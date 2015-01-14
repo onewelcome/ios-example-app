@@ -1,0 +1,50 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "framework": {
+                "parents": {
+                    "AudioToolbox.framework": [
+                        {
+                            "xml": "true",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "org.apache.cordova.device": {
+            "PACKAGE_NAME": "com.onegini.OneginiCordovaPlugin"
+        },
+        "org.apache.cordova.dialogs": {
+            "PACKAGE_NAME": "com.onegini.OneginiCordovaPlugin"
+        },
+        "org.apache.cordova.console": {
+            "PACKAGE_NAME": "com.onegini.OneginiCordovaPlugin"
+        }
+    },
+    "dependent_plugins": {}
+}

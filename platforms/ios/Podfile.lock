@@ -1,0 +1,58 @@
+PODS:
+  - AFNetworking (1.3.4)
+  - Base64 (1.0.1)
+  - ISO8601DateFormatterValueTransformer (0.6.0):
+    - RKValueTransformers (~> 1.1.0)
+  - OneginiSDKiOS (0.1):
+    - Base64 (~> 1.0)
+    - RestKit (= 0.23.3)
+    - RNCryptor (= 2.2)
+    - SSKeychain (= 1.2.2)
+  - RestKit (0.23.3):
+    - RestKit/Core (= 0.23.3)
+  - RestKit/Core (0.23.3):
+    - RestKit/CoreData
+    - RestKit/Network
+    - RestKit/ObjectMapping
+  - RestKit/CoreData (0.23.3):
+    - RestKit/ObjectMapping
+  - RestKit/Network (0.23.3):
+    - AFNetworking (~> 1.3.0)
+    - RestKit/ObjectMapping
+    - RestKit/Support
+    - SOCKit
+  - RestKit/ObjectMapping (0.23.3):
+    - ISO8601DateFormatterValueTransformer (~> 0.6.0)
+    - RestKit/Support
+    - RKValueTransformers (~> 1.1.0)
+  - RestKit/Support (0.23.3):
+    - TransitionKit (= 2.1.0)
+  - RKValueTransformers (1.1.1)
+  - RNCryptor (2.2)
+  - SOCKit (1.1)
+  - SSKeychain (1.2.2)
+  - TransitionKit (2.1.0)
+  - UIAlertView+Blocks (0.8.1)
+
+DEPENDENCIES:
+  - OneginiSDKiOS (from `../../../OneginiSDKiOS/`)
+  - UIAlertView+Blocks
+
+EXTERNAL SOURCES:
+  OneginiSDKiOS:
+    :path: ../../../OneginiSDKiOS/
+
+SPEC CHECKSUMS:
+  AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
+  Base64: c6d74f31f150543b246a07e180ba813c88e59311
+  ISO8601DateFormatterValueTransformer: a705384ea6531255258e25b6480ba1180db703a0
+  OneginiSDKiOS: 688e997f069897a48923c89cf1683b7dfeca273b
+  RestKit: 193a35cddae5198388977abaedad129f8acb978b
+  RKValueTransformers: 67b4ea3eb6a1c1a0b8c3c37eb4e4c05e4febeba2
+  RNCryptor: 4f562062c39f288b99601674f2c50dd44b68d58a
+  SOCKit: d8d0dd3688ae1026c12367570da8fa8e1a6980fb
+  SSKeychain: cc48bd3ad24fcd9125adb9e0d23dd50b8bbd08b9
+  TransitionKit: 6a6f3ddda38ae758778aa889dcb930e4f8d64edc
+  UIAlertView+Blocks: 0b749f1f7bd5131ff2233b30a406c1585a7171b2
+
+COCOAPODS: 0.35.0

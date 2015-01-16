@@ -14,9 +14,14 @@
 @property (strong, nonatomic) OGOneginiClient *oneginiClient;
 @property (strong, nonatomic) OGConfigModel *configModel;
 
-//@property (strong, nonatomic) CDVInvokedUrlCommand *authorizeCommand;
 @property (copy, nonatomic) NSString *authorizeCommandTxId;
+@property (copy, nonatomic) NSString *confirmPinCommandTxId;
 
+- (void)clearTokens:(CDVInvokedUrlCommand *)command;
+- (void)clearCredentials:(CDVInvokedUrlCommand *)command;
 - (void)initWithConfig:(CDVInvokedUrlCommand *)command;
+- (void)authorize:(CDVInvokedUrlCommand *)command;
+- (void)confirmPinWithVerification:(CDVInvokedUrlCommand *)command;
+- (void)confirmPin:(CDVInvokedUrlCommand *)command;
 
 @end

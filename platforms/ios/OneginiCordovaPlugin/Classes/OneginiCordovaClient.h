@@ -9,13 +9,14 @@
 #import <Cordova/CDV.h>
 #import <OneginiSDKiOS/OneginiSDK.h>
 
-@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate>
+@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate>
 
 @property (strong, nonatomic) OGOneginiClient *oneginiClient;
 @property (strong, nonatomic) OGConfigModel *configModel;
 
 @property (copy, nonatomic) NSString *authorizeCommandTxId;
 @property (copy, nonatomic) NSString *confirmPinCommandTxId;
+@property (copy, nonatomic) NSString *fetchResourceCommandTxId;
 
 - (void)clearTokens:(CDVInvokedUrlCommand *)command;
 - (void)clearCredentials:(CDVInvokedUrlCommand *)command;

@@ -72,32 +72,45 @@ var app = {
 					  ]);
 	},
 	authorize: function() {
+		var retryCount = 5;
 		cordova.exec(function(response) {
-			console.log('authorize ' + response.method);
-
+		    /*
+			 The response method contains the name of the method in the OGAuthorizationDelegate protocol
+			 */
 			if (response.method == 'requestAuthorization') {
+	 			console.log('authorize ' + response.method);
 				 /*
 				  If the useEmbeddedWebView config parameter is true (initWithConfig) then the response contains a url which must be openend in the webview.
 					  
 				  {"method":"requestAuthorization","url":"https://beta-tokenserver.onegini.com/oauth/authorize?response_type=code&client_id=9551393CAC43E79A575C0C247CC7048B2E42BF334484B601F1F78315D0137DE8&redirect_uri=oneginisdk://loginsuccess&scope=read&state=27647386-53C4-4271-8F2A-B17BB5B69176-16807"}
 				  */
 					 
-				// Open URL here
+				// Open URL here in an embedded webview
 			} else if (response.method == 'askForPin') {
+ 	 			console.log('authorize ' + response.method);
 				 /*
 				  Show a PIN entry dialog and call the askForPinResponse
-				  The authorize callback result is performed in the askForPinResponse callback function
 				 */
-				 app.askForPinResponse('12345', true);
+				 app.askForPinResponse('14941', false);
 			 } else if (response.method == 'askForPinWithVerification') {
+ 	 			console.log('authorize ' + response.method);
 				 /*
 				  Show a PIN entry dialog with a second PIN entry for verification and call the askForPinWithVerificationResponse
-				  The authorize callback result is performed in the askForPinWithVerificationResponse callback function
 				  */
-				 app.askForPinWithVerificationResponse('12345', '12345', true);
+					 
+				 // For testing purposes, force a retry by providing non matching pins
+				 if (retryCount-- > 0) {
+					 app.askForPinWithVerificationResponse('12345', '12045', true);
+				 } else {
+					 app.askForPinWithVerificationResponse('14941', '14941', false);
+				 }
+			 } else if (response == 'authorizationSuccess') {
+ 	 			console.log('authorize ' + response);
+					 
+				// Continue to main page after the authorization is performed with success
 			 }
 		}, function(error) {
-			console.error('authorize error ' + error);
+			console.error('authorize error ' + error.reason);
 			/* 
 			Possible error content
 
@@ -111,6 +124,12 @@ var app = {
 			*/
 		}, 'OneginiCordovaClient', 'authorize', ['read']);
 	},
+	logout: function() {
+		cordova.exec(null, null, 'OneginiCordovaClient', 'logout', null);
+	},
+	disconnect: function() {
+		cordova.exec(null, null, 'OneginiCordovaClient', 'disconnect', null);
+	},
 	clearCredentials: function() {
 		// FOR TESTING PURPOSE ONLY
 		cordova.exec(null, null, 'OneginiCordovaClient', 'clearCredentials', null);
@@ -120,19 +139,34 @@ var app = {
 		cordova.exec(null, null, 'OneginiCordovaClient', 'clearTokens', null);
 	},
 	askForPinResponse: function(pin, retry) {
-		cordova.exec(function(response) {
-			console.log('confirmPin ' + response);
-		}, function(error) {
+		// Forward the PIN entry back to the OneginiClient.
+		// Callback is performed on the initiating authorize callback handler
+		cordova.exec(null, function(error) {
 			console.log('confirmPin error ' + error)
-		}, 'OneginiCordovaClient', 'confirmPin', [pin, true]);
+		}, 'OneginiCordovaClient', 'confirmPin', [pin, retry]);
 	},
 	askForPinWithVerificationResponse: function(pin, verifyPin, retry) {
+		// Forward the PIN entry back to the OneginiClient.
+		// Callback is performed on the initiating authorize callback handler
+		cordova.exec(null, function(error) {
+			console.log('confirmPinWithVerification ' + error.reason + ' ' + error.error.NSLocalizedDescription);
+		}, 'OneginiCordovaClient', 'confirmPinWithVerification', [pin, verifyPin, retry]);
+	},
+	fetchResource: function(path, scopes, requestMethod, paramsEncoding, params) {
 		cordova.exec(function(response) {
-			console.log('confirmPinWithVerification ' + response);
+			 console.log('fetchResource ' + response);
 		}, function(error) {
-			console.log('confirmPinWithVerification error ' + error)
-		}, 'OneginiCordovaClient', 'confirmPinWithVerification', [pin, verifyPin, true]);
+			console.error('fetchResource error ' + error.reason);
+		}, 'OneginiCordovaClient', 'fetchResource', [path, scopes, requestMethod, paramsEncoding, params]);
+	},
+	fetchAnonymousResource: function(path, scopes, requestMethod, paramsEncoding, params) {
+		cordova.exec(function(response) {
+			 console.log('fetchAnonymousResource ' + response);
+		 }, function(error) {
+			 console.error('fetchAnonymousResource error ' + error.reason);
+		 }, 'OneginiCordovaClient', 'fetchAnonymousResource', [path, scopes, requestMethod, paramsEncoding, params]);
 	}
+
 };
 
 app.initialize();

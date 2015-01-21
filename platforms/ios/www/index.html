@@ -18,7 +18,11 @@
             </div>
 			
 			<div>
-				<input type="button" onClick="app.authorize();" value="Login"/></p>
+				<input type="button" onClick="app.authorize();" value="Login"/></br>
+				<input type="button" onClick="app.logout();" value="Logout"/></p>
+				<input type="button" onClick="app.fetchResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});" value="Fetch resource"/></br>
+				<input type="button" onClick="app.fetchAnonymousResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});" value="Fetch anonymous resource"/></p>
+				<input type="button" onClick="app.disconnect();" value="Disconnect"/></br>
 				<input type="button" onClick="app.clearCredentials();" value="Clear credentials"/></br>
 				<input type="button" onClick="app.clearTokens();" value="Clear tokens"/>
 			</div

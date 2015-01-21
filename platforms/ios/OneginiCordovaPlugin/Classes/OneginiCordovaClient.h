@@ -16,6 +16,7 @@
 
 @property (copy, nonatomic) NSString *authorizeCommandTxId;
 @property (copy, nonatomic) NSString *confirmPinCommandTxId;
+@property (copy, nonatomic) NSString *changePinCommandTxId;
 @property (copy, nonatomic) NSString *fetchResourceCommandTxId;
 
 - (void)clearTokens:(CDVInvokedUrlCommand *)command;
@@ -24,5 +25,8 @@
 - (void)authorize:(CDVInvokedUrlCommand *)command;
 - (void)confirmPinWithVerification:(CDVInvokedUrlCommand *)command;
 - (void)confirmPin:(CDVInvokedUrlCommand *)command;
+- (void)changePin:(CDVInvokedUrlCommand *)command;
+- (void)logout:(CDVInvokedUrlCommand *)command;
+- (void)disconnect:(CDVInvokedUrlCommand *)command;
 
 @end

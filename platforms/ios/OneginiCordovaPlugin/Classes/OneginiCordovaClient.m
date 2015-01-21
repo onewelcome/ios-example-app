@@ -21,7 +21,7 @@ NSString* const kError				= @"error";
 }
 
 @synthesize oneginiClient, authorizeCommandTxId, configModel;
-@synthesize confirmPinCommandTxId, fetchResourceCommandTxId;
+@synthesize confirmPinCommandTxId, fetchResourceCommandTxId, changePinCommandTxId;
 
 #pragma mark -
 #pragma mark overrides
@@ -132,7 +132,14 @@ NSString* const kError				= @"error";
 //	[result setKeepCallbackAsBool:YES];
 //	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
 	
-	[[OGOneginiClient sharedInstance] authorize:command.arguments];
+	[oneginiClient authorize:command.arguments];
+}
+
+- (void)changePin:(CDVInvokedUrlCommand *)command {
+	NSArray *scopes = command.arguments.firstObject;
+	
+	self.changePinCommandTxId = command.callbackId;
+	[oneginiClient authorizeAndChangePin:scopes];
 }
 
 /**

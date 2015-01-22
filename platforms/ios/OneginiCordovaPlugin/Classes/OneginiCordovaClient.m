@@ -74,12 +74,8 @@ NSString* const kError				= @"error";
 		d = md;
 	}
 	
-//	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:d];
-//	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
-//
-//	if (confirmPinCommandTxId != nil) {
-//		[self.commandDelegate sendPluginResult:result callbackId:confirmPinCommandTxId];
-//	}
+	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:d];
+	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
 }
 
 #pragma mark -
@@ -106,7 +102,7 @@ NSString* const kError				= @"error";
 	[CDVPluginResult setVerbose:YES];
 
 	if (command.arguments.count != 2) {
-		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"argument count is not 2"];
+		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 2 arguments but received %d", command.arguments.count]];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 		return;
 	}
@@ -132,22 +128,9 @@ NSString* const kError				= @"error";
 	[self resetAuthorizationState];
 	
 	self.authorizeCommandTxId = command.callbackId;
-	
-//	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-//	[result setKeepCallbackAsBool:YES];
-//	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
 	[oneginiClient authorize:command.arguments];
 }
 
-/**
- This is not a direct entry point and only valid to be called when a delegate askForPinWithVerification is requested.
- When the askForPinWithVerification is invoked then the user PIN entry is forwarded back to the OneginiClient by this method.
- 
- Command params:
- String pin
- String verifyPin
- Boolean retry
- */
 - (void)confirmPinWithVerification:(CDVInvokedUrlCommand *)command {
 	// If no request for a PIN entry is registered then this invokation is illegal.
 	if (pinEntryWithVerification == nil) {
@@ -157,6 +140,8 @@ NSString* const kError				= @"error";
 	}
 	
 	if (command.arguments.count != 3) {
+		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 3 arguments but received %d", command.arguments.count]];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 		return;
 	}
 	
@@ -174,14 +159,6 @@ NSString* const kError				= @"error";
 	}
 }
 
-/**
- This is not a direct entry point and only valid to be called when a delegate askForPin is requested.
- When the askForPin is invoked then the user PIN entry is forwarded back to the OneginiClient by this method.
- 
- Command arguments:
- String pin
- Boolean retry
- */
 - (void)confirmPin:(CDVInvokedUrlCommand *)command {
 	// If no request for a PIN entry is registered then this invokation is illegal.
 	if (pinEntryConfirmation == nil) {
@@ -191,6 +168,8 @@ NSString* const kError				= @"error";
 	}
 	
 	if (command.arguments.count != 2) {
+		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 2 arguments but received %d", command.arguments.count]];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 		return;
 	}
 	
@@ -214,16 +193,6 @@ NSString* const kError				= @"error";
 	[oneginiClient authorizeAndChangePin:scopes];
 }
 
-/**
- This is not a direct entry point and only valid to be called when a delegate askForPinChangeWithVerification is requested.
- When the askForPinChangeWithVerification is invoked then the user PIN entries are forwarded back to the OneginiClient by this method.
- 
- Command params:
- String currentPin
- String newPin
- String verifyNewPin
- Boolean retry
- */
 - (void)confirmChangePinWithVerification:(CDVInvokedUrlCommand *)command {
 	// If no request for a PIN change is registered then this invokation is illegal.
 	if (changePinEntryWithVerification == nil) {
@@ -233,6 +202,8 @@ NSString* const kError				= @"error";
 	}
 	
 	if (command.arguments.count != 4) {
+		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 4 arguments but received %d", command.arguments.count]];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 		return;
 	}
 	
@@ -264,18 +235,13 @@ NSString* const kError				= @"error";
 	
 }
 
-/**
- Fetches a specific resource.
- The access token validation flow is invoked if no valid access token is available.
-
- Command arguments:
- String path
- Array scopes
- String requestMethod, GET, PUT, POST or DELETE
- String parameterEncoding, FORM, JSON or PROPERTY
- Dictionary request parameters
- */
 - (void)fetchResource:(CDVInvokedUrlCommand *)command {
+	if (command.arguments.count != 5) {
+		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 5 arguments but received %d", command.arguments.count]];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+		return;
+	}
+	
 	NSString *path = [command.arguments objectAtIndex:0];
 	NSArray *scopes = [command.arguments objectAtIndex:1];
 	NSString *requestMethodString = [command.arguments objectAtIndex:2];
@@ -291,6 +257,12 @@ NSString* const kError				= @"error";
 }
 
 - (void)fetchAnonymousResource:(CDVInvokedUrlCommand *)command {
+	if (command.arguments.count != 5) {
+		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 5 arguments but received %d", command.arguments.count]];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+		return;
+	}
+
 	NSString *path = [command.arguments objectAtIndex:0];
 	NSArray *scopes = [command.arguments objectAtIndex:1];
 	NSString *requestMethodString = [command.arguments objectAtIndex:2];
@@ -380,19 +352,6 @@ NSString* const kError				= @"error";
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForPinWithVerification" }];
 	result.keepCallback = @(1);
 	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
-	
-	// Show a dialog where the user can enter a PIN (not this alert view used for testing)
-	
-//	UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Attention" message:@"Register '12345' code" delegate:nil cancelButtonTitle:@"Force retry" otherButtonTitles:@"PIN", nil];
-//	av.tapBlock = ^(UIAlertView *alertView, NSInteger buttonIndex) {
-//		if (buttonIndex == alertView.firstOtherButtonIndex) {
-//			confirm(@"12345", @"12345", YES);
-//		} else if (buttonIndex == alertView.cancelButtonIndex) {
-//			confirm(@"12345", @"00000", YES);
-//		}
-//	};
-//	
-//	[av show];
 }
 
 - (void)askForPinChangeWithVerification:(NSUInteger)pinSize confirmation:(ChangePinEntryWithVerification)confirmCallback cancel:(Cancel)cancelCallback {
@@ -424,17 +383,6 @@ NSString* const kError				= @"error";
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForPin"}];
 	result.keepCallback = @(1);
 	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
-	
-//	UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Attention" message:@"Enter '12345' code" delegate:nil cancelButtonTitle:@"Force retry" otherButtonTitles:@"PIN", nil];
-//	av.tapBlock = ^(UIAlertView *alertView, NSInteger buttonIndex) {
-//		if (buttonIndex == alertView.firstOtherButtonIndex) {
-//			confirm(@"12345", YES);
-//		} else if (buttonIndex == alertView.cancelButtonIndex) {
-//			confirm(@"00000", YES);
-//		}
-//	};
-//	
-//	[av show];
 }
 
 - (void)authorizationErrorInvalidGrant:(NSUInteger)remaining {

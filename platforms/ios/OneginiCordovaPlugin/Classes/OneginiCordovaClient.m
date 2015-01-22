@@ -18,10 +18,12 @@ NSString* const kError				= @"error";
 @implementation OneginiCordovaClient {
 	PinEntryConfirmation pinEntryConfirmation;
 	PinEntryWithVerification pinEntryWithVerification;
+	ChangePinEntryWithVerification changePinEntryWithVerification;
+	Cancel cancel;
 }
 
 @synthesize oneginiClient, authorizeCommandTxId, configModel;
-@synthesize confirmPinCommandTxId, fetchResourceCommandTxId, changePinCommandTxId;
+@synthesize confirmPinCommandTxId, fetchResourceCommandTxId;
 
 #pragma mark -
 #pragma mark overrides
@@ -45,6 +47,9 @@ NSString* const kError				= @"error";
 	
 	pinEntryWithVerification = nil;
 	pinEntryConfirmation = nil;
+	
+	changePinEntryWithVerification = nil;
+	cancel = nil;
 }
 
 - (void)resetAll {
@@ -131,15 +136,7 @@ NSString* const kError				= @"error";
 //	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
 //	[result setKeepCallbackAsBool:YES];
 //	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
-	
 	[oneginiClient authorize:command.arguments];
-}
-
-- (void)changePin:(CDVInvokedUrlCommand *)command {
-	NSArray *scopes = command.arguments.firstObject;
-	
-	self.changePinCommandTxId = command.callbackId;
-	[oneginiClient authorizeAndChangePin:scopes];
 }
 
 /**
@@ -208,6 +205,63 @@ NSString* const kError				= @"error";
 	@finally {
 		pinEntryConfirmation = nil;
 	}
+}
+
+- (void)changePin:(CDVInvokedUrlCommand *)command {
+	NSArray *scopes = command.arguments.firstObject;
+	
+	self.authorizeCommandTxId = command.callbackId;
+	[oneginiClient authorizeAndChangePin:scopes];
+}
+
+/**
+ This is not a direct entry point and only valid to be called when a delegate askForPinChangeWithVerification is requested.
+ When the askForPinChangeWithVerification is invoked then the user PIN entries are forwarded back to the OneginiClient by this method.
+ 
+ Command params:
+ String currentPin
+ String newPin
+ String verifyNewPin
+ Boolean retry
+ */
+- (void)confirmChangePinWithVerification:(CDVInvokedUrlCommand *)command {
+	// If no request for a PIN change is registered then this invokation is illegal.
+	if (changePinEntryWithVerification == nil) {
+		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_INVALID_ACTION];
+		[self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+		return;
+	}
+	
+	if (command.arguments.count != 4) {
+		return;
+	}
+	
+	NSString *currentPin = command.arguments.firstObject;
+	NSString *newPin = [command.arguments objectAtIndex:1];
+	NSString *verifyNewPin = [command.arguments objectAtIndex:2];
+	NSNumber *retry = [command.arguments objectAtIndex:3];
+	
+	self.confirmPinCommandTxId = command.callbackId;
+	
+	@try {
+		changePinEntryWithVerification(currentPin, newPin, verifyNewPin, retry.boolValue);
+	}
+	@finally {
+		changePinEntryWithVerification = nil;
+		cancel = nil;
+	}
+}
+
+- (void)cancelPinChange:(CDVInvokedUrlCommand *)command {
+	if (cancel != nil) {
+		cancel();
+	}
+	
+	cancel = nil;
+	changePinEntryWithVerification = nil;
+	
+	[self resetAuthorizationState];
+	
 }
 
 /**
@@ -341,6 +395,19 @@ NSString* const kError				= @"error";
 //	[av show];
 }
 
+- (void)askForPinChangeWithVerification:(NSUInteger)pinSize confirmation:(ChangePinEntryWithVerification)confirmCallback cancel:(Cancel)cancelCallback {
+	if (authorizeCommandTxId == nil) {
+		return;
+	}
+	
+	changePinEntryWithVerification = confirmCallback;
+	cancel = cancelCallback;
+	
+	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForPinChangeWithVerification" }];
+	result.keepCallback = @(1);
+	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
+}
+
 - (void)askForPin:(NSUInteger)pinSize confirmation:(PinEntryConfirmation)confirm {
 	// Show a dialog where the user can enter a PIN (not this alert view used for testing)
 	
@@ -431,10 +498,6 @@ NSString* const kError				= @"error";
 - (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message notificationType:(NSString *)notificationType
 											pinSize:(NSUInteger)pinSize	maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt
 											confirm:(PushAuthenticationWithPinConfirmation)confirm {
-	// Not implemented, should be made optional in the SDK
-}
-
-- (void)askForPinChangeWithVerification:(NSUInteger)pinSize confirmation:(ChangePinEntryWithVerification)confirm cancel:(Cancel)cancel {
 	// Not implemented, should be made optional in the SDK
 }
 

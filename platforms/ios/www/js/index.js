@@ -55,10 +55,10 @@ var app = {
 					 'OneginiCordovaClient',
 					 'initWithConfig',
 					 [{
-					  'kOGAppIdentifier':'DemoApp',
+					  'kOGAppIdentifier':'DemoApp-2-4',
 					  'kOGAppPlatform':'ios',
 					  'kOGAppScheme':'oneginisdk',
-					  'kOGAppVersion':'2.3',
+					  'kOGAppVersion':'2.4',
 					  'kAppBaseURL':'https://beta-tokenserver.onegini.com',
 					  'kOGShouldConfirmNewPin':true,
 					  'kOGShouldDirectlyShowPushMessage':true,
@@ -66,13 +66,12 @@ var app = {
 					  'kOGMaxPinFailures':'3',
 					  'kOGResourceBaseURL':'https://beta-tokenserver.onegini.com',
 					  'kOGRedirectURL':'oneginisdk://loginsuccess',
-					  'kOGAppSecret':'9281C9E8451047BF893CD97DD451D91AD441C3DD545D82C3C25EBCDD4342E15D',
 					  'kOGUseEmbeddedWebview':false
 					  },['MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4AGzANBgkqhkiG9w0BAQUFADBvMQswCQYDVQQGEwJTRTEUMBIGA1UEChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFkZFRydXN0IEV4dGVybmFsIFRUUCBOZXR3b3JrMSIwIAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBSb290MB4XDTEyMDIxNjAwMDAwMFoXDTIwMDUzMDEwNDgzOFowczELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxGTAXBgNVBAMTEFBvc2l0aXZlU1NMIENBIDIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDo6jnjIqaqucQA0OeqZztDB71Pkuu8vgGjQK3g70QotdA6voBUF4V6a4RsNjbloyTi/igBkLzX3Q+5K05IdwVpr95XMLHo+xoD9jxbUx6hAUlocnPWMytDqTcyUg+uJ1YxMGCtyb1zLDnukNh1sCUhYHsqfwL9goUfdE+SNHNcHQCgsMDqmOK+ARRYFygiinddUCXNmmym5QzlqyjDsiCJ8AckHpXCLsDl6ez2PRIHSD3SwyNWQezT3zVLyOf2hgVSEEOajBd8i6q8eODwRTusgFX+KJPhChFo9FJXb/5IC1tdGmpnc5mCtJ5DYD7HWyoSbhruyzmuwzWdqLxdsC/DAgMBAAGjggF3MIIBczAfBgNVHSMEGDAWgBStvZh6NLQm9/rEJlTvA73gJMtUGjAdBgNVHQ4EFgQUmeRAX2sUXj4F2d3TY1T8Yrj3AKwwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQAwEQYDVR0gBAowCDAGBgRVHSAAMEQGA1UdHwQ9MDswOaA3oDWGM2h0dHA6Ly9jcmwudXNlcnRydXN0LmNvbS9BZGRUcnVzdEV4dGVybmFsQ0FSb290LmNybDCBswYIKwYBBQUHAQEEgaYwgaMwPwYIKwYBBQUHMAKGM2h0dHA6Ly9jcnQudXNlcnRydXN0LmNvbS9BZGRUcnVzdEV4dGVybmFsQ0FSb290LnA3YzA5BggrBgEFBQcwAoYtaHR0cDovL2NydC51c2VydHJ1c3QuY29tL0FkZFRydXN0VVROU0dDQ0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0GCSqGSIb3DQEBBQUAA4IBAQCcNuNOrvGKu2yXjI9LZ9Cf2ISqnyFfNaFbxCtjDei8d12nxDf9Sy2e6B1pocCEzNFti/OBy59LdLBJKjHoN0DrH9mXoxoR1Sanbg+61b4s/bSRZNy+OxlQDXqV8wQTqbtHD4tc0azCe3chUN1bq+70ptjUSlNrTa24yOfmUlhNQ0zCoiNPDsAgOa/fT0JbHtMJ9BgJWSrZ6EoYvzL7+i1ki4fKWyvouAt+vhcSxwOCKa9Yr4WEXT0K3yNRw82vEL+AaXeRCk/luuGtm87fM04wO+mPZn+C+mv626PAcwDj1hKvTfIPWhRRH224hoFiB85ccsJP81cqcdnUl4XmGFO3']
 					  ]);
 	},
 	authorize: function() {
-		var retryCount = 5;
+		var retryCount = 3;
 		cordova.exec(function(response) {
 		    /*
 			 The response method contains the name of the method in the OGAuthorizationDelegate protocol
@@ -141,13 +140,15 @@ var app = {
 	askForPinResponse: function(pin, retry) {
 		// Forward the PIN entry back to the OneginiClient.
 		// Callback is performed on the initiating authorize callback handler
+		// An INVALID_ACTION is returned if no authorization transaction is registered.
 		cordova.exec(null, function(error) {
-			console.log('confirmPin error ' + error)
+			console.log('confirmPin error ' + error.reason + ' ' + error.error.NSLocalizedDescription);
 		}, 'OneginiCordovaClient', 'confirmPin', [pin, retry]);
 	},
 	askForPinWithVerificationResponse: function(pin, verifyPin, retry) {
 		// Forward the PIN entry back to the OneginiClient.
 		// Callback is performed on the initiating authorize callback handler
+		// An INVALID_ACTION is returned if no authorization transaction is registered.
 		cordova.exec(null, function(error) {
 			console.log('confirmPinWithVerification ' + error.reason + ' ' + error.error.NSLocalizedDescription);
 		}, 'OneginiCordovaClient', 'confirmPinWithVerification', [pin, verifyPin, retry]);
@@ -165,8 +166,30 @@ var app = {
 		 }, function(error) {
 			 console.error('fetchAnonymousResource error ' + error.reason);
 		 }, 'OneginiCordovaClient', 'fetchAnonymousResource', [path, scopes, requestMethod, paramsEncoding, params]);
+	},
+	changePin: function(scopes) {
+		cordova.exec(function(response) {
+			/*
+			 The OneginiClient will respond by means of the OGAuthorizationDelegate and ask for the 
+			 App to show a PIN entry/change dialog
+			 */
+			if (response.method == 'askForPinChangeWithVerification') {
+				app.changePinWithVerificationResponse('14941', '94149', '94149', false);
+			}
+		}, function(error) {
+			 console.error('changePin ' + error.reason);
+		}, 'OneginiCordovaClient', 'changePin', [scopes]);
+	},
+	changePinWithVerificationResponse: function(pin, newPin, newPinVerify, retry) {
+		// Forward the PIN entries back to the OneginiClient.
+		// Callback is performed on the initiating changePin callback handler
+		cordova.exec(null, function(error) {
+			console.log('changePinWithVerificationResponse ' + error.reason + ' ' + error.error.NSLocalizedDescription);
+		 }, 'OneginiCordovaClient', 'confirmChangePinWithVerification', [pin, newPin, newPinVerify, retry]);
+	},
+	cancelPinChange: function() {
+		cordova.exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', null);
 	}
-
 };
 
 app.initialize();

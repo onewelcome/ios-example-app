@@ -93,6 +93,11 @@
 - (void)disconnect:(CDVInvokedUrlCommand *)command;
 
 /**
+ Determine if the user is authorized
+ */
+- (void)isAuthorized:(CDVInvokedUrlCommand *)command;
+
+/**
  Fetches a specific resource. 
  The access token validation flow is invoked if no valid access token is available.
  

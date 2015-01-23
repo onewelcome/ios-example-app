@@ -18,19 +18,20 @@
             <h1>Onegini Cordova App</h1><a href="#debug" data-transition="slideup" class="ui-btn-right">Debug</a>
             </div>
             <div role="main" class="ui-content">
-				<a id="btnLogin" href="#authenticated" class="ui-btn">Login</a>
+				<a id="btnLogin" class="ui-btn">Login</a>
 			</div>
         </div>
-        <div data-role="page" id="authenticated">
+        <div data-role="page" id="authorized">
             <div data-role="header" data-position="fixed">
                 <h1>Logged in</h1>
-                <a id="btnLogout" href="#home" data-transition="slide" data-direction="reverse" class="ui-btn-left">Logout</a>
+                <a id="btnLogout" data-transition="slide" data-direction="reverse" class="ui-btn-left">Logout</a>
             </div>
             <div role="main" class="ui-content">
                 <input type="button"
-                       onClick="app.fetchResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});"
+                       onClick="ogCordovaApp.app.fetchResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});"
                        value="Fetch resource"/><br/>
-                <input type="button" onClick="app.changePin(['read']);" value="Change PIN"/>
+                <input type="button" onClick="ogCordovaApp.app.changePin(['read']);" value="Change PIN"/>
+                <a id="btnDisconnect" class="ui-btn">Disconnect app</a>
             </div>
         </div>
         <div data-role="page" id="debug">
@@ -38,25 +39,38 @@
                 <h1>Onegini Cordova App</h1><a href="#home" data-transition="slide" data-direction="reverse" data-icon="arrow-l" class="ui-btn-left">Home</a>
             </div>
             <div role="main" class="ui-content">
-                <input type="button" onClick="app.clearCredentials();" value="Clear credentials"/><br/>
-                <input type="button" onClick="app.clearTokens();" value="Clear tokens"/><br/>
-                <input type="button" onClick="app.fetchAnonymousResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});"
+                <input type="button" onClick="ogCordovaApp.app.clearCredentials();" value="Clear credentials"/><br/>
+                <input type="button" onClick="ogCordovaApp.app.clearTokens();" value="Clear tokens"/><br/>
+                <input type="button" onClick="ogCordovaApp.app.fetchAnonymousResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});"
                        value="Fetch anonymous resource"/>
             </div>
         </div>
         <div data-role="page" id="askForPin">
             <div data-role="header" data-position="fixed">
-                <h1>Enter PIN</h1>
+                <h1>Enter Pincode</h1>
             </div>
             <div role="main" class="ui-content">
                 <form action="" id="askForPinForm" method="post">
                     <label for="pin" class="ui-hidden-accessible">PIN</label>
-                    <input type="password" id="pin" name="pin" pattern="\\d{5}" size="5"/>
+                    <input type="password" id="pin" name="pin" pattern="\\d{5}" size="5" placeholder="Pincode"
+                            required="required"/>
 
                     <input type="submit" value="Login"/>
                 </form>
             </div>
         </div>
+        <div data-role="page" id="authorizationFailed">
+            <div data-role="header" data-position="fixed">
+                <h1>Authorization failed</h1>
+            </div>
+            <div data-role="main" class="ui-content" id="errorContent">
+
+            </div>
+        </div>
+
+        <script type="text/x-handlebars-template" id="errorMessage">
+            {{reason}}
+        </script>
 
         <script src="cordova.js"></script>
         <script src="lib/handlebars/handlebars.runtime-v2.0.0.js"></script>

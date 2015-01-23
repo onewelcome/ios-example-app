@@ -2,32 +2,64 @@
 <html>
     <head>
         <meta charset="utf-8" />
+        <title>Onegini</title>
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1,  target-densitydpi=device-dpi" />
         <link rel="stylesheet" href="css/index.css" />
-        <title>Onegini</title>
+        <link rel="stylesheet" href="lib/jquery-mobile/css/jquery.mobile-1.4.5.min.css" />
+        <script src="lib/jquery-mobile/js/jquery-2.1.3.min.js"></script>
+        <script src="lib/jquery-mobile-router/jquery.mobile.router.min.js"></script>
+        <script src="lib/jquery-mobile/js/jquery.mobile-1.4.5.min.js"></script>
     </head>
     <body>
-        <div class="app">
-            <h1>Onegini Cordova App</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+        <div data-role="page" id="home">
+            <div data-role="header" data-position="fixed">
+            <h1>Onegini Cordova App</h1><a href="#debug" data-transition="slideup" class="ui-btn-right">Debug</a>
             </div>
-			
-			<div>
-				<input type="button" onClick="app.authorize();" value="Login"/><br/>
-				<input type="button" onClick="app.logout();" value="Logout"/><br/>
-				<input type="button" onClick="app.fetchResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});" value="Fetch resource"/><br/>
-				<input type="button" onClick="app.fetchAnonymousResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});" value="Fetch anonymous resource"/><br/>
-				<input type="button" onClick="app.changePin(['read']);" value="Change PIN"/><br/>
-				<input type="button" onClick="app.disconnect();" value="Disconnect"/><br/>
-				<input type="button" onClick="app.clearCredentials();" value="Clear credentials"/><br/>
-				<input type="button" onClick="app.clearTokens();" value="Clear tokens"/>
+            <div role="main" class="ui-content">
+				<a id="btnLogin" href="#authenticated" class="ui-btn">Login</a>
 			</div>
         </div>
+        <div data-role="page" id="authenticated">
+            <div data-role="header" data-position="fixed">
+                <h1>Logged in</h1>
+                <a id="btnLogout" href="#home" data-transition="slide" data-direction="reverse" class="ui-btn-left">Logout</a>
+            </div>
+            <div role="main" class="ui-content">
+                <input type="button"
+                       onClick="app.fetchResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});"
+                       value="Fetch resource"/><br/>
+                <input type="button" onClick="app.changePin(['read']);" value="Change PIN"/>
+            </div>
+        </div>
+        <div data-role="page" id="debug">
+            <div data-role="header" data-position="fixed">
+                <h1>Onegini Cordova App</h1><a href="#home" data-transition="slide" data-direction="reverse" data-icon="arrow-l" class="ui-btn-left">Home</a>
+            </div>
+            <div role="main" class="ui-content">
+                <input type="button" onClick="app.clearCredentials();" value="Clear credentials"/><br/>
+                <input type="button" onClick="app.clearTokens();" value="Clear tokens"/><br/>
+                <input type="button" onClick="app.fetchAnonymousResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});"
+                       value="Fetch anonymous resource"/>
+            </div>
+        </div>
+        <div data-role="page" id="askForPin">
+            <div data-role="header" data-position="fixed">
+                <h1>Enter PIN</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <form action="" id="askForPinForm" method="post">
+                    <label for="pin" class="ui-hidden-accessible">PIN</label>
+                    <input type="password" id="pin" name="pin" pattern="\\d{5}" size="5"/>
+
+                    <input type="submit" value="Login"/>
+                </form>
+            </div>
+        </div>
+
         <script src="cordova.js"></script>
+        <script src="lib/handlebars/handlebars.runtime-v2.0.0.js"></script>
 		<script src="js/notification.js"></script>
 		<script src="js/index.js"></script>
 	</body>

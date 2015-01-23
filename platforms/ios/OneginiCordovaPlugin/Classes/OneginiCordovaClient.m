@@ -40,6 +40,10 @@ NSString* const kError				= @"error";
 	[[OGOneginiClient sharedInstance] handleAuthorizationCallback:notification.object];
 }
 
+- (void)onAppTerminate {
+	[oneginiClient logout:nil];
+}
+
 #pragma mark -
 - (void)resetAuthorizationState {
 	self.authorizeCommandTxId = nil;
@@ -129,6 +133,11 @@ NSString* const kError				= @"error";
 	
 	self.authorizeCommandTxId = command.callbackId;
 	[oneginiClient authorize:command.arguments];
+}
+
+- (void)isAuthorized:(CDVInvokedUrlCommand *)command {
+	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:[oneginiClient isAuthorized]];
+	[self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
 - (void)confirmPinWithVerification:(CDVInvokedUrlCommand *)command {

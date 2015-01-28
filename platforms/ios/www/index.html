@@ -60,6 +60,25 @@
                 </form>
             </section>
         </article>
+        <article data-role="page" id="askForPinWithVerification">
+            <header data-role="header" data-position="fixed">
+                <h1>Enter Pincode</h1>
+                <a data-btn-role="btnLogout" data-transition="slide" data-direction="reverse" class="ui-btn-left">Logout</a>
+            </header>
+            <section role="main" class="ui-content">
+                <form action="" id="askForPinWithVerificationForm" method="post">
+                    <label for="pinWithVerification" class="ui-hidden-accessible">PIN</label>
+                    <input type="password" id="pinWithVerification" name="pinWithVerification" pattern="\d*" size="5"
+                           placeholder="Pincode" required="required"/>
+                    <label for="pinVerification" class="ui-hidden-accessible">Verify PIN</label>
+                    <input type="password" id="pinVerification" name="pinVerification" pattern="\d*" size="5"
+                           placeholder="Verify Pincode" required="required"/>
+                    <span id="pinWithVerificationMessage"></span>
+
+                    <input type="submit" value="Save Pincode"/>
+                </form>
+            </section>
+        </article>
         <article data-role="page" id="authorizationFailed">
             <header data-role="header" data-position="fixed">
                 <h1>Authorization failed</h1>

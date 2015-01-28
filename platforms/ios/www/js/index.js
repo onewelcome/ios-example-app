@@ -13,33 +13,47 @@ ogCordovaApp.app = {
     },
     bindButtons: function () {
         var app = this;
-        $("[data-btn-role='btnLogin']").on("click", function (event) {
-            event.preventDefault();
+        $("[data-btn-role='btnLogin']").on("click", function (e) {
+            e.preventDefault();
             app.authorize();
         });
 
-        $("[data-btn-role='btnLogout']").on("click", function (event) {
-            event.preventDefault();
+        $("[data-btn-role='btnLogout']").on("click", function (e) {
+            e.preventDefault();
             app.logout();
-            $.mobile.navigate("#home");
+            app.showHome()
         });
 
-        $("#btnDisconnect").on("click", function (event) {
-            event.preventDefault();
+        $("#btnDisconnect").on("click", function (e) {
+            e.preventDefault();
             app.disconnect();
+            app.showHome();
         });
     },
-    bindForms : function() {
+    bindForms: function () {
         var app = this;
         $("#askForPinForm").on("submit", function (e) {
             e.preventDefault();
             console.log("Submitting PIN form");
+            // TODO add form validation
             var $form = $(this);
             var pinValue = $("#pin").val();
             // clear form in case we return to this page
             $form[0].reset();
             $("#pinMessage").html('').enhanceWithin();
             app.askForPinResponse(pinValue, false);
+        });
+
+        $("#askForPinWithVerificationForm").on("submit", function (e) {
+            e.preventDefault();
+            console.log("Submitting PIN with verification form");
+            var $form = $(this);
+            var pinValue = $("#pinWithVerification").val();
+            var verifyPinValue = $("#pinVerification").val();
+            // clear form in case we return to this page
+            $form[0].reset();
+            $("#pinWithVerificationMessage").html('').enhanceWithin();
+            app.askForPinWithVerificationResponse(pinValue, verifyPinValue, false);
         });
     },
     // onDeviceReady: internal call from an event handler. The scope of 'this' is the event, not ogCordova.app.
@@ -107,13 +121,15 @@ ogCordovaApp.app = {
                 /*
                  Show a PIN entry dialog with a second PIN entry for verification and call the askForPinWithVerificationResponse
                  */
-
+                $.mobile.navigate("#askForPinWithVerification");
                 // For testing purposes, force a retry by providing non matching pins
-                if (retryCount-- > 0) {
-                    ogCordovaApp.app.askForPinWithVerificationResponse('12345', '12045', true);
-                } else {
-                    ogCordovaApp.app.askForPinWithVerificationResponse('14941', '14941', false);
-                }
+                /*
+                 if (retryCount-- > 0) {
+                 ogCordovaApp.app.askForPinWithVerificationResponse('12345', '12045', true);
+                 } else {
+                 ogCordovaApp.app.askForPinWithVerificationResponse('14941', '14941', false);
+                 }
+                 */
             } else if (response == 'authorizationSuccess') {
                 console.log('authorized ' + response);
                 $.mobile.navigate("#authorized");
@@ -204,10 +220,6 @@ ogCordovaApp.app = {
     },
     cancelPinChange: function () {
         cordova.exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', null);
-    },
-    login: function (event, args) {
-        console.log("Login called via the router")
-        ogCordovaApp.app.authorize();
     },
     errorMessage: {}
 };

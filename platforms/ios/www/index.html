@@ -23,19 +23,23 @@
         <article data-role="page" id="authorized">
             <header data-role="header" data-position="fixed">
                 <h1>Logged in</h1>
-                <a data-btn-role="btnLogout" data-transition="slide" data-direction="reverse" class="ui-btn-left">Logout</a>
+                <a data-btn-role="btnLogout" data-transition="slide" data-direction="reverse" class="ui-btn ui-btn-left">Logout</a>
             </header>
             <section role="main" class="ui-content">
-                <input type="button"
-                       onClick="ogCordovaApp.app.fetchResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});"
-                       value="Fetch resource"/><br/>
+
+                <!-- Demo only: fetch resource and display it in the div below -->
+                <input type="button" class="ui-btn" id="fetchProfile" value="Show profile"/><br/>
+                <pre id="authorizedResource"></pre>
+<!--
                 <input type="button" onClick="ogCordovaApp.app.changePin(['read']);" value="Change PIN"/>
-                <a id="btnDisconnect" class="ui-btn">Disconnect app</a>
+-->
+                <a data-btn-role="btnDisconnect" class="ui-btn">Disconnect app</a>
             </section>
         </article>
         <article data-role="page" id="debug">
             <header data-role="header" data-position="fixed">
-                <h1>Onegini Cordova App</h1><a href="#home" data-transition="slide" data-direction="reverse" data-icon="arrow-l" class="ui-btn-left">Home</a>
+                <h1>Onegini Cordova App</h1><a href="#home" data-transition="slide" data-direction="reverse"
+                                               data-icon="arrow-l" class="ui-btn ui-btn-left">Home</a>
             </header>
             <section role="main" class="ui-content">
                 <input type="button" onClick="ogCordovaApp.app.clearCredentials();" value="Clear credentials"/><br/>
@@ -47,7 +51,7 @@
         <article data-role="page" id="askForPin">
             <header data-role="header" data-position="fixed">
                 <h1>Enter Pincode</h1>
-                <a data-btn-role="btnLogout" data-transition="slide" data-direction="reverse" class="ui-btn-left">Logout</a>
+                <a data-btn-role="btnLogout" data-transition="slide" data-direction="reverse" class="ui-btn ui-btn-left">Logout</a>
             </header>
             <section role="main" class="ui-content">
                 <form id="askForPinForm" method="post" data-ajax="false">
@@ -65,7 +69,7 @@
         <article data-role="page" id="askForPinWithVerification">
             <header data-role="header" data-position="fixed">
                 <h1>Enter Pincode</h1>
-                <a data-btn-role="btnLogout" data-transition="slide" data-direction="reverse" class="ui-btn-left">Logout</a>
+                <a data-btn-role="btnLogout" data-transition="slide" data-direction="reverse" class="ui-btn ui-btn-left">Logout</a>
             </header>
             <section role="main" class="ui-content">
                 <form id="askForPinWithVerificationForm" method="post" data-ajax="false">

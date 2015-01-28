@@ -21,13 +21,20 @@ ogCordovaApp.app = {
         $("[data-btn-role='btnLogout']").on("click", function (e) {
             e.preventDefault();
             app.logout();
-            app.showHome()
+            app.showHome();
         });
 
-        $("#btnDisconnect").on("click", function (e) {
+        $("[data-btn-role='btnDisconnect']").on("click", function (e) {
             e.preventDefault();
-            app.disconnect();
-            app.showHome();
+            if (window.confirm("Do you want to disconnect the app?")) {
+                app.disconnect();
+                app.showHome();
+            }
+        });
+
+        $("#fetchProfile").on("click", function (e) {
+            $("#authorizedResource").html('').enhanceWithin();
+            app.fetchResource('/client/resource/profile', ['read'], 'GET', 'JSON', {});
         });
     },
     bindForms: function () {
@@ -212,8 +219,10 @@ ogCordovaApp.app = {
     fetchResource: function (path, scopes, requestMethod, paramsEncoding, params) {
         cordova.exec(function (response) {
             console.log('fetchResource ' + response);
+            $("#authorizedResource").html(response).enhanceWithin();
         }, function (error) {
             console.error('fetchResource error ' + error.reason);
+            $("#authorizedResource").html("Failed to fetch profile").enhanceWithin();
         }, 'OneginiCordovaClient', 'fetchResource', [path, scopes, requestMethod, paramsEncoding, params]);
     },
     fetchAnonymousResource: function (path, scopes, requestMethod, paramsEncoding, params) {

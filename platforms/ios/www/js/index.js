@@ -32,28 +32,53 @@ ogCordovaApp.app = {
     },
     bindForms: function () {
         var app = this;
-        $("#askForPinForm").on("submit", function (e) {
-            e.preventDefault();
-            console.log("Submitting PIN form");
-            // TODO add form validation
-            var $form = $(this);
-            var pinValue = $("#pin").val();
-            // clear form in case we return to this page
-            $form[0].reset();
-            $("#pinMessage").html('').enhanceWithin();
-            app.askForPinResponse(pinValue, false);
-        });
 
-        $("#askForPinWithVerificationForm").on("submit", function (e) {
-            e.preventDefault();
-            console.log("Submitting PIN with verification form");
-            var $form = $(this);
-            var pinValue = $("#pinWithVerification").val();
-            var verifyPinValue = $("#pinVerification").val();
-            // clear form in case we return to this page
-            $form[0].reset();
-            $("#pinWithVerificationMessage").html('').enhanceWithin();
-            app.askForPinWithVerificationResponse(pinValue, verifyPinValue, false);
+        $("#askForPinForm").validate({
+            rules: {
+                pin: {
+                    required: true,
+                    digits: true,
+                    minlength: 5
+                }
+            },
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            },
+            submitHandler: function (form) {
+                console.log("Submitting PIN form");
+                var pinValue = $("#pin").val();
+                // clear form in case we return to this page
+                form.reset();
+                $("#pinMessage").html('').enhanceWithin();
+                app.askForPinResponse(pinValue, false);
+            }
+        });
+        $("#askForPinWithVerificationForm").validate({
+            rules: {
+                pinWithVerification: {
+                    required: true,
+                    digits: true,
+                    minlength: 5
+                },
+                pinVerification: {
+                    required: true,
+                    digits: true,
+                    minlength: 5,
+                    equalTo: "#pinWithVerification"
+                }
+            },
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            },
+            submitHandler: function (form) {
+                console.log("Submitting PIN with verification form");
+                var pinValue = $("#pinWithVerification").val();
+                var verifyPinValue = $("#pinVerification").val();
+                // clear form in case we return to this page
+                form.reset();
+                $("#pinWithVerificationMessage").html('').enhanceWithin();
+                app.askForPinWithVerificationResponse(pinValue, verifyPinValue, false);
+            }
         });
     },
     // onDeviceReady: internal call from an event handler. The scope of 'this' is the event, not ogCordova.app.

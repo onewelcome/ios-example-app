@@ -50,13 +50,15 @@
                 <a data-btn-role="btnLogout" data-transition="slide" data-direction="reverse" class="ui-btn-left">Logout</a>
             </header>
             <section role="main" class="ui-content">
-                <form action="" id="askForPinForm" method="post">
-                    <label for="pin" class="ui-hidden-accessible">PIN</label>
-                    <input type="password" id="pin" name="pin" pattern="\d*" size="5" placeholder="Pincode"
-                            required="required"/>
+                <form id="askForPinForm" method="post" data-ajax="false">
+                    <div data-role="fieldcontain">
+                        <label for="pin" class="ui-hidden-accessible">PIN</label>
+                        <input type="password" id="pin" name="pin" pattern="\d*" size="5" placeholder="Pincode"
+                                required="required" autocapitalize="off" autocorrect="off" autocomplete="off"/>
+                    </div>
                     <span id="pinMessage"></span>
 
-                    <input type="submit" value="Login"/>
+                    <input data-role="submit" type="submit" value="Login"/>
                 </form>
             </section>
         </article>
@@ -66,13 +68,19 @@
                 <a data-btn-role="btnLogout" data-transition="slide" data-direction="reverse" class="ui-btn-left">Logout</a>
             </header>
             <section role="main" class="ui-content">
-                <form action="" id="askForPinWithVerificationForm" method="post">
-                    <label for="pinWithVerification" class="ui-hidden-accessible">PIN</label>
-                    <input type="password" id="pinWithVerification" name="pinWithVerification" pattern="\d*" size="5"
-                           placeholder="Pincode" required="required"/>
-                    <label for="pinVerification" class="ui-hidden-accessible">Verify PIN</label>
-                    <input type="password" id="pinVerification" name="pinVerification" pattern="\d*" size="5"
-                           placeholder="Verify Pincode" required="required"/>
+                <form id="askForPinWithVerificationForm" method="post" data-ajax="false">
+                    <div data-role="fieldcontain">
+                        <label for="pinWithVerification" class="ui-hidden-accessible">PIN</label>
+                        <input type="password" id="pinWithVerification" name="pinWithVerification" pattern="\d*" size="5"
+                               placeholder="Pincode" required="required" autocapitalize="off" autocorrect="off"
+                               autocomplete="off"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="pinVerification" class="ui-hidden-accessible">Verify PIN</label>
+                        <input type="password" id="pinVerification" name="pinVerification" pattern="\d*" size="5"
+                               placeholder="Repeat Pincode" required="required" autocapitalize="off" autocorrect="off"
+                               autocomplete="off"/>
+                    </div>
                     <span id="pinWithVerificationMessage"></span>
 
                     <input type="submit" value="Save Pincode"/>
@@ -104,6 +112,7 @@
 
         <script src="cordova.js"></script>
         <script src="lib/handlebars/handlebars.runtime-v2.0.0.js"></script>
+        <script src="lib/jquery-validate/js/jquery.validate.min.js"></script>
 		<script src="js/index.js"></script>
 	</body>
 </html>

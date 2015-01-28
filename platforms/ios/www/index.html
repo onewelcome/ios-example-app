@@ -12,44 +12,44 @@
         <script src="lib/jquery-mobile/js/jquery.mobile-1.4.5.min.js"></script>
     </head>
     <body>
-        <div data-role="page" id="home">
-            <div data-role="header" data-position="fixed">
-            <h1>Onegini Cordova App</h1><a href="#debug" data-transition="slideup" class="ui-btn-right">Debug</a>
-            </div>
-            <div role="main" class="ui-content">
+        <article data-role="page" id="home">
+            <header data-role="header" data-position="fixed">
+                <h1>Onegini Cordova App</h1><a href="#debug" data-transition="slideup" class="ui-btn-right">Debug</a>
+            </header>
+            <section role="main" class="ui-content">
 				<a data-btn-role="btnLogin" class="ui-btn">Login</a>
-			</div>
-        </div>
-        <div data-role="page" id="authorized">
-            <div data-role="header" data-position="fixed">
+			</section>
+        </article>
+        <article data-role="page" id="authorized">
+            <header data-role="header" data-position="fixed">
                 <h1>Logged in</h1>
                 <a data-btn-role="btnLogout" data-transition="slide" data-direction="reverse" class="ui-btn-left">Logout</a>
-            </div>
-            <div role="main" class="ui-content">
+            </header>
+            <section role="main" class="ui-content">
                 <input type="button"
                        onClick="ogCordovaApp.app.fetchResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});"
                        value="Fetch resource"/><br/>
                 <input type="button" onClick="ogCordovaApp.app.changePin(['read']);" value="Change PIN"/>
                 <a id="btnDisconnect" class="ui-btn">Disconnect app</a>
-            </div>
-        </div>
-        <div data-role="page" id="debug">
-            <div data-role="header" data-position="fixed">
+            </section>
+        </article>
+        <article data-role="page" id="debug">
+            <header data-role="header" data-position="fixed">
                 <h1>Onegini Cordova App</h1><a href="#home" data-transition="slide" data-direction="reverse" data-icon="arrow-l" class="ui-btn-left">Home</a>
-            </div>
-            <div role="main" class="ui-content">
+            </header>
+            <section role="main" class="ui-content">
                 <input type="button" onClick="ogCordovaApp.app.clearCredentials();" value="Clear credentials"/><br/>
                 <input type="button" onClick="ogCordovaApp.app.clearTokens();" value="Clear tokens"/><br/>
                 <input type="button" onClick="ogCordovaApp.app.fetchAnonymousResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});"
                        value="Fetch anonymous resource"/>
-            </div>
-        </div>
-        <div data-role="page" id="askForPin">
-            <div data-role="header" data-position="fixed">
+            </section>
+        </article>
+        <article data-role="page" id="askForPin">
+            <header data-role="header" data-position="fixed">
                 <h1>Enter Pincode</h1>
                 <a data-btn-role="btnLogout" data-transition="slide" data-direction="reverse" class="ui-btn-left">Logout</a>
-            </div>
-            <div role="main" class="ui-content">
+            </header>
+            <section role="main" class="ui-content">
                 <form action="" id="askForPinForm" method="post">
                     <label for="pin" class="ui-hidden-accessible">PIN</label>
                     <input type="password" id="pin" name="pin" pattern="\d*" size="5" placeholder="Pincode"
@@ -58,26 +58,26 @@
 
                     <input type="submit" value="Login"/>
                 </form>
-            </div>
-        </div>
-        <div data-role="page" id="authorizationFailed">
-            <div data-role="header" data-position="fixed">
+            </section>
+        </article>
+        <article data-role="page" id="authorizationFailed">
+            <header data-role="header" data-position="fixed">
                 <h1>Authorization failed</h1>
-            </div>
-            <div data-role="main" class="ui-content" id="errorContent">
+            </header>
+            <section data-role="main" class="ui-content" id="errorContent">
                 <p>Failed to authorize</p>
                 <a data-btn-role="btnLogin" class="ui-btn">Try again</a>
-            </div>
-        </div>
+            </section>
+        </article>
 
-        <div data-role="page" id="paused">
-            <div data-role="header" data-position="fixed">
+        <article data-role="page" id="paused">
+            <header data-role="header" data-position="fixed">
                 <h1>Paused</h1>
-            </div>
-            <div data-role="main" class="ui-content">
+            </header>
+            <section data-role="main" class="ui-content">
                 The application is paused
-            </div>
-        </div>
+            </section>
+        </article>
 
         <script type="text/x-handlebars-template" id="errorMessage">
             {{reason}}

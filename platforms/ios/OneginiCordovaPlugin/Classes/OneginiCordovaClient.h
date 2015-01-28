@@ -93,7 +93,7 @@
 - (void)disconnect:(CDVInvokedUrlCommand *)command;
 
 /**
- Determine if the user is authorized
+ Determine if the user is authorized.
  */
 - (void)isAuthorized:(CDVInvokedUrlCommand *)command;
 

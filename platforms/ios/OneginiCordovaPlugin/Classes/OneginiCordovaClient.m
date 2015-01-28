@@ -474,7 +474,17 @@ NSString* const kError				= @"error";
 #pragma mark OGResourceHandlerDelegate
 
 - (void)resourceSuccess:(id)response {
-	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArrayBuffer:response];
+	CDVPluginResult *result;
+	
+	if ([response isKindOfClass:[NSData class]]) {
+		NSData *data = response;
+		NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+		result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
+	} else {
+		result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArrayBuffer:response];
+	}
+
 	[self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
 }
 

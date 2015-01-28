@@ -13,7 +13,7 @@ ogCordovaApp.app = {
     },
     bindButtons: function () {
         var app = this;
-        $("#btnLogin").on("click", function (event) {
+        $("[data-btn-role='btnLogin']").on("click", function (event) {
             event.preventDefault();
             app.authorize();
         });
@@ -121,8 +121,9 @@ ogCordovaApp.app = {
             }
         }, function (error) {
             console.error('authorize error ' + error.reason);
-            $("#errorContent").html(this.errorMessage(error)).enhanceWithin();
+            //$("#errorContent").html(ogCordovaApp.app.errorMessage(error)).enhanceWithin();
             $.mobile.navigate("#authorizationFailed");
+
             /*
              Possible error content
 

@@ -28,3 +28,7 @@ label.error {
         margin-left: 22%;
     }
 }
+
+img {
+    max-width: 100%;
+}

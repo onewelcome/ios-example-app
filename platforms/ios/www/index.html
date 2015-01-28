@@ -29,7 +29,7 @@
 
                 <!-- Demo only: fetch resource and display it in the div below -->
                 <input type="button" class="ui-btn" id="fetchProfile" value="Show profile"/><br/>
-                <pre id="authorizedResource"></pre>
+                <div id="authorizedResource"></div>
 <!--
                 <input type="button" onClick="ogCordovaApp.app.changePin(['read']);" value="Change PIN"/>
 -->
@@ -114,8 +114,25 @@
             {{reason}}
         </script>
 
+        <script type="text/x-handlebars-template" id="profile">
+            <dl>
+                <dt>Name:</dt>
+                <dd>{{fullName}}</dd>
+                <dt>Date of Birth:</dt>
+                <dd>{{dateOfBirth}}</dd>
+                <dt>Gender:</dt>
+                <dd>{{gender}}</dd>
+                <dt>Nationality:</dt>
+                <dd>{{nationality}}</dd>
+                <dt>Address:</dt>
+                <dd>{{address}}<br />{{zipCode}} {{city}}</dd>
+                <dt>Picture:</dt>
+                <dd><img src="data:image/png;base64,{{profilePicture}}" alt="Picture of {{fullName}}"/></dd>
+            </dl>
+        </script>
+
         <script src="cordova.js"></script>
-        <script src="lib/handlebars/handlebars.runtime-v2.0.0.js"></script>
+        <script src="lib/handlebars/handlebars-v2.0.0.js"></script>
         <script src="lib/jquery-validate/js/jquery.validate.min.js"></script>
 		<script src="js/index.js"></script>
 	</body>

@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		05E47B83FA404D00A531CFEF /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C4D072CE4AB7BA82FD02 /* CDVDevice.m */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
@@ -52,6 +51,7 @@
 		A55FCC0019E645FD87EE4438 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359253D9C6504EBD8C06520D /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		D952C483638C4344A68B4BFB /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5C7F523596F7489D8EE918F8 /* CDVNotification.bundle */; };
+		B41D9DF2F9EC425D8AABDA3D /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A258201AFC3B450FB3E8C68B /* CDVStatusBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +133,8 @@
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = OneginiCordovaPlugin/config.xml; sourceTree = "<group>"; };
 		F9747DF9B113E5F77E226E59 /* Pods-OneginiCordovaPlugin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneginiCordovaPlugin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneginiCordovaPlugin/Pods-OneginiCordovaPlugin.debug.xcconfig"; sourceTree = "<group>"; };
+		A258201AFC3B450FB3E8C68B /* CDVStatusBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVStatusBar.m"; path = "org.apache.cordova.statusbar/CDVStatusBar.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		97152A16A99B432E8A2B02E1 /* CDVStatusBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVStatusBar.h"; path = "org.apache.cordova.statusbar/CDVStatusBar.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +263,8 @@
 				BE6206DEBC604A79982AD6D6 /* CDVNotification.h */,
 				43058225C0614EB883A2CA26 /* CDVLogger.m */,
 				D33AD10DC18D4AB0ABCCB76D /* CDVLogger.h */,
+				A258201AFC3B450FB3E8C68B /* CDVStatusBar.m */,
+				97152A16A99B432E8A2B02E1 /* CDVStatusBar.h */,
 			);
 			name = Plugins;
 			path = OneginiCordovaPlugin/Plugins;
@@ -486,6 +490,7 @@
 				05E47B83FA404D00A531CFEF /* CDVDevice.m in Sources */,
 				2A77BECC39D442528A685FF4 /* CDVNotification.m in Sources */,
 				21BC92DB3D474C619C64B2AC /* CDVLogger.m in Sources */,
+				B41D9DF2F9EC425D8AABDA3D /* CDVStatusBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -3,32 +3,59 @@ var ogCordovaApp = {};
 ogCordovaApp.app = {
     // Application Constructor
     initialize: function () {
+        this.bindEvents();
+    },
+    bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener('pause', this.pauseApp, false);
+        document.addEventListener('resign', this.pauseApp, false); // iOS specific event when locking the app
+        document.addEventListener('resume', this.showHome, false);
     },
     bindButtons: function () {
+        var app = this;
         $("#btnLogin").on("click", function (event) {
             event.preventDefault();
-            ogCordovaApp.app.authorize();
+            app.authorize();
         });
 
-        $("#btnLogout").on("click", function (event) {
+        $("[data-btn-role='btnLogout']").on("click", function (event) {
             event.preventDefault();
-            ogCordovaApp.app.logout();
+            app.logout();
+            $.mobile.navigate("#home");
         });
 
         $("#btnDisconnect").on("click", function (event) {
             event.preventDefault();
-            ogCordovaApp.app.disconnect();
+            app.disconnect();
         });
     },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
+    bindForms : function() {
+        var app = this;
+        $("#askForPinForm").on("submit", function (e) {
+            e.preventDefault();
+            console.log("Submitting PIN form");
+            var $form = $(this);
+            var pinValue = $("#pin").val();
+            // clear form in case we return to this page
+            $form[0].reset();
+            $("#pinMessage").html('').enhanceWithin();
+            app.askForPinResponse(pinValue, false);
+        });
+    },
+    // onDeviceReady: internal call from an event handler. The scope of 'this' is the event, not ogCordova.app.
     onDeviceReady: function () {
-        ogCordovaApp.app.initWithConfig();
-        ogCordovaApp.app.bindButtons();
-        this.errorMessage = Handlebars.compile($("#errorMessage").html());
+        var app = ogCordovaApp.app;
+        app.initWithConfig();
+        app.bindButtons();
+        app.bindForms();
+        app.errorMessage = Handlebars.compile($("#errorMessage").html());
+    },
+    pauseApp: function () {
+        this.logout();
+        $.mobile.navigate("#paused");
+    },
+    showHome: function () {
+        $.mobile.navigate("#home");
     },
     initWithConfig: function () {
         cordova.exec(function (response) {
@@ -73,14 +100,6 @@ ogCordovaApp.app = {
                 /*
                  Show a PIN entry dialog and call the askForPinResponse
                  */
-                $("#askForPinForm").on("submit", function (e) {
-                    e.preventDefault();
-                    var $form = $(this);
-                    var pinValue = $("#pin").val();
-                    // clear form in case we return to this page
-                    $form[0].reset();
-                    ogCordovaApp.app.askForPinResponse(pinValue, false);
-                });
                 $.mobile.navigate("#askForPin");
                 //app.askForPinResponse('14941', false);
             } else if (response.method == 'askForPinWithVerification') {
@@ -119,7 +138,6 @@ ogCordovaApp.app = {
     },
     logout: function () {
         cordova.exec(null, null, 'OneginiCordovaClient', 'logout', null);
-        $.mobile.navigate("#home");
     },
     disconnect: function () {
         cordova.exec(null, null, 'OneginiCordovaClient', 'disconnect', null);
@@ -138,6 +156,7 @@ ogCordovaApp.app = {
         // An INVALID_ACTION is returned if no authorization transaction is registered.
         cordova.exec(null, function (error) {
             console.log('confirmPin error ' + error.reason + ' ' + error.error.NSLocalizedDescription);
+            $("#pinMessage").html('Invalid pin').enhanceWithin();
         }, 'OneginiCordovaClient', 'confirmPin', [pin, retry]);
     },
     askForPinWithVerificationResponse: function (pin, verifyPin, retry) {
@@ -185,7 +204,7 @@ ogCordovaApp.app = {
     cancelPinChange: function () {
         cordova.exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', null);
     },
-    login : function(event, args) {
+    login: function (event, args) {
         console.log("Login called via the router")
         ogCordovaApp.app.authorize();
     },

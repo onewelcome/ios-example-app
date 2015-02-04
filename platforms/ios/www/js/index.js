@@ -146,14 +146,13 @@ ogCordovaApp.app = {
     authorize: function () {
         var retryCount = 3;
         var authzWindow;
+        var app = this;
         cordova.exec(function (response) {
+            // close the window if it exists
+            app.closeInAppBrowser();
             /*
              The response method contains the name of the method in the OGAuthorizationDelegate protocol
              */
-            if (authzWindow && authzWindow.close) {
-                authzWindow.close();
-            }
-
             if (response.method == 'requestAuthorization') {
                 console.log('authorize ' + response.method);
                 /*
@@ -163,7 +162,7 @@ ogCordovaApp.app = {
                  */
 
                 // Open URL here in the inAppBrowser
-                 authzWindow = window.open(response.url, '_blank', 'location=no,toolbar=no');
+                app.openInAppBrowser(response.url);
             } else if (response.method == 'askForPin') {
                 console.log('authorize ' + response.method);
                 /*
@@ -290,6 +289,15 @@ ogCordovaApp.app = {
     clearProfile: function () {
         $("#authorizedResource").html("").enhanceWithin();
     },
+    openInAppBrowser: function (url) {
+        this.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no');
+    },
+    closeInAppBrowser: function () {
+        if (this.inAppBrowser && this.inAppBrowser.close) {
+            this.inAppBrowser.close();
+        }
+    },
+    inAppBrowser: {},
     errorMessage: {},
     profile: {}
 }

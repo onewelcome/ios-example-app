@@ -38,8 +38,8 @@ ogCordovaApp.app = {
 
         $("#fetchProfile").on("click", function (e) {
             e.preventDefault();
-            app.clearProfile();
-            app.fetchResource('/client/resource/profile', ['read'], 'GET', 'JSON', {});
+            ogCordovaApp.plugin.fetchResource(app.showResource, app.handleResourceError,
+                '/client/resource/profile', ['read'], 'GET', 'JSON', {});
         });
     },
     bindForms: function () {
@@ -101,7 +101,10 @@ ogCordovaApp.app = {
         app.bindForms();
         app.errorMessage = Handlebars.compile($("#errorMessage").html());
         app.profile = Handlebars.compile($("#profile").html());
-        app.clearProfile();
+        $(document).on("pagecontainerbeforechange", function(event, ui) {
+            // TODO make this more efficient and clear it only if we go away from the authorized page
+            app.clearProfile();
+        });
     },
     pauseApp: function () {
         this.logout();
@@ -207,21 +210,17 @@ ogCordovaApp.app = {
         }, 'OneginiCordovaClient', 'authorize', ['read']);
     },
     logout: function () {
-        this.clearProfile();
         cordova.exec(null, null, 'OneginiCordovaClient', 'logout', null);
     },
     disconnect: function () {
-        this.clearProfile();
         cordova.exec(null, null, 'OneginiCordovaClient', 'disconnect', null);
     },
     clearCredentials: function () {
         // FOR TESTING PURPOSE ONLY
-        this.clearProfile();
         cordova.exec(null, null, 'OneginiCordovaClient', 'clearCredentials', null);
     },
     clearTokens: function () {
         // FOR TESTING PURPOSE ONLY
-        this.clearProfile();
         cordova.exec(null, null, 'OneginiCordovaClient', 'clearTokens', null);
     },
     askForPinResponse: function (pin, retry) {
@@ -240,21 +239,6 @@ ogCordovaApp.app = {
         cordova.exec(null, function (error) {
             console.log('confirmPinWithVerification ' + error.reason + ' ' + error.error.NSLocalizedDescription);
         }, 'OneginiCordovaClient', 'confirmPinWithVerification', [pin, verifyPin, retry]);
-    },
-    fetchResource: function (path, scopes, requestMethod, paramsEncoding, params) {
-        var app = this;
-        cordova.exec(function (response) {
-            console.log('fetchResource ' + response);
-            try {
-                $("#authorizedResource").html(app.profile(JSON.parse(response))).enhanceWithin();
-            } catch (e) {
-                console.error("Could not parse response as JSON " + e);
-                $("#authorizedResource").html("Failed to fetch profile").enhanceWithin();
-            }
-        }, function (error) {
-            console.error('fetchResource error ' + error.reason);
-            $("#authorizedResource").html("Failed to fetch profile").enhanceWithin();
-        }, 'OneginiCordovaClient', 'fetchResource', [path, scopes, requestMethod, paramsEncoding, params]);
     },
     fetchAnonymousResource: function (path, scopes, requestMethod, paramsEncoding, params) {
         cordova.exec(function (response) {
@@ -287,7 +271,9 @@ ogCordovaApp.app = {
         cordova.exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', null);
     },
     clearProfile: function () {
-        $("#authorizedResource").html("").enhanceWithin();
+        console.log("Clearing profile");
+        ogCordovaApp.app.profile({});
+        $("#authorizedResource").html('').enhanceWithin();
     },
     openInAppBrowser: function (url) {
         this.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no');
@@ -297,10 +283,32 @@ ogCordovaApp.app = {
             this.inAppBrowser.close();
         }
     },
+    showResource: function (response) {
+        try {
+            $("#authorizedResource").html(ogCordovaApp.app.profile(JSON.parse(response))).enhanceWithin();
+        } catch (e) {
+            console.error("Could not parse response as JSON " + e);
+            $("#authorizedResource").html("Failed to parse profile").enhanceWithin();
+        }
+    },
+    handleResourceError: function (error) {
+        $("#authorizedResource").html("Failed to fetch profile").enhanceWithin();
+    },
     inAppBrowser: {},
     errorMessage: {},
     profile: {}
-}
-;
+};
+
+ogCordovaApp.plugin = {
+    fetchResource: function (successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params) {
+        cordova.exec(function (response) {
+            console.log('fetchResource ' + response);
+            successCallback(response);
+        }, function (error) {
+            console.error('fetchResource error ' + error.reason);
+            errorCallback(error);
+        }, 'OneginiCordovaClient', 'fetchResource', [path, scopes, requestMethod, paramsEncoding, params]);
+    }
+};
 
 ogCordovaApp.app.initialize();

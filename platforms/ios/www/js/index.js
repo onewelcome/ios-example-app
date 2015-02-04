@@ -1,6 +1,7 @@
 var ogCordovaApp = {};
 
 ogCordovaApp.app = {
+    name: 'Onegini',
     // Application Constructor
     initialize: function () {
         this.bindEvents();
@@ -26,10 +27,10 @@ ogCordovaApp.app = {
 
         $("[data-btn-role='btnDisconnect']").on("click", function (e) {
             e.preventDefault();
-            if (window.confirm("Do you want to disconnect the app?")) {
+            navigator.notification.confirm("Do you want to disconnect the app?", function() {
                 app.disconnect();
                 app.showHome();
-            }
+            });
         });
 
         $("#fetchProfile").on("click", function (e) {

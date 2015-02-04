@@ -37,6 +37,7 @@ ogCordovaApp.app = {
         });
 
         $("#fetchProfile").on("click", function (e) {
+            e.preventDefault();
             app.clearProfile();
             app.fetchResource('/client/resource/profile', ['read'], 'GET', 'JSON', {});
         });

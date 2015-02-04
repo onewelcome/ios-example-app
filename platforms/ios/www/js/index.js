@@ -27,10 +27,13 @@ ogCordovaApp.app = {
 
         $("[data-btn-role='btnDisconnect']").on("click", function (e) {
             e.preventDefault();
-            navigator.notification.confirm("Do you want to disconnect the app?", function() {
-                app.disconnect();
-                app.showHome();
-            });
+            var disconnectAndGoHome = function (buttonIndex) {
+                if (buttonIndex == 1) {
+                    app.disconnect();
+                    app.showHome();
+                }
+            };
+            app.confirm("Do you want to disconnect the app?", disconnectAndGoHome);
         });
 
         $("#fetchProfile").on("click", function (e) {
@@ -105,6 +108,16 @@ ogCordovaApp.app = {
     },
     showHome: function () {
         $.mobile.navigate("#home");
+    },
+    confirm: function (message, callback) {
+        if (navigator.notification) {
+            navigator.notification.confirm(message, callback);
+        }
+        else {
+            if (window.confirm(message)) {
+                callback(1);
+            }
+        }
     },
     initWithConfig: function () {
         cordova.exec(function (response) {

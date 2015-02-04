@@ -145,7 +145,7 @@ ogCordovaApp.app = {
     },
     authorize: function () {
         var retryCount = 3;
-        var authzWindow;
+
         var app = this;
         cordova.exec(function (response) {
             // close the window if it exists

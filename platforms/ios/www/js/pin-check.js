@@ -36,7 +36,7 @@ function PinPage() {
       alert("Too many PIN attempts");
     }
     // For now, if something goes wrong and there are no "remainingattempts", go home
-    $.mobile.navigate("#home");
+    ogCordovaApp.navigation.navigateToHome();
 
   };
 

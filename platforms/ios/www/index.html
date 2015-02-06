@@ -42,8 +42,9 @@
                                                data-icon="arrow-l" class="ui-btn ui-btn-left">Home</a>
             </header>
             <section role="main" class="ui-content">
-                <input type="button" onClick="ogCordovaApp.app.clearCredentials();" value="Clear credentials"/><br/>
-                <input type="button" onClick="ogCordovaApp.app.clearTokens();" value="Clear tokens"/><br/>
+              <!-- FIXME either remove these buttons or create the functions in the base app -->
+                <input type="button" onClick="ogCordovaPlugin.clearCredentials();" value="Clear credentials"/><br/>
+                <input type="button" onClick="ogCordovaPlugin.clearTokens();" value="Clear tokens"/><br/>
                 <input type="button" onClick="ogCordovaApp.app.fetchAnonymousResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});"
                        value="Fetch anonymous resource"/>
             </section>
@@ -131,9 +132,13 @@
             </dl>
         </script>
 
-        <script src="cordova.js"></script>
-        <script src="lib/handlebars/handlebars-v2.0.0.js"></script>
-        <script src="lib/jquery-validate/js/jquery.validate.min.js"></script>
-		<script src="js/index.js"></script>
-	</body>
+    <script src="cordova.js"></script>
+    <script src="js/onegini.js"></script>
+    <script src="lib/handlebars/handlebars-v2.0.0.js"></script>
+    <script src="lib/jquery-validate/js/jquery.validate.min.js"></script>
+    <script src="js/pin-set.js"></script>
+    <script src="js/pin-check.js"></script>
+    <script src="js/authorization-router.js"></script>
+    <script src="js/index.js"></script>
+  </body>
 </html>

@@ -60,8 +60,8 @@
                         <label for="pin" class="ui-hidden-accessible">PIN</label>
                         <input type="password" id="pin" name="pin" pattern="\d*" size="5" placeholder="Pincode"
                                 required="required" autocapitalize="off" autocorrect="off" autocomplete="off"/>
+                        <span id="pinMessage" data-content="dynamic"></span>
                     </div>
-                    <span id="pinMessage"></span>
 
                     <input data-role="submit" type="submit" value="Login"/>
                 </form>
@@ -85,8 +85,8 @@
                         <input type="password" id="pinVerification" name="pinVerification" pattern="\d*" size="5"
                                placeholder="Repeat Pincode" required="required" autocapitalize="off" autocorrect="off"
                                autocomplete="off"/>
+                        <span id="pinWithVerificationMessage" data-content="dynamic"></span>
                     </div>
-                    <span id="pinWithVerificationMessage"></span>
 
                     <input type="submit" value="Save Pincode"/>
                 </form>

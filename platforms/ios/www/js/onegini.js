@@ -79,7 +79,7 @@ var ogCordovaPlugin = {
         router.authorizationSuccess();
       }
     }, function (error) {
-      router.authorizationFailure(error);
+      router.authorizationFailure(error, scopes);
     }, 'OneginiCordovaClient', 'authorize', scopes);
   }
 };

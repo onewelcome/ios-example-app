@@ -1,10 +1,12 @@
 function AuthorizationRouter() {
 
   this.inAppBrowser = {};
+  this.hasDisplayedAskForPin = false;
 
   this.openInAppBrowser = function (url) {
     this.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no');
   };
+
   this.closeInAppBrowser = function () {
     if (this.inAppBrowser && this.inAppBrowser.close) {
       this.inAppBrowser.close();
@@ -18,20 +20,26 @@ function AuthorizationRouter() {
 
   this.askForPin = function () {
     this.closeInAppBrowser();
-    $.mobile.navigate("#askForPin");
+
+    if (this.hasDisplayedAskForPin === true) {
+      // Within this authorization action, the askForPin was displayed before. We inform the user the PIN was invalid.
+      $("#pinMessage").html('Invalid pin').enhanceWithin();
+    }
+    ogCordovaApp.navigation.navigateToPage("#askForPin");
+    this.hasDisplayedAskForPin = true;
   };
 
   this.askForPinWithVerification = function () {
     this.closeInAppBrowser();
-    $.mobile.navigate("#askForPinWithVerification");
+    ogCordovaApp.navigation.navigateToPage("#askForPinWithVerification");
   };
 
   this.authorizationSuccess = function () {
     this.closeInAppBrowser();
-    $.mobile.navigate("#authorized");
+    ogCordovaApp.navigation.navigateToPage("#authorized");
   };
 
-  this.authorizationFailure = function (error) {
+  this.authorizationFailure = function (error, scopes) {
     /*
      Possible error content
 
@@ -47,13 +55,14 @@ function AuthorizationRouter() {
     this.closeInAppBrowser();
 
     if (error && error.reason == "authorizationErrorInvalidGrant" && error.remainingAttempts > 0) {
-      $.mobile.navigate("#authorizationFailed");
+      // Need to call the authorize again because the transaction is lost after an error callback in Cordova
+      ogCordovaPlugin.authorize(this, scopes);
       return;
     }
     if (error && error.reason == "authorizationErrorTooManyPinFailures") {
       alert("Too many PIN attempts");
     }
-    // For now, if something goes wrong and there are no "remainingattempts", go home
-    $.mobile.navigate("#home");
+    // For now, if something goes wrong and there are no "remainingAttempts", go home
+    ogCordovaApp.navigation.navigateToHome();
   };
 }

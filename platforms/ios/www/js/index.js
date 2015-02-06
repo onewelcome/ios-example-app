@@ -29,19 +29,19 @@ ogCordovaApp.app = {
     document.addEventListener('deviceready', this.onDeviceReady, false);
     document.addEventListener('pause', this.pauseApp, false);
     document.addEventListener('resign', this.pauseApp, false); // iOS specific event when locking the app
-    document.addEventListener('resume', this.showHome, false);
+    document.addEventListener('resume', ogCordovaApp.navigation.navigateToHome, false);
   },
   bindButtons: function () {
     var app = this;
     $("[data-btn-role='btnLogin']").on("click", function (e) {
       e.preventDefault();
-      ogCordovaPlugin.authorize(new AuthorizationRouter());
+      ogCordovaPlugin.authorize(new AuthorizationRouter(), ogCordovaApp.config.scopes);
     });
 
     $("[data-btn-role='btnLogout']").on("click", function (e) {
       e.preventDefault();
       ogCordovaPlugin.logout();
-      app.showHome();
+      ogCordovaApp.navigation.navigateToHome();
     });
 
     $("[data-btn-role='btnDisconnect']").on("click", function (e) {
@@ -49,7 +49,7 @@ ogCordovaApp.app = {
       var disconnectAndGoHome = function (buttonIndex) {
         if (buttonIndex == 1) {
           ogCordovaPlugin.disconnect();
-          app.showHome();
+          ogCordovaApp.navigation.navigateToHome();
         }
       };
       app.confirm("Do you want to disconnect the app?", disconnectAndGoHome);
@@ -85,10 +85,7 @@ ogCordovaApp.app = {
   },
   pauseApp: function () {
     ogCordovaPlugin.logout();
-    $.mobile.navigate("#paused");
-  },
-  showHome: function () {
-    $.mobile.navigate("#home");
+    ogCordovaApp.navigation.navigateToPage("#paused");
   },
   confirm: function (message, callback) {
     if (navigator.notification) {
@@ -158,6 +155,16 @@ ogCordovaApp.app = {
   },
   errorMessage: {},
   profile: {}
+};
+
+ogCordovaApp.navigation = {
+
+  navigateToHome: function () {
+    $.mobile.navigate("#home", {transition: "slideup"});
+  },
+  navigateToPage: function (page) {
+    $.mobile.navigate(page, {transition: "slide"});
+  }
 };
 
 ogCordovaApp.app.initialize();

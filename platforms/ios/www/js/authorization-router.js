@@ -47,7 +47,7 @@ function AuthorizationRouter() {
     this.closeInAppBrowser();
 
     if (error && error.reason == "authorizationErrorInvalidGrant" && error.remainingAttempts > 0) {
-      $("#pinMessage").html('Invalid pin').enhanceWithin();
+      $.mobile.navigate("#authorizationFailed");
       return;
     }
     if (error && error.reason == "authorizationErrorTooManyPinFailures") {

@@ -101,9 +101,8 @@ ogCordovaApp.app = {
     app.bindForms();
     app.errorMessage = Handlebars.compile($("#errorMessage").html());
     app.profile = Handlebars.compile($("#profile").html());
-    $(document).on("pagecontainerbeforechange", function (event, ui) {
-      // TODO make this more efficient and clear it only if we go away from the authorized page
-      app.clearProfile();
+    $(":mobile-pagecontainer").on("pagecontainerbeforehide", function (event, ui) {
+      app.clearDynamicContent();
     });
   },
   pauseApp: function () {
@@ -273,10 +272,12 @@ ogCordovaApp.app = {
   cancelPinChange: function () {
     cordova.exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', null);
   },
-  clearProfile: function () {
-    console.log("Clearing profile");
-    ogCordovaApp.app.profile({});
-    $("#authorizedResource").html('').enhanceWithin();
+  clearDynamicContent: function () {
+    console.log("Clearing dynamic content");
+    var app = ogCordovaApp.app;
+    app.profile({});
+    app.errorMessage({});
+    $("[data-content=dynamic]").html('').enhanceWithin();
   },
   openInAppBrowser: function (url) {
     this.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no');

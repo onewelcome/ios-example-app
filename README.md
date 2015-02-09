@@ -28,7 +28,7 @@ Navigate to project root folder (where ./platforms directory is located) and exe
     cordova run ios     // to deploy and run application directly on connected physical iOS device
     cordova emulate ios // to deploy and run application on iOS emulator
     
-Please note that the xCode should not be running when using the cordova CLI.
+Please note that the xCode should not be running when using the cordova CLI. 
 
 #### xCode
 Package comes with OneginiCordovaPlugin xCode project which can be used to execute the cordova application. To access it open ./platforms/ios/OneginiCordovaPlugin.xcworkspace
@@ -36,3 +36,11 @@ Package comes with OneginiCordovaPlugin xCode project which can be used to execu
 # 4. Dependencies
 Currently OneginiCordovaPlugin has only one dependency (OneginiSDKiOS) which is included within the package, we're now working on project structure changes so it may change soon.
 
+# 5. Functionalities
+OneginiCordovaPlugin contains already all APIs implemenetions, so it is possible to use the plugin to perform all basic flows. <br>
+BaseApp implementation covers most of the flows available within the OneginiCordovaPlugin expect change pin functionallity.
+
+# 6. Todo
+- BaseApp change pin functionality implementation.
+- BaseApp styling.
+- Project cleanup and optimization. 

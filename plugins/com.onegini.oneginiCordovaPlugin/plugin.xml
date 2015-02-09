@@ -1,0 +1,16 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+    <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+            id="com.onegini.oneginiCordovaPlugin" version="0.2.3">
+        <name>OneginiCordovaPlugin</name>
+        <description>Cordova Device Plugin</description>
+        <platform name="ios">
+            <config-file target="config.xml" parent="/*">
+            <feature name="OneginiCordovaClient">
+                <param name="ios-package" value="OneginiCordovaClient" />
+                <param name="onload" value="true" />
+            </feature>
+            </config-file>
+            <header-file src="Classes/OneginiCordovaClient.h" />
+            <source-file src="Classes/OneginiCordovaClient.m" />
+        </platform>
+    </plugin>

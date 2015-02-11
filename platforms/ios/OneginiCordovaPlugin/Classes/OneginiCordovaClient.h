@@ -7,7 +7,7 @@
 //
 
 #import <Cordova/CDV.h>
-#import <OneginiSDKiOS/OneginiSDK.h>
+#import "OneginiSDK.h"
 
 @interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate>
 

@@ -127,6 +127,33 @@ NSString* const kError				= @"error";
 	}];
 }
 
+- (void)init:(CDVInvokedUrlCommand *)command {
+#ifdef DEBUG
+	NSLog(@"init %@", command);
+#endif
+	NSParameterAssert(command.arguments.count == 1);
+	
+	[CDVPluginResult setVerbose:YES];
+	
+	if (command.arguments.count != 1) {
+		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 arguments but received %d", command.arguments.count]];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+		return;
+	}
+	
+	[self.commandDelegate runInBackground:^{
+		NSString *configPath = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"plist"];
+		self.configModel = [[OGConfigModel alloc] initWithContentsOfFile:configPath];
+		self.oneginiClient = [[OGOneginiClient alloc] initWithConfig:configModel delegate:self];
+		
+		NSArray *certificates = [command.arguments objectAtIndex:1];
+		[oneginiClient setX509PEMCertificates:certificates];
+		
+		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"initWithConfig"];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	}];
+}
+
 - (void)authorize:(CDVInvokedUrlCommand *)command {
 	[self resetAuthorizationState];
 	

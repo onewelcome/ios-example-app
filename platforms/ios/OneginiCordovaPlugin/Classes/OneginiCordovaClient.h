@@ -26,11 +26,21 @@
 
 /**
  Initialize this 'OGOneginiClient' with a valid config model and SSL pinning certificates.
+ 
  Command params:
- Dictionary cconfig
+ Dictionary config
  Array certificates
  */
-- (void)initWithConfig:(CDVInvokedUrlCommand *)command;
+- (void)initWithConfig:(CDVInvokedUrlCommand *)command __deprecated;
+
+/**
+ Initialize this 'OGOneginiClient' with a valid config model and SSL pinning certificates.
+ The configuration is read from the config.plist contained in the bundle.
+ 
+ Command params:
+ Array certificates
+ */
+- (void)init:(CDVInvokedUrlCommand *)command;
 
 /**
  Initiate the authorization flow

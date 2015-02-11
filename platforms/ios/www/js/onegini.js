@@ -28,6 +28,19 @@ var ogCordovaPlugin = {
       }
     }, 'OneginiCordovaClient', 'fetchResource', [path, scopes, requestMethod, paramsEncoding, params]);
   },
+  fetchAnonymousResource: function (successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params) {
+    // not implemented in the base app yet
+    cordova.exec(function (response) {
+      if (successCallback) {
+        successCallback(response);
+      }
+    }, function (error) {
+      if (errorCallback) {
+        errorCallback(error);
+      }
+    }, 'OneginiCordovaClient', 'fetchAnonymousResource', [path, scopes, requestMethod, paramsEncoding, params]);
+  },
+
   logout: function () {
     cordova.exec(null, null, 'OneginiCordovaClient', 'logout', null);
   },
@@ -81,5 +94,30 @@ var ogCordovaPlugin = {
     }, function (error) {
       router.authorizationFailure(error, scopes);
     }, 'OneginiCordovaClient', 'authorize', scopes);
+  },
+  changePin: function (scopes) {
+    // not implemented in the base app yet
+    cordova.exec(function (response) {
+      /*
+       The OneginiClient will respond by means of the OGAuthorizationDelegate and ask for the
+       App to show a PIN entry/change dialog
+       */
+      if (response.method == 'askForPinChangeWithVerification') {
+        ogCordovaApp.app.changePinWithVerificationResponse('14941', '94149', '94149', false);
+      }
+    }, function (error) {
+    }, 'OneginiCordovaClient', 'changePin', [scopes]);
+  },
+  changePinWithVerificationResponse: function (pin, newPin, newPinVerify, retry) {
+    // not implemented in the base app yet
+
+    // Forward the PIN entries back to the OneginiClient.
+    // Callback is performed on the initiating changePin callback handler
+    cordova.exec(null, function (error) {
+    }, 'OneginiCordovaClient', 'confirmChangePinWithVerification', [pin, newPin, newPinVerify, retry]);
+  },
+  cancelPinChange: function () {
+    // not implemented in the base app yet
+    cordova.exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', null);
   }
 };

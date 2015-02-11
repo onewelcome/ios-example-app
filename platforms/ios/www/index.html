@@ -17,8 +17,8 @@
                 <h1>Onegini Cordova App</h1><a href="#debug" data-transition="slideup" class="ui-btn-right">Debug</a>
             </header>
             <section role="main" class="ui-content">
-				<a data-btn-role="btnLogin" class="ui-btn">Login</a>
-			</section>
+                <a data-btn-role="btnLogin" class="ui-btn">Login</a>
+            </section>
         </article>
         <article data-role="page" id="authorized">
             <header data-role="header" data-position="fixed">
@@ -31,7 +31,7 @@
                 <input type="button" class="ui-btn" id="fetchProfile" value="Show profile"/><br/>
                 <div id="authorizedResource" data-content="dynamic"></div>
 <!--
-                <input type="button" onClick="ogCordovaApp.app.changePin(['read']);" value="Change PIN"/>
+                <input type="button" onClick="ogCordovaPlugin.changePin(['read']);" value="Change PIN"/>
 -->
                 <a data-btn-role="btnDisconnect" class="ui-btn">Disconnect app</a>
             </section>
@@ -45,7 +45,7 @@
               <!-- FIXME either remove these buttons or create the functions in the base app -->
                 <input type="button" onClick="ogCordovaPlugin.clearCredentials();" value="Clear credentials"/><br/>
                 <input type="button" onClick="ogCordovaPlugin.clearTokens();" value="Clear tokens"/><br/>
-                <input type="button" onClick="ogCordovaApp.app.fetchAnonymousResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});"
+                <input type="button" onClick="ogCordovaPlugin.fetchAnonymousResource('/client/resource/profile', ['read'], 'GET', 'FORM', {});"
                        value="Fetch anonymous resource"/>
             </section>
         </article>

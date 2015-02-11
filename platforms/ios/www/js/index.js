@@ -111,29 +111,6 @@ ogCordovaApp.app = {
       console.error('fetchAnonymousResource error ' + error.reason);
     }, 'OneginiCordovaClient', 'fetchAnonymousResource', [path, scopes, requestMethod, paramsEncoding, params]);
   },
-  changePin: function (scopes) {
-    cordova.exec(function (response) {
-      /*
-       The OneginiClient will respond by means of the OGAuthorizationDelegate and ask for the
-       App to show a PIN entry/change dialog
-       */
-      if (response.method == 'askForPinChangeWithVerification') {
-        ogCordovaApp.app.changePinWithVerificationResponse('14941', '94149', '94149', false);
-      }
-    }, function (error) {
-      console.error('changePin ' + error.reason);
-    }, 'OneginiCordovaClient', 'changePin', [scopes]);
-  },
-  changePinWithVerificationResponse: function (pin, newPin, newPinVerify, retry) {
-    // Forward the PIN entries back to the OneginiClient.
-    // Callback is performed on the initiating changePin callback handler
-    cordova.exec(null, function (error) {
-      console.log('changePinWithVerificationResponse ' + error.reason + ' ' + error.error.NSLocalizedDescription);
-    }, 'OneginiCordovaClient', 'confirmChangePinWithVerification', [pin, newPin, newPinVerify, retry]);
-  },
-  cancelPinChange: function () {
-    cordova.exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', null);
-  },
   clearDynamicContent: function () {
     console.log("Clearing dynamic content");
     var app = ogCordovaApp.app;

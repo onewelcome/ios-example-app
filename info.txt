@@ -21,7 +21,7 @@ Config.xml file:
 
 Plugins: 
 
-org.apache.cordova.device,org.apache.cordova.dialogs
+org.apache.cordova.console,org.apache.cordova.device,org.apache.cordova.dialogs,org.apache.cordova.inappbrowser,org.apache.cordova.statusbar
 
 iOS platform:
 

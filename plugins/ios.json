@@ -35,10 +35,6 @@
                         {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
                             "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"OneginiCordovaClient\"><param name=\"ios-package\" value=\"OneginiCordovaClient\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
                         }
                     ]
                 }
@@ -75,9 +71,6 @@
             "PACKAGE_NAME": "com.onegini.OneginiCordovaPlugin"
         },
         "org.apache.cordova.inappbrowser": {
-            "PACKAGE_NAME": "com.onegini.OneginiCordovaPlugin"
-        },
-        "com.onegini.oneginiCordovaPlugin": {
             "PACKAGE_NAME": "com.onegini.OneginiCordovaPlugin"
         }
     },

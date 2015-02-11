@@ -14,11 +14,8 @@
 		2351A2591A655E2F00C89FF6 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2351A2581A655E2F00C89FF6 /* libiconv.dylib */; };
 		23A0C3B81A66A97B0087EEC4 /* PositiveSSLCA2.cer in Resources */ = {isa = PBXBuildFile; fileRef = 23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */; };
 		23A0C3B91A66A97B0087EEC4 /* PositiveSSLCA2.pem in Resources */ = {isa = PBXBuildFile; fileRef = 23A0C3B71A66A97B0087EEC4 /* PositiveSSLCA2.pem */; };
-		23D5A9CA1A654FF300BC6935 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 23D5A9C91A654FF200BC6935 /* Podfile */; };
-		23DBAF441A6528A4001836C4 /* OneginiCordovaClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 23DBAF431A6528A4001836C4 /* OneginiCordovaClient.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		2A77BECC39D442528A685FF4 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = A7D46A54DD1644558F82A1E9 /* CDVNotification.m */; };
-		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
 		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
 		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
 		305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */; };
@@ -36,8 +33,10 @@
 		30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */ = {isa = PBXBuildFile; fileRef = 30B4F2FF19D5E07200D9F7D8 /* Default-Landscape-736h.png */; };
 		30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C1856519D5FC0A00212699 /* icon-60@3x.png */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
+		417038CA1A88B0A0009FB93D /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
+		417038D51A88B891009FB93D /* libOneginiSDKiOS-0.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 417038D41A88B891009FB93D /* libOneginiSDKiOS-0.1.a */; };
+		56D8A5E197E2491CACFB1336 /* OneginiCordovaClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C887AA7EE740209E5B1E76 /* OneginiCordovaClient.m */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
-		678E0E20EA9F38391606C6A0 /* libPods-OneginiCordovaPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16FFDDBD7F6D1D9F0B77EEF0 /* libPods-OneginiCordovaPlugin.a */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
 		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
@@ -49,9 +48,9 @@
 		7E7966E61810823500FA85AD /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DC1810823500FA85AD /* icon-small.png */; };
 		7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DD1810823500FA85AD /* icon-small@2x.png */; };
 		A55FCC0019E645FD87EE4438 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359253D9C6504EBD8C06520D /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		B41D9DF2F9EC425D8AABDA3D /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A258201AFC3B450FB3E8C68B /* CDVStatusBar.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		D952C483638C4344A68B4BFB /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5C7F523596F7489D8EE918F8 /* CDVNotification.bundle */; };
-		B41D9DF2F9EC425D8AABDA3D /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A258201AFC3B450FB3E8C68B /* CDVStatusBar.m */; };
 		FD077FF8234A4620981BC3ED /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C72266476AA409CA20C5C8A /* CDVInAppBrowser.m */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +73,7 @@
 
 /* Begin PBXFileReference section */
 		16FFDDBD7F6D1D9F0B77EEF0 /* libPods-OneginiCordovaPlugin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneginiCordovaPlugin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		19C887AA7EE740209E5B1E76 /* OneginiCordovaClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneginiCordovaClient.m; path = com.onegini.oneginiCordovaPlugin/OneginiCordovaClient.m; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* OneginiCordovaPlugin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneginiCordovaPlugin.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,11 +81,11 @@
 		2351A2581A655E2F00C89FF6 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = PositiveSSLCA2.cer; sourceTree = "<group>"; };
 		23A0C3B71A66A97B0087EEC4 /* PositiveSSLCA2.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PositiveSSLCA2.pem; sourceTree = "<group>"; };
-		23D5A9C91A654FF200BC6935 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		23DBAF421A6528A4001836C4 /* OneginiCordovaClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiCordovaClient.h; sourceTree = "<group>"; };
 		23DBAF431A6528A4001836C4 /* OneginiCordovaClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneginiCordovaClient.m; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2AF51EA075294EB5A6682345 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVInAppBrowser.h; path = org.apache.cordova.inappbrowser/CDVInAppBrowser.h; sourceTree = "<group>"; };
 		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
 		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
 		302D95EE14D2391D003F00A1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -108,6 +108,74 @@
 		30FC414816E50CA1004E6F35 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* OneginiCordovaPlugin-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OneginiCordovaPlugin-Prefix.pch"; sourceTree = "<group>"; };
 		359253D9C6504EBD8C06520D /* AudioToolbox.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		417038541A85039A009FB93D /* libPods-OneginiCordovaPlugin-OneginiSDKiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-OneginiSDKiOS.a"; path = "build/Debug-iphoneos/libPods-OneginiCordovaPlugin-OneginiSDKiOS.a"; sourceTree = "<group>"; };
+		4170385C1A85078A009FB93D /* libPods-OneginiCordovaPlugin-OneginiSDKiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-OneginiSDKiOS.a"; path = "Pods/build/Debug-iphoneos/libPods-OneginiCordovaPlugin-OneginiSDKiOS.a"; sourceTree = "<group>"; };
+		4170385F1A850B52009FB93D /* OneginiCordovaPlugin.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = OneginiCordovaPlugin.app; sourceTree = "<group>"; };
+		417038601A850B52009FB93D /* OneginiCordovaPlugin.app.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = OneginiCordovaPlugin.app.dSYM; sourceTree = "<group>"; };
+		417038631A850B52009FB93D /* CDV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDV.h; sourceTree = "<group>"; };
+		417038641A850B52009FB93D /* CDVAvailability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVAvailability.h; sourceTree = "<group>"; };
+		417038651A850B52009FB93D /* CDVAvailabilityDeprecated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVAvailabilityDeprecated.h; sourceTree = "<group>"; };
+		417038661A850B52009FB93D /* CDVCommandDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVCommandDelegate.h; sourceTree = "<group>"; };
+		417038671A850B52009FB93D /* CDVCommandDelegateImpl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVCommandDelegateImpl.h; sourceTree = "<group>"; };
+		417038681A850B52009FB93D /* CDVCommandQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVCommandQueue.h; sourceTree = "<group>"; };
+		417038691A850B52009FB93D /* CDVConfigParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVConfigParser.h; sourceTree = "<group>"; };
+		4170386A1A850B52009FB93D /* CDVDebug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVDebug.h; sourceTree = "<group>"; };
+		4170386B1A850B52009FB93D /* CDVInvokedUrlCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVInvokedUrlCommand.h; sourceTree = "<group>"; };
+		4170386C1A850B52009FB93D /* CDVJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVJSON.h; sourceTree = "<group>"; };
+		4170386D1A850B52009FB93D /* CDVLocalStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVLocalStorage.h; sourceTree = "<group>"; };
+		4170386E1A850B52009FB93D /* CDVPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVPlugin.h; sourceTree = "<group>"; };
+		4170386F1A850B52009FB93D /* CDVPluginResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVPluginResult.h; sourceTree = "<group>"; };
+		417038701A850B52009FB93D /* CDVScreenOrientationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVScreenOrientationDelegate.h; sourceTree = "<group>"; };
+		417038711A850B52009FB93D /* CDVShared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVShared.h; sourceTree = "<group>"; };
+		417038721A850B52009FB93D /* CDVTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVTimer.h; sourceTree = "<group>"; };
+		417038731A850B52009FB93D /* CDVURLProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVURLProtocol.h; sourceTree = "<group>"; };
+		417038741A850B52009FB93D /* CDVUserAgentUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVUserAgentUtil.h; sourceTree = "<group>"; };
+		417038751A850B52009FB93D /* CDVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVViewController.h; sourceTree = "<group>"; };
+		417038761A850B52009FB93D /* CDVWebViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVWebViewDelegate.h; sourceTree = "<group>"; };
+		417038771A850B52009FB93D /* CDVWhitelist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDVWhitelist.h; sourceTree = "<group>"; };
+		417038781A850B52009FB93D /* NSArray+Comparisons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+Comparisons.h"; sourceTree = "<group>"; };
+		417038791A850B52009FB93D /* NSData+Base64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		4170387A1A850B52009FB93D /* NSDictionary+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Extensions.h"; sourceTree = "<group>"; };
+		4170387B1A850B52009FB93D /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
+		4170387C1A850B52009FB93D /* UIDevice+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Extensions.h"; sourceTree = "<group>"; };
+		4170387D1A850B52009FB93D /* libCordova.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCordova.a; sourceTree = "<group>"; };
+		4170387E1A850B52009FB93D /* libPods-OneginiCordovaPlugin-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-AFNetworking.a"; sourceTree = "<group>"; };
+		4170387F1A850B52009FB93D /* libPods-OneginiCordovaPlugin-Base64.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-Base64.a"; sourceTree = "<group>"; };
+		417038801A850B52009FB93D /* libPods-OneginiCordovaPlugin-ISO8601DateFormatterValueTransformer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-ISO8601DateFormatterValueTransformer.a"; sourceTree = "<group>"; };
+		417038811A850B52009FB93D /* libPods-OneginiCordovaPlugin-OneginiSDKiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-OneginiSDKiOS.a"; sourceTree = "<group>"; };
+		417038821A850B52009FB93D /* libPods-OneginiCordovaPlugin-RKValueTransformers.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-RKValueTransformers.a"; sourceTree = "<group>"; };
+		417038831A850B52009FB93D /* libPods-OneginiCordovaPlugin-RNCryptor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-RNCryptor.a"; sourceTree = "<group>"; };
+		417038841A850B52009FB93D /* libPods-OneginiCordovaPlugin-RestKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-RestKit.a"; sourceTree = "<group>"; };
+		417038851A850B52009FB93D /* libPods-OneginiCordovaPlugin-SOCKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-SOCKit.a"; sourceTree = "<group>"; };
+		417038861A850B52009FB93D /* libPods-OneginiCordovaPlugin-SSKeychain.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-SSKeychain.a"; sourceTree = "<group>"; };
+		417038871A850B52009FB93D /* libPods-OneginiCordovaPlugin-TransitionKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-TransitionKit.a"; sourceTree = "<group>"; };
+		417038881A850B52009FB93D /* libPods-OneginiCordovaPlugin-UIAlertView+Blocks.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-UIAlertView+Blocks.a"; sourceTree = "<group>"; };
+		417038891A850B52009FB93D /* libPods-OneginiCordovaPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin.a"; sourceTree = "<group>"; };
+		4170388A1A850B52009FB93D /* libsbb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsbb.a; sourceTree = "<group>"; };
+		4170388E1A8889BE009FB93D /* libPods-OneginiCordovaPlugin-OneginiSDKiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-OneginiSDKiOS.a"; path = "Pods/build/Debug-iphoneos/libPods-OneginiCordovaPlugin-OneginiSDKiOS.a"; sourceTree = "<group>"; };
+		417038911A8889CF009FB93D /* libPods-OneginiCordovaPlugin-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-OneginiCordovaPlugin-AFNetworking.a"; sourceTree = "<group>"; };
+		4170389D1A88A557009FB93D /* libPods-OneginiCordovaPlugin-OneginiSDKiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-OneginiSDKiOS.a"; sourceTree = "<group>"; };
+		417038A21A88A8FF009FB93D /* OGAuthorizationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAuthorizationDelegate.h; sourceTree = "<group>"; };
+		417038A31A88A8FF009FB93D /* OGConfigModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGConfigModel.h; sourceTree = "<group>"; };
+		417038A41A88A8FF009FB93D /* OGEnrollmentHandlerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGEnrollmentHandlerDelegate.h; sourceTree = "<group>"; };
+		417038A51A88A8FF009FB93D /* OGOneginiClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGOneginiClient.h; sourceTree = "<group>"; };
+		417038A61A88A8FF009FB93D /* OGPublicCommons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGPublicCommons.h; sourceTree = "<group>"; };
+		417038A71A88A8FF009FB93D /* OGResourceHandlerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGResourceHandlerDelegate.h; sourceTree = "<group>"; };
+		417038A81A88A8FF009FB93D /* OneginiSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneginiSDK.h; sourceTree = "<group>"; };
+		417038A91A88A8FF009FB93D /* libPods-OneginiCordovaPlugin-OneginiSDKiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-OneginiCordovaPlugin-OneginiSDKiOS.a"; sourceTree = "<group>"; };
+		417038AA1A88A8FF009FB93D /* libsbb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsbb.a; sourceTree = "<group>"; };
+		417038AE1A88A95F009FB93D /* libPods-OneginiCordovaPlugin-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-AFNetworking.a"; path = "OneginiSDKiOS/libPods-OneginiCordovaPlugin-AFNetworking.a"; sourceTree = "<group>"; };
+		417038B01A88A965009FB93D /* libPods-OneginiCordovaPlugin-RestKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-RestKit.a"; path = "OneginiSDKiOS/libPods-OneginiCordovaPlugin-RestKit.a"; sourceTree = "<group>"; };
+		417038B21A88A973009FB93D /* libPods-OneginiCordovaPlugin-ISO8601DateFormatterValueTransformer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-ISO8601DateFormatterValueTransformer.a"; path = "OneginiSDKiOS/libPods-OneginiCordovaPlugin-ISO8601DateFormatterValueTransformer.a"; sourceTree = "<group>"; };
+		417038B41A88A97A009FB93D /* libPods-OneginiCordovaPlugin-Base64.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-Base64.a"; path = "OneginiSDKiOS/libPods-OneginiCordovaPlugin-Base64.a"; sourceTree = "<group>"; };
+		417038B61A88A980009FB93D /* libPods-OneginiCordovaPlugin-RKValueTransformers.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-RKValueTransformers.a"; path = "OneginiSDKiOS/libPods-OneginiCordovaPlugin-RKValueTransformers.a"; sourceTree = "<group>"; };
+		417038B81A88A98A009FB93D /* libPods-OneginiCordovaPlugin-RNCryptor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-RNCryptor.a"; path = "OneginiSDKiOS/libPods-OneginiCordovaPlugin-RNCryptor.a"; sourceTree = "<group>"; };
+		417038BA1A88A991009FB93D /* libPods-OneginiCordovaPlugin-SOCKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-SOCKit.a"; path = "OneginiSDKiOS/libPods-OneginiCordovaPlugin-SOCKit.a"; sourceTree = "<group>"; };
+		417038BC1A88A99E009FB93D /* libPods-OneginiCordovaPlugin-SSKeychain.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-SSKeychain.a"; path = "OneginiSDKiOS/libPods-OneginiCordovaPlugin-SSKeychain.a"; sourceTree = "<group>"; };
+		417038BE1A88A9A6009FB93D /* libPods-OneginiCordovaPlugin-TransitionKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-TransitionKit.a"; path = "OneginiSDKiOS/libPods-OneginiCordovaPlugin-TransitionKit.a"; sourceTree = "<group>"; };
+		417038C01A88A9AC009FB93D /* libPods-OneginiCordovaPlugin-UIAlertView+Blocks.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin-UIAlertView+Blocks.a"; path = "OneginiSDKiOS/libPods-OneginiCordovaPlugin-UIAlertView+Blocks.a"; sourceTree = "<group>"; };
+		417038C21A88A9B5009FB93D /* libPods-OneginiCordovaPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OneginiCordovaPlugin.a"; path = "OneginiSDKiOS/libPods-OneginiCordovaPlugin.a"; sourceTree = "<group>"; };
+		417038D41A88B891009FB93D /* libOneginiSDKiOS-0.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libOneginiSDKiOS-0.1.a"; path = "OneginiSDKiOS/libOneginiSDKiOS-0.1.a"; sourceTree = "<group>"; };
 		43058225C0614EB883A2CA26 /* CDVLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVLogger.m; path = org.apache.cordova.console/CDVLogger.m; sourceTree = "<group>"; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		5B54C4D072CE4AB7BA82FD02 /* CDVDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVDevice.m; path = org.apache.cordova.device/CDVDevice.m; sourceTree = "<group>"; };
@@ -123,21 +191,18 @@
 		7E7966DC1810823500FA85AD /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small.png"; sourceTree = "<group>"; };
 		7E7966DD1810823500FA85AD /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@2x.png"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* OneginiCordovaPlugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "OneginiCordovaPlugin-Info.plist"; path = "../OneginiCordovaPlugin-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		964A07391AB01B8346957276 /* Pods-OneginiCordovaPlugin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneginiCordovaPlugin.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneginiCordovaPlugin/Pods-OneginiCordovaPlugin.release.xcconfig"; sourceTree = "<group>"; };
+		97152A16A99B432E8A2B02E1 /* CDVStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVStatusBar.h; path = org.apache.cordova.statusbar/CDVStatusBar.h; sourceTree = "<group>"; };
 		98182F56053B4446870D1A9D /* CDVDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVDevice.h; path = org.apache.cordova.device/CDVDevice.h; sourceTree = "<group>"; };
+		9C72266476AA409CA20C5C8A /* CDVInAppBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVInAppBrowser.m; path = org.apache.cordova.inappbrowser/CDVInAppBrowser.m; sourceTree = "<group>"; };
+		A258201AFC3B450FB3E8C68B /* CDVStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVStatusBar.m; path = org.apache.cordova.statusbar/CDVStatusBar.m; sourceTree = "<group>"; };
 		A7D46A54DD1644558F82A1E9 /* CDVNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVNotification.m; path = org.apache.cordova.dialogs/CDVNotification.m; sourceTree = "<group>"; };
+		BCEBF4AACC84432AA3CED00C /* OneginiCordovaClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OneginiCordovaClient.h; path = com.onegini.oneginiCordovaPlugin/OneginiCordovaClient.h; sourceTree = "<group>"; };
 		BE6206DEBC604A79982AD6D6 /* CDVNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVNotification.h; path = org.apache.cordova.dialogs/CDVNotification.h; sourceTree = "<group>"; };
 		D33AD10DC18D4AB0ABCCB76D /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVLogger.h; path = org.apache.cordova.console/CDVLogger.h; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		EB87FDF21871DA7A0020F90C /* merges */ = {isa = PBXFileReference; lastKnownFileType = folder; name = merges; path = ../../merges; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
-		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = OneginiCordovaPlugin/config.xml; sourceTree = "<group>"; };
-		F9747DF9B113E5F77E226E59 /* Pods-OneginiCordovaPlugin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneginiCordovaPlugin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneginiCordovaPlugin/Pods-OneginiCordovaPlugin.debug.xcconfig"; sourceTree = "<group>"; };
-		A258201AFC3B450FB3E8C68B /* CDVStatusBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVStatusBar.m"; path = "org.apache.cordova.statusbar/CDVStatusBar.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		97152A16A99B432E8A2B02E1 /* CDVStatusBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVStatusBar.h"; path = "org.apache.cordova.statusbar/CDVStatusBar.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		9C72266476AA409CA20C5C8A /* CDVInAppBrowser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVInAppBrowser.m"; path = "org.apache.cordova.inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		2AF51EA075294EB5A6682345 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVInAppBrowser.h"; path = "org.apache.cordova.inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,29 +210,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				417038D51A88B891009FB93D /* libOneginiSDKiOS-0.1.a in Frameworks */,
+				417038CA1A88B0A0009FB93D /* libCordova.a in Frameworks */,
 				2351A2591A655E2F00C89FF6 /* libiconv.dylib in Frameworks */,
 				2351A2571A655E2300C89FF6 /* libc++.dylib in Frameworks */,
 				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
-				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				A55FCC0019E645FD87EE4438 /* AudioToolbox.framework in Frameworks */,
-				678E0E20EA9F38391606C6A0 /* libPods-OneginiCordovaPlugin.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		03021DC27F6277A03CC9011F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F9747DF9B113E5F77E226E59 /* Pods-OneginiCordovaPlugin.debug.xcconfig */,
-				964A07391AB01B8346957276 /* Pods-OneginiCordovaPlugin.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,8 +250,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				23D5A9C91A654FF200BC6935 /* Podfile */,
-				EB87FDF41871DAF40020F90C /* config.xml */,
 				EB87FDF31871DA8E0020F90C /* www */,
 				EB87FDF21871DA7A0020F90C /* merges */,
 				EB87FDF11871DA420020F90C /* Staging */,
@@ -206,7 +260,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				03021DC27F6277A03CC9011F /* Pods */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -238,6 +291,25 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				417038D41A88B891009FB93D /* libOneginiSDKiOS-0.1.a */,
+				417038C21A88A9B5009FB93D /* libPods-OneginiCordovaPlugin.a */,
+				417038C01A88A9AC009FB93D /* libPods-OneginiCordovaPlugin-UIAlertView+Blocks.a */,
+				417038BE1A88A9A6009FB93D /* libPods-OneginiCordovaPlugin-TransitionKit.a */,
+				417038BC1A88A99E009FB93D /* libPods-OneginiCordovaPlugin-SSKeychain.a */,
+				417038BA1A88A991009FB93D /* libPods-OneginiCordovaPlugin-SOCKit.a */,
+				417038B81A88A98A009FB93D /* libPods-OneginiCordovaPlugin-RNCryptor.a */,
+				417038B61A88A980009FB93D /* libPods-OneginiCordovaPlugin-RKValueTransformers.a */,
+				417038B41A88A97A009FB93D /* libPods-OneginiCordovaPlugin-Base64.a */,
+				417038B21A88A973009FB93D /* libPods-OneginiCordovaPlugin-ISO8601DateFormatterValueTransformer.a */,
+				417038B01A88A965009FB93D /* libPods-OneginiCordovaPlugin-RestKit.a */,
+				417038AE1A88A95F009FB93D /* libPods-OneginiCordovaPlugin-AFNetworking.a */,
+				417038A01A88A8FF009FB93D /* OneginiSDKiOS */,
+				4170389D1A88A557009FB93D /* libPods-OneginiCordovaPlugin-OneginiSDKiOS.a */,
+				417038911A8889CF009FB93D /* libPods-OneginiCordovaPlugin-AFNetworking.a */,
+				4170388E1A8889BE009FB93D /* libPods-OneginiCordovaPlugin-OneginiSDKiOS.a */,
+				4170385E1A850B52009FB93D /* Debug-iphonesimulator */,
+				4170385C1A85078A009FB93D /* libPods-OneginiCordovaPlugin-OneginiSDKiOS.a */,
+				417038541A85039A009FB93D /* libPods-OneginiCordovaPlugin-OneginiSDKiOS.a */,
 				2351A2581A655E2F00C89FF6 /* libiconv.dylib */,
 				2351A2561A655E2300C89FF6 /* libc++.dylib */,
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
@@ -270,6 +342,8 @@
 				97152A16A99B432E8A2B02E1 /* CDVStatusBar.h */,
 				9C72266476AA409CA20C5C8A /* CDVInAppBrowser.m */,
 				2AF51EA075294EB5A6682345 /* CDVInAppBrowser.h */,
+				19C887AA7EE740209E5B1E76 /* OneginiCordovaClient.m */,
+				BCEBF4AACC84432AA3CED00C /* OneginiCordovaClient.h */,
 			);
 			name = Plugins;
 			path = OneginiCordovaPlugin/Plugins;
@@ -314,6 +388,96 @@
 			path = splash;
 			sourceTree = "<group>";
 		};
+		4170385E1A850B52009FB93D /* Debug-iphonesimulator */ = {
+			isa = PBXGroup;
+			children = (
+				4170385F1A850B52009FB93D /* OneginiCordovaPlugin.app */,
+				417038601A850B52009FB93D /* OneginiCordovaPlugin.app.dSYM */,
+				417038611A850B52009FB93D /* include */,
+				4170387D1A850B52009FB93D /* libCordova.a */,
+				4170387E1A850B52009FB93D /* libPods-OneginiCordovaPlugin-AFNetworking.a */,
+				4170387F1A850B52009FB93D /* libPods-OneginiCordovaPlugin-Base64.a */,
+				417038801A850B52009FB93D /* libPods-OneginiCordovaPlugin-ISO8601DateFormatterValueTransformer.a */,
+				417038811A850B52009FB93D /* libPods-OneginiCordovaPlugin-OneginiSDKiOS.a */,
+				417038821A850B52009FB93D /* libPods-OneginiCordovaPlugin-RKValueTransformers.a */,
+				417038831A850B52009FB93D /* libPods-OneginiCordovaPlugin-RNCryptor.a */,
+				417038841A850B52009FB93D /* libPods-OneginiCordovaPlugin-RestKit.a */,
+				417038851A850B52009FB93D /* libPods-OneginiCordovaPlugin-SOCKit.a */,
+				417038861A850B52009FB93D /* libPods-OneginiCordovaPlugin-SSKeychain.a */,
+				417038871A850B52009FB93D /* libPods-OneginiCordovaPlugin-TransitionKit.a */,
+				417038881A850B52009FB93D /* libPods-OneginiCordovaPlugin-UIAlertView+Blocks.a */,
+				417038891A850B52009FB93D /* libPods-OneginiCordovaPlugin.a */,
+				4170388A1A850B52009FB93D /* libsbb.a */,
+			);
+			name = "Debug-iphonesimulator";
+			path = "DerivedData/OneginiCordovaPlugin/Build/Products/Debug-iphonesimulator";
+			sourceTree = "<group>";
+		};
+		417038611A850B52009FB93D /* include */ = {
+			isa = PBXGroup;
+			children = (
+				417038621A850B52009FB93D /* Cordova */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		417038621A850B52009FB93D /* Cordova */ = {
+			isa = PBXGroup;
+			children = (
+				417038631A850B52009FB93D /* CDV.h */,
+				417038641A850B52009FB93D /* CDVAvailability.h */,
+				417038651A850B52009FB93D /* CDVAvailabilityDeprecated.h */,
+				417038661A850B52009FB93D /* CDVCommandDelegate.h */,
+				417038671A850B52009FB93D /* CDVCommandDelegateImpl.h */,
+				417038681A850B52009FB93D /* CDVCommandQueue.h */,
+				417038691A850B52009FB93D /* CDVConfigParser.h */,
+				4170386A1A850B52009FB93D /* CDVDebug.h */,
+				4170386B1A850B52009FB93D /* CDVInvokedUrlCommand.h */,
+				4170386C1A850B52009FB93D /* CDVJSON.h */,
+				4170386D1A850B52009FB93D /* CDVLocalStorage.h */,
+				4170386E1A850B52009FB93D /* CDVPlugin.h */,
+				4170386F1A850B52009FB93D /* CDVPluginResult.h */,
+				417038701A850B52009FB93D /* CDVScreenOrientationDelegate.h */,
+				417038711A850B52009FB93D /* CDVShared.h */,
+				417038721A850B52009FB93D /* CDVTimer.h */,
+				417038731A850B52009FB93D /* CDVURLProtocol.h */,
+				417038741A850B52009FB93D /* CDVUserAgentUtil.h */,
+				417038751A850B52009FB93D /* CDVViewController.h */,
+				417038761A850B52009FB93D /* CDVWebViewDelegate.h */,
+				417038771A850B52009FB93D /* CDVWhitelist.h */,
+				417038781A850B52009FB93D /* NSArray+Comparisons.h */,
+				417038791A850B52009FB93D /* NSData+Base64.h */,
+				4170387A1A850B52009FB93D /* NSDictionary+Extensions.h */,
+				4170387B1A850B52009FB93D /* NSMutableArray+QueueAdditions.h */,
+				4170387C1A850B52009FB93D /* UIDevice+Extensions.h */,
+			);
+			path = Cordova;
+			sourceTree = "<group>";
+		};
+		417038A01A88A8FF009FB93D /* OneginiSDKiOS */ = {
+			isa = PBXGroup;
+			children = (
+				417038A11A88A8FF009FB93D /* OneginiSDKiOS */,
+				417038A91A88A8FF009FB93D /* libPods-OneginiCordovaPlugin-OneginiSDKiOS.a */,
+				417038AA1A88A8FF009FB93D /* libsbb.a */,
+			);
+			path = OneginiSDKiOS;
+			sourceTree = "<group>";
+		};
+		417038A11A88A8FF009FB93D /* OneginiSDKiOS */ = {
+			isa = PBXGroup;
+			children = (
+				417038A21A88A8FF009FB93D /* OGAuthorizationDelegate.h */,
+				417038A31A88A8FF009FB93D /* OGConfigModel.h */,
+				417038A41A88A8FF009FB93D /* OGEnrollmentHandlerDelegate.h */,
+				417038A51A88A8FF009FB93D /* OGOneginiClient.h */,
+				417038A61A88A8FF009FB93D /* OGPublicCommons.h */,
+				417038A71A88A8FF009FB93D /* OGResourceHandlerDelegate.h */,
+				417038A81A88A8FF009FB93D /* OneginiSDK.h */,
+			);
+			path = OneginiSDKiOS;
+			sourceTree = "<group>";
+		};
 		EB87FDF11871DA420020F90C /* Staging */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,12 +494,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "OneginiCordovaPlugin" */;
 			buildPhases = (
-				A9BA423A0E3543F6DAD03C19 /* Check Pods Manifest.lock */,
 				304B58A110DAC018002A0835 /* Copy www directory */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
-				733C302E8E1DBC307D9DEED3 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -428,7 +590,6 @@
 				7E7966E11810823500FA85AD /* icon-50@2x.png in Resources */,
 				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
-				23D5A9CA1A654FF300BC6935 /* Podfile in Resources */,
 				D952C483638C4344A68B4BFB /* CDVNotification.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -451,36 +612,6 @@
 			shellScript = "cordova/lib/copy-www-build-step.sh";
 			showEnvVarsInLog = 0;
 		};
-		733C302E8E1DBC307D9DEED3 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OneginiCordovaPlugin/Pods-OneginiCordovaPlugin-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A9BA423A0E3543F6DAD03C19 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -491,12 +622,12 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
-				23DBAF441A6528A4001836C4 /* OneginiCordovaClient.m in Sources */,
 				05E47B83FA404D00A531CFEF /* CDVDevice.m in Sources */,
 				2A77BECC39D442528A685FF4 /* CDVNotification.m in Sources */,
 				21BC92DB3D474C619C64B2AC /* CDVLogger.m in Sources */,
 				B41D9DF2F9EC425D8AABDA3D /* CDVStatusBar.m in Sources */,
 				FD077FF8234A4620981BC3ED /* CDVInAppBrowser.m in Sources */,
+				56D8A5E197E2491CACFB1336 /* OneginiCordovaClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,19 +644,27 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F9747DF9B113E5F77E226E59 /* Pods-OneginiCordovaPlugin.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OneginiCordovaPlugin/OneginiCordovaPlugin-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/OneginiSDKiOS";
 				INFOPLIST_FILE = "OneginiCordovaPlugin/OneginiCordovaPlugin-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/build/OneginiCordovaPlugin.build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/DerivedData/OneginiCordovaPlugin/Build/Products/Debug-iphonesimulator",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/OneginiSDKiOS",
+				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreFoundation,
@@ -546,17 +685,25 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 964A07391AB01B8346957276 /* Pods-OneginiCordovaPlugin.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OneginiCordovaPlugin/OneginiCordovaPlugin-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/OneginiSDKiOS";
 				INFOPLIST_FILE = "OneginiCordovaPlugin/OneginiCordovaPlugin-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/build/OneginiCordovaPlugin.build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/DerivedData/OneginiCordovaPlugin/Build/Products/Debug-iphonesimulator",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/OneginiSDKiOS",
+				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreFoundation,

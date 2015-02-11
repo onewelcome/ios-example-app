@@ -12,5 +12,18 @@
             </config-file>
             <header-file src="Classes/OneginiCordovaClient.h" />
             <source-file src="Classes/OneginiCordovaClient.m" />
+			
+            <header-file src="OneginiSDKiOS/Headers/OGAuthorizationDelegate.h" />
+			<header-file src="OneginiSDKiOS/Headers/OGConfigModel.h" />
+			<header-file src="OneginiSDKiOS/Headers/OGEnrollmentHandlerDelegate.h" />
+			<header-file src="OneginiSDKiOS/Headers/OGOneginiClient.h" />
+			<header-file src="OneginiSDKiOS/Headers/OGPublicCommons.h" />
+			<header-file src="OneginiSDKiOS/Headers/OGResourceHandlerDelegate.h" />
+			<header-file src="OneginiSDKiOS/Headers/OneginiSDK.h" />
+			
+			<source-file src="OneginiSDKiOS/libOneginiSDKiOS-0.1.a" framework="true" />
+			
+			<framework src="libiconv.dylib" />
+			<framework src="libc++.dylib" />
         </platform>
     </plugin>

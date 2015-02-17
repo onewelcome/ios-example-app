@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="com.onegini.SdkPlugin"
+	version="0.1.0">
+	<engines>
+		<engine name="cordova" version=">=3.0.0" />
+	</engines>
+	<name>Test Plugin</name>
+	<description>Test Plugin</description>
+	<author>Onegini</author>
+	<keywords>test plugin</keywords>
+	<license>Apache 2.0 License</license>
+	<js-module src="www/SdkPlugin.js" name="SdkPlugin">
+		<clobbers target="SdkPlugin" />
+	</js-module>
+	<platform name="android">
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="SdkPlugin" >
+				<param name="android-package" value="com.onegini.SdkPlugin"/>
+                <param name="onload" value="true" />
+			</feature>
+		</config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+            <permission
+                android:name="com.onegini.mobile.sdk.android.demo.permission.C2D_MESSAGE"
+                android:protectionLevel="signature" />
+
+            <uses-permission android:name="com.onegini.mobile.sdk.android.demo.permission.C2D_MESSAGE" />
+
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+
+        </config-file>
+
+        <source-file src="src/android/com/onegini/SdkPlugin.java" target-dir="src/com/onegini/" />
+
+		<source-file src="lib/classes.jar" target-dir="libs/" />
+		<!--<source-file src="lib/okhttp-2.0.0.jar" target-dir="libs/" />-->
+		<source-file src="lib/okhttp-urlconnection-2.0.0.jar" target-dir="libs/" />
+		<source-file src="lib/retrofit-1.7.1.jar" target-dir="libs/" />
+		<source-file src="lib/og-ocra-3.jar" target-dir="libs/" />
+		<source-file src="lib/core-1.51.0.0.jar" target-dir="libs/" />
+		<source-file src="lib/prov-1.51.0.0.jar" target-dir="libs/" />
+		<source-file src="lib/pg-1.51.0.0.jar" target-dir="libs/" />
+		<source-file src="lib/pkix-1.51.0.0.jar" target-dir="libs/" />
+		<source-file src="lib/nimbus-jose-jwt-3.6.jar" target-dir="libs/" />
+		<source-file src="lib/okio-1.0.0.jar" target-dir="libs/" />
+		<source-file src="lib/gson-2.3.jar" target-dir="libs/" />
+		<source-file src="lib/jcip-annotations-1.0.jar" target-dir="libs/" />
+		<source-file src="lib/json-smart-1.1.1.jar" target-dir="libs/" />
+		<source-file src="lib/bcprov-jdk15on-1.51.jar" target-dir="libs/" />
+		<source-file src="lib/commons-io-2.4.jar" target-dir="libs/" />
+    </platform>
+</plugin>

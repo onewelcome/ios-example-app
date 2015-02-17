@@ -14,18 +14,18 @@
         <param name="onload" value="true"/>
       </feature>
     </config-file>
-    <header-file src="OneginiCordovaPlugin/Classes/OneginiCordovaClient.h"/>
-    <source-file src="OneginiCordovaPlugin/Classes/OneginiCordovaClient.m"/>
+    <header-file src="src/ios/OneginiCordovaPlugin/Classes/OneginiCordovaClient.h"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/OneginiCordovaClient.m"/>
 
-    <header-file src="OneginiSDKiOS/Headers/OGAuthorizationDelegate.h"/>
-    <header-file src="OneginiSDKiOS/Headers/OGConfigModel.h"/>
-    <header-file src="OneginiSDKiOS/Headers/OGEnrollmentHandlerDelegate.h"/>
-    <header-file src="OneginiSDKiOS/Headers/OGOneginiClient.h"/>
-    <header-file src="OneginiSDKiOS/Headers/OGPublicCommons.h"/>
-    <header-file src="OneginiSDKiOS/Headers/OGResourceHandlerDelegate.h"/>
-    <header-file src="OneginiSDKiOS/Headers/OneginiSDK.h"/>
+    <header-file src="src/ios/OneginiSDKiOS/Headers/OGAuthorizationDelegate.h"/>
+    <header-file src="src/ios/OneginiSDKiOS/Headers/OGConfigModel.h"/>
+    <header-file src="src/ios/OneginiSDKiOS/Headers/OGEnrollmentHandlerDelegate.h"/>
+    <header-file src="src/ios/OneginiSDKiOS/Headers/OGOneginiClient.h"/>
+    <header-file src="src/ios/OneginiSDKiOS/Headers/OGPublicCommons.h"/>
+    <header-file src="src/ios/OneginiSDKiOS/Headers/OGResourceHandlerDelegate.h"/>
+    <header-file src="src/ios/OneginiSDKiOS/Headers/OneginiSDK.h"/>
 
-    <source-file src="OneginiSDKiOS/libOneginiSDKiOS-0.1.a" framework="true"/>
+    <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-0.1.a" framework="true"/>
 
     <framework src="libiconv.dylib"/>
     <framework src="libc++.dylib"/>

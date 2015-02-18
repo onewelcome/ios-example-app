@@ -1,16 +1,37 @@
-// TODO: use the proper format for a Cordova plugin to expose the functions
-var oneginiCordova = {
+var exec = require('cordova/exec');
 
+module.exports = {
+  /**
+   * Initialises the Onegini SDK with config. The config object has a property sdkConfig and an array of certificates.
+   * The sdkConfig depends on the platform.
+   * @param {Object} config             Configuration for the Onegini SDK.
+   */
   initWithConfig: function (config) {
-    cordova.exec(function (response) {
+    exec(function (response) {
           console.log(response);
         }, function (error) {
 
         },
         'OneginiCordovaClient', 'initWithConfig', [config.sdkConfig, config.certificates]);
   },
+
+  /**
+   * Fetches a specific resource.
+   * The access token validation flow is invoked if no valid access token is available.
+   *
+   * @param {Function} successCallback  Function that can handle the successful resource call. Is called with a JSON
+   *                                    response object as argument.
+   * @param {Function} errorCallback    Function that can handle an unsuccessful resource call. Is called with the
+   *                                    error object as argument.
+   * @param {String} path               Location on the resource server to return the resource. The base URI of the
+   *                                    resource server is.
+   * @param {Array} scopes              Array of Strings with scopes to fetch the resource.
+   * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+   * @param {String} paramsEncoding     Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
+   * @param {Object} params             Parameters to send with the request.
+   */
   fetchResource: function (successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params) {
-    cordova.exec(function (response) {
+    exec(function (response) {
       if (successCallback) {
         successCallback(response);
       }
@@ -20,9 +41,26 @@ var oneginiCordova = {
       }
     }, 'OneginiCordovaClient', 'fetchResource', [path, scopes, requestMethod, paramsEncoding, params]);
   },
-  fetchAnonymousResource: function (successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params) {
+
+  /**
+   * Fetches a specific resource anonymously using a client access token.
+   * The access token validation flow is invoked if no valid access token is available.
+   *
+   * @param {Function} successCallback  Function that can handle the successful resource call. Is called with a JSON
+   *                                    response object as argument.
+   * @param {Function} errorCallback    Function that can handle an unsuccessful resource call. Is called with the
+   *                                    error object as argument.
+   * @param {String} path               Location on the resource server to return the resource. The base URI of the
+   *                                    resource server is.
+   * @param {Array} scopes              Array of Strings with scopes to fetch the resource.
+   * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+   * @param {String} paramsEncoding     Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
+   * @param {Object} params             Parameters to send with the request.
+   */
+  fetchAnonymousResource: function (successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding,
+                                    params) {
     // not implemented in the base app yet
-    cordova.exec(function (response) {
+    exec(function (response) {
       if (successCallback) {
         successCallback(response);
       }
@@ -33,41 +71,26 @@ var oneginiCordova = {
     }, 'OneginiCordovaClient', 'fetchAnonymousResource', [path, scopes, requestMethod, paramsEncoding, params]);
   },
 
-  logout: function () {
-    cordova.exec(null, null, 'OneginiCordovaClient', 'logout', null);
-  },
-  disconnect: function () {
-    cordova.exec(null, null, 'OneginiCordovaClient', 'disconnect', null);
-  },
-  clearCredentials: function () {
-    // FOR TESTING PURPOSE ONLY
-    cordova.exec(null, null, 'OneginiCordovaClient', 'clearCredentials', null);
-  },
-  clearTokens: function () {
-    // FOR TESTING PURPOSE ONLY
-    cordova.exec(null, null, 'OneginiCordovaClient', 'clearTokens', null);
-  },
-  checkPin: function (errorCallback, pin) {
-    // Callback is performed on the initiating authorize callback handler
-    // An INVALID_ACTION is returned if no authorization transaction is registered.
-    cordova.exec(null, function (error) {
-      console.log("Fail! " + JSON.stringify(error));
-      if (errorCallback) {
-        errorCallback(error);
-      }
-    }, 'OneginiCordovaClient', 'confirmPin', [pin, true]);
-  },
-  setPin: function (errorCallback, pin, verifyPin) {
-    // Callback is performed on the initiating authorize callback handler
-    // An INVALID_ACTION is returned if no authorization transaction is registered.
-    cordova.exec(null, function (error) {
-      if (errorCallback) {
-        errorCallback(error);
-      }
-    }, 'OneginiCordovaClient', 'confirmPinWithVerification', [pin, verifyPin, false]);
-  },
+  /**
+   * Main entry point into the authorization process.
+   *
+   * @param {Object} router   Object that can handle page transition for the outcome of the authorization. Should at
+   *                          least implement the following methods:
+   *                          - requestAuthorization(url) -> redirects the user to the given url to log in
+   *                          - askForPin -> should display a screen to verify the PIN code. Must call
+   *                                         checkPin(errorCallback, pin)
+   *                          - askForPinWithVerification -> should display a screen to set a PIN code. Must call
+   *                                         setPin(errorCallback, pin, verifyPin)
+   *                          - authorizationSuccess -> should show the landing page for the authenticated user
+   *                          - authorizationFailure(error) -> should handle authentication failure. If this method
+   *                                         is called, the authorization transaction is lost. The authorize method
+   *                                         must be called again to continue with the authorization flow. It may
+   *                                         require to keep an internal state to display error messages such as
+   *                                         'Invalid PIN code, try again'.
+   * @param {Array} scopes    {Array} with {String}s that represent the scopes for the access token
+   */
   authorize: function (router, scopes) {
-    cordova.exec(function (response) {
+    exec(function (response) {
       /*
        The response method contains the name of the method in the OGAuthorizationDelegate protocol
        */
@@ -87,9 +110,85 @@ var oneginiCordova = {
       router.authorizationFailure(error, scopes);
     }, 'OneginiCordovaClient', 'authorize', scopes);
   },
+
+
+  /**
+   * This will end the current session and invalidate the access token. The refresh token and client credentials
+   * remain untouched.
+   */
+  logout: function () {
+    exec(null, null, 'OneginiCordovaClient', 'logout', null);
+  },
+
+  /**
+   * Disconnect from the service, this will clear the refresh token and access token. Client credentials remain
+   * untouched.
+   */
+  disconnect: function () {
+    exec(null, null, 'OneginiCordovaClient', 'disconnect', null);
+  },
+
+  /**
+   * For testing purpose only: Clear the client credentials. A new dynamic client registration has to be performed
+   * on the next authorization request.
+   */
+  clearCredentials: function () {
+    exec(null, null, 'OneginiCordovaClient', 'clearCredentials', null);
+  },
+
+  /**
+   * For testing purpose only: Clear all tokens and reset the pin attempt count.
+   */
+  clearTokens: function () {
+    exec(null, null, 'OneginiCordovaClient', 'clearTokens', null);
+  },
+
+  /**
+   * Validates the PIN entered by the user. Can only be called within the authorization flow. In case of success, the
+   * authorize function decides the next step. If something goes wrong, the errorCallback is called.
+   *
+   * If the PIN has an invalid format (too long, too short, invalid characters), it will count as verification
+   * attempt.
+   *
+   * An INVALID_ACTION is returned if no authorization transaction is registered.
+   *
+   * @param {Function} errorCallback  Function to call when the PIN verification fails. Is called with an error object
+   *                                  as argument.
+   * @param {String} pin              The PIN code to verify
+   */
+  checkPin: function (errorCallback, pin) {
+    exec(null, function (error) {
+      if (errorCallback) {
+        errorCallback(error);
+      }
+    }, 'OneginiCordovaClient', 'confirmPin', [pin, true]);
+  },
+
+  /**
+   * Sets a PIN for the user. Can only be called within the authorization flow. In case of success, the
+   * authorize function decides the next step. If something goes wrong, the errorCallback is called.
+   *
+   * The app should first verify whether the pin has the correct format and the verifyPin matches the pin.
+   *
+   * An INVALID_ACTION is returned if no authorization transaction is registered.
+   *
+   * @param errorCallback           Function to call when the PIN verification fails. Is called with an error object
+   *                                as argument.
+   * @param {String} pin            The PIN code to set
+   * @param {String} verifyPin      The PIN code to set, should match pin
+   */
+  setPin: function (errorCallback, pin, verifyPin) {
+    // Callback is performed on the initiating authorize callback handler
+    exec(null, function (error) {
+      if (errorCallback) {
+        errorCallback(error);
+      }
+    }, 'OneginiCordovaClient', 'confirmPinWithVerification', [pin, verifyPin, false]);
+  },
+
   changePin: function (scopes) {
     // not implemented in the base app yet
-    cordova.exec(function (response) {
+    exec(function (response) {
       /*
        The OneginiClient will respond by means of the OGAuthorizationDelegate and ask for the
        App to show a PIN entry/change dialog
@@ -105,12 +204,12 @@ var oneginiCordova = {
 
     // Forward the PIN entries back to the OneginiClient.
     // Callback is performed on the initiating changePin callback handler
-    cordova.exec(null, function (error) {
+    exec(null, function (error) {
     }, 'OneginiCordovaClient', 'confirmChangePinWithVerification', [pin, newPin, newPinVerify, retry]);
   },
   cancelPinChange: function () {
     // not implemented in the base app yet
-    cordova.exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', null);
+    exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', null);
   }
 };
 

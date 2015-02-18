@@ -1,0 +1,26 @@
+2015-02-16 12:25:14.529 OneginiCordovaPlugin[62479:2851585] Apache Cordova native platform version 3.7.0 is starting.
+2015-02-16 12:25:14.531 OneginiCordovaPlugin[62479:2851585] Multi-tasking -> Device: YES, App: YES
+2015-02-16 12:25:14.539 OneginiCordovaPlugin[62479:2851585] Unlimited access to network resources
+2015-02-16 12:25:14.546 OneginiCordovaPlugin[62479:2851585] 
+
+Started backup to iCloud! Please be careful.
+Your application might be rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines" at:
+https://developer.apple.com/icloud/documentation/data-storage/
+To disable web storage backup to iCloud, set the BackupWebStorage preference to "local" in the Cordova config.xml file
+
+2015-02-16 12:25:15.699 OneginiCordovaPlugin[62479:2851585] Resetting plugins due to page load.
+2015-02-16 12:25:15.820 OneginiCordovaPlugin[62479:2851585] Finished load of: file:///Users/assessment/Library/Developer/CoreSimulator/Devices/903FEAB1-8B48-4554-A988-94B83DFB38D4/data/Containers/Bundle/Application/332F75EB-E5D4-47BF-9105-B2C835309017/OneginiCordovaPlugin.app/www/index.html
+2015-02-16 12:25:44.422 OneginiCordovaPlugin[62554:2853575] Apache Cordova native platform version 3.7.0 is starting.
+2015-02-16 12:25:44.423 OneginiCordovaPlugin[62554:2853575] Multi-tasking -> Device: YES, App: YES
+2015-02-16 12:25:44.425 OneginiCordovaPlugin[62554:2853575] Unlimited access to network resources
+2015-02-16 12:25:44.427 OneginiCordovaPlugin[62554:2853575] 
+
+Started backup to iCloud! Please be careful.
+Your application might be rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines" at:
+https://developer.apple.com/icloud/documentation/data-storage/
+To disable web storage backup to iCloud, set the BackupWebStorage preference to "local" in the Cordova config.xml file
+
+2015-02-16 12:25:44.651 OneginiCordovaPlugin[62554:2853575] Resetting plugins due to page load.
+2015-02-16 12:25:44.696 OneginiCordovaPlugin[62554:2853575] Finished load of: file:///Users/assessment/Library/Developer/CoreSimulator/Devices/903FEAB1-8B48-4554-A988-94B83DFB38D4/data/Containers/Bundle/Application/BA4FEE95-1630-4781-94C1-D0A44B8CE005/OneginiCordovaPlugin.app/www/index.html

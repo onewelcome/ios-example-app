@@ -9,15 +9,12 @@
 /* Begin PBXBuildFile section */
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
-		2315D8D51A9343820001AF77 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2315D8D41A9343820001AF77 /* config.xml */; };
 		2351A2571A655E2300C89FF6 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2351A2561A655E2300C89FF6 /* libc++.dylib */; };
 		2351A2591A655E2F00C89FF6 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2351A2581A655E2F00C89FF6 /* libiconv.dylib */; };
 		23A0C3B81A66A97B0087EEC4 /* PositiveSSLCA2.cer in Resources */ = {isa = PBXBuildFile; fileRef = 23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */; };
 		23A0C3B91A66A97B0087EEC4 /* PositiveSSLCA2.pem in Resources */ = {isa = PBXBuildFile; fileRef = 23A0C3B71A66A97B0087EEC4 /* PositiveSSLCA2.pem */; };
 		23C663EF1A8B7CA7007C1838 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23C663EE1A8B7CA7007C1838 /* config.plist */; };
 		23C663F21A8B805B007C1838 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
-		23C663F51A8B9EA8007C1838 /* plugin.xml in Resources */ = {isa = PBXBuildFile; fileRef = 23C663F41A8B9EA8007C1838 /* plugin.xml */; };
-		23C664011A8BA0C1007C1838 /* libOneginiSDKiOS-0.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C664001A8BA0C1007C1838 /* libOneginiSDKiOS-0.1.a */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
 		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
@@ -36,6 +33,7 @@
 		30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */ = {isa = PBXBuildFile; fileRef = 30B4F2FF19D5E07200D9F7D8 /* Default-Landscape-736h.png */; };
 		30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C1856519D5FC0A00212699 /* icon-60@3x.png */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
+		4142BF191A94A8340096E3D1 /* libOneginiSDKiOS-0.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4142BF181A94A8340096E3D1 /* libOneginiSDKiOS-0.1.a */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
@@ -128,6 +126,7 @@
 		30FC414816E50CA1004E6F35 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* OneginiCordovaPlugin-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OneginiCordovaPlugin-Prefix.pch"; sourceTree = "<group>"; };
 		359253D9C6504EBD8C06520D /* AudioToolbox.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4142BF181A94A8340096E3D1 /* libOneginiSDKiOS-0.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libOneginiSDKiOS-0.1.a"; path = "OneginiSDKiOS/libOneginiSDKiOS-0.1.a"; sourceTree = "<group>"; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		5C7F523596F7489D8EE918F8 /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CDVNotification.bundle; sourceTree = "<group>"; };
 		7E7966D41810823500FA85AD /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
@@ -151,13 +150,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4142BF191A94A8340096E3D1 /* libOneginiSDKiOS-0.1.a in Frameworks */,
 				23C663F21A8B805B007C1838 /* libCordova.a in Frameworks */,
 				2351A2591A655E2F00C89FF6 /* libiconv.dylib in Frameworks */,
 				2351A2571A655E2300C89FF6 /* libc++.dylib in Frameworks */,
 				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
-				23C664011A8BA0C1007C1838 /* libOneginiSDKiOS-0.1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +274,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4142BF181A94A8340096E3D1 /* libOneginiSDKiOS-0.1.a */,
 				2385F6731A932FA0007ADE4B /* UIKit.framework */,
 				23C663F71A8BA0C1007C1838 /* OneginiSDKiOS */,
 				2351A2581A655E2F00C89FF6 /* libiconv.dylib */,
@@ -358,7 +358,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "OneginiCordovaPlugin" */;
 			buildPhases = (
-				304B58A110DAC018002A0835 /* Copy www directory */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
@@ -438,7 +437,6 @@
 				7E7966E01810823500FA85AD /* icon-50.png in Resources */,
 				7E7966E31810823500FA85AD /* icon-60@2x.png in Resources */,
 				23A0C3B81A66A97B0087EEC4 /* PositiveSSLCA2.cer in Resources */,
-				2315D8D51A9343820001AF77 /* config.xml in Resources */,
 				7E7966E61810823500FA85AD /* icon-small.png in Resources */,
 				3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */,
 				3088BBBE154F3926009F9C59 /* Default-Landscape~ipad.png in Resources */,
@@ -450,7 +448,6 @@
 				7E7966DE1810823500FA85AD /* icon-40.png in Resources */,
 				3088BBC1154F3926009F9C59 /* Default@2x~iphone.png in Resources */,
 				7E7966E21810823500FA85AD /* icon-60.png in Resources */,
-				23C663F51A8B9EA8007C1838 /* plugin.xml in Resources */,
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
 				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
 				30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */,
@@ -462,24 +459,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		304B58A110DAC018002A0835 /* Copy www directory */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy www directory";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cordova/lib/copy-www-build-step.sh";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
@@ -522,6 +501,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/OneginiCordovaPlugin/OneginiSDKiOS",
+					"$(PROJECT_DIR)/OneginiSDKiOS",
 				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",
@@ -558,6 +538,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/OneginiCordovaPlugin/OneginiSDKiOS",
+					"$(PROJECT_DIR)/OneginiSDKiOS",
 				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",

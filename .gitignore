@@ -5,3 +5,4 @@ platforms/ios/OneginiCordovaPlugin.xcodeproj/xcuserdata
 platforms/ios/OneginiCordovaPlugin.xcworkspace/xcuserdata
 *.xccheckout
 .idea/
+platforms/ios/CordovaLib/CordovaLib.xcodeproj/project.xcworkspace/xcuserdata

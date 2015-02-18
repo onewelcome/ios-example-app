@@ -10,20 +10,8 @@
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		2315D8D51A9343820001AF77 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2315D8D41A9343820001AF77 /* config.xml */; };
-		2315D8D61A9343D40001AF77 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 301BF56E109A69640062928A /* www */; };
 		2351A2571A655E2300C89FF6 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2351A2561A655E2300C89FF6 /* libc++.dylib */; };
 		2351A2591A655E2F00C89FF6 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2351A2581A655E2F00C89FF6 /* libiconv.dylib */; };
-		2385F6741A932FA0007ADE4B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2385F6731A932FA0007ADE4B /* UIKit.framework */; };
-		2385F6751A932FCD007ADE4B /* OneginiCordovaClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 23DBAF421A6528A4001836C4 /* OneginiCordovaClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2385F6761A932FE3007ADE4B /* OneginiCordova.h in Headers */ = {isa = PBXBuildFile; fileRef = 2385F6571A932F8E007ADE4B /* OneginiCordova.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2385F67D1A9333A6007ADE4B /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
-		2385F67E1A9333EB007ADE4B /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2351A2581A655E2F00C89FF6 /* libiconv.dylib */; };
-		2385F67F1A9333F7007ADE4B /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2351A2561A655E2300C89FF6 /* libc++.dylib */; };
-		2385F6801A933428007ADE4B /* libOneginiSDKiOS-0.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C664001A8BA0C1007C1838 /* libOneginiSDKiOS-0.1.a */; };
-		2385F6811A933432007ADE4B /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
-		2385F6821A93343A007ADE4B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
-		2385F6831A933441007ADE4B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */; };
-		2385F6841A933448007ADE4B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359253D9C6504EBD8C06520D /* AudioToolbox.framework */; };
 		23A0C3B81A66A97B0087EEC4 /* PositiveSSLCA2.cer in Resources */ = {isa = PBXBuildFile; fileRef = 23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */; };
 		23A0C3B91A66A97B0087EEC4 /* PositiveSSLCA2.pem in Resources */ = {isa = PBXBuildFile; fileRef = 23A0C3B71A66A97B0087EEC4 /* PositiveSSLCA2.pem */; };
 		23C663EF1A8B7CA7007C1838 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23C663EE1A8B7CA7007C1838 /* config.plist */; };
@@ -63,27 +51,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2385F6681A932F8E007ADE4B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2385F6521A932F8D007ADE4B;
-			remoteInfo = OneginiCordova;
-		};
-		2385F6771A93304C007ADE4B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
-			remoteInfo = OneginiCordovaPlugin;
-		};
-		2385F67A1A93306F007ADE4B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = CordovaLib;
-		};
 		301BF534109A57CC0062928A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
@@ -120,7 +87,6 @@
 		2315D8D41A9343820001AF77 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = config.xml; path = OneginiCordovaPlugin/config.xml; sourceTree = "<group>"; };
 		2351A2561A655E2300C89FF6 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		2351A2581A655E2F00C89FF6 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
-		2385F6531A932F8D007ADE4B /* OneginiCordova.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OneginiCordova.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2385F6561A932F8E007ADE4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2385F6571A932F8E007ADE4B /* OneginiCordova.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneginiCordova.h; sourceTree = "<group>"; };
 		2385F6731A932FA0007ADE4B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -195,22 +161,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2385F64F1A932F8D007ADE4B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2385F6841A933448007ADE4B /* AudioToolbox.framework in Frameworks */,
-				2385F6831A933441007ADE4B /* MobileCoreServices.framework in Frameworks */,
-				2385F6821A93343A007ADE4B /* CoreGraphics.framework in Frameworks */,
-				2385F6811A933432007ADE4B /* AssetsLibrary.framework in Frameworks */,
-				2385F67F1A9333F7007ADE4B /* libc++.dylib in Frameworks */,
-				2385F67E1A9333EB007ADE4B /* libiconv.dylib in Frameworks */,
-				2385F67D1A9333A6007ADE4B /* libCordova.a in Frameworks */,
-				2385F6741A932FA0007ADE4B /* UIKit.framework in Frameworks */,
-				2385F6801A933428007ADE4B /* libOneginiSDKiOS-0.1.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -233,7 +183,6 @@
 			isa = PBXGroup;
 			children = (
 				1D6058910D05DD3D006BFB54 /* OneginiCordovaPlugin.app */,
-				2385F6531A932F8D007ADE4B /* OneginiCordova.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -404,18 +353,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		2385F6501A932F8D007ADE4B /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2385F6761A932FE3007ADE4B /* OneginiCordova.h in Headers */,
-				2385F6751A932FCD007ADE4B /* OneginiCordovaClient.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		1D6058900D05DD3D006BFB54 /* OneginiCordovaPlugin */ = {
 			isa = PBXNativeTarget;
@@ -431,32 +368,11 @@
 			);
 			dependencies = (
 				301BF551109A68C00062928A /* PBXTargetDependency */,
-				2385F6691A932F8E007ADE4B /* PBXTargetDependency */,
 			);
 			name = OneginiCordovaPlugin;
 			productName = OneginiCordovaPlugin;
 			productReference = 1D6058910D05DD3D006BFB54 /* OneginiCordovaPlugin.app */;
 			productType = "com.apple.product-type.application";
-		};
-		2385F6521A932F8D007ADE4B /* OneginiCordova */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2385F6711A932F8E007ADE4B /* Build configuration list for PBXNativeTarget "OneginiCordova" */;
-			buildPhases = (
-				2385F64E1A932F8D007ADE4B /* Sources */,
-				2385F64F1A932F8D007ADE4B /* Frameworks */,
-				2385F6501A932F8D007ADE4B /* Headers */,
-				2385F6511A932F8D007ADE4B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2385F67B1A93306F007ADE4B /* PBXTargetDependency */,
-				2385F6781A93304C007ADE4B /* PBXTargetDependency */,
-			);
-			name = OneginiCordova;
-			productName = OneginiCordova;
-			productReference = 2385F6531A932F8D007ADE4B /* OneginiCordova.framework */;
-			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -466,12 +382,6 @@
 			attributes = {
 				LastUpgradeCheck = 510;
 				ORGANIZATIONNAME = Onegini;
-				TargetAttributes = {
-					2385F6521A932F8D007ADE4B = {
-						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = MLKFP7554N;
-					};
-				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "OneginiCordovaPlugin" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -498,7 +408,6 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* OneginiCordovaPlugin */,
-				2385F6521A932F8D007ADE4B /* OneginiCordova */,
 			);
 		};
 /* End PBXProject section */
@@ -552,14 +461,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2385F6511A932F8D007ADE4B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2315D8D61A9343D40001AF77 /* www in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -591,31 +492,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2385F64E1A932F8D007ADE4B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2385F6691A932F8E007ADE4B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2385F6521A932F8D007ADE4B /* OneginiCordova */;
-			targetProxy = 2385F6681A932F8E007ADE4B /* PBXContainerItemProxy */;
-		};
-		2385F6781A93304C007ADE4B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1D6058900D05DD3D006BFB54 /* OneginiCordovaPlugin */;
-			targetProxy = 2385F6771A93304C007ADE4B /* PBXContainerItemProxy */;
-		};
-		2385F67B1A93306F007ADE4B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CordovaLib;
-			targetProxy = 2385F67A1A93306F007ADE4B /* PBXContainerItemProxy */;
-		};
 		301BF551109A68C00062928A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CordovaLib;
@@ -697,105 +576,6 @@
 				);
 				PRODUCT_NAME = OneginiCordovaPlugin;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		2385F66D1A932F8E007ADE4B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = c11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				HEADER_SEARCH_PATHS = (
-					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
-					"\"$(OBJROOT)/UninstalledProducts/include\"",
-					"\"$(BUILT_PRODUCTS_DIR)\"",
-					"$(PROJECT_DIR)/OneginiSDKiOS",
-				);
-				INFOPLIST_FILE = OneginiCordova/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/OneginiSDKiOS",
-					"$(PROJECT_DIR)/OneginiCordovaPlugin/OneginiSDKiOS",
-				);
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = armv7;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		2385F66E1A932F8E007ADE4B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Onegini B.V. (MLKFP7554N)";
-				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = c11;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				HEADER_SEARCH_PATHS = (
-					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
-					"\"$(OBJROOT)/UninstalledProducts/include\"",
-					"\"$(BUILT_PRODUCTS_DIR)\"",
-					"$(PROJECT_DIR)/OneginiSDKiOS",
-				);
-				INFOPLIST_FILE = OneginiCordova/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/OneginiSDKiOS",
-					"$(PROJECT_DIR)/OneginiCordovaPlugin/OneginiSDKiOS",
-				);
-				MTL_ENABLE_DEBUG_INFO = NO;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = armv7;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -908,15 +688,6 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2385F6711A932F8E007ADE4B /* Build configuration list for PBXNativeTarget "OneginiCordova" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2385F66D1A932F8E007ADE4B /* Debug */,
-				2385F66E1A932F8E007ADE4B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

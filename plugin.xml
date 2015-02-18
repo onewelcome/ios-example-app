@@ -27,7 +27,13 @@
 
     <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-0.1.a" framework="true"/>
 
+    <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
+    <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>
+
+
     <framework src="libiconv.dylib"/>
     <framework src="libc++.dylib"/>
+
+
   </platform>
 </plugin>

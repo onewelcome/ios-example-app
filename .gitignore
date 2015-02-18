@@ -1,7 +1,9 @@
-platforms/ios/Pods
-platforms/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata
-platforms/ios/OneginiCordovaPlugin.xcodeproj/project.xcworkspace/xcuserdata
-platforms/ios/OneginiCordovaPlugin.xcodeproj/xcuserdata
-platforms/ios/OneginiCordovaPlugin.xcworkspace/xcuserdata
+src/ios/Pods
+src/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata
+src/ios/OneginiCordovaPlugin.xcodeproj/project.xcworkspace/xcuserdata
+src/ios/OneginiCordovaPlugin.xcodeproj/xcuserdata
+src/ios/OneginiCordovaPlugin.xcworkspace/xcuserdata
+src/ios/OneginiCordovaPlugin.xcworkspace/xcuserdata
+src/ios/DerivedData
 *.xccheckout
 .idea/

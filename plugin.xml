@@ -3,8 +3,8 @@
         id="com.onegini.oneginiCordovaPlugin" version="0.2.3">
   <name>OneginiCordovaPlugin</name>
   <description>Cordova Device Plugin</description>
-  <js-module src="www/onegini.js" name="OneginiCordovaPlugin">
-    <clobbers target="OneginiCordovaPlugin" />
+  <js-module src="www/onegini.js" name="oneginiCordovaPlugin">
+    <clobbers target="oneginiCordovaPlugin" />
   </js-module>
 
   <platform name="ios">

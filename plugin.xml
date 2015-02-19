@@ -30,6 +30,7 @@
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>
 
+    <asset src="www/onegini.js" target="js/onegini.js" />
 
     <framework src="libiconv.dylib"/>
     <framework src="libc++.dylib"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
         id="com.onegini.oneginiCordovaPlugin" version="0.2.3">
   <name>OneginiCordovaPlugin</name>
   <description>Cordova Device Plugin</description>
@@ -36,5 +36,59 @@
     <framework src="libc++.dylib"/>
 
 
+  </platform>
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="OneginiCordovaClient" >
+        <param name="android-package" value="com.onegini.OneginiCordovaPlugin"/>
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.INTERNET" />
+      <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+      <uses-permission android:name="android.permission.WAKE_LOCK" />
+      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+      <permission
+          android:name="com.onegini.mobile.sdk.android.demo.permission.C2D_MESSAGE"
+          android:protectionLevel="signature" />
+
+      <uses-permission android:name="com.onegini.mobile.sdk.android.demo.permission.C2D_MESSAGE" />
+
+    </config-file>
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+
+    </config-file>
+
+    <source-file src="src/android/src/android/com/onegini/OneginiCordovaPlugin.java" target-dir="src/com/onegini/" />
+    <source-file src="src/android/src/android/com/onegini/actions/AuthorizeAction.java" target-dir="src/com/onegini/actions/" />
+    <source-file src="src/android/src/android/com/onegini/actions/ConfirmPinAction.java" target-dir="src/com/onegini/actions/" />
+    <source-file src="src/android/src/android/com/onegini/actions/DisconnectAction.java" target-dir="src/com/onegini/actions/" />
+    <source-file src="src/android/src/android/com/onegini/actions/FetchResourceAction.java" target-dir="src/com/onegini/actions/" />
+    <source-file src="src/android/src/android/com/onegini/actions/FetchResourceAnonymouslyAction.java" target-dir="src/com/onegini/actions/" />
+    <source-file src="src/android/src/android/com/onegini/actions/InitAction.java" target-dir="src/com/onegini/actions/" />
+    <source-file src="src/android/src/android/com/onegini/actions/LogoutAction.java" target-dir="src/com/onegini/actions/" />
+    <source-file src="src/android/src/android/com/onegini/actions/OneginiPluginAction.java" target-dir="src/com/onegini/actions/" />
+    <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/" />
+    <source-file src="src/android/src/android/com/onegini/resource/AnonymousResourceClient.java" target-dir="src/com/onegini/resource/" />
+    <source-file src="src/android/src/android/com/onegini/scope/ScopeParser.java" target-dir="src/com/onegini/scope/" />
+
+    <source-file src="src/android/lib/classes.jar" target-dir="libs/" />
+    <!--<source-file src="lib/okhttp-2.0.0.jar" target-dir="libs/" />-->
+    <source-file src="src/android/lib/okhttp-urlconnection-2.0.0.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/retrofit-1.7.1.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/og-ocra-3.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/core-1.51.0.0.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/prov-1.51.0.0.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/pg-1.51.0.0.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/pkix-1.51.0.0.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/nimbus-jose-jwt-3.6.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/okio-1.0.0.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/gson-2.3.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/jcip-annotations-1.0.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/json-smart-1.1.1.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/bcprov-jdk15on-1.51.jar" target-dir="libs/" />
+    <source-file src="src/android/lib/commons-io-2.4.jar" target-dir="libs/" />
   </platform>
 </plugin>

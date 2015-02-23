@@ -1,9 +1,10 @@
 apply plugin: 'android'
-
+def applicationSrcDir = 'src/android'
+def pluginAndroidDir = 'src/android'
 android {
     sourceSets {
         main {
-            java.srcDirs = ['src/android','CordovaLib/src']
+            java.srcDirs = [applicationSrcDir,'CordovaLib/src']
             java.exclude {'CordovaLib/src/com'}
             manifest.srcFile 'AndroidManifest.xml'
         }
@@ -22,14 +23,14 @@ buildscript {
 }
 
 allprojects {
-    sourceCompatibility = 1.6
-    targetCompatibility = 1.6
+    sourceCompatibility = 1.5
+    targetCompatibility = 1.5
     repositories {
         maven {
          url "https://buildserver.onegini.com/nexus/content/groups/public/"
          credentials {
-            username project.properties.mvnUser
-            password project.properties.mvnPassword
+            username mavenUser
+            password mavenPassword
         }
     }
     mavenLocal()
@@ -94,3 +95,14 @@ task preparePlugin(type: Copy)  {
     from configurations.compile
 }
 
+task javaAsPluginNodes <<{
+    def javaFiles = fileTree(dir :applicationSrcDir, include:"**/*.java")
+    javaFiles.visit {
+            if(it.name.endsWith(".java")) {
+                def targetDir = it.relativePath.toString().replace(it.name,"");
+                println "<source-file src=\"$pluginAndroidDir/$applicationSrcDir/$it.relativePath\" target-dir=\"src/$targetDir\" />"
+            }   
+    }
+
+    
+}

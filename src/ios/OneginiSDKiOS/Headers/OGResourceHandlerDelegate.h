@@ -19,8 +19,10 @@
  Method called when the resource call was successfully made.
  
  @param response the response on the resource call
+ @param headers the headers returned on the resource call
  */
-- (void)resourceSuccess:(id)response;
+- (void)resourceSuccess:(id)response
+                headers:(NSDictionary *)headers;
 
 /**
  * Method called when the resource call failed because of an unknown error.

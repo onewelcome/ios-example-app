@@ -12,7 +12,6 @@
 #define kOGAppPlatform						@"kOGAppPlatform"
 #define kOGAppScheme						@"kOGAppScheme"
 #define kOGAppSecret						@"kOGAppSecret"
-#define kOGAppIdentifier					@"kOGAppIdentifier"
 #define kOGAppVersion						@"kOGAppVersion"
 #define kOGBaseURL							@"kAppBaseURL"
 #define kOGMaxPinFailures					@"kOGMaxPinFailures"
@@ -25,6 +24,7 @@
 #define kOGRedirectURL						@"kOGRedirectURL"
 #define kOGDeviceName						@"kOGDeviceName"
 #define kOGUseEmbeddedWebview				@"kOGUseEmbeddedWebview"
+#define kOGStoreCookies                     @"kOGStoreCookies"
 
 @class OGCommons;
 
@@ -123,7 +123,7 @@
  
  @return true if you should confirm the pin created by the user, false otherwise
  */
-- (BOOL)shouldConfirmNewPin;
+- (BOOL)shouldConfirmNewPin DEPRECATED_ATTRIBUTE;
 
 /**
  Always show the push message right away, or just show a small notification
@@ -150,6 +150,13 @@
  @return true if client uses an embedded UIWebView
  */
 - (BOOL)useEmbeddedWebView;
+
+/**
+ If the App wants to store cookies between requests then this parameter must be set to true.
+
+@return true if the app requires storing cookies between requests
+*/
+- (BOOL)storeCookies;
 
 /**
  Returns the value associated with a given key.

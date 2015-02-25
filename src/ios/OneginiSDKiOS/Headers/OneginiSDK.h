@@ -10,6 +10,8 @@
 #import "OGResourceHandlerDelegate.h"
 #import "OGAuthorizationDelegate.h"
 #import "OGEnrollmentHandlerDelegate.h"
+#import "OGChangePinDelegate.h"
+#import "OGPinValidationDelegate.h"
 #import "OGConfigModel.h"
 #import "OGOneginiClient.h"
 #import "OGPublicCommons.h"

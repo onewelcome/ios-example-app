@@ -1,12 +1,14 @@
 apply plugin: 'android'
 def applicationSrcDir = 'src/android'
 def pluginAndroidDir = 'src/android'
+def applicationResDir = 'res'
 android {
     sourceSets {
         main {
             java.srcDirs = [applicationSrcDir,'CordovaLib/src']
             java.exclude {'CordovaLib/src/com'}
-            manifest.srcFile 'AndroidManifest.xml'
+            manifest.srcFile  'AndroidManifest.xml'
+            res.srcDirs = [applicationResDir]
         }
     }
 }
@@ -23,8 +25,8 @@ buildscript {
 }
 
 allprojects {
-    sourceCompatibility = 1.5
-    targetCompatibility = 1.5
+    sourceCompatibility = 1.6
+    targetCompatibility = 1.6
     repositories {
         maven {
          url "https://buildserver.onegini.com/nexus/content/groups/public/"
@@ -74,7 +76,7 @@ dependencies {
     compile 'com.onegini.mobile.sdk.android:library:3.00.00.00-SNAPSHOT@aar'
     // FIXME: Transitive dependencies that should come from the SDK, but won't work if you do a local maven install
     // Http Client
-    //compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     // Rest Client
     compile 'com.squareup.retrofit:retrofit:1.7.1'
@@ -95,14 +97,21 @@ task preparePlugin(type: Copy)  {
     from configurations.compile
 }
 
-task javaAsPluginNodes <<{
-    def javaFiles = fileTree(dir :applicationSrcDir, include:"**/*.java")
+task javaAsPluginNodes << {
+    def javaFiles = fileTree(dir: applicationSrcDir, include: "**/*.java")
     javaFiles.visit {
-            if(it.name.endsWith(".java")) {
-                def targetDir = it.relativePath.toString().replace(it.name,"");
-                println "<source-file src=\"$pluginAndroidDir/$applicationSrcDir/$it.relativePath\" target-dir=\"src/$targetDir\" />"
-            }   
+        if (it.name.endsWith(".java")) {
+            def targetDir = it.relativePath.toString().replace(it.name, "");
+            println "<source-file src=\"$pluginAndroidDir/$applicationSrcDir/$it.relativePath\" target-dir=\"src/$targetDir\" />"
+        }
     }
-
-    
+}
+task resAsPluginNodes <<{
+    def resFiles = fileTree(dir :applicationResDir, include:"**/*")
+    resFiles.visit {
+            if(!it.isDirectory()) {
+                def targetDir = it.relativePath.toString().replace(it.name,"");
+                println "<resource-file src=\"$pluginAndroidDir/$applicationResDir/$it.relativePath\" target=\"res/$it.relativePath\" />"
+            }
+    }
 }

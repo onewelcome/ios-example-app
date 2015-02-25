@@ -48,10 +48,12 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 //        actions.put("confirmChangePinWithVerification", null);
 //        actions.put("cancelPinChange", null);
     }
-
+        
+    public CordovaInterface getCordova(){
+        return cordova;
+    }
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-
         if (actions.containsKey(action)) {
             Class<? extends OneginiPluginAction> actionClass = actions.get(action);
             try {

@@ -1,12 +1,12 @@
 package com.onegini.actions;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.google.gson.Gson;
 import com.onegini.OneginiCordovaPlugin;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
-import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.AlertInterface;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.ConfirmationDialogSelector;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.ConfirmationWithPin;
@@ -31,7 +31,11 @@ public class InitAction implements OneginiPluginAction {
                 ContextAwareDialogProvider.getInstance().getPinDialog().setPinDialog(getPinDialImpl());
                 ContextAwareDialogProvider.getInstance().getConfirmationDialog().setConfirmationDialogSelector(getConfirmationDialogSelectorImpl());
                 ContextAwareDialogProvider.getInstance().getConfirmationWithPinDialog().setConfirmationWithPinDialog(getConfirmationWitkPinDialog());
-                OneginiClientConfigModel configModel = gson.fromJson(configuration.toString(), ConfigModel.class);
+                ConfigModel configModel = gson.fromJson(configuration.toString(), ConfigModel.class);
+                Application application = client.getCordova().getActivity().getApplication();
+                int identifier = client.getCordova().getActivity().getResources().getIdentifier("keystore","raw",application.getPackageName());
+                configModel.setCertificatePinningKeyStore(identifier);
+                configModel.setKeyStoreHash("7A8E3D2333A1324229712B288950E317CE5BE5F956C196CEF33B46993D371575");
                 Context applicationContext = client.cordova.getActivity().getApplicationContext();
                 OneginiClient oneginiClient = OneginiClient.setupInstance(applicationContext, configModel);
                 client.setOneginiClient(oneginiClient);

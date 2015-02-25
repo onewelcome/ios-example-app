@@ -13,8 +13,8 @@ public class ConfigModel implements OneginiClientConfigModel {
     private String appPlatform;
     @SerializedName("kOGAppScheme")
     private String appScheme;
-    @SerializedName("appSecret")
-    private String appSecret;
+    //@SerializedName("appSecret")
+    private String appSecret = "1234";
     @SerializedName("kOGAppVersion")
     private String appVersion;
     @SerializedName("kAppBaseURL")
@@ -27,12 +27,12 @@ public class ConfigModel implements OneginiClientConfigModel {
     private boolean shouldConfirmNewPin;
     @SerializedName("kOGShouldDirectlyShowPushMessage")
     private boolean shouldDirectlyShowPushMessage;
-    @SerializedName("certificatePinningKeyStore")
+   
     private int certificatePinningKeyStore;
-    @SerializedName("keyStoreHash")
-    private String keyStoreHash;
     @SerializedName("deviceName")
     private String deviceName;
+    
+    private  String keyStoreHash;
 
     @Override
     public String getAppIdentifier() {
@@ -89,9 +89,17 @@ public class ConfigModel implements OneginiClientConfigModel {
         return certificatePinningKeyStore;
     }
 
+    public void setCertificatePinningKeyStore(int certificatePinningKeyStore) {
+        this.certificatePinningKeyStore = certificatePinningKeyStore;
+    }
+
     @Override
     public String getKeyStoreHash() {
         return keyStoreHash;
+    }
+
+    public void setKeyStoreHash(String keyStoreHash) {
+        this.keyStoreHash = keyStoreHash;
     }
 
     @Override

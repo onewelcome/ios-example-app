@@ -1,0 +1,132 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.0'
+    }
+}
+
+apply plugin: 'java'
+def workDirectory = "build/jarjar/"
+def pluginAndroidDir = 'src/android'
+def applicationSrcDir = 'src/android'
+def applicationResDir = 'res'
+def pluginDepOutputFile = 'lib/plugin-dependencies.jar'
+allprojects {
+    sourceCompatibility = 1.6
+    targetCompatibility = 1.6
+    repositories {
+        maven {
+            url "https://buildserver.onegini.com/nexus/content/groups/public/"
+            credentials {
+                username mavenUser
+                password mavenPassword
+            }
+        }
+        mavenLocal()
+        mavenCentral()
+    }
+}
+dependencies {
+    // The onegini sdk
+    compile 'com.onegini.mobile.sdk.android:library:00.01.00-SNAPSHOT@aar'
+    // Http Client
+    compile 'com.squareup.okhttp:okhttp:2.2.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+    // Rest Client
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    //Onegini OCRA
+    compile('com.onegini.misc:og-ocra:3') {
+        exclude module: 'junit'
+    }
+    // Spongy castle
+    compile 'com.madgag.spongycastle:core:1.51.0.0'
+    compile 'com.madgag.spongycastle:prov:1.51.0.0'
+    compile 'com.madgag.spongycastle:pg:1.51.0.0'
+    compile 'com.madgag.spongycastle:pkix:1.51.0.0'
+    compile 'com.nimbusds:nimbus-jose-jwt:3.6'
+}
+task workDirecotryExists {
+    if (!file(workDirectory).exists()) {
+        file(workDirectory).mkdirs();
+    }
+}
+task clearOldLibs(type: Delete, dependsOn: workDirecotryExists) {
+    delete fileTree(dir: workDirectory, exclude: ['.gitignore', 'jarjar*'])
+}
+task downloadLibs(type: Copy, dependsOn: clearOldLibs) {
+    into(workDirectory)
+    from(configurations.compile)
+    exclude('jarjar*')
+}
+task downloadAndPrepareLibs(type: Copy, dependsOn: downloadLibs) {
+    def aarLibrary
+    def name
+    configurations.compile.each {
+        if (it.name.endsWith(".aar")) {
+            aarLibrary = it.absoluteFile;
+            name = it.name
+        }
+    }
+    from zipTree(aarLibrary)
+    into workDirectory
+    include "classes.jar"
+    rename { filename ->
+        filename.replace('classes', name)
+    }
+}
+
+task prepareLibrares(dependsOn: 'downloadAndPrepareLibs') {
+    doLast {
+        project.ant {
+            taskdef name: "jarjar", classname: "com.tonicsystems.jarjar.JarJarTask", classpath: "lib/jarjar-1.4.jar"
+            jarjar(jarfile: 'lib/plugin-dependencies.jar') {
+                configurations.compile.each {
+                    if (it.name.endsWith("jar")) {
+                        zipfileset(src: "build/jarjar/" + it.name)
+                    }else{
+                        zipfileset(src: "build/jarjar/" + it.name+".jar")
+                    }
+                }
+                rule pattern: "com.squareup.**", result: "com.squareup2.@1"
+            }
+        }
+        file(workDirectory).deleteDir();
+        println "<source-file src=\"$pluginAndroidDir/lib/plugin-dependencies.jar\" target-dir=\"libs/\" />"
+    }
+
+}
+
+task javaAsPluginNodes {
+    doLast {
+        def javaFiles = fileTree(dir: applicationSrcDir, include: "**/*.java")
+        javaFiles.visit {
+            if (it.name.endsWith(".java")) {
+                def targetDir = it.relativePath.toString().replace(it.name, "");
+                println "<source-file src=\"$pluginAndroidDir/$applicationSrcDir/$it.relativePath\" target-dir=\"src/$targetDir\" />"
+            }
+        }
+    }
+}
+
+task resAsPluginNodes {
+    doLast {
+        def resFiles = fileTree(dir: applicationResDir, include: "**/*")
+        resFiles.visit {
+            if (!it.isDirectory()) {
+                println "<resource-file src=\"$pluginAndroidDir/$applicationResDir/$it.relativePath\" target=\"res/$it.relativePath\" />"
+            }
+        }
+    }
+}
+
+task preparePlugin(dependsOn: [javaAsPluginNodes, prepareLibrares, resAsPluginNodes]) {
+    doLast {
+        println "Plugin generated"
+    }
+}
+
+

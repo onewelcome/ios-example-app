@@ -57,8 +57,13 @@
       <uses-permission android:name="com.onegini.mobile.sdk.android.demo.permission.C2D_MESSAGE" />
 
     </config-file>
-    <config-file target="AndroidManifest.xml" parent="/manifest/application">
-
+    <config-file target="AndroidManifest.xml"  parent="/*/application/activity">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="oneginisdk"/>
+        </intent-filter>
     </config-file>
 
       <source-file src="src/android/src/android/com/onegini/OneginiCordovaPlugin.java" target-dir="src/com/onegini/" />

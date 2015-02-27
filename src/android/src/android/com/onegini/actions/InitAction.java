@@ -33,7 +33,7 @@ public class InitAction implements OneginiPluginAction {
                 ContextAwareDialogProvider.getInstance().getConfirmationWithPinDialog().setConfirmationWithPinDialog(getConfirmationWitkPinDialog());
                 ConfigModel configModel = gson.fromJson(configuration.toString(), ConfigModel.class);
                 Application application = client.getCordova().getActivity().getApplication();
-                int identifier = client.getCordova().getActivity().getResources().getIdentifier("keystore","raw",application.getPackageName());
+                int identifier = client.getCordova().getActivity().getResources().getIdentifier("keystore", "raw", application.getPackageName());
                 configModel.setCertificatePinningKeyStore(identifier);
                 configModel.setKeyStoreHash("7A8E3D2333A1324229712B288950E317CE5BE5F956C196CEF33B46993D371575");
                 Context applicationContext = client.cordova.getActivity().getApplicationContext();

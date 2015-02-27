@@ -16,13 +16,11 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
             String requestPath = getPath(args);
             String[] scopes = getScopes(args);
             String requestMethod = getRequestMethod(args);
-            String paramsEncoding = getParamsEncoding(args);
             String[] params = getRequestParameters(args);
             AnonymousResourceClient resourceClient = new AnonymousResourceClient(client.getOneginiClient(), requestPath, scopes, requestMethod);
             resourceClient.performResourceAction(getResourceHandler(callbackContext), scopes, params);
         } catch (Exception e) {
             callbackContext.error(e.getMessage());
-
         }
         return false;
     }
@@ -30,8 +28,8 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
     private OneginiResourceHandler<String> getResourceHandler(final CallbackContext callbackContext) {
         return new OneginiResourceHandler<String>() {
             @Override
-            public void resourceSuccess(String o) {
-                callbackContext.success(o);
+            public void resourceSuccess(String response) {
+                callbackContext.success(response);
             }
 
             @Override
@@ -51,12 +49,10 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
 
             @Override
             public void getScopeError() {
-
             }
 
             @Override
             public void setRetry(boolean b) {
-
             }
 
             @Override
@@ -66,7 +62,6 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
 
             @Override
             public void getUnauthorizedClient() {
-
             }
 
             @Override
@@ -77,12 +72,7 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
     }
 
     private String[] getRequestParameters(JSONArray args) {
-
         return new String[0];
-    }
-
-    private String getParamsEncoding(JSONArray args) throws JSONException {
-        return args.getString(3);
     }
 
     private String getRequestMethod(JSONArray args) throws JSONException {
@@ -98,6 +88,5 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
     private String getPath(JSONArray args) throws JSONException {
         return args.getString(0);
     }
-
 
 }

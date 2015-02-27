@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.onegini.actions.AuthorizeAction;
 import com.onegini.actions.DisconnectAction;
 import com.onegini.actions.FetchResourceAction;
+import com.onegini.actions.FetchResourceAnonymouslyAction;
 import com.onegini.actions.InitAction;
 import com.onegini.actions.LogoutAction;
 import com.onegini.actions.OneginiPluginAction;
@@ -27,14 +28,14 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-      actions.put("initWithConfig", InitAction.class);
-      actions.put("authorize", AuthorizeAction.class);
-      actions.put("fetchResource", FetchResourceAction.class);
-      actions.put("fetchAnonymousResource",null);
-      actions.put("logout", LogoutAction.class);
-      actions.put("disconnect", DisconnectAction.class);
-      //  actions.put("clearCredentials", null);
-      //  actions.put("clearTokens", null);
+        actions.put("initWithConfig", InitAction.class);
+        actions.put("authorize", AuthorizeAction.class);
+        actions.put("fetchResource", FetchResourceAction.class);
+        actions.put("fetchAnonymousResource", FetchResourceAnonymouslyAction.class);
+        actions.put("logout", LogoutAction.class);
+        actions.put("disconnect", DisconnectAction.class);
+        //  actions.put("clearCredentials", null);
+        //  actions.put("clearTokens", null);
 
 
 //        actions.put("confirmPin", null);
@@ -48,10 +49,11 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 //        actions.put("confirmChangePinWithVerification", null);
 //        actions.put("cancelPinChange", null);
     }
-        
-    public CordovaInterface getCordova(){
+
+    public CordovaInterface getCordova() {
         return cordova;
     }
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (actions.containsKey(action)) {

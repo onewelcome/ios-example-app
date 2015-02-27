@@ -72,14 +72,15 @@ dependencies {
 //    compile 'com.google.android.gms:play-services-base:6.5+'
 
     // The onegini sdk
-    compile 'com.onegini.mobile.sdk.android:library:3.00.00.00-SNAPSHOT@aar'
+    compile 'com.onegini.mobile.sdk.android:library:2.04.05.02@aar'
     // FIXME: Transitive dependencies that should come from the SDK, but won't work if you do a local maven install
     // Http Client
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     // Rest Client
-    compile 'com.squareup.retrofit:retrofit:1.7.1'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
     //Onegini OCRA
+    
     compile ('com.onegini.misc:og-ocra:3'){
         exclude  module: 'junit' //by both name and group
     }

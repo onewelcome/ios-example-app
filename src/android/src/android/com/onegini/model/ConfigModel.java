@@ -111,4 +111,9 @@ public class ConfigModel implements OneginiClientConfigModel {
     public boolean shouldGetIdToken() {
         return shouldGetIdToken;
     }
+
+    @Override
+    public boolean shouldStoreCookies() {
+        return true;
+    }
 }

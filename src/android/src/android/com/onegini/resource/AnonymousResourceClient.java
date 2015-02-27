@@ -4,10 +4,9 @@ import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiResourceHandler;
 import com.onegini.mobile.sdk.android.library.helpers.AnonymousResourceHelperAbstract;
 
-import org.json.JSONObject;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collections;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -47,7 +46,7 @@ public class AnonymousResourceClient extends AnonymousResourceHelperAbstract<Str
             getResourceMethod.invoke(anonymousResourceRestClient, getAnonymousAuthenticationHeader(), path, new Callback<String>() {
                 @Override
                 public void success(final String result, final Response response) {
-                    oneginiResourceHandler.resourceSuccess(result);
+                    oneginiResourceHandler.resourceSuccess(result, Collections.EMPTY_LIST);
                 }
 
                 @Override

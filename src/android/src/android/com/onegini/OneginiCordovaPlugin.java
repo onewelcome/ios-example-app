@@ -1,6 +1,5 @@
 package com.onegini;
 
-import com.google.gson.Gson;
 import com.onegini.actions.AuthorizeAction;
 import com.onegini.actions.DisconnectAction;
 import com.onegini.actions.FetchResourceAction;
@@ -9,8 +8,6 @@ import com.onegini.actions.InitAction;
 import com.onegini.actions.LogoutAction;
 import com.onegini.actions.OneginiPluginAction;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
-import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
-import com.onegini.model.ConfigModel;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;

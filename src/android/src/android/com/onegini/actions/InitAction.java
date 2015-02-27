@@ -9,9 +9,9 @@ import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.AlertInterface;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.ConfirmationDialogSelector;
-import com.onegini.mobile.sdk.android.library.utils.dialogs.ConfirmationWithPin;
-import com.onegini.mobile.sdk.android.library.utils.dialogs.ContextAwareDialogProvider;
-import com.onegini.mobile.sdk.android.library.utils.dialogs.PinDialogInterface;
+import com.onegini.mobile.sdk.android.library.utils.dialogs.DialogProvider;
+import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCreatePinDialog;
+import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCurrentPinDialog;
 import com.onegini.model.ConfigModel;
 
 import org.apache.cordova.CallbackContext;
@@ -27,10 +27,10 @@ public class InitAction implements OneginiPluginAction {
         if (args.length() == 2) {
             try {
                 JSONObject configuration = args.getJSONObject(0);
-                ContextAwareDialogProvider.setInstance(null);
-                ContextAwareDialogProvider.getInstance().getPinDialog().setPinDialog(getPinDialImpl());
-                ContextAwareDialogProvider.getInstance().getConfirmationDialog().setConfirmationDialogSelector(getConfirmationDialogSelectorImpl());
-                ContextAwareDialogProvider.getInstance().getConfirmationWithPinDialog().setConfirmationWithPinDialog(getConfirmationWitkPinDialog());
+                DialogProvider.setInstance();
+                DialogProvider.getInstance().setOneginiCreatePinDialog(getOneginiCreatePinDialog());
+                DialogProvider.getInstance().setOneginiCurrentPinDialog(getOneginiCurrentPinDialog());
+                DialogProvider.getInstance().getConfirmationDialog().setConfirmationDialogSelector(getConfirmationDialogSelectorImpl());
                 ConfigModel configModel = gson.fromJson(configuration.toString(), ConfigModel.class);
                 Application application = client.getCordova().getActivity().getApplication();
                 int identifier = client.getCordova().getActivity().getResources().getIdentifier("keystore", "raw", application.getPackageName());
@@ -49,19 +49,45 @@ public class InitAction implements OneginiPluginAction {
         return false;
     }
 
-    private ConfirmationWithPin getConfirmationWitkPinDialog() {
-        return new ConfirmationWithPin() {
+    private OneginiCurrentPinDialog getOneginiCurrentPinDialog() {
+        return new OneginiCurrentPinDialog() {
             @Override
-            public void showConfirmation(String s, String s2, int i, int i2, ConfirmationWithPinHandler confirmationWithPinHandler) {
-
-            }
-
-            @Override
-            public void setContext(Context context) {
+            public void getCurrentPin(OneginiPinProvidedHandler oneginiPinProvidedHandler) {
 
             }
         };
     }
+
+    private OneginiCreatePinDialog getOneginiCreatePinDialog() {
+        return new OneginiCreatePinDialog() {
+            @Override
+            public void createPin(OneginiPinProvidedHandler oneginiPinProvidedHandler) {
+
+            }
+
+            @Override
+            public void pinBlackListed() {
+
+            }
+
+            @Override
+            public void pinShouldNotBeASequence() {
+
+            }
+
+            @Override
+            public void pinShouldNotUseSimilarDigits(int maxSimilar) {
+
+            }
+
+            @Override
+            public void pinTooShort() {
+
+            }
+        };
+    }
+
+
 
     private ConfirmationDialogSelector getConfirmationDialogSelectorImpl() {
         return new ConfirmationDialogSelector() {
@@ -77,42 +103,5 @@ public class InitAction implements OneginiPluginAction {
         };
     }
 
-    private PinDialogInterface getPinDialImpl() {
-        return new PinDialogInterface() {
-            @Override
-            public void showDialog(OneginiPinProvidedHandler oneginiPinProvidedHandler, String s) {
 
-            }
-
-            @Override
-            public void setContext(Context context) {
-
-            }
-
-            @Override
-            public void pinBlackListed(String s) {
-
-            }
-
-            @Override
-            public void pinShouldNotBeASequence(String s) {
-
-            }
-
-            @Override
-            public void pinShouldNotUseSimilarDigits(String s, int i) {
-
-            }
-
-            @Override
-            public void pinTooShort(String s) {
-
-            }
-
-            @Override
-            public void pinsNotEqual(String s) {
-
-            }
-        };
-    }
 }

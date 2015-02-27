@@ -9,6 +9,10 @@ import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.List;
+
+import retrofit.client.Header;
+
 public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
     @Override
     public boolean execute(JSONArray args, CallbackContext callbackContext, OneginiCordovaPlugin client) {
@@ -28,7 +32,7 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
     private OneginiResourceHandler<String> getResourceHandler(final CallbackContext callbackContext) {
         return new OneginiResourceHandler<String>() {
             @Override
-            public void resourceSuccess(String response) {
+            public void resourceSuccess(String response,List<Header> headers) {
                 callbackContext.success(response);
             }
 

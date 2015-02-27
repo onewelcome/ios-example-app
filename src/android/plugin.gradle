@@ -14,7 +14,7 @@ def workDirectory = "build/jarjar/"
 def pluginAndroidDir = 'src/android'
 def applicationSrcDir = 'src/android'
 def applicationResDir = 'res'
-def pluginDepOutputFile = 'lib/plugin-dependencies.jar'
+
 allprojects {
     sourceCompatibility = 1.6
     targetCompatibility = 1.6
@@ -32,10 +32,10 @@ allprojects {
 }
 dependencies {
     // The onegini sdk
-    compile 'com.onegini.mobile.sdk.android:library:00.01.00-SNAPSHOT@aar'
+    compile 'com.onegini.mobile.sdk.android:library:3.00.00.00-SNAPSHOT@aar'
     // Http Client
-    compile 'com.squareup.okhttp:okhttp:2.2.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     // Rest Client
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     //Onegini OCRA
@@ -85,6 +85,7 @@ task prepareLibrares(dependsOn: 'downloadAndPrepareLibs') {
             taskdef name: "jarjar", classname: "com.tonicsystems.jarjar.JarJarTask", classpath: "lib/jarjar-1.4.jar"
             jarjar(jarfile: 'lib/plugin-dependencies.jar') {
                 configurations.compile.each {
+                    //println "file added $it.name"
                     if (it.name.endsWith("jar")) {
                         zipfileset(src: "build/jarjar/" + it.name)
                     }else{

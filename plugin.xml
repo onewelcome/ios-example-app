@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="com.onegini.oneginiCordovaPlugin" version="0.2.3">
+        id="com.onegini.oneginiCordovaPlugin" version="0.2.4.4">
   <name>OneginiCordovaPlugin</name>
   <description>Cordova Device Plugin</description>
   <js-module src="www/onegini.js" name="oneginiCordovaPlugin">
@@ -23,9 +23,11 @@
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGOneginiClient.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGPublicCommons.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGResourceHandlerDelegate.h"/>
+	<header-file src="src/ios/OneginiSDKiOS/Headers/OGChangePinDelegate.h"/>
+	<header-file src="src/ios/OneginiSDKiOS/Headers/OGPinValidationDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OneginiSDK.h"/>
 
-    <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-0.1.a" framework="true"/>
+    <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-2.04.05.03-SNAPSHOT.a" framework="true"/>
 
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>
@@ -34,7 +36,6 @@
 
     <framework src="libiconv.dylib"/>
     <framework src="libc++.dylib"/>
-
 
   </platform>
 </plugin>

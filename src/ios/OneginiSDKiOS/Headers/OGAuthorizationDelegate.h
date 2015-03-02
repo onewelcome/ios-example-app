@@ -64,7 +64,7 @@ typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm
 - (void)askForCurrentPin;
 
 /**
- Ask the user for the current PIN in change PIN request flow.
+ Ask the user for the current PIN in the change PIN request flow.
  The PIN must be forwarded directly to the client and not be stored by any means.
  */
 - (void)askCurrentPinForChangeRequest;

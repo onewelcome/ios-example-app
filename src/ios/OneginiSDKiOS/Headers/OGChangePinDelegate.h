@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ This protocol informs the client about the result of the PIN change request.
+ Clients must also implement the OGPinValidationDelegate protocol.
+ */
 @protocol OGChangePinDelegate <NSObject>
 
 @required

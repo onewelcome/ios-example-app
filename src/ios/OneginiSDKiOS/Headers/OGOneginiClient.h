@@ -134,6 +134,14 @@
  @param pin
  */
 - (void)confirmCurrentPinForChangeRequest:(NSString *)pin;
+
+/**
+ Confirm the new PIN for the change request.
+ Call this method in reponse to OGAuthorizationDelegate - (void)askNewPinForChangeRequest:(NSUInteger)pinSize;
+ 
+ @param pin
+ @param pin validation delegate
+ */
 - (void)confirmNewPinForChangeRequest:(NSString *)pin validation:(id<OGPinValidationDelegate>)delegate;
 
 /**

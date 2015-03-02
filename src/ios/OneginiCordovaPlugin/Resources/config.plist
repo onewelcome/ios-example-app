@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>kOGAppIdentifier</key>
-	<string>DemoApp-2-4</string>
+	<string>DemoApp</string>
 	<key>kOGAppScheme</key>
 	<string>oneginisdk</string>
 	<key>kOGAppPlatform</key>
 	<string>ios</string>
 	<key>kOGAppVersion</key>
-	<string>2.4</string>
+	<string>2.4.1</string>
 	<key>kAppBaseURL</key>
-	<string>https://beta-tokenserver.onegini.com</string>
+	<string>https://oauth-engine.onegini.com</string>
 	<key>kOGShouldConfirmNewPin</key>
 	<true/>
 	<key>kOGShouldDirectlyShowPushMessage</key>
@@ -21,8 +21,12 @@
 	<key>kOGMaxPinFailures</key>
 	<string>3</string>
 	<key>kOGResourceBaseURL</key>
-	<string>https://beta-tokenserver.onegini.com</string>
+	<string>https://oauth-engine.onegini.com</string>
 	<key>kOGRedirectURL</key>
 	<string>oneginisdk://loginsuccess</string>
+	<key>kOGStoreCookies</key>
+	<true/>
+	<key>kOGDeviceName</key>
+	<string>Test Cordova</string>
 </dict>
 </plist>

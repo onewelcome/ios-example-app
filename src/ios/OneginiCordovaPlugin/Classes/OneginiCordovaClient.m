@@ -539,6 +539,9 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 - (void)pinChangeError:(NSError *)error {
 	if (pinChangeCommandTxId == nil) {
+#ifdef DEBUG
+		NSLog(@"pinChangeError: pinChangeCommandTxId is nil, invocation is out of context");
+#endif
 		return;
 	}
 	
@@ -548,6 +551,9 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 - (void)invalidCurrentPin {
 	if (pinChangeCommandTxId == nil) {
+#ifdef DEBUG
+		NSLog(@"invalidCurrentPin: pinChangeCommandTxId is nil, invocation is out of context");
+#endif
 		return;
 	}
 	
@@ -557,6 +563,9 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 - (void)pinChanged {
 	if (pinChangeCommandTxId == nil) {
+#ifdef DEBUG
+		NSLog(@"pinChanged: pinChangeCommandTxId is nil, invocation is out of context");
+#endif
 		return;
 	}
 	
@@ -566,6 +575,9 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 - (void)pinChangeError {
 	if (pinChangeCommandTxId == nil) {
+#ifdef DEBUG
+		NSLog(@"pinChangeError: pinChangeCommandTxId is nil, invocation is out of context");
+#endif
 		return;
 	}
 	

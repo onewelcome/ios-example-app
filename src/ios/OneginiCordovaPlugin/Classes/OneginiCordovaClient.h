@@ -91,7 +91,7 @@
  Cancel the PIN change. This is not a rollback of a changed PIN.
  It should be called when the user PIN change input dialog is cancelled by the user.
  */
-//- (void)cancelPinChange:(CDVInvokedUrlCommand *)command;
+- (void)cancelPinChange:(CDVInvokedUrlCommand *)command;
 
 /**
  Logout will invalidate the current session.

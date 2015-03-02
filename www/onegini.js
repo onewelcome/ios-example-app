@@ -98,11 +98,11 @@ module.exports = {
         router.requestAuthorization(response.url);
       }
       else if (response.method == 'askForCurrentPin') {
-        // TODO rename function confirm response.method
+        // TODO rename function conform response.method name
         router.askForPin();
       }
       else if (response.method == 'askForNewPin') {
-        // TODO rename function confirm response.method
+        // TODO rename function conform response.method name
         router.askForPinWithVerification();
       }
       else if (response == 'authorizationSuccess') {
@@ -112,7 +112,6 @@ module.exports = {
       router.authorizationFailure(error, scopes);
     }, 'OneginiCordovaClient', 'authorize', scopes);
   },
-
 
   /**
    * This will end the current session and invalidate the access token. The refresh token and client credentials
@@ -161,7 +160,6 @@ module.exports = {
   checkPin: function (errorCallback, pin) {
     exec(null, function (error) {
       if (errorCallback) {
-       	// TODO differentiate between the different validation errors 
         errorCallback(error);
       }
     }, 'OneginiCordovaClient', 'confirmCurrentPin', [pin]);
@@ -182,8 +180,15 @@ module.exports = {
   setPin: function (errorCallback, pin) {
     // Callback is performed on the initiating authorize callback handler
     exec(null, function (error) {
+      console.log(error);
       if (errorCallback) {
-      	// TODO differentiate between the different validation errors 
+       	// Currently the following validation errors are defined.
+       	// The error contains a 'reason' and optionally an additional key 
+		// pinBlackListed
+		// pinShouldNotBeASequence
+		// pinShouldNotUseSimilarDigits with maxSimilarDigits key
+		// pinTooShort
+		// pinEntryError
         errorCallback(error);
       }
     }, 'OneginiCordovaClient', 'confirmNewPin', [pin]);
@@ -201,8 +206,15 @@ module.exports = {
       } 
       else if (response.method == 'askCurrentPinForChangeRequest') {
    		// WARNING NOT IMPLEMENTED, call the router and ask the user for the new PIN
+      } 
+      else if (response == 'pinChanged') {
+        // WARNING NOT IMPLEMENTED, call the router and inform that the pin has been changed
       }
-    }, function (error) {
+    }, function (error) {      
+      // Expect the following errors, see also OGChangePinDelegate
+      // invalidCurrentPin
+      // pinChangeError 
+      // pinChangeError with additional error object
     }, 'OneginiCordovaClient', 'changePin', [scopes]);
   },
   confirmCurrentPinForChangeRequest: function (pin) {
@@ -217,6 +229,13 @@ module.exports = {
     // Forward the PIN entries back to the OneginiClient.
     // Callback is performed on the initiating changePin callback handler
     exec(null, function (error) {
+       	// Currently the following validation errors are defined.
+      	// The error contains a 'reason' and optionally an additional key 
+		// pinBlackListed
+		// pinShouldNotBeASequence
+		// pinShouldNotUseSimilarDigits with maxSimilarDigits key
+		// pinTooShort
+		// pinEntryError
     }, 'OneginiCordovaClient', 'confirmNewPinForChangeRequest', [pin]);
   },
   cancelPinChange: function () {

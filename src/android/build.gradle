@@ -1,11 +1,15 @@
+// Gradle configuration required by android studio.
+// TODO: remove dependencies duplications in plugin.gradle and build.gradle
 apply plugin: 'android'
-
+def applicationSrcDir = 'src/android'
+def applicationResDir = 'res'
 android {
     sourceSets {
         main {
-            java.srcDirs = ['src/android','CordovaLib/src']
+            java.srcDirs = [applicationSrcDir,'CordovaLib/src']
             java.exclude {'CordovaLib/src/com'}
-            manifest.srcFile 'AndroidManifest.xml'
+            manifest.srcFile  'AndroidManifest.xml'
+            res.srcDirs = [applicationResDir]
         }
     }
 }
@@ -28,17 +32,14 @@ allprojects {
         maven {
          url "https://buildserver.onegini.com/nexus/content/groups/public/"
          credentials {
-            username project.properties.mvnUser
-            password project.properties.mvnPassword
+            username mavenUser
+            password mavenPassword
         }
     }
     mavenLocal()
     mavenCentral()
   }
 }
-
-
-
 
 android {
     compileSdkVersion 21
@@ -64,22 +65,20 @@ android {
 
 dependencies {
 //    compile 'com.android.support:appcompat-v7:21.0.2'
-//    compile 'com.android.support:multidex:1.0.0'
-//
-//  // Google messaging
-//    compile 'com.google.android.gms:play-services-base:6.5+'
-
     // The onegini sdk
-    compile 'com.onegini.mobile.sdk.android:library:3.00.00.00-SNAPSHOT@aar'
+    compile 'com.onegini.mobile.sdk.android:library:2.04.05.02@aar'
     // FIXME: Transitive dependencies that should come from the SDK, but won't work if you do a local maven install
+    // Google play services
+    compile 'com.google.android.gms:play-services-base:6.5+'
     // Http Client
-    //compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     // Rest Client
-    compile 'com.squareup.retrofit:retrofit:1.7.1'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
     //Onegini OCRA
+    
     compile ('com.onegini.misc:og-ocra:3'){
-        exclude  module: 'junit' //by both name and group
+        exclude  module: 'junit'
     }
     // Spongy castle
     compile 'com.madgag.spongycastle:core:1.51.0.0'
@@ -88,9 +87,3 @@ dependencies {
     compile 'com.madgag.spongycastle:pkix:1.51.0.0'
     compile 'com.nimbusds:nimbus-jose-jwt:3.6'
 }
-
-task preparePlugin(type: Copy)  {
-    into  file("lib")
-    from configurations.compile
-}
-

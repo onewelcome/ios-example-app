@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
         id="com.onegini.oneginiCordovaPlugin" version="0.2.3">
   <name>OneginiCordovaPlugin</name>
   <description>Cordova Device Plugin</description>
@@ -35,6 +35,50 @@
     <framework src="libiconv.dylib"/>
     <framework src="libc++.dylib"/>
 
+
+  </platform>
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="OneginiCordovaClient" >
+        <param name="android-package" value="com.onegini.OneginiCordovaPlugin"/>
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.INTERNET" />
+      <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+      <uses-permission android:name="android.permission.WAKE_LOCK" />
+      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+      <permission android:name="com.onegini.mobile.sdk.android.demo.permission.C2D_MESSAGE"
+          android:protectionLevel="signature" />
+      <uses-permission android:name="com.onegini.mobile.sdk.android.demo.permission.C2D_MESSAGE" />
+
+
+    </config-file>
+    <config-file target="AndroidManifest.xml"  parent="/*/application/activity">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="oneginisdk"/>
+        </intent-filter>
+    </config-file>
+
+      <source-file src="src/android/src/android/com/onegini/OneginiCordovaPlugin.java" target-dir="src/com/onegini/" />
+      <source-file src="src/android/src/android/com/onegini/actions/AuthorizeAction.java" target-dir="src/com/onegini/actions/" />
+      <source-file src="src/android/src/android/com/onegini/actions/ConfirmPinAction.java" target-dir="src/com/onegini/actions/" />
+      <source-file src="src/android/src/android/com/onegini/actions/DisconnectAction.java" target-dir="src/com/onegini/actions/" />
+      <source-file src="src/android/src/android/com/onegini/actions/FetchResourceAction.java" target-dir="src/com/onegini/actions/" />
+      <source-file src="src/android/src/android/com/onegini/actions/FetchResourceAnonymouslyAction.java" target-dir="src/com/onegini/actions/" />
+      <source-file src="src/android/src/android/com/onegini/actions/InitAction.java" target-dir="src/com/onegini/actions/" />
+      <source-file src="src/android/src/android/com/onegini/actions/LogoutAction.java" target-dir="src/com/onegini/actions/" />
+      <source-file src="src/android/src/android/com/onegini/actions/OneginiPluginAction.java" target-dir="src/com/onegini/actions/" />
+      <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/" />
+      <source-file src="src/android/src/android/com/onegini/resource/AnonymousResourceClient.java" target-dir="src/com/onegini/resource/" />
+      <source-file src="src/android/src/android/com/onegini/scope/ScopeParser.java" target-dir="src/com/onegini/scope/" />
+      <source-file src="src/android/lib/plugin-dependencies.jar" target-dir="libs/" />
+      <resource-file src="src/android/res/raw/keystore.bks" target="res/raw/keystore.bks" />
 
   </platform>
 </plugin>

@@ -1,3 +1,5 @@
+// Main gradle build configuration used to generate cordova plugin dependencies and plugin.xml configuration.
+// TODO: remove dependencies duplications in plugin.gradle and build.gradle
 buildscript {
     repositories {
         jcenter()
@@ -30,6 +32,7 @@ allprojects {
         mavenCentral()
     }
 }
+
 dependencies {
     // The onegini sdk
     compile 'com.onegini.mobile.sdk.android:library:2.04.05.02@aar'
@@ -49,19 +52,23 @@ dependencies {
     compile 'com.madgag.spongycastle:pkix:1.51.0.0'
     compile 'com.nimbusds:nimbus-jose-jwt:3.6'
 }
+
 task workDirecotryExists {
     if (!file(workDirectory).exists()) {
         file(workDirectory).mkdirs();
     }
 }
+
 task clearOldLibs(type: Delete, dependsOn: workDirecotryExists) {
     delete fileTree(dir: workDirectory, exclude: ['.gitignore', 'jarjar*'])
 }
+
 task downloadLibs(type: Copy, dependsOn: clearOldLibs) {
     into(workDirectory)
     from(configurations.compile)
     exclude('jarjar*')
 }
+
 task downloadAndPrepareLibs(type: Copy, dependsOn: downloadLibs) {
     def aarLibrary
     def name
@@ -98,7 +105,6 @@ task prepareLibrares(dependsOn: 'downloadAndPrepareLibs') {
         file(workDirectory).deleteDir();
         println "<source-file src=\"$pluginAndroidDir/lib/plugin-dependencies.jar\" target-dir=\"libs/\" />"
     }
-
 }
 
 task javaAsPluginNodes {

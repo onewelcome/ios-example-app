@@ -8,7 +8,7 @@ import org.json.JSONArray;
 
 public class DisconnectAction implements OneginiPluginAction {
   @Override
-  public boolean execute(final JSONArray args, final CallbackContext callbackContext,
+  public void execute(final JSONArray args, final CallbackContext callbackContext,
                          final OneginiCordovaPlugin client) {
     client.getOneginiClient().disconnect(new OneginiRevokeHandler() {
       @Override
@@ -21,6 +21,5 @@ public class DisconnectAction implements OneginiPluginAction {
         callbackContext.error("Failed to disconnect device.");
       }
     });
-    return true;
   }
 }

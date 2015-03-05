@@ -9,11 +9,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 public class AuthorizeAction implements OneginiPluginAction {
-    @Override
-    public boolean execute(JSONArray args, final CallbackContext callbackContext, OneginiCordovaPlugin client) {
+
+  @Override
+    public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
         if (args.length() == 1) {
             try {
-                String[] scopes = new ScopeParser().getScopesAsArray(args);
+                final String[] scopes = new ScopeParser().getScopesAsArray(args);
                 client.getOneginiClient().authorize(scopes, new OneginiAuthorizationHandler() {
                     @Override
                     public void authorizationSuccess() {
@@ -80,12 +81,10 @@ public class AuthorizeAction implements OneginiPluginAction {
                         callbackContext.error("");
                     }
                 });
-                return true;
             } catch (JSONException e) {
                 callbackContext.error(e.getMessage());
             }
         }
         callbackContext.error("");
-        return false;
     }
 }

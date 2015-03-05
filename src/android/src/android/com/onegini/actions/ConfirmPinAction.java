@@ -7,7 +7,6 @@ import org.json.JSONArray;
 
 public class ConfirmPinAction implements OneginiPluginAction{
     @Override
-    public boolean execute(JSONArray args, CallbackContext callbackContext, OneginiCordovaPlugin client) {
-        return false;
+    public void execute(JSONArray args, CallbackContext callbackContext, OneginiCordovaPlugin client) {
     }
 }

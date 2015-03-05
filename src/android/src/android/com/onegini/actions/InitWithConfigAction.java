@@ -12,13 +12,11 @@ import android.app.Application;
 import android.content.Context;
 import com.google.gson.Gson;
 import com.onegini.OneginiCordovaPlugin;
+import com.onegini.dialogs.ConfirmationDialogSelectorHandler;
+import com.onegini.dialogs.CreatePinDialogHandler;
+import com.onegini.dialogs.CurrentPinDialogHandler;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
-import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
-import com.onegini.mobile.sdk.android.library.utils.dialogs.AlertInterface;
-import com.onegini.mobile.sdk.android.library.utils.dialogs.ConfirmationDialogSelector;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.DialogProvider;
-import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCreatePinDialog;
-import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCurrentPinDialog;
 import com.onegini.model.ConfigModel;
 
 public class InitWithConfigAction implements OneginiPluginAction {
@@ -26,7 +24,7 @@ public class InitWithConfigAction implements OneginiPluginAction {
 
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext,
-                         final OneginiCordovaPlugin client) {
+                      final OneginiCordovaPlugin client) {
     setupDialogs();
     final boolean isConfigured = setupConfiguration(args, client);
     if (isConfigured) {
@@ -60,62 +58,10 @@ public class InitWithConfigAction implements OneginiPluginAction {
 
   private void setupDialogs() {
     DialogProvider.setInstance();
-    DialogProvider.getInstance().setOneginiCreatePinDialog(getOneginiCreatePinDialog());
-    DialogProvider.getInstance().setOneginiCurrentPinDialog(getOneginiCurrentPinDialog());
+    DialogProvider.getInstance().setOneginiCreatePinDialog(new CreatePinDialogHandler());
+    DialogProvider.getInstance().setOneginiCurrentPinDialog(new CurrentPinDialogHandler());
     DialogProvider.getInstance().getConfirmationDialog()
-        .setConfirmationDialogSelector(getConfirmationDialogSelectorImpl());
-  }
-
-  private OneginiCurrentPinDialog getOneginiCurrentPinDialog() {
-    return new OneginiCurrentPinDialog() {
-      @Override
-      public void getCurrentPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
-
-      }
-    };
-  }
-
-  private OneginiCreatePinDialog getOneginiCreatePinDialog() {
-    return new OneginiCreatePinDialog() {
-      @Override
-      public void createPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
-
-      }
-
-      @Override
-      public void pinBlackListed() {
-
-      }
-
-      @Override
-      public void pinShouldNotBeASequence() {
-
-      }
-
-      @Override
-      public void pinShouldNotUseSimilarDigits(final int maxSimilar) {
-
-      }
-
-      @Override
-      public void pinTooShort() {
-
-      }
-    };
-  }
-
-  private ConfirmationDialogSelector getConfirmationDialogSelectorImpl() {
-    return new ConfirmationDialogSelector() {
-      @Override
-      public AlertInterface selectConfirmationDialog(final String s) {
-        return null;
-      }
-
-      @Override
-      public void setContext(final Context context) {
-
-      }
-    };
+        .setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler());
   }
 
 }

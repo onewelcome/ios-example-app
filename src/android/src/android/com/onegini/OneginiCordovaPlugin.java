@@ -1,20 +1,16 @@
 package com.onegini;
 
 import static com.onegini.OneginiConstants.AUTHORIZE_ACTION;
+import static com.onegini.OneginiConstants.CONFIRM_CURRENT_PIN_ACTION;
+import static com.onegini.OneginiConstants.CONFIRM_NEW_PIN_ACTION;
 import static com.onegini.OneginiConstants.DISCONNECT_ACTION;
-import static com.onegini.OneginiConstants.FETCH_ANONYMOUSE_ACTION;
+import static com.onegini.OneginiConstants.FETCH_ANONYMOUS_ACTION;
 import static com.onegini.OneginiConstants.FETCH_RESOURCE_ACTION;
 import static com.onegini.OneginiConstants.INIT_WITH_CONFIG_ACTION;
 import static com.onegini.OneginiConstants.LOGOUT_ACTION;
 
-import com.onegini.actions.AuthorizeAction;
-import com.onegini.actions.DisconnectAction;
-import com.onegini.actions.FetchResourceAction;
-import com.onegini.actions.FetchResourceAnonymouslyAction;
-import com.onegini.actions.InitWithConfigAction;
-import com.onegini.actions.LogoutAction;
-import com.onegini.actions.OneginiPluginAction;
-import com.onegini.mobile.sdk.android.library.OneginiClient;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -23,8 +19,16 @@ import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.onegini.actions.AuthorizeAction;
+import com.onegini.actions.ConfirmCurrentPinAction;
+import com.onegini.actions.ConfirmNewPinAction;
+import com.onegini.actions.DisconnectAction;
+import com.onegini.actions.FetchResourceAction;
+import com.onegini.actions.FetchResourceAnonymouslyAction;
+import com.onegini.actions.InitWithConfigAction;
+import com.onegini.actions.LogoutAction;
+import com.onegini.actions.OneginiPluginAction;
+import com.onegini.mobile.sdk.android.library.OneginiClient;
 
 public class OneginiCordovaPlugin extends CordovaPlugin {
   private static Map<String, Class<? extends OneginiPluginAction>> actions = new HashMap<String, Class<? extends OneginiPluginAction>>();
@@ -33,16 +37,21 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
   @Override
   public void initialize(final CordovaInterface cordova, final CordovaWebView webView) {
     actions.put(INIT_WITH_CONFIG_ACTION, InitWithConfigAction.class);
+
     actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
+    actions.put(CONFIRM_CURRENT_PIN_ACTION, ConfirmCurrentPinAction.class);
+    actions.put(CONFIRM_NEW_PIN_ACTION, ConfirmNewPinAction.class);
+
     actions.put(FETCH_RESOURCE_ACTION, FetchResourceAction.class);
-    actions.put(FETCH_ANONYMOUSE_ACTION, FetchResourceAnonymouslyAction.class);
+    actions.put(FETCH_ANONYMOUS_ACTION, FetchResourceAnonymouslyAction.class);
+
     actions.put(LOGOUT_ACTION, LogoutAction.class);
     actions.put(DISCONNECT_ACTION, DisconnectAction.class);
+
+
 //    actions.put("clearCredentials", null);
 //    actions.put("clearTokens", null);
 
-
-//        actions.put("confirmPin", null);
 //        actions.put("confirmPinWithVerification", null);
 //        actions.put("requestAuthorization", null);
 //        actions.put("askForPin", null);

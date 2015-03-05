@@ -20,14 +20,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.onegini.actions.AuthorizeAction;
-import com.onegini.actions.ConfirmCurrentPinAction;
-import com.onegini.actions.ConfirmNewPinAction;
 import com.onegini.actions.DisconnectAction;
 import com.onegini.actions.FetchResourceAction;
 import com.onegini.actions.FetchResourceAnonymouslyAction;
 import com.onegini.actions.InitWithConfigAction;
 import com.onegini.actions.LogoutAction;
 import com.onegini.actions.OneginiPluginAction;
+import com.onegini.actions.PinProvidedAction;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 
 public class OneginiCordovaPlugin extends CordovaPlugin {
@@ -39,8 +38,8 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     actions.put(INIT_WITH_CONFIG_ACTION, InitWithConfigAction.class);
 
     actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
-    actions.put(CONFIRM_CURRENT_PIN_ACTION, ConfirmCurrentPinAction.class);
-    actions.put(CONFIRM_NEW_PIN_ACTION, ConfirmNewPinAction.class);
+    actions.put(CONFIRM_CURRENT_PIN_ACTION, PinProvidedAction.class);
+    actions.put(CONFIRM_NEW_PIN_ACTION, PinProvidedAction.class);
 
     actions.put(FETCH_RESOURCE_ACTION, FetchResourceAction.class);
     actions.put(FETCH_ANONYMOUS_ACTION, FetchResourceAnonymouslyAction.class);

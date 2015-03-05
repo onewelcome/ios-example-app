@@ -1,34 +1,54 @@
 package com.onegini.actions;
 
-import static com.onegini.OneginiAuthorizationStatus.AUTHORIZATION_ERROR;
-import static com.onegini.OneginiAuthorizationStatus.AUTHORIZATION_ERROR_CLIENT_REG_FAILED;
-import static com.onegini.OneginiAuthorizationStatus.AUTHORIZATION_ERROR_INVALID_GRANT;
-import static com.onegini.OneginiAuthorizationStatus.AUTHORIZATION_ERROR_INVALID_GRANT_TYPE;
-import static com.onegini.OneginiAuthorizationStatus.AUTHORIZATION_ERROR_INVALID_REQUEST;
-import static com.onegini.OneginiAuthorizationStatus.AUTHORIZATION_ERROR_INVALID_SCOPE;
-import static com.onegini.OneginiAuthorizationStatus.AUTHORIZATION_ERROR_INVALID_STATE;
-import static com.onegini.OneginiAuthorizationStatus.AUTHORIZATION_ERROR_NOT_AUTHENTICATED;
-import static com.onegini.OneginiAuthorizationStatus.AUTHORIZATION_ERROR_NOT_AUTHORIZED;
-import static com.onegini.OneginiAuthorizationStatus.AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES;
-import static com.onegini.OneginiAuthorizationStatus.AUTHORIZATION_SUCCESS;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_CLIENT_REG_FAILED;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_GRANT_TYPE;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_REQUEST;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_SCOPE;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_STATE;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_NOT_AUTHENTICATED;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_NOT_AUTHORIZED;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_SUCCESS;
 
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.onegini.OneginiCordovaPlugin;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiAuthorizationHandler;
+import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
 import com.onegini.scope.ScopeParser;
+import com.onegini.util.CallbackResultBuilder;
 
 public class AuthorizeAction implements OneginiPluginAction {
 
-  private static String authorizationCallbackId;
-  public static String getAuthorizationCallbackId() {
-    return authorizationCallbackId;
+  private final CallbackResultBuilder callbackResultBuilder;
+
+  public AuthorizeAction() {
+    callbackResultBuilder = new CallbackResultBuilder();
   }
 
-  public static void removeAuthorizationCallback() {
-    authorizationCallbackId = null;
+  private static CallbackContext authorizationCallback;
+
+  public static CallbackContext getAuthorizationCallback() {
+    return authorizationCallback;
+  }
+
+  public static void clearAuthorizationSessionState() {
+    authorizationCallback = null;
+    awaitingPinProvidedHandler = null;
+  }
+
+  private static OneginiPinProvidedHandler awaitingPinProvidedHandler;
+
+  public static void setAwaitingPinProvidedHandler(final OneginiPinProvidedHandler pinProvidedHandler) {
+    awaitingPinProvidedHandler = pinProvidedHandler;
+  }
+
+  public static OneginiPinProvidedHandler getAwaitingPinProvidedHandler() {
+    return awaitingPinProvidedHandler;
   }
 
   @Override
@@ -37,78 +57,93 @@ public class AuthorizeAction implements OneginiPluginAction {
       callbackContext.error("Failed to authorize, invalid parameter.");
       return;
     }
-    authorizationCallbackId = callbackContext.getCallbackId();
+
+    authorizationCallback = callbackContext;
 
     try {
       final String[] scopes = new ScopeParser().getScopesAsArray(args);
       client.getOneginiClient().authorize(scopes, new OneginiAuthorizationHandler() {
         @Override
         public void authorizationSuccess() {
-          callbackContext.success(AUTHORIZATION_SUCCESS.getName());
+          sendCallbackResult(callbackResultBuilder.withSuccessMessage(AUTHORIZATION_SUCCESS.getName()).build());
         }
 
         @Override
         public void authorizationError() {
-          callbackContext.error(AUTHORIZATION_ERROR.getName());
+          sendCallbackResult(callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR.getName()).build());
         }
 
         @Override
         public void authorizationException(Exception e) {
-          callbackContext.error(AUTHORIZATION_ERROR.getName());
+          sendCallbackResult(callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR.getName()).build());
         }
 
         @Override
         public void authorizationErrorInvalidRequest() {
-          callbackContext.error(AUTHORIZATION_ERROR_INVALID_REQUEST.getName());
+          sendCallbackResult(
+              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_INVALID_REQUEST.getName()).build());
         }
 
         @Override
         public void authorizationErrorClientRegistrationFailed() {
-          callbackContext.error(AUTHORIZATION_ERROR_CLIENT_REG_FAILED.getName());
+          sendCallbackResult(
+              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_CLIENT_REG_FAILED.getName()).build());
         }
 
         @Override
         public void authorizationErrorInvalidState() {
-          callbackContext.error(AUTHORIZATION_ERROR_INVALID_STATE.getName());
+          sendCallbackResult(
+              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_INVALID_STATE.getName()).build());
         }
 
         @Override
         public void authorizationErrorInvalidGrant(int i) {
-          callbackContext.error(AUTHORIZATION_ERROR_INVALID_GRANT.getName());
+          sendCallbackResult(
+              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_INVALID_STATE.getName()).build());
         }
 
         @Override
         public void authorizationErrorNotAuthenticated() {
-          callbackContext.error(AUTHORIZATION_ERROR_NOT_AUTHENTICATED.getName());
+          sendCallbackResult(
+              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_NOT_AUTHENTICATED.getName()).build());
         }
 
         @Override
         public void authorizationErrorInvalidScope() {
-          callbackContext.error(AUTHORIZATION_ERROR_INVALID_SCOPE.getName());
+          sendCallbackResult(
+              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_INVALID_SCOPE.getName()).build());
         }
 
         @Override
         public void authorizationErrorNotAuthorized() {
-          callbackContext.error(AUTHORIZATION_ERROR_NOT_AUTHORIZED.getName());
+          sendCallbackResult(
+              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_NOT_AUTHORIZED.getName()).build());
         }
 
         @Override
         public void authorizationErrorInvalidGrantType() {
-          callbackContext.error(AUTHORIZATION_ERROR_INVALID_GRANT_TYPE.getName());
+          sendCallbackResult(
+              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_INVALID_GRANT_TYPE.getName()).build());
         }
 
         @Override
         public void authorizationErrorTooManyPinFailures() {
-          callbackContext.error(AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES.getName());
+          sendCallbackResult(
+              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES.getName()).build());
         }
 
         @Override
         public void authorizationClientConfigFailed() {
-          callbackContext.error(AUTHORIZATION_ERROR.getName());
+          sendCallbackResult(callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR.getName()).build());
         }
       });
     } catch (JSONException e) {
       callbackContext.error(AUTHORIZATION_ERROR.getName());
     }
+  }
+
+  private void sendCallbackResult(final PluginResult result) {
+    authorizationCallback.sendPluginResult(result);
+    clearAuthorizationSessionState();
   }
 }

@@ -1,8 +1,14 @@
 package com.onegini.actions;
 
+import static com.onegini.OneginiConstants.KEYSTORE_HASH;
+
+import org.apache.cordova.CallbackContext;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Application;
 import android.content.Context;
-
 import com.google.gson.Gson;
 import com.onegini.OneginiCordovaPlugin;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
@@ -14,94 +20,103 @@ import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCreatePinDial
 import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCurrentPinDialog;
 import com.onegini.model.ConfigModel;
 
-import org.apache.cordova.CallbackContext;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class InitAction implements OneginiPluginAction {
-    Gson gson = new Gson();
+  Gson gson = new Gson();
 
-    @Override
-    public boolean execute(JSONArray args, CallbackContext callbackContext, OneginiCordovaPlugin client) {
-        if (args.length() == 2) {
-            try {
-                JSONObject configuration = args.getJSONObject(0);
-                DialogProvider.setInstance();
-                DialogProvider.getInstance().setOneginiCreatePinDialog(getOneginiCreatePinDialog());
-                DialogProvider.getInstance().setOneginiCurrentPinDialog(getOneginiCurrentPinDialog());
-                DialogProvider.getInstance().getConfirmationDialog().setConfirmationDialogSelector(getConfirmationDialogSelectorImpl());
-                ConfigModel configModel = gson.fromJson(configuration.toString(), ConfigModel.class);
-                Application application = client.getCordova().getActivity().getApplication();
-                int identifier = client.getCordova().getActivity().getResources().getIdentifier("keystore", "raw", application.getPackageName());
-                configModel.setCertificatePinningKeyStore(identifier);
-                configModel.setKeyStoreHash("7A8E3D2333A1324229712B288950E317CE5BE5F956C196CEF33B46993D371575");
-                Context applicationContext = client.cordova.getActivity().getApplicationContext();
-                OneginiClient oneginiClient = OneginiClient.setupInstance(applicationContext, configModel);
-                client.setOneginiClient(oneginiClient);
-                callbackContext.success();
-                return true;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        callbackContext.error("Bad configuration");
-        return false;
+  @Override
+  public boolean execute(final JSONArray args, final CallbackContext callbackContext,
+                         final OneginiCordovaPlugin client) {
+    setupDialogs();
+    final boolean isConfigured = setupConfiguration(args, client);
+    if (isConfigured) {
+      callbackContext.success();
+    }
+    else {
+      callbackContext.error("Failed to initialize plugin, wrong or missing configuration.");
     }
 
-    private OneginiCurrentPinDialog getOneginiCurrentPinDialog() {
-        return new OneginiCurrentPinDialog() {
-            @Override
-            public void getCurrentPin(OneginiPinProvidedHandler oneginiPinProvidedHandler) {
+    return isConfigured;
+  }
 
-            }
-        };
+  private boolean setupConfiguration(final JSONArray args, final OneginiCordovaPlugin client) {
+    try {
+      final JSONObject configuration = args.getJSONObject(0);
+      final ConfigModel configModel = gson.fromJson(configuration.toString(), ConfigModel.class);
+      final Application application = client.getCordova().getActivity().getApplication();
+
+      final int keystoreResourcePointer = client.getCordova().getActivity().getResources()
+          .getIdentifier("keystore", "raw", application.getPackageName());
+      configModel.setCertificatePinningKeyStore(keystoreResourcePointer);
+      configModel.setKeyStoreHash(KEYSTORE_HASH);
+
+      final Context applicationContext = client.cordova.getActivity().getApplicationContext();
+      final OneginiClient oneginiClient = OneginiClient.setupInstance(applicationContext, configModel);
+      client.setOneginiClient(oneginiClient);
+      return true;
+    } catch (JSONException e) {
+      e.printStackTrace();
+      return false;
     }
+  }
 
-    private OneginiCreatePinDialog getOneginiCreatePinDialog() {
-        return new OneginiCreatePinDialog() {
-            @Override
-            public void createPin(OneginiPinProvidedHandler oneginiPinProvidedHandler) {
+  private void setupDialogs() {
+    DialogProvider.setInstance();
+    DialogProvider.getInstance().setOneginiCreatePinDialog(getOneginiCreatePinDialog());
+    DialogProvider.getInstance().setOneginiCurrentPinDialog(getOneginiCurrentPinDialog());
+    DialogProvider.getInstance().getConfirmationDialog()
+        .setConfirmationDialogSelector(getConfirmationDialogSelectorImpl());
+  }
 
-            }
+  private OneginiCurrentPinDialog getOneginiCurrentPinDialog() {
+    return new OneginiCurrentPinDialog() {
+      @Override
+      public void getCurrentPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
 
-            @Override
-            public void pinBlackListed() {
+      }
+    };
+  }
 
-            }
+  private OneginiCreatePinDialog getOneginiCreatePinDialog() {
+    return new OneginiCreatePinDialog() {
+      @Override
+      public void createPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
 
-            @Override
-            public void pinShouldNotBeASequence() {
+      }
 
-            }
+      @Override
+      public void pinBlackListed() {
 
-            @Override
-            public void pinShouldNotUseSimilarDigits(int maxSimilar) {
+      }
 
-            }
+      @Override
+      public void pinShouldNotBeASequence() {
 
-            @Override
-            public void pinTooShort() {
+      }
 
-            }
-        };
-    }
+      @Override
+      public void pinShouldNotUseSimilarDigits(final int maxSimilar) {
 
+      }
 
+      @Override
+      public void pinTooShort() {
 
-    private ConfirmationDialogSelector getConfirmationDialogSelectorImpl() {
-        return new ConfirmationDialogSelector() {
-            @Override
-            public AlertInterface selectConfirmationDialog(String s) {
-                return null;
-            }
+      }
+    };
+  }
 
-            @Override
-            public void setContext(Context context) {
+  private ConfirmationDialogSelector getConfirmationDialogSelectorImpl() {
+    return new ConfirmationDialogSelector() {
+      @Override
+      public AlertInterface selectConfirmationDialog(final String s) {
+        return null;
+      }
 
-            }
-        };
-    }
+      @Override
+      public void setContext(final Context context) {
 
+      }
+    };
+  }
 
 }

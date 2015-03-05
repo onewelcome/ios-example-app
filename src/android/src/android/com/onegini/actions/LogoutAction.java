@@ -9,7 +9,7 @@ import org.json.JSONArray;
 
 public class LogoutAction implements OneginiPluginAction {
   @Override
-  public boolean execute(final JSONArray args, final CallbackContext callbackContext,
+  public void execute(final JSONArray args, final CallbackContext callbackContext,
                          final OneginiCordovaPlugin client) {
     client.getOneginiClient().logout(new OneginiRevokeHandler() {
       @Override
@@ -22,6 +22,5 @@ public class LogoutAction implements OneginiPluginAction {
         callbackContext.error("Failed to logout user.");
       }
     });
-    return true;
   }
 }

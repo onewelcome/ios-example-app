@@ -16,7 +16,7 @@ import retrofit.client.Header;
 public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
 
   @Override
-  public boolean execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
+  public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
     try {
       final String requestPath = getPath(args);
       final String[] scopes = getScopes(args);
@@ -28,7 +28,6 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
     } catch (Exception e) {
       callbackContext.error(e.getMessage());
     }
-    return false;
   }
 
   private OneginiResourceHandler<String> getResourceHandler(final CallbackContext callbackContext) {

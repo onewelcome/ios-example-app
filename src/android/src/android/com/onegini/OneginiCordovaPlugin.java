@@ -1,10 +1,17 @@
 package com.onegini;
 
+import static com.onegini.OneginiConstants.AUTHORIZE_ACTION;
+import static com.onegini.OneginiConstants.DISCONNECT_ACTION;
+import static com.onegini.OneginiConstants.FETCH_ANONYMOUSE_ACTION;
+import static com.onegini.OneginiConstants.FETCH_RESOURCE_ACTION;
+import static com.onegini.OneginiConstants.INIT_WITH_CONFIG_ACTION;
+import static com.onegini.OneginiConstants.LOGOUT_ACTION;
+
 import com.onegini.actions.AuthorizeAction;
 import com.onegini.actions.DisconnectAction;
 import com.onegini.actions.FetchResourceAction;
 import com.onegini.actions.FetchResourceAnonymouslyAction;
-import com.onegini.actions.InitAction;
+import com.onegini.actions.InitWithConfigAction;
 import com.onegini.actions.LogoutAction;
 import com.onegini.actions.OneginiPluginAction;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
@@ -24,13 +31,13 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
   private OneginiClient oneginiClient;
 
   @Override
-  public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-    actions.put("initWithConfig", InitAction.class);
-    actions.put("authorize", AuthorizeAction.class);
-    actions.put("fetchResource", FetchResourceAction.class);
-    actions.put("fetchAnonymousResource", FetchResourceAnonymouslyAction.class);
-    actions.put("logout", LogoutAction.class);
-    actions.put("disconnect", DisconnectAction.class);
+  public void initialize(final CordovaInterface cordova, final CordovaWebView webView) {
+    actions.put(INIT_WITH_CONFIG_ACTION, InitWithConfigAction.class);
+    actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
+    actions.put(FETCH_RESOURCE_ACTION, FetchResourceAction.class);
+    actions.put(FETCH_ANONYMOUSE_ACTION, FetchResourceAnonymouslyAction.class);
+    actions.put(LOGOUT_ACTION, LogoutAction.class);
+    actions.put(DISCONNECT_ACTION, DisconnectAction.class);
 //    actions.put("clearCredentials", null);
 //    actions.put("clearTokens", null);
 
@@ -61,7 +68,8 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
         callbackContext.error("Failed to create action class for \"" + action + "\"");
         return false;
       }
-      return actionInstance.execute(args, callbackContext, this);
+      actionInstance.execute(args, callbackContext, this);
+      return true;
     }
     callbackContext.error("Action \"" + action + "\" is not supported");
     return false;
@@ -76,7 +84,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     return null;
   }
 
-  public void setOneginiClient(OneginiClient oneginiClient) {
+  public void setOneginiClient(final OneginiClient oneginiClient) {
     this.oneginiClient = oneginiClient;
   }
 

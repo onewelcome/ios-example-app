@@ -1,5 +1,6 @@
 package com.onegini.actions;
 
+import static com.onegini.OneginiConstants.INIT_WITH_CONFIG_ACTION;
 import static com.onegini.OneginiConstants.KEYSTORE_HASH;
 
 import org.apache.cordova.CallbackContext;
@@ -20,22 +21,20 @@ import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCreatePinDial
 import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCurrentPinDialog;
 import com.onegini.model.ConfigModel;
 
-public class InitAction implements OneginiPluginAction {
+public class InitWithConfigAction implements OneginiPluginAction {
   Gson gson = new Gson();
 
   @Override
-  public boolean execute(final JSONArray args, final CallbackContext callbackContext,
+  public void execute(final JSONArray args, final CallbackContext callbackContext,
                          final OneginiCordovaPlugin client) {
     setupDialogs();
     final boolean isConfigured = setupConfiguration(args, client);
     if (isConfigured) {
-      callbackContext.success();
+      callbackContext.success(INIT_WITH_CONFIG_ACTION);
     }
     else {
       callbackContext.error("Failed to initialize plugin, wrong or missing configuration.");
     }
-
-    return isConfigured;
   }
 
   private boolean setupConfiguration(final JSONArray args, final OneginiCordovaPlugin client) {

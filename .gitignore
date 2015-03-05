@@ -7,3 +7,5 @@ src/ios/OneginiCordovaPlugin.xcworkspace/xcuserdata
 src/ios/DerivedData
 *.xccheckout
 .idea/
+src/android/android.iml
+src/android/CordovaLib/CordovaLib.iml

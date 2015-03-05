@@ -1,9 +1,10 @@
-package com.onegini.util;
+package com.onegini;
 
 
 public enum OneginiAuthorizationStatus {
 
-  AUTHORIZATION_SUCCSESS("authorizationSuccess"),
+  // Authorization responses
+  AUTHORIZATION_SUCCESS("authorizationSuccess"),
   AUTHORIZATION_REQUEST("requestAuthorization"),
   AUTHORIZATION_ERROR("authorizationError"),
   AUTHORIZATION_ERROR_CLIENT_REG_FAILED("authorizationErrorClientRegistrationFailed"),
@@ -16,7 +17,11 @@ public enum OneginiAuthorizationStatus {
   AUTHORIZATION_ERROR_NOT_AUTHORIZED("authorizationErrorNotAuthorized"),
   AUTHORIZATION_ERROR_INVALID_REQUEST("authorizationErrorInvalidRequest"),
   AUTHORIZATION_ERROR_INVALID_GRANT_TYPE("authorizationErrorInvalidGrantType"),
-  AUTHORIZATION_ERROR_NO_AUTH_GRANT("authorizationErrorNoAuthorizationGrant");
+  AUTHORIZATION_ERROR_NO_AUTH_GRANT("authorizationErrorNoAuthorizationGrant"),
+
+  // Authorization pin responses
+  ASK_FOR_CURRENT_PIN("askForCurrentPin"),
+  ASK_FOR_NEW_PIN("askForNewPin");
 
   private final String name;
 

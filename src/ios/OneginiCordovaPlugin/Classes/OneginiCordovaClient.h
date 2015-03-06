@@ -113,7 +113,7 @@
  Validate the PIN against the current PIN policy.
  Callback is performed on the PIN validation handlers.
  
- Commond arguments:
+ Command arguments:
  String pin
  */
 - (void)validatePin:(CDVInvokedUrlCommand *)command;

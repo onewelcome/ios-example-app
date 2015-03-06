@@ -19,6 +19,9 @@ import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import com.onegini.actions.AuthorizeAction;
 import com.onegini.actions.DisconnectAction;
 import com.onegini.actions.FetchResourceAction;
@@ -28,6 +31,7 @@ import com.onegini.actions.LogoutAction;
 import com.onegini.actions.OneginiPluginAction;
 import com.onegini.actions.PinProvidedAction;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
+import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
 
 public class OneginiCordovaPlugin extends CordovaPlugin {
   private static Map<String, Class<? extends OneginiPluginAction>> actions = new HashMap<String, Class<? extends OneginiPluginAction>>();
@@ -70,7 +74,6 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
   public boolean execute(final String action, final JSONArray args,
                          final CallbackContext callbackContext) throws JSONException {
     if (actions.containsKey(action)) {
-
       final OneginiPluginAction actionInstance = buildActionClassFor(action);
       if (actionInstance == null) {
         callbackContext.error("Failed to create action class for \"" + action + "\"");
@@ -88,6 +91,37 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     try {
       return actionClass.newInstance();
     } catch (Exception e) {
+    }
+    return null;
+  }
+
+  @Override
+  public Object onMessage(final String id, final Object data) {
+    if (oneginiClient == null) {
+      return null;
+    }
+    if (getOneginiClient().getConfigModel() == null) {
+      return null;
+    }
+    final Activity activity = cordova.getActivity();
+    if (activity == null) {
+      return null;
+    }
+    final Intent intent = activity.getIntent();
+    if (intent == null) {
+      return null;
+    }
+    final Uri callbackUri = intent.getData();
+    if (callbackUri == null) {
+      return null;
+    }
+    final OneginiClientConfigModel configModel = getOneginiClient().getConfigModel();
+    if (configModel == null) {
+      return null;
+    }
+    final String appScheme = configModel.getAppScheme();
+    if (callbackUri.getScheme().equals(appScheme)) {
+      getOneginiClient().handleAuthorizationCallback(callbackUri);
     }
     return null;
   }

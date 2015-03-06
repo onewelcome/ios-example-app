@@ -110,6 +110,15 @@
 - (void)isAuthorized:(CDVInvokedUrlCommand *)command;
 
 /**
+ Validate the PIN against the current PIN policy.
+ Callback is performed on the PIN validation handlers.
+ 
+ Commond arguments:
+ String pin
+ */
+- (void)validatePin:(CDVInvokedUrlCommand *)command;
+
+/**
  Fetches a specific resource. 
  The access token validation flow is invoked if no valid access token is available.
  

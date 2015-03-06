@@ -228,6 +228,58 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 	[oneginiClient confirmNewPinForChangeRequest:pin validation:self];
 }
 
+- (void)validatePin:(CDVInvokedUrlCommand *)command {
+	if (command.arguments.count != 1) {
+		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+		return;
+	}
+	
+	NSString *pin = command.arguments.firstObject;
+	NSError *error;
+	BOOL result = [oneginiClient isPinValid:pin error:&error];
+	
+	CDVPluginResult *pluginResult;
+	if (result) {
+		pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:YES];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+		return;
+	}
+	
+	if (![error.domain isEqualToString:@"com.onegini.PinValidation"]) {
+		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+		return;
+	}
+	
+	self.pinValidateCommandTxId = command.callbackId;
+
+	// TODO move error codes into OGPublicCommons public API
+	switch (error.code) {
+		case 0: {
+			[self pinShouldNotBeASequence];
+			break;
+		}
+		case 1: {
+			NSNumber *n = error.userInfo[@"kMaxSimilarDigits"];
+			[self pinShouldNotUseSimilarDigits:n.integerValue];
+			break;
+		}
+		case 2: {
+			[self pinTooShort];
+			break;
+		}
+		case 3: {
+			[self pinBlackListed];
+			break;
+		}
+		default: {
+			CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
+			[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+		}
+	}
+}
+
 - (void)fetchResource:(CDVInvokedUrlCommand *)command {
 	if (command.arguments.count != 5) {
 		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 5 arguments but received %lu", (unsigned long)command.arguments.count]];

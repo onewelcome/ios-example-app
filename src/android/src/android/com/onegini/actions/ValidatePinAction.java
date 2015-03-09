@@ -39,7 +39,7 @@ public class ValidatePinAction implements OneginiPluginAction {
   }
 
   private void validatePin(final char[] pin, final CallbackContext callbackContext, final OneginiClient oneginiClient) {
-    oneginiClient.isPinValid(pin, new OneginiPinValidationDialog() {
+    final boolean pinValid = oneginiClient.isPinValid(pin, new OneginiPinValidationDialog() {
       @Override
       public void pinBlackListed() {
         callbackContext.sendPluginResult(
@@ -72,5 +72,18 @@ public class ValidatePinAction implements OneginiPluginAction {
                 .build());
       }
     });
+
+    if (pinValid) {
+      callbackContext.sendPluginResult(
+          callbackResultBuilder
+              .withSuccess()
+              .build());
+    }
+    else {
+      callbackContext.sendPluginResult(
+          callbackResultBuilder
+              .withErrorMessage("Pin invalid.")
+              .build());
+    }
   }
 }

@@ -1,6 +1,7 @@
 package com.onegini;
 
 import static com.onegini.OneginiConstants.AUTHORIZE_ACTION;
+import static com.onegini.OneginiConstants.CHANGE_PIN_ACTION;
 import static com.onegini.OneginiConstants.CONFIRM_CURRENT_PIN_ACTION;
 import static com.onegini.OneginiConstants.CONFIRM_NEW_PIN_ACTION;
 import static com.onegini.OneginiConstants.DISCONNECT_ACTION;
@@ -24,6 +25,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import com.onegini.actions.AuthorizeAction;
+import com.onegini.actions.ChangePinAction;
 import com.onegini.actions.DisconnectAction;
 import com.onegini.actions.FetchResourceAction;
 import com.onegini.actions.FetchResourceAnonymouslyAction;
@@ -47,6 +49,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     actions.put(CONFIRM_CURRENT_PIN_ACTION, PinProvidedAction.class);
     actions.put(CONFIRM_NEW_PIN_ACTION, PinProvidedAction.class);
     actions.put(VALIDATE_PIN_ACTION, ValidatePinAction.class);
+    actions.put(CHANGE_PIN_ACTION, ChangePinAction.class);
 
     actions.put(FETCH_RESOURCE_ACTION, FetchResourceAction.class);
     actions.put(FETCH_ANONYMOUS_ACTION, FetchResourceAnonymouslyAction.class);

@@ -238,15 +238,18 @@ module.exports = {
 		// pinEntryError
     }, 'OneginiCordovaClient', 'confirmNewPinForChangeRequest', [pin]);
   },
-  validatePin: function (pin) {
+  validatePin: function (errorCallback, pin) {
     // not implemented in the base app yet
     exec(null, function (error) {
-       	// Currently the following validation errors are defined.
-      	// The error contains a 'reason' and optionally an additional key 
-		// pinBlackListed
-		// pinShouldNotBeASequence
-		// pinShouldNotUseSimilarDigits with 'maxSimilarDigits' key
-		// pinTooShort
+      if (errorCallback) {
+        // Currently the following validation errors are defined.
+        // The error contains a 'reason' and optionally an additional key
+        // pinBlackListed
+        // pinShouldNotBeASequence
+        // pinShouldNotUseSimilarDigits with 'maxSimilarDigits' key
+        // pinTooShort
+        errorCallback(error);
+      }
     }, 'OneginiCordovaClient', 'validatePin', [pin]);
   },
   cancelPinChange: function () {

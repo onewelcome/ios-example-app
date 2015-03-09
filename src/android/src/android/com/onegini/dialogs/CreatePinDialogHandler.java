@@ -32,7 +32,7 @@ public class CreatePinDialogHandler implements OneginiCreatePinDialog {
     AuthorizeAction.setAwaitingPinProvidedHandler(oneginiPinProvidedHandler);
 
     authorizationCallback.sendPluginResult(callbackResultBuilder
-        .withSuccessMessage(ASK_FOR_NEW_PIN.getName())
+        .withSuccessMethod(ASK_FOR_NEW_PIN.getName())
         .withCallbackKept()
         .build());
   }
@@ -43,7 +43,7 @@ public class CreatePinDialogHandler implements OneginiCreatePinDialog {
   @Override
   public void pinBlackListed() {
     AuthorizeAction.getAuthorizationCallback().sendPluginResult(callbackResultBuilder
-        .withSuccessMessage(PIN_BLACKLISTED.getName())
+        .withSuccessMethod(PIN_BLACKLISTED.getName())
         .withCallbackKept()
         .build());
   }
@@ -51,7 +51,7 @@ public class CreatePinDialogHandler implements OneginiCreatePinDialog {
   @Override
   public void pinShouldNotBeASequence() {
     AuthorizeAction.getAuthorizationCallback().sendPluginResult(callbackResultBuilder
-        .withSuccessMessage(PIN_SHOULD_NOT_BE_A_SEQUENCE.getName())
+        .withSuccessMethod(PIN_SHOULD_NOT_BE_A_SEQUENCE.getName())
         .withCallbackKept()
         .build());
   }
@@ -59,7 +59,7 @@ public class CreatePinDialogHandler implements OneginiCreatePinDialog {
   @Override
   public void pinShouldNotUseSimilarDigits(final int i) {
     AuthorizeAction.getAuthorizationCallback().sendPluginResult(callbackResultBuilder
-        .withSuccessMessage(PIN_SHOULD_NOT_USE_SIMILAR_DIGITS.getName())
+        .withSuccessMethod(PIN_SHOULD_NOT_USE_SIMILAR_DIGITS.getName())
         .withCallbackKept()
         .build());
   }
@@ -67,7 +67,7 @@ public class CreatePinDialogHandler implements OneginiCreatePinDialog {
   @Override
   public void pinTooShort() {
     AuthorizeAction.getAuthorizationCallback().sendPluginResult(callbackResultBuilder
-        .withSuccessMessage(PIN_TOO_SHORT.getName())
+        .withSuccessMethod(PIN_TOO_SHORT.getName())
         .withCallbackKept()
         .build());
   }

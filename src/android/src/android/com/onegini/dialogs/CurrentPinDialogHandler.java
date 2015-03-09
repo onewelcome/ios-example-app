@@ -28,7 +28,7 @@ public class CurrentPinDialogHandler implements OneginiCurrentPinDialog {
     AuthorizeAction.setAwaitingPinProvidedHandler(oneginiPinProvidedHandler);
 
     authorizationCallback.sendPluginResult(callbackResultBuilder
-        .withSuccessMessage(ASK_FOR_CURRENT_PIN.getName())
+        .withSuccessMethod(ASK_FOR_CURRENT_PIN.getName())
         .withCallbackKept()
         .build());
   }

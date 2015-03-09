@@ -8,6 +8,7 @@ import static com.onegini.OneginiConstants.FETCH_ANONYMOUS_ACTION;
 import static com.onegini.OneginiConstants.FETCH_RESOURCE_ACTION;
 import static com.onegini.OneginiConstants.INIT_WITH_CONFIG_ACTION;
 import static com.onegini.OneginiConstants.LOGOUT_ACTION;
+import static com.onegini.OneginiConstants.VALIDATE_PIN_ACTION;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +31,7 @@ import com.onegini.actions.InitWithConfigAction;
 import com.onegini.actions.LogoutAction;
 import com.onegini.actions.OneginiPluginAction;
 import com.onegini.actions.PinProvidedAction;
+import com.onegini.actions.ValidatePinAction;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
 
@@ -44,6 +46,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
     actions.put(CONFIRM_CURRENT_PIN_ACTION, PinProvidedAction.class);
     actions.put(CONFIRM_NEW_PIN_ACTION, PinProvidedAction.class);
+    actions.put(VALIDATE_PIN_ACTION, ValidatePinAction.class);
 
     actions.put(FETCH_RESOURCE_ACTION, FetchResourceAction.class);
     actions.put(FETCH_ANONYMOUS_ACTION, FetchResourceAnonymouslyAction.class);

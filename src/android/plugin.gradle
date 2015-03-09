@@ -35,7 +35,7 @@ allprojects {
 
 dependencies {
   // The onegini sdk
-  compile 'com.onegini.mobile.sdk.android:library:2.04.05.03@aar'
+  compile 'com.onegini.mobile.sdk.android:library:00.01.00-SNAPSHOT@aar'
   // Http Client
   compile 'com.squareup.okhttp:okhttp:2.0.0'
   compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'

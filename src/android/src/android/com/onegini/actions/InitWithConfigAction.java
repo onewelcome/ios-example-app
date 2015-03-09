@@ -20,13 +20,24 @@ import com.onegini.mobile.sdk.android.library.utils.dialogs.DialogProvider;
 import com.onegini.model.ConfigModel;
 
 public class InitWithConfigAction implements OneginiPluginAction {
-  Gson gson = new Gson();
+
+  private static boolean isConfigured;
+
+  private Gson gson;
+
+  public InitWithConfigAction() {
+    gson = new Gson();
+  }
 
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext,
                       final OneginiCordovaPlugin client) {
+    if (isConfigured) {
+      return;
+    }
+    
     setupDialogs();
-    final boolean isConfigured = setupConfiguration(args, client);
+    isConfigured = setupConfiguration(args, client);
     if (isConfigured) {
       callbackContext.success(INIT_WITH_CONFIG_ACTION);
     }

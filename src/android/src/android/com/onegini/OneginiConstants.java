@@ -12,6 +12,7 @@ public class OneginiConstants {
   public static final String CONFIRM_CURRENT_PIN_ACTION = "confirmCurrentPin";
   public static final String CONFIRM_NEW_PIN_ACTION = "confirmNewPin";
   public static final String VALIDATE_PIN_ACTION = "validatePin";
+  public static final String CHANGE_PIN_ACTION = "changePin";
 
 
 

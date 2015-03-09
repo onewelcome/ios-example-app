@@ -96,34 +96,19 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
   }
 
   @Override
-  public Object onMessage(final String id, final Object data) {
-    if (oneginiClient == null) {
-      return null;
-    }
-    if (getOneginiClient().getConfigModel() == null) {
-      return null;
-    }
-    final Activity activity = cordova.getActivity();
-    if (activity == null) {
-      return null;
-    }
-    final Intent intent = activity.getIntent();
-    if (intent == null) {
-      return null;
-    }
+  public void onNewIntent(final Intent intent) {
     final Uri callbackUri = intent.getData();
     if (callbackUri == null) {
-      return null;
+      return;
     }
     final OneginiClientConfigModel configModel = getOneginiClient().getConfigModel();
     if (configModel == null) {
-      return null;
+      return;
     }
     final String appScheme = configModel.getAppScheme();
     if (callbackUri.getScheme().equals(appScheme)) {
       getOneginiClient().handleAuthorizationCallback(callbackUri);
     }
-    return null;
   }
 
   public void setOneginiClient(final OneginiClient oneginiClient) {

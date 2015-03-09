@@ -24,7 +24,7 @@ public class CreatePinDialogHandler implements OneginiCreatePinDialog {
   @Override
   public void createPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
     final CallbackContext authorizationCallback = AuthorizeAction.getAuthorizationCallback();
-    if (AuthorizeAction.getAuthorizationCallback() == null) {
+    if (authorizationCallback == null) {
       //TODO: invalidate pin request on SDK side
       return;
     }

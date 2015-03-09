@@ -1,119 +1,57 @@
 package com.onegini.resource;
 
-import com.onegini.mobile.sdk.android.library.OneginiClient;
-import com.onegini.mobile.sdk.android.library.handlers.OneginiResourceHandler;
-import com.onegini.mobile.sdk.android.library.helpers.AnonymousResourceHelperAbstract;
+import static com.onegini.resource.RestResourceInterface.getResourceCallMethod;
+import static com.onegini.resource.RestResourceInterface.getRestAdapterForMethod;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collections;
 
+import com.onegini.mobile.sdk.android.library.OneginiClient;
+import com.onegini.mobile.sdk.android.library.handlers.OneginiResourceHandler;
+import com.onegini.mobile.sdk.android.library.helpers.AnonymousResourceHelperAbstract;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.Header;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
 
 public class AnonymousResourceClient extends AnonymousResourceHelperAbstract<String> {
-    private final Object anonymousResourceRestClient;
-    private String path;
-    private String[] scopes;
-    private Class<?> restClientImpl;
 
-    public AnonymousResourceClient(OneginiClient oneginiClient, String path, String[] scopes, String requestMethod) {
-        super(oneginiClient, true);
-        this.scopes = scopes;
-        restClientImpl = getRestClientImpl(requestMethod);
-        anonymousResourceRestClient = getRestAdapter().create(GetRestClientImpl.class);
-        this.path = preparePath(path);
+  private ResourceRequest resourceRequest;
+
+  public AnonymousResourceClient(final OneginiClient oneginiClient, final ResourceRequest resourceRequest) {
+    super(oneginiClient, true);
+    this.resourceRequest = resourceRequest;
+  }
+
+  @Override
+  protected void performResourceActionImpl(final OneginiResourceHandler<String> oneginiResourceHandler,
+                                           String[] strings, final String... params) {
+    if (resourceRequest == null) {
+      return;
     }
 
-    private String preparePath(String path) {
-        if (path.startsWith("/")) {
-            return path.replaceFirst("/", "");
-        }
-        return path;
-    }
+    final Object restClient = buildRestAdapterForMethod(resourceRequest.getRequestMethodString());
+    final Method restResourceMethod = getResourceCallMethod(resourceRequest.getRequestMethodString());
 
-    @Override
-    protected void performResourceActionImpl(final OneginiResourceHandler<String> oneginiResourceHandler, String[] strings, final String... params) {
-        Method getResourceMethod = getGetResourceMethod(anonymousResourceRestClient);
-        try {
-            getResourceMethod.invoke(anonymousResourceRestClient, getAnonymousAuthenticationHeader(), path, new Callback<String>() {
-                @Override
-                public void success(final String result, final Response response) {
-                    oneginiResourceHandler.resourceSuccess(result, Collections.EMPTY_LIST);
-                }
-
-                @Override
-                public void failure(final RetrofitError error) {
-                    handleError(error, oneginiResourceHandler, scopes, params);
-                }
-            });
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Method getGetResourceMethod(Object anonymousResourceRestClient) {
-        Method[] methods = restClientImpl.getMethods();
-        for (Method m : methods) {
-            if (m.getName().equals("getResource")) {
-                return m;
+    try {
+      restResourceMethod
+          .invoke(restClient, getAnonymousAuthenticationHeader(), resourceRequest.getPath(), new Callback<String>() {
+            @Override
+            public void success(final String result, final Response response) {
+              oneginiResourceHandler.resourceSuccess(result, Collections.EMPTY_LIST);
             }
-        }
-        return null;
+
+            @Override
+            public void failure(final RetrofitError error) {
+              handleError(error, oneginiResourceHandler, resourceRequest.getScopes(), params);
+            }
+          });
+    } catch (final Exception e) {
+      e.printStackTrace();
     }
+  }
 
-    public Class<?> getRestClientImpl(String requestMethod) {
-        if ("GET".equalsIgnoreCase(requestMethod)) {
-            return GetRestClientImpl.class;
-        }
-        if ("POST".equalsIgnoreCase(requestMethod)) {
-            return PostRestClientImpl.class;
-        }
-        if ("PUT".equalsIgnoreCase(requestMethod)) {
-            return PutRestClientImpl.class;
-        }
-        if ("DELETE".equalsIgnoreCase(requestMethod)) {
-            return DeleteRestClientImpl.class;
-        }
-        throw new RuntimeException("Unsupported request method type " + requestMethod + " only GET,POST,PUT,DELETE supported");
+  private Object buildRestAdapterForMethod(final String requestMethod) {
+    return getRestAdapter().create(getRestAdapterForMethod(requestMethod));
+  }
 
-    }
-
-
-    private interface GetRestClientImpl {
-        @GET("/{path}")
-        void getResource(@Header("Authorization") String authorizationHeader,
-                         @Path(value = "path", encode = false) String requestPath,
-                         Callback<String> callback);
-    }
-
-    private interface PutRestClientImpl {
-        @PUT("/{path}")
-        void getResource(@Header("Authorization") String authorizationHeader,
-                         @Path(value = "path", encode = false) String requestPath,
-                         Callback<String> callback);
-    }
-
-    private interface PostRestClientImpl {
-        @POST("/{path}")
-        void getResource(@Header("Authorization") String authorizationHeader,
-                         @Path(value = "path", encode = false) String requestPath,
-                         Callback<String> callback);
-    }
-
-    private interface DeleteRestClientImpl {
-        @DELETE("/{path}")
-        void getResource(@Header("Authorization") String authorizationHeader,
-                         @Path(value = "path", encode = false) String requestPath,
-                         Callback<String> callback);
-    }
 }

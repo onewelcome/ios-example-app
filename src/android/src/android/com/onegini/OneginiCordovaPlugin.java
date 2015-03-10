@@ -9,6 +9,7 @@ import static com.onegini.OneginiConstants.FETCH_ANONYMOUS_ACTION;
 import static com.onegini.OneginiConstants.FETCH_RESOURCE_ACTION;
 import static com.onegini.OneginiConstants.INIT_WITH_CONFIG_ACTION;
 import static com.onegini.OneginiConstants.LOGOUT_ACTION;
+import static com.onegini.OneginiConstants.MOBILE_AUTHENTICATION_ACTION;
 import static com.onegini.OneginiConstants.VALIDATE_PIN_ACTION;
 
 import java.util.HashMap;
@@ -31,6 +32,7 @@ import com.onegini.actions.FetchResourceAction;
 import com.onegini.actions.FetchResourceAnonymouslyAction;
 import com.onegini.actions.InitWithConfigAction;
 import com.onegini.actions.LogoutAction;
+import com.onegini.actions.MobileAuthenticationAction;
 import com.onegini.actions.OneginiPluginAction;
 import com.onegini.actions.PinProvidedAction;
 import com.onegini.actions.ValidatePinAction;
@@ -56,20 +58,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 
     actions.put(LOGOUT_ACTION, LogoutAction.class);
     actions.put(DISCONNECT_ACTION, DisconnectAction.class);
-
-
-//    actions.put("clearCredentials", null);
-//    actions.put("clearTokens", null);
-
-//        actions.put("confirmPinWithVerification", null);
-//        actions.put("requestAuthorization", null);
-//        actions.put("askForPin", null);
-//        actions.put("askForPinWithVerification", null);
-//        actions.put("authorizationSuccess", null);
-//        actions.put("askForPinChangeWithVerification", null);
-//        actions.put("changePin", null);
-//        actions.put("confirmChangePinWithVerification", null);
-//        actions.put("cancelPinChange", null);
+    actions.put(MOBILE_AUTHENTICATION_ACTION, MobileAuthenticationAction.class);
   }
 
   public CordovaInterface getCordova() {

@@ -23,10 +23,6 @@ public class ChangePinAction implements OneginiPluginAction {
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
     final OneginiClient oneginiClient = client.getOneginiClient();
-    if (oneginiClient == null) {
-      callbackContext.error("Failed to change pin, client not initialized.");
-      return;
-    }
 
     oneginiClient.changePin(new OneginiChangePinHandler() {
       @Override

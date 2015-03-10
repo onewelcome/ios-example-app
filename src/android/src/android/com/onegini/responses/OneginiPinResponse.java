@@ -16,6 +16,8 @@ public enum OneginiPinResponse {
   // Pin change flow responses
   PIN_CURRENT_INVALID("invalidCurrentPin"),
   PIN_CHANGE_ERROR("pinChangeError"),
+  PIN_CHANGE_ASK_FOR_NEW_PIN("askNewPinForChangeRequest"),
+  PIN_CHANGE_ASK_FOR_CURRENT_PIN("askCurrentPinForChangeRequest"),
   PIN_CHANGED("pinChanged");
 
   private final String name;

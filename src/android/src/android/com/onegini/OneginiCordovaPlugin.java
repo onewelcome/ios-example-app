@@ -22,7 +22,6 @@ import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import com.onegini.actions.AuthorizeAction;

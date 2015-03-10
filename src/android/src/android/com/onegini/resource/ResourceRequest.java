@@ -59,7 +59,7 @@ public class ResourceRequest {
     return path;
   }
 
-  private String[] parseScopes(final JSONArray scopes) {
+  public static String[] parseScopes(final JSONArray scopes) {
     final ScopeParser scopeParser = new ScopeParser();
     try {
       return scopeParser.getScopesAsArray(scopes);

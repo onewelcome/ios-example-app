@@ -26,10 +26,6 @@ public class ValidatePinAction implements OneginiPluginAction {
     }
 
     final OneginiClient oneginiClient = client.getOneginiClient();
-    if (oneginiClient == null) {
-      callbackContext.error("Client not initialized.");
-      return;
-    }
     try {
       final String pin = (String) args.get(0);
       validatePin(pin.toCharArray(), callbackContext, oneginiClient);

@@ -70,71 +70,86 @@ public class AuthorizeAction implements OneginiPluginAction {
 
         @Override
         public void authorizationError() {
-          sendCallbackResult(callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR.getName())
+              .build());
         }
 
         @Override
         public void authorizationException(Exception e) {
-          sendCallbackResult(callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR.getName())
+              .build());
         }
 
         @Override
         public void authorizationErrorInvalidRequest() {
-          sendCallbackResult(
-              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_INVALID_REQUEST.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+                  .withErrorReason(AUTHORIZATION_ERROR_INVALID_REQUEST
+                      .getName()).build());
         }
 
         @Override
         public void authorizationErrorClientRegistrationFailed() {
-          sendCallbackResult(
-              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_CLIENT_REG_FAILED.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+                  .withErrorReason(AUTHORIZATION_ERROR_CLIENT_REG_FAILED.getName())
+              .build());
         }
 
         @Override
         public void authorizationErrorInvalidState() {
-          sendCallbackResult(
-              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_INVALID_STATE.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+                  .withErrorReason(AUTHORIZATION_ERROR_INVALID_STATE.getName())
+                  .build());
         }
 
         @Override
         public void authorizationErrorInvalidGrant(int i) {
-          sendCallbackResult(
-              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_INVALID_STATE.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+                  .withErrorReason(AUTHORIZATION_ERROR_INVALID_STATE.getName())
+                  .build());
         }
 
         @Override
         public void authorizationErrorNotAuthenticated() {
-          sendCallbackResult(
-              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_NOT_AUTHENTICATED.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_NOT_AUTHENTICATED.getName())
+              .build());
         }
 
         @Override
         public void authorizationErrorInvalidScope() {
-          sendCallbackResult(
-              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_INVALID_SCOPE.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_INVALID_SCOPE.getName())
+              .build());
         }
 
         @Override
         public void authorizationErrorNotAuthorized() {
-          sendCallbackResult(
-              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_NOT_AUTHORIZED.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_NOT_AUTHORIZED.getName())
+              .build());
         }
 
         @Override
         public void authorizationErrorInvalidGrantType() {
-          sendCallbackResult(
-              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_INVALID_GRANT_TYPE.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_INVALID_GRANT_TYPE.getName())
+              .build());
         }
 
         @Override
         public void authorizationErrorTooManyPinFailures() {
-          sendCallbackResult(
-              callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES.getName())
+              .build());
         }
 
         @Override
         public void authorizationClientConfigFailed() {
-          sendCallbackResult(callbackResultBuilder.withSuccessMessage(AUTHORIZATION_ERROR.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR.getName())
+              .build());
         }
       });
     } catch (JSONException e) {

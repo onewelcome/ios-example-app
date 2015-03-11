@@ -6,53 +6,71 @@ import static org.apache.cordova.PluginResult.Status.OK;
 import java.util.HashMap;
 
 import org.apache.cordova.PluginResult;
-import org.json.JSONArray;
 import org.json.JSONObject;
+
+import android.text.TextUtils;
 
 public class CallbackResultBuilder {
 
-  private PluginResult result;
+  private boolean shouldKeepCallback;
+  private HashMap<String, String> payload;
+  private PluginResult.Status status;
+  private String message;
+
+  public CallbackResultBuilder() {
+    payload = new HashMap<String, String>();
+  }
 
   public CallbackResultBuilder withSuccess() {
-    result = new PluginResult(OK);
+    status = OK;
     return this;
   }
 
   public CallbackResultBuilder withSuccessMethod(final String method) {
-    result = new PluginResult(OK, new JSONObject(new HashMap<String, String>() {{
-      put("method", method);
-    }}));
+    status = OK;
+    payload.put("method", method);
     return this;
   }
 
   public CallbackResultBuilder withSuccessMessage(final String message) {
-    result = new PluginResult(OK, message);
+    status = OK;
+    this.message = message;
     return this;
   }
 
   public CallbackResultBuilder withError() {
-    result = new PluginResult(ERROR);
+    status = ERROR;
     return this;
   }
 
   public CallbackResultBuilder withErrorMessage(final String message) {
-    result = new PluginResult(ERROR, message);
+    status = ERROR;
+    this.message = message;
     return this;
   }
 
   public CallbackResultBuilder withErrorReason(final String reason) {
-    result = new PluginResult(OK, new JSONObject(new HashMap<String, String>() {{
-      put("reason", reason);
-    }}));
+    status = ERROR;
+    payload.put("reason", reason);
+    return this;
+  }
+
+  public CallbackResultBuilder withRemainingAttempts(final int remainingAttempts) {
+    status = ERROR;
+    payload.put("remainingAttempts", Integer.toString(remainingAttempts));
     return this;
   }
 
   public CallbackResultBuilder withCallbackKept() {
-    result.setKeepCallback(true);
+    shouldKeepCallback = true;
     return this;
   }
 
   public PluginResult build() {
-    return result;
+    if (TextUtils.isEmpty(message)) {
+      return new PluginResult(status, new JSONObject(payload));
+    } else {
+      return new PluginResult(status, message);
+    }
   }
 }

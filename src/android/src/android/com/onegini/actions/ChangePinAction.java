@@ -50,7 +50,7 @@ public class ChangePinAction implements OneginiPluginAction {
     oneginiClient.changePin(new OneginiChangePinHandler() {
       @Override
       public void pinChanged() {
-        sendCallbackResult(
+        callbackContext.sendPluginResult(
             callbackResultBuilder
             .withSuccessMessage(PIN_CHANGED.getName())
             .build());
@@ -60,7 +60,7 @@ public class ChangePinAction implements OneginiPluginAction {
       public void invalidCurrentPin() {
         sendCallbackResult(
             callbackResultBuilder
-                .withSuccessMessage(PIN_CURRENT_INVALID.getName())
+                .withErrorReason(PIN_CURRENT_INVALID.getName())
                 .build());
       }
 
@@ -68,7 +68,7 @@ public class ChangePinAction implements OneginiPluginAction {
       public void pinChangeError() {
         sendCallbackResult(
             callbackResultBuilder
-                .withSuccessMessage(PIN_CHANGE_ERROR.getName())
+                .withErrorReason(PIN_CHANGE_ERROR.getName())
                 .build());
       }
 
@@ -76,7 +76,7 @@ public class ChangePinAction implements OneginiPluginAction {
       public void pinChangeException(final Exception exception) {
         sendCallbackResult(
             callbackResultBuilder
-                .withSuccessMessage(PIN_CHANGE_ERROR.getName())
+                .withErrorReason(PIN_CHANGE_ERROR.getName())
                 .build());
       }
     });

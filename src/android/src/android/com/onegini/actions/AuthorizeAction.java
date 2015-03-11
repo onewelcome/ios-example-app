@@ -85,29 +85,30 @@ public class AuthorizeAction implements OneginiPluginAction {
         @Override
         public void authorizationErrorInvalidRequest() {
           sendCallbackResult(callbackResultBuilder
-                  .withErrorReason(AUTHORIZATION_ERROR_INVALID_REQUEST
-                      .getName()).build());
+              .withErrorReason(AUTHORIZATION_ERROR_INVALID_REQUEST
+                  .getName()).build());
         }
 
         @Override
         public void authorizationErrorClientRegistrationFailed() {
           sendCallbackResult(callbackResultBuilder
-                  .withErrorReason(AUTHORIZATION_ERROR_CLIENT_REG_FAILED.getName())
+              .withErrorReason(AUTHORIZATION_ERROR_CLIENT_REG_FAILED.getName())
               .build());
         }
 
         @Override
         public void authorizationErrorInvalidState() {
           sendCallbackResult(callbackResultBuilder
-                  .withErrorReason(AUTHORIZATION_ERROR_INVALID_STATE.getName())
-                  .build());
+              .withErrorReason(AUTHORIZATION_ERROR_INVALID_STATE.getName())
+              .build());
         }
 
         @Override
-        public void authorizationErrorInvalidGrant(int i) {
+        public void authorizationErrorInvalidGrant(int remainingAttempts) {
           sendCallbackResult(callbackResultBuilder
-                  .withErrorReason(AUTHORIZATION_ERROR_INVALID_STATE.getName())
-                  .build());
+              .withErrorReason(AUTHORIZATION_ERROR_INVALID_STATE.getName())
+              .withRemainingAttempts(remainingAttempts)
+              .build());
         }
 
         @Override

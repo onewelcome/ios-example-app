@@ -38,7 +38,7 @@ allprojects {
 
 dependencies {
   // The onegini sdk
-  compile 'com.onegini.mobile.sdk.android:library:00.01.00-SNAPSHOT@aar'
+  compile 'com.onegini.mobile.sdk.android:library:2.04.05.03@aar'
   // Google play services
 //  compile 'com.google.android.gms:play-services-base:6.5.+'
   // Http Client

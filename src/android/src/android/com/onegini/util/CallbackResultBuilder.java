@@ -67,10 +67,13 @@ public class CallbackResultBuilder {
   }
 
   public PluginResult build() {
+    final PluginResult result;
     if (TextUtils.isEmpty(message)) {
-      return new PluginResult(status, new JSONObject(payload));
+      result = new PluginResult(status, new JSONObject(payload));
     } else {
-      return new PluginResult(status, message);
+      result = new PluginResult(status, message);
     }
+    result.setKeepCallback(shouldKeepCallback);
+    return result;
   }
 }

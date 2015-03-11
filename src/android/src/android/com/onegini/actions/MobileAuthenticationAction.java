@@ -14,7 +14,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.onegini.OneginiCordovaPlugin;
-import com.onegini.gcm.GCMHelper;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiMobileAuthEnrollmentHandler;
 import com.onegini.resource.ResourceRequest;
 import com.onegini.util.CallbackResultBuilder;
@@ -43,8 +42,8 @@ public class MobileAuthenticationAction implements OneginiPluginAction {
   }
 
   private void enroll(final String[] scopes, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
-    final GCMHelper gcmHelper = new GCMHelper(client.getCordova().getActivity().getApplicationContext());
-    gcmHelper.registerGCMService(client.getOneginiClient(), scopes, buildEnrollHandlerForCallback(callbackContext));
+//    final GCMHelper gcmHelper = new GCMHelper(client.getCordova().getActivity().getApplicationContext());
+//    gcmHelper.registerGCMService(client.getOneginiClient(), scopes, buildEnrollHandlerForCallback(callbackContext));
   }
 
   private OneginiMobileAuthEnrollmentHandler buildEnrollHandlerForCallback(final CallbackContext callbackContext) {

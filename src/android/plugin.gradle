@@ -10,7 +10,6 @@ buildscript {
     classpath 'com.android.tools.build:gradle:1.0.0'
   }
 }
-
 apply plugin: 'java'
 def workDirectory = "build/jarjar/"
 def pluginAndroidDir = 'src/android'
@@ -21,6 +20,10 @@ allprojects {
   sourceCompatibility = 1.6
   targetCompatibility = 1.6
   repositories {
+    def androidHome = System.getenv("ANDROID_HOME")
+    maven { url "$androidHome/extras/android/m2repository/" }
+    maven { url "$androidHome/extras/google/m2repository/"}
+
     maven {
       url "https://buildserver.onegini.com/nexus/content/groups/public/"
       credentials {
@@ -36,6 +39,8 @@ allprojects {
 dependencies {
   // The onegini sdk
   compile 'com.onegini.mobile.sdk.android:library:00.01.00-SNAPSHOT@aar'
+  // Google play services
+//  compile 'com.google.android.gms:play-services-base:6.5.+'
   // Http Client
   compile 'com.squareup.okhttp:okhttp:2.0.0'
   compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
@@ -135,5 +140,3 @@ task preparePlugin(dependsOn: [javaAsPluginNodes, prepareLibrares, resAsPluginNo
     println "Plugin generated"
   }
 }
-
-

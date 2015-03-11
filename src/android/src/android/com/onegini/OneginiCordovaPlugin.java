@@ -3,7 +3,9 @@ package com.onegini;
 import static com.onegini.OneginiConstants.AUTHORIZE_ACTION;
 import static com.onegini.OneginiConstants.CHANGE_PIN_ACTION;
 import static com.onegini.OneginiConstants.CONFIRM_CURRENT_PIN_ACTION;
+import static com.onegini.OneginiConstants.CONFIRM_CURRENT_PIN_CHANGE_PIN_ACTION;
 import static com.onegini.OneginiConstants.CONFIRM_NEW_PIN_ACTION;
+import static com.onegini.OneginiConstants.CONFIRM_NEW_PIN_CHANGE_PIN_ACTION;
 import static com.onegini.OneginiConstants.DISCONNECT_ACTION;
 import static com.onegini.OneginiConstants.FETCH_ANONYMOUS_ACTION;
 import static com.onegini.OneginiConstants.FETCH_RESOURCE_ACTION;
@@ -49,6 +51,8 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
     actions.put(CONFIRM_CURRENT_PIN_ACTION, PinProvidedAction.class);
     actions.put(CONFIRM_NEW_PIN_ACTION, PinProvidedAction.class);
+    actions.put(CONFIRM_CURRENT_PIN_CHANGE_PIN_ACTION, PinProvidedAction.class);
+    actions.put(CONFIRM_NEW_PIN_CHANGE_PIN_ACTION, PinProvidedAction.class);
     actions.put(VALIDATE_PIN_ACTION, ValidatePinAction.class);
     actions.put(CHANGE_PIN_ACTION, ChangePinAction.class);
 

@@ -115,6 +115,11 @@ public class ConfigModel implements OneginiClientConfigModel {
   }
 
   @Override
+  public int getHttpClientTimeout() {
+    return 0;
+  }
+
+  @Override
   public String getAppSecret() {
     return HashUtil.sha256(toString().getBytes(Charset.forName(DEFAULT_ENCODING)));
   }

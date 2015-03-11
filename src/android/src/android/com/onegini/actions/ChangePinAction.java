@@ -50,7 +50,7 @@ public class ChangePinAction implements OneginiPluginAction {
     oneginiClient.changePin(new OneginiChangePinHandler() {
       @Override
       public void pinChanged() {
-        callbackContext.sendPluginResult(
+        sendCallbackResult(
             callbackResultBuilder
             .withSuccessMessage(PIN_CHANGED.getName())
             .build());

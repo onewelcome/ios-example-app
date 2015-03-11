@@ -1,91 +1,165 @@
 package com.onegini.actions;
 
-import com.onegini.OneginiCordovaPlugin;
-import com.onegini.mobile.sdk.android.library.handlers.OneginiAuthorizationHandler;
-import com.onegini.scope.ScopeParser;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_CLIENT_REG_FAILED;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_GRANT_TYPE;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_REQUEST;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_SCOPE;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_STATE;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_NOT_AUTHENTICATED;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_NOT_AUTHORIZED;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_SUCCESS;
 
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import com.onegini.OneginiCordovaPlugin;
+import com.onegini.mobile.sdk.android.library.handlers.OneginiAuthorizationHandler;
+import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
+import com.onegini.scope.ScopeParser;
+import com.onegini.util.CallbackResultBuilder;
+
 public class AuthorizeAction implements OneginiPluginAction {
-    @Override
-    public boolean execute(JSONArray args, final CallbackContext callbackContext, OneginiCordovaPlugin client) {
-        if (args.length() == 1) {
-            try {
-                String[] scopes = new ScopeParser().getScopesAsArray(args);
-                client.getOneginiClient().authorize(scopes, new OneginiAuthorizationHandler() {
-                    @Override
-                    public void authorizationSuccess() {
-                        callbackContext.success();
-                    }
 
-                    @Override
-                    public void authorizationError() {
-                        callbackContext.error("");
-                    }
+  private final CallbackResultBuilder callbackResultBuilder;
 
-                    @Override
-                    public void authorizationException(Exception e) {
-                        callbackContext.error("");
-                    }
+  public AuthorizeAction() {
+    callbackResultBuilder = new CallbackResultBuilder();
+  }
 
-                    @Override
-                    public void authorizationErrorInvalidRequest() {
-                        callbackContext.error("");
-                    }
+  private static CallbackContext authorizationCallback;
 
-                    @Override
-                    public void authorizationErrorClientRegistrationFailed() {
-                        callbackContext.error("");
-                    }
+  public static CallbackContext getAuthorizationCallback() {
+    return authorizationCallback;
+  }
 
-                    @Override
-                    public void authorizationErrorInvalidState() {
-                        callbackContext.error("");
-                    }
+  public static void clearAuthorizationSessionState() {
+    authorizationCallback = null;
+    awaitingPinProvidedHandler = null;
+  }
 
-                    @Override
-                    public void authorizationErrorInvalidGrant(int i) {
-                        callbackContext.error("");
-                    }
+  private static OneginiPinProvidedHandler awaitingPinProvidedHandler;
 
-                    @Override
-                    public void authorizationErrorNotAuthenticated() {
-                        callbackContext.error("");
-                    }
+  public static void setAwaitingPinProvidedHandler(final OneginiPinProvidedHandler pinProvidedHandler) {
+    awaitingPinProvidedHandler = pinProvidedHandler;
+  }
 
-                    @Override
-                    public void authorizationErrorInvalidScope() {
-                        callbackContext.error("");
-                    }
+  public static OneginiPinProvidedHandler getAwaitingPinProvidedHandler() {
+    return awaitingPinProvidedHandler;
+  }
 
-                    @Override
-                    public void authorizationErrorNotAuthorized() {
-                        callbackContext.error("");
-                    }
-
-                    @Override
-                    public void authorizationErrorInvalidGrantType() {
-                        callbackContext.error("");
-                    }
-
-                    @Override
-                    public void authorizationErrorTooManyPinFailures() {
-                        callbackContext.error("");
-                    }
-
-                    @Override
-                    public void authorizationClientConfigFailed() {
-                        callbackContext.error("");
-                    }
-                });
-                return true;
-            } catch (JSONException e) {
-                callbackContext.error(e.getMessage());
-            }
-        }
-        callbackContext.error("");
-        return false;
+  @Override
+  public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
+    if (args.length() != 1) {
+      callbackContext.error("Failed to authorize, invalid parameter.");
+      return;
     }
+
+    authorizationCallback = callbackContext;
+
+    try {
+      final String[] scopes = new ScopeParser().getScopesAsArray(args);
+      client.getOneginiClient().authorize(scopes, new OneginiAuthorizationHandler() {
+        @Override
+        public void authorizationSuccess() {
+          sendCallbackResult(callbackResultBuilder.withSuccessMessage(AUTHORIZATION_SUCCESS.getName()).build());
+        }
+
+        @Override
+        public void authorizationError() {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR.getName())
+              .build());
+        }
+
+        @Override
+        public void authorizationException(Exception e) {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR.getName())
+              .build());
+        }
+
+        @Override
+        public void authorizationErrorInvalidRequest() {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_INVALID_REQUEST
+                  .getName()).build());
+        }
+
+        @Override
+        public void authorizationErrorClientRegistrationFailed() {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_CLIENT_REG_FAILED.getName())
+              .build());
+        }
+
+        @Override
+        public void authorizationErrorInvalidState() {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_INVALID_STATE.getName())
+              .build());
+        }
+
+        @Override
+        public void authorizationErrorInvalidGrant(int remainingAttempts) {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_INVALID_STATE.getName())
+              .withRemainingAttempts(remainingAttempts)
+              .build());
+        }
+
+        @Override
+        public void authorizationErrorNotAuthenticated() {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_NOT_AUTHENTICATED.getName())
+              .build());
+        }
+
+        @Override
+        public void authorizationErrorInvalidScope() {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_INVALID_SCOPE.getName())
+              .build());
+        }
+
+        @Override
+        public void authorizationErrorNotAuthorized() {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_NOT_AUTHORIZED.getName())
+              .build());
+        }
+
+        @Override
+        public void authorizationErrorInvalidGrantType() {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_INVALID_GRANT_TYPE.getName())
+              .build());
+        }
+
+        @Override
+        public void authorizationErrorTooManyPinFailures() {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES.getName())
+              .build());
+        }
+
+        @Override
+        public void authorizationClientConfigFailed() {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR.getName())
+              .build());
+        }
+      });
+    } catch (JSONException e) {
+      callbackContext.error(AUTHORIZATION_ERROR.getName());
+    }
+  }
+
+  private void sendCallbackResult(final PluginResult result) {
+    authorizationCallback.sendPluginResult(result);
+    clearAuthorizationSessionState();
+  }
 }

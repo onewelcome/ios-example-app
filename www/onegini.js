@@ -77,9 +77,9 @@ module.exports = {
    * @param {Object} router   Object that can handle page transition for the outcome of the authorization. Should at
    *                          least implement the following methods:
    *                          - requestAuthorization(url) -> redirects the user to the given url to log in
-   *                          - askForPin -> should display a screen to verify the PIN code. Must call
+   *                          - askForCurrentPin -> should display a screen to verify the PIN code. Must call
    *                                         checkPin(errorCallback, pin)
-   *                          - askForPinWithVerification -> should display a screen to set a PIN code. Must call
+   *                          - askForNewPin -> should display a screen to set a PIN code. Must call
    *                                         setPin(errorCallback, pin, verifyPin)
    *                          - authorizationSuccess -> should show the landing page for the authenticated user
    *                          - authorizationFailure(error) -> should handle authentication failure. If this method
@@ -97,10 +97,12 @@ module.exports = {
       if (response.method == 'requestAuthorization') {
         router.requestAuthorization(response.url);
       }
-      else if (response.method == 'askForPin') {
+      else if (response.method == 'askForCurrentPin') {
+        // TODO rename function conform response.method name
         router.askForPin();
       }
-      else if (response.method == 'askForPinWithVerification') {
+      else if (response.method == 'askForNewPin') {
+        // TODO rename function conform response.method name
         router.askForPinWithVerification();
       }
       else if (response == 'authorizationSuccess') {
@@ -111,21 +113,20 @@ module.exports = {
     }, 'OneginiCordovaClient', 'authorize', scopes);
   },
 
-
   /**
    * This will end the current session and invalidate the access token. The refresh token and client credentials
    * remain untouched.
    */
-  logout: function () {
-    exec(null, null, 'OneginiCordovaClient', 'logout', null);
+  logout: function (successCallback, errorCallback) {
+    exec(successCallback, errorCallback, 'OneginiCordovaClient', 'logout', []);
   },
 
   /**
    * Disconnect from the service, this will clear the refresh token and access token. Client credentials remain
    * untouched.
    */
-  disconnect: function () {
-    exec(null, null, 'OneginiCordovaClient', 'disconnect', null);
+  disconnect: function (successCallback, errorCallback) {
+    exec(successCallback, errorCallback, 'OneginiCordovaClient', 'disconnect', []);
   },
 
   /**
@@ -133,14 +134,14 @@ module.exports = {
    * on the next authorization request.
    */
   clearCredentials: function () {
-    exec(null, null, 'OneginiCordovaClient', 'clearCredentials', null);
+    exec(null, null, 'OneginiCordovaClient', 'clearCredentials', []);
   },
 
   /**
    * For testing purpose only: Clear all tokens and reset the pin attempt count.
    */
   clearTokens: function () {
-    exec(null, null, 'OneginiCordovaClient', 'clearTokens', null);
+    exec(null, null, 'OneginiCordovaClient', 'clearTokens', []);
   },
 
   /**
@@ -158,10 +159,8 @@ module.exports = {
    */
   checkPin: function (errorCallback, pin) {
     exec(null, function (error) {
-      if (errorCallback) {
-        errorCallback(error);
-      }
-    }, 'OneginiCordovaClient', 'confirmPin', [pin, true]);
+    errorCallback(error);
+    }, 'OneginiCordovaClient', 'confirmCurrentPin', [pin]);
   },
 
   /**
@@ -175,41 +174,83 @@ module.exports = {
    * @param errorCallback           Function to call when the PIN verification fails. Is called with an error object
    *                                as argument.
    * @param {String} pin            The PIN code to set
-   * @param {String} verifyPin      The PIN code to set, should match pin
    */
-  setPin: function (errorCallback, pin, verifyPin) {
+  setPin: function (errorCallback, pin) {
     // Callback is performed on the initiating authorize callback handler
     exec(null, function (error) {
-      if (errorCallback) {
-        errorCallback(error);
-      }
-    }, 'OneginiCordovaClient', 'confirmPinWithVerification', [pin, verifyPin, false]);
+      console.log(error);
+    // The error contains a 'reason' and optionally an additional key
+    // pinBlackListed
+		// pinShouldNotBeASequence
+		// pinShouldNotUseSimilarDigits with maxSimilarDigits key
+		// pinTooShort
+		// pinEntryError
+      errorCallback(error);
+    }, 'OneginiCordovaClient', 'confirmNewPin', [pin]);
   },
 
-  changePin: function (scopes) {
-    // not implemented in the base app yet
+  changePin: function (router) {
     exec(function (response) {
       /*
        The OneginiClient will respond by means of the OGAuthorizationDelegate and ask for the
        App to show a PIN entry/change dialog
        */
-      if (response.method == 'askForPinChangeWithVerification') {
-        ogCordovaApp.app.changePinWithVerificationResponse('14941', '94149', '94149', false);
+      if (response.method == 'askNewPinForChangeRequest') {
+        router.askForNewPinChangePinFlow();
+      }
+      else if (response.method == 'askCurrentPinForChangeRequest') {
+        router.askForPinChangePinFlow();
+      }
+      else if (response == 'pinChanged') {
+        router.changePinSuccess();
       }
     }, function (error) {
-    }, 'OneginiCordovaClient', 'changePin', [scopes]);
+      // The error contains a 'reason' and optionally an additional key
+      // invalidCurrentPin
+      // pinChangeError
+      // pinChangeError with additional error object
+      router.changePinError(error);
+    }, 'OneginiCordovaClient', 'changePin', []);
   },
-  changePinWithVerificationResponse: function (pin, newPin, newPinVerify, retry) {
-    // not implemented in the base app yet
+  confirmCurrentPinForChangeRequest: function (errorCallback, pin) {
+    exec(null, function (error) {
+        console.log(error);
+        if (errorCallback) {
+          errorCallback(error);
+        }
+    },
+    'OneginiCordovaClient', 'confirmCurrentPinForChangeRequest', [pin]);
+  },
 
+  confirmNewPinForChangeRequest: function (errorCallback, pin) {
     // Forward the PIN entries back to the OneginiClient.
     // Callback is performed on the initiating changePin callback handler
     exec(null, function (error) {
-    }, 'OneginiCordovaClient', 'confirmChangePinWithVerification', [pin, newPin, newPinVerify, retry]);
+      console.log(error);
+      errorCallback(error);
+    // The error contains a 'reason' and optionally an additional key
+		// pinBlackListed
+		// pinShouldNotBeASequence
+		// pinShouldNotUseSimilarDigits with maxSimilarDigits key
+		// pinTooShort
+		// pinEntryError
+    }, 'OneginiCordovaClient', 'confirmNewPinForChangeRequest', [pin]);
   },
+
+  validatePin: function (errorCallback, pin) {
+    // not implemented in the base app yet
+    exec(null, function (error) {
+      // The error contains a 'reason' and optionally an additional key
+      // pinBlackListed
+      // pinShouldNotBeASequence
+      // pinShouldNotUseSimilarDigits with 'maxSimilarDigits' key
+      // pinTooShort
+      errorCallback(error);
+    }, 'OneginiCordovaClient', 'validatePin', [pin]);
+  },
+
   cancelPinChange: function () {
     // not implemented in the base app yet
-    exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', null);
+    exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', []);
   }
 };
-

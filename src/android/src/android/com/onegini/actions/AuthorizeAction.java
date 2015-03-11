@@ -2,6 +2,7 @@ package com.onegini.actions;
 
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_CLIENT_REG_FAILED;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_GRANT;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_GRANT_TYPE;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_REQUEST;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_SCOPE;
@@ -106,7 +107,7 @@ public class AuthorizeAction implements OneginiPluginAction {
         @Override
         public void authorizationErrorInvalidGrant(int remainingAttempts) {
           sendCallbackResult(callbackResultBuilder
-              .withErrorReason(AUTHORIZATION_ERROR_INVALID_STATE.getName())
+              .withErrorReason(AUTHORIZATION_ERROR_INVALID_GRANT.getName())
               .withRemainingAttempts(remainingAttempts)
               .build());
         }

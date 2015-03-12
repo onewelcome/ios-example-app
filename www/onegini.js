@@ -166,49 +166,59 @@ module.exports = {
   /**
    * Sets a PIN for the user. Can only be called within the authorization flow. In case of success, the
    * authorize function decides the next step. If something goes wrong, the errorCallback is called.
+   * Callback is performed on initiating authorize callback handler.
    *
-   * The app should first verify whether the pin has the correct format and the verifyPin matches the pin.
+   * The app should first verify whether the PIN has the correct format and the verifyPin matches the pin.
    *
    * An INVALID_ACTION is returned if no authorization transaction is registered.
    *
-   * @param errorCallback           Function to call when the PIN verification fails. Is called with an error object
-   *                                as argument.
-   * @param {String} pin            The PIN code to set
+   * @param errorCallback     Function to call when the PIN verification fails. Is called with an error object
+   *                          containing a 'reason' and potentially additional key:
+   *                          - pinBlackListed -> entered PIN is black listed
+   *                          - pinShouldNotBeASequence -> PIN cannot contain a sequence
+   *                          - pinShouldNotUseSimilarDigits with maxSimilarDigits key -> PIN can contain only
+   *                                         'maxSimilarDigits' same digits
+   *                          - pinTooShort -> entered PIN is too short
+   *                          - pinEntryError -> PIN retrieval error
+   * @param {String} pin      The PIN code to set
    */
   setPin: function (errorCallback, pin) {
-    // Callback is performed on the initiating authorize callback handler
     exec(null, function (error) {
       console.log(error);
-    // The error contains a 'reason' and optionally an additional key
-    // pinBlackListed
-		// pinShouldNotBeASequence
-		// pinShouldNotUseSimilarDigits with maxSimilarDigits key
-		// pinTooShort
-		// pinEntryError
       errorCallback(error);
     }, 'OneginiCordovaClient', 'confirmNewPin', [pin]);
   },
 
+  /**
+   * Changes PIN number. User will firstly be prompted to enter current PIN number and once validation success
+   * will enter PIN creation flow.
+   *
+   * @param {Object} router   Object that can handle page transition for the outcome of the change pin. Should at
+   *                          least implement the following methods:
+   *                          - askForNewPinChangePinFlow -> should display a screen to set a PIN code. Must call
+   *                                         confirmNewPinForChangeRequest(errorCallback, pin)
+   *                          - askForPinChangePinFlow -> should display a screen to verify the PIN code. Must call
+   *                                         confirmCurrentPinForChangeRequest(errorCallback, pin)
+   *                          - changePinSuccess -> should handle completion of change PIN flow
+   *                          - changePinError -> should show the landing page for the authenticated user
+   *                          - authorizationFailure(error) -> should handle change PIN failure. If this method
+   *                                         is called, the change PIN transaction is lost.
+   *                                         Method must handle errors with following 'reason' properties:
+   *                                         'invalidCurrentPin'
+   *                                         'pinChangeError'
+   */
   changePin: function (router) {
     exec(function (response) {
-      /*
-       The OneginiClient will respond by means of the OGAuthorizationDelegate and ask for the
-       App to show a PIN entry/change dialog
-       */
       if (response.method == 'askNewPinForChangeRequest') {
         router.askForNewPinChangePinFlow();
       }
       else if (response.method == 'askCurrentPinForChangeRequest') {
         router.askForPinChangePinFlow();
       }
-      else if (response == 'pinChanged') {
+      else {
         router.changePinSuccess();
       }
     }, function (error) {
-      // The error contains a 'reason' and optionally an additional key
-      // invalidCurrentPin
-      // pinChangeError
-      // pinChangeError with additional error object
       router.changePinError(error);
     }, 'OneginiCordovaClient', 'changePin', []);
   },
@@ -222,29 +232,47 @@ module.exports = {
     'OneginiCordovaClient', 'confirmCurrentPinForChangeRequest', [pin]);
   },
 
+  /**
+   * Sets a new PIN for the user. Can only be called within the change PIN flow. In case of success, the
+   * changePin function decides the next step. If something goes wrong, the errorCallback is called.
+   * Callback is performed on initiating changePin callback handler.
+   *
+   * The app should first verify whether the PIN has the correct format and the verifyPin matches the pin.
+   *
+   * An INVALID_ACTION is returned if no change PIN transaction is registered.
+   *
+   * @param errorCallback     Function to call when the PIN verification fails. Is called with an error object
+   *                          containing a 'reason' and potentially additional key:
+   *                          - pinBlackListed -> entered PIN is black listed
+   *                          - pinShouldNotBeASequence -> PIN cannot contain a sequence
+   *                          - pinShouldNotUseSimilarDigits with maxSimilarDigits key -> PIN can contain only
+   *                                         'maxSimilarDigits' same digits
+   *                          - pinTooShort -> entered PIN is too short
+   *                          - pinEntryError -> PIN retrieval error
+   * @param {String} pin      The PIN code to set
+   */
   confirmNewPinForChangeRequest: function (errorCallback, pin) {
-    // Forward the PIN entries back to the OneginiClient.
-    // Callback is performed on the initiating changePin callback handler
     exec(null, function (error) {
       console.log(error);
       errorCallback(error);
-    // The error contains a 'reason' and optionally an additional key
-		// pinBlackListed
-		// pinShouldNotBeASequence
-		// pinShouldNotUseSimilarDigits with maxSimilarDigits key
-		// pinTooShort
-		// pinEntryError
     }, 'OneginiCordovaClient', 'confirmNewPinForChangeRequest', [pin]);
   },
 
+  /**
+   * Validates provided PIN number against clients pin policy.
+   *
+   * @param errorCallback     Function to call when the PIN verification fails. Is called with an error object
+   *                          containing a 'reason' and potentially additional key:
+   *                          - pinBlackListed -> entered PIN is black listed
+   *                          - pinShouldNotBeASequence -> PIN cannot contain a sequence
+   *                          - pinShouldNotUseSimilarDigits with maxSimilarDigits key -> PIN can contain only
+   *                                         'maxSimilarDigits' same digits
+   *                          - pinTooShort -> entered PIN is too short
+   *                          - pinEntryError -> PIN retrieval error
+   * @param {String} pin      The PIN code to set
+   */
   validatePin: function (errorCallback, pin) {
-    // not implemented in the base app yet
     exec(null, function (error) {
-      // The error contains a 'reason' and optionally an additional key
-      // pinBlackListed
-      // pinShouldNotBeASequence
-      // pinShouldNotUseSimilarDigits with 'maxSimilarDigits' key
-      // pinTooShort
       errorCallback(error);
     }, 'OneginiCordovaClient', 'validatePin', [pin]);
   },

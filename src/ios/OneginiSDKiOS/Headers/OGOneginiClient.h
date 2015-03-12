@@ -10,6 +10,8 @@
 #import "OGResourceHandlerDelegate.h"
 #import "OGAuthorizationDelegate.h"
 #import "OGEnrollmentHandlerDelegate.h"
+#import "OGPinValidationDelegate.h"
+#import "OGChangePinDelegate.h"
 #import "OGPublicCommons.h"
 
 @class OGConfigModel, OGAuthorizationManager, OGResourceManager, OGEnrollmentManager;
@@ -22,6 +24,7 @@
 @interface OGOneginiClient : NSObject
 
 @property (weak, nonatomic) id<OGAuthorizationDelegate> authorizationDelegate;
+@property (weak, nonatomic) id<OGPinValidationDelegate> pinValidationDelegate;
 
 /**
  For verification of the bundled DER encoded CA X509 certificates, 
@@ -66,18 +69,18 @@
 - (void)authorize:(NSArray *)scopes;
 
 /**
-Change the user's current PIN
-The user will be requested to enter the current, a new and a verification PIN
-The PIN must satisfy the client's PIN policy.
-
-@param scopes
-@param delegate
-*/
-- (void)authorizeAndChangePin:(NSArray *)scopes;
+ Initiate the PIN change sequence.
+ If no refresh token is registered then the sequence is cancelled.
+ This will invoke a call to the OGAuthorizationDelegate - (void)askForPinChange:(NSUInteger)pinSize;
+ 
+ @param delegate
+ @return true if change request procedure is started
+ */
+- (void)changePinRequest:(id <OGChangePinDelegate>)delegate;
 
 /**
  Determine if the device is linked to a user
- 
+  
  @return true, if the device is linked to a user
  */
 - (BOOL)isRegistered DEPRECATED_ATTRIBUTE;
@@ -95,6 +98,51 @@ The PIN must satisfy the client's PIN policy.
  @return true, if a valid access token is available
  */
 - (BOOL)isAuthorized;
+
+/**
+ Check if the pin satisfies all pin policy constraints
+ 
+ @param pin
+ @param error
+ @return true if all pin policy constraints are satisfied
+ */
+- (BOOL)isPinValid:(NSString *)pin error:(NSError **)error;
+
+/**
+ Confirm the PIN entry
+ This is the callback entry after the delegate is requested to ask the user for the current pin.
+ @see OGAuthorizationDelegate -(void)askForPin:(NSUInteger)pinSize;
+ 
+ @param pin
+ */
+- (void)confirmCurrentPin:(NSString *)pin;
+
+/**
+ Confirm the new PIN.
+ This is the callback entry after the delegate is requested to ask the user for a new pin.
+ @see OGAuthorizationDelegate -(void)askForNewPin:(NSUInteger)pinSize;
+ 
+ @param pin
+ @param validation delegate
+ */
+- (void)confirmNewPin:(NSString *)pin validation:(id<OGPinValidationDelegate>)delegate;
+
+/**
+ Confirm the current PIN as part of the change PIN request flow.
+ This method should be called after a call to OGAuthorizationDelegate - (void)askCurrentPinForChangeRequest;
+ 
+ @param pin
+ */
+- (void)confirmCurrentPinForChangeRequest:(NSString *)pin;
+
+/**
+ Confirm the new PIN for the change request.
+ Call this method in reponse to OGAuthorizationDelegate - (void)askNewPinForChangeRequest:(NSUInteger)pinSize;
+ 
+ @param pin
+ @param pin validation delegate
+ */
+- (void)confirmNewPinForChangeRequest:(NSString *)pin validation:(id<OGPinValidationDelegate>)delegate;
 
 /**
  Handle the response of the authorization request from the browser redirect.
@@ -150,6 +198,25 @@ The PIN must satisfy the client's PIN policy.
 					 params:(NSDictionary *)params
 				   delegate:(id <OGResourceHandlerDelegate>)delegate;
 
+/**
+Fetches a specific resource.
+The access token validation flow is invoked if no valid access token is available.
+Params are encoded using JSON notation
+
+@param path relative path to the resource end point
+@param scopes
+@param params additional request parameters
+@param headers additional headers
+@param delegate
+@return transactionId
+*/
+- (NSString *)fetchResource:(NSString *)path
+					 scopes:(NSArray *)scopes
+			  requestMethod:(HTTPRequestMethod)requestMethod
+					 params:(NSDictionary *)params
+					headers:(NSDictionary *)headers
+				   delegate:(id <OGResourceHandlerDelegate>)delegate;
+
 
 /**
  Fetches a specific resource.
@@ -170,6 +237,26 @@ The PIN must satisfy the client's PIN policy.
 				   delegate:(id <OGResourceHandlerDelegate>)delegate;
 
 /**
+Fetches a specific resource.
+The access token validation flow is invoked if no valid access token is available.
+
+@param path relative path to the resource end point
+@param scopes
+@param params additional request parameters
+@param paramsEncoding
+@param headers additional headers
+@param delegate
+@return transactionId
+*/
+- (NSString *)fetchResource:(NSString *)path
+					 scopes:(NSArray *)scopes
+			  requestMethod:(HTTPRequestMethod)requestMethod
+					 params:(NSDictionary *)params
+			 paramsEncoding:(HTTPClientParameterEncoding)paramsEncoding
+					headers:(NSDictionary *)headers
+				   delegate:(id <OGResourceHandlerDelegate>)delegate;
+
+/**
  Fetches a specific resource anonymously using a client access token.
  The access token validation flow is invoked if no valid access token is available.
  
@@ -183,6 +270,24 @@ The PIN must satisfy the client's PIN policy.
 							  scopes:(NSArray *)scopes
 					   requestMethod:(HTTPRequestMethod)requestMethod
 							  params:(NSDictionary *)params
+							delegate:(id <OGResourceHandlerDelegate>)delegate;
+
+/**
+Fetches a specific resource anonymously using a client access token.
+The access token validation flow is invoked if no valid access token is available.
+
+@param path relative path to the resource end point
+@param scopes
+@param params additional request parameters
+@param headers additional headers
+@param delegate
+@return transactionId
+*/
+- (NSString *)fetchAnonymousResource:(NSString *)path
+							  scopes:(NSArray *)scopes
+					   requestMethod:(HTTPRequestMethod)requestMethod
+							  params:(NSDictionary *)params
+							 headers:(NSDictionary *)headers
 							delegate:(id <OGResourceHandlerDelegate>)delegate;
 
 /**
@@ -201,6 +306,26 @@ The PIN must satisfy the client's PIN policy.
 					   requestMethod:(HTTPRequestMethod)requestMethod
 							  params:(NSDictionary *)params
 					  paramsEncoding:(HTTPClientParameterEncoding)paramsEncoding
+							delegate:(id <OGResourceHandlerDelegate>)delegate;
+
+/**
+Fetches a specific resource anonymously using a client access token.
+The access token validation flow is invoked if no valid access token is available.
+
+@param path relative path to the resource end point
+@param scopes
+@param params additional request parameters
+@param paramsEncoding
+@param headers additional headers
+@param delegate
+@return transactionId
+*/
+- (NSString *)fetchAnonymousResource:(NSString *)path
+							  scopes:(NSArray *)scopes
+					   requestMethod:(HTTPRequestMethod)requestMethod
+							  params:(NSDictionary *)params
+					  paramsEncoding:(HTTPClientParameterEncoding)paramsEncoding
+							 headers:(NSDictionary *)headers
 							delegate:(id <OGResourceHandlerDelegate>)delegate;
 
 

@@ -9,14 +9,15 @@
 #import <Cordova/CDV.h>
 #import "OneginiSDK.h"
 
-@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate>
+@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate>
 
 @property (strong, nonatomic) OGOneginiClient *oneginiClient;
 @property (strong, nonatomic) OGConfigModel *configModel;
 
 @property (copy, nonatomic) NSString *authorizeCommandTxId;
-@property (copy, nonatomic) NSString *confirmPinCommandTxId;
+@property (copy, nonatomic) NSString *pinChangeCommandTxId;
 @property (copy, nonatomic) NSString *fetchResourceCommandTxId;
+@property (copy, nonatomic) NSString *pinValidateCommandTxId;
 
 /** FOR TESTING PURPOSE ONLY */
 - (void)clearTokens:(CDVInvokedUrlCommand *)command;
@@ -53,37 +54,38 @@
 - (void)changePin:(CDVInvokedUrlCommand *)command;
 
 /**
- This is not a direct entry point and only valid to be called when a delegate askForPinWithVerification is requested.
+ This is not a direct entry point and only valid to be called when a delegate askForNewPin is requested.
  When the askForPinWithVerification is invoked then the user PIN entry is forwarded back to the OneginiClient by this method.
  
  Command params:
  String pin
- String verifyPin
- Boolean retry
  */
-- (void)confirmPinWithVerification:(CDVInvokedUrlCommand *)command;
+- (void)confirmNewPin:(CDVInvokedUrlCommand *)command;
 
 /**
  This is not a direct entry point and only valid to be called when a delegate askForPin is requested.
- When the askForPin is invoked then the user PIN entry is forwarded back to the OneginiClient by this method.
+ When the askForCurrentPin is invoked then the user PIN entry is forwarded back to the OneginiClient by this method.
  
  Command arguments:
  String pin
- Boolean retry
  */
-- (void)confirmPin:(CDVInvokedUrlCommand *)command;
+- (void)confirmCurrentPin:(CDVInvokedUrlCommand *)command;
 
 /**
- This is not a direct entry point and only valid to be called when a delegate askForPinChangeWithVerification is requested.
- When the askForPinChangeWithVerification is invoked then the user PIN entries are forwarded back to the OneginiClient by this method.
+ This is not a direct entry point and only valid to be called when a delegate askCurrentPinForChangeRequest is requested.
+
+ Command params:
+ String currentPin
+ */
+- (void)confirmCurrentPinForChangeRequest:(CDVInvokedUrlCommand *)command;
+
+/**
+ This is not a direct entry point and only valid to be called when a delegate askNewPinForChangeRequest is requested.
  
  Command params:
  String currentPin
- String newPin
- String verifyNewPin
- Boolean retry
  */
-- (void)confirmChangePinWithVerification:(CDVInvokedUrlCommand *)command;
+- (void)confirmNewPinForChangeRequest:(CDVInvokedUrlCommand *)command;
 
 /**
  Cancel the PIN change. This is not a rollback of a changed PIN.
@@ -106,6 +108,15 @@
  Determine if the user is authorized.
  */
 - (void)isAuthorized:(CDVInvokedUrlCommand *)command;
+
+/**
+ Validate the PIN against the current PIN policy.
+ Callback is performed on the PIN validation handlers.
+ 
+ Command arguments:
+ String pin
+ */
+- (void)validatePin:(CDVInvokedUrlCommand *)command;
 
 /**
  Fetches a specific resource. 

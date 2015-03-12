@@ -16,13 +16,6 @@
 @required
 
 /**
- Method called when the resource call was successfully made.
- 
- @param response the response on the resource call
- */
-- (void)resourceSuccess:(id)response;
-
-/**
  * Method called when the resource call failed because of an unknown error.
  */
 - (void)resourceError;
@@ -51,8 +44,30 @@
 @optional
 
 /**
+Method called when the resource call was successfully made.
+
+Optional but either this one or the one with the headers should be implemented
+
+@param response the response on the resource call
+@param headers the headers returned on the resource call
+*/
+- (void)resourceSuccess:(id)response;
+
+/**
+Method called when the resource call was successfully made.
+
+Optional but either this one or the one with the headers should be implemented
+
+@param response the response on the resource call
+@param headers the headers returned on the resource call
+*/
+- (void)resourceSuccess:(id)response
+				headers:(NSDictionary *)headers;
+
+/**
  Method called when the grant type to get the client credentials is not enabled
  */
 - (void)invalidGrantType;
+
 
 @end

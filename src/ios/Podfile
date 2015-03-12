@@ -1,0 +1,8 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, "8.1"
+xcodeproj 'OneginiCordovaPlugin'
+link_with 'OneginiCordovaPlugin'
+
+# Use for development with local source repository
+pod 'OneginiSDKiOS', :path => '../../../OneginiSDKiOS/'

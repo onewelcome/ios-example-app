@@ -12,7 +12,7 @@ module.exports = {
         }, function (error) {
 
         },
-        'OneginiCordovaClient', 'initWithConfig', [config.sdkConfig, config.certificates]);
+        this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.INIT_WITH_CONFIG, [config.sdkConfig, config.certificates]);
   },
 
   /**
@@ -39,7 +39,7 @@ module.exports = {
       if (errorCallback) {
         errorCallback(error);
       }
-    }, 'OneginiCordovaClient', 'fetchResource', [path, scopes, requestMethod, paramsEncoding, params]);
+    }, this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.FETCH_RESOURCE, [path, scopes, requestMethod, paramsEncoding, params]);
   },
 
   /**
@@ -68,7 +68,7 @@ module.exports = {
       if (errorCallback) {
         errorCallback(error);
       }
-    }, 'OneginiCordovaClient', 'fetchAnonymousResource', [path, scopes, requestMethod, paramsEncoding, params]);
+    }, this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, [path, scopes, requestMethod, paramsEncoding, params]);
   },
 
   /**
@@ -94,54 +94,41 @@ module.exports = {
       /*
        The response method contains the name of the method in the OGAuthorizationDelegate protocol
        */
-      if (response.method == 'requestAuthorization') {
+      if (response.method == this.OG_CONSTANTS.AUTHORIZATION_REQUESTED) {
         router.requestAuthorization(response.url);
       }
-      else if (response.method == 'askForCurrentPin') {
+      else if (response.method == this.OG_CONSTANTS.PIN_ASK_FOR_CURRENT) {
         // TODO rename function conform response.method name
         router.askForPin();
       }
-      else if (response.method == 'askForNewPin') {
+      else if (response.method == this.OG_CONSTANTS.PIN_ASK_FOR_NEW) {
         // TODO rename function conform response.method name
         router.askForPinWithVerification();
       }
-      else if (response == 'authorizationSuccess') {
+      else if (response == this.OG_CONSTANTS.AUTHORIZATION_SUCCESS) {
         router.authorizationSuccess();
       }
     }, function (error) {
       router.authorizationFailure(error, scopes);
-    }, 'OneginiCordovaClient', 'authorize', scopes);
+    }, this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, scopes);
   },
 
   /**
-   * This will end the current session and invalidate the access token. The refresh token and client credentials
+   * This will remove current session data and invalidate the access token. The refresh token and client credentials
    * remain untouched.
    */
   logout: function (successCallback, errorCallback) {
-    exec(successCallback, errorCallback, 'OneginiCordovaClient', 'logout', []);
+    exec(successCallback, errorCallback, this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.LOGOUT, []);
+    this.invalidateSessionState();
   },
 
   /**
-   * Disconnect from the service, this will clear the refresh token and access token. Client credentials remain
-   * untouched.
+   * Disconnect from the service, this will clear the refresh token and access token and remove session data.
+   * Client credentials remain untouched.
    */
   disconnect: function (successCallback, errorCallback) {
-    exec(successCallback, errorCallback, 'OneginiCordovaClient', 'disconnect', []);
-  },
-
-  /**
-   * For testing purpose only: Clear the client credentials. A new dynamic client registration has to be performed
-   * on the next authorization request.
-   */
-  clearCredentials: function () {
-    exec(null, null, 'OneginiCordovaClient', 'clearCredentials', []);
-  },
-
-  /**
-   * For testing purpose only: Clear all tokens and reset the pin attempt count.
-   */
-  clearTokens: function () {
-    exec(null, null, 'OneginiCordovaClient', 'clearTokens', []);
+    exec(successCallback, errorCallback, this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.DISCONNECT, []);
+    this.invalidateSessionState();
   },
 
   /**
@@ -160,7 +147,7 @@ module.exports = {
   checkPin: function (errorCallback, pin) {
     exec(null, function (error) {
     errorCallback(error);
-    }, 'OneginiCordovaClient', 'confirmCurrentPin', [pin]);
+    }, this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.PIN_CONFIRM_CURRENT, [pin]);
   },
 
   /**
@@ -186,7 +173,7 @@ module.exports = {
     exec(null, function (error) {
       console.log(error);
       errorCallback(error);
-    }, 'OneginiCordovaClient', 'confirmNewPin', [pin]);
+    }, this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.PIN_CONFIRM_NEW, [pin]);
   },
 
   /**
@@ -209,10 +196,10 @@ module.exports = {
    */
   changePin: function (router) {
     exec(function (response) {
-      if (response.method == 'askNewPinForChangeRequest') {
+      if (response.method == this.OG_CONSTANTS.PIN_ASK_FOR_NEW_FOR_CHANGE_REQUEST) {
         router.askForNewPinChangePinFlow();
       }
-      else if (response.method == 'askCurrentPinForChangeRequest') {
+      else if (response.method == this.OG_CONSTANTS.PIN_ASK_FOR_CURRENT_FOR_CHANGE_REQUEST) {
         router.askForPinChangePinFlow();
       }
       else {
@@ -220,7 +207,7 @@ module.exports = {
       }
     }, function (error) {
       router.changePinError(error);
-    }, 'OneginiCordovaClient', 'changePin', []);
+    }, this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.PIN_CHANGE, []);
   },
   confirmCurrentPinForChangeRequest: function (errorCallback, pin) {
     exec(null, function (error) {
@@ -229,7 +216,7 @@ module.exports = {
           errorCallback(error);
         }
     },
-    'OneginiCordovaClient', 'confirmCurrentPinForChangeRequest', [pin]);
+        this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.PIN_CONFIRM_CURRENT_FOR_CHANGE_REQUEST, [pin]);
   },
 
   /**
@@ -255,7 +242,7 @@ module.exports = {
     exec(null, function (error) {
       console.log(error);
       errorCallback(error);
-    }, 'OneginiCordovaClient', 'confirmNewPinForChangeRequest', [pin]);
+    }, this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.PIN_CONFIRM_NEW_FOR_CHANGE_REQUEST, [pin]);
   },
 
   /**
@@ -274,11 +261,73 @@ module.exports = {
   validatePin: function (errorCallback, pin) {
     exec(null, function (error) {
       errorCallback(error);
-    }, 'OneginiCordovaClient', 'validatePin', [pin]);
+    }, this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.PIN_VALIDATE, [pin]);
   },
 
+  /**
+   * Cancels started pin change flow and removes related session data.
+   */
   cancelPinChange: function () {
     // not implemented in the base app yet
-    exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', []);
+    exec(null, null, this.OG_CONSTANTS.CORDOVA_CLIENT, this.OG_CONSTANTS.PIN_CANCEL_CHANGE, []);
+  },
+
+  /**
+   * Invalidates session storage data.
+   */
+  invalidateSessionState: function () {
+    var length = sessionStorage.length;
+    while(length--) {
+      var key = sessionStorage.key(i);
+      sessionStorage.removeItem(key);
+    }
+  },
+
+  /**
+   * Preserves in currently displayed page identifier in sessions storage.
+   */
+  preserveOriginLocaiton: function () {
+    var activePage = $.mobile.activePage.attr("id");
+    sessionStorage.setItem(this.OG_CONSTANTS.PAGE_OF_ORIGIN, activePage);
+  },
+
+  /**
+   * List of constant values used in communication with OneginiCordovaPlugin.
+   */
+  OG_CONSTANTS: {
+    PAGE_OF_ORIGIN: "origin_page",
+
+    CORDOVA_CLIENT: "OneginiCordovaClient",
+
+    INIT_WITH_CONFIG: "initWithConfig",
+
+    AUTHORIZATION_AUTHORIZE: "authorize",
+    AUTHORIZATION_REQUESTED: "requestAuthorization",
+    AUTHORIZATION_SUCCESS: "authorizationSuccess",
+    AUTHORIZATION_FAILURE: "authorizationFailure",
+
+    PIN_ASK_FOR_CURRENT: "askForCurrentPin",
+    PIN_ASK_FOR_NEW: "askForNewPin",
+    PIN_CONFIRM_NEW: "confirmNewPin",
+    PIN_CONFIRM_CURRENT: "confirmCurrentPin",
+    PIN_VALIDATE: "validatePin",
+    PIN_BLACK_LISTED: "pinBlackListed",
+    PIN_SHOULD_NOT_BE_A_SEQUENCE: "pinShouldNotBeASequence",
+    PIN_SHOULD_NUT_USE_SIMILAR_DIGITS: "pinShouldNotUseSimilarDigits",
+    PIN_MAX_SIMILAR_DIGITS: "maxSimilarDigits",
+    PIN_TOO_SHORT: "pinTooShort",
+    PIN_ENTRY_ERROR: "pinEntryError",
+    PIN_CHANGE: "changePin",
+    PIN_ASK_FOR_CURRENT_FOR_CHANGE_REQUEST: "askCurrentPinForChangeRequest",
+    PIN_ASK_FOR_NEW_FOR_CHANGE_REQUEST: "askNewPinForChangeRequest",
+    PIN_CONFIRM_NEW_FOR_CHANGE_REQUEST: "confirmNewPinForChangeRequest",
+    PIN_CONFIRM_CURRENT_FOR_CHANGE_REQUEST: "confirmCurrentPinForChangeRequest",
+    PIN_CANCEL_CHANGE: "cancelPinChange",
+
+    DISCONNECT: "disconnect",
+    LOGOUT: "logout",
+
+    FETCH_RESOURCE: "fetchResource",
+    FETCH_ANONYMOUS_RESOURCE: "fetchAnonymousResource"
   }
 };

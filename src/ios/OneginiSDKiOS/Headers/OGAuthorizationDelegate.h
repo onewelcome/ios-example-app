@@ -8,16 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^PinEntryWithVerification)(NSString *pin, NSString *verification, BOOL retry);
-typedef void(^PinEntryConfirmation)(NSString *pin, BOOL retry);
-typedef void(^ChangePinEntryWithVerification)(NSString *pin, NSString *newPin, NSString *newPinVerification, BOOL retry);
+/** 
+ Callback asking for a PIN and a second verification PIN. 
+ If the PINs don't not satisfy the PIN policy constraints and retry is true then the PIN entry dialog is reopened 
+ */
+//typedef void(^PinEntryWithVerification)(NSString *pin, NSString *verification, BOOL retry);
+//typedef void(^PinEntryConfirmation)(NSString *pin, BOOL retry);
+//typedef void(^ChangePinEntryWithVerification)(NSString *pin, NSString *newPin, NSString *newPinVerification, BOOL retry);
 typedef void(^Cancel)(void);
 typedef void(^PushAuthenticationConfirmation)(BOOL confirm);
 typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm, BOOL retry);
 
 /**
  This delegate provides the interface from the OneginiClient to the App implementation. 
- All invokations are performed asynchronous and on the main queue.
+ All invocations are performed asynchronous and on the main queue.
  */
 @protocol OGAuthorizationDelegate <NSObject>
 
@@ -41,46 +45,30 @@ typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm
 - (void)requestAuthorization:(NSURL *)url;
 
 /**
- Ask the user for a new PIN and verification. 
+ Ask the user for a new PIN
  The implementor should present a PIN entry dialog with a second verification entry.
- 
  The PIN must be forwarded directly to the client and not be stored by any means.
- 
- The order of the PIN values in the callback handler is not relevant.
- If both PIN do not match (or length is less then pinSize) and retry is true then 
- this method is re-invoked. This retry due to incorrect pinSize does not count as a PIN attempt failure.
+ Call the OGOneginiClient - (void)confirmNewPin:(NSString *)pin; with the new PIN.
+ The new PIN must satisfy any PIN policy constraints.
  
  @param pinSize, the size of the PIN value
- @param complete, user entry confirmation callback handler.
  */
-- (void)askForPinWithVerification:(NSUInteger)pinSize confirmation:(PinEntryWithVerification)confirm;
-
-/**
-Ask the user for a new PIN replacing the existing one.
-The implementor should ask the user for the current PIN and the new PIN with verification.
-
-The PINs must be forwarded directly to the client and not be stored by any means.
-
-The new PINs must satisfy any PIN policy constraints. If the policy is not met retry is true then
-this method is re-invoked. This retry due to incorrect pinSize does not count as a PIN attempt failure.
-
-@param pinSize, the size of the PIN value
-@param complete, user entry confirmation callback handler.
-*/
-- (void)askForPinChangeWithVerification:(NSUInteger)pinSize confirmation:(ChangePinEntryWithVerification)confirm cancel:(Cancel)cancel;
+- (void)askForNewPin:(NSUInteger)pinSize;
 
 /**
  Ask the user to provide the PIN for confirmation of the authorization request.
  
  The implementor should present a PIN entry dialog and must forward the PIN directly to the client and not store the PIN by any means.
- 
- If the PIN size is less then the pinSize parameter and retry is true then this method is re-invoked.
- This retry due to incorrect pinSize does not count as a PIN attempt failure.
- 
- @param pinSize, the size of the PIN value
- @param complete, user entry confirmation callback handler.
+ Call the OGOneginiClient - (void)confirmPin:(NSString *)pin; with the user provided PIN.
  */
-- (void)askForPin:(NSUInteger)pinSize confirmation:(PinEntryConfirmation)confirm;
+- (void)askForCurrentPin;
+
+/**
+ Ask the user for the current PIN in the change PIN request flow.
+ The PIN must be forwarded directly to the client and not be stored by any means.
+ */
+- (void)askCurrentPinForChangeRequest;
+- (void)askNewPinForChangeRequest:(NSUInteger)pinSize;
 
 /**
  Ask the user for confirmation on a push authentication request.
@@ -161,13 +149,6 @@ this method is re-invoked. This retry due to incorrect pinSize does not count as
 - (void)authorizationErrorNotAuthorized;
 
 @optional
-
-/**
- If the PIN entry verification fails an error is generated. 
- 
- @param error
- */
-- (void)pinEntryError:(NSError *)error;
 
 /**
  An exception was thrown during the authorization request.

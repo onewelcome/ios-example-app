@@ -10,6 +10,7 @@ public enum OneginiPinResponse {
   PIN_BLACKLISTED("pinBlackListed"),
   PIN_SHOULD_NOT_BE_A_SEQUENCE("pinShouldNotBeASequence"),
   PIN_SHOULD_NOT_USE_SIMILAR_DIGITS("pinShouldNotUseSimilarDigits"),
+  PIN_MAX_SIMILAR_DIGITS("maxSimilarDigits"),
   PIN_TOO_SHORT("pinTooShort"),
   PIN_ENTRY_ERROR("pinEntryError"),
 

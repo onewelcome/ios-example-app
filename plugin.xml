@@ -79,6 +79,7 @@
     <source-file src="src/android/src/android/com/onegini/dialogs/ConfirmationDialogSelectorHandler.java" target-dir="src/com/onegini/dialogs/" />
     <source-file src="src/android/src/android/com/onegini/dialogs/CreatePinDialogHandler.java" target-dir="src/com/onegini/dialogs/" />
     <source-file src="src/android/src/android/com/onegini/dialogs/CurrentPinDialogHandler.java" target-dir="src/com/onegini/dialogs/" />
+    <source-file src="src/android/src/android/com/onegini/actions/PinCallbackSession.java" target-dir="src/com/onegini/actions/" />
     <!--<source-file src="src/android/src/android/com/onegini/gcm/GCMHelper.java" target-dir="src/com/onegini/gcm/" />-->
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/" />
     <source-file src="src/android/src/android/com/onegini/resource/AnonymousResourceClient.java" target-dir="src/com/onegini/resource/" />

@@ -11,6 +11,7 @@ import org.apache.cordova.CallbackContext;
 
 import com.onegini.actions.AuthorizeAction;
 import com.onegini.actions.ChangePinAction;
+import com.onegini.actions.PinCallbackSession;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCreatePinDialog;
 import com.onegini.util.CallbackResultBuilder;
@@ -25,17 +26,14 @@ public class CreatePinDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void createPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
-    if (isAuthorizationFlow()) {
-      handleInitialPinCreation(oneginiPinProvidedHandler);
-      return;
-    }
+    PinCallbackSession.setAwaitingPinProvidedHandler(oneginiPinProvidedHandler);
 
     if (isChangePinFlow()) {
-      handleNewPin(oneginiPinProvidedHandler);
+      handleNewPinInChangeFlow();
       return;
     }
 
-    //TODO: invalidate pin request on SDK side
+    handlePinCreation();
   }
 
   /*
@@ -43,7 +41,7 @@ public class CreatePinDialogHandler implements OneginiCreatePinDialog {
    */
   @Override
   public void pinBlackListed() {
-    getAppropriateCallbackContext().sendPluginResult(callbackResultBuilder
+    PinCallbackSession.getPinCallback().sendPluginResult(callbackResultBuilder
         .withSuccessMethod(PIN_BLACKLISTED.getName())
         .withCallbackKept()
         .build());
@@ -51,7 +49,7 @@ public class CreatePinDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void pinShouldNotBeASequence() {
-    getAppropriateCallbackContext().sendPluginResult(callbackResultBuilder
+    PinCallbackSession.getPinCallback().sendPluginResult(callbackResultBuilder
         .withSuccessMethod(PIN_SHOULD_NOT_BE_A_SEQUENCE.getName())
         .withCallbackKept()
         .build());
@@ -59,7 +57,7 @@ public class CreatePinDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void pinShouldNotUseSimilarDigits(final int i) {
-    getAppropriateCallbackContext().sendPluginResult(callbackResultBuilder
+    PinCallbackSession.getPinCallback().sendPluginResult(callbackResultBuilder
         .withSuccessMethod(PIN_SHOULD_NOT_USE_SIMILAR_DIGITS.getName())
         .withCallbackKept()
         .build());
@@ -67,22 +65,8 @@ public class CreatePinDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void pinTooShort() {
-    getAppropriateCallbackContext().sendPluginResult(callbackResultBuilder
+    PinCallbackSession.getPinCallback().sendPluginResult(callbackResultBuilder
         .withSuccessMethod(PIN_TOO_SHORT.getName())
-        .withCallbackKept()
-        .build());
-  }
-
-  private boolean isAuthorizationFlow() {
-    return AuthorizeAction.getAuthorizationCallback() != null;
-  }
-
-  private void handleInitialPinCreation(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
-    final CallbackContext authorizationCallback = AuthorizeAction.getAuthorizationCallback();
-    AuthorizeAction.setAwaitingPinProvidedHandler(oneginiPinProvidedHandler);
-
-    authorizationCallback.sendPluginResult(callbackResultBuilder
-        .withSuccessMethod(ASK_FOR_NEW_PIN.getName())
         .withCallbackKept()
         .build());
   }
@@ -91,23 +75,18 @@ public class CreatePinDialogHandler implements OneginiCreatePinDialog {
     return ChangePinAction.getChangePinCallback() != null;
   }
 
-  private void handleNewPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
-    final CallbackContext changePinCallback = ChangePinAction.getChangePinCallback();
-    ChangePinAction.setAwaitingPinProvidedHandler(oneginiPinProvidedHandler);
-
-    changePinCallback.sendPluginResult(callbackResultBuilder
-        .withSuccessMethod(PIN_CHANGE_ASK_FOR_NEW_PIN.getName())
+  private void handlePinCreation() {
+    PinCallbackSession.getPinCallback().sendPluginResult(callbackResultBuilder
+        .withSuccessMethod(ASK_FOR_NEW_PIN.getName())
         .withCallbackKept()
         .build());
   }
 
-  private CallbackContext getAppropriateCallbackContext() {
-    if (isAuthorizationFlow()) {
-      return AuthorizeAction.getAuthorizationCallback();
-    }
-    else {
-      return ChangePinAction.getChangePinCallback();
-    }
+  private void handleNewPinInChangeFlow() {
+    PinCallbackSession.getPinCallback().sendPluginResult(callbackResultBuilder
+        .withSuccessMethod(PIN_CHANGE_ASK_FOR_NEW_PIN.getName())
+        .withCallbackKept()
+        .build());
   }
 
 }

@@ -15,27 +15,7 @@ public class PinProvidedAction implements OneginiPluginAction {
       return;
     }
 
-    if (isAuthorizationFlow()) {
-      handlePin(args, callbackContext, AuthorizeAction.getAwaitingPinProvidedHandler());
-      return;
-    }
-
-    if (isChangePinFlow()) {
-      handlePin(args, callbackContext, ChangePinAction.getAwaitingPinProvidedHandler());
-      return;
-    }
-
-    AuthorizeAction.clearAuthorizationSessionState();
-    ChangePinAction.clearChangePinSessionState();
-    callbackContext.error("Session not found.");
-  }
-
-  private boolean isAuthorizationFlow() {
-    return AuthorizeAction.getAwaitingPinProvidedHandler() != null;
-  }
-
-  private boolean isChangePinFlow() {
-    return ChangePinAction.getAwaitingPinProvidedHandler() != null;
+    handlePin(args, callbackContext, PinCallbackSession.getAwaitingPinProvidedHandler());
   }
 
   private void handlePin(final JSONArray args, final CallbackContext callbackContext,
@@ -43,6 +23,7 @@ public class PinProvidedAction implements OneginiPluginAction {
     try {
       final String pin = (String) args.get(0);
       pinProvidedHandler.onPinProvided(pin.toCharArray());
+      callbackContext.success();
     } catch (JSONException e) {
       callbackContext.error("Failed to read provided pin, " + e.getMessage());
     }

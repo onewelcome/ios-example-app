@@ -26,19 +26,13 @@ import com.onegini.util.CallbackResultBuilder;
 public class AuthorizeAction implements OneginiPluginAction {
 
   private final CallbackResultBuilder callbackResultBuilder;
+  private CallbackContext callbackContext;
 
   public AuthorizeAction() {
     callbackResultBuilder = new CallbackResultBuilder();
   }
 
-  private static CallbackContext authorizationCallback;
-
-  public static CallbackContext getAuthorizationCallback() {
-    return authorizationCallback;
-  }
-
   public static void clearAuthorizationSessionState() {
-    authorizationCallback = null;
     awaitingPinProvidedHandler = null;
   }
 
@@ -58,15 +52,16 @@ public class AuthorizeAction implements OneginiPluginAction {
       callbackContext.error("Failed to authorize, invalid parameter.");
       return;
     }
-
-    authorizationCallback = callbackContext;
+    this.callbackContext = callbackContext;
 
     try {
       final String[] scopes = new ScopeParser().getScopesAsArray(args);
       client.getOneginiClient().authorize(scopes, new OneginiAuthorizationHandler() {
         @Override
         public void authorizationSuccess() {
-          sendCallbackResult(callbackResultBuilder.withSuccessMessage(AUTHORIZATION_SUCCESS.getName()).build());
+          sendCallbackResult(callbackResultBuilder
+              .withSuccessMessage(AUTHORIZATION_SUCCESS.getName())
+              .build());
         }
 
         @Override
@@ -160,7 +155,7 @@ public class AuthorizeAction implements OneginiPluginAction {
   }
 
   private void sendCallbackResult(final PluginResult result) {
-    authorizationCallback.sendPluginResult(result);
+    callbackContext.sendPluginResult(result);
     clearAuthorizationSessionState();
   }
 }

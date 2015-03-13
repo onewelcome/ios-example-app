@@ -15,6 +15,27 @@ module.exports = {
         oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.INIT_WITH_CONFIG, [config.sdkConfig, config.certificates]);
   },
 
+  initPinCallbackSession: function (router, errorCallback) {
+    exec(function (response) {
+          if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_NEW_FOR_CHANGE_REQUEST) {
+            router.askForNewPinChangePinFlow();
+          }
+          else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_CURRENT_FOR_CHANGE_REQUEST) {
+            router.askForPinChangePinFlow();
+          }
+          else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_CURRENT) {
+            router.askForPin();
+          }
+          else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_NEW) {
+            router.askForNewPin();
+
+          }
+        }, function (error) {
+          errorCallback(error);
+        },
+        oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.INIT_PIN_CALLBACK_SESSION, []);
+  },
+
   /**
    * Fetches a specific resource.
    * The access token validation flow is invoked if no valid access token is available.
@@ -97,14 +118,6 @@ module.exports = {
       if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_REQUESTED) {
         router.requestAuthorization(response.url);
       }
-      else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_CURRENT) {
-        // TODO rename function conform response.method name
-        router.askForPin();
-      }
-      else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_NEW) {
-        // TODO rename function conform response.method name
-        router.askForPinWithVerification();
-      }
       else if (response == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_SUCCESS) {
         router.authorizationSuccess();
       }
@@ -118,7 +131,10 @@ module.exports = {
    * remain untouched.
    */
   logout: function (successCallback, errorCallback) {
-    exec(successCallback, errorCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.LOGOUT, []);
+    exec(function (response) {
+      oneginiCordovaPlugin.shouldRestoreLocationAfterReauthorization = false;
+      successCallback();
+    }, errorCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.LOGOUT, []);
     this.invalidateSessionState();
   },
 
@@ -127,7 +143,10 @@ module.exports = {
    * Client credentials remain untouched.
    */
   disconnect: function (successCallback, errorCallback) {
-    exec(successCallback, errorCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.DISCONNECT, []);
+    exec(function (response) {
+      oneginiCordovaPlugin.shouldRestoreLocationAfterReauthorization = false;
+      successCallback();
+    }, errorCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.DISCONNECT, []);
     this.invalidateSessionState();
   },
 
@@ -144,9 +163,11 @@ module.exports = {
    *                                  as argument.
    * @param {String} pin              The PIN code to verify
    */
-  checkPin: function (errorCallback, pin) {
-    exec(null, function (error) {
-    errorCallback(error);
+  checkPin: function (successCallback, errorCallback, pin) {
+    exec(function (response) {
+      successCallback();
+    }, function (error) {
+      errorCallback(error);
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CONFIRM_CURRENT, [pin]);
   },
 
@@ -196,26 +217,18 @@ module.exports = {
    */
   changePin: function (router) {
     exec(function (response) {
-      if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_NEW_FOR_CHANGE_REQUEST) {
-        router.askForNewPinChangePinFlow();
-      }
-      else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_CURRENT_FOR_CHANGE_REQUEST) {
-        router.askForPinChangePinFlow();
-      }
-      else {
-        router.changePinSuccess();
-      }
+      router.changePinSuccess();
     }, function (error) {
       router.changePinError(error);
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE, []);
   },
   confirmCurrentPinForChangeRequest: function (errorCallback, pin) {
     exec(null, function (error) {
-        console.log(error);
-        if (errorCallback) {
-          errorCallback(error);
-        }
-    },
+          console.log(error);
+          if (errorCallback) {
+            errorCallback(error);
+          }
+        },
         oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CONFIRM_CURRENT_FOR_CHANGE_REQUEST, [pin]);
   },
 
@@ -277,7 +290,7 @@ module.exports = {
    */
   invalidateSessionState: function () {
     var length = sessionStorage.length;
-    while(length--) {
+    while (length--) {
       var key = sessionStorage.key(i);
       sessionStorage.removeItem(key);
     }
@@ -286,7 +299,7 @@ module.exports = {
   /**
    * Preserves in currently displayed page identifier in sessions storage.
    */
-  preserveOriginLocaiton: function () {
+  preserveCurrentLocaiton: function () {
     var activePage = $.mobile.activePage.attr("id");
     sessionStorage.setItem(oneginiCordovaPlugin.OG_CONSTANTS.PAGE_OF_ORIGIN, activePage);
   },
@@ -300,6 +313,7 @@ module.exports = {
     CORDOVA_CLIENT: "OneginiCordovaClient",
 
     INIT_WITH_CONFIG: "initWithConfig",
+    INIT_PIN_CALLBACK_SESSION: "initPinCallbackSession",
 
     AUTHORIZATION_AUTHORIZE: "authorize",
     AUTHORIZATION_REQUESTED: "requestAuthorization",

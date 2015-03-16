@@ -18,7 +18,7 @@ module.exports = {
   initPinCallbackSession: function (router, errorCallback) {
     exec(function (response) {
           if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_NEW_FOR_CHANGE_REQUEST) {
-            router.askForNewPinChangePinFlow();
+            router.askForNewPinChangePinFlow(oneginiCordovaPlugin.confirmNewPinForChangeRequest);
           }
           else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_CURRENT_FOR_CHANGE_REQUEST) {
             router.askForPinChangePinFlow();
@@ -27,7 +27,7 @@ module.exports = {
             router.askForPin();
           }
           else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_NEW) {
-            router.askForNewPin();
+            router.askForNewPin(oneginiCordovaPlugin.setPin);
 
           }
         }, function (error) {

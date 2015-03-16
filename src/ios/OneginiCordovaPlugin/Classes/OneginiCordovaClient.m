@@ -141,6 +141,10 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 - (void)initPinCallbackSession:(CDVInvokedUrlCommand *)command {
 	self.pinCommandTxId = command.callbackId;
+	
+	CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+	pluginResult.keepCallback = @(1);
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:pinCommandTxId];
 }
 
 - (void)authorize:(CDVInvokedUrlCommand *)command {

@@ -57,6 +57,7 @@ public class ValidatePinAction implements OneginiPluginAction {
         callbackContext.sendPluginResult(
             callbackResultBuilder
                 .withErrorReason(OneginiPinResponse.PIN_SHOULD_NOT_USE_SIMILAR_DIGITS.getName())
+                .withMaxSimilarDigits(maxSimilar)
                 .build());
       }
 

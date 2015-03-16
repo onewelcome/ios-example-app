@@ -61,6 +61,11 @@ public class CallbackResultBuilder {
     return this;
   }
 
+  public CallbackResultBuilder withMaxSimilarDigits(final int maxSimilar) {
+    payload.put("maxSimilarDigits", Integer.toString(maxSimilar));
+    return this;
+  }
+
   public CallbackResultBuilder withCallbackKept() {
     shouldKeepCallback = true;
     return this;

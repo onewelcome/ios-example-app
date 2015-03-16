@@ -9,6 +9,7 @@ import static com.onegini.OneginiConstants.CONFIRM_NEW_PIN_CHANGE_PIN_ACTION;
 import static com.onegini.OneginiConstants.DISCONNECT_ACTION;
 import static com.onegini.OneginiConstants.FETCH_ANONYMOUS_ACTION;
 import static com.onegini.OneginiConstants.FETCH_RESOURCE_ACTION;
+import static com.onegini.OneginiConstants.INIT_PIN_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.INIT_WITH_CONFIG_ACTION;
 import static com.onegini.OneginiConstants.LOGOUT_ACTION;
 import static com.onegini.OneginiConstants.MOBILE_AUTHENTICATION_ACTION;
@@ -35,6 +36,7 @@ import com.onegini.actions.InitWithConfigAction;
 import com.onegini.actions.LogoutAction;
 import com.onegini.actions.MobileAuthenticationAction;
 import com.onegini.actions.OneginiPluginAction;
+import com.onegini.actions.PinCallbackSession;
 import com.onegini.actions.PinProvidedAction;
 import com.onegini.actions.ValidatePinAction;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
@@ -47,6 +49,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
   @Override
   public void initialize(final CordovaInterface cordova, final CordovaWebView webView) {
     actions.put(INIT_WITH_CONFIG_ACTION, InitWithConfigAction.class);
+    actions.put(INIT_PIN_CALLBACK_SESSION, PinCallbackSession.class);
 
     actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
     actions.put(CONFIRM_CURRENT_PIN_ACTION, PinProvidedAction.class);

@@ -4,6 +4,7 @@ public class OneginiConstants {
 
   //Actions
   public static final String INIT_WITH_CONFIG_ACTION = "initWithConfig";
+  public static final String INIT_PIN_CALLBACK_SESSION = "initPinCallbackSession";
   public static final String AUTHORIZE_ACTION = "authorize";
   public static final String FETCH_RESOURCE_ACTION = "fetchResource";
   public static final String FETCH_ANONYMOUS_ACTION = "fetchAnonymousResource";

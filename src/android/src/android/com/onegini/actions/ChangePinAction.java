@@ -25,6 +25,7 @@ public class ChangePinAction implements OneginiPluginAction {
 
   public static void clearChangePinSessionState() {
     changePinCallback = null;
+    awaitingPinProvidedHandler = null;
   }
 
   public static void setAwaitingPinProvidedHandler(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {

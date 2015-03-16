@@ -17,8 +17,8 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 @implementation OneginiCordovaClient
 
-@synthesize oneginiClient, authorizeCommandTxId, configModel, pinChangeCommandTxId;
-@synthesize fetchResourceCommandTxId, pinValidateCommandTxId;
+@synthesize oneginiClient, authorizeCommandTxId, configModel;
+@synthesize fetchResourceCommandTxId, pinCommandTxId;
 
 #pragma mark -
 #pragma mark overrides
@@ -41,10 +41,9 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 #pragma mark -
 - (void)resetAll {
-	self.pinChangeCommandTxId = nil;
-	self.pinValidateCommandTxId = nil;
 	self.authorizeCommandTxId = nil;
 	self.fetchResourceCommandTxId = nil;
+	self.pinCommandTxId = nil;
 }
 
 - (void)authorizationErrorCallbackWIthReason:(NSString *)reason {
@@ -140,6 +139,10 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 	}];
 }
 
+- (void)initPinCallbackSession:(CDVInvokedUrlCommand *)command {
+	self.pinCommandTxId = command.callbackId;
+}
+
 - (void)authorize:(CDVInvokedUrlCommand *)command {
 	[self resetAll];
 	
@@ -153,8 +156,6 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 }
 
 - (void)confirmNewPin:(CDVInvokedUrlCommand *)command {
-	self.pinValidateCommandTxId = nil;
-	self.pinChangeCommandTxId = nil;
 	
 	if (command.arguments.count != 1) {
 		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
@@ -164,16 +165,10 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 	NSString *pin = command.arguments.firstObject;
 	
-	// Register the transaction id for validation callbacks.
-	self.pinValidateCommandTxId = command.callbackId;
-	
 	[oneginiClient confirmNewPin:pin validation:self];
 }
 
 - (void)confirmCurrentPin:(CDVInvokedUrlCommand *)command {
-	self.pinValidateCommandTxId = nil;
-	self.pinChangeCommandTxId = nil;
-	
 	if (command.arguments.count != 1) {
 		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -186,22 +181,14 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 }
 
 - (void)changePin:(CDVInvokedUrlCommand *)command {
-	self.pinChangeCommandTxId = command.callbackId;
-	self.pinValidateCommandTxId = nil;
-	
 	[oneginiClient changePinRequest:self];
 }
 
 - (void)cancelPinChange:(CDVInvokedUrlCommand *)command {
-	self.pinChangeCommandTxId = nil;
-	self.pinValidateCommandTxId = nil;
-	
 	// TODO add cancel PIN change method to public API of OGOneginiClient in order to invalidate the state.
 }
 
 - (void)confirmCurrentPinForChangeRequest:(CDVInvokedUrlCommand *)command {
-	self.pinValidateCommandTxId = nil;
-	
 	if (command.arguments.count != 1) {
 		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -213,8 +200,6 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 }
 
 - (void)confirmNewPinForChangeRequest:(CDVInvokedUrlCommand *)command {
-	self.pinValidateCommandTxId = nil;
-	
 	if (command.arguments.count != 1) {
 		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -222,7 +207,6 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 	}
 
 	// Register the transaction id for validation callbacks.
-	self.pinValidateCommandTxId = command.callbackId;
 	NSString *pin = command.arguments.firstObject;
 
 	[oneginiClient confirmNewPinForChangeRequest:pin validation:self];
@@ -252,8 +236,6 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 		return;
 	}
 	
-	self.pinValidateCommandTxId = command.callbackId;
-
 	// TODO move error codes into OGPublicCommons public API
 	switch (error.code) {
 		case 0: {
@@ -411,23 +393,29 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 }
 
 - (void)askNewPinForChangeRequest:(NSUInteger)pinSize {
-	if (pinChangeCommandTxId == nil) {
+	if (pinCommandTxId == nil) {
+#ifdef DEBUG
+		NSLog(@"askNewPinForChangeRequest: pinCommandTxId is nil");
+#endif
 		return;
 	}
 	
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askNewPinForChangeRequest" }];
 	result.keepCallback = @(1);
-	[self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 - (void)askCurrentPinForChangeRequest {
-	if (pinChangeCommandTxId == nil) {
+	if (pinCommandTxId == nil) {
+#ifdef DEBUG
+		NSLog(@"askCurrentPinForChangeRequest: pinCommandTxId is nil");
+#endif
 		return;
 	}
 	
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askCurrentPinForChangeRequest" }];
 	result.keepCallback = @(1);
-	[self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 - (void)authorizationErrorInvalidGrant:(NSUInteger)remaining {
@@ -558,83 +546,83 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 											messageAsDictionary:@{ kReason:@"pinBlackListed" }];
 	
-	[self.commandDelegate sendPluginResult:result callbackId:pinValidateCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 - (void)pinShouldNotBeASequence {
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 											messageAsDictionary:@{ kReason:@"pinShouldNotBeASequence" }];
-	[self.commandDelegate sendPluginResult:result callbackId:pinValidateCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 - (void)pinShouldNotUseSimilarDigits:(NSUInteger)count {
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 											messageAsDictionary:@{ kReason:@"pinShouldNotUseSimilarDigits", kMaxSimilarDigits:@(count) }];
-	[self.commandDelegate sendPluginResult:result callbackId:pinValidateCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 - (void)pinTooShort {
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 											messageAsDictionary:@{ kReason:@"pinTooShort" }];
-	[self.commandDelegate sendPluginResult:result callbackId:pinValidateCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 // @optional
 - (void)pinEntryError:(NSError *)error {
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 											messageAsDictionary:@{ kReason:@"pinEntryError", kError:error.userInfo }];
-	[self.commandDelegate sendPluginResult:result callbackId:pinValidateCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 #pragma mark - 
 #pragma mark OGChangePinDelegate
 
 - (void)pinChangeError:(NSError *)error {
-	if (pinChangeCommandTxId == nil) {
+	if (pinCommandTxId == nil) {
 #ifdef DEBUG
-		NSLog(@"pinChangeError: pinChangeCommandTxId is nil, invocation is out of context");
+		NSLog(@"pinChangeError: pinCommandTxId is nil, invocation is out of context");
 #endif
 		return;
 	}
 	
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"pinChangeError", kError:error.userInfo} ];
-	[self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 - (void)invalidCurrentPin {
-	if (pinChangeCommandTxId == nil) {
+	if (pinCommandTxId == nil) {
 #ifdef DEBUG
-		NSLog(@"invalidCurrentPin: pinChangeCommandTxId is nil, invocation is out of context");
+		NSLog(@"invalidCurrentPin: pinCommandTxId is nil, invocation is out of context");
 #endif
 		return;
 	}
 	
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"invalidCurrentPin"} ];
-	[self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 - (void)pinChanged {
-	if (pinChangeCommandTxId == nil) {
+	if (pinCommandTxId == nil) {
 #ifdef DEBUG
-		NSLog(@"pinChanged: pinChangeCommandTxId is nil, invocation is out of context");
+		NSLog(@"pinChanged: pinCommandTxId is nil, invocation is out of context");
 #endif
 		return;
 	}
 	
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK	messageAsString:@"pinChanged"];
-	[self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 - (void)pinChangeError {
-	if (pinChangeCommandTxId == nil) {
+	if (pinCommandTxId == nil) {
 #ifdef DEBUG
-		NSLog(@"pinChangeError: pinChangeCommandTxId is nil, invocation is out of context");
+		NSLog(@"pinChangeError: pinCommandTxId is nil, invocation is out of context");
 #endif
 		return;
 	}
 	
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"pinChangeError"} ];
-	[self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 #pragma mark -

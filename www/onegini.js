@@ -12,7 +12,28 @@ module.exports = {
         }, function (error) {
 
         },
-        'OneginiCordovaClient', 'initWithConfig', [config.sdkConfig, config.certificates]);
+        oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.INIT_WITH_CONFIG, [config.sdkConfig, config.certificates]);
+  },
+
+  initPinCallbackSession: function (router, errorCallback) {
+    exec(function (response) {
+          if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_NEW_FOR_CHANGE_REQUEST) {
+            router.askForNewPinChangePinFlow(oneginiCordovaPlugin.confirmNewPinForChangeRequest);
+          }
+          else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_CURRENT_FOR_CHANGE_REQUEST) {
+            router.askForPinChangePinFlow();
+          }
+          else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_CURRENT) {
+            router.askForPin();
+          }
+          else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_NEW) {
+            router.askForNewPin(oneginiCordovaPlugin.setPin);
+
+          }
+        }, function (error) {
+          errorCallback(error);
+        },
+        oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.INIT_PIN_CALLBACK_SESSION, []);
   },
 
   /**
@@ -39,7 +60,7 @@ module.exports = {
       if (errorCallback) {
         errorCallback(error);
       }
-    }, 'OneginiCordovaClient', 'fetchResource', [path, scopes, requestMethod, paramsEncoding, params]);
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, [path, scopes, requestMethod, paramsEncoding, params]);
   },
 
   /**
@@ -68,7 +89,7 @@ module.exports = {
       if (errorCallback) {
         errorCallback(error);
       }
-    }, 'OneginiCordovaClient', 'fetchAnonymousResource', [path, scopes, requestMethod, paramsEncoding, params]);
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, [path, scopes, requestMethod, paramsEncoding, params]);
   },
 
   /**
@@ -94,54 +115,39 @@ module.exports = {
       /*
        The response method contains the name of the method in the OGAuthorizationDelegate protocol
        */
-      if (response.method == 'requestAuthorization') {
+      if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_REQUESTED) {
         router.requestAuthorization(response.url);
       }
-      else if (response.method == 'askForCurrentPin') {
-        // TODO rename function conform response.method name
-        router.askForPin();
-      }
-      else if (response.method == 'askForNewPin') {
-        // TODO rename function conform response.method name
-        router.askForPinWithVerification();
-      }
-      else if (response == 'authorizationSuccess') {
+      else if (response == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_SUCCESS) {
         router.authorizationSuccess();
       }
     }, function (error) {
       router.authorizationFailure(error, scopes);
-    }, 'OneginiCordovaClient', 'authorize', scopes);
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, scopes);
   },
 
   /**
-   * This will end the current session and invalidate the access token. The refresh token and client credentials
+   * This will remove current session data and invalidate the access token. The refresh token and client credentials
    * remain untouched.
    */
   logout: function (successCallback, errorCallback) {
-    exec(successCallback, errorCallback, 'OneginiCordovaClient', 'logout', []);
+    exec(function (response) {
+      oneginiCordovaPlugin.shouldRestoreLocationAfterReauthorization = false;
+      successCallback();
+    }, errorCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.LOGOUT, []);
+    this.invalidateSessionState();
   },
 
   /**
-   * Disconnect from the service, this will clear the refresh token and access token. Client credentials remain
-   * untouched.
+   * Disconnect from the service, this will clear the refresh token and access token and remove session data.
+   * Client credentials remain untouched.
    */
   disconnect: function (successCallback, errorCallback) {
-    exec(successCallback, errorCallback, 'OneginiCordovaClient', 'disconnect', []);
-  },
-
-  /**
-   * For testing purpose only: Clear the client credentials. A new dynamic client registration has to be performed
-   * on the next authorization request.
-   */
-  clearCredentials: function () {
-    exec(null, null, 'OneginiCordovaClient', 'clearCredentials', []);
-  },
-
-  /**
-   * For testing purpose only: Clear all tokens and reset the pin attempt count.
-   */
-  clearTokens: function () {
-    exec(null, null, 'OneginiCordovaClient', 'clearTokens', []);
+    exec(function (response) {
+      oneginiCordovaPlugin.shouldRestoreLocationAfterReauthorization = false;
+      successCallback();
+    }, errorCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.DISCONNECT, []);
+    this.invalidateSessionState();
   },
 
   /**
@@ -157,100 +163,186 @@ module.exports = {
    *                                  as argument.
    * @param {String} pin              The PIN code to verify
    */
-  checkPin: function (errorCallback, pin) {
-    exec(null, function (error) {
-    errorCallback(error);
-    }, 'OneginiCordovaClient', 'confirmCurrentPin', [pin]);
+  checkPin: function (successCallback, errorCallback, pin) {
+    exec(function (response) {
+      successCallback();
+    }, function (error) {
+      errorCallback(error);
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CONFIRM_CURRENT, [pin]);
   },
 
   /**
    * Sets a PIN for the user. Can only be called within the authorization flow. In case of success, the
    * authorize function decides the next step. If something goes wrong, the errorCallback is called.
+   * Callback is performed on initiating authorize callback handler.
    *
-   * The app should first verify whether the pin has the correct format and the verifyPin matches the pin.
+   * The app should first verify whether the PIN has the correct format and the verifyPin matches the pin.
    *
    * An INVALID_ACTION is returned if no authorization transaction is registered.
    *
-   * @param errorCallback           Function to call when the PIN verification fails. Is called with an error object
-   *                                as argument.
-   * @param {String} pin            The PIN code to set
+   * @param errorCallback     Function to call when the PIN verification fails. Is called with an error object
+   *                          containing a 'reason' and potentially additional key:
+   *                          - pinBlackListed -> entered PIN is black listed
+   *                          - pinShouldNotBeASequence -> PIN cannot contain a sequence
+   *                          - pinShouldNotUseSimilarDigits with maxSimilarDigits key -> PIN can contain only
+   *                                         'maxSimilarDigits' same digits
+   *                          - pinTooShort -> entered PIN is too short
+   *                          - pinEntryError -> PIN retrieval error
+   * @param {String} pin      The PIN code to set
    */
   setPin: function (errorCallback, pin) {
-    // Callback is performed on the initiating authorize callback handler
     exec(null, function (error) {
       console.log(error);
-    // The error contains a 'reason' and optionally an additional key
-    // pinBlackListed
-		// pinShouldNotBeASequence
-		// pinShouldNotUseSimilarDigits with maxSimilarDigits key
-		// pinTooShort
-		// pinEntryError
       errorCallback(error);
-    }, 'OneginiCordovaClient', 'confirmNewPin', [pin]);
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CONFIRM_NEW, [pin]);
   },
 
+  /**
+   * Changes PIN number. User will firstly be prompted to enter current PIN number and once validation success
+   * will enter PIN creation flow.
+   *
+   * @param {Object} router   Object that can handle page transition for the outcome of the change pin. Should at
+   *                          least implement the following methods:
+   *                          - askForNewPinChangePinFlow -> should display a screen to set a PIN code. Must call
+   *                                         confirmNewPinForChangeRequest(errorCallback, pin)
+   *                          - askForPinChangePinFlow -> should display a screen to verify the PIN code. Must call
+   *                                         confirmCurrentPinForChangeRequest(errorCallback, pin)
+   *                          - changePinSuccess -> should handle completion of change PIN flow
+   *                          - changePinError -> should show the landing page for the authenticated user
+   *                          - authorizationFailure(error) -> should handle change PIN failure. If this method
+   *                                         is called, the change PIN transaction is lost.
+   *                                         Method must handle errors with following 'reason' properties:
+   *                                         'invalidCurrentPin'
+   *                                         'pinChangeError'
+   */
   changePin: function (router) {
     exec(function (response) {
-      /*
-       The OneginiClient will respond by means of the OGAuthorizationDelegate and ask for the
-       App to show a PIN entry/change dialog
-       */
-      if (response.method == 'askNewPinForChangeRequest') {
-        router.askForNewPinChangePinFlow();
-      }
-      else if (response.method == 'askCurrentPinForChangeRequest') {
-        router.askForPinChangePinFlow();
-      }
-      else if (response == 'pinChanged') {
-        router.changePinSuccess();
-      }
+      router.changePinSuccess();
     }, function (error) {
-      // The error contains a 'reason' and optionally an additional key
-      // invalidCurrentPin
-      // pinChangeError
-      // pinChangeError with additional error object
       router.changePinError(error);
-    }, 'OneginiCordovaClient', 'changePin', []);
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE, []);
   },
   confirmCurrentPinForChangeRequest: function (errorCallback, pin) {
     exec(null, function (error) {
-        console.log(error);
-        if (errorCallback) {
-          errorCallback(error);
-        }
-    },
-    'OneginiCordovaClient', 'confirmCurrentPinForChangeRequest', [pin]);
+          console.log(error);
+          if (errorCallback) {
+            errorCallback(error);
+          }
+        },
+        oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CONFIRM_CURRENT_FOR_CHANGE_REQUEST, [pin]);
   },
 
+  /**
+   * Sets a new PIN for the user. Can only be called within the change PIN flow. In case of success, the
+   * changePin function decides the next step. If something goes wrong, the errorCallback is called.
+   * Callback is performed on initiating changePin callback handler.
+   *
+   * The app should first verify whether the PIN has the correct format and the verifyPin matches the pin.
+   *
+   * An INVALID_ACTION is returned if no change PIN transaction is registered.
+   *
+   * @param errorCallback     Function to call when the PIN verification fails. Is called with an error object
+   *                          containing a 'reason' and potentially additional key:
+   *                          - pinBlackListed -> entered PIN is black listed
+   *                          - pinShouldNotBeASequence -> PIN cannot contain a sequence
+   *                          - pinShouldNotUseSimilarDigits with maxSimilarDigits key -> PIN can contain only
+   *                                         'maxSimilarDigits' same digits
+   *                          - pinTooShort -> entered PIN is too short
+   *                          - pinEntryError -> PIN retrieval error
+   * @param {String} pin      The PIN code to set
+   */
   confirmNewPinForChangeRequest: function (errorCallback, pin) {
-    // Forward the PIN entries back to the OneginiClient.
-    // Callback is performed on the initiating changePin callback handler
     exec(null, function (error) {
       console.log(error);
       errorCallback(error);
-    // The error contains a 'reason' and optionally an additional key
-		// pinBlackListed
-		// pinShouldNotBeASequence
-		// pinShouldNotUseSimilarDigits with maxSimilarDigits key
-		// pinTooShort
-		// pinEntryError
-    }, 'OneginiCordovaClient', 'confirmNewPinForChangeRequest', [pin]);
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CONFIRM_NEW_FOR_CHANGE_REQUEST, [pin]);
   },
 
+  /**
+   * Validates provided PIN number against clients pin policy.
+   *
+   * @param errorCallback     Function to call when the PIN verification fails. Is called with an error object
+   *                          containing a 'reason' and potentially additional key:
+   *                          - pinBlackListed -> entered PIN is black listed
+   *                          - pinShouldNotBeASequence -> PIN cannot contain a sequence
+   *                          - pinShouldNotUseSimilarDigits with maxSimilarDigits key -> PIN can contain only
+   *                                         'maxSimilarDigits' same digits
+   *                          - pinTooShort -> entered PIN is too short
+   *                          - pinEntryError -> PIN retrieval error
+   * @param {String} pin      The PIN code to set
+   */
   validatePin: function (errorCallback, pin) {
-    // not implemented in the base app yet
     exec(null, function (error) {
-      // The error contains a 'reason' and optionally an additional key
-      // pinBlackListed
-      // pinShouldNotBeASequence
-      // pinShouldNotUseSimilarDigits with 'maxSimilarDigits' key
-      // pinTooShort
       errorCallback(error);
-    }, 'OneginiCordovaClient', 'validatePin', [pin]);
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_VALIDATE, [pin]);
   },
 
+  /**
+   * Cancels started pin change flow and removes related session data.
+   */
   cancelPinChange: function () {
     // not implemented in the base app yet
-    exec(null, null, 'OneginiCordovaClient', 'cancelPinChange', []);
+    exec(null, null, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CANCEL_CHANGE, []);
+  },
+
+  /**
+   * Invalidates session storage data.
+   */
+  invalidateSessionState: function () {
+    var length = sessionStorage.length;
+    while (length--) {
+      var key = sessionStorage.key(i);
+      sessionStorage.removeItem(key);
+    }
+  },
+
+  /**
+   * Preserves in currently displayed page identifier in sessions storage.
+   */
+  preserveCurrentLocaiton: function () {
+    var activePage = $.mobile.activePage.attr("id");
+    sessionStorage.setItem(oneginiCordovaPlugin.OG_CONSTANTS.PAGE_OF_ORIGIN, activePage);
+  },
+
+  /**
+   * List of constant values used in communication with OneginiCordovaPlugin.
+   */
+  OG_CONSTANTS: {
+    PAGE_OF_ORIGIN: "origin_page",
+
+    CORDOVA_CLIENT: "OneginiCordovaClient",
+
+    INIT_WITH_CONFIG: "initWithConfig",
+    INIT_PIN_CALLBACK_SESSION: "initPinCallbackSession",
+
+    AUTHORIZATION_AUTHORIZE: "authorize",
+    AUTHORIZATION_REQUESTED: "requestAuthorization",
+    AUTHORIZATION_SUCCESS: "authorizationSuccess",
+    AUTHORIZATION_FAILURE: "authorizationFailure",
+
+    PIN_ASK_FOR_CURRENT: "askForCurrentPin",
+    PIN_ASK_FOR_NEW: "askForNewPin",
+    PIN_CONFIRM_NEW: "confirmNewPin",
+    PIN_CONFIRM_CURRENT: "confirmCurrentPin",
+    PIN_VALIDATE: "validatePin",
+    PIN_BLACK_LISTED: "pinBlackListed",
+    PIN_SHOULD_NOT_BE_A_SEQUENCE: "pinShouldNotBeASequence",
+    PIN_SHOULD_NUT_USE_SIMILAR_DIGITS: "pinShouldNotUseSimilarDigits",
+    PIN_MAX_SIMILAR_DIGITS: "maxSimilarDigits",
+    PIN_TOO_SHORT: "pinTooShort",
+    PIN_ENTRY_ERROR: "pinEntryError",
+    PIN_CHANGE: "changePin",
+    PIN_ASK_FOR_CURRENT_FOR_CHANGE_REQUEST: "askCurrentPinForChangeRequest",
+    PIN_ASK_FOR_NEW_FOR_CHANGE_REQUEST: "askNewPinForChangeRequest",
+    PIN_CONFIRM_NEW_FOR_CHANGE_REQUEST: "confirmNewPinForChangeRequest",
+    PIN_CONFIRM_CURRENT_FOR_CHANGE_REQUEST: "confirmCurrentPinForChangeRequest",
+    PIN_CANCEL_CHANGE: "cancelPinChange",
+
+    DISCONNECT: "disconnect",
+    LOGOUT: "logout",
+
+    FETCH_RESOURCE: "fetchResource",
+    FETCH_ANONYMOUS_RESOURCE: "fetchAnonymousResource",
+    FETCH_RESOURCE_AUTH_FAILED: "resourceCallErrorAuthenticationFailed"
   }
 };

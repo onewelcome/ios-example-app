@@ -43,7 +43,6 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 - (void)resetAll {
 	self.authorizeCommandTxId = nil;
 	self.fetchResourceCommandTxId = nil;
-	self.pinCommandTxId = nil;
 }
 
 - (void)authorizationErrorCallbackWIthReason:(NSString *)reason {
@@ -369,31 +368,29 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 }
 
 - (void)askForCurrentPin {
+	if (pinCommandTxId == nil) {
 #ifdef DEBUG
-	NSLog(@"askForCurrentPin:");
+		NSLog(@"askForCurrentPin: pinCommandTxId is nil");
 #endif
-	
-	if (authorizeCommandTxId == nil) {
 		return;
 	}
 	
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForCurrentPin"}];
 	result.keepCallback = @(1);
-	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 - (void)askForNewPin:(NSUInteger)pinSize {
+	if (pinCommandTxId == nil) {
 #ifdef DEBUG
-	NSLog(@"askForNewPin:");
+		NSLog(@"askForNewPin: pinCommandTxId is nil");
 #endif
-
-	if (authorizeCommandTxId == nil) {
 		return;
 	}
 	
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForNewPin" }];
 	result.keepCallback = @(1);
-	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
+	[self.commandDelegate sendPluginResult:result callbackId:pinCommandTxId];
 }
 
 - (void)askNewPinForChangeRequest:(NSUInteger)pinSize {

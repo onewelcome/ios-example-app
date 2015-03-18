@@ -3,8 +3,8 @@ var exec = require('cordova/exec');
 module.exports = {
   /**
    * Awaits notification that the Onegini plugin initialization is finished.
-   * @param successCallback   method to be called on plugin initialisation complete
-   * @param errorCallback     method to be called on plugin initialisation failure
+   * @param successCallback   Function to be called on plugin initialisation complete
+   * @param errorCallback     Function to be called on plugin initialisation failure
    */
   awaitPluginInitialization: function (successCallback, errorCallback) {
     exec(successCallback, errorCallback,
@@ -135,6 +135,9 @@ module.exports = {
   /**
    * This will remove current session data and invalidate the access token. The refresh token and client credentials
    * remain untouched.
+   *
+   * @param successCallback   Function to be called once user is successfully logged out
+   * @param errorCallback     Function to be called when logout action fails
    */
   logout: function (successCallback, errorCallback) {
     exec(function (response) {
@@ -147,6 +150,9 @@ module.exports = {
   /**
    * Disconnect from the service, this will clear the refresh token and access token and remove session data.
    * Client credentials remain untouched.
+   *
+   * @param successCallback   Function to be called once disconnect action succeed
+   * @param errorCallback     Function to be called when disconnection fails
    */
   disconnect: function (successCallback, errorCallback) {
     exec(function (response) {
@@ -217,9 +223,20 @@ module.exports = {
     exec(function (response) {
       router.changePinSuccess();
     }, function (error) {
-      router.changePinError(error);
+      if (error.reason = oneginiCordovaPlugin.OG_CONSTANTS.PIN_INVALID) {
+        router.invalidCurrentPin();
+      } else if (error.reason = oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE_ERROR) {
+        router.changePinError();
+      }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE, []);
   },
+
+  /**
+   * Verifies if entered PIN is currently valid, if true proceeds with new PIN creation in change PIN flow.
+   *
+   * @param errorCallback   Function to call PIN verification fails
+   * @param pin             Entered PIN number
+   */
   confirmCurrentPinForChangeRequest: function (errorCallback, pin) {
     exec(null, function (error) {
           console.log(error);
@@ -302,12 +319,11 @@ module.exports = {
     sessionStorage.setItem(oneginiCordovaPlugin.OG_CONSTANTS.PAGE_OF_ORIGIN, activePage);
   },
 
-
   inAppBrowser: {},
 
   /**
    * Opens specified URL using inAppBrowser, should be used only if inAppBrowser plugin is active.
-   * @param url URL to open
+   * @param url   URL to open
    */
   openInAppBrowser: function (url) {
     oneginiCordovaPlugin.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no');
@@ -350,11 +366,13 @@ module.exports = {
     PIN_TOO_SHORT: "pinTooShort",
     PIN_ENTRY_ERROR: "pinEntryError",
     PIN_CHANGE: "changePin",
+    PIN_CHANGE_ERROR: "pinChangeError",
     PIN_ASK_FOR_CURRENT_FOR_CHANGE_REQUEST: "askCurrentPinForChangeRequest",
     PIN_ASK_FOR_NEW_FOR_CHANGE_REQUEST: "askNewPinForChangeRequest",
     PIN_CONFIRM_NEW_FOR_CHANGE_REQUEST: "confirmNewPinForChangeRequest",
     PIN_CONFIRM_CURRENT_FOR_CHANGE_REQUEST: "confirmCurrentPinForChangeRequest",
     PIN_CANCEL_CHANGE: "cancelPinChange",
+    PIN_INVALID: "invalidCurrentPin",
 
     DISCONNECT: "disconnect",
     LOGOUT: "logout",

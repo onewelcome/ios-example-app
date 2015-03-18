@@ -4,7 +4,7 @@ module.exports = {
   /**
    * Initialises the Onegini SDK with config. The config object has a property sdkConfig and an array of certificates.
    * The sdkConfig depends on the platform.
-   * @param {Object} config             Configuration for the Onegini SDK.
+   * @param {Object} config   Configuration for the Onegini SDK.
    */
   initWithConfig: function (config) {
     exec(function (response) {
@@ -15,6 +15,31 @@ module.exports = {
         oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.INIT_WITH_CONFIG, [config.sdkConfig, config.certificates]);
   },
 
+  /**
+   * Awaits notification that the initialization is finished.
+   * @param successCallback   method to be called on plugin initialisation complete
+   * @param errorCallback     method to be called on plugin initialisation failure
+   */
+  awaitPluginInitialization: function (successCallback, errorCallback) {
+    exec(successCallback, errorCallback,
+        oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AWAIT_PLUGIN_INITIALIZATION, []);
+  },
+
+  /**
+   * Initiates static PIN callback session. Whenever SDK will require top level application to show PIN dialog,
+   * it will use this session.
+   * @param {Object} router   Object that can handle page transition for the outcome of the authorization. Should at
+   *                          least implement the following methods:
+   *                          - askForCurrentPin -> should display a screen to verify the PIN code. Must call
+   *                                         checkPin(errorCallback, pin)
+   *                          - askForNewPin -> should display a screen to set a PIN code. Must call
+   *                                         setPin(errorCallback, pin, verifyPin)
+   *                          - askForNewPinChangePinFlow -> should display a screen to set a PIN code. Must call
+   *                                         confirmNewPinForChangeRequest(errorCallback, pin)
+   *                          - askForPinChangePinFlow -> should display a screen to verify the PIN code. Must call
+   *                                         confirmCurrentPinForChangeRequest(errorCallback, pin)
+   * @param errorCallback
+   */
   initPinCallbackSession: function (router, errorCallback) {
     exec(function (response) {
           if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_NEW_FOR_CHANGE_REQUEST) {
@@ -28,7 +53,6 @@ module.exports = {
           }
           else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_NEW) {
             router.askForNewPin(oneginiCordovaPlugin.setPin);
-
           }
         }, function (error) {
           errorCallback(error);
@@ -98,10 +122,6 @@ module.exports = {
    * @param {Object} router   Object that can handle page transition for the outcome of the authorization. Should at
    *                          least implement the following methods:
    *                          - requestAuthorization(url) -> redirects the user to the given url to log in
-   *                          - askForCurrentPin -> should display a screen to verify the PIN code. Must call
-   *                                         checkPin(errorCallback, pin)
-   *                          - askForNewPin -> should display a screen to set a PIN code. Must call
-   *                                         setPin(errorCallback, pin, verifyPin)
    *                          - authorizationSuccess -> should show the landing page for the authenticated user
    *                          - authorizationFailure(error) -> should handle authentication failure. If this method
    *                                         is called, the authorization transaction is lost. The authorize method
@@ -115,11 +135,11 @@ module.exports = {
       /*
        The response method contains the name of the method in the OGAuthorizationDelegate protocol
        */
-      if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_REQUESTED) {
-        router.requestAuthorization(response.url);
-      }
-      else if (response == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_SUCCESS) {
+      if (response == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_SUCCESS) {
         router.authorizationSuccess();
+      }
+      else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_REQUESTED) {
+        router.requestAuthorization(response.url);
       }
     }, function (error) {
       router.authorizationFailure(error, scopes);
@@ -203,17 +223,9 @@ module.exports = {
    *
    * @param {Object} router   Object that can handle page transition for the outcome of the change pin. Should at
    *                          least implement the following methods:
-   *                          - askForNewPinChangePinFlow -> should display a screen to set a PIN code. Must call
-   *                                         confirmNewPinForChangeRequest(errorCallback, pin)
-   *                          - askForPinChangePinFlow -> should display a screen to verify the PIN code. Must call
-   *                                         confirmCurrentPinForChangeRequest(errorCallback, pin)
    *                          - changePinSuccess -> should handle completion of change PIN flow
    *                          - changePinError -> should show the landing page for the authenticated user
-   *                          - authorizationFailure(error) -> should handle change PIN failure. If this method
-   *                                         is called, the change PIN transaction is lost.
-   *                                         Method must handle errors with following 'reason' properties:
-   *                                         'invalidCurrentPin'
-   *                                         'pinChangeError'
+   *                          - invalidCurrentPin -> should handle invalid current PIN in change PIN flow
    */
   changePin: function (router) {
     exec(function (response) {
@@ -304,6 +316,26 @@ module.exports = {
     sessionStorage.setItem(oneginiCordovaPlugin.OG_CONSTANTS.PAGE_OF_ORIGIN, activePage);
   },
 
+
+  inAppBrowser: {},
+
+  /**
+   * Opens specified URL using inAppBrowser, should be used only if inAppBrowser plugin is active.
+   * @param url URL to open
+   */
+  openInAppBrowser: function (url) {
+    oneginiCordovaPlugin.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no');
+  },
+
+  /**
+   * Closes inAppBrowser.
+   */
+  closeInAppBrowser: function () {
+    if (oneginiCordovaPlugin.inAppBrowser && oneginiCordovaPlugin.inAppBrowser.close) {
+      oneginiCordovaPlugin.inAppBrowser.close();
+    }
+  },
+
   /**
    * List of constant values used in communication with OneginiCordovaPlugin.
    */
@@ -312,6 +344,7 @@ module.exports = {
 
     CORDOVA_CLIENT: "OneginiCordovaClient",
 
+    AWAIT_PLUGIN_INITIALIZATION: "awaitPluginInitialization",
     INIT_WITH_CONFIG: "initWithConfig",
     INIT_PIN_CALLBACK_SESSION: "initPinCallbackSession",
 

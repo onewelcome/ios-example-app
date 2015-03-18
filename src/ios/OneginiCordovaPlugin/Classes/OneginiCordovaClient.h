@@ -16,7 +16,10 @@
 
 @property (copy, nonatomic) NSString *authorizeCommandTxId;
 @property (copy, nonatomic) NSString *fetchResourceCommandTxId;
-@property (copy, nonatomic) NSString *pinCommandTxId;
+@property (copy, nonatomic) NSString *pinDialogCommandTxId;
+@property (copy, nonatomic) NSString *pinValidateCommandTxId;
+@property (copy, nonatomic) NSString *pinChangeCommandTxId;
+
 
 /** FOR TESTING PURPOSE ONLY */
 - (void)clearTokens:(CDVInvokedUrlCommand *)command;

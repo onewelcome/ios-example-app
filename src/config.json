@@ -1,0 +1,14 @@
+{
+    kOGAppIdentifier: 'androidSdkApp',
+    kOGAppPlatform: 'android',
+    kOGAppScheme: 'oneginisdk',
+    kOGAppVersion: '0.3',
+    kAppBaseURL: 'http://dev.onegini.me:7878',
+    kOGShouldConfirmNewPin: true,
+    kOGShouldDirectlyShowPushMessage: true,
+    kOGKeyStorePassword: 'NotSoVerySecureYet',
+    kOGMaxPinFailures: '3',
+    kOGResourceBaseURL: 'http://dev.onegini.me:7878',
+    kOGRedirectURL: 'oneginisdk://loginsuccess',
+    kOGUseEmbeddedWebview: true
+}

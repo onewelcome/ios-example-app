@@ -1,6 +1,7 @@
 package com.onegini;
 
 import static com.onegini.OneginiConstants.AUTHORIZE_ACTION;
+import static com.onegini.OneginiConstants.AWAIT_INITIALIZATION;
 import static com.onegini.OneginiConstants.CHANGE_PIN_ACTION;
 import static com.onegini.OneginiConstants.CONFIRM_CURRENT_PIN_ACTION;
 import static com.onegini.OneginiConstants.CONFIRM_CURRENT_PIN_CHANGE_PIN_ACTION;
@@ -28,6 +29,7 @@ import org.json.JSONException;
 import android.content.Intent;
 import android.net.Uri;
 import com.onegini.actions.AuthorizeAction;
+import com.onegini.actions.AwaitInitialization;
 import com.onegini.actions.ChangePinAction;
 import com.onegini.actions.DisconnectAction;
 import com.onegini.actions.FetchResourceAction;
@@ -48,6 +50,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 
   @Override
   public void initialize(final CordovaInterface cordova, final CordovaWebView webView) {
+    actions.put(AWAIT_INITIALIZATION, AwaitInitialization.class);
     actions.put(INIT_WITH_CONFIG_ACTION, InitWithConfigAction.class);
     actions.put(INIT_PIN_CALLBACK_SESSION, PinCallbackSession.class);
 

@@ -14,12 +14,12 @@
 @property (strong, nonatomic) OGOneginiClient *oneginiClient;
 @property (strong, nonatomic) OGConfigModel *configModel;
 
+@property (copy, nonatomic) NSString *pluginInitializedCommandTxId;
 @property (copy, nonatomic) NSString *authorizeCommandTxId;
 @property (copy, nonatomic) NSString *fetchResourceCommandTxId;
 @property (copy, nonatomic) NSString *pinDialogCommandTxId;
 @property (copy, nonatomic) NSString *pinValidateCommandTxId;
 @property (copy, nonatomic) NSString *pinChangeCommandTxId;
-
 
 /** FOR TESTING PURPOSE ONLY */
 - (void)clearTokens:(CDVInvokedUrlCommand *)command;
@@ -34,16 +34,13 @@
  Dictionary config
  Array certificates
  */
-- (void)initWithConfig:(CDVInvokedUrlCommand *)command __deprecated;
+- (void)initWithConfig:(CDVInvokedUrlCommand *)command;
 
 /**
- Initialize this 'OGOneginiClient' with a valid config model and SSL pinning certificates.
- The configuration is read from the config.plist contained in the bundle.
- 
- Command params:
- Array certificates
+ Awaits plugin initialized notificaiton. Currently called once pinCallbackSession is set.
+ Once plugin will be responsible for loading and setting the SDK configuration it should also be done before sending success callback.
  */
-- (void)init:(CDVInvokedUrlCommand *)command;
+- (void)awaitPluginInitialization:(CDVInvokedUrlCommand *)command;
 
 /**
  Register a callback to be used for every PIN interaction during the lifetime of this instance.

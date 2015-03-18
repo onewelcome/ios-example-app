@@ -15,9 +15,11 @@
 @property (strong, nonatomic) OGConfigModel *configModel;
 
 @property (copy, nonatomic) NSString *authorizeCommandTxId;
-@property (copy, nonatomic) NSString *pinChangeCommandTxId;
 @property (copy, nonatomic) NSString *fetchResourceCommandTxId;
+@property (copy, nonatomic) NSString *pinDialogCommandTxId;
 @property (copy, nonatomic) NSString *pinValidateCommandTxId;
+@property (copy, nonatomic) NSString *pinChangeCommandTxId;
+
 
 /** FOR TESTING PURPOSE ONLY */
 - (void)clearTokens:(CDVInvokedUrlCommand *)command;
@@ -42,6 +44,12 @@
  Array certificates
  */
 - (void)init:(CDVInvokedUrlCommand *)command;
+
+/**
+ Register a callback to be used for every PIN interaction during the lifetime of this instance.
+ Must be called after init or initWithConfig.
+ */
+- (void)initPinCallbackSession:(CDVInvokedUrlCommand *)command;
 
 /**
  Initiate the authorization flow

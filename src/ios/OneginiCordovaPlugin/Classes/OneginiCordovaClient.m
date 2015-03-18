@@ -17,7 +17,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 @implementation OneginiCordovaClient
 
-@synthesize oneginiClient, authorizeCommandTxId, configModel;
+@synthesize oneginiClient, pluginInitializedCommandTxId, authorizeCommandTxId, configModel;
 @synthesize fetchResourceCommandTxId, pinDialogCommandTxId, pinValidateCommandTxId, pinChangeCommandTxId;
 
 #pragma mark -
@@ -41,6 +41,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 #pragma mark -
 - (void)resetAll {
+    self.pluginInitializedCommandTxId = nil;
 	self.authorizeCommandTxId = nil;
 	self.fetchResourceCommandTxId = nil;
     self.pinValidateCommandTxId = nil;
@@ -113,31 +114,8 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 	}];
 }
 
-- (void)init:(CDVInvokedUrlCommand *)command {
-#ifdef DEBUG
-	NSLog(@"init %@", command);
-#endif
-	NSParameterAssert(command.arguments.count == 1);
-	
-	[CDVPluginResult setVerbose:YES];
-	
-	if (command.arguments.count != 1) {
-		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 arguments but received %lu", (unsigned long)command.arguments.count]];
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-		return;
-	}
-	
-	[self.commandDelegate runInBackground:^{
-		NSString *configPath = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"plist"];
-		self.configModel = [[OGConfigModel alloc] initWithContentsOfFile:configPath];
-		self.oneginiClient = [[OGOneginiClient alloc] initWithConfig:configModel delegate:self];
-		
-		NSArray *certificates = [command.arguments objectAtIndex:1];
-		[oneginiClient setX509PEMCertificates:certificates];
-		
-		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"initWithConfig"];
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-	}];
+- (void)awaitPluginInitialization:(CDVInvokedUrlCommand *)command {
+    self.pluginInitializedCommandTxId = command.callbackId;
 }
 
 - (void)initPinCallbackSession:(CDVInvokedUrlCommand *)command {
@@ -146,6 +124,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 	CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
 	pluginResult.keepCallback = @(1);
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:pinDialogCommandTxId];
+    [self sendSuccessCallback:pluginInitializedCommandTxId];
 }
 
 - (void)authorize:(CDVInvokedUrlCommand *)command {

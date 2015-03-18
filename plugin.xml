@@ -65,6 +65,7 @@
     </config-file>
     <source-file src="src/android/src/android/com/onegini/OneginiConstants.java" target-dir="src/com/onegini/" />
     <source-file src="src/android/src/android/com/onegini/OneginiCordovaPlugin.java" target-dir="src/com/onegini/" />
+    <source-file src="src/android/src/android/com/onegini/actions/AwaitInitialization.java" target-dir="src/com/onegini/actions/" />
     <source-file src="src/android/src/android/com/onegini/actions/AuthorizeAction.java" target-dir="src/com/onegini/actions/" />
     <source-file src="src/android/src/android/com/onegini/actions/ChangePinAction.java" target-dir="src/com/onegini/actions/" />
     <source-file src="src/android/src/android/com/onegini/actions/DisconnectAction.java" target-dir="src/com/onegini/actions/" />

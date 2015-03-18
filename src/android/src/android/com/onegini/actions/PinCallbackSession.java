@@ -37,5 +37,7 @@ public class PinCallbackSession implements OneginiPluginAction {
         .withSuccess()
         .withCallbackKept()
         .build());
+
+    AwaitInitialization.notifyPluginInitialized();
   }
 }

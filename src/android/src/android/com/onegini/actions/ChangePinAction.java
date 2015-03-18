@@ -11,13 +11,11 @@ import org.json.JSONArray;
 import com.onegini.OneginiCordovaPlugin;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiChangePinHandler;
-import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
 import com.onegini.util.CallbackResultBuilder;
 
 public class ChangePinAction implements OneginiPluginAction {
 
   private static CallbackContext changePinCallback;
-  private static OneginiPinProvidedHandler awaitingPinProvidedHandler;
 
   public static CallbackContext getChangePinCallback() {
     return changePinCallback;
@@ -25,15 +23,6 @@ public class ChangePinAction implements OneginiPluginAction {
 
   public static void clearChangePinSessionState() {
     changePinCallback = null;
-    awaitingPinProvidedHandler = null;
-  }
-
-  public static void setAwaitingPinProvidedHandler(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
-    awaitingPinProvidedHandler = oneginiPinProvidedHandler;
-  }
-
-  public static OneginiPinProvidedHandler getAwaitingPinProvidedHandler() {
-    return awaitingPinProvidedHandler;
   }
 
   private CallbackResultBuilder callbackResultBuilder;

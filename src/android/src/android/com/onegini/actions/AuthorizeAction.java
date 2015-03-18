@@ -19,7 +19,6 @@ import org.json.JSONException;
 
 import com.onegini.OneginiCordovaPlugin;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiAuthorizationHandler;
-import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
 import com.onegini.scope.ScopeParser;
 import com.onegini.util.CallbackResultBuilder;
 
@@ -30,20 +29,6 @@ public class AuthorizeAction implements OneginiPluginAction {
 
   public AuthorizeAction() {
     callbackResultBuilder = new CallbackResultBuilder();
-  }
-
-  public static void clearAuthorizationSessionState() {
-    awaitingPinProvidedHandler = null;
-  }
-
-  private static OneginiPinProvidedHandler awaitingPinProvidedHandler;
-
-  public static void setAwaitingPinProvidedHandler(final OneginiPinProvidedHandler pinProvidedHandler) {
-    awaitingPinProvidedHandler = pinProvidedHandler;
-  }
-
-  public static OneginiPinProvidedHandler getAwaitingPinProvidedHandler() {
-    return awaitingPinProvidedHandler;
   }
 
   @Override
@@ -156,6 +141,5 @@ public class AuthorizeAction implements OneginiPluginAction {
 
   private void sendCallbackResult(final PluginResult result) {
     callbackContext.sendPluginResult(result);
-    clearAuthorizationSessionState();
   }
 }

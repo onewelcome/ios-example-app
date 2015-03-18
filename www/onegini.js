@@ -2,21 +2,7 @@ var exec = require('cordova/exec');
 
 module.exports = {
   /**
-   * Initialises the Onegini SDK with config. The config object has a property sdkConfig and an array of certificates.
-   * The sdkConfig depends on the platform.
-   * @param {Object} config   Configuration for the Onegini SDK.
-   */
-  initWithConfig: function (config) {
-    exec(function (response) {
-          console.log(response);
-        }, function (error) {
-
-        },
-        oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.INIT_WITH_CONFIG, [config.sdkConfig, config.certificates]);
-  },
-
-  /**
-   * Awaits notification that the initialization is finished.
+   * Awaits notification that the Onegini plugin initialization is finished.
    * @param successCallback   method to be called on plugin initialisation complete
    * @param errorCallback     method to be called on plugin initialisation failure
    */
@@ -345,7 +331,6 @@ module.exports = {
     CORDOVA_CLIENT: "OneginiCordovaClient",
 
     AWAIT_PLUGIN_INITIALIZATION: "awaitPluginInitialization",
-    INIT_WITH_CONFIG: "initWithConfig",
     INIT_PIN_CALLBACK_SESSION: "initPinCallbackSession",
 
     AUTHORIZATION_AUTHORIZE: "authorize",

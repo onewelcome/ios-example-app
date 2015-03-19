@@ -39,7 +39,10 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     NSString *configJsonFilePath = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"json"];
     NSData* configJsonData = [NSData dataWithContentsOfFile:configJsonFilePath];
     NSError * deserializationError=nil;
-    NSDictionary * configuration = [NSJSONSerialization JSONObjectWithData:configJsonData options:kNilOptions error:&deserializationError];
+    NSMutableDictionary * configuration = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:configJsonData options:kNilOptions error:&deserializationError]];
+    if ([configuration objectForKey:kOGDeviceName] == nil) {
+        [configuration setObject:[self getDeviceName] forKey:kOGDeviceName];
+    }
     
     self.configModel = [[OGConfigModel alloc] initWithDictionary:configuration];
     self.oneginiClient = [[OGOneginiClient alloc] initWithConfig:configModel delegate:self];

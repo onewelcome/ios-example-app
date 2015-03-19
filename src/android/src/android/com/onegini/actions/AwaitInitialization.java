@@ -9,12 +9,17 @@ public class AwaitInitialization implements OneginiPluginAction {
 
   private static CallbackContext pluginInitializedCallback;
 
-  public static void notifyPluginInitialized() {
+  public static void notifyIfPluginInitialized() {
     if (pluginInitializedCallback == null) {
       return;
     }
 
-    pluginInitializedCallback.success();
+    if (PluginInitializer.isConfigured() &&
+        isPinCallbackSessionSet()) {
+      pluginInitializedCallback.success();
+    } else {
+      notifyPluginInitializationFailed();
+    }
   }
 
   public static void notifyPluginInitializationFailed() {
@@ -28,5 +33,11 @@ public class AwaitInitialization implements OneginiPluginAction {
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
     pluginInitializedCallback = callbackContext;
+
+    notifyIfPluginInitialized();
+  }
+
+  private static boolean isPinCallbackSessionSet() {
+    return PinCallbackSession.getPinCallback() != null;
   }
 }

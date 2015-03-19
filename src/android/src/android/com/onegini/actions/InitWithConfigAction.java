@@ -60,6 +60,9 @@ public class InitWithConfigAction implements OneginiPluginAction {
       final Context applicationContext = client.cordova.getActivity().getApplicationContext();
       final OneginiClient oneginiClient = OneginiClient.setupInstance(applicationContext, configModel);
       client.setOneginiClient(oneginiClient);
+
+      setupURLHandler(oneginiClient, configModel);
+
       return true;
     } catch (JSONException e) {
       e.printStackTrace();
@@ -75,4 +78,9 @@ public class InitWithConfigAction implements OneginiPluginAction {
         .setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler());
   }
 
+  private void setupURLHandler(final OneginiClient client, final ConfigModel configModel) {
+    if (configModel.useEmbeddedWebview()) {
+      client.setOneginiURLHandler(new URLHandler());
+    }
+  }
 }

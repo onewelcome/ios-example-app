@@ -25,7 +25,11 @@ import com.onegini.util.CallbackResultBuilder;
 public class AuthorizeAction implements OneginiPluginAction {
 
   private final CallbackResultBuilder callbackResultBuilder;
-  private CallbackContext callbackContext;
+  private static CallbackContext callbackContext;
+
+  public static CallbackContext getCallbackContext() {
+    return callbackContext;
+  }
 
   public AuthorizeAction() {
     callbackResultBuilder = new CallbackResultBuilder();

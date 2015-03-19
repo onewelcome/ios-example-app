@@ -14,10 +14,18 @@
  */
 @protocol OGChangePinDelegate <NSObject>
 
+- (void)invalidCurrentPin DEPRECATED_ATTRIBUTE;
+
+/**
+ The access grant or refresh token provided by the client is invalid.
+ 
+ @param remaining, the number of remaining attempts before the token becomes invalid
+ */
+- (void)invalidCurrentPin:(NSUInteger)remaining;
+
 @required
 
 - (void)pinChanged;
-- (void)invalidCurrentPin;
 - (void)pinChangeError;
 - (void)pinChangeError:(NSError *)error;
 

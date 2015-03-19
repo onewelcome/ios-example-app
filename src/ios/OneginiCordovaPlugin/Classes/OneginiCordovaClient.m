@@ -618,6 +618,18 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"invalidCurrentPin", kRemainingAttempts:@(remaining)} ];
 	[self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
 }
+- (void)pinChangeErrorTooManyPinFailures
+{
+    if (pinChangeCommandTxId == nil) {
+#ifdef DEBUG
+        NSLog(@"invalidCurrentPin: pinCommandTxId is nil");
+#endif
+        return;
+    }
+    
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"pinChangeErrorTooManyAttempts"} ];
+    [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+}
 
 - (void)pinChanged {
 	if (pinChangeCommandTxId == nil) {

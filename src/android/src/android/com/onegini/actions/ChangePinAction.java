@@ -2,6 +2,7 @@ package com.onegini.actions;
 
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGED;
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGE_ERROR;
+import static com.onegini.responses.OneginiPinResponse.PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS;
 import static com.onegini.responses.OneginiPinResponse.PIN_CURRENT_INVALID;
 
 import org.apache.cordova.CallbackContext;
@@ -40,34 +41,43 @@ public class ChangePinAction implements OneginiPluginAction {
     oneginiClient.changePin(new OneginiChangePinHandler() {
       @Override
       public void pinChanged() {
-        sendCallbackResult(
-            callbackResultBuilder
+        sendCallbackResult(callbackResultBuilder
             .withSuccessMessage(PIN_CHANGED.getName())
             .build());
       }
 
       @Override
+      @Deprecated
       public void invalidCurrentPin() {
-        sendCallbackResult(
-            callbackResultBuilder
-                .withErrorReason(PIN_CURRENT_INVALID.getName())
-                .build());
+      }
+
+      @Override
+      public void invalidCurrentPin(final int remainingAttempts) {
+        sendCallbackResult(callbackResultBuilder
+            .withRemainingAttempts(remainingAttempts)
+            .withErrorReason(PIN_CURRENT_INVALID.getName())
+            .build());
+      }
+
+      @Override
+      public void pinChangeErrorTooManyPinFailures() {
+        sendCallbackResult(callbackResultBuilder
+            .withErrorReason(PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS.getName())
+            .build());
       }
 
       @Override
       public void pinChangeError() {
-        sendCallbackResult(
-            callbackResultBuilder
-                .withErrorReason(PIN_CHANGE_ERROR.getName())
-                .build());
+        sendCallbackResult(callbackResultBuilder
+            .withErrorReason(PIN_CHANGE_ERROR.getName())
+            .build());
       }
 
       @Override
       public void pinChangeException(final Exception exception) {
-        sendCallbackResult(
-            callbackResultBuilder
-                .withErrorReason(PIN_CHANGE_ERROR.getName())
-                .build());
+        sendCallbackResult(callbackResultBuilder
+            .withErrorReason(PIN_CHANGE_ERROR.getName())
+            .build());
       }
     });
   }

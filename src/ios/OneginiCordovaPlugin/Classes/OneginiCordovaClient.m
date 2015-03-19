@@ -593,7 +593,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 - (void)invalidCurrentPin {
 	if (pinChangeCommandTxId == nil) {
 #ifdef DEBUG
-		NSLog(@"invalidCurrentPin: pinCommandTxId is nil, invocation is out of context");
+		NSLog(@"invalidCurrentPin: pinCommandTxId is nil");
 #endif
 		return;
 	}
@@ -602,10 +602,22 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 	[self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
 }
 
+- (void)invalidCurrentPin:(NSUInteger)remaining {
+	if (pinChangeCommandTxId == nil) {
+#ifdef DEBUG
+		NSLog(@"invalidCurrentPin: pinCommandTxId is nil");
+#endif
+		return;
+	}
+	
+	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"invalidCurrentPin", kRemainingAttempts:@(remaining)} ];
+	[self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+}
+
 - (void)pinChanged {
 	if (pinChangeCommandTxId == nil) {
 #ifdef DEBUG
-		NSLog(@"pinChanged: pinCommandTxId is nil, invocation is out of context");
+		NSLog(@"pinChanged: pinCommandTxId is nil");
 #endif
 		return;
 	}
@@ -617,7 +629,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 - (void)pinChangeError {
 	if (pinChangeCommandTxId == nil) {
 #ifdef DEBUG
-		NSLog(@"pinChangeError: pinCommandTxId is nil, invocation is out of context");
+		NSLog(@"pinChangeError: pinCommandTxId is nil");
 #endif
 		return;
 	}

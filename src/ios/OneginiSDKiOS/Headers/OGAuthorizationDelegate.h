@@ -8,20 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-/** 
- Callback asking for a PIN and a second verification PIN. 
- If the PINs don't not satisfy the PIN policy constraints and retry is true then the PIN entry dialog is reopened 
- */
-//typedef void(^PinEntryWithVerification)(NSString *pin, NSString *verification, BOOL retry);
-//typedef void(^PinEntryConfirmation)(NSString *pin, BOOL retry);
-//typedef void(^ChangePinEntryWithVerification)(NSString *pin, NSString *newPin, NSString *newPinVerification, BOOL retry);
 typedef void(^Cancel)(void);
 typedef void(^PushAuthenticationConfirmation)(BOOL confirm);
 typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm, BOOL retry);
 
 /**
  This delegate provides the interface from the OneginiClient to the App implementation. 
- All invocations are performed asynchronous and on the main queue.
+ All invokations are performed asynchronous and on the main queue.
  */
 @protocol OGAuthorizationDelegate <NSObject>
 
@@ -59,15 +52,26 @@ typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm
  Ask the user to provide the PIN for confirmation of the authorization request.
  
  The implementor should present a PIN entry dialog and must forward the PIN directly to the client and not store the PIN by any means.
- Call the OGOneginiClient - (void)confirmPin:(NSString *)pin; with the user provided PIN.
+ Call the OGOneginiClient - (void)confirmCurrentPin:(NSString *)pin; with the user provided PIN.
  */
 - (void)askForCurrentPin;
 
 /**
  Ask the user for the current PIN in the change PIN request flow.
  The PIN must be forwarded directly to the client and not be stored by any means.
+ Call the OGOneginiClient - (void)confirmCurrentPinForChangeRequest:(NSString *)pin; with the user provided PIN.
  */
 - (void)askCurrentPinForChangeRequest;
+
+/**
+ Ask the user for a new PIN
+ The implementor should present a PIN entry dialog with a second verification entry.
+ The PIN must be forwarded directly to the client and not be stored by any means.
+ Call the OGOneginiClient - (void)confirmNewPinForChangeRequest:(NSString *)pin validation:(id<OGPinValidationDelegate>)delegate;
+ The new PIN must satisfy any PIN policy constraints.
+ 
+ @param pinSize, the size of the PIN value
+ */
 - (void)askNewPinForChangeRequest:(NSUInteger)pinSize;
 
 /**

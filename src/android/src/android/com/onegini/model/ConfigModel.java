@@ -33,6 +33,9 @@ public class ConfigModel implements OneginiClientConfigModel {
   @SerializedName("deviceName")
   private String deviceName;
 
+  @SerializedName("kOGUseEmbeddedWebview")
+  private boolean useEmbeddedWebview;
+
   private int certificatePinningKeyStore;
   private String keyStoreHash;
 
@@ -117,6 +120,10 @@ public class ConfigModel implements OneginiClientConfigModel {
   @Override
   public int getHttpClientTimeout() {
     return 0;
+  }
+
+  public boolean useEmbeddedWebview() {
+    return useEmbeddedWebview;
   }
 
   @Override

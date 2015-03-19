@@ -71,6 +71,11 @@ public class CallbackResultBuilder {
     return this;
   }
 
+  public CallbackResultBuilder withURL(final String url) {
+    payload.put("url", url);
+    return this;
+  }
+
   public PluginResult build() {
     final PluginResult result;
     if (TextUtils.isEmpty(message)) {

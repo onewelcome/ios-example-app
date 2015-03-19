@@ -27,10 +27,11 @@
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGResourceHandlerDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OneginiSDK.h"/>
 
-    <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-2.04.05.03-SNAPSHOT.a" framework="true"/>
+    <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-2.04.05.04-SNAPSHOT.a" framework="true"/>
 
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>
+    <resource-file src="src/config.json" />
 
     <framework src="libiconv.dylib"/>
     <framework src="libc++.dylib"/>

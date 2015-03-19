@@ -19,6 +19,7 @@ public enum OneginiPinResponse {
   PIN_CHANGE_ERROR("pinChangeError"),
   PIN_CHANGE_ASK_FOR_NEW_PIN("askNewPinForChangeRequest"),
   PIN_CHANGE_ASK_FOR_CURRENT_PIN("askCurrentPinForChangeRequest"),
+  PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS("pinChangeErrorTooManyAttempts"),
   PIN_CHANGED("pinChanged");
 
   private final String name;

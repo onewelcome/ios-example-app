@@ -235,13 +235,13 @@ module.exports = {
     exec(function (response) {
       router.changePinSuccess();
     }, function (error) {
-      if (error.reason = oneginiCordovaPlugin.OG_CONSTANTS.PIN_INVALID) {
+      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_INVALID) {
         router.invalidCurrentPin(error.remainingAttempts);
       }
-      else if (error.reason = oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS) {
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS) {
         router.tooManyPinAttempts();
       }
-      else if (error.reason = oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE_ERROR) {
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE_ERROR) {
         router.changePinError();
       }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE, []);

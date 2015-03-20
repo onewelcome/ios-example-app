@@ -153,7 +153,6 @@ module.exports = {
     exec(function (response) {
       successCallback();
     }, errorCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.LOGOUT, []);
-    this.invalidateSessionState();
   },
 
   /**
@@ -165,10 +164,9 @@ module.exports = {
    */
   disconnect: function (successCallback, errorCallback) {
     exec(function (response) {
-      oneginiCordovaPlugin.shouldRestoreLocationAfterReauthorization = false;
       successCallback();
     }, errorCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.DISCONNECT, []);
-    this.invalidateSessionState();
+    oneginiCordovaPlugin.invalidateSessionState();
   },
 
   /**
@@ -316,21 +314,6 @@ module.exports = {
   },
 
   /**
-   * Checks if user is currently registered (if he has refresh token)
-   * @param successCallback   Function to be called if user is registered
-   * @param errorCallback     Function to be called is user isn't registered
-   */
-  checkIsRegistered: function (successCallback, errorCallback) {
-    exec(function (response) {
-      console.log("user is registered");
-      successCallback();
-    }, function (error) {
-      console.log("user is unregistered");
-      errorCallback(error);
-    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.CHECK_IS_REGISTERED, []);
-  },
-
-  /**
    * Invalidates session storage data.
    */
   invalidateSessionState: function () {
@@ -339,6 +322,7 @@ module.exports = {
       var key = sessionStorage.key(i);
       sessionStorage.removeItem(key);
     }
+    oneginiCordovaPlugin.shouldRestoreLocationAfterReauthorization = false;
   },
 
   /**
@@ -410,7 +394,6 @@ module.exports = {
 
     DISCONNECT: "disconnect",
     LOGOUT: "logout",
-    CHECK_IS_REGISTERED: "isRegistered",
 
     FETCH_RESOURCE: "fetchResource",
     FETCH_ANONYMOUS_RESOURCE: "fetchAnonymousResource",

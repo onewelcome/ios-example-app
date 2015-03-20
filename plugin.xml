@@ -78,6 +78,7 @@
     <source-file src="src/android/src/android/com/onegini/actions/OneginiPluginAction.java" target-dir="src/com/onegini/actions/" />
     <source-file src="src/android/src/android/com/onegini/actions/PinProvidedAction.java" target-dir="src/com/onegini/actions/" />
     <source-file src="src/android/src/android/com/onegini/actions/ValidatePinAction.java" target-dir="src/com/onegini/actions/" />
+    <source-file src="src/android/src/android/com/onegini/actions/CheckIsRegisteredAction.java" target-dir="src/com/onegini/actions/" />
     <source-file src="src/android/src/android/com/onegini/dialogs/ConfirmationDialogSelectorHandler.java" target-dir="src/com/onegini/dialogs/" />
     <source-file src="src/android/src/android/com/onegini/dialogs/CreatePinDialogHandler.java" target-dir="src/com/onegini/dialogs/" />
     <source-file src="src/android/src/android/com/onegini/dialogs/CurrentPinDialogHandler.java" target-dir="src/com/onegini/dialogs/" />

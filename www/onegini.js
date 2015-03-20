@@ -109,6 +109,9 @@ module.exports = {
    *                          least implement the following methods:
    *                          - requestAuthorization(url) -> redirects the user to the given url to log in
    *                          - authorizationSuccess -> should show the landing page for the authenticated user
+   *                          - invalidCurrentPin(remainingAttempts, scopes) -> indicates that the entered PIN number
+   *                                         was invalid and provides an information about remaining PIN attempts
+   *                          - tooManyPinAttempts -> method called once user exceeds allowed number of PIN attempts
    *                          - authorizationFailure(error) -> should handle authentication failure. If this method
    *                                         is called, the authorization transaction is lost. The authorize method
    *                                         must be called again to continue with the authorization flow. It may
@@ -128,7 +131,14 @@ module.exports = {
         router.requestAuthorization(response.url);
       }
     }, function (error) {
-      router.authorizationFailure(error, scopes);
+      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_PIN) {
+        router.invalidCurrentPin(error.remainingAttempts, scopes);
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_TOO_MANY_PIN_ATTEMPTS) {
+        router.tooManyPinAttempts();
+      } else {
+        router.authorizationFailure(error, scopes)
+      };
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, scopes);
   },
 
@@ -217,15 +227,21 @@ module.exports = {
    *                          least implement the following methods:
    *                          - changePinSuccess -> should handle completion of change PIN flow
    *                          - changePinError -> should show the landing page for the authenticated user
-   *                          - invalidCurrentPin -> should handle invalid current PIN in change PIN flow
+   *                          - invalidCurrentPin(remainingAttempts) -> should handle invalid current PIN
+   *                                          in change PIN flow
+   *                          - tooManyPinAttempts -> method called once user exceeds allowed number of PIN attempts
    */
   changePin: function (router) {
     exec(function (response) {
       router.changePinSuccess();
     }, function (error) {
-      if (error.reason = oneginiCordovaPlugin.OG_CONSTANTS.PIN_INVALID) {
-        router.invalidCurrentPin();
-      } else if (error.reason = oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE_ERROR) {
+      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_INVALID) {
+        router.invalidCurrentPin(error.remainingAttempts);
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS) {
+        router.tooManyPinAttempts();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE_ERROR) {
         router.changePinError();
       }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE, []);
@@ -353,6 +369,8 @@ module.exports = {
     AUTHORIZATION_REQUESTED: "requestAuthorization",
     AUTHORIZATION_SUCCESS: "authorizationSuccess",
     AUTHORIZATION_FAILURE: "authorizationFailure",
+    AUTHORIZATION_ERROR_INVALID_PIN: "authorizationErrorInvalidGrant",
+    AUTHORIZATION_ERROR_TOO_MANY_PIN_ATTEMPTS: "authorizationErrorTooManyPinFailures",
 
     PIN_ASK_FOR_CURRENT: "askForCurrentPin",
     PIN_ASK_FOR_NEW: "askForNewPin",
@@ -367,6 +385,7 @@ module.exports = {
     PIN_ENTRY_ERROR: "pinEntryError",
     PIN_CHANGE: "changePin",
     PIN_CHANGE_ERROR: "pinChangeError",
+    PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS: "pinChangeErrorTooManyAttempts",
     PIN_ASK_FOR_CURRENT_FOR_CHANGE_REQUEST: "askCurrentPinForChangeRequest",
     PIN_ASK_FOR_NEW_FOR_CHANGE_REQUEST: "askNewPinForChangeRequest",
     PIN_CONFIRM_NEW_FOR_CHANGE_REQUEST: "confirmNewPinForChangeRequest",

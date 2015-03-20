@@ -3,6 +3,7 @@ package com.onegini.resource;
 import java.lang.reflect.Method;
 
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.Header;
@@ -25,6 +26,7 @@ public class RestResourceInterface {
     @PUT("/{path}")
     void call(@Header("Authorization") String authorizationHeader,
               @Path(value = "path", encode = false) String requestPath,
+              @Body String bodyString,
               Callback<String> callback);
   }
 
@@ -32,6 +34,7 @@ public class RestResourceInterface {
     @POST("/{path}")
     void call(@Header("Authorization") String authorizationHeader,
               @Path(value = "path", encode = false) String requestPath,
+              @Body String bodyString,
               Callback<String> callback);
   }
 

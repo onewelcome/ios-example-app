@@ -41,7 +41,7 @@ public class PluginInitializer {
     final OneginiClient oneginiClient = OneginiClient.setupInstance(applicationContext, configModel);
     client.setOneginiClient(oneginiClient);
 
-    setupURLHandler(client, configModel);
+    setupURLHandler(oneginiClient, configModel);
 
     configured = true;
   }

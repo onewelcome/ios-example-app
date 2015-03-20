@@ -28,17 +28,7 @@
 - (void)clearCredentials:(CDVInvokedUrlCommand *)command;
 
 /**
- Initialize this 'OGOneginiClient' with a valid config model and SSL pinning certificates.
- 
- Command params:
- Dictionary config
- Array certificates
- */
-- (void)initWithConfig:(CDVInvokedUrlCommand *)command;
-
-/**
- Awaits plugin initialized notificaiton. Currently called once pinCallbackSession is set.
- Once plugin will be responsible for loading and setting the SDK configuration it should also be done before sending success callback.
+ Awaits plugin initialized notificaiton. Currently called once pinCallbackSession is set and plugin initialization was successful.
  */
 - (void)awaitPluginInitialization:(CDVInvokedUrlCommand *)command;
 

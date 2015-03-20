@@ -17,8 +17,6 @@ public class AwaitInitialization implements OneginiPluginAction {
     if (PluginInitializer.isConfigured() &&
         isPinCallbackSessionSet()) {
       pluginInitializedCallback.success();
-    } else {
-      notifyPluginInitializationFailed();
     }
   }
 

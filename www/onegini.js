@@ -151,7 +151,6 @@ module.exports = {
    */
   logout: function (successCallback, errorCallback) {
     exec(function (response) {
-      oneginiCordovaPlugin.shouldRestoreLocationAfterReauthorization = false;
       successCallback();
     }, errorCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.LOGOUT, []);
     this.invalidateSessionState();
@@ -333,6 +332,7 @@ module.exports = {
   preserveCurrentLocaiton: function () {
     var activePage = $.mobile.activePage.attr("id");
     sessionStorage.setItem(oneginiCordovaPlugin.OG_CONSTANTS.PAGE_OF_ORIGIN, activePage);
+    oneginiCordovaPlugin.shouldRestoreLocationAfterReauthorization = true;
   },
 
   inAppBrowser: {},
@@ -398,6 +398,6 @@ module.exports = {
 
     FETCH_RESOURCE: "fetchResource",
     FETCH_ANONYMOUS_RESOURCE: "fetchAnonymousResource",
-    FETCH_RESOURCE_AUTH_FAILED: "resourceCallErrorAuthenticationFailed"
+    FETCH_RESOURCE_AUTH_FAILED: "resourceErrorAuthenticationFailed"
   }
 };

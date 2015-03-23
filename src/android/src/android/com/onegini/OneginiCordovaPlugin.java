@@ -3,6 +3,7 @@ package com.onegini;
 import static com.onegini.OneginiConstants.AUTHORIZE_ACTION;
 import static com.onegini.OneginiConstants.AWAIT_INITIALIZATION;
 import static com.onegini.OneginiConstants.CHANGE_PIN_ACTION;
+import static com.onegini.OneginiConstants.CHECK_IS_REGISTERED_ACTION;
 import static com.onegini.OneginiConstants.CONFIRM_CURRENT_PIN_ACTION;
 import static com.onegini.OneginiConstants.CONFIRM_CURRENT_PIN_CHANGE_PIN_ACTION;
 import static com.onegini.OneginiConstants.CONFIRM_NEW_PIN_ACTION;
@@ -30,6 +31,7 @@ import android.net.Uri;
 import com.onegini.actions.AuthorizeAction;
 import com.onegini.actions.AwaitInitialization;
 import com.onegini.actions.ChangePinAction;
+import com.onegini.actions.CheckIsRegisteredAction;
 import com.onegini.actions.DisconnectAction;
 import com.onegini.actions.FetchResourceAction;
 import com.onegini.actions.FetchResourceAnonymouslyAction;
@@ -66,6 +68,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     actions.put(LOGOUT_ACTION, LogoutAction.class);
     actions.put(DISCONNECT_ACTION, DisconnectAction.class);
     actions.put(MOBILE_AUTHENTICATION_ACTION, MobileAuthenticationAction.class);
+    actions.put(CHECK_IS_REGISTERED_ACTION, CheckIsRegisteredAction.class);
 
     final PluginInitializer initializer = new PluginInitializer();
     initializer.setup(this);

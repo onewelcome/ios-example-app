@@ -82,11 +82,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	}
 	
 	NSDictionary *d = @{ kReason:reason };
-//	if (error != nil) {
-//		NSMutableDictionary *md = [NSMutableDictionary dictionaryWithDictionary:d];
-//		[md setObject:error.userInfo forKey:kError];
-//		d = md;
-//	}
 	
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:d];
 	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];

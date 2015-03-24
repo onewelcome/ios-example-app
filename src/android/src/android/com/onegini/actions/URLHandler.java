@@ -8,9 +8,6 @@ import android.net.Uri;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiURLHandler;
 import com.onegini.util.CallbackResultBuilder;
 
-/**
- * Created by Robert on 18.03.15.
- */
 public class URLHandler implements OneginiURLHandler {
 
   private final CallbackResultBuilder callbackResultBuilder;
@@ -29,6 +26,7 @@ public class URLHandler implements OneginiURLHandler {
     context.sendPluginResult(callbackResultBuilder
         .withSuccessMethod(AUTHORIZATION_REQUEST.getName())
         .withURL(uri.toString())
+        .withCallbackKept()
         .build());
   }
 }

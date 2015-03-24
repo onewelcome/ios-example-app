@@ -269,8 +269,8 @@ module.exports = {
    *
    * An INVALID_ACTION is returned if no change PIN transaction is registered.
    *
-   * @param errorCallback     Function to call when the PIN verification fails. Is called with an error object
-   *                          containing a 'reason' and potentially additional key:
+   * @param {object} router   Object that can handle PIN verification failure. Should at least implement the
+   *                          following methods:
    *                          - pinBlackListed -> entered PIN is black listed
    *                          - pinShouldNotBeASequence -> PIN cannot contain a sequence
    *                          - pinShouldNotUseSimilarDigits with maxSimilarDigits key -> PIN can contain only
@@ -279,18 +279,32 @@ module.exports = {
    *                          - pinEntryError -> PIN retrieval error
    * @param {String} pin      The PIN code to set
    */
-  confirmNewPinForChangeRequest: function (errorCallback, pin) {
+  confirmNewPinForChangeRequest: function (router, pin) {
     exec(null, function (error) {
-      console.log(error);
-      errorCallback(error);
+      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_BLACK_LISTED) {
+        router.pinBlackListed();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_SHOULD_NOT_BE_A_SEQUENCE) {
+        router.pinShouldNotBeASequence();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_SHOULD_NUT_USE_SIMILAR_DIGITS) {
+        router.pinShouldNotUseSimilarDigits();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_TOO_SHORT) {
+        router.pinTooShort();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ENTRY_ERROR) {
+        router.pinEntryError();
+      }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CONFIRM_NEW_FOR_CHANGE_REQUEST, [pin]);
   },
 
   /**
    * Validates provided PIN number against clients pin policy.
    *
-   * @param errorCallback     Function to call when the PIN verification fails. Is called with an error object
-   *                          containing a 'reason' and potentially additional key:
+   * @param {object} router   Object that can handle PIN verification failure. Should at least implement the
+   *                          following methods:
+   *                          - pinValid -> PIN validation succeeded
    *                          - pinBlackListed -> entered PIN is black listed
    *                          - pinShouldNotBeASequence -> PIN cannot contain a sequence
    *                          - pinShouldNotUseSimilarDigits with maxSimilarDigits key -> PIN can contain only
@@ -299,9 +313,25 @@ module.exports = {
    *                          - pinEntryError -> PIN retrieval error
    * @param {String} pin      The PIN code to set
    */
-  validatePin: function (errorCallback, pin) {
-    exec(null, function (error) {
-      errorCallback(error);
+  validatePin: function (router, pin) {
+    exec(function (response) {
+      router.pinValid(pin);
+    }, function (error) {
+      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_BLACK_LISTED) {
+        router.pinBlackListed();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_SHOULD_NOT_BE_A_SEQUENCE) {
+        router.pinShouldNotBeASequence();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_SHOULD_NUT_USE_SIMILAR_DIGITS) {
+        router.pinShouldNotUseSimilarDigits(error.maxSimilarDigits);
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_TOO_SHORT) {
+        router.pinTooShort();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ENTRY_ERROR) {
+        router.pinEntryError();
+      }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_VALIDATE, [pin]);
   },
 

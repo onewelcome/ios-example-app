@@ -352,7 +352,7 @@ module.exports = {
       var key = sessionStorage.key(i);
       sessionStorage.removeItem(key);
     }
-    oneginiCordovaPlugin.shouldRestoreLocationAfterReauthorization = false;
+    oneginiCordovaPlugin.shouldRestoreSessionData = false;
   },
 
   /**
@@ -361,7 +361,7 @@ module.exports = {
   preserveCurrentLocaiton: function () {
     var activePage = $.mobile.activePage.attr("id");
     sessionStorage.setItem(oneginiCordovaPlugin.OG_CONSTANTS.PAGE_OF_ORIGIN, activePage);
-    oneginiCordovaPlugin.shouldRestoreLocationAfterReauthorization = true;
+    oneginiCordovaPlugin.shouldRestoreSessionData = true;
   },
 
   inAppBrowser: {},

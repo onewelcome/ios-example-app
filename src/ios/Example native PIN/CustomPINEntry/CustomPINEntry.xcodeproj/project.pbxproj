@@ -28,6 +28,8 @@
 		23EF09DF1AC590F20090F4B1 /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D61AC590F20090F4B1 /* SourceSansPro-Regular.ttf */; };
 		23EF09E01AC590F20090F4B1 /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D71AC590F20090F4B1 /* SourceSansPro-Semibold.ttf */; };
 		23EF09E11AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D81AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf */; };
+		23EF09E31AC59E3E0090F4B1 /* pin-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09E21AC59E3E0090F4B1 /* pin-background.png */; };
+		23EF09E51AC5A41B0090F4B1 /* pin-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09E41AC5A41B0090F4B1 /* pin-config.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 		23EF09D61AC590F20090F4B1 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		23EF09D71AC590F20090F4B1 /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
 		23EF09D81AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SourceSansPro-SemiboldItalic.ttf"; sourceTree = "<group>"; };
+		23EF09E21AC59E3E0090F4B1 /* pin-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-background.png"; path = "CustomPINEntry/pin-background.png"; sourceTree = "<group>"; };
+		23EF09E41AC5A41B0090F4B1 /* pin-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "pin-config.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,7 @@
 		23043A7D1AC453F00068FB52 = {
 			isa = PBXGroup;
 			children = (
+				23EF09E71AC5A5AF0090F4B1 /* Customization */,
 				23043A881AC453F00068FB52 /* CustomPINEntry */,
 				23043AA21AC453F00068FB52 /* CustomPINEntryTests */,
 				23043A871AC453F00068FB52 /* Products */,
@@ -111,7 +116,6 @@
 		23043A881AC453F00068FB52 /* CustomPINEntry */ = {
 			isa = PBXGroup;
 			children = (
-				23EF09CF1AC590DF0090F4B1 /* Fonts */,
 				23043AAF1AC4540E0068FB52 /* PinEntryViewController.h */,
 				23043AB01AC4540E0068FB52 /* PinEntryViewController.m */,
 				23043AB11AC4540E0068FB52 /* PinEntryViewController.xib */,
@@ -171,6 +175,17 @@
 				23EF09D81AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf */,
 			);
 			name = Fonts;
+			path = CustomPINEntry;
+			sourceTree = "<group>";
+		};
+		23EF09E71AC5A5AF0090F4B1 /* Customization */ = {
+			isa = PBXGroup;
+			children = (
+				23EF09CF1AC590DF0090F4B1 /* Fonts */,
+				23EF09E41AC5A41B0090F4B1 /* pin-config.json */,
+				23EF09E21AC59E3E0090F4B1 /* pin-background.png */,
+			);
+			name = Customization;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,6 +277,8 @@
 				23EF09E11AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf in Resources */,
 				23043AB31AC4540E0068FB52 /* PinEntryViewController.xib in Resources */,
 				23043A951AC453F00068FB52 /* Main.storyboard in Resources */,
+				23EF09E51AC5A41B0090F4B1 /* pin-config.json in Resources */,
+				23EF09E31AC59E3E0090F4B1 /* pin-background.png in Resources */,
 				23EF09DF1AC590F20090F4B1 /* SourceSansPro-Regular.ttf in Resources */,
 				23EF09E01AC590F20090F4B1 /* SourceSansPro-Semibold.ttf in Resources */,
 				23043A9A1AC453F00068FB52 /* LaunchScreen.xib in Resources */,

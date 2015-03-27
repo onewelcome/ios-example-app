@@ -6,16 +6,9 @@
 #import "PinEntryViewController.h"
 #import "Util.h"
 
-@interface PinEntryViewController ()
-@end
-
-// TODO implement dynamic pin size.
-// TODO implement PIN change modes.
-
 @implementation PinEntryViewController {
 	NSInteger currentPin;
 	NSMutableArray *pinEntry;
-	PINEntryModes pinEntryMode;
 }
 
 @synthesize keys, pins, delegate, pinsView;
@@ -23,8 +16,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-	pinEntryMode = PINCheckMode;
-	
 	currentPin = 0;
 	pinEntry = [NSMutableArray new];
 	
@@ -38,14 +29,15 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-	[self reset];
+	[super viewWillDisappear:animated];
+	
+	[self resetPin];
 }
 
-- (void)setMode:(PINEntryModes)mode {
-	[self reset];
+- (IBAction)onBackKeyClicked:(id)sender {
+	[pinEntry removeLastObject];
 	
-	pinEntryMode = mode;
-	[self evaluatePinState];
+	[self updatePinStateRepresentation];
 }
 
 - (void)setKeyBackgroundImage:(NSString *)imageName forState:(UIControlState)state {
@@ -61,12 +53,6 @@
 	}
 }
 
-- (IBAction)onBackKeyClicked:(id)sender {
-	[pinEntry removeLastObject];
-	
-	[self updatePinStateRepresentation];
-}
-		 
 - (void)keyPressed:(UIButton *)key {
 	if (pinEntry == nil) {
 		pinEntry = [NSMutableArray new];
@@ -101,29 +87,11 @@
 }
 
 - (void)evaluatePinState {
-	/*
-	 When the PIN is forwarded to the delegate, the PIN in this view controller is wiped. 
-	 */
-	NSString *pin = [pinEntry componentsJoinedByString:@""];
-	BOOL forwardToNextStep = pinEntry.count == pins.count;
-
-	if (pinEntryMode == PINCheckMode) {
-		if (forwardToNextStep) {
-			[delegate confirmPin:pin];
-		}
-	} else if (pinEntryMode == PINRegistrationMode) {
-		if (forwardToNextStep) {
-			[delegate validateNewPin:pin];
-		}
-	} else if (pinEntryMode == PINRegistrationVerififyMode) {
-		if (forwardToNextStep) {
-			[delegate confirmNewPin:pin];
-		}
-	}
-	
-#warning PIN Change modes not implemented
-	
 	[self updatePinStateRepresentation];
+	
+	if (pinEntry.count == pins.count) {
+		[delegate pinEntered:self pin:[pinEntry componentsJoinedByString:@""]];
+	}
 }
 
 - (void)updatePinStateRepresentation {
@@ -142,12 +110,6 @@
 	
 	pinEntry = [NSMutableArray new];
 	currentPin = 0;
-}
-
-- (void)reset {
-	[self resetPin];
-	
-	pinEntryMode = PINCheckMode;
 }
 
 @end

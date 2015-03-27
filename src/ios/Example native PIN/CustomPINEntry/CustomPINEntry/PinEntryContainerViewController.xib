@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PinEntryContainerViewController">
             <connections>
+                <outlet property="containerBackgroundImage" destination="cut-SA-e9C" id="srh-RV-fxK"/>
                 <outlet property="pinViewPlaceholder" destination="rMn-wU-JxI" id="Dxw-vW-CVK"/>
                 <outlet property="view" destination="iN0-l3-epB" id="YZu-fu-mFT"/>
             </connections>
@@ -15,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pin-background" translatesAutoresizingMaskIntoConstraints="NO" id="cut-SA-e9C">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cut-SA-e9C">
                     <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                 </imageView>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rMn-wU-JxI" userLabel="PIN view">
@@ -29,7 +30,4 @@
             <point key="canvasLocation" x="139" y="155"/>
         </view>
     </objects>
-    <resources>
-        <image name="pin-background" width="1024" height="768"/>
-    </resources>
 </document>

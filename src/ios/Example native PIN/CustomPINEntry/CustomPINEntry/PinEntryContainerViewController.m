@@ -8,8 +8,8 @@
 
 #import "PinEntryContainerViewController.h"
 
-@interface PinEntryContainerViewController ()
-@end
+NSString *kBackgoundImage = @"backgoundImage";
+NSString *kKeyColor = @"keyColor";
 
 @implementation PinEntryContainerViewController
 
@@ -22,6 +22,47 @@
 
 - (void)pinEntered:(PinEntryViewController *)controller pin:(NSString *)pin {
 	
+}
+
+- (void)applyConfig:(NSDictionary *)config {
+	NSString *value = config[kBackgoundImage];
+	if (value != nil) {
+		UIImage *image = [UIImage imageNamed:value];
+		if (image == nil) {
+			image = [UIImage imageWithContentsOfFile:value];
+		}
+		
+		self.containerBackgroundImage.image = image;
+	}
+	
+	value = config[kKeyColor];
+	if (value != nil) {
+		UIColor *color = [self colorWithHexString:value];
+		[self.pinEntryViewController setKeyColor:color forState:UIControlStateNormal];
+	}
+}
+
+// TODO move category on UIColor
+- (UIColor *) colorWithHexString: (NSString *)stringToConvert {
+	NSString *string = stringToConvert;
+	if ([string hasPrefix:@"#"]) {
+		string = [string substringFromIndex:1];
+	}
+	
+	NSScanner *scanner = [NSScanner scannerWithString:string];
+	unsigned hexNum;
+	if (![scanner scanHexInt: &hexNum]) {
+		return nil;
+	}
+	
+	int r = (hexNum >> 16) & 0xFF;
+	int g = (hexNum >> 8) & 0xFF;
+	int b = (hexNum) & 0xFF;
+	
+	return [UIColor colorWithRed:r / 255.0f
+						   green:g / 255.0f
+							blue:b / 255.0f
+						   alpha:1.0f];
 }
 
 @end

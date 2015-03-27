@@ -49,6 +49,12 @@
 	[self.backKey setBackgroundImage:[UIImage imageNamed:imageName] forState:state];
 }
 
+- (void)setKeyColor:(UIColor *)color forState:(UIControlState)state {
+	for (UIButton *button in keys) {
+		[button setTitleColor:color forState:state];
+	}
+}
+
 - (void)initView {
 	for (UIButton *key in keys) {
 		[key addTarget:self action:@selector(keyPressed:) forControlEvents:UIControlEventTouchUpInside];

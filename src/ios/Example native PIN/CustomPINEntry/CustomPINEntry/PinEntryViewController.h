@@ -41,6 +41,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *key8;
 @property (weak, nonatomic) IBOutlet UIButton *key9;
 @property (weak, nonatomic) IBOutlet UIButton *key0;
+@property (weak, nonatomic) IBOutlet UIButton *backKey;
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *keys;
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *pins;

@@ -7,23 +7,37 @@
 //
 
 #import "ViewController.h"
-#import "PinEntryViewController.h"
+#import "PinEntryContainerViewController.h"
 
 @implementation ViewController
 
-@synthesize changePinViewController;
+@synthesize pinViewController;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	changePinViewController = [[PinEntryViewController alloc] initWithNibName:@"PinEntryViewController" bundle:nil];
-	
-	[self.view addSubview:changePinViewController.view];
-	changePinViewController.view.center = self.view.center;
+	pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
+	[self.view addSubview:pinViewController.view];
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+	return UIInterfaceOrientationLandscapeLeft;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+	return UIInterfaceOrientationMaskLandscape;
+}
+
+- (BOOL)shouldAutorotate {
+	return YES;
+}
+
+- (BOOL)prefersStatusBarHidden {
+	return YES;
 }
 
 - (IBAction)invalidPinAction:(id)sender {
-	[changePinViewController invalidPin];
+	//[pinViewController invalidPin];
 }
 
 @end

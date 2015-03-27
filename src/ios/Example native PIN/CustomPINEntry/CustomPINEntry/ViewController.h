@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class PinEntryViewController;
+@class PinEntryContainerViewController;
 
 @interface ViewController : UIViewController
 
-@property (strong, nonatomic) PinEntryViewController *changePinViewController;
+@property (strong, nonatomic) PinEntryContainerViewController *pinViewController;
 
 @end
 

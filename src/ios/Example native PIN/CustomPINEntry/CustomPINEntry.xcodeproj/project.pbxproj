@@ -17,6 +17,17 @@
 		23043AB21AC4540E0068FB52 /* PinEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23043AB01AC4540E0068FB52 /* PinEntryViewController.m */; };
 		23043AB31AC4540E0068FB52 /* PinEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23043AB11AC4540E0068FB52 /* PinEntryViewController.xib */; };
 		23043AB51AC4541F0068FB52 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23043AB41AC4541F0068FB52 /* Media.xcassets */; };
+		23EF09CC1AC57C5C0090F4B1 /* PinEntryContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EF09CB1AC57C5C0090F4B1 /* PinEntryContainerViewController.m */; };
+		23EF09CE1AC5876C0090F4B1 /* PinEntryContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09CD1AC5876C0090F4B1 /* PinEntryContainerViewController.xib */; };
+		23EF09D91AC590F20090F4B1 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D01AC590F20090F4B1 /* OFL.txt */; };
+		23EF09DA1AC590F20090F4B1 /* SourceSansPro-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D11AC590F20090F4B1 /* SourceSansPro-ExtraLight.ttf */; };
+		23EF09DB1AC590F20090F4B1 /* SourceSansPro-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D21AC590F20090F4B1 /* SourceSansPro-ExtraLightItalic.ttf */; };
+		23EF09DC1AC590F20090F4B1 /* SourceSansPro-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D31AC590F20090F4B1 /* SourceSansPro-Italic.ttf */; };
+		23EF09DD1AC590F20090F4B1 /* SourceSansPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D41AC590F20090F4B1 /* SourceSansPro-Light.ttf */; };
+		23EF09DE1AC590F20090F4B1 /* SourceSansPro-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D51AC590F20090F4B1 /* SourceSansPro-LightItalic.ttf */; };
+		23EF09DF1AC590F20090F4B1 /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D61AC590F20090F4B1 /* SourceSansPro-Regular.ttf */; };
+		23EF09E01AC590F20090F4B1 /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D71AC590F20090F4B1 /* SourceSansPro-Semibold.ttf */; };
+		23EF09E11AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D81AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +58,18 @@
 		23043AB01AC4540E0068FB52 /* PinEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinEntryViewController.m; sourceTree = "<group>"; };
 		23043AB11AC4540E0068FB52 /* PinEntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinEntryViewController.xib; sourceTree = "<group>"; };
 		23043AB41AC4541F0068FB52 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		23EF09CA1AC57C5C0090F4B1 /* PinEntryContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinEntryContainerViewController.h; sourceTree = "<group>"; };
+		23EF09CB1AC57C5C0090F4B1 /* PinEntryContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinEntryContainerViewController.m; sourceTree = "<group>"; };
+		23EF09CD1AC5876C0090F4B1 /* PinEntryContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinEntryContainerViewController.xib; sourceTree = "<group>"; };
+		23EF09D01AC590F20090F4B1 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		23EF09D11AC590F20090F4B1 /* SourceSansPro-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-ExtraLight.ttf"; sourceTree = "<group>"; };
+		23EF09D21AC590F20090F4B1 /* SourceSansPro-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		23EF09D31AC590F20090F4B1 /* SourceSansPro-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Italic.ttf"; sourceTree = "<group>"; };
+		23EF09D41AC590F20090F4B1 /* SourceSansPro-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Light.ttf"; sourceTree = "<group>"; };
+		23EF09D51AC590F20090F4B1 /* SourceSansPro-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-LightItalic.ttf"; sourceTree = "<group>"; };
+		23EF09D61AC590F20090F4B1 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
+		23EF09D71AC590F20090F4B1 /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
+		23EF09D81AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SourceSansPro-SemiboldItalic.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +111,7 @@
 		23043A881AC453F00068FB52 /* CustomPINEntry */ = {
 			isa = PBXGroup;
 			children = (
+				23EF09CF1AC590DF0090F4B1 /* Fonts */,
 				23043AAF1AC4540E0068FB52 /* PinEntryViewController.h */,
 				23043AB01AC4540E0068FB52 /* PinEntryViewController.m */,
 				23043AB11AC4540E0068FB52 /* PinEntryViewController.xib */,
@@ -100,6 +124,9 @@
 				23043A981AC453F00068FB52 /* LaunchScreen.xib */,
 				23043AB41AC4541F0068FB52 /* Media.xcassets */,
 				23043A891AC453F00068FB52 /* Supporting Files */,
+				23EF09CA1AC57C5C0090F4B1 /* PinEntryContainerViewController.h */,
+				23EF09CB1AC57C5C0090F4B1 /* PinEntryContainerViewController.m */,
+				23EF09CD1AC5876C0090F4B1 /* PinEntryContainerViewController.xib */,
 			);
 			path = CustomPINEntry;
 			sourceTree = "<group>";
@@ -128,6 +155,22 @@
 				23043AA41AC453F00068FB52 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		23EF09CF1AC590DF0090F4B1 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				23EF09D01AC590F20090F4B1 /* OFL.txt */,
+				23EF09D11AC590F20090F4B1 /* SourceSansPro-ExtraLight.ttf */,
+				23EF09D21AC590F20090F4B1 /* SourceSansPro-ExtraLightItalic.ttf */,
+				23EF09D31AC590F20090F4B1 /* SourceSansPro-Italic.ttf */,
+				23EF09D41AC590F20090F4B1 /* SourceSansPro-Light.ttf */,
+				23EF09D51AC590F20090F4B1 /* SourceSansPro-LightItalic.ttf */,
+				23EF09D61AC590F20090F4B1 /* SourceSansPro-Regular.ttf */,
+				23EF09D71AC590F20090F4B1 /* SourceSansPro-Semibold.ttf */,
+				23EF09D81AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,11 +253,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23EF09DA1AC590F20090F4B1 /* SourceSansPro-ExtraLight.ttf in Resources */,
+				23EF09D91AC590F20090F4B1 /* OFL.txt in Resources */,
+				23EF09DD1AC590F20090F4B1 /* SourceSansPro-Light.ttf in Resources */,
 				23043AB51AC4541F0068FB52 /* Media.xcassets in Resources */,
+				23EF09CE1AC5876C0090F4B1 /* PinEntryContainerViewController.xib in Resources */,
+				23EF09DC1AC590F20090F4B1 /* SourceSansPro-Italic.ttf in Resources */,
+				23EF09E11AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf in Resources */,
 				23043AB31AC4540E0068FB52 /* PinEntryViewController.xib in Resources */,
 				23043A951AC453F00068FB52 /* Main.storyboard in Resources */,
+				23EF09DF1AC590F20090F4B1 /* SourceSansPro-Regular.ttf in Resources */,
+				23EF09E01AC590F20090F4B1 /* SourceSansPro-Semibold.ttf in Resources */,
 				23043A9A1AC453F00068FB52 /* LaunchScreen.xib in Resources */,
 				23043A971AC453F00068FB52 /* Images.xcassets in Resources */,
+				23EF09DB1AC590F20090F4B1 /* SourceSansPro-ExtraLightItalic.ttf in Resources */,
+				23EF09DE1AC590F20090F4B1 /* SourceSansPro-LightItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +287,7 @@
 			files = (
 				23043AB21AC4540E0068FB52 /* PinEntryViewController.m in Sources */,
 				23043A921AC453F00068FB52 /* ViewController.m in Sources */,
+				23EF09CC1AC57C5C0090F4B1 /* PinEntryContainerViewController.m in Sources */,
 				23043A8F1AC453F00068FB52 /* AppDelegate.m in Sources */,
 				23043A8C1AC453F00068FB52 /* main.m in Sources */,
 			);
@@ -428,6 +482,7 @@
 				23043AAB1AC453F00068FB52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		23043AAC1AC453F00068FB52 /* Build configuration list for PBXNativeTarget "CustomPINEntryTests" */ = {
 			isa = XCConfigurationList;
@@ -436,6 +491,7 @@
 				23043AAE1AC453F00068FB52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

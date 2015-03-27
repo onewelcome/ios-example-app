@@ -1,10 +1,8 @@
 //
-//  ChangePinViewController.m
-//  oneginisdkiostestapp
+//  PinEntryViewController
 //
 
 #import "PinEntryViewController.h"
-#import "Util.h"
 
 @implementation PinEntryViewController {
 	NSInteger currentPin;
@@ -45,6 +43,10 @@
 	for (UIButton *button in keys) {
 		[button setBackgroundImage:image forState:state];
 	}
+}
+
+- (void)setDeleteKeyBackgroundImage:(NSString *)imageName forState:(UIControlState) state {
+	[self.backKey setBackgroundImage:[UIImage imageNamed:imageName] forState:state];
 }
 
 - (void)initView {

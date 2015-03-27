@@ -9,26 +9,18 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
+@class PinEntryViewController;
+
 @protocol PinEntryViewControllerDelegate <NSObject>
-
-- (void)confirmPin:(NSString *)pin;
-- (void)confirmNewPin:(NSString *)pin;
-- (void)validateNewPin:(NSString *)pin;
-
-- (void)confirmPinForChangeRequest:(NSString *)pin;
-- (void)validateNewPinForChangeRequest:(NSString *)pin;
-- (void)confirmNewPinForChangeRequest:(NSString *)pin;
-
+/**
+ Informs the delegate that the required number of digits is entered by the user.
+ It is the responsibility of the delegate to dismiss the controller
+ 
+ @param controller
+ @param pin
+ */
+- (void)pinEntered:(PinEntryViewController *)controller pin:(NSString *)pin;
 @end
-
-typedef enum : NSUInteger {
-	PINCheckMode,
-	PINRegistrationMode,
-	PINRegistrationVerififyMode,
-	PINChangeCheckMode,
-	PINChangeNewPinMode,
-	PINChangeNewPinVerifyMode
-} PINEntryModes;
 
 /**
  Simple PIN entry dialog with 5 positions and custom numeric input pad.
@@ -54,13 +46,6 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *pins;
 
 - (void)setKeyBackgroundImage:(NSString *)imageName forState:(UIControlState)state;
-
-/**
- Set the initial PIN entry mode.
- 
- @param mode
- */
-- (void)setMode:(PINEntryModes)mode;
 
 /**
  Reset the PIN entry

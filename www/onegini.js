@@ -360,7 +360,7 @@ module.exports = {
    */
   preserveCurrentLocation: function () {
     var activePage = $.mobile.activePage.attr("id");
-    oneginiCordovaPlugin.preserveLocaiton(activePage);
+    oneginiCordovaPlugin.preserveLocation(activePage);
   },
 
   /**

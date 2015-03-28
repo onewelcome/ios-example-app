@@ -386,8 +386,8 @@ module.exports = {
    */
   closeInAppBrowser: function () {
     if (oneginiCordovaPlugin.inAppBrowser && oneginiCordovaPlugin.inAppBrowser.hide) {
-      oneginiCordovaPlugin.inAppBrowser.hide();
       oneginiCordovaPlugin.inAppBrowser.open("about:blank", '_blank', 'location=no,toolbar=no,clearcache=yes');
+      oneginiCordovaPlugin.inAppBrowser.hide();
     }
   },
 

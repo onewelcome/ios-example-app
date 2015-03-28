@@ -352,7 +352,7 @@ module.exports = {
       var key = sessionStorage.key(i);
       sessionStorage.removeItem(key);
     }
-    oneginiCordovaPlugin.shouldRestoreLocationAfterReauthorization = false;
+    oneginiCordovaPlugin.shouldRestoreSessionData = false;
   },
 
   /**
@@ -361,7 +361,7 @@ module.exports = {
   preserveCurrentLocaiton: function () {
     var activePage = $.mobile.activePage.attr("id");
     sessionStorage.setItem(oneginiCordovaPlugin.OG_CONSTANTS.PAGE_OF_ORIGIN, activePage);
-    oneginiCordovaPlugin.shouldRestoreLocationAfterReauthorization = true;
+    oneginiCordovaPlugin.shouldRestoreSessionData = true;
   },
 
   inAppBrowser: {},
@@ -371,15 +371,16 @@ module.exports = {
    * @param url   URL to open
    */
   openInAppBrowser: function (url) {
-    oneginiCordovaPlugin.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no');
+    oneginiCordovaPlugin.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no,clearcache=yes');
   },
 
   /**
    * Closes inAppBrowser.
    */
   closeInAppBrowser: function () {
-    if (oneginiCordovaPlugin.inAppBrowser && oneginiCordovaPlugin.inAppBrowser.close) {
-      oneginiCordovaPlugin.inAppBrowser.close();
+    if (oneginiCordovaPlugin.inAppBrowser && oneginiCordovaPlugin.inAppBrowser.hide) {
+      oneginiCordovaPlugin.inAppBrowser.hide();
+      oneginiCordovaPlugin.inAppBrowser.open("about:blank", '_blank', 'location=no,toolbar=no,clearcache=yes');
     }
   },
 

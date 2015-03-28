@@ -356,11 +356,18 @@ module.exports = {
   },
 
   /**
-   * Preserves in currently displayed page identifier in sessions storage.
+   * Preserves currently displayed page identifier in sessions storage.
    */
-  preserveCurrentLocaiton: function () {
+  preserveCurrentLocation: function () {
     var activePage = $.mobile.activePage.attr("id");
-    sessionStorage.setItem(oneginiCordovaPlugin.OG_CONSTANTS.PAGE_OF_ORIGIN, activePage);
+    oneginiCordovaPlugin.preserveLocaiton(activePage);
+  },
+
+  /**
+   * Preserves specified page identifier in sessions storage.
+   */
+  preserveLocation: function (pageId) {
+    sessionStorage.setItem(oneginiCordovaPlugin.OG_CONSTANTS.PAGE_OF_ORIGIN, pageId);
     oneginiCordovaPlugin.shouldRestoreSessionData = true;
   },
 

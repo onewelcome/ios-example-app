@@ -385,10 +385,31 @@ module.exports = {
    * Closes inAppBrowser.
    */
   closeInAppBrowser: function () {
-    if (oneginiCordovaPlugin.inAppBrowser && oneginiCordovaPlugin.inAppBrowser.hide) {
+    if (!oneginiCordovaPlugin.inAppBrowser) {
+      return;
+    }
+    if (oneginiCordovaPlugin.isAndroid() && oneginiCordovaPlugin.inAppBrowser.hide) {
       oneginiCordovaPlugin.inAppBrowser.open("about:blank", '_blank', 'location=no,toolbar=no,clearcache=yes');
       oneginiCordovaPlugin.inAppBrowser.hide();
+    } else if (oneginiCordovaPlugin.isiOS() && oneginiCordovaPlugin.inAppBrowser.close){
+      oneginiCordovaPlugin.inAppBrowser.close();
     }
+  },
+
+  /**
+   * Determines whenever userAgent is Android.
+   * @returns {boolean}
+   */
+  isAndroid: function () {
+    return navigator.userAgent.indexOf("Android") > 0;
+  },
+
+  /**
+   * Determines whenever userAgent is iOS.
+   * @returns {boolean}
+   */
+  isiOS: function (){
+    return ( navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0 || navigator.userAgent.indexOf("iPod") > 0);
   },
 
   /**

@@ -16,6 +16,12 @@
     </config-file>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/OneginiCordovaClient.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/OneginiCordovaClient.m"/>
+	<header-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.h"/>
+	<source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.m"/>
+	<source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.xib"/>
+	<header-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryViewController.h"/>
+	<source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryViewController.m"/>
+	<source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryViewController.xib"/>
 
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGAuthorizationDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGConfigModel.h"/>
@@ -32,6 +38,7 @@
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>
     <resource-file src="src/ios/config.json" />
+    <resource-file src="src/generic/pin-config.json" />
 
     <framework src="libiconv.dylib"/>
     <framework src="libc++.dylib"/>

@@ -164,6 +164,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				23043A7A1AC438170068FB52 /* Custom PIN */,
 				302D95EE14D2391D003F00A1 /* MainViewController.h */,
 				302D95EF14D2391D003F00A1 /* MainViewController.m */,
 				302D95F014D2391D003F00A1 /* MainViewController.xib */,
@@ -182,6 +183,13 @@
 				1D6058910D05DD3D006BFB54 /* OneginiCordovaPlugin.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		23043A7A1AC438170068FB52 /* Custom PIN */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Custom PIN";
 			sourceTree = "<group>";
 		};
 		2385F6541A932F8D007ADE4B /* OneginiCordova */ = {

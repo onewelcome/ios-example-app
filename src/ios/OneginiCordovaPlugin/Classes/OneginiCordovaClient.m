@@ -684,4 +684,24 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	}
 }
 
+#pragma mark -
+#pragma mark Custom PIN entry
+
+- (void)showPinEntryView {
+	self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
+	[self.viewController.view addSubview:self.pinViewController.view];
+	
+	// Load customization from a JSON config file and apply it.
+	NSString *path = [[NSBundle mainBundle] pathForResource:@"pin-config" ofType:@"json"];
+	NSData *data = [NSData dataWithContentsOfFile:path];
+	NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+	[self.pinViewController applyConfig:config];
+}
+
+#pragma mark - 
+#pragma mark PinEntryContainerViewControllerDelegate
+- (void)pinEntered:(PinEntryContainerViewController *)controller pin:(NSString *)pin {
+	
+}
+
 @end

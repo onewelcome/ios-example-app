@@ -8,11 +8,14 @@
 
 #import <Cordova/CDV.h>
 #import "OneginiSDK.h"
+#import "PinEntryContainerViewController.h"
 
-@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate>
+@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate, PinEntryContainerViewControllerDelegate>
 
 @property (strong, nonatomic) OGOneginiClient *oneginiClient;
 @property (strong, nonatomic) OGConfigModel *configModel;
+
+@property (strong, nonatomic) PinEntryContainerViewController *pinViewController;
 
 @property (copy, nonatomic) NSString *pluginInitializedCommandTxId;
 @property (copy, nonatomic) NSString *authorizeCommandTxId;

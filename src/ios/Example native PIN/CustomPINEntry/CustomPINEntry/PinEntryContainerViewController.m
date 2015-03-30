@@ -8,8 +8,12 @@
 
 #import "PinEntryContainerViewController.h"
 
-NSString *kBackgoundImage = @"backgoundImage";
-NSString *kKeyColor = @"keyColor";
+NSString *kBackgoundImage					= @"backgoundImage";
+NSString *kKeyColor							= @"pinKeyColor";
+NSString *kKeyNormalStateImage				= @"pinKeyNormalStateImage";
+NSString *kKeyHighlightedStateImage			= @"pinKeyHighlightedStateImage";
+NSString *kDeleteKeyNormalStateImage		= @"pinDeleteKeyNormalStateImage";
+NSString *kDeleteKeyHighlightedStateImage	= @"pinDeleteKeyHighlightedStateImage";
 
 @implementation PinEntryContainerViewController
 
@@ -19,6 +23,30 @@ NSString *kKeyColor = @"keyColor";
 	self.pinEntryViewController = [[PinEntryViewController alloc] initWithNibName:@"PinEntryViewController" bundle:nil];
 	[self.pinViewPlaceholder addSubview:self.pinEntryViewController.view];
 	self.pinEntryViewController.delegate = self;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+	return UIInterfaceOrientationLandscapeLeft;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+	return UIInterfaceOrientationMaskLandscape;
+}
+
+- (BOOL)shouldAutorotate {
+	return YES;
+}
+
+- (BOOL)prefersStatusBarHidden {
+	return YES;
+}
+
+- (void)reset {
+	[self.pinEntryViewController reset];
+}
+
+- (void)invalidPin {
+	[self.pinEntryViewController invalidPin];
 }
 
 #pragma mark -
@@ -32,7 +60,11 @@ NSString *kKeyColor = @"keyColor";
 #pragma mark Customization
 
 - (void)applyConfig:(NSDictionary *)config {
-	NSString *value = config[kBackgoundImage];
+	
+	NSDictionary *idiomConfig = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [config valueForKeyPath:@"ios.ipad"] : [config valueForKeyPath:@"ios.iphone"];
+	NSDictionary *orientationConfig = UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) ? idiomConfig[@"landscape"] : idiomConfig[@"portrait"];
+	
+	NSString *value = orientationConfig[kBackgoundImage];
 	if (value != nil) {
 		UIImage *image = [UIImage imageNamed:value];
 		if (image == nil) {
@@ -46,6 +78,16 @@ NSString *kKeyColor = @"keyColor";
 	if (value != nil) {
 		UIColor *color = [self colorWithHexString:value];
 		[self.pinEntryViewController setKeyColor:color forState:UIControlStateNormal];
+	}
+	
+	value = config[kKeyNormalStateImage];
+	if (value != nil) {
+		[self.pinEntryViewController setKeyBackgroundImage:value forState:UIControlStateNormal];
+	}
+	
+	value = config[kKeyHighlightedStateImage];
+	if (value != nil) {
+		[self.pinEntryViewController setKeyBackgroundImage:value forState:UIControlStateHighlighted];
 	}
 }
 

@@ -46,7 +46,7 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *keys;
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *pins;
 
-- (void)setKeyBackgroundImage:(NSString *)imageName forState:(UIControlState)state;
+- (void)setKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState)state;
 - (void)setKeyColor:(UIColor *)color forState:(UIControlState)state;
 
 /**
@@ -56,5 +56,7 @@
  @param subMessage
  */
 - (void)invalidPin;
+
+- (void)reset;
 
 @end

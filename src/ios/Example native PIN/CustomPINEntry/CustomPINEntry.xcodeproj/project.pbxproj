@@ -17,6 +17,9 @@
 		23043AB21AC4540E0068FB52 /* PinEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23043AB01AC4540E0068FB52 /* PinEntryViewController.m */; };
 		23043AB31AC4540E0068FB52 /* PinEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23043AB11AC4540E0068FB52 /* PinEntryViewController.xib */; };
 		23043AB51AC4541F0068FB52 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23043AB41AC4541F0068FB52 /* Media.xcassets */; };
+		236828371AC937ED0055A6D5 /* pin_key_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 236828361AC937ED0055A6D5 /* pin_key_normal.png */; };
+		236828391AC93AE10055A6D5 /* pin_key_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 236828381AC93AE10055A6D5 /* pin_key_highlighted.png */; };
+		2368283B1AC93E1B0055A6D5 /* pin_delete_key_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 2368283A1AC93E1B0055A6D5 /* pin_delete_key_normal.png */; };
 		23EF09CC1AC57C5C0090F4B1 /* PinEntryContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EF09CB1AC57C5C0090F4B1 /* PinEntryContainerViewController.m */; };
 		23EF09CE1AC5876C0090F4B1 /* PinEntryContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09CD1AC5876C0090F4B1 /* PinEntryContainerViewController.xib */; };
 		23EF09D91AC590F20090F4B1 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D01AC590F20090F4B1 /* OFL.txt */; };
@@ -28,7 +31,7 @@
 		23EF09DF1AC590F20090F4B1 /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D61AC590F20090F4B1 /* SourceSansPro-Regular.ttf */; };
 		23EF09E01AC590F20090F4B1 /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D71AC590F20090F4B1 /* SourceSansPro-Semibold.ttf */; };
 		23EF09E11AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09D81AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf */; };
-		23EF09E31AC59E3E0090F4B1 /* pin-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09E21AC59E3E0090F4B1 /* pin-background.png */; };
+		23EF09E31AC59E3E0090F4B1 /* pin_container_ipad_landscape_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09E21AC59E3E0090F4B1 /* pin_container_ipad_landscape_bg.png */; };
 		23EF09E51AC5A41B0090F4B1 /* pin-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 23EF09E41AC5A41B0090F4B1 /* pin-config.json */; };
 /* End PBXBuildFile section */
 
@@ -60,8 +63,11 @@
 		23043AB01AC4540E0068FB52 /* PinEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinEntryViewController.m; sourceTree = "<group>"; };
 		23043AB11AC4540E0068FB52 /* PinEntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinEntryViewController.xib; sourceTree = "<group>"; };
 		23043AB41AC4541F0068FB52 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		236828361AC937ED0055A6D5 /* pin_key_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_key_normal.png; sourceTree = "<group>"; };
+		236828381AC93AE10055A6D5 /* pin_key_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_key_highlighted.png; sourceTree = "<group>"; };
+		2368283A1AC93E1B0055A6D5 /* pin_delete_key_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pin_delete_key_normal.png; path = CustomPINEntry/pin_delete_key_normal.png; sourceTree = "<group>"; };
 		23EF09CA1AC57C5C0090F4B1 /* PinEntryContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinEntryContainerViewController.h; sourceTree = "<group>"; };
-		23EF09CB1AC57C5C0090F4B1 /* PinEntryContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinEntryContainerViewController.m; sourceTree = "<group>"; };
+		23EF09CB1AC57C5C0090F4B1 /* PinEntryContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PinEntryContainerViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		23EF09CD1AC5876C0090F4B1 /* PinEntryContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinEntryContainerViewController.xib; sourceTree = "<group>"; };
 		23EF09D01AC590F20090F4B1 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		23EF09D11AC590F20090F4B1 /* SourceSansPro-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-ExtraLight.ttf"; sourceTree = "<group>"; };
@@ -72,8 +78,8 @@
 		23EF09D61AC590F20090F4B1 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		23EF09D71AC590F20090F4B1 /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
 		23EF09D81AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SourceSansPro-SemiboldItalic.ttf"; sourceTree = "<group>"; };
-		23EF09E21AC59E3E0090F4B1 /* pin-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pin-background.png"; path = "CustomPINEntry/pin-background.png"; sourceTree = "<group>"; };
-		23EF09E41AC5A41B0090F4B1 /* pin-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "pin-config.json"; sourceTree = "<group>"; };
+		23EF09E21AC59E3E0090F4B1 /* pin_container_ipad_landscape_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_container_ipad_landscape_bg.png; sourceTree = "<group>"; };
+		23EF09E41AC5A41B0090F4B1 /* pin-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; lineEnding = 0; path = "pin-config.json"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.javascript; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,8 +188,11 @@
 			isa = PBXGroup;
 			children = (
 				23EF09CF1AC590DF0090F4B1 /* Fonts */,
+				236828381AC93AE10055A6D5 /* pin_key_highlighted.png */,
+				236828361AC937ED0055A6D5 /* pin_key_normal.png */,
+				2368283A1AC93E1B0055A6D5 /* pin_delete_key_normal.png */,
+				23EF09E21AC59E3E0090F4B1 /* pin_container_ipad_landscape_bg.png */,
 				23EF09E41AC5A41B0090F4B1 /* pin-config.json */,
-				23EF09E21AC59E3E0090F4B1 /* pin-background.png */,
 			);
 			name = Customization;
 			sourceTree = "<group>";
@@ -275,10 +284,13 @@
 				23EF09CE1AC5876C0090F4B1 /* PinEntryContainerViewController.xib in Resources */,
 				23EF09DC1AC590F20090F4B1 /* SourceSansPro-Italic.ttf in Resources */,
 				23EF09E11AC590F20090F4B1 /* SourceSansPro-SemiboldItalic.ttf in Resources */,
+				2368283B1AC93E1B0055A6D5 /* pin_delete_key_normal.png in Resources */,
+				236828371AC937ED0055A6D5 /* pin_key_normal.png in Resources */,
 				23043AB31AC4540E0068FB52 /* PinEntryViewController.xib in Resources */,
+				236828391AC93AE10055A6D5 /* pin_key_highlighted.png in Resources */,
 				23043A951AC453F00068FB52 /* Main.storyboard in Resources */,
 				23EF09E51AC5A41B0090F4B1 /* pin-config.json in Resources */,
-				23EF09E31AC59E3E0090F4B1 /* pin-background.png in Resources */,
+				23EF09E31AC59E3E0090F4B1 /* pin_container_ipad_landscape_bg.png in Resources */,
 				23EF09DF1AC590F20090F4B1 /* SourceSansPro-Regular.ttf in Resources */,
 				23EF09E01AC590F20090F4B1 /* SourceSansPro-Semibold.ttf in Resources */,
 				23043A9A1AC453F00068FB52 /* LaunchScreen.xib in Resources */,

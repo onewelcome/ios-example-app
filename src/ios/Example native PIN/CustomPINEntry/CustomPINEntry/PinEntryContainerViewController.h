@@ -21,7 +21,21 @@
 
 /** Full size backgound image */
 extern NSString *kBackgoundImage;
+
+/** PIN key text color */
 extern NSString *kKeyColor;
+
+/** PIN key background image for the normal (untouched) state */
+extern NSString *kKeyNormalStateImage;
+
+/** PIN key background image for the highlighted (touched) state */
+extern NSString *kKeyHighlightedStateImage;
+
+/** Delete PIN key background image for the normal (untouched) state */
+extern NSString *kDeleteKeyNormalStateImage;
+
+/** Delete PIN key background image for the highlighted (touched) state */
+extern NSString *kDeleteKeyHighlightedStateImage;
 
 @interface PinEntryContainerViewController : UIViewController <PinEntryViewControllerDelegate>
 
@@ -36,5 +50,15 @@ extern NSString *kKeyColor;
  @param config
  */
 - (void)applyConfig:(NSDictionary *)config;
+
+/**
+ Reset the PIN value and representation
+ */
+- (void)reset;
+
+/**
+ Performs a reset and a custom animation similar to the iOS lock screen PIN entry
+ */
+- (void)invalidPin;
 
 @end

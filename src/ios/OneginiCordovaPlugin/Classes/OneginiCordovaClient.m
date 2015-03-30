@@ -396,6 +396,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 		return;
 	}
 	
+	pinEntryMode = PINRegistrationMode;
+	
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForNewPin" }];
 	result.keepCallback = @(1);
 	[self.commandDelegate sendPluginResult:result callbackId:pinDialogCommandTxId];
@@ -695,6 +697,9 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 #pragma mark -
 #pragma mark Custom PIN entry
 
+/**
+ Load the custom configuration and overlay the current view with the custom PIN entry view
+ */
 - (void)showPinEntryView {
 	// Load customization from a generic JSON config file
 	NSString *path = [[NSBundle mainBundle] pathForResource:@"pin-config" ofType:@"json"];
@@ -708,21 +713,61 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	[self.pinViewController applyConfig:config];
 }
 
-#pragma mark - 
-#pragma mark PinEntryContainerViewControllerDelegate
-- (void)pinEntered:(PinEntryContainerViewController *)controller pin:(NSString *)pin {
-#warning WORK IN PROGRESS
-	if (pinEntryMode == PINCheckMode) {
-		[oneginiClient confirmCurrentPin:pin];
-	} else if (pinEntryMode == PINRegistrationMode) {
-	} else if (pinEntryMode == PINRegistrationVerififyMode) {
-	}
-}
-
+/**
+ Close the custom PIN entry view
+ */
 - (void)closePinView {
 	if (self.pinViewController != nil) {
 		[self.pinViewController.view removeFromSuperview];
 		self.pinViewController = nil;
+	}
+}
+
+#pragma mark - 
+#pragma mark PinEntryContainerViewControllerDelegate
+- (void)pinEntered:(PinEntryContainerViewController *)controller pin:(NSString *)pin {
+#warning WORK IN PROGRESS
+	
+	switch (pinEntryMode) {
+		case PINCheckMode: {
+			[oneginiClient confirmCurrentPin:pin];
+			break;
+		}
+		case PINRegistrationMode: {
+#ifdef DEBUG
+			NSLog(@"pinEntered: PINRegistrationMode NOT IMPLEMENTED");
+#endif
+			break;
+		}
+		case PINRegistrationVerififyMode: {
+#ifdef DEBUG
+			NSLog(@"pinEntered: PINRegistrationVerififyMode NOT IMPLEMENTED");
+#endif
+			break;
+		}
+		case PINChangeCheckMode: {
+#ifdef DEBUG
+			NSLog(@"pinEntered: PINChangeCheckMode NOT IMPLEMENTED");
+#endif
+			break;
+		}
+		case PINChangeNewPinMode: {
+#ifdef DEBUG
+			NSLog(@"pinEntered: PINChangeNewPinMode NOT IMPLEMENTED");
+#endif
+			break;
+		}
+		case PINChangeNewPinVerifyMode: {
+#ifdef DEBUG
+			NSLog(@"pinEntered: PINChangeNewPinVerifyMode NOT IMPLEMENTED");
+#endif
+			break;
+		}
+		default: {
+#ifdef DEBUG 
+			NSLog(@"pinEntered: unknown state");
+#endif
+		}
 	}
 }
 

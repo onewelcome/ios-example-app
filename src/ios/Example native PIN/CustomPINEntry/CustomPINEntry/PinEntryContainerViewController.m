@@ -18,11 +18,18 @@ NSString *kKeyColor = @"keyColor";
 
 	self.pinEntryViewController = [[PinEntryViewController alloc] initWithNibName:@"PinEntryViewController" bundle:nil];
 	[self.pinViewPlaceholder addSubview:self.pinEntryViewController.view];
+	self.pinEntryViewController.delegate = self;
 }
 
+#pragma mark -
+#pragma mark PinEntryViewControllerDelegate
+
 - (void)pinEntered:(PinEntryViewController *)controller pin:(NSString *)pin {
-	
+	[self.delegate pinEntered:self pin:pin];
 }
+
+#pragma mark -
+#pragma mark Customization
 
 - (void)applyConfig:(NSDictionary *)config {
 	NSString *value = config[kBackgoundImage];
@@ -42,6 +49,8 @@ NSString *kKeyColor = @"keyColor";
 	}
 }
 
+#pragma mark -
+#pragma mark Util
 // TODO move category on UIColor
 - (UIColor *) colorWithHexString: (NSString *)stringToConvert {
 	NSString *string = stringToConvert;

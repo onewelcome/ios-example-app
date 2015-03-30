@@ -11,6 +11,8 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		2351A2571A655E2300C89FF6 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2351A2561A655E2300C89FF6 /* libc++.dylib */; };
 		2351A2591A655E2F00C89FF6 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2351A2581A655E2F00C89FF6 /* libiconv.dylib */; };
+		237380E21AC980DC00A9C28F /* pin-clear-ic.png in Resources */ = {isa = PBXBuildFile; fileRef = 237380E01AC980DC00A9C28F /* pin-clear-ic.png */; };
+		237380E31AC980DC00A9C28F /* pin-occupied-ic.png in Resources */ = {isa = PBXBuildFile; fileRef = 237380E11AC980DC00A9C28F /* pin-occupied-ic.png */; };
 		239D6BD51ABAD5C4001700F4 /* libOneginiSDKiOS-2.04.05.04-SNAPSHOT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 239D6BD41ABAD5C4001700F4 /* libOneginiSDKiOS-2.04.05.04-SNAPSHOT.a */; };
 		23A0C3B81A66A97B0087EEC4 /* PositiveSSLCA2.cer in Resources */ = {isa = PBXBuildFile; fileRef = 23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */; };
 		23A0C3B91A66A97B0087EEC4 /* PositiveSSLCA2.pem in Resources */ = {isa = PBXBuildFile; fileRef = 23A0C3B71A66A97B0087EEC4 /* PositiveSSLCA2.pem */; };
@@ -18,7 +20,6 @@
 		23B3B5B31AC9746A00F6BB9C /* PinEntryContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5AE1AC9746A00F6BB9C /* PinEntryContainerViewController.xib */; };
 		23B3B5B41AC9746A00F6BB9C /* PinEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B5B01AC9746A00F6BB9C /* PinEntryViewController.m */; };
 		23B3B5B51AC9746A00F6BB9C /* PinEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5B11AC9746A00F6BB9C /* PinEntryViewController.xib */; };
-		23B3B5B71AC9747700F6BB9C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5B61AC9747700F6BB9C /* Media.xcassets */; };
 		23B3B5BD1AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5B81AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png */; };
 		23B3B5BE1AC9748300F6BB9C /* pin_key_delete_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5B91AC9748300F6BB9C /* pin_key_delete_normal.png */; };
 		23B3B5BF1AC9748300F6BB9C /* pin_key_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5BA1AC9748300F6BB9C /* pin_key_highlighted.png */; };
@@ -104,6 +105,8 @@
 		1D6058910D05DD3D006BFB54 /* OneginiCordovaPlugin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneginiCordovaPlugin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2351A2561A655E2300C89FF6 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		2351A2581A655E2F00C89FF6 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		237380E01AC980DC00A9C28F /* pin-clear-ic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-clear-ic.png"; sourceTree = "<group>"; };
+		237380E11AC980DC00A9C28F /* pin-occupied-ic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-occupied-ic.png"; sourceTree = "<group>"; };
 		2385F6731A932FA0007ADE4B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		239D6BD41ABAD5C4001700F4 /* libOneginiSDKiOS-2.04.05.04-SNAPSHOT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libOneginiSDKiOS-2.04.05.04-SNAPSHOT.a"; sourceTree = "<group>"; };
 		23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = PositiveSSLCA2.cer; sourceTree = "<group>"; };
@@ -114,7 +117,6 @@
 		23B3B5AF1AC9746A00F6BB9C /* PinEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinEntryViewController.h; sourceTree = "<group>"; };
 		23B3B5B01AC9746A00F6BB9C /* PinEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinEntryViewController.m; sourceTree = "<group>"; };
 		23B3B5B11AC9746A00F6BB9C /* PinEntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinEntryViewController.xib; sourceTree = "<group>"; };
-		23B3B5B61AC9747700F6BB9C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		23B3B5B81AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_container_ipad_landscape_bg.png; sourceTree = "<group>"; };
 		23B3B5B91AC9748300F6BB9C /* pin_key_delete_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_key_delete_normal.png; sourceTree = "<group>"; };
 		23B3B5BA1AC9748300F6BB9C /* pin_key_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_key_highlighted.png; sourceTree = "<group>"; };
@@ -314,13 +316,14 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				237380E01AC980DC00A9C28F /* pin-clear-ic.png */,
+				237380E11AC980DC00A9C28F /* pin-occupied-ic.png */,
 				23B3B5C21AC9749400F6BB9C /* Fonts */,
 				23B3B5B81AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png */,
 				23B3B5B91AC9748300F6BB9C /* pin_key_delete_normal.png */,
 				23B3B5BA1AC9748300F6BB9C /* pin_key_highlighted.png */,
 				23B3B5BB1AC9748300F6BB9C /* pin_key_normal.png */,
 				23B3B5BC1AC9748300F6BB9C /* pin-config.json */,
-				23B3B5B61AC9747700F6BB9C /* Media.xcassets */,
 				23C663EE1A8B7CA7007C1838 /* config.plist */,
 				23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */,
 				23A0C3B71A66A97B0087EEC4 /* PositiveSSLCA2.pem */,
@@ -487,6 +490,7 @@
 				308D05381370CCF300D202BF /* icon.png in Resources */,
 				308D05391370CCF300D202BF /* icon@2x.png in Resources */,
 				23B3B5CE1AC974A400F6BB9C /* SourceSansPro-Light.ttf in Resources */,
+				237380E21AC980DC00A9C28F /* pin-clear-ic.png in Resources */,
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				23A0C3B91A66A97B0087EEC4 /* PositiveSSLCA2.pem in Resources */,
 				7E7966E01810823500FA85AD /* icon-50.png in Resources */,
@@ -496,7 +500,6 @@
 				3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */,
 				23B3B5D21AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf in Resources */,
 				3088BBBE154F3926009F9C59 /* Default-Landscape~ipad.png in Resources */,
-				23B3B5B71AC9747700F6BB9C /* Media.xcassets in Resources */,
 				23C663EF1A8B7CA7007C1838 /* config.plist in Resources */,
 				3088BBBF154F3926009F9C59 /* Default-Portrait@2x~ipad.png in Resources */,
 				23B3B5CC1AC974A400F6BB9C /* SourceSansPro-ExtraLightItalic.ttf in Resources */,
@@ -522,6 +525,7 @@
 				7E7966E11810823500FA85AD /* icon-50@2x.png in Resources */,
 				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
+				237380E31AC980DC00A9C28F /* pin-occupied-ic.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

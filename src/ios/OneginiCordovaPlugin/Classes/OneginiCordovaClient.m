@@ -21,7 +21,9 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 
 @end
 
-@implementation OneginiCordovaClient
+@implementation OneginiCordovaClient {
+	PINEntryModes pinEntryMode;
+}
 
 @synthesize oneginiClient, pluginInitializedCommandTxId, authorizeCommandTxId, configModel;
 @synthesize fetchResourceCommandTxId, pinDialogCommandTxId, pinValidateCommandTxId, pinChangeCommandTxId;
@@ -35,7 +37,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     NSLog(@"pluginInitialize");
     [CDVPluginResult setVerbose:YES];
 #endif
-    
+	pinEntryMode = PINEntryModeUnknown;
+	
     NSString *configJsonFilePath = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"json"];
     NSData* configJsonData = [NSData dataWithContentsOfFile:configJsonFilePath];
     NSError * deserializationError=nil;
@@ -347,6 +350,9 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 		[self resetAll];
 		return;
 	}
+
+	[self closePinView];
+	pinEntryMode = PINEntryModeUnknown;
 	
 	@try {
 		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"authorizationSuccess"];
@@ -375,9 +381,11 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 		return;
 	}
 	
-	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForCurrentPin"}];
-	result.keepCallback = @(1);
-	[self.commandDelegate sendPluginResult:result callbackId:pinDialogCommandTxId];
+	pinEntryMode = PINCheckMode;
+	[self showPinEntryView];
+//	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForCurrentPin"}];
+//	result.keepCallback = @(1);
+//	[self.commandDelegate sendPluginResult:result callbackId:pinDialogCommandTxId];
 }
 
 - (void)askForNewPin:(NSUInteger)pinSize {
@@ -688,20 +696,34 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 #pragma mark Custom PIN entry
 
 - (void)showPinEntryView {
-	self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
-	[self.viewController.view addSubview:self.pinViewController.view];
-	
-	// Load customization from a JSON config file and apply it.
+	// Load customization from a generic JSON config file
 	NSString *path = [[NSBundle mainBundle] pathForResource:@"pin-config" ofType:@"json"];
 	NSData *data = [NSData dataWithContentsOfFile:path];
 	NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+
+	self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
+	self.pinViewController.delegate = self;
+	
+	[self.viewController.view addSubview:self.pinViewController.view];
 	[self.pinViewController applyConfig:config];
 }
 
 #pragma mark - 
 #pragma mark PinEntryContainerViewControllerDelegate
 - (void)pinEntered:(PinEntryContainerViewController *)controller pin:(NSString *)pin {
-	
+#warning WORK IN PROGRESS
+	if (pinEntryMode == PINCheckMode) {
+		[oneginiClient confirmCurrentPin:pin];
+	} else if (pinEntryMode == PINRegistrationMode) {
+	} else if (pinEntryMode == PINRegistrationVerififyMode) {
+	}
+}
+
+- (void)closePinView {
+	if (self.pinViewController != nil) {
+		[self.pinViewController.view removeFromSuperview];
+		self.pinViewController = nil;
+	}
 }
 
 @end

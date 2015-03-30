@@ -38,11 +38,19 @@
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>
     <resource-file src="src/ios/config.json" />
+	
+	<!-- Work in progress, these are not the correct image assets (copied from example PSD with low resolution) --> 
     <resource-file src="src/generic/pin-config.json" />
+	<resource-file src="src/generic/pin_container_ipad_landscape_bg.png" />
+	<resource-file src="src/generic/pin_delete_key_normal.png" />
+	<resource-file src="src/generic/pin_delete_key_highlighted.png" />
+	<resource-file src="src/generic/pin_key_highlighted.png" />
+	<resource-file src="src/generic/pin_key_normal.png" />
+	<resource-file src="src/generic/pin-occupied-ic.png" />
+	<resource-file src="src/generic/pin-clear-ic.png" />
 
     <framework src="libiconv.dylib"/>
     <framework src="libc++.dylib"/>
-
 
   </platform>
   <platform name="android">

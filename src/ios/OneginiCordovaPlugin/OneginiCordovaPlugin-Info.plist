@@ -195,5 +195,9 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SourceSansPro-Regular.ttf</string>
+	</array>
 </dict>
 </plist>

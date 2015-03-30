@@ -28,7 +28,6 @@ import org.json.JSONException;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.view.WindowManager;
 import com.onegini.actions.AuthorizeAction;
 import com.onegini.actions.AwaitInitialization;
 import com.onegini.actions.ChangePinAction;
@@ -73,8 +72,6 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 
     final PluginInitializer initializer = new PluginInitializer();
     initializer.setup(this);
-
-    preventSystemScreenshots();
   }
 
   public CordovaInterface getCordova() {
@@ -131,13 +128,5 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
       throw new RuntimeException("client not initialized");
     }
     return oneginiClient;
-  }
-
-  /**
-   * Prevent system from taking app screenshot when going into background and showing the screenshot
-   * in the Task Manager.
-   */
-  private void preventSystemScreenshots() {
-    getCordova().getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
   }
 }

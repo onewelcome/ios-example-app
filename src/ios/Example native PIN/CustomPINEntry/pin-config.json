@@ -2,12 +2,12 @@
 	"pinKeyColor":"#ffffff",
 	"pinKeyNormalStateImage":"pin_key_normal.png",
 	"pinKeyHighlightedStateImage":"pin_key_highlighted.png",
-	"pinDeleteKeyNormalStateImage":"pin_delete_key_normal",
-	"pinDeleteKeyHighlightedStateImage":"pin_delete_key_highlighted",
+	"pinDeleteKeyNormalStateImage":"pin_delete_key_normal.png",
+	"pinDeleteKeyHighlightedStateImage":"pin_delete_key_highlighted.png",
 	"ios": {
 		"ipad":{
 			"landscape":{
-				"backgoundImage":"pin_container_ipad_landscape_bg",
+				"backgoundImage":"pin_container_ipad_landscape_bg.png",
 			},
 			"portrait":{},
 		},

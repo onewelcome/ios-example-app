@@ -356,11 +356,18 @@ module.exports = {
   },
 
   /**
-   * Preserves in currently displayed page identifier in sessions storage.
+   * Preserves currently displayed page identifier in sessions storage.
    */
-  preserveCurrentLocaiton: function () {
+  preserveCurrentLocation: function () {
     var activePage = $.mobile.activePage.attr("id");
-    sessionStorage.setItem(oneginiCordovaPlugin.OG_CONSTANTS.PAGE_OF_ORIGIN, activePage);
+    oneginiCordovaPlugin.preserveLocation(activePage);
+  },
+
+  /**
+   * Preserves specified page identifier in sessions storage.
+   */
+  preserveLocation: function (pageId) {
+    sessionStorage.setItem(oneginiCordovaPlugin.OG_CONSTANTS.PAGE_OF_ORIGIN, pageId);
     oneginiCordovaPlugin.shouldRestoreSessionData = true;
   },
 
@@ -371,16 +378,38 @@ module.exports = {
    * @param url   URL to open
    */
   openInAppBrowser: function (url) {
-    oneginiCordovaPlugin.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no');
+    oneginiCordovaPlugin.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no,clearcache=yes');
   },
 
   /**
    * Closes inAppBrowser.
    */
   closeInAppBrowser: function () {
-    if (oneginiCordovaPlugin.inAppBrowser && oneginiCordovaPlugin.inAppBrowser.close) {
+    if (!oneginiCordovaPlugin.inAppBrowser) {
+      return;
+    }
+    if (oneginiCordovaPlugin.isAndroid() && oneginiCordovaPlugin.inAppBrowser.hide) {
+      oneginiCordovaPlugin.inAppBrowser.open("about:blank", '_blank', 'location=no,toolbar=no,clearcache=yes');
+      oneginiCordovaPlugin.inAppBrowser.hide();
+    } else if (oneginiCordovaPlugin.isiOS() && oneginiCordovaPlugin.inAppBrowser.close){
       oneginiCordovaPlugin.inAppBrowser.close();
     }
+  },
+
+  /**
+   * Determines whenever userAgent is Android.
+   * @returns {boolean}
+   */
+  isAndroid: function () {
+    return navigator.userAgent.indexOf("Android") > 0;
+  },
+
+  /**
+   * Determines whenever userAgent is iOS.
+   * @returns {boolean}
+   */
+  isiOS: function (){
+    return ( navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0 || navigator.userAgent.indexOf("iPod") > 0);
   },
 
   /**

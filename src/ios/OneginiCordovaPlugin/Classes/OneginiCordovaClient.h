@@ -10,6 +10,16 @@
 #import "OneginiSDK.h"
 #import "PinEntryContainerViewController.h"
 
+typedef enum : NSUInteger {
+	PINEntryModeUnknown,
+	PINCheckMode,
+	PINRegistrationMode,
+	PINRegistrationVerififyMode,
+	PINChangeCheckMode,
+	PINChangeNewPinMode,
+	PINChangeNewPinVerifyMode
+} PINEntryModes;
+
 @interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate, PinEntryContainerViewControllerDelegate>
 
 @property (strong, nonatomic) OGOneginiClient *oneginiClient;

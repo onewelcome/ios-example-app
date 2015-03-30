@@ -49,7 +49,7 @@
 	}
 }
 
-- (void)setDeleteKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState) state {
+- (void)setDeleteKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState)state {
 	[self.backKey setBackgroundImage:[UIImage imageNamed:imagePath] forState:state];
 }
 

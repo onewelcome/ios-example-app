@@ -89,6 +89,16 @@ NSString *kDeleteKeyHighlightedStateImage	= @"pinDeleteKeyHighlightedStateImage"
 	if (value != nil) {
 		[self.pinEntryViewController setKeyBackgroundImage:value forState:UIControlStateHighlighted];
 	}
+
+	value = config[kDeleteKeyNormalStateImage];
+	if (value != nil) {
+		[self.pinEntryViewController setDeleteKeyBackgroundImage:value forState:UIControlStateNormal];
+	}
+
+	value = config[kDeleteKeyHighlightedStateImage];
+	if (value != nil) {
+		[self.pinEntryViewController setDeleteKeyBackgroundImage:value forState:UIControlStateHighlighted];
+	}
 }
 
 #pragma mark -

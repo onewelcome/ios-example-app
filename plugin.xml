@@ -121,6 +121,7 @@
     <source-file src="src/android/src/android/com/onegini/actions/CheckIsRegisteredAction.java" target-dir="src/com/onegini/actions/" />
     <!--<source-file src="src/android/src/android/com/onegini/gcm/GCMHelper.java" target-dir="src/com/onegini/gcm/" />-->
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/" />
+    <source-file src="src/android/src/android/com/onegini/model/PinConfigModel.java" target-dir="src/com/onegini/model/" />
     <source-file src="src/android/src/android/com/onegini/resource/AnonymousResourceClient.java" target-dir="src/com/onegini/resource/" />
     <source-file src="src/android/src/android/com/onegini/resource/ResourceClient.java" target-dir="src/com/onegini/resource/" />
     <source-file src="src/android/src/android/com/onegini/resource/ResourceHandler.java" target-dir="src/com/onegini/resource/" />
@@ -141,5 +142,16 @@
     
     <resource-file src="src/android/res/raw/keystore.bks" target="res/raw/keystore.bks" />
     <resource-file src="src/android/config.json" target="res/raw/config.json" />
+
+    <!-- Work in progress, these are not the correct image assets (copied from example PSD with low resolution) --> 
+    <resource-file src="src/generic/pin-config.json" target="res/raw/pin_config.json" />
+    <resource-file src="src/generic/pin_delete_key_normal.png" target="res/drawable/pin_delete_key_normal.png" />
+    <resource-file src="src/generic/pin_delete_key_highlighted.png" target="res/drawable/pin_delete_key_highlighted.png" />
+    <resource-file src="src/generic/pin_key_normal.png" target="res/drawable/pin_key_normal.png" />
+    <resource-file src="src/generic/pin_key_highlighted.png" target="res/drawable/pin_key_highlighted.png" />
+    <!--<resource-file src="src/generic/pin-config.json" target="res/raw/pin-config.json" />
+    <resource-file src="src/generic/pin-occupied-ic.png" />
+    <resource-file src="src/generic/pin-clear-ic.png" />
+    -->
   </platform>
 </plugin>

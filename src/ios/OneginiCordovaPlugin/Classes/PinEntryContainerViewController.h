@@ -44,6 +44,12 @@ extern NSString *kDeleteKeyHighlightedStateImage;
 @property (weak, nonatomic) IBOutlet UIView *pinViewPlaceholder;
 @property (weak, nonatomic) IBOutlet UIImageView *containerBackgroundImage;
 
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *subMessageLabel;
+
+@property (strong, nonatomic) UIImage *landscapeBackgroundImage;
+@property (strong, nonatomic) UIImage *portraitBackgroundImage;
+
 /**
  Apply custom style 
  
@@ -61,4 +67,5 @@ extern NSString *kDeleteKeyHighlightedStateImage;
  */
 - (void)invalidPin;
 
+- (void)invalidPinWithReason:(NSString *)message subMessage:(NSString *)subMessage;
 @end

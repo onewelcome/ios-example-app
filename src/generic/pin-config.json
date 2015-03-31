@@ -5,9 +5,10 @@
 	"pinDeleteKeyNormalStateImage":"pin_delete_key_normal.png",
 	"pinDeleteKeyHighlightedStateImage":"pin_delete_key_highlighted.png",
 	"ios": {
+		"pinKeyFont":"SourceSansPro-Regular",
 		"ipad":{
 			"landscape":{
-				"backgoundImage":"pin_container_ipad_landscape_bg.png",
+				"backgroundImage":"pin_container_ipad_landscape_bg.png",
 			},
 			"portrait":{},
 		},

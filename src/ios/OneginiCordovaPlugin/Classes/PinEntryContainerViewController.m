@@ -18,8 +18,8 @@ NSString *kDeleteKeyHighlightedStateImage	= @"pinDeleteKeyHighlightedStateImage"
 @implementation PinEntryContainerViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-
+	[super viewDidLoad];
+	
 	self.pinEntryViewController = [[PinEntryViewController alloc] initWithNibName:@"PinEntryViewController" bundle:nil];
 	[self.pinViewPlaceholder addSubview:self.pinEntryViewController.view];
 	self.pinEntryViewController.delegate = self;
@@ -30,7 +30,7 @@ NSString *kDeleteKeyHighlightedStateImage	= @"pinDeleteKeyHighlightedStateImage"
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
-	return UIInterfaceOrientationMaskLandscape;
+	return UIInterfaceOrientationMaskAll;
 }
 
 - (BOOL)shouldAutorotate {
@@ -41,11 +41,30 @@ NSString *kDeleteKeyHighlightedStateImage	= @"pinDeleteKeyHighlightedStateImage"
 	return YES;
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	[self applyBackgroundImage];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+	[self applyBackgroundImage];
+}
+
+- (void)applyBackgroundImage {
+	self.containerBackgroundImage.image = UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) ? self.landscapeBackgroundImage : self.portraitBackgroundImage;
+}
+
 - (void)reset {
 	[self.pinEntryViewController reset];
 }
 
 - (void)invalidPin {
+	[self.pinEntryViewController invalidPin];
+}
+
+- (void)invalidPinWithReason:(NSString *)message subMessage:(NSString *)subMessage {
+	self.messageLabel.text = message;
+	self.subMessageLabel.text = subMessage;
+	
 	[self.pinEntryViewController invalidPin];
 }
 
@@ -60,21 +79,31 @@ NSString *kDeleteKeyHighlightedStateImage	= @"pinDeleteKeyHighlightedStateImage"
 #pragma mark Customization
 
 - (void)applyConfig:(NSDictionary *)config {
-	
 	NSDictionary *idiomConfig = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [config valueForKeyPath:@"ios.ipad"] : [config valueForKeyPath:@"ios.iphone"];
-	NSDictionary *orientationConfig = UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) ? idiomConfig[@"landscape"] : idiomConfig[@"portrait"];
 	
-	NSString *value = orientationConfig[kBackgoundImage];
-	if (value != nil) {
-		UIImage *image = [UIImage imageNamed:value];
-		if (image == nil) {
-			image = [UIImage imageWithContentsOfFile:value];
+	NSDictionary *orientationConfig = idiomConfig[@"landscape"];
+	if (orientationConfig != nil) {
+		NSString *backgroundImageName = orientationConfig[@"backgroundImage"];
+		if (backgroundImageName != nil) {
+			self.landscapeBackgroundImage = [UIImage imageNamed:backgroundImageName];
+			if (self.landscapeBackgroundImage == nil) {
+				self.landscapeBackgroundImage = [UIImage imageWithContentsOfFile:backgroundImageName];
+			}
 		}
-		
-		self.containerBackgroundImage.image = image;
 	}
 	
-	value = config[kKeyColor];
+	orientationConfig = idiomConfig[@"portrait"];
+	if (orientationConfig != nil) {
+		NSString *backgroundImageName = orientationConfig[@"backgroundImage"];
+		if (backgroundImageName != nil) {
+			self.portraitBackgroundImage = [UIImage imageNamed:backgroundImageName];
+			if (self.portraitBackgroundImage == nil) {
+				self.portraitBackgroundImage = [UIImage imageWithContentsOfFile:backgroundImageName];
+			}
+		}
+	}
+	
+	NSString *value = config[kKeyColor];
 	if (value != nil) {
 		UIColor *color = [self colorWithHexString:value];
 		[self.pinEntryViewController setKeyColor:color forState:UIControlStateNormal];
@@ -89,16 +118,18 @@ NSString *kDeleteKeyHighlightedStateImage	= @"pinDeleteKeyHighlightedStateImage"
 	if (value != nil) {
 		[self.pinEntryViewController setKeyBackgroundImage:value forState:UIControlStateHighlighted];
 	}
-
+	
 	value = config[kDeleteKeyNormalStateImage];
 	if (value != nil) {
 		[self.pinEntryViewController setDeleteKeyBackgroundImage:value forState:UIControlStateNormal];
 	}
-
+	
 	value = config[kDeleteKeyHighlightedStateImage];
 	if (value != nil) {
 		[self.pinEntryViewController setDeleteKeyBackgroundImage:value forState:UIControlStateHighlighted];
 	}
+	
+	[self applyBackgroundImage];
 }
 
 #pragma mark -

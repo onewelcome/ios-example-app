@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PinEntryContainerViewController">
+            <connections>
+                <outlet property="containerBackgroundImage" destination="cut-SA-e9C" id="srh-RV-fxK"/>
+                <outlet property="messageLabel" destination="28I-4a-RbF" id="sjR-wH-FXV"/>
+                <outlet property="messageLabelHeightConstraint" destination="a2d-Xa-t06" id="wwb-96-w2h"/>
+                <outlet property="messageLabelLeftConstraint" destination="Nw6-hL-Uff" id="QoO-V4-GbD"/>
+                <outlet property="messageLabelTopConstraint" destination="qsP-wJ-4Pm" id="S9V-K0-BBk"/>
+                <outlet property="messageLabelWidthConstraint" destination="cn6-S0-I5D" id="QCl-dk-d55"/>
+                <outlet property="pinViewPlaceholder" destination="rMn-wU-JxI" id="Dxw-vW-CVK"/>
+                <outlet property="view" destination="iN0-l3-epB" id="YZu-fu-mFT"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cut-SA-e9C">
+                    <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rMn-wU-JxI" userLabel="PIN view">
+                    <rect key="frame" x="374" y="271" width="276" height="447"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="276" id="QEo-nz-fCF"/>
+                        <constraint firstAttribute="height" constant="447" id="mVw-t3-JgQ"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="28I-4a-RbF">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="a2d-Xa-t06"/>
+                        <constraint firstAttribute="width" constant="300" id="cn6-S0-I5D"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.92490267753601074" green="0.92487502098083496" blue="0.92489069700241089" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="cut-SA-e9C" secondAttribute="bottom" id="1pC-x7-g8r"/>
+                <constraint firstItem="cut-SA-e9C" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5Ip-op-4YM"/>
+                <constraint firstAttribute="centerX" secondItem="rMn-wU-JxI" secondAttribute="centerX" id="Ki1-2G-7pX"/>
+                <constraint firstItem="cut-SA-e9C" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="KsT-zl-zOf"/>
+                <constraint firstItem="28I-4a-RbF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Nw6-hL-Uff"/>
+                <constraint firstAttribute="bottom" secondItem="rMn-wU-JxI" secondAttribute="bottom" constant="50" id="Y6O-rg-Q94"/>
+                <constraint firstItem="28I-4a-RbF" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qsP-wJ-4Pm"/>
+                <constraint firstAttribute="trailing" secondItem="cut-SA-e9C" secondAttribute="trailing" id="tOH-8q-qk3"/>
+            </constraints>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
+            <point key="canvasLocation" x="139" y="155"/>
+        </view>
+    </objects>
+</document>

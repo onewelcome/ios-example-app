@@ -11,10 +11,28 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		2351A2571A655E2300C89FF6 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2351A2561A655E2300C89FF6 /* libc++.dylib */; };
 		2351A2591A655E2F00C89FF6 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2351A2581A655E2F00C89FF6 /* libiconv.dylib */; };
+		237380E21AC980DC00A9C28F /* pin-clear-ic.png in Resources */ = {isa = PBXBuildFile; fileRef = 237380E01AC980DC00A9C28F /* pin-clear-ic.png */; };
+		237380E31AC980DC00A9C28F /* pin-occupied-ic.png in Resources */ = {isa = PBXBuildFile; fileRef = 237380E11AC980DC00A9C28F /* pin-occupied-ic.png */; };
 		239D6BD51ABAD5C4001700F4 /* libOneginiSDKiOS-2.04.05.04-SNAPSHOT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 239D6BD41ABAD5C4001700F4 /* libOneginiSDKiOS-2.04.05.04-SNAPSHOT.a */; };
 		23A0C3B81A66A97B0087EEC4 /* PositiveSSLCA2.cer in Resources */ = {isa = PBXBuildFile; fileRef = 23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */; };
 		23A0C3B91A66A97B0087EEC4 /* PositiveSSLCA2.pem in Resources */ = {isa = PBXBuildFile; fileRef = 23A0C3B71A66A97B0087EEC4 /* PositiveSSLCA2.pem */; };
-		23C663EF1A8B7CA7007C1838 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23C663EE1A8B7CA7007C1838 /* config.plist */; };
+		23B3B5B21AC9746A00F6BB9C /* PinEntryContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B5AD1AC9746A00F6BB9C /* PinEntryContainerViewController.m */; };
+		23B3B5B31AC9746A00F6BB9C /* PinEntryContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5AE1AC9746A00F6BB9C /* PinEntryContainerViewController.xib */; };
+		23B3B5B41AC9746A00F6BB9C /* PinEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B5B01AC9746A00F6BB9C /* PinEntryViewController.m */; };
+		23B3B5B51AC9746A00F6BB9C /* PinEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5B11AC9746A00F6BB9C /* PinEntryViewController.xib */; };
+		23B3B5BD1AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5B81AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png */; };
+		23B3B5BE1AC9748300F6BB9C /* pin_key_delete_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5B91AC9748300F6BB9C /* pin_key_delete_normal.png */; };
+		23B3B5BF1AC9748300F6BB9C /* pin_key_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5BA1AC9748300F6BB9C /* pin_key_highlighted.png */; };
+		23B3B5C01AC9748300F6BB9C /* pin_key_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5BB1AC9748300F6BB9C /* pin_key_normal.png */; };
+		23B3B5C11AC9748300F6BB9C /* pin-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5BC1AC9748300F6BB9C /* pin-config.json */; };
+		23B3B5CB1AC974A400F6BB9C /* SourceSansPro-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5C31AC974A400F6BB9C /* SourceSansPro-ExtraLight.ttf */; };
+		23B3B5CC1AC974A400F6BB9C /* SourceSansPro-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5C41AC974A400F6BB9C /* SourceSansPro-ExtraLightItalic.ttf */; };
+		23B3B5CD1AC974A400F6BB9C /* SourceSansPro-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5C51AC974A400F6BB9C /* SourceSansPro-Italic.ttf */; };
+		23B3B5CE1AC974A400F6BB9C /* SourceSansPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5C61AC974A400F6BB9C /* SourceSansPro-Light.ttf */; };
+		23B3B5CF1AC974A400F6BB9C /* SourceSansPro-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5C71AC974A400F6BB9C /* SourceSansPro-LightItalic.ttf */; };
+		23B3B5D01AC974A400F6BB9C /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5C81AC974A400F6BB9C /* SourceSansPro-Regular.ttf */; };
+		23B3B5D11AC974A400F6BB9C /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5C91AC974A400F6BB9C /* SourceSansPro-Semibold.ttf */; };
+		23B3B5D21AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5CA1AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf */; };
 		23C663F21A8B805B007C1838 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
 		23CC2D081AA43F890056F377 /* OneginiCordovaClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 23DBAF431A6528A4001836C4 /* OneginiCordovaClient.m */; };
 		23FD95CC1A9CC81600A1AC62 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 23FD95CB1A9CC81600A1AC62 /* Podfile */; };
@@ -86,11 +104,31 @@
 		1D6058910D05DD3D006BFB54 /* OneginiCordovaPlugin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneginiCordovaPlugin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2351A2561A655E2300C89FF6 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		2351A2581A655E2F00C89FF6 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		237380E01AC980DC00A9C28F /* pin-clear-ic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-clear-ic.png"; sourceTree = "<group>"; };
+		237380E11AC980DC00A9C28F /* pin-occupied-ic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin-occupied-ic.png"; sourceTree = "<group>"; };
 		2385F6731A932FA0007ADE4B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		239D6BD41ABAD5C4001700F4 /* libOneginiSDKiOS-2.04.05.04-SNAPSHOT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libOneginiSDKiOS-2.04.05.04-SNAPSHOT.a"; sourceTree = "<group>"; };
 		23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = PositiveSSLCA2.cer; sourceTree = "<group>"; };
 		23A0C3B71A66A97B0087EEC4 /* PositiveSSLCA2.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PositiveSSLCA2.pem; sourceTree = "<group>"; };
-		23C663EE1A8B7CA7007C1838 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
+		23B3B5AC1AC9746A00F6BB9C /* PinEntryContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinEntryContainerViewController.h; sourceTree = "<group>"; };
+		23B3B5AD1AC9746A00F6BB9C /* PinEntryContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinEntryContainerViewController.m; sourceTree = "<group>"; };
+		23B3B5AE1AC9746A00F6BB9C /* PinEntryContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinEntryContainerViewController.xib; sourceTree = "<group>"; };
+		23B3B5AF1AC9746A00F6BB9C /* PinEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinEntryViewController.h; sourceTree = "<group>"; };
+		23B3B5B01AC9746A00F6BB9C /* PinEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinEntryViewController.m; sourceTree = "<group>"; };
+		23B3B5B11AC9746A00F6BB9C /* PinEntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinEntryViewController.xib; sourceTree = "<group>"; };
+		23B3B5B81AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_container_ipad_landscape_bg.png; sourceTree = "<group>"; };
+		23B3B5B91AC9748300F6BB9C /* pin_key_delete_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_key_delete_normal.png; sourceTree = "<group>"; };
+		23B3B5BA1AC9748300F6BB9C /* pin_key_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_key_highlighted.png; sourceTree = "<group>"; };
+		23B3B5BB1AC9748300F6BB9C /* pin_key_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_key_normal.png; sourceTree = "<group>"; };
+		23B3B5BC1AC9748300F6BB9C /* pin-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "pin-config.json"; sourceTree = "<group>"; };
+		23B3B5C31AC974A400F6BB9C /* SourceSansPro-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-ExtraLight.ttf"; sourceTree = "<group>"; };
+		23B3B5C41AC974A400F6BB9C /* SourceSansPro-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		23B3B5C51AC974A400F6BB9C /* SourceSansPro-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Italic.ttf"; sourceTree = "<group>"; };
+		23B3B5C61AC974A400F6BB9C /* SourceSansPro-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Light.ttf"; sourceTree = "<group>"; };
+		23B3B5C71AC974A400F6BB9C /* SourceSansPro-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-LightItalic.ttf"; sourceTree = "<group>"; };
+		23B3B5C81AC974A400F6BB9C /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
+		23B3B5C91AC974A400F6BB9C /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
+		23B3B5CA1AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SourceSansPro-SemiboldItalic.ttf"; sourceTree = "<group>"; };
 		23DBAF421A6528A4001836C4 /* OneginiCordovaClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiCordovaClient.h; sourceTree = "<group>"; };
 		23DBAF431A6528A4001836C4 /* OneginiCordovaClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneginiCordovaClient.m; sourceTree = "<group>"; };
 		23FD95CB1A9CC81600A1AC62 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
@@ -164,7 +202,12 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				23043A7A1AC438170068FB52 /* Custom PIN */,
+				23B3B5AC1AC9746A00F6BB9C /* PinEntryContainerViewController.h */,
+				23B3B5AD1AC9746A00F6BB9C /* PinEntryContainerViewController.m */,
+				23B3B5AE1AC9746A00F6BB9C /* PinEntryContainerViewController.xib */,
+				23B3B5AF1AC9746A00F6BB9C /* PinEntryViewController.h */,
+				23B3B5B01AC9746A00F6BB9C /* PinEntryViewController.m */,
+				23B3B5B11AC9746A00F6BB9C /* PinEntryViewController.xib */,
 				302D95EE14D2391D003F00A1 /* MainViewController.h */,
 				302D95EF14D2391D003F00A1 /* MainViewController.m */,
 				302D95F014D2391D003F00A1 /* MainViewController.xib */,
@@ -185,13 +228,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		23043A7A1AC438170068FB52 /* Custom PIN */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Custom PIN";
-			sourceTree = "<group>";
-		};
 		2385F6541A932F8D007ADE4B /* OneginiCordova */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +241,21 @@
 			children = (
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		23B3B5C21AC9749400F6BB9C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				23B3B5C31AC974A400F6BB9C /* SourceSansPro-ExtraLight.ttf */,
+				23B3B5C41AC974A400F6BB9C /* SourceSansPro-ExtraLightItalic.ttf */,
+				23B3B5C51AC974A400F6BB9C /* SourceSansPro-Italic.ttf */,
+				23B3B5C61AC974A400F6BB9C /* SourceSansPro-Light.ttf */,
+				23B3B5C71AC974A400F6BB9C /* SourceSansPro-LightItalic.ttf */,
+				23B3B5C81AC974A400F6BB9C /* SourceSansPro-Regular.ttf */,
+				23B3B5C91AC974A400F6BB9C /* SourceSansPro-Semibold.ttf */,
+				23B3B5CA1AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		23FD95D01A9CCC3800A1AC62 /* OneginiSDKiOS */ = {
@@ -263,7 +314,14 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				23C663EE1A8B7CA7007C1838 /* config.plist */,
+				237380E01AC980DC00A9C28F /* pin-clear-ic.png */,
+				237380E11AC980DC00A9C28F /* pin-occupied-ic.png */,
+				23B3B5C21AC9749400F6BB9C /* Fonts */,
+				23B3B5B81AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png */,
+				23B3B5B91AC9748300F6BB9C /* pin_key_delete_normal.png */,
+				23B3B5BA1AC9748300F6BB9C /* pin_key_highlighted.png */,
+				23B3B5BB1AC9748300F6BB9C /* pin_key_normal.png */,
+				23B3B5BC1AC9748300F6BB9C /* pin-config.json */,
 				23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */,
 				23A0C3B71A66A97B0087EEC4 /* PositiveSSLCA2.pem */,
 				308D052D1370CCF300D202BF /* icons */,
@@ -418,13 +476,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23B3B5BD1AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png in Resources */,
 				23FD95CC1A9CC81600A1AC62 /* Podfile in Resources */,
 				7E7966E41810823500FA85AD /* icon-76.png in Resources */,
 				7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */,
+				23B3B5CF1AC974A400F6BB9C /* SourceSansPro-LightItalic.ttf in Resources */,
+				23B3B5B51AC9746A00F6BB9C /* PinEntryViewController.xib in Resources */,
 				308D05371370CCF300D202BF /* icon-72.png in Resources */,
 				30B4F30119D5E07200D9F7D8 /* Default-736h.png in Resources */,
 				308D05381370CCF300D202BF /* icon.png in Resources */,
 				308D05391370CCF300D202BF /* icon@2x.png in Resources */,
+				23B3B5CE1AC974A400F6BB9C /* SourceSansPro-Light.ttf in Resources */,
+				237380E21AC980DC00A9C28F /* pin-clear-ic.png in Resources */,
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				23A0C3B91A66A97B0087EEC4 /* PositiveSSLCA2.pem in Resources */,
 				7E7966E01810823500FA85AD /* icon-50.png in Resources */,
@@ -432,10 +495,17 @@
 				23A0C3B81A66A97B0087EEC4 /* PositiveSSLCA2.cer in Resources */,
 				7E7966E61810823500FA85AD /* icon-small.png in Resources */,
 				3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */,
+				23B3B5D21AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf in Resources */,
 				3088BBBE154F3926009F9C59 /* Default-Landscape~ipad.png in Resources */,
-				23C663EF1A8B7CA7007C1838 /* config.plist in Resources */,
 				3088BBBF154F3926009F9C59 /* Default-Portrait@2x~ipad.png in Resources */,
+				23B3B5CC1AC974A400F6BB9C /* SourceSansPro-ExtraLightItalic.ttf in Resources */,
 				7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */,
+				23B3B5CD1AC974A400F6BB9C /* SourceSansPro-Italic.ttf in Resources */,
+				23B3B5CB1AC974A400F6BB9C /* SourceSansPro-ExtraLight.ttf in Resources */,
+				23B3B5C11AC9748300F6BB9C /* pin-config.json in Resources */,
+				23B3B5C01AC9748300F6BB9C /* pin_key_normal.png in Resources */,
+				23B3B5BE1AC9748300F6BB9C /* pin_key_delete_normal.png in Resources */,
+				23B3B5D11AC974A400F6BB9C /* SourceSansPro-Semibold.ttf in Resources */,
 				3088BBC0154F3926009F9C59 /* Default-Portrait~ipad.png in Resources */,
 				30B4F30019D5E07200D9F7D8 /* Default-667h.png in Resources */,
 				7E7966DE1810823500FA85AD /* icon-40.png in Resources */,
@@ -443,11 +513,15 @@
 				7E7966E21810823500FA85AD /* icon-60.png in Resources */,
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
 				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
+				23B3B5BF1AC9748300F6BB9C /* pin_key_highlighted.png in Resources */,
 				30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */,
+				23B3B5B31AC9746A00F6BB9C /* PinEntryContainerViewController.xib in Resources */,
+				23B3B5D01AC974A400F6BB9C /* SourceSansPro-Regular.ttf in Resources */,
 				30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */,
 				7E7966E11810823500FA85AD /* icon-50@2x.png in Resources */,
 				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
+				237380E31AC980DC00A9C28F /* pin-occupied-ic.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,8 +534,10 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
+				23B3B5B21AC9746A00F6BB9C /* PinEntryContainerViewController.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				23CC2D081AA43F890056F377 /* OneginiCordovaClient.m in Sources */,
+				23B3B5B41AC9746A00F6BB9C /* PinEntryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,22 +555,18 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OneginiCordovaPlugin/OneginiCordovaPlugin-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/OneginiSDKiOS";
 				INFOPLIST_FILE = "OneginiCordovaPlugin/OneginiCordovaPlugin-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/OneginiCordovaPlugin/OneginiSDKiOS",
 					"$(PROJECT_DIR)/OneginiSDKiOS",
 				);
 				OTHER_LDFLAGS = (
@@ -518,20 +590,17 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OneginiCordovaPlugin/OneginiCordovaPlugin-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/OneginiSDKiOS";
 				INFOPLIST_FILE = "OneginiCordovaPlugin/OneginiCordovaPlugin-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/OneginiCordovaPlugin/OneginiSDKiOS",
 					"$(PROJECT_DIR)/OneginiSDKiOS",
 				);
 				OTHER_LDFLAGS = (
@@ -569,8 +638,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = 1;
 				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -598,7 +667,6 @@
 				);
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
-				USER_HEADER_SEARCH_PATHS = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -621,7 +689,6 @@
 				DEBUG = 0;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -648,7 +715,6 @@
 				);
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
-				USER_HEADER_SEARCH_PATHS = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

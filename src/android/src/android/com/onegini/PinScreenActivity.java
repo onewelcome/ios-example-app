@@ -2,11 +2,14 @@ package com.onegini;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.onegini.model.PinConfigModel;
+import com.onegini.util.JSONResourceReader;
 
 public class PinScreenActivity extends Activity {
 
@@ -19,6 +22,10 @@ public class PinScreenActivity extends Activity {
   private final char[] pin = new char[MAX_DIGITS];
   private final TextView[] pinInputs = new TextView[MAX_DIGITS];
 
+  private final StateListDrawable digitButtonsStatesDrawables = new StateListDrawable();
+  private final StateListDrawable deleteButtonStatesDrawables = new StateListDrawable();
+
+  private PinConfigModel pinConfigModel;
   private int cursorIndex = 0;
 
   @Override
@@ -44,11 +51,58 @@ public class PinScreenActivity extends Activity {
     final Resources resources = getResources();
     final String packageName = getPackageName();
 
+    initPinConfig(resources, packageName);
+    initButtonStatesDrawables(resources, packageName);
+    initPinInputs(resources, packageName);
+    initPinButtons(resources, packageName);
+
+    resetPin();
+  }
+
+  private void initPinConfig(final Resources resources, final String packageName) {
+    final int configurationPointer = resources.getIdentifier("pin_config", "raw", packageName);
+    final JSONResourceReader jsonResourceReader = new JSONResourceReader();
+    final String configString = jsonResourceReader.parse(resources, configurationPointer);
+    pinConfigModel = jsonResourceReader.map(PinConfigModel.class, configString);
+  }
+
+  private void initButtonStatesDrawables(final Resources resources, final String packageName) {
+    final int digitKeyNormalResourceId = resources.getIdentifier("pin_key_normal", "drawable", packageName);
+    final int digitKeyFocusedResourceId = resources.getIdentifier("pin_key_highlighted", "drawable", packageName);
+
+    digitButtonsStatesDrawables.addState(
+        new int[] {android.R.attr.state_pressed}, getResources().getDrawable(digitKeyFocusedResourceId)
+    );
+
+    digitButtonsStatesDrawables.addState(
+        new int[] {android.R.attr.state_focused}, getResources().getDrawable(digitKeyFocusedResourceId)
+    );
+    digitButtonsStatesDrawables.addState(
+        new int[] { }, getResources().getDrawable(digitKeyNormalResourceId)
+    );
+
+    final int delKeyNormalResourceId = resources.getIdentifier("pin_delete_key_normal", "drawable", packageName);
+    final int delKeyFocusedResourceId = resources.getIdentifier("pin_delete_key_highlighted", "drawable", packageName);
+
+    deleteButtonStatesDrawables.addState(
+        new int[] {android.R.attr.state_pressed}, getResources().getDrawable(delKeyFocusedResourceId)
+    );
+    deleteButtonStatesDrawables.addState(
+        new int[] {android.R.attr.state_focused}, getResources().getDrawable(delKeyFocusedResourceId)
+    );
+    deleteButtonStatesDrawables.addState(
+        new int[] { }, getResources().getDrawable(delKeyNormalResourceId)
+    );
+  }
+
+  private void initPinInputs(final Resources resources, final String packageName) {
     for (int input = 0; input < MAX_DIGITS; input++) {
       final int inputId = resources.getIdentifier("pinInput" + input, "id", packageName);
       pinInputs[input] = (TextView) findViewById(inputId);
     }
+  }
 
+  private void initPinButtons(final Resources resources, final String packageName) {
     for (int digit = 0; digit < 10; digit++) {
       final int buttonId = resources.getIdentifier("pinKey" + digit, "id", packageName);
       initPinDigitButton(buttonId, digit);
@@ -56,12 +110,11 @@ public class PinScreenActivity extends Activity {
 
     final int delButtonId = resources.getIdentifier("pinKeyDel", "id", packageName);
     initPinDeleteButton(delButtonId);
-
-    resetPin();
   }
 
   private void initPinDigitButton(final int buttonId, final int buttonValue) {
     final Button pinButton = (Button) findViewById(buttonId);
+    pinButton.setBackground(digitButtonsStatesDrawables.mutate());
     pinButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View v) {
@@ -72,6 +125,7 @@ public class PinScreenActivity extends Activity {
 
   private void initPinDeleteButton(final int buttonId) {
     final Button deleteButton = (Button) findViewById(buttonId);
+    deleteButton.setBackground(deleteButtonStatesDrawables);
     deleteButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View v) {

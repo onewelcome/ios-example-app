@@ -38,6 +38,16 @@
 	[self updatePinStateRepresentation];
 }
 
+- (void)setKeyFont:(UIFont *)font {
+	if (font == nil) {
+		return;
+	}
+	
+	for (UIButton *button in keys) {
+		[button.titleLabel setFont:font];
+	}
+}
+
 - (void)setKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState)state {
 	UIImage *image = [UIImage imageNamed:imagePath];
 	if (image == nil) {

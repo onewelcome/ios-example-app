@@ -1,0 +1,112 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF">
+
+  <!-- Keyboard -->
+  <TableLayout
+      android:id="@+id/pinKeyboard"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_centerHorizontal="true">
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+      <Button
+          android:id="@+id/pinKey1"
+          style="@style/PinKeyboardKeyButton"
+          android:text="1"/>
+      <Button
+          android:id="@+id/pinKey2"
+          style="@style/PinKeyboardKeyButton"
+          android:text="2"/>
+      <Button
+          android:id="@+id/pinKey3"
+          style="@style/PinKeyboardKeyButton"
+          android:text="3"/>
+    </TableRow>
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+      <Button
+          android:id="@+id/pinKey4"
+          style="@style/PinKeyboardKeyButton"
+          android:text="4"/>
+      <Button
+          android:id="@+id/pinKey5"
+          style="@style/PinKeyboardKeyButton"
+          android:text="5"/>
+      <Button
+          android:id="@+id/pinKey6"
+          style="@style/PinKeyboardKeyButton"
+          android:text="6"/>
+    </TableRow>
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+      <Button
+          android:id="@+id/pinKey7"
+          style="@style/PinKeyboardKeyButton"
+          android:text="7"/>
+      <Button
+          android:id="@+id/pinKey8"
+          style="@style/PinKeyboardKeyButton"
+          android:text="8"/>
+      <Button
+          android:id="@+id/pinKey9"
+          style="@style/PinKeyboardKeyButton"
+          android:text="9"/>
+    </TableRow>
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+      <Button
+          android:id="@+id/pinKey0"
+          style="@style/PinKeyboardKeyButton"
+          android:text="0"
+          android:layout_column="1"/>
+      <Button
+          android:id="@+id/pinKeyDel"
+          style="@style/PinKeyboardKeyButton"
+          android:text="X"
+          android:layout_column="2"/>
+    </TableRow>
+  </TableLayout>
+
+  <LinearLayout
+      android:id="@+id/pinInput"
+      android:layout_width="wrap_content"
+      android:layout_height="40dp"
+      android:layout_above="@+id/pinKeyboard"
+      android:layout_alignStart="@+id/pinKeyboard"
+      android:layout_alignEnd="@+id/pinKeyboard"
+      android:layout_margin="5dp"
+      android:background="#ebf1f2"
+      android:gravity="center"
+      android:textAlignment="center">
+
+    <TextView
+        android:id="@+id/pinInput0"
+        style="@style/PinKeyboardInputField" />
+
+    <TextView
+        android:id="@+id/pinInput1"
+        style="@style/PinKeyboardInputField" />
+
+    <TextView
+        android:id="@+id/pinInput2"
+        style="@style/PinKeyboardInputField" />
+
+    <TextView
+        android:id="@+id/pinInput3"
+        style="@style/PinKeyboardInputField" />
+
+    <TextView
+        android:id="@+id/pinInput4"
+        style="@style/PinKeyboardInputField" />
+
+  </LinearLayout>
+
+</RelativeLayout>

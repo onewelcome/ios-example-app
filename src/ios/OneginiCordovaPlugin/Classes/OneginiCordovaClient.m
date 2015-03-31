@@ -23,8 +23,19 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 @end
 
 @implementation OneginiCordovaClient {
+	/**
+	 Identifies the current state of the PIN entry process.
+	 */
 	PINEntryModes pinEntryMode;
+	
+	/** 
+	 This indicates if the native PIN entry view should be used.
+	 The value is set in the generic config.json
+	 */
 	BOOL useNativePinView;
+	
+	/** Temporary storage of the first PIN for verification with the second entry */
+#warning TODO apply memory protection
 	NSString *verifyPin;
 }
 
@@ -821,19 +832,23 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 			break;
 		}
 		case PINRegistrationMode: {
+			verifyPin = [pin copy];
+
+			// Switch to registration mode so the user can enter the second verification PIN
 			pinEntryMode = PINRegistrationVerififyMode;
 			[self.pinViewController setMessage:NSLocalizedString(@"Voor de toegangscode nogmaals in voor controle", nil)];
-			verifyPin = [pin copy];
-			
 			[self.pinViewController reset];
+
 			break;
 		}
 		case PINRegistrationVerififyMode: {
 			if (![verifyPin isEqualToString:pin]) {
+				// Perform a retry of the PIN entry
 				verifyPin = nil;
 				[self.pinViewController invalidPinWithReason:NSLocalizedString(@"Toegangcodes zijn niet gelijk, voer opnieuw de codes in", nil)];
 				pinEntryMode = PINRegistrationMode;
 			} else {
+				// The user entered the second verification PIN, check if they are equal and confirm the PIN
 				verifyPin = nil;
 				[oneginiClient confirmNewPin:pin validation:self];
 			}

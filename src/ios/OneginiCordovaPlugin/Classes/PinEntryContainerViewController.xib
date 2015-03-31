@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PinEntryContainerViewController">
             <connections>
                 <outlet property="containerBackgroundImage" destination="cut-SA-e9C" id="srh-RV-fxK"/>
+                <outlet property="messageLabel" destination="28I-4a-RbF" id="sjR-wH-FXV"/>
                 <outlet property="pinViewPlaceholder" destination="rMn-wU-JxI" id="Dxw-vW-CVK"/>
+                <outlet property="subMessageLabel" destination="gfC-ha-u8p" id="SGL-Xv-JWw"/>
                 <outlet property="view" destination="iN0-l3-epB" id="YZu-fu-mFT"/>
             </connections>
         </placeholder>
@@ -16,15 +19,45 @@
             <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cut-SA-e9C">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cut-SA-e9C">
                     <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                 </imageView>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rMn-wU-JxI" userLabel="PIN view">
-                    <rect key="frame" x="374" y="261" width="276" height="447"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rMn-wU-JxI" userLabel="PIN view">
+                    <rect key="frame" x="374" y="271" width="276" height="447"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="276" id="QEo-nz-fCF"/>
+                        <constraint firstAttribute="height" constant="447" id="mVw-t3-JgQ"/>
+                    </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="28I-4a-RbF">
+                    <rect key="frame" x="374" y="230" width="276" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfC-ha-u8p">
+                    <rect key="frame" x="374" y="250" width="276" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.92490267753601074" green="0.92487502098083496" blue="0.92489069700241089" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="gfC-ha-u8p" secondAttribute="centerX" id="02A-g8-446"/>
+                <constraint firstAttribute="bottom" secondItem="cut-SA-e9C" secondAttribute="bottom" id="1pC-x7-g8r"/>
+                <constraint firstItem="cut-SA-e9C" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5Ip-op-4YM"/>
+                <constraint firstItem="rMn-wU-JxI" firstAttribute="top" secondItem="gfC-ha-u8p" secondAttribute="bottom" id="I0e-Jh-PMq"/>
+                <constraint firstAttribute="centerX" secondItem="rMn-wU-JxI" secondAttribute="centerX" id="Ki1-2G-7pX"/>
+                <constraint firstItem="cut-SA-e9C" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="KsT-zl-zOf"/>
+                <constraint firstAttribute="centerX" secondItem="28I-4a-RbF" secondAttribute="centerX" id="S9G-Kq-0mC"/>
+                <constraint firstAttribute="bottom" secondItem="rMn-wU-JxI" secondAttribute="bottom" constant="50" id="Y6O-rg-Q94"/>
+                <constraint firstItem="gfC-ha-u8p" firstAttribute="top" secondItem="28I-4a-RbF" secondAttribute="bottom" constant="-1" id="aFZ-ez-42l"/>
+                <constraint firstItem="28I-4a-RbF" firstAttribute="width" secondItem="rMn-wU-JxI" secondAttribute="width" id="cmI-N4-nV6"/>
+                <constraint firstItem="rMn-wU-JxI" firstAttribute="width" secondItem="gfC-ha-u8p" secondAttribute="width" id="t0R-nL-wF2"/>
+                <constraint firstAttribute="trailing" secondItem="cut-SA-e9C" secondAttribute="trailing" id="tOH-8q-qk3"/>
+            </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
             <point key="canvasLocation" x="139" y="155"/>

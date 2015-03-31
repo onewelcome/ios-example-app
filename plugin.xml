@@ -37,7 +37,9 @@
 
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>
-    <resource-file src="src/ios/config.json" />
+	
+	<!-- Generic OAUTH config -->
+    <resource-file src="src/generic/config.json" />
 	
 	<!-- Work in progress, these are not the correct image assets (copied from example PSD with low resolution) --> 
     <resource-file src="src/generic/pin-config.json" />
@@ -48,7 +50,17 @@
 	<resource-file src="src/generic/pin_key_normal.png" />
 	<resource-file src="src/generic/pin-occupied-ic.png" />
 	<resource-file src="src/generic/pin-clear-ic.png" />
-
+	
+	<!-- Fonts used by the PIN dialog -->
+	<resource-file src="src/generic/fonts/SourceSansPro-ExtraLight.ttf" />
+	<resource-file src="src/generic/fonts/SourceSansPro-ExtraLightItalic.ttf" />
+	<resource-file src="src/generic/fonts/SourceSansPro-Italic.ttf" />
+	<resource-file src="src/generic/fonts/SourceSansPro-Light.ttf" />
+	<resource-file src="src/generic/fonts/SourceSansPro-LightItalic.ttf" />
+	<resource-file src="src/generic/fonts/SourceSansPro-Regular.ttf" />
+	<resource-file src="src/generic/fonts/SourceSansPro-Semibold.ttf" />
+	<resource-file src="src/generic/fonts/SourceSansPro-SemiboldItalic.ttf" />
+	
     <framework src="libiconv.dylib"/>
     <framework src="libc++.dylib"/>
 

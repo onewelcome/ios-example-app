@@ -33,7 +33,6 @@
 		23B3B5D01AC974A400F6BB9C /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5C81AC974A400F6BB9C /* SourceSansPro-Regular.ttf */; };
 		23B3B5D11AC974A400F6BB9C /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5C91AC974A400F6BB9C /* SourceSansPro-Semibold.ttf */; };
 		23B3B5D21AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5CA1AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf */; };
-		23C663EF1A8B7CA7007C1838 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23C663EE1A8B7CA7007C1838 /* config.plist */; };
 		23C663F21A8B805B007C1838 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
 		23CC2D081AA43F890056F377 /* OneginiCordovaClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 23DBAF431A6528A4001836C4 /* OneginiCordovaClient.m */; };
 		23FD95CC1A9CC81600A1AC62 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 23FD95CB1A9CC81600A1AC62 /* Podfile */; };
@@ -130,7 +129,6 @@
 		23B3B5C81AC974A400F6BB9C /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		23B3B5C91AC974A400F6BB9C /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
 		23B3B5CA1AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SourceSansPro-SemiboldItalic.ttf"; sourceTree = "<group>"; };
-		23C663EE1A8B7CA7007C1838 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		23DBAF421A6528A4001836C4 /* OneginiCordovaClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiCordovaClient.h; sourceTree = "<group>"; };
 		23DBAF431A6528A4001836C4 /* OneginiCordovaClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneginiCordovaClient.m; sourceTree = "<group>"; };
 		23FD95CB1A9CC81600A1AC62 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
@@ -324,7 +322,6 @@
 				23B3B5BA1AC9748300F6BB9C /* pin_key_highlighted.png */,
 				23B3B5BB1AC9748300F6BB9C /* pin_key_normal.png */,
 				23B3B5BC1AC9748300F6BB9C /* pin-config.json */,
-				23C663EE1A8B7CA7007C1838 /* config.plist */,
 				23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */,
 				23A0C3B71A66A97B0087EEC4 /* PositiveSSLCA2.pem */,
 				308D052D1370CCF300D202BF /* icons */,
@@ -500,7 +497,6 @@
 				3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */,
 				23B3B5D21AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf in Resources */,
 				3088BBBE154F3926009F9C59 /* Default-Landscape~ipad.png in Resources */,
-				23C663EF1A8B7CA7007C1838 /* config.plist in Resources */,
 				3088BBBF154F3926009F9C59 /* Default-Portrait@2x~ipad.png in Resources */,
 				23B3B5CC1AC974A400F6BB9C /* SourceSansPro-ExtraLightItalic.ttf in Resources */,
 				7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */,
@@ -563,7 +559,6 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OneginiCordovaPlugin/OneginiCordovaPlugin-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
@@ -572,7 +567,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/OneginiCordovaPlugin/OneginiSDKiOS",
 					"$(PROJECT_DIR)/OneginiSDKiOS",
 				);
 				OTHER_LDFLAGS = (
@@ -607,7 +601,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/OneginiCordovaPlugin/OneginiSDKiOS",
 					"$(PROJECT_DIR)/OneginiSDKiOS",
 				);
 				OTHER_LDFLAGS = (
@@ -645,8 +638,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG = 1;
 				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -674,7 +667,6 @@
 				);
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
-				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/CustomPINEntry/CustomPINEntry";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -697,7 +689,6 @@
 				DEBUG = 0;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -724,7 +715,6 @@
 				);
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
-				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/CustomPINEntry/CustomPINEntry";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

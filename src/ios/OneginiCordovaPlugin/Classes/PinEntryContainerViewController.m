@@ -97,7 +97,6 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 	}
 	
 	self.messageLabel.textColor = [self colorWithHexString:validationMessageConfig[@"textColor"]];
-	self.messageLabel.backgroundColor =[UIColor colorWithWhite:0.9 alpha:1.0];
 }
 
 - (NSDictionary *)orientationBasedConfig {

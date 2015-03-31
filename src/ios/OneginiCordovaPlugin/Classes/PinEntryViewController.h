@@ -48,6 +48,7 @@
 
 - (void)setKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState)state;
 - (void)setKeyColor:(UIColor *)color forState:(UIControlState)state;
+- (void)setKeyFont:(UIFont *)font;
 - (void)setDeleteKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState)state;
 
 /**

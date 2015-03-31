@@ -45,10 +45,14 @@ extern NSString *kDeleteKeyHighlightedStateImage;
 @property (weak, nonatomic) IBOutlet UIImageView *containerBackgroundImage;
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subMessageLabel;
 
-@property (strong, nonatomic) UIImage *landscapeBackgroundImage;
-@property (strong, nonatomic) UIImage *portraitBackgroundImage;
+@property (strong, nonatomic) NSDictionary *landscapeConfig;
+@property (strong, nonatomic) NSDictionary *portraitConfig;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelLeftConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelHeightConstraint;
 
 /**
  Apply custom style 

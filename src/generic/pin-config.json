@@ -15,15 +15,15 @@
 					"fontSize":16.0,
 					"fontName":"SourceSansPro-Light",
 					"errorTextColor":"#ff0000",
-					"textColor":"#000000",
-				},
+					"textColor":"#000000"
+				}
 			},
-			"portrait":{},
+			"portrait":{}
 		},
 		"iphone":{
 			"landscape":{},
-			"portrait":{},
-		},
+			"portrait":{}
+		}
 	},
 	"android": {},
 	"windows": {}

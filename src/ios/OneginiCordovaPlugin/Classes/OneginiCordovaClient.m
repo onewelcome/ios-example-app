@@ -25,6 +25,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 @implementation OneginiCordovaClient {
 	PINEntryModes pinEntryMode;
 	BOOL useNativePinView;
+	NSString *verifyPin;
 }
 
 @synthesize oneginiClient, pluginInitializedCommandTxId, authorizeCommandTxId, configModel;
@@ -32,6 +33,10 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 
 #pragma mark -
 #pragma mark overrides
+
+- (void)dealloc {
+	verifyPin = nil;
+}
 
 - (void)pluginInitialize {
     
@@ -404,11 +409,14 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 		return;
 	}
 	
-	pinEntryMode = PINRegistrationMode;
-	
-	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForNewPin" }];
-	result.keepCallback = @(1);
-	[self.commandDelegate sendPluginResult:result callbackId:pinDialogCommandTxId];
+	if (useNativePinView) {
+		pinEntryMode = PINRegistrationMode;
+		[self showPinEntryView];
+	} else {
+		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForNewPin" }];
+		result.keepCallback = @(1);
+		[self.commandDelegate sendPluginResult:result callbackId:pinDialogCommandTxId];
+	}
 }
 
 - (void)askNewPinForChangeRequest:(NSUInteger)pinSize {
@@ -456,44 +464,61 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 		}
 	} else {
 #warning TODO add messages to pin-config.json
-		[self.pinViewController invalidPinWithReason:NSLocalizedString(@"Invalid PIN", nil)
-										  subMessage:[NSString stringWithFormat:NSLocalizedString(@"remaining attempts %ld", nil), (unsigned long)remaining]];
+		[self.pinViewController invalidPinWithReason:[NSString stringWithFormat:NSLocalizedString(@"Verkeerde toegangscode ingevuld, u heeft nog %ld pogingen.", nil), (unsigned long)remaining]];
 	}
 }
 
 - (void)authorizationErrorTooManyPinFailures {
+	[self closePinView];
+	
 	[self authorizationErrorCallbackWIthReason:@"authorizationErrorTooManyPinFailures"];
 }
 
 - (void)authorizationErrorNotAuthenticated {
+	[self closePinView];
+	
 	[self authorizationErrorCallbackWIthReason:@"authorizationErrorNotAuthenticated"];
 }
 
 - (void)authorizationErrorInvalidScope {
+	[self closePinView];
+	
 	[self authorizationErrorCallbackWIthReason:@"authorizationErrorInvalidScope"];
 }
 
 - (void)authorizationErrorInvalidState {
+	[self closePinView];
+	
 	[self authorizationErrorCallbackWIthReason:@"authorizationErrorInvalidState"];
 }
 
 - (void)authorizationErrorNoAccessToken {
+	[self closePinView];
+	
 	[self authorizationErrorCallbackWIthReason:@"authorizationErrorNoAccessToken"];
 }
 
 - (void)authorizationErrorNotAuthorized {
+	[self closePinView];
+	
 	[self authorizationErrorCallbackWIthReason:@"authorizationErrorNotAuthorized"];
 }
 
 - (void)authorizationErrorInvalidRequest {
+	[self closePinView];
+	
 	[self authorizationErrorCallbackWIthReason:@"authorizationErrorInvalidRequest"];
 }
 
 - (void)authorizationErrorInvalidGrantType {
+	[self closePinView];
+	
 	[self authorizationErrorCallbackWIthReason:@"authorizationErrorInvalidGrantType"];
 }
 
 - (void)authorizationErrorNoAuthorizationGrant {
+	[self closePinView];
+	
 	[self authorizationErrorCallbackWIthReason:@"authorizationErrorNoAuthorizationGrant"];
 }
 
@@ -509,6 +534,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 
 // @optional
 - (void)authorizationError:(NSError *)error {
+	[self closePinView];
+	
 	[self authorizationErrorCallbackWIthReason:@"authorizationError" error:error];
 }
 
@@ -736,6 +763,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 		[self.viewController dismissViewControllerAnimated:YES completion:nil];
 		self.pinViewController = nil;
 	}
+	
+	pinEntryMode = PINEntryModeUnknown;
 }
 
 #pragma mark -
@@ -749,15 +778,24 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 			break;
 		}
 		case PINRegistrationMode: {
-#ifdef DEBUG
-			NSLog(@"pinEntered: PINRegistrationMode NOT IMPLEMENTED");
-#endif
+			pinEntryMode = PINRegistrationVerififyMode;
+			[self.pinViewController setMessage:NSLocalizedString(@"Voor de toegangscode nogmaals in voor controle", nil)];
+			verifyPin = [pin copy];
+			
+			[self.pinViewController reset];
 			break;
 		}
 		case PINRegistrationVerififyMode: {
-#ifdef DEBUG
-			NSLog(@"pinEntered: PINRegistrationVerififyMode NOT IMPLEMENTED");
-#endif
+			if (![verifyPin isEqualToString:pin]) {
+				verifyPin = nil;
+				[self.pinViewController invalidPinWithReason:NSLocalizedString(@"Toegangcodes zijn niet gelijk, voer opnieuw de codes in", nil)];
+				pinEntryMode = PINRegistrationMode;
+			} else {
+				verifyPin = nil;
+				pinEntryMode = PINEntryModeUnknown;
+				[oneginiClient confirmNewPin:pin validation:self];
+			}
+		
 			break;
 		}
 		case PINChangeCheckMode: {

@@ -93,9 +93,7 @@
 }
 
 - (void)invalidPin {
-	[self resetPin];
-	
-	[self updatePinStateRepresentation];
+	[self reset];
 	
 	CABasicAnimation *shake = [CABasicAnimation animationWithKeyPath:@"position"];
 	[shake setDuration:0.1];

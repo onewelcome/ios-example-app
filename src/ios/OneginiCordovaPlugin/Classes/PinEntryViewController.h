@@ -52,13 +52,13 @@
 - (void)setDeleteKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState)state;
 
 /**
- Reset the PIN entry
- 
- @param message
- @param subMessage
+ Same as reset but also performs a custom animation
  */
 - (void)invalidPin;
 
+/**
+ Reset the PIN and representation. 
+ */
 - (void)reset;
 
 @end

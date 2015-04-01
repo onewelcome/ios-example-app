@@ -71,5 +71,7 @@ extern NSString *kDeleteKeyHighlightedStateImage;
  */
 - (void)invalidPin;
 
-- (void)invalidPinWithReason:(NSString *)message subMessage:(NSString *)subMessage;
+- (void)invalidPinWithReason:(NSString *)message;
+
+- (void)setMessage:(NSString *)message;
 @end

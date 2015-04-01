@@ -103,6 +103,20 @@ module.exports = {
   },
 
   /**
+   * Determine if the user is registered.
+   *
+   * @param successCallback   Function to be called when user is already registered
+   * @param errorCallback     Function to be called when user is not yet registered
+   */
+  isRegistered: function (successCallback, errorCallback) {
+    exec(function (response)  {
+      successCallback();
+    }, function (error) {
+      errorCallback();
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.IS_REGISTERED, []);
+  },
+
+  /**
    * Main entry point into the authorization process.
    *
    * @param {Object} router   Object that can handle page transition for the outcome of the authorization. Should at
@@ -422,6 +436,7 @@ module.exports = {
 
     AWAIT_PLUGIN_INITIALIZATION: "awaitPluginInitialization",
     INIT_PIN_CALLBACK_SESSION: "initPinCallbackSession",
+    IS_REGISTERED: "isRegistered",
 
     AUTHORIZATION_AUTHORIZE: "authorize",
     AUTHORIZATION_REQUESTED: "requestAuthorization",

@@ -11,18 +11,19 @@
 			"landscape":{
 				"backgroundImage":"pin_container_ipad_landscape_bg.png",
 				"validationMessage" : {
-					"frame":[50.0, 206.0, 300.0, 24.0],
+					"frame":[50.0, 206.0, 400.0, 24.0],
 					"fontSize":16.0,
 					"fontName":"SourceSansPro-Light",
-					"textColor":"#000000",
-				},
+					"errorTextColor":"#ff0000",
+					"textColor":"#000000"
+				}
 			},
-			"portrait":{},
+			"portrait":{}
 		},
 		"iphone":{
 			"landscape":{},
-			"portrait":{},
-		},
+			"portrait":{}
+		}
 	},
 	"android": {},
 	"windows": {}

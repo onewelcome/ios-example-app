@@ -97,7 +97,22 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 	}
 	
 	self.messageLabel.textColor = [self colorWithHexString:validationMessageConfig[@"textColor"]];
-	self.messageLabel.backgroundColor =[UIColor colorWithWhite:0.9 alpha:1.0];
+}
+
+- (UIColor *)messageTextColor:(BOOL)isError {
+	NSDictionary *config = [self orientationBasedConfig];
+		
+	if (config == nil) {
+		return [UIColor blackColor];
+	}
+
+	NSDictionary *validationMessageConfig = config[@"validationMessage"];
+	if (validationMessageConfig == nil) {
+		return [UIColor blackColor];
+	}
+	
+	NSString *color = isError ? validationMessageConfig[@"errorTextColor"] : validationMessageConfig[@"textColor"];
+	return color == nil ? [UIColor blackColor] : [self colorWithHexString:color];
 }
 
 - (NSDictionary *)orientationBasedConfig {
@@ -113,10 +128,16 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 	[self.pinEntryViewController invalidPin];
 }
 
-- (void)invalidPinWithReason:(NSString *)message subMessage:(NSString *)subMessage {
+- (void)invalidPinWithReason:(NSString *)message {
 	self.messageLabel.text = message;
+	self.messageLabel.textColor = [self messageTextColor:YES];
 	
 	[self.pinEntryViewController invalidPin];
+}
+
+- (void)setMessage:(NSString *)message {
+	self.messageLabel.text = message;
+	self.messageLabel.textColor = [self messageTextColor:NO];
 }
 
 #pragma mark -

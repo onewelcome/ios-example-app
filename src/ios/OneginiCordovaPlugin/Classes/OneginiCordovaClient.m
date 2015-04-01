@@ -164,8 +164,9 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	}
 	
 	NSString *pin = command.arguments.firstObject;
-
-	[oneginiClient confirmCurrentPin:pin];
+    
+    [oneginiClient confirmCurrentPin:pin];
+    [self sendSuccessCallback:command.callbackId];
 }
 
 - (void)changePin:(CDVInvokedUrlCommand *)command {

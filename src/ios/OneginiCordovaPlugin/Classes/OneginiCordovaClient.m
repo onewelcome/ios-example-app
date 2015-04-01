@@ -424,7 +424,9 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	
 	if (useNativePinView) {
 #warning INVESTIGATE workaround for main view controller not view hierarchy
-		// If no callback is performed then they main view controller is not within the view hierarchy
+		// If no callback is performed then the main view controller is not within the view hierarchy
+		// Maybe a dummy callback will suffice this needs te be investigated.
+		// Another possible alternative is to find the parent view controller of the embedded webview.
 		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForNewPin" }];
 		result.keepCallback = @(1);
 		[self.commandDelegate sendPluginResult:result callbackId:pinDialogCommandTxId];

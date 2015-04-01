@@ -423,7 +423,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	}
 	
 	if (useNativePinView) {
-#warning INVESTIGATE workaround for main view controller not view hierarchy
+#warning INVESTIGATE workaround for main view controller not within view hierarchy
 		// If no callback is performed then the main view controller is not within the view hierarchy
 		// Maybe a dummy callback will suffice this needs te be investigated.
 		// Another possible alternative is to find the parent view controller of the embedded webview.
@@ -795,6 +795,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
 	self.pinViewController.delegate = self;
 
+	// See INVESTIGATE warning on the askForNewPin method regarding the main view controller issue.
 	[self.viewController presentViewController:self.pinViewController animated:YES completion:^{
 		[self.pinViewController applyConfig:config];
 	}];

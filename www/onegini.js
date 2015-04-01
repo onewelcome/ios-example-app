@@ -62,6 +62,8 @@ module.exports = {
    * @param {Object} params             Parameters to send with the request.
    */
   fetchResource: function (successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params) {
+    oneginiCordovaPlugin.preserveCurrentLocation();
+
     exec(function (response) {
       if (successCallback) {
         successCallback(response);

@@ -105,13 +105,15 @@ module.exports = {
   /**
    * Determine if the user is registered.
    *
-   * @param successCallback   Function to be called once user is successfully logged out
-   * @param errorCallback     Function to be called when logout action fails
+   * @param successCallback   Function to be called when user is already registered
+   * @param errorCallback     Function to be called when user is not yet registered
    */
   isRegistered: function (successCallback, errorCallback) {
     exec(function (response)  {
       successCallback();
-    }, errorCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.IS_REGISTERED, []);
+    }, function (error) {
+      errorCallback();
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.IS_REGISTERED, []);
   },
 
   /**

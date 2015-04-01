@@ -39,6 +39,11 @@
 - (void)initPinCallbackSession:(CDVInvokedUrlCommand *)command;
 
 /**
+ Determine if the user is registered.
+ */
+- (void)isRegistered:(CDVInvokedUrlCommand *)command;
+
+/**
  Initiate the authorization flow
  */
 - (void)authorize:(CDVInvokedUrlCommand *)command;

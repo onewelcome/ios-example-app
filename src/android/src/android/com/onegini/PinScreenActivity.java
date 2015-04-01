@@ -2,11 +2,14 @@ package com.onegini;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.onegini.model.PinConfigModel;
 import com.onegini.util.JSONResourceReader;
@@ -26,16 +29,21 @@ public class PinScreenActivity extends Activity {
   private String packageName;
   private PinConfigModel pinConfigModel;
   private int cursorIndex = 0;
+  private int logoResourceId;
   private int digitKeyNormalResourceId;
   private int digitKeyFocusedResourceId;
   private int deleteKeyNormalResourceId;
   private int deleteKeyFocusedResourceId;
+  private Typeface customFont;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(getResources().getIdentifier("activity_pin_screen", "layout", getPackageName()));
+    resources = getResources();
+    packageName = getPackageName();
+    setContentView(resources.getIdentifier("activity_pin_screen", "layout", packageName));
     init();
+    resetPin();
   }
 
   @Override
@@ -51,15 +59,9 @@ public class PinScreenActivity extends Activity {
   }
 
   private void init() {
-    resources = getResources();
-    packageName = getPackageName();
-
     initConfig();
-    initResources();
-    initPinInputs();
-    initPinButtons();
-
-    resetPin();
+    initAssets();
+    initLayout();
   }
 
   private void initConfig() {
@@ -69,49 +71,92 @@ public class PinScreenActivity extends Activity {
     pinConfigModel = jsonResourceReader.map(PinConfigModel.class, configString);
   }
 
-  private void initResources() {
+  private void initAssets() {
+    logoResourceId = resources.getIdentifier(
+        getDrawableNameFromFileName(pinConfigModel.getLogoImage()),
+        "drawable",
+        packageName
+    );
+
     digitKeyNormalResourceId = resources.getIdentifier(
-        getDrawableNameFromFileName(pinConfigModel.getPinKeyNormalStateImage()),
+        getDrawableNameFromFileName(pinConfigModel.getKeyNormalStateImage()),
         "drawable",
         packageName
     );
     digitKeyFocusedResourceId = resources.getIdentifier(
-        getDrawableNameFromFileName(pinConfigModel.getPinKeyHighlightedStateImage()),
+        getDrawableNameFromFileName(pinConfigModel.getKeyHighlightedStateImage()),
         "drawable",
         packageName
     );
     deleteKeyNormalResourceId = resources.getIdentifier(
-        getDrawableNameFromFileName(pinConfigModel.getPinDeleteKeyNormalStateImage()),
+        getDrawableNameFromFileName(pinConfigModel.getDeleteKeyNormalStateImage()),
         "drawable",
         packageName
     );
     deleteKeyFocusedResourceId = resources.getIdentifier(
-        getDrawableNameFromFileName(pinConfigModel.getPinDeleteKeyHighlightedStateImage()),
+        getDrawableNameFromFileName(pinConfigModel.getDeleteKeyHighlightedStateImage()),
         "drawable",
         packageName
     );
+    customFont = Typeface.createFromAsset(getAssets(), "fonts/font_regular.ttf");
+  }
+
+  private void initLayout() {
+    initLogo();
+    initLabels();
+    initBackgrounds();
+    initPinInputs();
+    initPinButtons();
+  }
+
+  private void initLogo() {
+    final int logoId = resources.getIdentifier("pin_logo", "id", packageName);
+    final ImageView logo = (ImageView) findViewById(logoId);
+    logo.setImageResource(logoResourceId);
+  }
+
+  private void initLabels() {
+    // TODO find all labels/messages in template and use custom fonts from assets
+  }
+
+  private void initBackgrounds() {
+    final int backgroundColor = Color.parseColor(pinConfigModel.getBackgroundColor());
+    final int foregroundColor = Color.parseColor(pinConfigModel.getForegroundColor());
+
+    final int backgroundId = resources.getIdentifier("pin_background", "id", packageName);
+    findViewById(backgroundId).setBackgroundColor(backgroundColor);
+
+    final int dividerId = resources.getIdentifier("pin_divider", "id", packageName);
+    findViewById(dividerId).setBackgroundColor(backgroundColor);
+
+    final int foregroundId = resources.getIdentifier("pin_foreground", "id", packageName);
+    findViewById(foregroundId).setBackgroundColor(foregroundColor);
+
+    final int headerId = resources.getIdentifier("pin_header", "id", packageName);
+    findViewById(headerId).setBackgroundColor(foregroundColor);
   }
 
   private void initPinInputs() {
     for (int input = 0; input < MAX_DIGITS; input++) {
-      final int inputId = resources.getIdentifier("pinInput" + input, "id", packageName);
+      final int inputId = resources.getIdentifier("pin_input_" + input, "id", packageName);
       pinInputs[input] = (TextView) findViewById(inputId);
     }
   }
 
   private void initPinButtons() {
     for (int digit = 0; digit < 10; digit++) {
-      final int buttonId = resources.getIdentifier("pinKey" + digit, "id", packageName);
+      final int buttonId = resources.getIdentifier("pin_key_" + digit, "id", packageName);
       initPinDigitButton(buttonId, digit);
     }
 
-    final int delButtonId = resources.getIdentifier("pinKeyDel", "id", packageName);
+    final int delButtonId = resources.getIdentifier("pin_key_del", "id", packageName);
     initPinDeleteButton(delButtonId);
   }
 
   private void initPinDigitButton(final int buttonId, final int buttonValue) {
     final Button pinButton = (Button) findViewById(buttonId);
     pinButton.setBackground(createDrawableForButton(digitKeyNormalResourceId, digitKeyFocusedResourceId));
+    pinButton.setTypeface(customFont);
     pinButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View v) {
@@ -123,6 +168,7 @@ public class PinScreenActivity extends Activity {
   private void initPinDeleteButton(final int buttonId) {
     final Button deleteButton = (Button) findViewById(buttonId);
     deleteButton.setBackground(createDrawableForButton(deleteKeyNormalResourceId, deleteKeyFocusedResourceId));
+    deleteButton.setTypeface(customFont);
     deleteButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View v) {

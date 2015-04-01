@@ -1,5 +1,8 @@
 {
 	"pinKeyColor":"#ffffff",
+	"pinForegroundColor": "#ffffff",
+	"pinBackgroundColor": "#f0f0f0",
+	"pinLogoImage":"logo.png",
 	"pinKeyNormalStateImage":"pin_key_normal.png",
 	"pinKeyHighlightedStateImage":"pin_key_highlighted.png",
 	"pinDeleteKeyNormalStateImage":"pin_delete_key_normal.png",

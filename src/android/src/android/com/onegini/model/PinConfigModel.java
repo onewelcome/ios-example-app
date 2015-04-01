@@ -1,30 +1,55 @@
 package com.onegini.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class PinConfigModel {
 
-  private String pinKeyColor;
-  private String pinKeyNormalStateImage;
-  private String pinKeyHighlightedStateImage;
-  private String pinDeleteKeyNormalStateImage;
-  private String pinDeleteKeyHighlightedStateImage;
+  @SerializedName("pinForegroundColor")
+  private String foregroundColor;
+  @SerializedName("pinBackgroundColor")
+  private String backgroundColor;
+  @SerializedName("pinLogoImage")
+  private String logoImage;
+  @SerializedName("pinKeyColor")
+  private String keyColor; // currently not used in Android
+  @SerializedName("pinKeyNormalStateImage")
+  private String keyNormalStateImage;
+  @SerializedName("pinKeyHighlightedStateImage")
+  private String keyHighlightedStateImage;
+  @SerializedName("pinDeleteKeyNormalStateImage")
+  private String deleteKeyNormalStateImage;
+  @SerializedName("pinDeleteKeyHighlightedStateImage")
+  private String deleteKeyHighlightedStateImage;
 
-  public String getPinKeyColor() {
-    return pinKeyColor;
+  public String getDeleteKeyHighlightedStateImage() {
+    return deleteKeyHighlightedStateImage;
   }
 
-  public String getPinKeyNormalStateImage() {
-    return pinKeyNormalStateImage;
+  public String getForegroundColor() {
+    return foregroundColor;
   }
 
-  public String getPinKeyHighlightedStateImage() {
-    return pinKeyHighlightedStateImage;
+  public String getBackgroundColor() {
+    return backgroundColor;
   }
 
-  public String getPinDeleteKeyNormalStateImage() {
-    return pinDeleteKeyNormalStateImage;
+  public String getLogoImage() {
+    return logoImage;
   }
 
-  public String getPinDeleteKeyHighlightedStateImage() {
-    return pinDeleteKeyHighlightedStateImage;
+  public String getKeyColor() {
+    return keyColor;
+  }
+
+  public String getKeyNormalStateImage() {
+    return keyNormalStateImage;
+  }
+
+  public String getKeyHighlightedStateImage() {
+    return keyHighlightedStateImage;
+  }
+
+  public String getDeleteKeyNormalStateImage() {
+    return deleteKeyNormalStateImage;
   }
 }

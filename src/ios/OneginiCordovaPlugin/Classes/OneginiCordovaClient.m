@@ -146,6 +146,14 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
 }
 
+- (void)isRegistered:(CDVInvokedUrlCommand *)command
+{
+    if (oneginiClient.isClientRegistered)
+        [self sendSuccessCallback:command.callbackId];
+    else
+        [self sendErrorCallback:command.callbackId];
+}
+
 - (void)authorize:(CDVInvokedUrlCommand *)command {
 	[self resetAll];
 	
@@ -180,8 +188,9 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	}
 	
 	NSString *pin = command.arguments.firstObject;
-
-	[oneginiClient confirmCurrentPin:pin];
+    
+    [oneginiClient confirmCurrentPin:pin];
+    [self sendSuccessCallback:command.callbackId];
 }
 
 - (void)changePin:(CDVInvokedUrlCommand *)command {

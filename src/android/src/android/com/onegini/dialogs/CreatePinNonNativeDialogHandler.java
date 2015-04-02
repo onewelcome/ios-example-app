@@ -16,11 +16,11 @@ import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler
 import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCreatePinDialog;
 import com.onegini.util.CallbackResultBuilder;
 
-public class CreatePinDialogHandler implements OneginiCreatePinDialog {
+public class CreatePinNonNativeDialogHandler implements OneginiCreatePinDialog {
 
   private final CallbackResultBuilder callbackResultBuilder;
 
-  public CreatePinDialogHandler() {
+  public CreatePinNonNativeDialogHandler() {
     callbackResultBuilder = new CallbackResultBuilder();
   }
 

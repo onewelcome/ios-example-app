@@ -49,18 +49,9 @@ import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
 
 public class OneginiCordovaPlugin extends CordovaPlugin {
+
   private static Map<String, Class<? extends OneginiPluginAction>> actions = new HashMap<String, Class<? extends OneginiPluginAction>>();
   private OneginiClient oneginiClient;
-
-  private static boolean _shouldShowNativeScreens;
-
-  public static boolean shouldShowNativeScreens() {
-    return _shouldShowNativeScreens;
-  }
-
-  public static void setShouldShowNativeScreens(final boolean shouldShowNativeScreens) {
-    OneginiCordovaPlugin._shouldShowNativeScreens = shouldShowNativeScreens;
-  }
 
   @Override
   protected void pluginInitialize() {

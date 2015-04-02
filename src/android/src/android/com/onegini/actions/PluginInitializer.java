@@ -10,8 +10,10 @@ import android.app.Application;
 import android.content.Context;
 import com.onegini.OneginiCordovaPlugin;
 import com.onegini.dialogs.ConfirmationDialogSelectorHandler;
-import com.onegini.dialogs.CreatePinDialogHandler;
-import com.onegini.dialogs.CurrentPinDialogHandler;
+import com.onegini.dialogs.CreatePinNativeDialogHandler;
+import com.onegini.dialogs.CreatePinNonNativeDialogHandler;
+import com.onegini.dialogs.CurrentPinNativeDialogHandler;
+import com.onegini.dialogs.CurrentPinNonNativeDialogHandler;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.DialogProvider;
 import com.onegini.model.ConfigModel;
@@ -26,7 +28,8 @@ public class PluginInitializer {
   }
 
   public void setup(final OneginiCordovaPlugin client) {
-    setupDialogs();
+    final boolean shouldUseNativeScreen = setupUseOfNativeScreens();
+    setupDialogs(shouldUseNativeScreen);
 
     final Application application = client.getCordova().getActivity().getApplication();
 
@@ -46,15 +49,27 @@ public class PluginInitializer {
     client.setOneginiClient(oneginiClient);
 
     setupURLHandler(oneginiClient, configModel);
-    setupUseOfNativeScreens();
 
     configured = true;
   }
 
-  private void setupUseOfNativeScreens() {
+  private boolean setupUseOfNativeScreens() {
     final CordovaPreferences preferences = Config.getPreferences();
-    final boolean shouldUseNativeScreens = preferences.getBoolean(SHOULD_SHOW_NATIVE_SCREENS_CONFIG_PROPERTY, true);
-    OneginiCordovaPlugin.setShouldShowNativeScreens(shouldUseNativeScreens);
+    return preferences.getBoolean(SHOULD_SHOW_NATIVE_SCREENS_CONFIG_PROPERTY, true);
+  }
+
+  private void setupDialogs(final boolean shouldUseNativeScreens) {
+    DialogProvider.setInstance();
+    if (shouldUseNativeScreens) {
+      DialogProvider.getInstance().setOneginiCreatePinDialog(new CreatePinNativeDialogHandler());
+      DialogProvider.getInstance().setOneginiCurrentPinDialog(new CurrentPinNativeDialogHandler());
+    }
+    else {
+      DialogProvider.getInstance().setOneginiCreatePinDialog(new CreatePinNonNativeDialogHandler());
+      DialogProvider.getInstance().setOneginiCurrentPinDialog(new CurrentPinNonNativeDialogHandler());
+    }
+    DialogProvider.getInstance().getConfirmationDialog()
+        .setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler());
   }
 
   private ConfigModel retrieveConfiguration(final OneginiCordovaPlugin client, final Application application) {
@@ -63,14 +78,6 @@ public class PluginInitializer {
     final JSONResourceReader jsonResourceReader = new JSONResourceReader();
     final String configString = jsonResourceReader.parse(client.getCordova().getActivity().getResources(), configurationPointer);
     return jsonResourceReader.map(ConfigModel.class, configString);
-  }
-
-  private void setupDialogs() {
-    DialogProvider.setInstance();
-    DialogProvider.getInstance().setOneginiCreatePinDialog(new CreatePinDialogHandler());
-    DialogProvider.getInstance().setOneginiCurrentPinDialog(new CurrentPinDialogHandler());
-    DialogProvider.getInstance().getConfirmationDialog()
-        .setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler());
   }
 
   private void setupURLHandler(final OneginiClient client, final ConfigModel configModel) {

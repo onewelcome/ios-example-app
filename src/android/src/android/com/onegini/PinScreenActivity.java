@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.onegini.model.PinConfigModel;
 import com.onegini.util.JSONResourceReader;
 
@@ -28,13 +29,20 @@ public class PinScreenActivity extends Activity {
   private Resources resources;
   private String packageName;
   private PinConfigModel pinConfigModel;
+  private Typeface customFont;
   private int cursorIndex = 0;
+
+  private TextView titleTextView;
+  private TextView pinForgottenTextView;
+  private TextView errorTextView;
+  private TextView pinLabelTextView;
+  private Button deleteButton;
+
   private int logoResourceId;
   private int digitKeyNormalResourceId;
   private int digitKeyFocusedResourceId;
   private int deleteKeyNormalResourceId;
   private int deleteKeyFocusedResourceId;
-  private Typeface customFont;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +111,7 @@ public class PinScreenActivity extends Activity {
 
   private void initLayout() {
     initLogo();
-    initLabels();
+    initTextViews();
     initBackgrounds();
     initPinInputs();
     initPinButtons();
@@ -115,8 +123,16 @@ public class PinScreenActivity extends Activity {
     logo.setImageResource(logoResourceId);
   }
 
-  private void initLabels() {
-    // TODO find all labels/messages in template and use custom fonts from assets
+  private void initTextViews() {
+    titleTextView = (TextView) findViewById(resources.getIdentifier("pin_title", "id", packageName));
+    pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
+    errorTextView = (TextView) findViewById(resources.getIdentifier("pin_error", "id", packageName));
+    pinLabelTextView = (TextView) findViewById(resources.getIdentifier("pin_small_label", "id", packageName));
+
+    titleTextView.setTypeface(customFont);
+    pinForgottenTextView.setTypeface(customFont);
+    errorTextView.setTypeface(customFont);
+    pinLabelTextView.setTypeface(customFont);
   }
 
   private void initBackgrounds() {
@@ -166,7 +182,7 @@ public class PinScreenActivity extends Activity {
   }
 
   private void initPinDeleteButton(final int buttonId) {
-    final Button deleteButton = (Button) findViewById(buttonId);
+    deleteButton = (Button) findViewById(buttonId);
     deleteButton.setBackground(createDrawableForButton(deleteKeyNormalResourceId, deleteKeyFocusedResourceId));
     deleteButton.setTypeface(customFont);
     deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -179,9 +195,14 @@ public class PinScreenActivity extends Activity {
 
   private void onDigitKeyClicked(final int digit) {
     if (cursorIndex < MAX_DIGITS) {
-      pin[cursorIndex] = Character.forDigit(digit, 10);
-      cursorIndex++;
+      pin[cursorIndex++] = Character.forDigit(digit, 10);
       updateInputView();
+      deleteButton.setVisibility(View.VISIBLE);
+      errorTextView.setVisibility(View.GONE);
+      if (cursorIndex == MAX_DIGITS) {
+        // TODO trigger callback
+        Toast.makeText(this, "Pin: "+getPin(), Toast.LENGTH_SHORT).show();
+      }
     }
   }
 
@@ -189,6 +210,9 @@ public class PinScreenActivity extends Activity {
     if (cursorIndex > 0) {
       pin[--cursorIndex] = '\0';
       updateInputView();
+      if (cursorIndex == 0) {
+        deleteButton.setVisibility(View.GONE);
+      }
     }
   }
 
@@ -212,6 +236,7 @@ public class PinScreenActivity extends Activity {
     for (int index = 0; index < MAX_DIGITS; index++) {
       pin[index] = '\0';
     }
+    deleteButton.setVisibility(View.GONE);
   }
 
   private String getDrawableNameFromFileName(final String filename) {

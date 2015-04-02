@@ -2,6 +2,7 @@ package com.onegini.actions;
 
 import static com.onegini.dialogs.PinDialogMessages.PIN_INVALID;
 import static com.onegini.dialogs.PinDialogMessages.REMAINING_ATTEMPTS_KEY;
+import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_CLIENT_REG_FAILED;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_GRANT;
@@ -20,7 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.content.Context;
-import android.content.Intent;
 import com.onegini.OneginiCordovaPlugin;
 import com.onegini.dialogs.PinScreenActivity;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiAuthorizationHandler;
@@ -100,7 +100,8 @@ public class AuthorizeAction implements OneginiPluginAction {
         public void authorizationErrorInvalidGrant(int remainingAttempts) {
           // that is the only notification which impacts the pin screen within OneginiAuthorizationHandler
           if (client.shouldUseNativeScreens()) {
-            notifyActivity(PIN_INVALID.replace(REMAINING_ATTEMPTS_KEY, Integer.toString(remainingAttempts)));
+            broadcastWithMessage(context,
+                PIN_INVALID.replace(REMAINING_ATTEMPTS_KEY, Integer.toString(remainingAttempts)));
           }
           else {
             sendCallbackResult(callbackResultBuilder
@@ -158,15 +159,8 @@ public class AuthorizeAction implements OneginiPluginAction {
   }
 
   private void sendCallbackResult(final PluginResult result) {
+    PinScreenActivity.getInstance().finish();
     callbackContext.sendPluginResult(result);
-  }
-
-  private void notifyActivity(final String message) {
-    final Intent intent = new Intent(context, PinScreenActivity.class);
-    intent.putExtra("message", message);
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-    context.startActivity(intent);
   }
 
 }

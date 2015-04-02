@@ -7,6 +7,9 @@ import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_SEQUENCE;
 import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_SIMILAR;
 import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_TOO_SHORT;
 import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_VERIFY_PIN;
+import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
+import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithTitle;
+import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithTitleAndMessage;
 
 import java.util.Arrays;
 
@@ -33,14 +36,13 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
   }
 
   private void setPin(final char[] pin) {
+    if (pin == null) {
+      this.pin = pin;
+      return;
+    }
     this.pin = Arrays.copyOf(pin, pin.length);
   }
 
-  private void nullifyPin(final char[] pin) {
-    for (int i = 0; i < pin.length; i++) {
-      pin[i] = '\0';
-    }
-  }
   private boolean isPinVerificationCall() {
     return pin != null;
   }
@@ -74,19 +76,19 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
           }
 
           setPin(pin);
-          notifyActivity(PIN_DIALOG_VERIFY_PIN);
+          broadcastWithTitle(context, PIN_DIALOG_VERIFY_PIN);
         }
 
         @Override
         public void verifiedPinProvided(final char[] pin) {
           final boolean pinsEqual = Arrays.equals(getPin(), pin);
+          setPin(null);
           if (pinsEqual) {
             oneginiPinProvidedHandler.onPinProvided(pin);
           }
           else {
-            notifyActivity(PIN_DIALOG_PINS_NOT_EQUAL);
+            broadcastWithTitleAndMessage(context, PIN_DIALOG_CHOOSE_PIN, PIN_DIALOG_PINS_NOT_EQUAL);
           }
-          nullifyPin(getPin());
         }
       };
     }
@@ -97,33 +99,21 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void pinBlackListed() {
-    notifyActivity(PIN_DIALOG_BLACKLISTED);
+    broadcastWithMessage(context, PIN_DIALOG_BLACKLISTED);
   }
 
   @Override
   public void pinShouldNotBeASequence() {
-    notifyActivity(PIN_DIALOG_SEQUENCE);
+    broadcastWithMessage(context, PIN_DIALOG_SEQUENCE);
   }
 
   @Override
   public void pinShouldNotUseSimilarDigits(final int maxSimilarDigits) {
-    notifyActivity(PIN_DIALOG_SIMILAR + ". The max is " + maxSimilarDigits);
+    broadcastWithMessage(context, PIN_DIALOG_SIMILAR + ". The max is " + maxSimilarDigits);
   }
 
   @Override
   public void pinTooShort() {
-    notifyActivity(PIN_DIALOG_TOO_SHORT);
-  }
-
-  private void notifyActivity(final String type, final String message) {
-    final Intent intent = new Intent(context, PinScreenActivity.class);
-    intent.putExtra(type, message);
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-    context.startActivity(intent);
-  }
-
-  private void notifyActivity(final String message) {
-    notifyActivity("message", message);
+    broadcastWithMessage(context, PIN_DIALOG_TOO_SHORT);
   }
 }

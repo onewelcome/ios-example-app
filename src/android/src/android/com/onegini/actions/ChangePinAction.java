@@ -1,5 +1,8 @@
 package com.onegini.actions;
 
+import static com.onegini.dialogs.PinDialogMessages.PIN_INVALID;
+import static com.onegini.dialogs.PinDialogMessages.REMAINING_ATTEMPTS_KEY;
+import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGED;
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGE_ERROR;
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS;
@@ -9,7 +12,9 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 
+import android.app.Application;
 import com.onegini.OneginiCordovaPlugin;
+import com.onegini.dialogs.PinScreenActivity;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiChangePinHandler;
 import com.onegini.util.CallbackResultBuilder;
@@ -17,6 +22,7 @@ import com.onegini.util.CallbackResultBuilder;
 public class ChangePinAction implements OneginiPluginAction {
 
   private static CallbackContext changePinCallback;
+  private Application context;
 
   public static CallbackContext getChangePinCallback() {
     return changePinCallback;
@@ -37,6 +43,7 @@ public class ChangePinAction implements OneginiPluginAction {
     final OneginiClient oneginiClient = client.getOneginiClient();
 
     changePinCallback = callbackContext;
+    this.context = client.getCordova().getActivity().getApplication();
 
     oneginiClient.changePin(new OneginiChangePinHandler() {
       @Override
@@ -53,10 +60,16 @@ public class ChangePinAction implements OneginiPluginAction {
 
       @Override
       public void invalidCurrentPin(final int remainingAttempts) {
-        sendCallbackResult(callbackResultBuilder
-            .withRemainingAttempts(remainingAttempts)
-            .withErrorReason(PIN_CURRENT_INVALID.getName())
-            .build());
+        if (client.shouldUseNativeScreens()) {
+          broadcastWithMessage(context,
+              PIN_INVALID.replace(REMAINING_ATTEMPTS_KEY, Integer.toString(remainingAttempts)));
+        }
+        else {
+          sendCallbackResult(callbackResultBuilder
+              .withRemainingAttempts(remainingAttempts)
+              .withErrorReason(PIN_CURRENT_INVALID.getName())
+              .build());
+        }
       }
 
       @Override
@@ -84,6 +97,7 @@ public class ChangePinAction implements OneginiPluginAction {
 
   private void sendCallbackResult(final PluginResult result) {
     changePinCallback.sendPluginResult(result);
+    PinScreenActivity.getInstance().finish();
     clearChangePinSessionState();
   }
 }

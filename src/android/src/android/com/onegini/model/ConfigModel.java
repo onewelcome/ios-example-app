@@ -4,6 +4,7 @@ import static com.onegini.mobile.sdk.android.library.OneginiConstants.DEFAULT_EN
 
 import java.nio.charset.Charset;
 
+import android.util.Log;
 import com.google.gson.annotations.SerializedName;
 import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
 import com.onegini.util.HashUtil;
@@ -61,6 +62,9 @@ public class ConfigModel implements OneginiClientConfigModel {
 
   @Override
   public String getBaseUrl() {
+    final String secret = HashUtil.sha256(toString().getBytes(Charset.forName(DEFAULT_ENCODING)));
+    Log.d("ConfigModel", " ------ SECRET ---- " + secret);
+
     return baseUrl;
   }
 

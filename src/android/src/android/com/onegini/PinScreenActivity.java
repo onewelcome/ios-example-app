@@ -1,6 +1,7 @@
 package com.onegini;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.onegini.model.PinConfigModel;
+import com.onegini.util.DeviceUtil;
 import com.onegini.util.JSONResourceReader;
 
 public class PinScreenActivity extends Activity {
@@ -47,9 +49,7 @@ public class PinScreenActivity extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    resources = getResources();
-    packageName = getPackageName();
-    setContentView(resources.getIdentifier("activity_pin_screen", "layout", packageName));
+    lockScreenOrientation();
     init();
     resetPin();
   }
@@ -66,7 +66,18 @@ public class PinScreenActivity extends Activity {
     super.onPause();
   }
 
+  private void lockScreenOrientation() {
+    if (DeviceUtil.isTablet(this)) {
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    }
+    else {
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+  }
+
   private void init() {
+    resources = getResources();
+    packageName = getPackageName();
     initConfig();
     initAssets();
     initLayout();
@@ -110,6 +121,7 @@ public class PinScreenActivity extends Activity {
   }
 
   private void initLayout() {
+    setContentView(resources.getIdentifier("activity_pin_screen", "layout", packageName));
     initLogo();
     initTextViews();
     initBackgrounds();

@@ -1,5 +1,6 @@
 package com.onegini.dialogs;
 
+import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_CHOOSE_PIN;
 import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_ENTER_CURRENT_PIN;
 
 import android.content.Context;
@@ -26,17 +27,9 @@ public class CurrentPinNativeDialogHandler implements OneginiCurrentPinDialog {
 
     final Intent intent = new Intent(context, PinScreenActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    intent.putExtra("title", PIN_DIALOG_ENTER_CURRENT_PIN);
     context.startActivity(intent);
 
     PinScreenActivity.setCreatePinFlow(false);
-    notifyActivity("title", PIN_DIALOG_ENTER_CURRENT_PIN);
-  }
-
-  private void notifyActivity(final String type, final String message) {
-    final Intent intent = new Intent(context, PinScreenActivity.class);
-    intent.putExtra(type, message);
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-    context.startActivity(intent);
   }
 }

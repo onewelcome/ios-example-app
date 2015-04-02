@@ -28,10 +28,11 @@ public class PluginInitializer {
   }
 
   public void setup(final OneginiCordovaPlugin client) {
-    final boolean shouldUseNativeScreen = setupUseOfNativeScreens();
-    setupDialogs(shouldUseNativeScreen);
-
     final Application application = client.getCordova().getActivity().getApplication();
+
+    final boolean shouldUseNativeScreen = setupUseOfNativeScreens(client);
+    setupDialogs(shouldUseNativeScreen, application.getApplicationContext());
+
 
     final ConfigModel configModel = retrieveConfiguration(client, application);
     if (configModel == null) {
@@ -53,16 +54,18 @@ public class PluginInitializer {
     configured = true;
   }
 
-  private boolean setupUseOfNativeScreens() {
+  private boolean setupUseOfNativeScreens(final OneginiCordovaPlugin client) {
     final CordovaPreferences preferences = Config.getPreferences();
-    return preferences.getBoolean(SHOULD_SHOW_NATIVE_SCREENS_CONFIG_PROPERTY, true);
+    final boolean shouldUseNativeScreens = preferences.getBoolean(SHOULD_SHOW_NATIVE_SCREENS_CONFIG_PROPERTY, true);
+    client.setShouldUseNativeScreens(shouldUseNativeScreens);
+    return shouldUseNativeScreens;
   }
 
-  private void setupDialogs(final boolean shouldUseNativeScreens) {
+  private void setupDialogs(final boolean shouldUseNativeScreens, final Context context) {
     DialogProvider.setInstance();
     if (shouldUseNativeScreens) {
-      DialogProvider.getInstance().setOneginiCreatePinDialog(new CreatePinNativeDialogHandler());
-      DialogProvider.getInstance().setOneginiCurrentPinDialog(new CurrentPinNativeDialogHandler());
+      DialogProvider.getInstance().setOneginiCreatePinDialog(new CreatePinNativeDialogHandler(context));
+      DialogProvider.getInstance().setOneginiCurrentPinDialog(new CurrentPinNativeDialogHandler(context));
     }
     else {
       DialogProvider.getInstance().setOneginiCreatePinDialog(new CreatePinNonNativeDialogHandler());

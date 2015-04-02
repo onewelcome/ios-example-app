@@ -1,4 +1,4 @@
-package com.onegini;
+package com.onegini.dialogs;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -23,25 +23,32 @@ public class PinScreenActivity extends Activity {
   private static final String HTML_CHAR_DOT = "&#9679;";
   private static final String HTML_CHAR_DASH = "&mdash;";
 
-  private final char[] pin = new char[MAX_DIGITS];
-  private final TextView[] pinInputs = new TextView[MAX_DIGITS];
+  private static boolean isCreatePinFlow;
 
+  public static void setCreatePinFlow(final boolean isCreatePinFlow) {
+    PinScreenActivity.isCreatePinFlow = isCreatePinFlow;
+  }
+
+  private int deleteKeyNormalResourceId;
+  private final char[] pin = new char[MAX_DIGITS];
+
+  private final TextView[] pinInputs = new TextView[MAX_DIGITS];
   private Resources resources;
   private String packageName;
   private PinConfigModel pinConfigModel;
   private Typeface customFont;
-  private int cursorIndex = 0;
 
+  private int cursorIndex = 0;
   private TextView titleTextView;
   private TextView pinForgottenTextView;
   private TextView errorTextView;
   private TextView pinLabelTextView;
-  private Button deleteButton;
 
+  private Button deleteButton;
   private int logoResourceId;
   private int digitKeyNormalResourceId;
   private int digitKeyFocusedResourceId;
-  private int deleteKeyNormalResourceId;
+
   private int deleteKeyFocusedResourceId;
 
   @Override
@@ -133,6 +140,12 @@ public class PinScreenActivity extends Activity {
     pinForgottenTextView.setTypeface(customFont);
     errorTextView.setTypeface(customFont);
     pinLabelTextView.setTypeface(customFont);
+
+    final String title = getIntent().getStringExtra("title");
+    titleTextView.setText(title);
+
+    final String message = getIntent().getStringExtra("message");
+    titleTextView.setText(message);
   }
 
   private void initBackgrounds() {
@@ -200,8 +213,12 @@ public class PinScreenActivity extends Activity {
       deleteButton.setVisibility(View.VISIBLE);
       errorTextView.setVisibility(View.GONE);
       if (cursorIndex == MAX_DIGITS) {
-        // TODO trigger callback
-        Toast.makeText(this, "Pin: "+getPin(), Toast.LENGTH_SHORT).show();
+        if (PinScreenActivity.isCreatePinFlow) {
+          CreatePinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);
+        }
+        else {
+          CurrentPinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);
+        }
       }
     }
   }
@@ -222,14 +239,6 @@ public class PinScreenActivity extends Activity {
       htmlCharacter = (pin[i] == '\0') ? HTML_CHAR_DASH : HTML_CHAR_DOT;
       pinInputs[i].setText(Html.fromHtml(htmlCharacter));
     }
-  }
-
-  private String getPin() {
-    final StringBuilder pinBuilder = new StringBuilder();
-    for (int index = 0; index < MAX_DIGITS; index++) {
-      pinBuilder.append(pin[index]);
-    }
-    return pinBuilder.toString();
   }
 
   private void resetPin() {

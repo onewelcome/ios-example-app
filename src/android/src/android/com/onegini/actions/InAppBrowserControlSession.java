@@ -1,5 +1,7 @@
 package com.onegini.actions;
 
+import static com.onegini.responses.InAppBrowserControlResponse.CLOSE_IN_APP_BROWSER;
+
 import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 
@@ -8,16 +10,22 @@ import com.onegini.util.CallbackResultBuilder;
 
 public class InAppBrowserControlSession implements OneginiPluginAction {
 
+  private static CallbackResultBuilder callbackResultBuilder = new CallbackResultBuilder();
   private static CallbackContext inAppBrowserControlCallback;
 
   public static CallbackContext getInAppBrowserControlCallback() {
     return inAppBrowserControlCallback;
   }
 
-  private final CallbackResultBuilder callbackResultBuilder;
+  public static void closeInAppBrowser() {
+    if (inAppBrowserControlCallback == null) {
+      return;
+    }
 
-  public InAppBrowserControlSession() {
-    callbackResultBuilder = new CallbackResultBuilder();
+    inAppBrowserControlCallback.sendPluginResult(callbackResultBuilder
+        .withSuccessMethod(CLOSE_IN_APP_BROWSER.getName())
+        .withCallbackKept()
+        .build());
   }
 
   @Override

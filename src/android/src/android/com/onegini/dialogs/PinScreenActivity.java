@@ -1,6 +1,7 @@
 package com.onegini.dialogs;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.onegini.model.PinConfigModel;
 import com.onegini.util.JSONResourceReader;
 
@@ -71,6 +71,13 @@ public class PinScreenActivity extends Activity {
   protected void onPause() {
     resetPin();
     super.onPause();
+  }
+
+  @Override
+  protected void onNewIntent(final Intent intent) {
+    init();
+    resetPin();
+    setIntent(intent);
   }
 
   private void init() {
@@ -145,7 +152,7 @@ public class PinScreenActivity extends Activity {
     titleTextView.setText(title);
 
     final String message = getIntent().getStringExtra("message");
-    titleTextView.setText(message);
+    errorTextView.setText(message);
   }
 
   private void initBackgrounds() {
@@ -235,7 +242,7 @@ public class PinScreenActivity extends Activity {
 
   private void updateInputView() {
     String htmlCharacter;
-    for (int i=0; i < MAX_DIGITS; i++) {
+    for (int i = 0; i < MAX_DIGITS; i++) {
       htmlCharacter = (pin[i] == '\0') ? HTML_CHAR_DASH : HTML_CHAR_DOT;
       pinInputs[i].setText(Html.fromHtml(htmlCharacter));
     }
@@ -259,9 +266,9 @@ public class PinScreenActivity extends Activity {
 
   private StateListDrawable createDrawableForButton(final int normalStateResourceId, final int focusedStateResourceId) {
     final StateListDrawable statesDrawables = new StateListDrawable();
-    statesDrawables.addState(new int[] {android.R.attr.state_pressed}, resources.getDrawable(focusedStateResourceId));
-    statesDrawables.addState(new int[] {android.R.attr.state_focused}, resources.getDrawable(focusedStateResourceId));
-    statesDrawables.addState(new int[] { }, resources.getDrawable(normalStateResourceId));
+    statesDrawables.addState(new int[]{ android.R.attr.state_pressed }, resources.getDrawable(focusedStateResourceId));
+    statesDrawables.addState(new int[]{ android.R.attr.state_focused }, resources.getDrawable(focusedStateResourceId));
+    statesDrawables.addState(new int[]{ }, resources.getDrawable(normalStateResourceId));
     return statesDrawables;
   }
 }

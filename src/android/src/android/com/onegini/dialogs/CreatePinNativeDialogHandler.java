@@ -33,9 +33,14 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
   }
 
   private void setPin(final char[] pin) {
-    this.pin = pin;
+    this.pin = Arrays.copyOf(pin, pin.length);
   }
 
+  private void nullifyPin(final char[] pin) {
+    for (int i = 0; i < pin.length; i++) {
+      pin[i] = '\0';
+    }
+  }
   private boolean isPinVerificationCall() {
     return pin != null;
   }
@@ -50,10 +55,10 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
     final Intent intent = new Intent(context, PinScreenActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    intent.putExtra("title", PIN_DIALOG_CHOOSE_PIN);
     context.startActivity(intent);
 
     PinScreenActivity.setCreatePinFlow(true);
-    notifyActivity("title", PIN_DIALOG_CHOOSE_PIN);
 
     if (OneginiClient.getInstance().getConfigModel().shouldConfirmNewPin()) {
       this.oneginiPinProvidedHandler = new OneginiPinWithConfirmationHandler() {
@@ -75,13 +80,13 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
         @Override
         public void verifiedPinProvided(final char[] pin) {
           final boolean pinsEqual = Arrays.equals(getPin(), pin);
-          setPin(null);
           if (pinsEqual) {
             oneginiPinProvidedHandler.onPinProvided(pin);
           }
           else {
             notifyActivity(PIN_DIALOG_PINS_NOT_EQUAL);
           }
+          nullifyPin(getPin());
         }
       };
     }

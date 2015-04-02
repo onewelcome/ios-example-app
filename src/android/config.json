@@ -3,12 +3,12 @@
     "kOGAppPlatform": "android",
     "kOGAppScheme": "oneginisdk",
     "kOGAppVersion": "2.4.1",
-    "kAppBaseURL": "https://oauth-engine.onegini.com",
+    "kAppBaseURL": "http://dev.onegini.me:7878",
     "kOGShouldConfirmNewPin": true,
     "kOGShouldDirectlyShowPushMessage": true,
     "kOGKeyStorePassword": "NotSoVerySecureYet",
     "kOGMaxPinFailures": "3",
-    "kOGResourceBaseURL": "https://oauth-engine.onegini.com",
+    "kOGResourceBaseURL": "http://dev.onegini.me:7878",
     "kOGRedirectURL": "oneginisdk://loginsuccess",
     "kOGUseEmbeddedWebview": true
 }

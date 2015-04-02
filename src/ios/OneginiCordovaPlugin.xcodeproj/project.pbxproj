@@ -165,6 +165,7 @@
 		32CA4F630368D1EE00C91783 /* OneginiCordovaPlugin-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OneginiCordovaPlugin-Prefix.pch"; sourceTree = "<group>"; };
 		359253D9C6504EBD8C06520D /* AudioToolbox.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		5CD4A5301ACD4DA0000FD948 /* Commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Commons.h; sourceTree = "<group>"; };
 		7E7966D41810823500FA85AD /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
 		7E7966D51810823500FA85AD /* icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40@2x.png"; sourceTree = "<group>"; };
 		7E7966D61810823500FA85AD /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
@@ -202,6 +203,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5CD4A5301ACD4DA0000FD948 /* Commons.h */,
 				23B3B5AC1AC9746A00F6BB9C /* PinEntryContainerViewController.h */,
 				23B3B5AD1AC9746A00F6BB9C /* PinEntryContainerViewController.m */,
 				23B3B5AE1AC9746A00F6BB9C /* PinEntryContainerViewController.xib */,

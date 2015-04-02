@@ -94,16 +94,18 @@
 
 - (void)invalidPin {
 	[self reset];
-	
-	CABasicAnimation *shake = [CABasicAnimation animationWithKeyPath:@"position"];
-	[shake setDuration:0.1];
-	[shake setRepeatCount:2];
-	[shake setAutoreverses:YES];
-	[shake setFromValue:[NSValue valueWithCGPoint:
-						 CGPointMake(CGRectGetMidX(pinsView.frame) - 5.0, CGRectGetMidY(pinsView.frame))]];
-	[shake setToValue:[NSValue valueWithCGPoint:
-					   CGPointMake(CGRectGetMidX(pinsView.frame) + 5.0, CGRectGetMidY(pinsView.frame))]];
-	[pinsView.layer addAnimation:shake forKey:@"position"];
+}
+
+-(void)shakePinAnimation{
+    CABasicAnimation *shake = [CABasicAnimation animationWithKeyPath:@"position"];
+    [shake setDuration:0.1];
+    [shake setRepeatCount:2];
+    [shake setAutoreverses:YES];
+    [shake setFromValue:[NSValue valueWithCGPoint:
+                         CGPointMake(CGRectGetMidX(pinsView.frame) - 5.0, CGRectGetMidY(pinsView.frame))]];
+    [shake setToValue:[NSValue valueWithCGPoint:
+                       CGPointMake(CGRectGetMidX(pinsView.frame) + 5.0, CGRectGetMidY(pinsView.frame))]];
+    [pinsView.layer addAnimation:shake forKey:@"position"];
 }
 
 - (void)evaluatePinState {

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PinEntryViewController.h"
+#import "Commons.h"
 
 @class PinEntryContainerViewController;
 
@@ -43,6 +44,7 @@ extern NSString *kDeleteKeyHighlightedStateImage;
 @property (strong, nonatomic) PinEntryViewController *pinEntryViewController;
 @property (weak, nonatomic) IBOutlet UIView *pinViewPlaceholder;
 @property (weak, nonatomic) IBOutlet UIImageView *containerBackgroundImage;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 
@@ -53,6 +55,8 @@ extern NSString *kDeleteKeyHighlightedStateImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelHeightConstraint;
+
+@property (nonatomic) PINEntryModes mode;
 
 /**
  Apply custom style 

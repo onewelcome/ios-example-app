@@ -29,7 +29,8 @@ public class PinScreenActivity extends Activity {
   private Resources resources;
   private String packageName;
   private PinConfigModel pinConfigModel;
-  private Typeface customFont;
+  private Typeface customFontRegular;
+  private Typeface customFontLight;
   private int cursorIndex = 0;
 
   private TextView titleTextView;
@@ -106,7 +107,9 @@ public class PinScreenActivity extends Activity {
         "drawable",
         packageName
     );
-    customFont = Typeface.createFromAsset(getAssets(), "fonts/font_regular.ttf");
+
+    customFontRegular = Typeface.createFromAsset(getAssets(), "fonts/font_regular.ttf");
+    customFontLight = Typeface.createFromAsset(getAssets(), "fonts/font_light.ttf");
   }
 
   private void initLayout() {
@@ -129,10 +132,10 @@ public class PinScreenActivity extends Activity {
     errorTextView = (TextView) findViewById(resources.getIdentifier("pin_error", "id", packageName));
     pinLabelTextView = (TextView) findViewById(resources.getIdentifier("pin_small_label", "id", packageName));
 
-    titleTextView.setTypeface(customFont);
-    pinForgottenTextView.setTypeface(customFont);
-    errorTextView.setTypeface(customFont);
-    pinLabelTextView.setTypeface(customFont);
+    titleTextView.setTypeface(customFontRegular);
+    pinForgottenTextView.setTypeface(customFontRegular);
+    errorTextView.setTypeface(customFontRegular);
+    pinLabelTextView.setTypeface(customFontRegular);
   }
 
   private void initBackgrounds() {
@@ -172,7 +175,7 @@ public class PinScreenActivity extends Activity {
   private void initPinDigitButton(final int buttonId, final int buttonValue) {
     final Button pinButton = (Button) findViewById(buttonId);
     pinButton.setBackground(createDrawableForButton(digitKeyNormalResourceId, digitKeyFocusedResourceId));
-    pinButton.setTypeface(customFont);
+    pinButton.setTypeface(customFontLight);
     pinButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View v) {
@@ -184,7 +187,8 @@ public class PinScreenActivity extends Activity {
   private void initPinDeleteButton(final int buttonId) {
     deleteButton = (Button) findViewById(buttonId);
     deleteButton.setBackground(createDrawableForButton(deleteKeyNormalResourceId, deleteKeyFocusedResourceId));
-    deleteButton.setTypeface(customFont);
+    deleteButton.setTypeface(customFontLight);
+    deleteButton.setText(Html.fromHtml("&larr;"));
     deleteButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View v) {

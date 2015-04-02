@@ -151,5 +151,6 @@
     <resource-file src="src/generic/pin_key_normal.png" target="res/drawable/pin_key_normal.png" />
     <resource-file src="src/generic/pin_key_highlighted.png" target="res/drawable/pin_key_highlighted.png" />
     <resource-file src="src/generic/fonts/SourceSansPro-Regular.ttf" target="assets/fonts/font_regular.ttf"/>
+    <resource-file src="src/generic/fonts/SourceSansPro-Light.ttf" target="assets/fonts/font_light.ttf"/>
   </platform>
 </plugin>

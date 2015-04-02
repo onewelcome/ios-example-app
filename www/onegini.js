@@ -62,6 +62,8 @@ module.exports = {
    * @param {Object} params             Parameters to send with the request.
    */
   fetchResource: function (successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params) {
+    oneginiCordovaPlugin.preserveCurrentLocation();
+
     exec(function (response) {
       if (successCallback) {
         successCallback(response);
@@ -100,6 +102,20 @@ module.exports = {
         errorCallback(error);
       }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, [path, scopes, requestMethod, paramsEncoding, params]);
+  },
+
+  /**
+   * Determine if the user is registered.
+   *
+   * @param successCallback   Function to be called when user is already registered
+   * @param errorCallback     Function to be called when user is not yet registered
+   */
+  isRegistered: function (successCallback, errorCallback) {
+    exec(function (response)  {
+      successCallback();
+    }, function (error) {
+      errorCallback();
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.IS_REGISTERED, []);
   },
 
   /**
@@ -167,6 +183,15 @@ module.exports = {
       successCallback();
     }, errorCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.DISCONNECT, []);
     oneginiCordovaPlugin.invalidateSessionState();
+  },
+
+  // TODO
+  openNativePinScreen: function() {
+    exec(function (response) {
+
+    }, function (error) {
+
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.OPEN_PIN_ACTIVITY, []);
   },
 
   /**
@@ -422,6 +447,7 @@ module.exports = {
 
     AWAIT_PLUGIN_INITIALIZATION: "awaitPluginInitialization",
     INIT_PIN_CALLBACK_SESSION: "initPinCallbackSession",
+    IS_REGISTERED: "isRegistered",
 
     AUTHORIZATION_AUTHORIZE: "authorize",
     AUTHORIZATION_REQUESTED: "requestAuthorization",
@@ -456,6 +482,8 @@ module.exports = {
 
     FETCH_RESOURCE: "fetchResource",
     FETCH_ANONYMOUS_RESOURCE: "fetchAnonymousResource",
-    FETCH_RESOURCE_AUTH_FAILED: "resourceErrorAuthenticationFailed"
+    FETCH_RESOURCE_AUTH_FAILED: "resourceErrorAuthenticationFailed",
+
+    OPEN_PIN_ACTIVITY: "openPinActivity"
   }
 };

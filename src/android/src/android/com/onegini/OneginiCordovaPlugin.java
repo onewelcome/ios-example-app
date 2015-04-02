@@ -26,6 +26,7 @@ import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import com.onegini.actions.AuthorizeAction;
@@ -89,6 +90,12 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
       }
       actionInstance.execute(args, callbackContext, this);
       return true;
+    }
+    // TODO test call
+    else if (action.equals("openPinActivity")) {
+      final Context context = cordova.getActivity().getApplicationContext();
+      final Intent intent = new Intent(context, PinScreenActivity.class);
+      cordova.startActivityForResult(this, intent, 0); //TODO change 0 for ID
     }
     callbackContext.error("Action \"" + action + "\" is not supported");
     return false;

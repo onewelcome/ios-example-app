@@ -92,8 +92,16 @@
             <data android:scheme="oneginisdk"/>
         </intent-filter>
     </config-file>
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <activity
+        android:name="com.onegini.PinScreenActivity"
+        android:theme="@android:style/Theme.Black.NoTitleBar">
+      </activity>
+    </config-file>
+
     <source-file src="src/android/src/android/com/onegini/OneginiConstants.java" target-dir="src/com/onegini/" />
     <source-file src="src/android/src/android/com/onegini/OneginiCordovaPlugin.java" target-dir="src/com/onegini/" />
+    <source-file src="src/android/src/android/com/onegini/PinScreenActivity.java" target-dir="src/com/onegini/" />
     <source-file src="src/android/src/android/com/onegini/actions/PluginInitializer.java" target-dir="src/com/onegini/actions/" />
     <source-file src="src/android/src/android/com/onegini/actions/AwaitInitialization.java" target-dir="src/com/onegini/actions/" />
     <source-file src="src/android/src/android/com/onegini/actions/AuthorizeAction.java" target-dir="src/com/onegini/actions/" />
@@ -114,6 +122,7 @@
     <source-file src="src/android/src/android/com/onegini/actions/CheckIsRegisteredAction.java" target-dir="src/com/onegini/actions/" />
     <!--<source-file src="src/android/src/android/com/onegini/gcm/GCMHelper.java" target-dir="src/com/onegini/gcm/" />-->
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/" />
+    <source-file src="src/android/src/android/com/onegini/model/PinConfigModel.java" target-dir="src/com/onegini/model/" />
     <source-file src="src/android/src/android/com/onegini/resource/AnonymousResourceClient.java" target-dir="src/com/onegini/resource/" />
     <source-file src="src/android/src/android/com/onegini/resource/ResourceClient.java" target-dir="src/com/onegini/resource/" />
     <source-file src="src/android/src/android/com/onegini/resource/ResourceHandler.java" target-dir="src/com/onegini/resource/" />
@@ -128,8 +137,20 @@
     <source-file src="src/android/src/android/com/onegini/util/HashUtil.java" target-dir="src/com/onegini/util/" />
     <source-file src="src/android/lib/plugin-dependencies.jar" target-dir="libs/" />
     <source-file src="src/android/src/android/com/onegini/util/JSONResourceReader.java" target-dir="src/com/onegini/util/" />
+
+    <source-file src="src/android/res/layout/activity_pin_screen.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
     
     <resource-file src="src/android/res/raw/keystore.bks" target="res/raw/keystore.bks" />
     <resource-file src="src/android/config.json" target="res/raw/config.json" />
+
+    <!-- Work in progress, these are not the correct image assets (copied from example PSD with low resolution) --> 
+    <resource-file src="src/generic/pin-config.json" target="res/raw/pin_config.json" />
+    <resource-file src="src/generic/logo.png" target="res/drawable/logo.png" />
+    <resource-file src="src/generic/pin_delete_key_normal.png" target="res/drawable/pin_delete_key_normal.png" />
+    <resource-file src="src/generic/pin_delete_key_highlighted.png" target="res/drawable/pin_delete_key_highlighted.png" />
+    <resource-file src="src/generic/pin_key_normal.png" target="res/drawable/pin_key_normal.png" />
+    <resource-file src="src/generic/pin_key_highlighted.png" target="res/drawable/pin_key_highlighted.png" />
+    <resource-file src="src/generic/fonts/SourceSansPro-Regular.ttf" target="assets/fonts/font_regular.ttf"/>
   </platform>
 </plugin>

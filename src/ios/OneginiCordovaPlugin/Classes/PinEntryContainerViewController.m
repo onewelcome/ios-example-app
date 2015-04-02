@@ -28,11 +28,14 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-	return UIInterfaceOrientationLandscapeLeft;
+	return UIInterfaceOrientationPortrait;
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
-	return UIInterfaceOrientationMaskAll;
+    if([[UIDevice currentDevice].model containsString:@"iPhone"])
+        return UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskPortraitUpsideDown;
+    else
+        return UIInterfaceOrientationMaskLandscapeLeft|UIInterfaceOrientationMaskLandscapeRight;
 }
 
 - (BOOL)shouldAutorotate {
@@ -138,6 +141,39 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 - (void)setMessage:(NSString *)message {
 	self.messageLabel.text = message;
 	self.messageLabel.textColor = [self messageTextColor:NO];
+}
+
+-(void)setMode:(PINEntryModes)mode
+{
+//    PINEntryModeUnknown,
+//    PINCheckMode,					// Ask current PIN
+//    PINRegistrationMode,			// Ask new PIN first entry
+//    PINRegistrationVerififyMode,	// Ask new PIN second entry (verification)
+//    PINChangeCheckMode,				// Ask current PIN for change PIN request
+//    PINChangeNewPinMode,			// Ask new PIN first entry for change PIN request
+//    PINChangeNewPinVerifyMode
+    switch (mode) {
+        case PINCheckMode:
+            self.titleLabel.text = @"Input pincode";
+            break;
+        case PINRegistrationMode:
+            self.titleLabel.text = @"Create pin";
+            break;
+        case PINRegistrationVerififyMode:
+            self.titleLabel.text = @"Verify pin";
+            break;
+        case PINChangeCheckMode:
+            self.titleLabel.text = @"Input pincode";
+            break;
+        case PINChangeNewPinMode:
+            self.titleLabel.text = @"Change pin";
+            break;
+        case PINChangeNewPinVerifyMode:
+            self.titleLabel.text = @"Verify pin";
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark -

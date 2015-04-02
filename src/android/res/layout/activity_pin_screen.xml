@@ -11,14 +11,14 @@
     android:id="@+id/pin_header"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:minHeight="48dp"
     android:padding="10dp"
     android:orientation="horizontal">
 
     <ImageView
       android:id="@+id/pin_logo"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android:layout_height="32dp"
+      android:scaleType="fitXY"
       android:contentDescription="Van Lanschot"/>
 
   </LinearLayout>
@@ -54,17 +54,6 @@
         android:layout_height="wrap_content">
 
         <TextView
-         android:id="@+id/pin_small_label"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentTop="true"
-         android:layout_alignParentStart="true"
-         android:layout_toStartOf="@+id/pin_forgoten_label"
-         android:text="Voer uw 5-cijferige toegangscode in."
-         android:textColor="#000"
-         android:textSize="14sp" />
-
-        <TextView
           android:id="@+id/pin_forgoten_label"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -74,6 +63,19 @@
           android:text="Toegangscode vergeten?"
           android:textColor="#72994d"
           android:textSize="14sp" />
+
+        <TextView
+         android:id="@+id/pin_small_label"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentTop="true"
+         android:layout_alignParentStart="true"
+         android:layout_toStartOf="@+id/pin_forgoten_label"
+         android:layout_toLeftOf="@+id/pin_forgoten_label"
+         android:text="Voer uw 5-cijferige toegangscode in."
+         android:textColor="#000"
+         android:textSize="14sp" />
+
       </RelativeLayout>
 
       <View
@@ -88,114 +90,118 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <!-- Keyboard -->
-        <TableLayout
-          android:id="@+id/pin_keyboard"
+        <LinearLayout
+          android:orientation="vertical"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_centerVertical="true"
-          android:layout_centerHorizontal="true">
+          android:layout_centerInParent="true">
 
-          <TableRow
+          <!-- input -->
+          <LinearLayout
+            android:id="@+id/pin_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:layout_margin="5dp"
+            android:background="#ebf1f2"
+            android:gravity="center"
+            android:textAlignment="center">
+
+            <TextView
+              android:id="@+id/pin_input_0"
+              style="@style/PinKeyboardInputField" />
+
+            <TextView
+              android:id="@+id/pin_input_1"
+              style="@style/PinKeyboardInputField" />
+
+            <TextView
+              android:id="@+id/pin_input_2"
+              style="@style/PinKeyboardInputField" />
+
+            <TextView
+              android:id="@+id/pin_input_3"
+              style="@style/PinKeyboardInputField" />
+
+            <TextView
+              android:id="@+id/pin_input_4"
+              style="@style/PinKeyboardInputField" />
+
+          </LinearLayout>
+
+          <!-- Keyboard -->
+          <TableLayout
+            android:id="@+id/pin_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <Button
-              android:id="@+id/pin_key_1"
-              style="@style/PinKeyboardKeyButton"
-              android:text="1"/>
-            <Button
-              android:id="@+id/pin_key_2"
-              style="@style/PinKeyboardKeyButton"
-              android:text="2"/>
-            <Button
-              android:id="@+id/pin_key_3"
-              style="@style/PinKeyboardKeyButton"
-              android:text="3"/>
-          </TableRow>
 
-          <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-              android:id="@+id/pin_key_4"
-              style="@style/PinKeyboardKeyButton"
-              android:text="4"/>
-            <Button
-              android:id="@+id/pin_key_5"
-              style="@style/PinKeyboardKeyButton"
-              android:text="5"/>
-            <Button
-              android:id="@+id/pin_key_6"
-              style="@style/PinKeyboardKeyButton"
-              android:text="6"/>
-          </TableRow>
+            <TableRow
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+              <Button
+                android:id="@+id/pin_key_1"
+                style="@style/PinKeyboardKeyButton"
+                android:text="1"/>
+              <Button
+                android:id="@+id/pin_key_2"
+                style="@style/PinKeyboardKeyButton"
+                android:text="2"/>
+              <Button
+                android:id="@+id/pin_key_3"
+                style="@style/PinKeyboardKeyButton"
+                android:text="3"/>
+            </TableRow>
 
-          <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-              android:id="@+id/pin_key_7"
-              style="@style/PinKeyboardKeyButton"
-              android:text="7"/>
-            <Button
-              android:id="@+id/pin_key_8"
-              style="@style/PinKeyboardKeyButton"
-              android:text="8"/>
-            <Button
-              android:id="@+id/pin_key_9"
-              style="@style/PinKeyboardKeyButton"
-              android:text="9"/>
-          </TableRow>
+            <TableRow
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+              <Button
+                android:id="@+id/pin_key_4"
+                style="@style/PinKeyboardKeyButton"
+                android:text="4"/>
+              <Button
+                android:id="@+id/pin_key_5"
+                style="@style/PinKeyboardKeyButton"
+                android:text="5"/>
+              <Button
+                android:id="@+id/pin_key_6"
+                style="@style/PinKeyboardKeyButton"
+                android:text="6"/>
+            </TableRow>
 
-          <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-              android:id="@+id/pin_key_0"
-              style="@style/PinKeyboardKeyButton"
-              android:text="0"
-              android:layout_column="1"/>
-            <Button
-              android:id="@+id/pin_key_del"
-              style="@style/PinKeyboardKeyButton"
-              android:text="X"
-              android:layout_column="2"/>
-          </TableRow>
-        </TableLayout>
+            <TableRow
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+              <Button
+                android:id="@+id/pin_key_7"
+                style="@style/PinKeyboardKeyButton"
+                android:text="7"/>
+              <Button
+                android:id="@+id/pin_key_8"
+                style="@style/PinKeyboardKeyButton"
+                android:text="8"/>
+              <Button
+                android:id="@+id/pin_key_9"
+                style="@style/PinKeyboardKeyButton"
+                android:text="9"/>
+            </TableRow>
 
-        <!-- input -->
-        <LinearLayout
-          android:id="@+id/pin_input"
-          android:layout_width="wrap_content"
-          android:layout_height="40dp"
-          android:layout_above="@+id/pin_keyboard"
-          android:layout_alignStart="@+id/pin_keyboard"
-          android:layout_alignEnd="@+id/pin_keyboard"
-          android:layout_margin="5dp"
-          android:background="#ebf1f2"
-          android:gravity="center"
-          android:textAlignment="center">
-
-          <TextView
-            android:id="@+id/pin_input_0"
-            style="@style/PinKeyboardInputField" />
-
-          <TextView
-            android:id="@+id/pin_input_1"
-            style="@style/PinKeyboardInputField" />
-
-          <TextView
-            android:id="@+id/pin_input_2"
-            style="@style/PinKeyboardInputField" />
-
-          <TextView
-            android:id="@+id/pin_input_3"
-            style="@style/PinKeyboardInputField" />
-
-          <TextView
-            android:id="@+id/pin_input_4"
-            style="@style/PinKeyboardInputField" />
-
+            <TableRow
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+              <Button
+                android:id="@+id/pin_key_0"
+                style="@style/PinKeyboardKeyButton"
+                android:text="0"
+                android:padding="0dp"
+                android:layout_column="1"/>
+              <Button
+                android:id="@+id/pin_key_del"
+                style="@style/PinKeyboardKeyButton"
+                android:text="X"
+                android:layout_column="2"/>
+            </TableRow>
+          </TableLayout>
         </LinearLayout>
       </RelativeLayout>
     </LinearLayout>

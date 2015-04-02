@@ -1,5 +1,7 @@
 package com.onegini.actions;
 
+import static com.onegini.dialogs.PinDialogMessages.PIN_INVALID;
+import static com.onegini.dialogs.PinDialogMessages.REMAINING_ATTEMPTS_KEY;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_CLIENT_REG_FAILED;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_GRANT;
@@ -17,7 +19,10 @@ import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.content.Context;
+import android.content.Intent;
 import com.onegini.OneginiCordovaPlugin;
+import com.onegini.dialogs.PinScreenActivity;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiAuthorizationHandler;
 import com.onegini.scope.ScopeParser;
 import com.onegini.util.CallbackResultBuilder;
@@ -35,6 +40,8 @@ public class AuthorizeAction implements OneginiPluginAction {
     callbackResultBuilder = new CallbackResultBuilder();
   }
 
+  private Context context;
+
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
     if (args.length() != 1) {
@@ -42,6 +49,7 @@ public class AuthorizeAction implements OneginiPluginAction {
       return;
     }
     this.callbackContext = callbackContext;
+    this.context = client.getCordova().getActivity().getApplication();
 
     try {
       final String[] scopes = new ScopeParser().getScopesAsArray(args);
@@ -90,10 +98,16 @@ public class AuthorizeAction implements OneginiPluginAction {
 
         @Override
         public void authorizationErrorInvalidGrant(int remainingAttempts) {
-          sendCallbackResult(callbackResultBuilder
-              .withErrorReason(AUTHORIZATION_ERROR_INVALID_GRANT.getName())
-              .withRemainingAttempts(remainingAttempts)
-              .build());
+          // that is the only notification which impacts the pin screen within OneginiAuthorizationHandler
+          if (client.shouldUseNativeScreens()) {
+            notifyActivity(PIN_INVALID.replace(REMAINING_ATTEMPTS_KEY, Integer.toString(remainingAttempts)));
+          }
+          else {
+            sendCallbackResult(callbackResultBuilder
+                .withErrorReason(AUTHORIZATION_ERROR_INVALID_GRANT.getName())
+                .withRemainingAttempts(remainingAttempts)
+                .build());
+          }
         }
 
         @Override
@@ -146,4 +160,13 @@ public class AuthorizeAction implements OneginiPluginAction {
   private void sendCallbackResult(final PluginResult result) {
     callbackContext.sendPluginResult(result);
   }
+
+  private void notifyActivity(final String message) {
+    final Intent intent = new Intent(context, PinScreenActivity.class);
+    intent.putExtra("message", message);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+    context.startActivity(intent);
+  }
+
 }

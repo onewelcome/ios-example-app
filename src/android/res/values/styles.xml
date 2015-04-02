@@ -2,10 +2,10 @@
 <resources>
 
   <style name="PinKeyboardKeyButton">
-    <item name="android:layout_width">48dp</item>
-    <item name="android:layout_height">48dp</item>
+    <item name="android:layout_width">64dp</item>
+    <item name="android:layout_height">64dp</item>
     <item name="android:textColor">#FFF</item>
-    <item name="android:textSize">24sp</item>
+    <item name="android:textSize">30sp</item>
     <item name="android:layout_margin">5dp</item>
     <item name="android:gravity">center</item>
     <item name="android:textAlignment">center</item>

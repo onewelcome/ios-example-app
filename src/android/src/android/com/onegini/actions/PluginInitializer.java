@@ -1,6 +1,10 @@
 package com.onegini.actions;
 
 import static com.onegini.OneginiConstants.KEYSTORE_HASH;
+import static com.onegini.OneginiConstants.SHOULD_SHOW_NATIVE_SCREENS_CONFIG_PROPERTY;
+
+import org.apache.cordova.Config;
+import org.apache.cordova.CordovaPreferences;
 
 import android.app.Application;
 import android.content.Context;
@@ -42,8 +46,15 @@ public class PluginInitializer {
     client.setOneginiClient(oneginiClient);
 
     setupURLHandler(oneginiClient, configModel);
+    setupUseOfNativeScreens();
 
     configured = true;
+  }
+
+  private void setupUseOfNativeScreens() {
+    final CordovaPreferences preferences = Config.getPreferences();
+    final boolean shouldUseNativeScreens = preferences.getBoolean(SHOULD_SHOW_NATIVE_SCREENS_CONFIG_PROPERTY, true);
+    OneginiCordovaPlugin.setShouldShowNativeScreens(shouldUseNativeScreens);
   }
 
   private ConfigModel retrieveConfiguration(final OneginiCordovaPlugin client, final Application application) {

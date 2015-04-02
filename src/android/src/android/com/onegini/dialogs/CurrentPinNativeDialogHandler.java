@@ -1,6 +1,5 @@
 package com.onegini.dialogs;
 
-import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_CHOOSE_PIN;
 import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_ENTER_CURRENT_PIN;
 
 import android.content.Context;

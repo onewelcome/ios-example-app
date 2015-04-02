@@ -1,6 +1,7 @@
 package com.onegini.dialogs;
 
-import android.app.Activity;
+import org.apache.cordova.CordovaActivity;
+
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 import com.onegini.model.PinConfigModel;
 import com.onegini.util.JSONResourceReader;
 
-public class PinScreenActivity extends Activity {
+public class PinScreenActivity extends CordovaActivity {
 
   // this const might be configurable in next sprints
   private static final int MAX_DIGITS = 5;
@@ -51,14 +52,21 @@ public class PinScreenActivity extends Activity {
 
   private int deleteKeyFocusedResourceId;
 
+  private static PinScreenActivity instance;
+
+  public static PinScreenActivity getInstance() {
+    return instance;
+  }
+
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     resources = getResources();
     packageName = getPackageName();
     setContentView(resources.getIdentifier("activity_pin_screen", "layout", packageName));
-    init();
+    initialize();
     resetPin();
+    instance = this;
   }
 
   @Override
@@ -75,12 +83,12 @@ public class PinScreenActivity extends Activity {
 
   @Override
   protected void onNewIntent(final Intent intent) {
-    init();
-    resetPin();
     setIntent(intent);
+    updateTexts(intent);
+    resetPin();
   }
 
-  private void init() {
+  private void initialize() {
     initConfig();
     initAssets();
     initLayout();
@@ -148,11 +156,35 @@ public class PinScreenActivity extends Activity {
     errorTextView.setTypeface(customFont);
     pinLabelTextView.setTypeface(customFont);
 
-    final String title = getIntent().getStringExtra("title");
-    titleTextView.setText(title);
+    updateTexts(getIntent());
+  }
 
-    final String message = getIntent().getStringExtra("message");
-    errorTextView.setText(message);
+  private void updateTexts(final Intent intent) {
+    final String title = intent.getStringExtra("title");
+    if (isNotBlank(title)) {
+      titleTextView.setText(title);
+    }
+
+    final String message = intent.getStringExtra("message");
+    if (isNotBlank(message)) {
+      errorTextView.setText(message);
+      errorTextView.setVisibility(View.VISIBLE);
+    }
+    else {
+      errorTextView.setText("");
+      errorTextView.setVisibility(View.GONE);
+    }
+  }
+
+  private boolean isNotBlank(final String string) {
+    return !isBlank(string);
+  }
+
+  private boolean isBlank(final String string) {
+    if (string == null || string.length() == 0) {
+      return true;
+    }
+    return false;
   }
 
   private void initBackgrounds() {
@@ -253,6 +285,7 @@ public class PinScreenActivity extends Activity {
       pin[index] = '\0';
     }
     deleteButton.setVisibility(View.GONE);
+    cursorIndex = 0;
   }
 
   private String getDrawableNameFromFileName(final String filename) {

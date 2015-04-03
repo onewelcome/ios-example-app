@@ -1,0 +1,33 @@
+{
+	"pinKeyColor":"#ffffff",
+	"pinForegroundColor": "#ffffff",
+	"pinBackgroundColor": "#f0f0f0",
+	"pinLogoImage":"logo.png",
+	"pinKeyNormalStateImage":"pin_key_normal.png",
+	"pinKeyHighlightedStateImage":"pin_key_highlighted.png",
+	"pinDeleteKeyNormalStateImage":"pin_delete_key_normal.png",
+	"pinDeleteKeyHighlightedStateImage":"pin_delete_key_highlighted.png",
+	"ios": {
+		"pinKeyFontName":"SourceSansPro-Light",
+		"pinKeyFontSize":50.0,
+		"ipad":{
+			"landscape":{
+				"backgroundImage":"pin_container_ipad_landscape_bg.png",
+				"validationMessage" : {
+					"frame":[50.0, 206.0, 400.0, 24.0],
+					"fontSize":16.0,
+					"fontName":"SourceSansPro-Light",
+					"errorTextColor":"#ff0000",
+					"textColor":"#000000"
+				}
+			},
+			"portrait":{}
+		},
+		"iphone":{
+			"landscape":{},
+			"portrait":{}
+		}
+	},
+	"android": {},
+	"windows": {}
+}

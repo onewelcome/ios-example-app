@@ -141,11 +141,15 @@
     <source-file src="src/android/src/android/com/onegini/scope/ScopeParser.java" target-dir="src/com/onegini/scope/" />
     <source-file src="src/android/src/android/com/onegini/util/CallbackResultBuilder.java" target-dir="src/com/onegini/util/" />
     <source-file src="src/android/src/android/com/onegini/util/HashUtil.java" target-dir="src/com/onegini/util/" />
+    <source-file src="src/android/src/android/com/onegini/util/DeviceUtil.java" target-dir="src/com/onegini/util/" />
     <source-file src="src/android/lib/plugin-dependencies.jar" target-dir="libs/" />
     <source-file src="src/android/src/android/com/onegini/util/JSONResourceReader.java" target-dir="src/com/onegini/util/" />
 
     <source-file src="src/android/res/layout/activity_pin_screen.xml" target-dir="res/layout"/>
     <source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
+    <source-file src="src/android/res/values/bools.xml" target-dir="res/values"/>
+    <source-file src="src/android/res/values-sw600dp/bools.xml" target-dir="res/values-sw600dp"/>
+    <source-file src="src/android/res/values-xlarge/bools.xml" target-dir="res/values-xlarge"/>
     
     <resource-file src="src/android/res/raw/keystore.bks" target="res/raw/keystore.bks" />
     <resource-file src="src/android/config.json" target="res/raw/config.json" />

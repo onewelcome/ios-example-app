@@ -2,6 +2,7 @@ package com.onegini.dialogs;
 
 import org.apache.cordova.CordovaActivity;
 
+import android.content.pm.ActivityInfo;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.onegini.model.PinConfigModel;
+import com.onegini.util.DeviceUtil;
 import com.onegini.util.JSONResourceReader;
 
 public class PinScreenActivity extends CordovaActivity {
@@ -65,6 +67,7 @@ public class PinScreenActivity extends CordovaActivity {
     resources = getResources();
     packageName = getPackageName();
     setContentView(resources.getIdentifier("activity_pin_screen", "layout", packageName));
+    lockScreenOrientation();
     initialize();
     resetPin();
     instance = this;
@@ -87,6 +90,15 @@ public class PinScreenActivity extends CordovaActivity {
     setIntent(intent);
     updateTexts(intent);
     resetPin();
+  }
+
+  private void lockScreenOrientation() {
+    if (DeviceUtil.isTablet(this)) {
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    }
+    else {
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
   }
 
   private void initialize() {
@@ -135,6 +147,7 @@ public class PinScreenActivity extends CordovaActivity {
   }
 
   private void initLayout() {
+    setContentView(resources.getIdentifier("activity_pin_screen", "layout", packageName));
     initLogo();
     initTextViews();
     initBackgrounds();

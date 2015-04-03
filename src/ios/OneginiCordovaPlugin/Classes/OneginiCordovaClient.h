@@ -9,6 +9,7 @@
 #import <Cordova/CDV.h>
 #import "OneginiSDK.h"
 #import "PinEntryContainerViewController.h"
+#import "MainViewController.h"
 #import "Commons.h"
 
 @interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate, PinEntryContainerViewControllerDelegate>

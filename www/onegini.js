@@ -201,15 +201,6 @@ module.exports = {
     oneginiCordovaPlugin.invalidateSessionState();
   },
 
-  // TODO
-  openNativePinScreen: function () {
-    exec(function (response) {
-
-    }, function (error) {
-
-    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.OPEN_PIN_ACTIVITY, []);
-  },
-
   /**
    * Validates the PIN entered by the user. Can only be called within the authorization flow. In case of success, the
    * authorize function decides the next step. If something goes wrong, the errorCallback is called.
@@ -503,7 +494,5 @@ module.exports = {
     FETCH_RESOURCE: "fetchResource",
     FETCH_ANONYMOUS_RESOURCE: "fetchAnonymousResource",
     FETCH_RESOURCE_AUTH_FAILED: "resourceErrorAuthenticationFailed",
-
-    OPEN_PIN_ACTIVITY: "openPinActivity"
   }
 };

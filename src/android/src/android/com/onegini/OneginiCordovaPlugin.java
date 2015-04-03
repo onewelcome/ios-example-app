@@ -96,6 +96,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
       actionInstance.execute(args, callbackContext, this);
       return true;
     }
+    callbackContext.error("Action \"" + action + "\" is not supported");
     return false;
   }
 

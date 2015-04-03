@@ -1,7 +1,5 @@
 package com.onegini.model;
 
-import android.util.Log;
-
 import static com.onegini.mobile.sdk.android.library.OneginiConstants.DEFAULT_ENCODING;
 
 import java.nio.charset.Charset;
@@ -131,7 +129,6 @@ public class ConfigModel implements OneginiClientConfigModel {
   @Override
   public String getAppSecret() {
       final String secret = HashUtil.sha256(toString().getBytes(Charset.forName(DEFAULT_ENCODING)));
-      //Log.d("ConfigModel", " ------ SECRET ----" + secret);
       return secret;
   }
 

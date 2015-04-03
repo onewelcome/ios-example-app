@@ -490,9 +490,9 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 //        [self showPinEntryView];
 //        [self showPinEntryViewInMode:PINChangeNewPinMode];
     } else {
-	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askNewPinForChangeRequest" }];
-	result.keepCallback = @(1);
-	[self.commandDelegate sendPluginResult:result callbackId:pinDialogCommandTxId];
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askNewPinForChangeRequest" }];
+        result.keepCallback = @(1);
+        [self.commandDelegate sendPluginResult:result callbackId:pinDialogCommandTxId];
     }
 }
 

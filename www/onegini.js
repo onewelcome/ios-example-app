@@ -47,6 +47,20 @@ module.exports = {
   },
 
   /**
+   * Initiates static callback session to enable control over InAppBrowser from native code.
+   * @param errorCallback
+   */
+  initInAppBrowserCallbackSession: function (errorCallback) {
+    exec(function (response) {
+          if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.CLOSE_IN_APP_BROWSER) {
+            oneginiCordovaPlugin.closeInAppBrowser();
+          }
+        }, errorCallback,
+        oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.INIT_IN_APP_BROWSER_CONTROL_SESSION, []);
+
+  },
+
+  /**
    * Fetches a specific resource.
    * The access token validation flow is invoked if no valid access token is available.
    *
@@ -111,7 +125,7 @@ module.exports = {
    * @param errorCallback     Function to be called when user is not yet registered
    */
   isRegistered: function (successCallback, errorCallback) {
-    exec(function (response)  {
+    exec(function (response) {
       successCallback();
     }, function (error) {
       errorCallback();
@@ -152,9 +166,11 @@ module.exports = {
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_TOO_MANY_PIN_ATTEMPTS) {
         router.tooManyPinAttempts();
-      } else {
+      }
+      else {
         router.authorizationFailure(error, scopes)
-      };
+      }
+      ;
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, scopes);
   },
 
@@ -183,15 +199,6 @@ module.exports = {
       successCallback();
     }, errorCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.DISCONNECT, []);
     oneginiCordovaPlugin.invalidateSessionState();
-  },
-
-  // TODO
-  openNativePinScreen: function() {
-    exec(function (response) {
-
-    }, function (error) {
-
-    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.OPEN_PIN_ACTIVITY, []);
   },
 
   /**
@@ -416,7 +423,8 @@ module.exports = {
     if (oneginiCordovaPlugin.isAndroid() && oneginiCordovaPlugin.inAppBrowser.hide) {
       oneginiCordovaPlugin.inAppBrowser.open("about:blank", '_blank', 'location=no,toolbar=no,clearcache=yes');
       oneginiCordovaPlugin.inAppBrowser.hide();
-    } else if (oneginiCordovaPlugin.isiOS() && oneginiCordovaPlugin.inAppBrowser.close){
+    }
+    else if (oneginiCordovaPlugin.isiOS() && oneginiCordovaPlugin.inAppBrowser.close) {
       oneginiCordovaPlugin.inAppBrowser.close();
     }
   },
@@ -433,7 +441,7 @@ module.exports = {
    * Determines whenever userAgent is iOS.
    * @returns {boolean}
    */
-  isiOS: function (){
+  isiOS: function () {
     return ( navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0 || navigator.userAgent.indexOf("iPod") > 0);
   },
 
@@ -447,6 +455,9 @@ module.exports = {
 
     AWAIT_PLUGIN_INITIALIZATION: "awaitPluginInitialization",
     INIT_PIN_CALLBACK_SESSION: "initPinCallbackSession",
+    INIT_IN_APP_BROWSER_CONTROL_SESSION: "inAppBrowserControlSession",
+    CLOSE_IN_APP_BROWSER: "closeInAppBrowser",
+
     IS_REGISTERED: "isRegistered",
 
     AUTHORIZATION_AUTHORIZE: "authorize",
@@ -483,7 +494,5 @@ module.exports = {
     FETCH_RESOURCE: "fetchResource",
     FETCH_ANONYMOUS_RESOURCE: "fetchAnonymousResource",
     FETCH_RESOURCE_AUTH_FAILED: "resourceErrorAuthenticationFailed",
-
-    OPEN_PIN_ACTIVITY: "openPinActivity"
   }
 };

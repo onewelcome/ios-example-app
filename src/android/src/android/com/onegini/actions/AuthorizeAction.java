@@ -159,7 +159,9 @@ public class AuthorizeAction implements OneginiPluginAction {
   }
 
   private void sendCallbackResult(final PluginResult result) {
-    PinScreenActivity.getInstance().finish();
+    if (PinScreenActivity.getInstance() != null) {
+      PinScreenActivity.getInstance().finish();
+    }
     callbackContext.sendPluginResult(result);
   }
 

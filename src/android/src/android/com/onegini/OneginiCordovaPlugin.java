@@ -12,6 +12,7 @@ import static com.onegini.OneginiConstants.DISCONNECT_ACTION;
 import static com.onegini.OneginiConstants.FETCH_ANONYMOUS_ACTION;
 import static com.onegini.OneginiConstants.FETCH_RESOURCE_ACTION;
 import static com.onegini.OneginiConstants.INIT_PIN_CALLBACK_SESSION;
+import static com.onegini.OneginiConstants.IN_APP_BROWSER_CONTROL_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.LOGOUT_ACTION;
 import static com.onegini.OneginiConstants.MOBILE_AUTHENTICATION_ACTION;
 import static com.onegini.OneginiConstants.VALIDATE_PIN_ACTION;
@@ -36,6 +37,7 @@ import com.onegini.actions.CheckIsRegisteredAction;
 import com.onegini.actions.DisconnectAction;
 import com.onegini.actions.FetchResourceAction;
 import com.onegini.actions.FetchResourceAnonymouslyAction;
+import com.onegini.actions.InAppBrowserControlSession;
 import com.onegini.actions.LogoutAction;
 import com.onegini.actions.MobileAuthenticationAction;
 import com.onegini.actions.OneginiPluginAction;
@@ -47,13 +49,16 @@ import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
 
 public class OneginiCordovaPlugin extends CordovaPlugin {
+
   private static Map<String, Class<? extends OneginiPluginAction>> actions = new HashMap<String, Class<? extends OneginiPluginAction>>();
   private OneginiClient oneginiClient;
+  private boolean shouldUseNativeScreens;
 
   @Override
   protected void pluginInitialize() {
     actions.put(AWAIT_INITIALIZATION, AwaitInitialization.class);
     actions.put(INIT_PIN_CALLBACK_SESSION, PinCallbackSession.class);
+    actions.put(IN_APP_BROWSER_CONTROL_CALLBACK_SESSION, InAppBrowserControlSession.class);
 
     actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
     actions.put(CONFIRM_CURRENT_PIN_ACTION, PinProvidedAction.class);
@@ -90,12 +95,6 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
       }
       actionInstance.execute(args, callbackContext, this);
       return true;
-    }
-    // TODO test call
-    else if (action.equals("openPinActivity")) {
-      final Context context = cordova.getActivity().getApplicationContext();
-      final Intent intent = new Intent(context, PinScreenActivity.class);
-      cordova.startActivityForResult(this, intent, 0); //TODO change 0 for ID
     }
     callbackContext.error("Action \"" + action + "\" is not supported");
     return false;
@@ -135,5 +134,13 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
       throw new RuntimeException("client not initialized");
     }
     return oneginiClient;
+  }
+
+  public void setShouldUseNativeScreens(final boolean shouldUseNativeScreens) {
+    this.shouldUseNativeScreens = shouldUseNativeScreens;
+  }
+
+  public boolean shouldUseNativeScreens() {
+    return shouldUseNativeScreens;
   }
 }

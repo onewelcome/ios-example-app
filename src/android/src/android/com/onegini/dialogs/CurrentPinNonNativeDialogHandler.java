@@ -9,11 +9,11 @@ import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler
 import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCurrentPinDialog;
 import com.onegini.util.CallbackResultBuilder;
 
-public class CurrentPinDialogHandler implements OneginiCurrentPinDialog {
+public class CurrentPinNonNativeDialogHandler implements OneginiCurrentPinDialog {
 
   private final CallbackResultBuilder callbackResultBuilder;
 
-  public CurrentPinDialogHandler() {
+  public CurrentPinNonNativeDialogHandler() {
     callbackResultBuilder = new CallbackResultBuilder();
   }
 

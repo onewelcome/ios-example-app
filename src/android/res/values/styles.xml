@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="PinKeyboardKeyButton">
+    <item name="android:layout_width">64dp</item>
+    <item name="android:layout_height">64dp</item>
+    <item name="android:textColor">#FFF</item>
+    <item name="android:textSize">36sp</item>
+    <item name="android:layout_margin">5dp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textAlignment">center</item>
+    <item name="android:scaleType">fitXY</item>
+  </style>
+
+  <style name="PinKeyboardInputField">
+    <item name="android:layout_width">12dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textColor">#000</item>
+    <item name="android:textSize">20sp</item>
+    <item name="android:layout_margin">8dp</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+
+</resources>

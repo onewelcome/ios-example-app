@@ -15,7 +15,8 @@ public class AwaitInitialization implements OneginiPluginAction {
     }
 
     if (PluginInitializer.isConfigured() &&
-        isPinCallbackSessionSet()) {
+        isPinCallbackSessionSet() &&
+        isInAppBrowserControlCallbackSessionSet()) {
       pluginInitializedCallback.success();
     }
   }
@@ -37,5 +38,9 @@ public class AwaitInitialization implements OneginiPluginAction {
 
   private static boolean isPinCallbackSessionSet() {
     return PinCallbackSession.getPinCallback() != null;
+  }
+
+  private static boolean isInAppBrowserControlCallbackSessionSet() {
+    return InAppBrowserControlSession.getInAppBrowserControlCallback() != null;
   }
 }

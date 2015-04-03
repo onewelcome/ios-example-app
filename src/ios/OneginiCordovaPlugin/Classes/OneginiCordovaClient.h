@@ -8,16 +8,22 @@
 
 #import <Cordova/CDV.h>
 #import "OneginiSDK.h"
+#import "PinEntryContainerViewController.h"
+#import "MainViewController.h"
+#import "Commons.h"
 
-@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate>
+@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate, PinEntryContainerViewControllerDelegate>
 
 @property (strong, nonatomic) OGOneginiClient *oneginiClient;
 @property (strong, nonatomic) OGConfigModel *configModel;
+
+@property (strong, nonatomic) PinEntryContainerViewController *pinViewController;
 
 @property (copy, nonatomic) NSString *pluginInitializedCommandTxId;
 @property (copy, nonatomic) NSString *authorizeCommandTxId;
 @property (copy, nonatomic) NSString *fetchResourceCommandTxId;
 @property (copy, nonatomic) NSString *pinDialogCommandTxId;
+@property (copy, nonatomic) NSString *inAppBrowserCommandTxId;
 @property (copy, nonatomic) NSString *pinValidateCommandTxId;
 @property (copy, nonatomic) NSString *pinChangeCommandTxId;
 
@@ -38,6 +44,11 @@
  */
 - (void)initPinCallbackSession:(CDVInvokedUrlCommand *)command;
 
+/**
+ Register a callback to be used for managing inAppBrowser
+ */
+- (void)initInAppBrowserCallbackSession:(CDVInvokedUrlCommand *)command;
+        
 /**
  Determine if the user is registered.
  */

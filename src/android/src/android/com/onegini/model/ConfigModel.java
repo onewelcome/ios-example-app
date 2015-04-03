@@ -61,9 +61,6 @@ public class ConfigModel implements OneginiClientConfigModel {
 
   @Override
   public String getBaseUrl() {
-    final String secret = HashUtil.sha256(toString().getBytes(Charset.forName(DEFAULT_ENCODING)));
-    Log.d("ConfigModel", " ------ SECRET ---- " + secret);
-
     return baseUrl;
   }
 

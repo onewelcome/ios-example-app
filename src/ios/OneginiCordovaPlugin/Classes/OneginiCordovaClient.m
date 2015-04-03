@@ -56,7 +56,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     [CDVPluginResult setVerbose:YES];
 #endif
 	pinEntryMode = PINEntryModeUnknown;
-	
+    
     NSString *configJsonFilePath = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"json"];
     NSData *configJsonData = [NSData dataWithContentsOfFile:configJsonFilePath];
     NSError *deserializationError = nil;
@@ -143,6 +143,23 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
             [self sendSuccessCallback:pluginInitializedCommandTxId];
         else
             [self sendErrorCallback:pluginInitializedCommandTxId];
+    }
+}
+
+- (void)initInAppBrowserCallbackSession:(CDVInvokedUrlCommand *)command
+{
+    self.inAppBrowserCommandTxId = command.callbackId;
+
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    pluginResult.keepCallback = @(1);
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.inAppBrowserCommandTxId];
+    
+    if (self.pluginInitializedCommandTxId)
+    {
+        if(self.initializationSuccessful)
+            [self sendSuccessCallback:self.inAppBrowserCommandTxId];
+        else
+            [self sendErrorCallback:self.inAppBrowserCommandTxId];
     }
 }
 
@@ -467,8 +484,11 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	}
     if (useNativePinView) {
         pinEntryMode = PINChangeNewPinMode;
+        [self.pinViewController reset];
+        self.pinViewController.mode = pinEntryMode;
+        [self.pinViewController setMessage:@"Insert new pincode"];
 //        [self showPinEntryView];
-        [self showPinEntryViewInMode:PINChangeNewPinMode];
+//        [self showPinEntryViewInMode:PINChangeNewPinMode];
     } else {
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askNewPinForChangeRequest" }];
 	result.keepCallback = @(1);
@@ -512,7 +532,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 		}
 	} else {
 #warning TODO add messages to pin-config.json
-		[self.pinViewController invalidPinWithReason:[NSString stringWithFormat:NSLocalizedString(@"Verkeerde toegangscode ingevuld, u heeft nog %ld pogingen.", nil), (unsigned long)remaining]];
+		[self.pinViewController invalidPinWithReason:[NSString stringWithFormat:NSLocalizedString(@"Invalid pincode, you have %ld more attempts.", nil), (unsigned long)remaining]];
 	}
 }
 
@@ -646,7 +666,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 - (void)pinBlackListed {
 	if (self.pinViewController != nil) {
 		[self retryPinEntryAfterValidationFailure];
-		[self.pinViewController invalidPinWithReason:NSLocalizedString(@"Toegangscode is niet toegestaan", nil)];
+		[self.pinViewController invalidPinWithReason:NSLocalizedString(@"Pincode is not allowed", nil)];
 	} else {
 		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 												messageAsDictionary:@{ kReason:@"pinBlackListed" }];
@@ -658,7 +678,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 - (void)pinShouldNotBeASequence {
 	if (self.pinViewController != nil) {
 		[self retryPinEntryAfterValidationFailure];
-		[self.pinViewController invalidPinWithReason:NSLocalizedString(@"Toegangscode mag niet bestaan uit opvolgende cijfers", nil)];
+		[self.pinViewController invalidPinWithReason:NSLocalizedString(@"Pincode should not consist of consecutive numbers", nil)];
 	} else {
 		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 												messageAsDictionary:@{ kReason:@"pinShouldNotBeASequence" }];
@@ -669,7 +689,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 - (void)pinShouldNotUseSimilarDigits:(NSUInteger)count {
 	if (self.pinViewController != nil) {
 		[self retryPinEntryAfterValidationFailure];
-		[self.pinViewController invalidPinWithReason:[NSString stringWithFormat:NSLocalizedString(@"Toegangscode mag niet %d dezelfde cijfers bevatten", nil), count]];
+		[self.pinViewController invalidPinWithReason:[NSString stringWithFormat:NSLocalizedString(@"Pincode should not contain %d the same digits", nil), count]];
 	} else {
 		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 												messageAsDictionary:@{ kReason:@"pinShouldNotUseSimilarDigits", kMaxSimilarDigits:@(count) }];
@@ -680,7 +700,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 - (void)pinTooShort {
 	if (self.pinViewController != nil) {
 		[self retryPinEntryAfterValidationFailure];
-		[self.pinViewController invalidPinWithReason:NSLocalizedString(@"Toegangscode is te kort", nil)];
+		[self.pinViewController invalidPinWithReason:NSLocalizedString(@"Pincode is too short", nil)];
 	} else {
 		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 												messageAsDictionary:@{ kReason:@"pinTooShort" }];
@@ -706,7 +726,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 		return;
 	}
     if (self.pinViewController){
-        [self.pinViewController invalidPin];
+        [self.pinViewController invalidPinWithReason:@"Invalid pin"];
     }
     else{
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"pinChangeError", kError:error.userInfo} ];
@@ -722,7 +742,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 		return;
 	}
     if (self.pinViewController){
-        [self.pinViewController invalidPin];
+        [self.pinViewController invalidPinWithReason:@"Invalid pin"];
     }
     else{
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"invalidCurrentPin"} ];
@@ -737,9 +757,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 #endif
 		return;
 	}
-	
     if (self.pinViewController){
-        [self.pinViewController invalidPin];
+        [self.pinViewController invalidPinWithReason: [NSString stringWithFormat:@"Invalid pin, you have %lu more attempts",(unsigned long)remaining]];
     }
     else{
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"invalidCurrentPin", kRemainingAttempts:@(remaining)} ];
@@ -754,13 +773,9 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 #endif
         return;
     }
-    if (self.pinViewController){
-        [self.pinViewController invalidPin];
-    }
-    else{
-        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"pinChangeErrorTooManyAttempts"} ];
-        [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
-    }
+    [self closePinView];
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"pinChangeErrorTooManyAttempts"} ];
+    [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
 }
 
 - (void)pinChanged {
@@ -786,7 +801,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 		return;
 	}
     if (self.pinViewController){
-        [self.pinViewController invalidPin];
+        [self.pinViewController invalidPinWithReason:@"Invalid pin"];
     }
     else{
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"pinChangeError"} ];
@@ -834,24 +849,24 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 /**
  Load the custom configuration and overlay the current view with the custom PIN entry view
  */
-- (void)showPinEntryView {
-	// Load customization from a generic JSON config file
-	NSString *path = [[NSBundle mainBundle] pathForResource:@"pin-config" ofType:@"json"];
-	NSData *data = [NSData dataWithContentsOfFile:path];
-	NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-
-	self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
-	self.pinViewController.delegate = self;
-
-	// See INVESTIGATE warning on the askForNewPin method regarding the main view controller issue.
-    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    while (topViewController.presentedViewController) {
-        topViewController = topViewController.presentedViewController;
-    }
-    [topViewController presentViewController:self.pinViewController animated:YES completion:^{
-		[self.pinViewController applyConfig:config];
-	}];
-}
+//- (void)showPinEntryView {
+//	// Load customization from a generic JSON config file
+//	NSString *path = [[NSBundle mainBundle] pathForResource:@"pin-config" ofType:@"json"];
+//	NSData *data = [NSData dataWithContentsOfFile:path];
+//	NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//
+//	self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
+//	self.pinViewController.delegate = self;
+//
+//	// See INVESTIGATE warning on the askForNewPin method regarding the main view controller issue.
+//    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+//    while (topViewController.presentedViewController) {
+//        topViewController = topViewController.presentedViewController;
+//    }
+//    [topViewController presentViewController:self.pinViewController animated:YES completion:^{
+//		[self.pinViewController applyConfig:config];
+//	}];
+//}
 
 - (void)showPinEntryViewInMode:(PINEntryModes)mode {
     // Load customization from a generic JSON config file
@@ -862,15 +877,36 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
     self.pinViewController.delegate = self;
     
-    // See INVESTIGATE warning on the askForNewPin method regarding the main view controller issue.
-    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    while (topViewController.presentedViewController) {
-        topViewController = topViewController.presentedViewController;
+//    // See INVESTIGATE warning on the askForNewPin method regarding the main view controller issue.
+//    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+//    while (topViewController.presentedViewController) {
+//        topViewController = topViewController.presentedViewController;
+//    }
+    
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{kMethod:@"closeInAppBrowser"}];
+    pluginResult.keepCallback = @(1);
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.inAppBrowserCommandTxId];
+    
+    if (self.pluginInitializedCommandTxId)
+    {
+        if(self.initializationSuccessful)
+            [self sendSuccessCallback:self.inAppBrowserCommandTxId];
+        else
+            [self sendErrorCallback:self.inAppBrowserCommandTxId];
     }
-    [topViewController presentViewController:self.pinViewController animated:YES completion:^{
-        [self.pinViewController applyConfig:config];
-        self.pinViewController.mode = mode;
-    }];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        while (topViewController.presentedViewController) {
+            topViewController = topViewController.presentedViewController;
+        }
+        [topViewController presentViewController:self.pinViewController animated:YES completion:^{
+            [self.pinViewController applyConfig:config];
+            self.pinViewController.mode = mode;
+        }];
+    });
+
+    
 }
 
 /**
@@ -896,6 +932,42 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	}
 }
 
+-(bool)isPinValid:(NSString*)pin
+{
+    NSError* error;
+    if(![oneginiClient isPinValid:verifyPin error:&error])
+    {
+        switch (error.code) {
+            case 0: {
+                [self pinShouldNotBeASequence];
+                break;
+            }
+            case 1: {
+                NSNumber *n = error.userInfo[@"kMaxSimilarDigits"];
+                [self pinShouldNotUseSimilarDigits:n.integerValue];
+                break;
+            }
+            case 2: {
+                [self pinTooShort];
+                break;
+            }
+            case 3: {
+                [self pinBlackListed];
+                break;
+            }
+            default: {
+                //                        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
+                //                        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                break;
+            }
+        }
+        return NO;
+    }
+    else
+        return YES;
+
+}
+
 #pragma mark -
 #pragma mark PinEntryContainerViewControllerDelegate
 - (void)pinEntered:(PinEntryContainerViewController *)controller pin:(NSString *)pin {
@@ -909,11 +981,17 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 		case PINRegistrationMode: {
 			verifyPin = [pin copy];
 
-			// Switch to registration mode so the user can enter the second verification PIN
-			pinEntryMode = PINRegistrationVerififyMode;
-			[self.pinViewController setMessage:NSLocalizedString(@"Insert pincode again for verification", nil)];
-			[self.pinViewController reset];
-
+            if(![self isPinValid:verifyPin])
+            {
+                [self.pinViewController reset];
+            }
+            else
+            {
+                // Switch to registration mode so the user can enter the second verification PIN
+                pinEntryMode = PINRegistrationVerififyMode;
+                [self.pinViewController setMessage:NSLocalizedString(@"Insert pincode again for verification", nil)];
+                [self.pinViewController reset];
+            }
 			break;
 		}
 		case PINRegistrationVerififyMode: {
@@ -936,12 +1014,17 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
         }
         case PINChangeNewPinMode: {
             verifyPin = [pin copy];
-            
-            
-            pinEntryMode = PINChangeNewPinVerifyMode;
-            [self.pinViewController setMessage:NSLocalizedString(@"Insert pincode again for verification", nil)];
-            [self.pinViewController reset];
-            
+            if(![self isPinValid:verifyPin])
+            {
+                [self.pinViewController reset];
+            }
+            else
+            {
+                pinEntryMode = PINChangeNewPinVerifyMode;
+                
+                [self.pinViewController setMessage:NSLocalizedString(@"Insert pincode again for verification", nil)];
+                [self.pinViewController reset];
+            }
             break;
         }
         case PINChangeNewPinVerifyMode: {
@@ -949,7 +1032,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
                 // Perform a retry of the PIN entry
                 verifyPin = nil;
                 [self.pinViewController invalidPinWithReason:NSLocalizedString(@"Pincodes are not equal, re-enter the codes", nil)];
-                pinEntryMode = PINChangeCheckMode;
+                pinEntryMode = PINChangeNewPinMode;
             } else {
                 // The user entered the second verification PIN, check if they are equal and confirm the PIN
                 verifyPin = nil;

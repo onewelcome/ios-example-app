@@ -123,6 +123,10 @@
 			pin.alpha = i < pinEntry.count ? 1.0 : 0.0;
 		}];
 	}
+    if (pinEntry.count == 0)
+        self.backKey.hidden = YES;
+    else
+        self.backKey.hidden = NO;
 }
 
 - (void)resetPin {

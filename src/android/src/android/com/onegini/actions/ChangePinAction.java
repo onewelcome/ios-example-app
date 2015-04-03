@@ -97,7 +97,9 @@ public class ChangePinAction implements OneginiPluginAction {
 
   private void sendCallbackResult(final PluginResult result) {
     changePinCallback.sendPluginResult(result);
-    PinScreenActivity.getInstance().finish();
+    if (PinScreenActivity.getInstance() != null) {
+      PinScreenActivity.getInstance().finish();
+    }
     clearChangePinSessionState();
   }
 }

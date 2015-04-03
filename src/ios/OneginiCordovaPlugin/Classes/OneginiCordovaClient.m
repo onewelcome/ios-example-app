@@ -65,8 +65,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
         [configuration setObject:[self getDeviceName] forKey:kOGDeviceName];
     }
 	
-	NSNumber *n = [configuration objectForKey:kOGUseNativePinView];
-	useNativePinView = n == nil ? NO : n.boolValue;
+    NSString *shouldShowNativaScreens = [((MainViewController*)self.viewController).settings objectForKey:@"shouldshownativescreens"];
+    useNativePinView = [shouldShowNativaScreens isEqualToString:@"true"] ? YES : NO;
 	
     self.configModel = [[OGConfigModel alloc] initWithDictionary:configuration];
     self.oneginiClient = [[OGOneginiClient alloc] initWithConfig:configModel delegate:self];
@@ -433,7 +433,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	if (useNativePinView) {
 		pinEntryMode = PINCheckMode;
         [self showPinEntryViewInMode:PINCheckMode];
-//		[self showPinEntryView];
 	} else {
 		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForCurrentPin"}];
 		result.keepCallback = @(1);
@@ -450,23 +449,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	}
 	
 	if (useNativePinView) {
-#warning INVESTIGATE workaround for main view controller not within view hierarchy
-		// If no callback is performed then the main view controller is not within the view hierarchy
-		// Maybe a dummy callback will suffice this needs te be investigated.
-		// Another possible alternative is to find the parent view controller of the embedded webview.
-        
         pinEntryMode = PINRegistrationMode;
-//        [self showPinEntryView];
         [self showPinEntryViewInMode:PINRegistrationMode];
-        
-//		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForNewPin" }];
-//		result.keepCallback = @(1);
-//		[self.commandDelegate sendPluginResult:result callbackId:pinDialogCommandTxId];
-//		
-//		pinEntryMode = PINRegistrationMode;
-//		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//			[self showPinEntryView];
-//		});
 
 	} else {
 		CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForNewPin" }];
@@ -487,8 +471,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
         [self.pinViewController reset];
         self.pinViewController.mode = pinEntryMode;
         [self.pinViewController setMessage:@"Insert new pincode"];
-//        [self showPinEntryView];
-//        [self showPinEntryViewInMode:PINChangeNewPinMode];
     } else {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askNewPinForChangeRequest" }];
         result.keepCallback = @(1);
@@ -613,43 +595,52 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 - (void)resourceSuccess:(id)response {
 	CDVPluginResult *result;
 	
-	if ([response isKindOfClass:[NSData class]]) {
-		NSData *data = response;
-		NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    [self closePinView];
 
-		result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
-	} else {
-		result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArrayBuffer:response];
-	}
+    if ([response isKindOfClass:[NSData class]]) {
+        NSData *data = response;
+        NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 
-	[self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
+        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
+    } else {
+        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArrayBuffer:response];
+    }
+
+    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
+
 }
 
 - (void)resourceError {
+   
+    [self closePinView];
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 											messageAsDictionary:@{ kReason:@"resourceError" }];
 	[self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
 }
 
 - (void)resourceBadRequest {
+    [self closePinView];
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 											messageAsDictionary:@{ kReason:@"resourceBadRequest" }];
 	[self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
 }
 
 - (void)scopeError {
+    [self closePinView];
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 											messageAsDictionary:@{ kReason:@"scopeError" }];
 	[self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
 }
 
 - (void)unauthorizedClient {
+    [self closePinView];
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 											messageAsDictionary:@{ kReason:@"unauthorizedClient" }];
 	[self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
 }
 
 - (void)resourceErrorAuthenticationFailed {
+    [self closePinView];
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 											messageAsDictionary:@{ kReason:@"resourceErrorAuthenticationFailed" }];
 	[self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
@@ -849,24 +840,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 /**
  Load the custom configuration and overlay the current view with the custom PIN entry view
  */
-//- (void)showPinEntryView {
-//	// Load customization from a generic JSON config file
-//	NSString *path = [[NSBundle mainBundle] pathForResource:@"pin-config" ofType:@"json"];
-//	NSData *data = [NSData dataWithContentsOfFile:path];
-//	NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-//
-//	self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
-//	self.pinViewController.delegate = self;
-//
-//	// See INVESTIGATE warning on the askForNewPin method regarding the main view controller issue.
-//    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-//    while (topViewController.presentedViewController) {
-//        topViewController = topViewController.presentedViewController;
-//    }
-//    [topViewController presentViewController:self.pinViewController animated:YES completion:^{
-//		[self.pinViewController applyConfig:config];
-//	}];
-//}
 
 - (void)showPinEntryViewInMode:(PINEntryModes)mode {
     // Load customization from a generic JSON config file
@@ -876,12 +849,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     
     self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
     self.pinViewController.delegate = self;
-    
-//    // See INVESTIGATE warning on the askForNewPin method regarding the main view controller issue.
-//    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-//    while (topViewController.presentedViewController) {
-//        topViewController = topViewController.presentedViewController;
-//    }
     
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{kMethod:@"closeInAppBrowser"}];
     pluginResult.keepCallback = @(1);
@@ -905,8 +872,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
             self.pinViewController.mode = mode;
         }];
     });
-
-    
 }
 
 /**
@@ -956,8 +921,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
                 break;
             }
             default: {
-                //                        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
-                //                        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
                 break;
             }
         }
@@ -971,7 +934,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 #pragma mark -
 #pragma mark PinEntryContainerViewControllerDelegate
 - (void)pinEntered:(PinEntryContainerViewController *)controller pin:(NSString *)pin {
-#warning WORK IN PROGRESS
 	
 	switch (pinEntryMode) {
 		case PINCheckMode: {

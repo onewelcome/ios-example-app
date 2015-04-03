@@ -22,6 +22,7 @@
 @property (copy, nonatomic) NSString *authorizeCommandTxId;
 @property (copy, nonatomic) NSString *fetchResourceCommandTxId;
 @property (copy, nonatomic) NSString *pinDialogCommandTxId;
+@property (copy, nonatomic) NSString *inAppBrowserCommandTxId;
 @property (copy, nonatomic) NSString *pinValidateCommandTxId;
 @property (copy, nonatomic) NSString *pinChangeCommandTxId;
 
@@ -42,6 +43,11 @@
  */
 - (void)initPinCallbackSession:(CDVInvokedUrlCommand *)command;
 
+/**
+ Register a callback to be used for managing inAppBrowser
+ */
+- (void)initInAppBrowserCallbackSession:(CDVInvokedUrlCommand *)command;
+        
 /**
  Determine if the user is registered.
  */

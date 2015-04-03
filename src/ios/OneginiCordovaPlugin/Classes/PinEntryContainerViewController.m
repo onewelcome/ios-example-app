@@ -27,10 +27,6 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 	self.pinEntryViewController.delegate = self;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-	return UIInterfaceOrientationPortrait;
-}
-
 - (NSUInteger)supportedInterfaceOrientations {
     if([[UIDevice currentDevice].model containsString:@"iPhone"])
         return UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskPortraitUpsideDown;
@@ -145,16 +141,9 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 
 -(void)setMode:(PINEntryModes)mode
 {
-//    PINEntryModeUnknown,
-//    PINCheckMode,					// Ask current PIN
-//    PINRegistrationMode,			// Ask new PIN first entry
-//    PINRegistrationVerififyMode,	// Ask new PIN second entry (verification)
-//    PINChangeCheckMode,				// Ask current PIN for change PIN request
-//    PINChangeNewPinMode,			// Ask new PIN first entry for change PIN request
-//    PINChangeNewPinVerifyMode
     switch (mode) {
         case PINCheckMode:
-            self.titleLabel.text = @"Input pincode";
+            self.titleLabel.text = @"Login with pin";
             break;
         case PINRegistrationMode:
             self.titleLabel.text = @"Create pin";
@@ -163,7 +152,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             self.titleLabel.text = @"Verify pin";
             break;
         case PINChangeCheckMode:
-            self.titleLabel.text = @"Input pincode";
+            self.titleLabel.text = @"Insert pin";
             break;
         case PINChangeNewPinMode:
             self.titleLabel.text = @"Change pin";

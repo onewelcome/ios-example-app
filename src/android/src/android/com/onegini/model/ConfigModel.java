@@ -4,6 +4,7 @@ import static com.onegini.mobile.sdk.android.library.OneginiConstants.DEFAULT_EN
 
 import java.nio.charset.Charset;
 
+import android.os.Build;
 import com.google.gson.annotations.SerializedName;
 import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
 import com.onegini.util.HashUtil;
@@ -30,8 +31,6 @@ public class ConfigModel implements OneginiClientConfigModel {
   private boolean shouldConfirmNewPin;
   @SerializedName("kOGShouldDirectlyShowPushMessage")
   private boolean shouldDirectlyShowPushMessage;
-  @SerializedName("deviceName")
-  private String deviceName;
 
   @SerializedName("kOGUseEmbeddedWebview")
   private boolean useEmbeddedWebview;
@@ -104,7 +103,7 @@ public class ConfigModel implements OneginiClientConfigModel {
 
   @Override
   public String getDeviceName() {
-    return deviceName;
+    return Build.BRAND + " " + Build.MODEL;
   }
 
   @Override

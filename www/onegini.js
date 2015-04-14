@@ -64,10 +64,22 @@ module.exports = {
    * Fetches a specific resource.
    * The access token validation flow is invoked if no valid access token is available.
    *
-   * @param {Function} successCallback  Function that can handle the successful resource call. Is called with a JSON
-   *                                    response object as argument.
-   * @param {Function} errorCallback    Function that can handle an unsuccessful resource call. Is called with the
-   *                                    error object as argument.
+   * @param {Object} router             Object that can handle page transition for the outcome of the authorization.
+   *                                    Should at least implement the following methods:
+   *                                    - resourceFetched -> method to be called once resource is successfully fetched,
+   *                                    resource content is passed as a param
+   *                                    - notConnected -> method called whenever plugin isn't able to establish network
+   *                                    connection
+   *                                    - resourceCallError -> indicates general resource call error
+   *                                    - resourceCallAuthenticationFailed -> called whenever authentication for
+   *                                    accessing specific resource fails
+   *                                    - resourceCallScopeError -> method called when the scope linked to the provided
+   *                                    access token is not the needed scope
+   *                                    - resourceCallBadRequest -> resource call ended up with bad request
+   *                                    - resourceCallUnauthorized -> method called requested grant type is not allowed
+   *                                    for this client
+   *                                    - resourceCallInvalidGrant -> Method called when the grant type to get
+   *                                    the client credentials is not enabled
    * @param {String} path               Location on the resource server to return the resource. The base URI of the
    *                                    resource server is.
    * @param {Array} scopes              Array of Strings with scopes to fetch the resource.
@@ -75,16 +87,34 @@ module.exports = {
    * @param {String} paramsEncoding     Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
    * @param {Object} params             Parameters to send with the request.
    */
-  fetchResource: function (successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params) {
+  fetchResource: function (router, path, scopes, requestMethod, paramsEncoding, params) {
     oneginiCordovaPlugin.preserveCurrentLocation();
 
     exec(function (response) {
       if (successCallback) {
-        successCallback(response);
+        router.resourceFetched(response);
       }
     }, function (error) {
-      if (errorCallback) {
-        errorCallback(error);
+      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.NO_INTERNET_CONNECTION) {
+        router.notConnected();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_ERROR) {
+        router.resourceCallError();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_AUTH_FAILED) {
+        router.resourceCallAuthenticationFailed();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_SCOPE_ERROR) {
+        router.resourceCallScopeError();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_BAD_REQUEST) {
+        router.resourceCallBadRequest();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_UNAUTHORIZED) {
+        router.resourceCallUnauthorized();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_INVALID_GRANT) {
+        router.resourceCallInvalidGrant();
       }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, [path, scopes, requestMethod, paramsEncoding, params]);
   },
@@ -146,7 +176,8 @@ module.exports = {
    *                                         is called, the authorization transaction is lost. The authorize method
    *                                         must be called again to continue with the authorization flow. It may
    *                                         require to keep an internal state to display error messages such as
-   *                                         'Invalid PIN code, try again'.
+   *                                         'Invalid PIN code, try again'
+   *                          - notConnected -> method called whenever plugin isn't able to establish network connection
    * @param {Array} scopes    {Array} with {String}s that represent the scopes for the access token
    */
   authorize: function (router, scopes) {
@@ -166,6 +197,9 @@ module.exports = {
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_TOO_MANY_PIN_ATTEMPTS) {
         router.tooManyPinAttempts();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.NO_INTERNET_CONNECTION) {
+        router.notConnected();
       }
       else {
         router.authorizationFailure(error, scopes)
@@ -259,6 +293,7 @@ module.exports = {
    *                          - invalidCurrentPin(remainingAttempts) -> should handle invalid current PIN
    *                                          in change PIN flow
    *                          - tooManyPinAttempts -> method called once user exceeds allowed number of PIN attempts
+   *                          - notConnected -> method called whenever plugin isn't able to establish network connection
    */
   changePin: function (router) {
     exec(function (response) {
@@ -273,13 +308,16 @@ module.exports = {
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE_ERROR) {
         router.changePinError();
       }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.NO_INTERNET_CONNECTION) {
+        router.notConnected();
+      }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE, []);
   },
 
   /**
    * Verifies if entered PIN is currently valid, if true proceeds with new PIN creation in change PIN flow.
    *
-   * @param errorCallback   Function to call PIN verification fails
+   * @param errorCallback   Function to call when PIN verification fails
    * @param pin             Entered PIN number
    */
   confirmCurrentPinForChangeRequest: function (errorCallback, pin) {
@@ -458,6 +496,8 @@ module.exports = {
     INIT_IN_APP_BROWSER_CONTROL_SESSION: "inAppBrowserControlSession",
     CLOSE_IN_APP_BROWSER: "closeInAppBrowser",
 
+    NO_INTERNET_CONNECTION: "noInternetConnection",
+
     IS_REGISTERED: "isRegistered",
 
     AUTHORIZATION_AUTHORIZE: "authorize",
@@ -493,6 +533,11 @@ module.exports = {
 
     FETCH_RESOURCE: "fetchResource",
     FETCH_ANONYMOUS_RESOURCE: "fetchAnonymousResource",
-    FETCH_RESOURCE_AUTH_FAILED: "resourceErrorAuthenticationFailed",
+    RESOURCE_CALL_ERROR: "resourceCallError",
+    RESOURCE_CALL_AUTH_FAILED: "resourceErrorAuthenticationFailed",
+    RESOURCE_CALL_SCOPE_ERROR: "scopeError",
+    RESOURCE_CALL_BAD_REQUEST: "resourceBadRequest",
+    RESOURCE_CALL_UNAUTHORIZED: "unauthorizedClient",
+    RESOURCE_CALL_INVALID_GRANT: "invalidGrant"
   }
 };

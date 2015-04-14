@@ -13,7 +13,7 @@ public enum OneginiAuthorizationResponse {
   AUTHORIZATION_ERROR_NOT_AUTHENTICATED("authorizationErrorNotAuthenticated"),
   AUTHORIZATION_ERROR_INVALID_SCOPE("authorizationErrorInvalidScope"),
   AUTHORIZATION_ERROR_INVALID_STATE("authorizationErrorInvalidState"),
-  AUTHORIZATION_ERROR_NO_ACCESS("authorizationErrorNoAccessToken"),
+  AUTHORIZATION_ERROR_NO_ACCESS_TOKEN("authorizationErrorNoAccessToken"),
   AUTHORIZATION_ERROR_NOT_AUTHORIZED("authorizationErrorNotAuthorized"),
   AUTHORIZATION_ERROR_INVALID_REQUEST("authorizationErrorInvalidRequest"),
   AUTHORIZATION_ERROR_INVALID_GRANT_TYPE("authorizationErrorInvalidGrantType"),

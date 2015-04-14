@@ -1,9 +1,14 @@
 package com.onegini.actions;
 
+import static com.onegini.responses.GeneralResponse.NO_INTERNET_CONNECTION;
+import static com.onegini.util.DeviceUtil.isNotConnected;
+
 import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 
+import android.content.Context;
 import com.onegini.OneginiCordovaPlugin;
+import com.onegini.util.CallbackResultBuilder;
 
 public class AwaitInitialization implements OneginiPluginAction {
 
@@ -32,6 +37,16 @@ public class AwaitInitialization implements OneginiPluginAction {
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
     pluginInitializedCallback = callbackContext;
+
+    final CallbackResultBuilder callbackResultBuilder = new CallbackResultBuilder();
+    final Context context = client.getCordova().getActivity().getApplication();
+
+    if (isNotConnected(context)) {
+      callbackContext.sendPluginResult(callbackResultBuilder
+              .withErrorReason(NO_INTERNET_CONNECTION.getName())
+              .build());
+      return;
+    }
 
     notifyIfPluginInitialized();
   }

@@ -3,11 +3,23 @@ var exec = require('cordova/exec');
 module.exports = {
   /**
    * Awaits notification that the Onegini plugin initialization is finished.
-   * @param successCallback   Function to be called on plugin initialisation complete
-   * @param errorCallback     Function to be called on plugin initialisation failure
+   * @param {Object} router   Object that can handle page transition for the outcome of the authorization. Should at
+   *                          least implement the following methods:
+   *                          - pluginInitialized -> called once plugin is initialized successfully
+   *                          - notConnected -> method called whenever plugin isn't able to establish network connection
+   *                          - initializationError -> called when other error occurred during plugin initialization
    */
-  awaitPluginInitialization: function (successCallback, errorCallback) {
-    exec(successCallback, errorCallback,
+  awaitPluginInitialization: function (router) {
+    exec(function (response) {
+          router.pluginInitialized();
+        }, function (error) {
+          if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.NO_INTERNET_CONNECTION) {
+            router.notConnected();
+          }
+          else {
+            router.initializationError();
+          }
+        },
         oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AWAIT_PLUGIN_INITIALIZATION, []);
   },
 
@@ -24,9 +36,9 @@ module.exports = {
    *                                         confirmNewPinForChangeRequest(errorCallback, pin)
    *                          - askForPinChangePinFlow -> should display a screen to verify the PIN code. Must call
    *                                         confirmCurrentPinForChangeRequest(errorCallback, pin)
-   * @param errorCallback
+   *                          - pinCallbackInitFailed -> method called when PIN callback initialization fails
    */
-  initPinCallbackSession: function (router, errorCallback) {
+  initPinCallbackSession: function (router) {
     exec(function (response) {
           if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_NEW_FOR_CHANGE_REQUEST) {
             router.askForNewPinChangePinFlow(oneginiCordovaPlugin.confirmNewPinForChangeRequest);
@@ -41,7 +53,7 @@ module.exports = {
             router.askForNewPin(oneginiCordovaPlugin.setPin);
           }
         }, function (error) {
-          errorCallback(error);
+          router.pinCallbackInitFailed(error);
         },
         oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.INIT_PIN_CALLBACK_SESSION, []);
   },

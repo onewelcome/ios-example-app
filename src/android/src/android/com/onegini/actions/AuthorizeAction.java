@@ -15,7 +15,6 @@ import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_E
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_NOT_AUTHORIZED;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_SUCCESS;
-import static com.onegini.util.DeviceUtil.isConnected;
 import static com.onegini.util.DeviceUtil.isNotConnected;
 
 import org.apache.cordova.CallbackContext;
@@ -27,10 +26,8 @@ import android.content.Context;
 import com.onegini.OneginiCordovaPlugin;
 import com.onegini.dialogs.PinScreenActivity;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiAuthorizationHandler;
-import com.onegini.responses.GeneralResponse;
 import com.onegini.scope.ScopeParser;
 import com.onegini.util.CallbackResultBuilder;
-import com.onegini.util.DeviceUtil;
 
 public class AuthorizeAction implements OneginiPluginAction {
 

@@ -7,6 +7,8 @@ module.exports = {
    *                          least implement the following methods:
    *                          - pluginInitialized -> called once plugin is initialized successfully
    *                          - notConnected -> method called whenever plugin isn't able to establish network connection
+   *                          - unsupportedAppVersion -> invoked when application version is not valid and update
+   *                          is needed
    *                          - initializationError -> called when other error occurred during plugin initialization
    */
   awaitPluginInitialization: function (router) {
@@ -15,6 +17,9 @@ module.exports = {
         }, function (error) {
           if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.NO_INTERNET_CONNECTION) {
             router.notConnected();
+          }
+          else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.UNSUPPORTED_APP_VERSION) {
+            router.unsupportedAppVersion();
           }
           else {
             router.initializationError();
@@ -509,6 +514,7 @@ module.exports = {
     CLOSE_IN_APP_BROWSER: "closeInAppBrowser",
 
     NO_INTERNET_CONNECTION: "noInternetConnection",
+    UNSUPPORTED_APP_VERSION: "unsupportedAppVersion",
 
     IS_REGISTERED: "isRegistered",
 

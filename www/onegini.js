@@ -186,15 +186,21 @@ module.exports = {
    *                          least implement the following methods:
    *                          - requestAuthorization(url) -> redirects the user to the given url to log in
    *                          - authorizationSuccess -> should show the landing page for the authenticated user
-   *                          - invalidCurrentPin(remainingAttempts, scopes) -> indicates that the entered PIN number
-   *                                         was invalid and provides an information about remaining PIN attempts
-   *                          - tooManyPinAttempts -> method called once user exceeds allowed number of PIN attempts
-   *                          - authorizationFailure(error) -> should handle authentication failure. If this method
-   *                                         is called, the authorization transaction is lost. The authorize method
-   *                                         must be called again to continue with the authorization flow. It may
-   *                                         require to keep an internal state to display error messages such as
-   *                                         'Invalid PIN code, try again'
-   *                          - notConnected -> method called whenever plugin isn't able to establish network connection
+   *                          - errorInvalidCurrentPin(remainingAttempts, scopes) -> indicates that the entered PIN
+   *                          number was invalid and provides an information about remaining PIN attempts
+   *                          - errorTooManyPinAttempts -> method called once user exceeds allowed number of PIN
+   *                          attempts
+   *                          - errorRegistrationFailed -> invoked when client registration fails
+   *                          - errorNotConnected -> method called whenever plugin isn't able to establish network connection
+   *                          - errorNotAuthenticated -> invoked when client credentials are invalid
+   *                          - errorNotAuthorized -> called when client was not authorized to perform action
+   *                          - errorInvalidScope -> one or more of the scopes requested authorization for were not
+   *                          available
+   *                          - errorInvalidState -> the state parameter in the authorization request is different than
+   *                          the value in the callback. This indicates a possible man in the middle attack.
+   *                          - errorInvalidRequest -> method called when one or more required parameters were missing
+   *                          in the authorization request.
+   *                          - errorInvalidGrant -> called when access grant or refresh token was invalid
    * @param {Array} scopes    {Array} with {String}s that represent the scopes for the access token
    */
   authorize: function (router, scopes) {
@@ -210,18 +216,36 @@ module.exports = {
       }
     }, function (error) {
       if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_PIN) {
-        router.invalidCurrentPin(error.remainingAttempts, scopes);
+        router.errorInvalidCurrentPin(error.remainingAttempts, scopes);
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_TOO_MANY_PIN_ATTEMPTS) {
-        router.tooManyPinAttempts();
+        router.errorTooManyPinAttempts();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_CLIENT_REGISTRATION_FAILED) {
+        router.errorRegistrationFailed();
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.NO_INTERNET_CONNECTION) {
-        router.notConnected();
+        router.errorNotConnected();
       }
-      else {
-        router.authorizationFailure(error, scopes)
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_NOT_AUTHENTICATED) {
+        router.errorNotAuthenticated();
       }
-      ;
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_NOT_AUTHORIZED) {
+        router.errorNotAuthorized();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_SCOPE) {
+        router.errorInvalidScope();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_STATE) {
+        router.errorInvalidState();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_REQUEST) {
+        router.errorInvalidRequest();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_GRANT_TYPE) {
+        router.errorInvalidGrant();
+      }
+
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, scopes);
   },
 
@@ -524,6 +548,13 @@ module.exports = {
     AUTHORIZATION_FAILURE: "authorizationFailure",
     AUTHORIZATION_ERROR_INVALID_PIN: "authorizationErrorInvalidGrant",
     AUTHORIZATION_ERROR_TOO_MANY_PIN_ATTEMPTS: "authorizationErrorTooManyPinFailures",
+    AUTHORIZATION_ERROR_CLIENT_REGISTRATION_FAILED: "authorizationErrorClientRegistrationFailed",
+    AUTHORIZATION_ERROR_NOT_AUTHENTICATED: "authorizationErrorNotAuthenticated",
+    AUTHORIZATION_ERROR_INVALID_SCOPE: "authorizationErrorInvalidScope",
+    AUTHORIZATION_ERROR_INVALID_STATE: "authorizationErrorInvalidState",
+    AUTHORIZATION_ERROR_NOT_AUTHORIZED: "authorizationErrorNotAuthorized",
+    AUTHORIZATION_ERROR_INVALID_REQUEST: "authorizationErrorInvalidRequest",
+    AUTHORIZATION_ERROR_INVALID_GRANT_TYPE: "authorizationErrorInvalidGrantType",
 
     PIN_ASK_FOR_CURRENT: "askForCurrentPin",
     PIN_ASK_FOR_NEW: "askForNewPin",

@@ -8,6 +8,7 @@
 
 #import "OneginiCordovaClient.h"
 #import <Cordova/NSDictionary+Extensions.h>
+#import "Reachability.h"
 
 NSString* const kReason				= @"reason";
 NSString* const kRemainingAttempts	= @"remainingAttempts";
@@ -128,6 +129,10 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 
 - (void)awaitPluginInitialization:(CDVInvokedUrlCommand *)command {
     self.pluginInitializedCommandTxId = command.callbackId;
+    if (![self isConnected]){
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
+        [self.commandDelegate sendPluginResult:result callbackId:self.pluginInitializedCommandTxId];
+    }
 }
 
 - (void)initPinCallbackSession:(CDVInvokedUrlCommand *)command {
@@ -171,11 +176,26 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
         [self sendErrorCallback:command.callbackId];
 }
 
+- (bool)isConnected
+{
+    Reachability* currentReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [currentReachability currentReachabilityStatus];
+    
+    if (networkStatus == ReachableViaWiFi||networkStatus == ReachableViaWWAN)
+        return YES;
+    else
+        return NO;
+}
+
 - (void)authorize:(CDVInvokedUrlCommand *)command {
 	[self resetAll];
 	
 	self.authorizeCommandTxId = command.callbackId;
-	[oneginiClient authorize:command.arguments];
+    
+    if ([self isConnected])
+        [oneginiClient authorize:command.arguments];
+    else
+        [self authorizationErrorCallbackWIthReason:@"connectivityProblem"];
 }
 
 - (void)isAuthorized:(CDVInvokedUrlCommand *)command {
@@ -198,6 +218,11 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 }
 
 - (void)confirmCurrentPin:(CDVInvokedUrlCommand *)command {
+    if (![self isConnected]){
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }
+    
 	if (command.arguments.count != 1) {
 		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -211,6 +236,10 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 }
 
 - (void)changePin:(CDVInvokedUrlCommand *)command {
+    if (![self isConnected]){
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }
     self.pinChangeCommandTxId = command.callbackId;
     self.pinValidateCommandTxId = nil;
     
@@ -304,6 +333,10 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 }
 
 - (void)fetchResource:(CDVInvokedUrlCommand *)command {
+    if (![self isConnected]){
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }
 	if (command.arguments.count != 5) {
 		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 5 arguments but received %lu", (unsigned long)command.arguments.count]];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -325,6 +358,10 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 }
 
 - (void)fetchAnonymousResource:(CDVInvokedUrlCommand *)command {
+    if (![self isConnected]){
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }
 	if (command.arguments.count != 5) {
 		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 5 arguments but received %lu", (unsigned long)command.arguments.count]];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -346,6 +383,10 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 }
 
 - (void)logout:(CDVInvokedUrlCommand *)command {
+    if (![self isConnected]){
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }
 	@try {
 		[self.oneginiClient logout:nil];
 	}
@@ -356,6 +397,10 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 }
 
 - (void)disconnect:(CDVInvokedUrlCommand *)command {
+    if (![self isConnected]){
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }
 	@try {
 		[self.oneginiClient disconnect];
 	}
@@ -415,7 +460,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 - (void)authorizationError {
 	[self closePinView];
 	
-	[self authorizationErrorCallbackWIthReason:@"authorizationError"];
+	[self authorizationErrorCallbackWIthReason:@"connectivityProblem"];
 }
 
 - (void)authorizationErrorClientRegistrationFailed:(NSError *)error {
@@ -644,6 +689,14 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
 											messageAsDictionary:@{ kReason:@"resourceErrorAuthenticationFailed" }];
 	[self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
+}
+
+-(void)invalidGrantType
+{
+    [self closePinView];
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+                                            messageAsDictionary:@{ kReason:@"invalidGrant" }];
+    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
 }
 
 #pragma mark -

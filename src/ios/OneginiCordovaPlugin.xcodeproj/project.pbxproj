@@ -35,7 +35,6 @@
 		23B3B5D21AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5CA1AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf */; };
 		23C663F21A8B805B007C1838 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
 		23CC2D081AA43F890056F377 /* OneginiCordovaClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 23DBAF431A6528A4001836C4 /* OneginiCordovaClient.m */; };
-		23FD95CC1A9CC81600A1AC62 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 23FD95CB1A9CC81600A1AC62 /* Podfile */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
 		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
@@ -55,6 +54,8 @@
 		30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C1856519D5FC0A00212699 /* icon-60@3x.png */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
+		5C1882A91ADE8AE600DE7286 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C1882A81ADE8AE600DE7286 /* SystemConfiguration.framework */; };
+		5CE4923D1ADD49420083246F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4923C1ADD49420083246F /* Reachability.m */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
 		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
@@ -131,7 +132,6 @@
 		23B3B5CA1AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SourceSansPro-SemiboldItalic.ttf"; sourceTree = "<group>"; };
 		23DBAF421A6528A4001836C4 /* OneginiCordovaClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiCordovaClient.h; sourceTree = "<group>"; };
 		23DBAF431A6528A4001836C4 /* OneginiCordovaClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneginiCordovaClient.m; sourceTree = "<group>"; };
-		23FD95CB1A9CC81600A1AC62 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		23FD95D21A9CCC3800A1AC62 /* OGAuthorizationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAuthorizationDelegate.h; sourceTree = "<group>"; };
 		23FD95D31A9CCC3800A1AC62 /* OGConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGConfigModel.h; sourceTree = "<group>"; };
 		23FD95D41A9CCC3800A1AC62 /* OGEnrollmentHandlerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnrollmentHandlerDelegate.h; sourceTree = "<group>"; };
@@ -165,7 +165,10 @@
 		32CA4F630368D1EE00C91783 /* OneginiCordovaPlugin-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OneginiCordovaPlugin-Prefix.pch"; sourceTree = "<group>"; };
 		359253D9C6504EBD8C06520D /* AudioToolbox.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		5C1882A81ADE8AE600DE7286 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5CD4A5301ACD4DA0000FD948 /* Commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Commons.h; sourceTree = "<group>"; };
+		5CE4923B1ADD49420083246F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		5CE4923C1ADD49420083246F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		7E7966D41810823500FA85AD /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
 		7E7966D51810823500FA85AD /* icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40@2x.png"; sourceTree = "<group>"; };
 		7E7966D61810823500FA85AD /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
@@ -187,6 +190,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C1882A91ADE8AE600DE7286 /* SystemConfiguration.framework in Frameworks */,
 				23C663F21A8B805B007C1838 /* libCordova.a in Frameworks */,
 				2351A2591A655E2F00C89FF6 /* libiconv.dylib in Frameworks */,
 				2351A2571A655E2300C89FF6 /* libc++.dylib in Frameworks */,
@@ -203,6 +207,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5CE4923B1ADD49420083246F /* Reachability.h */,
+				5CE4923C1ADD49420083246F /* Reachability.m */,
 				5CD4A5301ACD4DA0000FD948 /* Commons.h */,
 				23B3B5AC1AC9746A00F6BB9C /* PinEntryContainerViewController.h */,
 				23B3B5AD1AC9746A00F6BB9C /* PinEntryContainerViewController.m */,
@@ -288,7 +294,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				23FD95CB1A9CC81600A1AC62 /* Podfile */,
 				EB87FDF31871DA8E0020F90C /* www */,
 				EB87FDF21871DA7A0020F90C /* merges */,
 				EB87FDF11871DA420020F90C /* Staging */,
@@ -337,6 +342,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5C1882A81ADE8AE600DE7286 /* SystemConfiguration.framework */,
 				23FD95D01A9CCC3800A1AC62 /* OneginiSDKiOS */,
 				2385F6731A932FA0007ADE4B /* UIKit.framework */,
 				2351A2581A655E2F00C89FF6 /* libiconv.dylib */,
@@ -479,7 +485,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				23B3B5BD1AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png in Resources */,
-				23FD95CC1A9CC81600A1AC62 /* Podfile in Resources */,
 				7E7966E41810823500FA85AD /* icon-76.png in Resources */,
 				7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */,
 				23B3B5CF1AC974A400F6BB9C /* SourceSansPro-LightItalic.ttf in Resources */,
@@ -537,6 +542,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				23B3B5B21AC9746A00F6BB9C /* PinEntryContainerViewController.m in Sources */,
+				5CE4923D1ADD49420083246F /* Reachability.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				23CC2D081AA43F890056F377 /* OneginiCordovaClient.m in Sources */,
 				23B3B5B41AC9746A00F6BB9C /* PinEntryViewController.m in Sources */,

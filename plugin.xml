@@ -15,6 +15,8 @@
       </feature>
     </config-file>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/Commons.h"/>
+    <header-file src="src/ios/OneginiCordovaPlugin/Classes/Reachability.h"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/Reachability.m"/>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/OneginiCordovaClient.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/OneginiCordovaClient.m"/>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.h"/>

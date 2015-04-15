@@ -1,6 +1,6 @@
 package com.onegini.actions;
 
-import static com.onegini.responses.GeneralResponse.NO_INTERNET_CONNECTION;
+import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.util.DeviceUtil.isNotConnected;
 
 import org.apache.cordova.CallbackContext;
@@ -43,7 +43,7 @@ public class AwaitInitialization implements OneginiPluginAction {
 
     if (isNotConnected(context)) {
       callbackContext.sendPluginResult(callbackResultBuilder
-              .withErrorReason(NO_INTERNET_CONNECTION.getName())
+              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
               .build());
       return;
     }

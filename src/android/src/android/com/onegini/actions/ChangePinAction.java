@@ -3,7 +3,7 @@ package com.onegini.actions;
 import static com.onegini.dialogs.PinDialogMessages.PIN_INVALID;
 import static com.onegini.dialogs.PinDialogMessages.REMAINING_ATTEMPTS_KEY;
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
-import static com.onegini.responses.GeneralResponse.NO_INTERNET_CONNECTION;
+import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGED;
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGE_ERROR;
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS;
@@ -49,7 +49,7 @@ public class ChangePinAction implements OneginiPluginAction {
 
     if (isNotConnected(context)) {
       sendCallbackResult(callbackResultBuilder
-              .withErrorReason(NO_INTERNET_CONNECTION.getName())
+              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
               .build()
       );
       return;

@@ -2,7 +2,7 @@ package com.onegini.responses;
 
 public enum GeneralResponse {
 
-  NO_INTERNET_CONNECTION("noInternetConnection"),
+  CONNECTIVITY_PROBLEM("connectivityProblem"),
   UNSUPPORTED_APP_VERSION("unsupportedAppVersion");
 
   private final String name;

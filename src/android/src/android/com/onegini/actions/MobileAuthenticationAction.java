@@ -1,6 +1,6 @@
 package com.onegini.actions;
 
-import static com.onegini.responses.GeneralResponse.NO_INTERNET_CONNECTION;
+import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.responses.MobileAuthEnrollmentResponse.ENROLLMENT_AUTHENTICATION_ERROR;
 import static com.onegini.responses.MobileAuthEnrollmentResponse.ENROLLMENT_DEVICE_ALREADY_ENROLLED;
 import static com.onegini.responses.MobileAuthEnrollmentResponse.ENROLLMENT_ERROR;
@@ -39,7 +39,7 @@ public class MobileAuthenticationAction implements OneginiPluginAction {
     final Context context = client.getCordova().getActivity().getApplication();
     if (isNotConnected(context)) {
       callbackContext.sendPluginResult(callbackResultBuilder
-              .withErrorReason(NO_INTERNET_CONNECTION.getName())
+              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
               .build()
       );
       return;

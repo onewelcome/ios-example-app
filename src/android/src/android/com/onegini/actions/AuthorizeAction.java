@@ -3,7 +3,7 @@ package com.onegini.actions;
 import static com.onegini.dialogs.PinDialogMessages.PIN_INVALID;
 import static com.onegini.dialogs.PinDialogMessages.REMAINING_ATTEMPTS_KEY;
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
-import static com.onegini.responses.GeneralResponse.NO_INTERNET_CONNECTION;
+import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_CLIENT_REG_FAILED;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_GRANT;
@@ -55,7 +55,7 @@ public class AuthorizeAction implements OneginiPluginAction {
 
     if (isNotConnected(context)) {
       sendCallbackResult(callbackResultBuilder
-              .withErrorReason(NO_INTERNET_CONNECTION.getName())
+              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
               .build()
       );
       return;
@@ -74,7 +74,7 @@ public class AuthorizeAction implements OneginiPluginAction {
         @Override
         public void authorizationError() {
           sendCallbackResult(callbackResultBuilder
-              .withErrorReason(AUTHORIZATION_ERROR.getName())
+              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
               .build());
         }
 

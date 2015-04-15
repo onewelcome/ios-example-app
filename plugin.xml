@@ -165,6 +165,8 @@
                  target-dir="src/com/onegini/resource/"/>
     <source-file src="src/android/src/android/com/onegini/resource/RestResourceInterface.java"
                  target-dir="src/com/onegini/resource/"/>
+    <source-file src="src/android/src/android/com/onegini/responses/GeneralResponse.java"
+                 target-dir="src/com/onegini/responses/"/>
     <source-file src="src/android/src/android/com/onegini/responses/InAppBrowserControlResponse.java"
                  target-dir="src/com/onegini/responses/"/>
     <source-file src="src/android/src/android/com/onegini/responses/MobileAuthEnrollmentResponse.java"

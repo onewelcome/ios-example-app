@@ -113,7 +113,7 @@ module.exports = {
       }
     }, function (error) {
       if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.NO_INTERNET_CONNECTION) {
-        router.notConnected();
+        router.errorNotConnected();
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_ERROR) {
         router.resourceCallError();
@@ -341,16 +341,16 @@ module.exports = {
       router.changePinSuccess();
     }, function (error) {
       if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_INVALID) {
-        router.invalidCurrentPin(error.remainingAttempts);
+        router.errorInvalidCurrentPin(error.remainingAttempts);
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS) {
-        router.tooManyPinAttempts();
+        router.errorTooManyPinAttempts();
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE_ERROR) {
-        router.changePinError();
+        router.errorChangingPin();
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.NO_INTERNET_CONNECTION) {
-        router.notConnected();
+        router.errorNotConnected();
       }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE, []);
   },

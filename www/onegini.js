@@ -6,7 +6,8 @@ module.exports = {
    * @param {Object} router   Object that can handle page transition for the outcome of the authorization. Should at
    *                          least implement the following methods:
    *                          - pluginInitialized -> called once plugin is initialized successfully
-   *                          - notConnected -> method called whenever plugin isn't able to establish network connection
+   *                          - errorConnectivityProblem -> method called whenever plugin isn't able to establish
+   *                          connection with the server
    *                          - unsupportedAppVersion -> invoked when application version is not valid and update
    *                          is needed
    *                          - initializationError -> called when other error occurred during plugin initialization
@@ -15,8 +16,8 @@ module.exports = {
     exec(function (response) {
           router.pluginInitialized();
         }, function (error) {
-          if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.NO_INTERNET_CONNECTION) {
-            router.notConnected();
+          if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
+            router.errorConnectivityProblem();
           }
           else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.UNSUPPORTED_APP_VERSION) {
             router.unsupportedAppVersion();
@@ -85,8 +86,8 @@ module.exports = {
    *                                    Should at least implement the following methods:
    *                                    - resourceFetched -> method to be called once resource is successfully fetched,
    *                                    resource content is passed as a param
-   *                                    - notConnected -> method called whenever plugin isn't able to establish network
-   *                                    connection
+   *                                    - errorConnectivityProblem -> method called whenever plugin isn't able to
+   *                                    establish connection with the server
    *                                    - resourceCallError -> indicates general resource call error
    *                                    - resourceCallAuthenticationFailed -> called whenever authentication for
    *                                    accessing specific resource fails
@@ -112,8 +113,8 @@ module.exports = {
         router.resourceFetched(response);
       }
     }, function (error) {
-      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.NO_INTERNET_CONNECTION) {
-        router.errorNotConnected();
+      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
+        router.errorConnectivityProblem();
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_ERROR) {
         router.resourceCallError();
@@ -191,7 +192,8 @@ module.exports = {
    *                          - errorTooManyPinAttempts -> method called once user exceeds allowed number of PIN
    *                          attempts
    *                          - errorRegistrationFailed -> invoked when client registration fails
-   *                          - errorNotConnected -> method called whenever plugin isn't able to establish network connection
+   *                          - errorConnectivityProblem -> method called whenever plugin isn't able to establish
+   *                          connection with the server
    *                          - errorNotAuthenticated -> invoked when client credentials are invalid
    *                          - errorNotAuthorized -> called when client was not authorized to perform action
    *                          - errorInvalidScope -> one or more of the scopes requested authorization for were not
@@ -224,8 +226,8 @@ module.exports = {
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_CLIENT_REGISTRATION_FAILED) {
         router.errorRegistrationFailed();
       }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.NO_INTERNET_CONNECTION) {
-        router.errorNotConnected();
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
+        router.errorConnectivityProblem();
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_NOT_AUTHENTICATED) {
         router.errorNotAuthenticated();
@@ -332,9 +334,10 @@ module.exports = {
    *                          - changePinSuccess -> should handle completion of change PIN flow
    *                          - changePinError -> should show the landing page for the authenticated user
    *                          - invalidCurrentPin(remainingAttempts) -> should handle invalid current PIN
-   *                                          in change PIN flow
+   *                          in change PIN flow
    *                          - tooManyPinAttempts -> method called once user exceeds allowed number of PIN attempts
-   *                          - notConnected -> method called whenever plugin isn't able to establish network connection
+   *                          - errorConnectivityProblem -> method called whenever plugin isn't able to establish
+   *                          connection with the server
    */
   changePin: function (router) {
     exec(function (response) {
@@ -349,8 +352,8 @@ module.exports = {
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE_ERROR) {
         router.errorChangingPin();
       }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.NO_INTERNET_CONNECTION) {
-        router.errorNotConnected();
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
+        router.errorConnectivityProblem();
       }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE, []);
   },
@@ -537,7 +540,7 @@ module.exports = {
     INIT_IN_APP_BROWSER_CONTROL_SESSION: "inAppBrowserControlSession",
     CLOSE_IN_APP_BROWSER: "closeInAppBrowser",
 
-    NO_INTERNET_CONNECTION: "noInternetConnection",
+    CONNECTIVITY_PROBLEM: "connectivityProblem",
     UNSUPPORTED_APP_VERSION: "unsupportedAppVersion",
 
     IS_REGISTERED: "isRegistered",

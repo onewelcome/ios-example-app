@@ -1,6 +1,7 @@
 package com.onegini.dialogs;
 
-import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_ENTER_CURRENT_PIN;
+import static com.onegini.model.MessageKey.KEYBOARD_TITLE_ENTER_CURRENT_PIN;
+import static com.onegini.util.MessageResourceReader.getMessageForKey;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +27,7 @@ public class CurrentPinNativeDialogHandler implements OneginiCurrentPinDialog {
 
     final Intent intent = new Intent(context, PinScreenActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.putExtra("title", PIN_DIALOG_ENTER_CURRENT_PIN);
+    intent.putExtra("title", getMessageForKey(KEYBOARD_TITLE_ENTER_CURRENT_PIN.name()));
     context.startActivity(intent);
 
     PinScreenActivity.setCreatePinFlow(false);

@@ -40,6 +40,7 @@
 
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>
+    <resource-file src="src/generic/messages/messages.properties"/>
 
     <!-- Generic OAUTH config -->
     <resource-file src="src/generic/config.json"/>

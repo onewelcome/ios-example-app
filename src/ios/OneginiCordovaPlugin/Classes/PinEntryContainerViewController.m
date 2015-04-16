@@ -143,22 +143,22 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 {
     switch (mode) {
         case PINCheckMode:
-            self.titleLabel.text = @"Login with pin";
+            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_ENTER_PIN"];
             break;
         case PINRegistrationMode:
-            self.titleLabel.text = @"Create pin";
+            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_CREATE_PIN"];
             break;
         case PINRegistrationVerififyMode:
-            self.titleLabel.text = @"Verify pin";
+            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_VERIFY_PIN"];
             break;
         case PINChangeCheckMode:
-            self.titleLabel.text = @"Insert pin";
+            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_ENTER_PIN"];
             break;
         case PINChangeNewPinMode:
-            self.titleLabel.text = @"Change pin";
+            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_CREATE_PIN"];
             break;
         case PINChangeNewPinVerifyMode:
-            self.titleLabel.text = @"Verify pin";
+            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_VERIFY_PIN"];
             break;
         default:
             break;

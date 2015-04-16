@@ -8,8 +8,6 @@ module.exports = {
    *                          - pluginInitialized -> called once plugin is initialized successfully
    *                          - errorConnectivityProblem -> method called whenever plugin isn't able to establish
    *                          connection with the server
-   *                          - unsupportedAppVersion -> invoked when application version is not valid and update
-   *                          is needed
    *                          - initializationError -> called when other error occurred during plugin initialization
    */
   awaitPluginInitialization: function (router) {
@@ -18,9 +16,6 @@ module.exports = {
         }, function (error) {
           if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
             router.errorConnectivityProblem();
-          }
-          else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.UNSUPPORTED_APP_VERSION) {
-            router.unsupportedAppVersion();
           }
           else {
             router.initializationError();
@@ -203,6 +198,8 @@ module.exports = {
    *                          - errorInvalidRequest -> method called when one or more required parameters were missing
    *                          in the authorization request.
    *                          - errorInvalidGrant -> called when access grant or refresh token was invalid
+   *                          - unsupportedAppVersion -> invoked when application version is not valid and update
+   *                          is needed
    * @param {Array} scopes    {Array} with {String}s that represent the scopes for the access token
    */
   authorize: function (router, scopes) {
@@ -246,6 +243,9 @@ module.exports = {
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_GRANT_TYPE) {
         router.errorInvalidGrant();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.UNSUPPORTED_APP_VERSION) {
+        router.errorUnsupportedAppVersion();
       }
 
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, scopes);

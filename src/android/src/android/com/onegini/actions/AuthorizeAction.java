@@ -1,9 +1,9 @@
 package com.onegini.actions;
 
-import static com.onegini.dialogs.PinDialogMessages.PIN_INVALID;
-import static com.onegini.dialogs.PinDialogMessages.REMAINING_ATTEMPTS_KEY;
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
+import static com.onegini.model.MessageKey.AUTHORIZATION_ERROR_PIN_INVALID;
 import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
+import static com.onegini.responses.GeneralResponse.UNSUPPORTED_APP_VERSION;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_CLIENT_REG_FAILED;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_GRANT;
@@ -111,7 +111,7 @@ public class AuthorizeAction implements OneginiPluginAction {
           // that is the only notification which impacts the pin screen within OneginiAuthorizationHandler
           if (client.shouldUseNativeScreens()) {
             broadcastWithMessage(context,
-                PIN_INVALID.replace(REMAINING_ATTEMPTS_KEY, Integer.toString(remainingAttempts)));
+                AUTHORIZATION_ERROR_PIN_INVALID.name().replace("{remainingAttempts}", Integer.toString(remainingAttempts)));
           }
           else {
             sendCallbackResult(callbackResultBuilder
@@ -160,6 +160,13 @@ public class AuthorizeAction implements OneginiPluginAction {
         public void authorizationClientConfigFailed() {
           sendCallbackResult(callbackResultBuilder
               .withErrorReason(AUTHORIZATION_ERROR.getName())
+              .build());
+        }
+
+        @Override
+        public void authorizationErrorInvalidApplication() {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(UNSUPPORTED_APP_VERSION.getName())
               .build());
         }
       });

@@ -18,6 +18,7 @@ import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.DialogProvider;
 import com.onegini.model.ConfigModel;
 import com.onegini.util.JSONResourceReader;
+import com.onegini.util.MessageResourceReader;
 
 public class PluginInitializer {
 
@@ -50,6 +51,7 @@ public class PluginInitializer {
     client.setOneginiClient(oneginiClient);
 
     setupURLHandler(oneginiClient, configModel);
+    MessageResourceReader.setupInstance(applicationContext);
 
     configured = true;
   }

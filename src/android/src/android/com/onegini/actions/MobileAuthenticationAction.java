@@ -1,5 +1,6 @@
 package com.onegini.actions;
 
+import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.responses.MobileAuthEnrollmentResponse.ENROLLMENT_AUTHENTICATION_ERROR;
 import static com.onegini.responses.MobileAuthEnrollmentResponse.ENROLLMENT_DEVICE_ALREADY_ENROLLED;
 import static com.onegini.responses.MobileAuthEnrollmentResponse.ENROLLMENT_ERROR;
@@ -8,11 +9,13 @@ import static com.onegini.responses.MobileAuthEnrollmentResponse.ENROLLMENT_INVA
 import static com.onegini.responses.MobileAuthEnrollmentResponse.ENROLLMENT_NOT_AVAILABLE;
 import static com.onegini.responses.MobileAuthEnrollmentResponse.ENROLLMENT_SUCCESS;
 import static com.onegini.responses.MobileAuthEnrollmentResponse.ENROLLMENT_USER_ALREADY_ENROLLED;
+import static com.onegini.util.DeviceUtil.isNotConnected;
 
 import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.content.Context;
 import com.onegini.OneginiCordovaPlugin;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiMobileAuthEnrollmentHandler;
 import com.onegini.resource.ResourceRequest;
@@ -33,6 +36,15 @@ public class MobileAuthenticationAction implements OneginiPluginAction {
       return;
     }
 
+    final Context context = client.getCordova().getActivity().getApplication();
+    if (isNotConnected(context)) {
+      callbackContext.sendPluginResult(callbackResultBuilder
+              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
+              .build()
+      );
+      return;
+    }
+
     try {
       final String[] scopes = ResourceRequest.parseScopes(args.getJSONArray(0));
       enroll(scopes, callbackContext, client);
@@ -42,8 +54,13 @@ public class MobileAuthenticationAction implements OneginiPluginAction {
   }
 
   private void enroll(final String[] scopes, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
-//    final GCMHelper gcmHelper = new GCMHelper(client.getCordova().getActivity().getApplicationContext());
-//    gcmHelper.registerGCMService(client.getOneginiClient(), scopes, buildEnrollHandlerForCallback(callbackContext));
+    /*
+    Registration for Push notifications is currently disabled as it requires including additional
+    classes within the plugin.
+
+    final GCMHelper gcmHelper = new GCMHelper(client.getCordova().getActivity().getApplicationContext());
+    gcmHelper.registerGCMService(client.getOneginiClient(), scopes, buildEnrollHandlerForCallback(callbackContext));
+    */
   }
 
   private OneginiMobileAuthEnrollmentHandler buildEnrollHandlerForCallback(final CallbackContext callbackContext) {

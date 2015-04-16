@@ -3,6 +3,7 @@ package com.onegini.actions;
 import static com.onegini.dialogs.PinDialogMessages.PIN_INVALID;
 import static com.onegini.dialogs.PinDialogMessages.REMAINING_ATTEMPTS_KEY;
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
+import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_CLIENT_REG_FAILED;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_GRANT;
@@ -14,6 +15,7 @@ import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_E
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_NOT_AUTHORIZED;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_SUCCESS;
+import static com.onegini.util.DeviceUtil.isNotConnected;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
@@ -51,6 +53,14 @@ public class AuthorizeAction implements OneginiPluginAction {
     this.callbackContext = callbackContext;
     this.context = client.getCordova().getActivity().getApplication();
 
+    if (isNotConnected(context)) {
+      sendCallbackResult(callbackResultBuilder
+              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
+              .build()
+      );
+      return;
+    }
+
     try {
       final String[] scopes = new ScopeParser().getScopesAsArray(args);
       client.getOneginiClient().authorize(scopes, new OneginiAuthorizationHandler() {
@@ -64,7 +74,7 @@ public class AuthorizeAction implements OneginiPluginAction {
         @Override
         public void authorizationError() {
           sendCallbackResult(callbackResultBuilder
-              .withErrorReason(AUTHORIZATION_ERROR.getName())
+              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
               .build());
         }
 
@@ -153,7 +163,8 @@ public class AuthorizeAction implements OneginiPluginAction {
               .build());
         }
       });
-    } catch (JSONException e) {
+    }
+    catch (JSONException e) {
       callbackContext.error(AUTHORIZATION_ERROR.getName());
     }
   }

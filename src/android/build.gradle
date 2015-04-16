@@ -66,7 +66,7 @@ android {
 dependencies {
 //    compile 'com.android.support:appcompat-v7:21.0.2'
     // The onegini sdk
-    compile 'com.onegini.mobile.sdk.android:library:3.00.00.01-SNAPSHOT@aar'
+    compile 'com.onegini.mobile.sdk.android:library:3.02.00@aar'
     // FIXME: Transitive dependencies that should come from the SDK, but won't work if you do a local maven install
     // Google play services
     compile 'com.google.android.gms:play-services-base:6.5+'

@@ -383,10 +383,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 }
 
 - (void)logout:(CDVInvokedUrlCommand *)command {
-    if (![self isConnected]){
-        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
-        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-    }
 	@try {
 		[self.oneginiClient logout:nil];
 	}
@@ -397,10 +393,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 }
 
 - (void)disconnect:(CDVInvokedUrlCommand *)command {
-    if (![self isConnected]){
-        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
-        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-    }
 	@try {
 		[self.oneginiClient disconnect];
 	}

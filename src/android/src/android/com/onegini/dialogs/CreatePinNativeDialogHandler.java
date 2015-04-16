@@ -1,15 +1,16 @@
 package com.onegini.dialogs;
 
-import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_BLACKLISTED;
-import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_CHOOSE_PIN;
-import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_PINS_NOT_EQUAL;
-import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_SEQUENCE;
-import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_SIMILAR;
-import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_TOO_SHORT;
-import static com.onegini.dialogs.PinDialogMessages.PIN_DIALOG_VERIFY_PIN;
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithTitle;
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithTitleAndMessage;
+import static com.onegini.model.MessageKey.PIN_BLACK_LISTED;
+import static com.onegini.model.MessageKey.PIN_CODES_DIFFERS;
+import static com.onegini.model.MessageKey.KEYBOARD_TITLE_CREATE_PIN;
+import static com.onegini.model.MessageKey.KEYBOARD_TITLE_VERIFY_PIN;
+import static com.onegini.model.MessageKey.PIN_SHOULD_NOT_BE_A_SEQUENCE;
+import static com.onegini.model.MessageKey.PIN_SHOULD_NOT_USE_SIMILAR_DIGITS;
+import static com.onegini.model.MessageKey.PIN_TOO_SHORT;
+import static com.onegini.util.MessageResourceReader.getMessageForKey;
 
 import java.util.Arrays;
 
@@ -57,7 +58,7 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
     final Intent intent = new Intent(context, PinScreenActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.putExtra("title", PIN_DIALOG_CHOOSE_PIN);
+    intent.putExtra("title", getMessageForKey(KEYBOARD_TITLE_CREATE_PIN.name()));
     context.startActivity(intent);
 
     PinScreenActivity.setCreatePinFlow(true);
@@ -76,7 +77,7 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
           }
 
           setPin(pin);
-          broadcastWithTitle(context, PIN_DIALOG_VERIFY_PIN);
+          broadcastWithTitle(context, getMessageForKey(KEYBOARD_TITLE_VERIFY_PIN.name()));
         }
 
         @Override
@@ -87,7 +88,9 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
             oneginiPinProvidedHandler.onPinProvided(pin);
           }
           else {
-            broadcastWithTitleAndMessage(context, PIN_DIALOG_CHOOSE_PIN, PIN_DIALOG_PINS_NOT_EQUAL);
+            broadcastWithTitleAndMessage(context,
+                getMessageForKey(KEYBOARD_TITLE_CREATE_PIN.name()),
+                getMessageForKey(PIN_CODES_DIFFERS.name()));
           }
         }
       };
@@ -99,21 +102,23 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void pinBlackListed() {
-    broadcastWithMessage(context, PIN_DIALOG_BLACKLISTED);
+    broadcastWithMessage(context, getMessageForKey(PIN_BLACK_LISTED.name()));
   }
 
   @Override
   public void pinShouldNotBeASequence() {
-    broadcastWithMessage(context, PIN_DIALOG_SEQUENCE);
+    broadcastWithMessage(context, getMessageForKey(PIN_SHOULD_NOT_BE_A_SEQUENCE.name()));
   }
 
   @Override
   public void pinShouldNotUseSimilarDigits(final int maxSimilarDigits) {
-    broadcastWithMessage(context, PIN_DIALOG_SIMILAR + ". The max is " + maxSimilarDigits);
+    final String message = getMessageForKey(PIN_SHOULD_NOT_USE_SIMILAR_DIGITS.name());
+    broadcastWithMessage(context,
+        message.replace("{maxSimilarDigits}", Integer.toString(maxSimilarDigits)));
   }
 
   @Override
   public void pinTooShort() {
-    broadcastWithMessage(context, PIN_DIALOG_TOO_SHORT);
+    broadcastWithMessage(context, getMessageForKey(PIN_TOO_SHORT.name()));
   }
 }

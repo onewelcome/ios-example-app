@@ -141,8 +141,6 @@
                  target-dir="src/com/onegini/dialogs/"/>
     <source-file src="src/android/src/android/com/onegini/dialogs/CurrentPinNonNativeDialogHandler.java"
                  target-dir="src/com/onegini/dialogs/"/>
-    <source-file src="src/android/src/android/com/onegini/dialogs/PinDialogMessages.java"
-                 target-dir="src/com/onegini/dialogs"/>
     <source-file src="src/android/src/android/com/onegini/dialogs/PinIntentBroadcaster.java"
                  target-dir="src/com/onegini/dialogs"/>
     <source-file src="src/android/src/android/com/onegini/dialogs/PinScreenActivity.java"
@@ -155,6 +153,7 @@
                  target-dir="src/com/onegini/actions/"/>
     <!--<source-file src="src/android/src/android/com/onegini/gcm/GCMHelper.java" target-dir="src/com/onegini/gcm/" />-->
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/"/>
+    <source-file src="src/android/src/android/com/onegini/model/MessageKey.java" target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/model/PinConfigModel.java"
                  target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/resource/AnonymousResourceClient.java"
@@ -187,6 +186,8 @@
     <source-file src="src/android/lib/plugin-dependencies.jar" target-dir="libs/"/>
     <source-file src="src/android/src/android/com/onegini/util/JSONResourceReader.java"
                  target-dir="src/com/onegini/util/"/>
+    <source-file src="src/android/src/android/com/onegini/util/MessageResourceReader.java"
+                 target-dir="src/com/onegini/util/"/>
 
     <source-file src="src/android/res/layout/activity_pin_screen.xml" target-dir="res/layout"/>
     <source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
@@ -207,5 +208,7 @@
     <resource-file src="src/generic/pin_key_highlighted.png" target="res/drawable/pin_key_highlighted.png"/>
     <resource-file src="src/generic/fonts/SourceSansPro-Regular.ttf" target="assets/fonts/font_regular.ttf"/>
     <resource-file src="src/generic/fonts/SourceSansPro-Light.ttf" target="assets/fonts/font_light.ttf"/>
+    <resource-file src="src/generic/messages/messages.properties" target="res/raw/messages.properties"/>
+    <asset src="src/generic/messages/messages.properties" target="res/messages.properties"/>
   </platform>
 </plugin>

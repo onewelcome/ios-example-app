@@ -86,7 +86,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 {
     NSError *error;
     NSString *properties = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:fileName ofType:nil] encoding:kCFStringEncodingUTF8 error:&error];
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\{*\\}" options:NSRegularExpressionCaseInsensitive error:&error];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\{.*\\}" options:NSRegularExpressionCaseInsensitive error:&error];
     properties = [regex stringByReplacingMatchesInString:properties options:0 range:NSMakeRange(0, [properties length]) withTemplate:@"%@"];
     if (error)
         NSLog(@"Error reading messages.properties file");
@@ -547,7 +547,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
         pinEntryMode = PINChangeNewPinMode;
         [self.pinViewController reset];
         self.pinViewController.mode = pinEntryMode;
-        [self.pinViewController setMessage:[messages objectForKey:@"KEYBOARD_TITLE_CREATE_PIN"]];
     } else {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askNewPinForChangeRequest" }];
         result.keepCallback = @(1);
@@ -953,8 +952,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
         }
         [topViewController presentViewController:self.pinViewController animated:YES completion:^{
             [self.pinViewController applyConfig:config];
-            self.pinViewController.mode = mode;
             self.pinViewController.messages = messages;
+            self.pinViewController.mode = mode;
         }];
     });
 }
@@ -1036,7 +1035,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
             {
                 // Switch to registration mode so the user can enter the second verification PIN
                 pinEntryMode = PINRegistrationVerififyMode;
-                [self.pinViewController setMessage:[messages objectForKey:@"KEYBOARD_TITLE_VERIFY_PIN"]];
                 self.pinViewController.mode = PINRegistrationVerififyMode;
                 [self.pinViewController reset];
             }
@@ -1070,7 +1068,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
             {
                 pinEntryMode = PINChangeNewPinVerifyMode;
                 
-                [self.pinViewController setMessage:[messages objectForKey:@"KEYBOARD_TITLE_VERIFY_PIN"]];
                 self.pinViewController.mode = PINChangeNewPinVerifyMode;
                 [self.pinViewController reset];
             }

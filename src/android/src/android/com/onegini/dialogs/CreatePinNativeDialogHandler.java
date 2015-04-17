@@ -3,10 +3,11 @@ package com.onegini.dialogs;
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithTitle;
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithTitleAndMessage;
-import static com.onegini.model.MessageKey.PIN_BLACK_LISTED;
-import static com.onegini.model.MessageKey.PIN_CODES_DIFFERS;
 import static com.onegini.model.MessageKey.KEYBOARD_TITLE_CREATE_PIN;
 import static com.onegini.model.MessageKey.KEYBOARD_TITLE_VERIFY_PIN;
+import static com.onegini.model.MessageKey.MAX_SIMILAR_DIGITS;
+import static com.onegini.model.MessageKey.PIN_BLACK_LISTED;
+import static com.onegini.model.MessageKey.PIN_CODES_DIFFERS;
 import static com.onegini.model.MessageKey.PIN_SHOULD_NOT_BE_A_SEQUENCE;
 import static com.onegini.model.MessageKey.PIN_SHOULD_NOT_USE_SIMILAR_DIGITS;
 import static com.onegini.model.MessageKey.PIN_TOO_SHORT;
@@ -112,9 +113,10 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void pinShouldNotUseSimilarDigits(final int maxSimilarDigits) {
+    final String maxSimilarDigitsKey = getMessageForKey(MAX_SIMILAR_DIGITS.name());
     final String message = getMessageForKey(PIN_SHOULD_NOT_USE_SIMILAR_DIGITS.name());
     broadcastWithMessage(context,
-        message.replace("{maxSimilarDigits}", Integer.toString(maxSimilarDigits)));
+        message.replace(maxSimilarDigitsKey, Integer.toString(maxSimilarDigits)));
   }
 
   @Override

@@ -2,6 +2,7 @@ package com.onegini.actions;
 
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
 import static com.onegini.model.MessageKey.AUTHORIZATION_ERROR_PIN_INVALID;
+import static com.onegini.model.MessageKey.REMAINING_ATTEMPTS;
 import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.responses.GeneralResponse.UNSUPPORTED_APP_VERSION;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR;
@@ -16,6 +17,7 @@ import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_E
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_SUCCESS;
 import static com.onegini.util.DeviceUtil.isNotConnected;
+import static com.onegini.util.MessageResourceReader.getMessageForKey;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
@@ -110,8 +112,9 @@ public class AuthorizeAction implements OneginiPluginAction {
         public void authorizationErrorInvalidGrant(int remainingAttempts) {
           // that is the only notification which impacts the pin screen within OneginiAuthorizationHandler
           if (client.shouldUseNativeScreens()) {
-            broadcastWithMessage(context,
-                AUTHORIZATION_ERROR_PIN_INVALID.name().replace("{remainingAttempts}", Integer.toString(remainingAttempts)));
+            final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
+            final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
+            broadcastWithMessage(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
           }
           else {
             sendCallbackResult(callbackResultBuilder

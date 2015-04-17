@@ -104,9 +104,7 @@ module.exports = {
     oneginiCordovaPlugin.preserveCurrentLocation();
 
     exec(function (response) {
-      if (successCallback) {
-        router.resourceFetched(response);
-      }
+      router.resourceFetched(response);
     }, function (error) {
       if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
         router.errorConnectivityProblem();

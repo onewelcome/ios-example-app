@@ -1,8 +1,7 @@
 package com.onegini.actions;
 
-import static com.onegini.dialogs.PinDialogMessages.PIN_INVALID;
-import static com.onegini.dialogs.PinDialogMessages.REMAINING_ATTEMPTS_KEY;
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
+import static com.onegini.model.MessageKey.AUTHORIZATION_ERROR_PIN_INVALID;
 import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGED;
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGE_ERROR;
@@ -72,7 +71,7 @@ public class ChangePinAction implements OneginiPluginAction {
       public void invalidCurrentPin(final int remainingAttempts) {
         if (client.shouldUseNativeScreens()) {
           broadcastWithMessage(context,
-              PIN_INVALID.replace(REMAINING_ATTEMPTS_KEY, Integer.toString(remainingAttempts)));
+              AUTHORIZATION_ERROR_PIN_INVALID.name().replace("{remainingAttempts}", Integer.toString(remainingAttempts)));
         }
         else {
           sendCallbackResult(callbackResultBuilder

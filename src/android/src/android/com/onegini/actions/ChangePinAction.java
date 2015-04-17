@@ -2,12 +2,14 @@ package com.onegini.actions;
 
 import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
 import static com.onegini.model.MessageKey.AUTHORIZATION_ERROR_PIN_INVALID;
+import static com.onegini.model.MessageKey.REMAINING_ATTEMPTS;
 import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGED;
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGE_ERROR;
 import static com.onegini.responses.OneginiPinResponse.PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS;
 import static com.onegini.responses.OneginiPinResponse.PIN_CURRENT_INVALID;
 import static com.onegini.util.DeviceUtil.isNotConnected;
+import static com.onegini.util.MessageResourceReader.getMessageForKey;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
@@ -19,6 +21,7 @@ import com.onegini.dialogs.PinScreenActivity;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiChangePinHandler;
 import com.onegini.util.CallbackResultBuilder;
+import com.onegini.util.MessageResourceReader;
 
 public class ChangePinAction implements OneginiPluginAction {
 
@@ -70,8 +73,9 @@ public class ChangePinAction implements OneginiPluginAction {
       @Override
       public void invalidCurrentPin(final int remainingAttempts) {
         if (client.shouldUseNativeScreens()) {
-          broadcastWithMessage(context,
-              AUTHORIZATION_ERROR_PIN_INVALID.name().replace("{remainingAttempts}", Integer.toString(remainingAttempts)));
+          final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
+          final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
+          broadcastWithMessage(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
         }
         else {
           sendCallbackResult(callbackResultBuilder

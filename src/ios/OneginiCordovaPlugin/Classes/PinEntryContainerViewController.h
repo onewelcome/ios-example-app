@@ -57,7 +57,7 @@ extern NSString *kDeleteKeyHighlightedStateImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelHeightConstraint;
 
 @property (nonatomic) PINEntryModes mode;
-@property (nonnull) NSDictionary* messages;
+@property (nonatomic) NSDictionary* messages;
 
 /**
  Apply custom style 

@@ -1036,8 +1036,9 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 			if (![verifyPin isEqualToString:pin]) {
 				// Perform a retry of the PIN entry
 				verifyPin = nil;
-				[self.pinViewController invalidPinWithReason:[messages objectForKey:@"AUTHORIZATION_ERROR_PIN_CHANGE_FAILED"]];
 				pinEntryMode = PINRegistrationMode;
+                self.pinViewController.mode = PINRegistrationMode;
+                [self.pinViewController invalidPinWithReason:[messages objectForKey:@"PIN_CODES_DIFFERS"]];
 			} else {
 				// The user entered the second verification PIN, check if they are equal and confirm the PIN
 				verifyPin = nil;
@@ -1069,8 +1070,9 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
             if (![verifyPin isEqualToString:pin]) {
                 // Perform a retry of the PIN entry
                 verifyPin = nil;
-                [self.pinViewController invalidPinWithReason:[messages objectForKey:@"AUTHORIZATION_ERROR_PIN_CHANGE_FAILED"]];
                 pinEntryMode = PINChangeNewPinMode;
+                self.pinViewController.mode = PINChangeNewPinMode;
+                [self.pinViewController invalidPinWithReason:[messages objectForKey:@"PIN_CODES_DIFFERS"]];
             } else {
                 // The user entered the second verification PIN, check if they are equal and confirm the PIN
                 verifyPin = nil;

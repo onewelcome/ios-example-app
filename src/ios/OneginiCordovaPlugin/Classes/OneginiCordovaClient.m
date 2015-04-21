@@ -183,7 +183,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
 }
 
-- (void)initInAppBrowserCallbackSession:(CDVInvokedUrlCommand *)command
+- (void)inAppBrowserControlSession:(CDVInvokedUrlCommand *)command
 {
     self.inAppBrowserCommandTxId = command.callbackId;
 

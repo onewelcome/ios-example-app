@@ -79,10 +79,10 @@ module.exports = {
    *
    * @param {Object} router             Object that can handle page transition for the outcome of the authorization.
    *                                    Should at least implement the following methods:
-   *                                    - resourceFetched -> method to be called once resource is successfully fetched,
-   *                                    resource content is passed as a param
    *                                    - errorConnectivityProblem -> method called whenever plugin isn't able to
    *                                    establish connection with the server
+   *                                    - resourceFetched -> method to be called once resource is successfully fetched,
+   *                                    resource content is passed as a param
    *                                    - resourceCallError -> indicates general resource call error
    *                                    - resourceCallAuthenticationFailed -> called whenever authentication for
    *                                    accessing specific resource fails

@@ -25,6 +25,10 @@
 
 @required
 
+/**
+ PIN change failed due to maximum number of retry attempts exceeded allowed maximum.
+ */
+- (void)pinChangeErrorTooManyPinFailures;
 - (void)pinChanged;
 - (void)pinChangeError;
 - (void)pinChangeError:(NSError *)error;

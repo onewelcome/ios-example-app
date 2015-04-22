@@ -71,8 +71,8 @@ dependencies {
     // Google play services
     compile 'com.google.android.gms:play-services-base:6.5+'
     // Http Client
-    compile 'com.squareup.okhttp:okhttp:2.0.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+    compile 'com.squareup.okhttp:okhttp:2.3.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
     // Rest Client
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     //Onegini OCRA

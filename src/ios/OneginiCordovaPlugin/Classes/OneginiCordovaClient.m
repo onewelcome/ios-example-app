@@ -639,6 +639,13 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     [self authorizationErrorCallbackWIthReason:@"authorizationErrorNoAuthorizationGrant"];
 }
 
+-(void)authorizationErrorInvalidAppPlatformOrVersion
+{
+    [self closePinView];
+    
+    [self authorizationErrorCallbackWIthReason:@"unsupportedAppVersion"];
+}
+
 - (void)askForPushAuthenticationConfirmation:(NSString *)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm {
     // Not implemented, should be made optional in the SDK
 }

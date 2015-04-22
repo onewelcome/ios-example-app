@@ -21,25 +21,23 @@ import com.onegini.dialogs.PinScreenActivity;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiChangePinHandler;
 import com.onegini.util.CallbackResultBuilder;
-import com.onegini.util.MessageResourceReader;
 
 public class ChangePinAction implements OneginiPluginAction {
 
   private static CallbackContext changePinCallback;
   private Application context;
+  private CallbackResultBuilder callbackResultBuilder;
 
   public static CallbackContext getChangePinCallback() {
     return changePinCallback;
   }
 
-  public static void clearChangePinSessionState() {
-    changePinCallback = null;
-  }
-
-  private CallbackResultBuilder callbackResultBuilder;
-
   public ChangePinAction() {
     callbackResultBuilder = new CallbackResultBuilder();
+  }
+
+  private void clearChangePinSessionState() {
+    changePinCallback = null;
   }
 
   @Override
@@ -95,7 +93,7 @@ public class ChangePinAction implements OneginiPluginAction {
       @Override
       public void pinChangeError() {
         sendCallbackResult(callbackResultBuilder
-            .withErrorReason(PIN_CHANGE_ERROR.getName())
+            .withErrorReason(CONNECTIVITY_PROBLEM.getName())
             .build());
       }
 

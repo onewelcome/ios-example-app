@@ -25,6 +25,8 @@ public class ConfigModel implements OneginiClientConfigModel {
   private boolean shouldConfirmNewPin;
   @SerializedName("kOGShouldDirectlyShowPushMessage")
   private boolean shouldDirectlyShowPushMessage;
+  @SerializedName("kOGdebugDetectionEnabled")
+  private boolean debugDetectionEnabled;
 
   @SerializedName("kOGUseEmbeddedWebview")
   private boolean useEmbeddedWebview;
@@ -117,7 +119,10 @@ public class ConfigModel implements OneginiClientConfigModel {
 
   @Override
   public boolean debugDetectionEnabled() {
-    return false;
+    if (debugDetectionEnabled == null) {
+      return true;
+    }
+    return  debugDetectionEnabled;
   }
 
   public boolean useEmbeddedWebview() {

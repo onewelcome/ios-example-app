@@ -1,14 +1,8 @@
 package com.onegini.model;
 
-import static com.onegini.mobile.sdk.android.library.OneginiConstants.DEFAULT_ENCODING;
-
-import java.nio.charset.Charset;
-
 import android.os.Build;
 import com.google.gson.annotations.SerializedName;
 import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
-import com.onegini.util.HashUtil;
-
 
 public class ConfigModel implements OneginiClientConfigModel {
   @SerializedName("shouldGetIdToken")
@@ -121,14 +115,13 @@ public class ConfigModel implements OneginiClientConfigModel {
     return 0;
   }
 
-  public boolean useEmbeddedWebview() {
-    return useEmbeddedWebview;
+  @Override
+  public boolean debugDetectionEnabled() {
+    return false;
   }
 
-  @Override
-  public String getAppSecret() {
-      final String secret = HashUtil.sha256(toString().getBytes(Charset.forName(DEFAULT_ENCODING)));
-      return secret;
+  public boolean useEmbeddedWebview() {
+    return useEmbeddedWebview;
   }
 
   @Override

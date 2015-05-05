@@ -119,9 +119,6 @@ public class ConfigModel implements OneginiClientConfigModel {
 
   @Override
   public boolean debugDetectionEnabled() {
-    if (debugDetectionEnabled == null) {
-      return true;
-    }
     return  debugDetectionEnabled;
   }
 

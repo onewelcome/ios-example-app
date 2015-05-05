@@ -526,6 +526,14 @@ module.exports = {
   },
 
   /**
+   * Detect and lock in prefered screen orientation
+   * (tablet in landscape, phone in portrait)
+   */
+  setupScreenOrientation: function () {
+    exec(null, null, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.SETUP_SCREEN_ORIENTATION, []);
+  },
+
+  /**
    * List of constant values used in communication with OneginiCordovaPlugin.
    */
   OG_CONSTANTS: {
@@ -588,6 +596,8 @@ module.exports = {
     RESOURCE_CALL_SCOPE_ERROR: "scopeError",
     RESOURCE_CALL_BAD_REQUEST: "resourceBadRequest",
     RESOURCE_CALL_UNAUTHORIZED: "unauthorizedClient",
-    RESOURCE_CALL_INVALID_GRANT: "invalidGrant"
+    RESOURCE_CALL_INVALID_GRANT: "invalidGrant",
+
+    SETUP_SCREEN_ORIENTATION: "setupScreenOrientation"
   }
 };

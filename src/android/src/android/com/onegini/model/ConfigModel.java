@@ -1,14 +1,8 @@
 package com.onegini.model;
 
-import static com.onegini.mobile.sdk.android.library.OneginiConstants.DEFAULT_ENCODING;
-
-import java.nio.charset.Charset;
-
 import android.os.Build;
 import com.google.gson.annotations.SerializedName;
 import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
-import com.onegini.util.HashUtil;
-
 
 public class ConfigModel implements OneginiClientConfigModel {
   @SerializedName("shouldGetIdToken")
@@ -31,7 +25,10 @@ public class ConfigModel implements OneginiClientConfigModel {
   private boolean shouldConfirmNewPin;
   @SerializedName("kOGShouldDirectlyShowPushMessage")
   private boolean shouldDirectlyShowPushMessage;
-
+  @SerializedName("kOGdebugDetectionEnabled")
+  private boolean debugDetectionEnabled;
+  @SerializedName("kOGrootDetectionEnabled")
+  private boolean rootDetectionEnabled;
   @SerializedName("kOGUseEmbeddedWebview")
   private boolean useEmbeddedWebview;
 
@@ -121,14 +118,18 @@ public class ConfigModel implements OneginiClientConfigModel {
     return 0;
   }
 
-  public boolean useEmbeddedWebview() {
-    return useEmbeddedWebview;
+  @Override
+  public boolean debugDetectionEnabled() {
+    return  debugDetectionEnabled;
   }
 
   @Override
-  public String getAppSecret() {
-      final String secret = HashUtil.sha256(toString().getBytes(Charset.forName(DEFAULT_ENCODING)));
-      return secret;
+  public boolean rootDetectionEnabled() {
+    return rootDetectionEnabled;
+  }
+
+  public boolean useEmbeddedWebview() {
+    return useEmbeddedWebview;
   }
 
   @Override

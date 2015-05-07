@@ -47,7 +47,7 @@
 /**
  Register a callback to be used for managing inAppBrowser
  */
-- (void)initInAppBrowserCallbackSession:(CDVInvokedUrlCommand *)command;
+- (void)inAppBrowserControlSession:(CDVInvokedUrlCommand *)command;
         
 /**
  Determine if the user is registered.

@@ -37,6 +37,7 @@ allprojects {
 }
 
 dependencies {
+  compile files('dexguard/lib/dexguard_util.jar')
   // The onegini sdk
   compile 'com.onegini.mobile.sdk.android:library:3.02.00@aar'
   // Google play services

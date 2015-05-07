@@ -3,10 +3,12 @@ src/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata
 src/ios/OneginiCordovaPlugin.xcodeproj/project.xcworkspace/xcuserdata
 src/ios/OneginiCordovaPlugin.xcodeproj/xcuserdata
 src/ios/OneginiCordovaPlugin.xcworkspace/xcuserdata
-src/ios/OneginiCordovaPlugin.xcworkspace/xcuserdata
 src/ios/DerivedData
 *.xccheckout
 .idea/
 .DS_Store
 src/ios/Example native PIN/CustomPINEntry/CustomPINEntry.xcodeproj/project.xcworkspace/xcuserdata/eduard.xcuserdatad
 src/ios/Example native PIN/CustomPINEntry/CustomPINEntry.xcodeproj/xcuserdata/eduard.xcuserdatad
+
+src/android/.gradle
+src/android/CordovaLib/build

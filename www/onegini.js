@@ -490,7 +490,7 @@ module.exports = {
    * @param url   URL to open
    */
   openInAppBrowser: function (url) {
-    oneginiCordovaPlugin.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no,clearcache=yes');
+    oneginiCordovaPlugin.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no,clearcache=yes,hardwareback=no,dismissablewithbackbutton=no');
   },
 
   /**

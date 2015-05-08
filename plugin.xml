@@ -36,7 +36,7 @@
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGResourceHandlerDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OneginiSDK.h"/>
 
-    <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-2.04.05.04-SNAPSHOT.a" framework="true"/>
+    <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-3.00.00.00-SNAPSHOT.a" framework="true"/>
 
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>
@@ -44,7 +44,7 @@
     <asset src="src/generic/messages/messages.properties" target="res/messages.properties"/>
 
     <!-- Generic OAUTH config -->
-    <resource-file src="src/generic/config.json"/>
+    <resource-file src="src/ios/config.json"/>
 
     <!-- Work in progress, these are not the correct image assets (copied from example PSD with low resolution) -->
     <resource-file src="src/generic/pin-config.json"/>

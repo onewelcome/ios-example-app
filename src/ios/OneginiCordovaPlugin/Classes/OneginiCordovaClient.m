@@ -914,6 +914,10 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
 }
 
+- (void)setupScreenOrientation:(CDVInvokedUrlCommand *)command{
+    
+}
+
 #pragma mark -
 #pragma mark Custom PIN entry
 

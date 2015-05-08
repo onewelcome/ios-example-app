@@ -12,3 +12,4 @@ src/ios/Example native PIN/CustomPINEntry/CustomPINEntry.xcodeproj/xcuserdata/ed
 
 src/android/.gradle
 src/android/CordovaLib/build
+src/android/build

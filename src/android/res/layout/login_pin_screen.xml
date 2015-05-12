@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#fff">
+
+  <!-- header -->
+  <RelativeLayout
+    android:id="@+id/screen_header"
+    android:background="#FFF"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:layout_alignParentTop="true"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <ImageView
+      android:id="@+id/pin_logo"
+      android:src="@drawable/logo"
+      android:layout_width="wrap_content"
+      android:layout_height="48dp"
+      android:scaleType="fitXY"
+      android:layout_centerVertical="true"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"/>
+
+    <TextView
+      android:id="@+id/help_button"
+      android:text="Help?"
+      android:textColor="#72994d"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:textSize="16sp"/>
+
+  </RelativeLayout>
+
+  <include
+    layout="@layout/keyboard"
+    android:id="@+id/included_keyboard"/>
+
+  <!-- body -->
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0"
+    android:layout_above="@+id/included_keyboard"
+    android:layout_below="@+id/screen_header"
+    android:padding="15dp">
+
+    <TextView
+      android:id="@+id/pin_title"
+      android:text="Log in"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="24sp"
+      android:textColor="#7f6c66"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentLeft="true"/>
+
+    <TextView
+      android:id="@+id/pin_forgotten_label"
+      android:text="Did you forget your pincode?"
+      android:textColor="#72994d"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentBottom="true"
+      android:textSize="16sp"/>
+
+    <LinearLayout
+      android:id="@+id/pin_input"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:textAlignment="center"
+      android:layout_centerVertical="true">
+
+      <TextView
+        android:id="@+id/pin_input_0"
+        style="@style/PinKeyboardInputField"/>
+
+      <TextView
+        android:id="@+id/pin_input_1"
+        style="@style/PinKeyboardInputField" />
+
+      <TextView
+        android:id="@+id/pin_input_2"
+        style="@style/PinKeyboardInputField" />
+
+      <TextView
+        android:id="@+id/pin_input_3"
+        style="@style/PinKeyboardInputField" />
+
+      <TextView
+        android:id="@+id/pin_input_4"
+        style="@style/PinKeyboardInputField" />
+
+    </LinearLayout>
+  </RelativeLayout>
+</RelativeLayout>

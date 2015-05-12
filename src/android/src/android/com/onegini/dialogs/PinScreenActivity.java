@@ -5,26 +5,19 @@ import org.apache.cordova.CordovaActivity;
 import android.content.pm.ActivityInfo;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import com.onegini.model.PinConfigModel;
 import com.onegini.util.DeviceUtil;
-import com.onegini.util.JSONResourceReader;
 
 public class PinScreenActivity extends CordovaActivity {
 
-  // this const might be configurable in next sprints
   private static final int MAX_DIGITS = 5;
 
   private static final String HTML_CHAR_DOT = "&#9679;";
-  private static final String HTML_CHAR_DASH = "&mdash;";
 
   private static boolean isCreatePinFlow;
 
@@ -32,28 +25,23 @@ public class PinScreenActivity extends CordovaActivity {
     PinScreenActivity.isCreatePinFlow = isCreatePinFlow;
   }
 
-  private int deleteKeyNormalResourceId;
   private final char[] pin = new char[MAX_DIGITS];
 
   private final TextView[] pinInputs = new TextView[MAX_DIGITS];
   private Resources resources;
   private String packageName;
-  private PinConfigModel pinConfigModel;
   private Typeface customFontRegular;
   private Typeface customFontLight;
   private int cursorIndex = 0;
 
   private TextView titleTextView;
   private TextView pinForgottenTextView;
-  private TextView errorTextView;
+  //private TextView errorTextView;
   private TextView pinLabelTextView;
 
   private Button deleteButton;
-  private int logoResourceId;
-  private int digitKeyNormalResourceId;
-  private int digitKeyFocusedResourceId;
-
-  private int deleteKeyFocusedResourceId;
+  private int inputFocusedBackgroundResourceId;
+  private int inputNormaBackgroundlResourceId;
 
   private static PinScreenActivity instance;
 
@@ -64,10 +52,9 @@ public class PinScreenActivity extends CordovaActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    lockScreenOrientation();
     resources = getResources();
     packageName = getPackageName();
-    setContentView(resources.getIdentifier("activity_pin_screen", "layout", packageName));
-    lockScreenOrientation();
     initialize();
     resetPin();
     instance = this;
@@ -102,75 +89,53 @@ public class PinScreenActivity extends CordovaActivity {
   }
 
   private void initialize() {
-    initConfig();
     initAssets();
     initLayout();
   }
 
-  private void initConfig() {
-    final int configurationPointer = resources.getIdentifier("pin_config", "raw", packageName);
-    final JSONResourceReader jsonResourceReader = new JSONResourceReader();
-    final String configString = jsonResourceReader.parse(resources, configurationPointer);
-    pinConfigModel = jsonResourceReader.map(PinConfigModel.class, configString);
-  }
-
   private void initAssets() {
-    logoResourceId = resources.getIdentifier(
-        getDrawableNameFromFileName(pinConfigModel.getLogoImage()),
-        "drawable",
-        packageName
-    );
+    String resourceName = (isCreatePinFlow) ? "form_inactive" : "form_inactive_gray";
+    inputNormaBackgroundlResourceId = resources.getIdentifier(resourceName, "drawable", packageName);
 
-    digitKeyNormalResourceId = resources.getIdentifier(
-        getDrawableNameFromFileName(pinConfigModel.getKeyNormalStateImage()),
-        "drawable",
-        packageName
-    );
-    digitKeyFocusedResourceId = resources.getIdentifier(
-        getDrawableNameFromFileName(pinConfigModel.getKeyHighlightedStateImage()),
-        "drawable",
-        packageName
-    );
-    deleteKeyNormalResourceId = resources.getIdentifier(
-        getDrawableNameFromFileName(pinConfigModel.getDeleteKeyNormalStateImage()),
-        "drawable",
-        packageName
-    );
-    deleteKeyFocusedResourceId = resources.getIdentifier(
-        getDrawableNameFromFileName(pinConfigModel.getDeleteKeyHighlightedStateImage()),
-        "drawable",
-        packageName
-    );
+    // in create pin flow focused imput doesn't have "active" background
+    // it wasn't delivered by mobgen, so has to be fixed later
+    resourceName = (isCreatePinFlow) ? "form_active" : "form_inactive_gray";
+    inputFocusedBackgroundResourceId = resources.getIdentifier(resourceName, "drawable", packageName);
 
     customFontRegular = Typeface.createFromAsset(getAssets(), "fonts/font_regular.ttf");
     customFontLight = Typeface.createFromAsset(getAssets(), "fonts/font_light.ttf");
   }
 
   private void initLayout() {
-    setContentView(resources.getIdentifier("activity_pin_screen", "layout", packageName));
-    initLogo();
+    final String layoutFilename = (isCreatePinFlow) ? "create_pin_screen" : "login_pin_screen";
+    setContentView(resources.getIdentifier(layoutFilename, "layout", packageName));
+
     initTextViews();
-    initBackgrounds();
     initPinInputs();
     initPinButtons();
-  }
-
-  private void initLogo() {
-    final int logoId = resources.getIdentifier("pin_logo", "id", packageName);
-    final ImageView logo = (ImageView) findViewById(logoId);
-    logo.setImageResource(logoResourceId);
   }
 
   private void initTextViews() {
     titleTextView = (TextView) findViewById(resources.getIdentifier("pin_title", "id", packageName));
     pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
-    errorTextView = (TextView) findViewById(resources.getIdentifier("pin_error", "id", packageName));
-    pinLabelTextView = (TextView) findViewById(resources.getIdentifier("pin_small_label", "id", packageName));
+    //errorTextView = (TextView) findViewById(resources.getIdentifier("pin_error", "id", packageName));
+    //pinLabelTextView = (TextView) findViewById(resources.getIdentifier("pin_small_label", "id", packageName));
 
     titleTextView.setTypeface(customFontRegular);
-    pinForgottenTextView.setTypeface(customFontRegular);
-    errorTextView.setTypeface(customFontRegular);
-    pinLabelTextView.setTypeface(customFontRegular);
+
+    if (isCreatePinFlow) {
+      TextView stepTextView;
+      for (int step = 1; step <= 3; step++) {
+        stepTextView = (TextView) findViewById(resources.getIdentifier("step_marker_" + step, "id", packageName));
+        stepTextView.setTypeface(customFontRegular);
+      }
+    }
+    else {
+      pinForgottenTextView.setTypeface(customFontRegular);
+    }
+
+    //errorTextView.setTypeface(customFontRegular);
+    //pinLabelTextView.setTypeface(customFontRegular);
 
     updateTexts(getIntent());
   }
@@ -181,7 +146,7 @@ public class PinScreenActivity extends CordovaActivity {
       titleTextView.setText(title);
     }
 
-    final String message = intent.getStringExtra("message");
+    /*final String message = intent.getStringExtra("message");
     if (isNotBlank(message)) {
       errorTextView.setText(message);
       errorTextView.setVisibility(View.VISIBLE);
@@ -189,7 +154,7 @@ public class PinScreenActivity extends CordovaActivity {
     else {
       errorTextView.setText("");
       errorTextView.setVisibility(View.GONE);
-    }
+    }*/
   }
 
   private boolean isNotBlank(final String string) {
@@ -203,23 +168,6 @@ public class PinScreenActivity extends CordovaActivity {
     return false;
   }
 
-  private void initBackgrounds() {
-    final int backgroundColor = Color.parseColor(pinConfigModel.getBackgroundColor());
-    final int foregroundColor = Color.parseColor(pinConfigModel.getForegroundColor());
-
-    final int backgroundId = resources.getIdentifier("pin_background", "id", packageName);
-    findViewById(backgroundId).setBackgroundColor(backgroundColor);
-
-    final int dividerId = resources.getIdentifier("pin_divider", "id", packageName);
-    findViewById(dividerId).setBackgroundColor(backgroundColor);
-
-    final int foregroundId = resources.getIdentifier("pin_foreground", "id", packageName);
-    findViewById(foregroundId).setBackgroundColor(foregroundColor);
-
-    final int headerId = resources.getIdentifier("pin_header", "id", packageName);
-    findViewById(headerId).setBackgroundColor(foregroundColor);
-  }
-
   private void initPinInputs() {
     for (int input = 0; input < MAX_DIGITS; input++) {
       final int inputId = resources.getIdentifier("pin_input_" + input, "id", packageName);
@@ -228,8 +176,9 @@ public class PinScreenActivity extends CordovaActivity {
   }
 
   private void initPinButtons() {
+    int buttonId;
     for (int digit = 0; digit < 10; digit++) {
-      final int buttonId = resources.getIdentifier("pin_key_" + digit, "id", packageName);
+      buttonId = resources.getIdentifier("pin_key_" + digit, "id", packageName);
       initPinDigitButton(buttonId, digit);
     }
 
@@ -239,8 +188,7 @@ public class PinScreenActivity extends CordovaActivity {
 
   private void initPinDigitButton(final int buttonId, final int buttonValue) {
     final Button pinButton = (Button) findViewById(buttonId);
-    pinButton.setBackground(createDrawableForButton(digitKeyNormalResourceId, digitKeyFocusedResourceId));
-    pinButton.setTypeface(customFontLight);
+    pinButton.setTypeface(customFontRegular);
     pinButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View v) {
@@ -251,8 +199,7 @@ public class PinScreenActivity extends CordovaActivity {
 
   private void initPinDeleteButton(final int buttonId) {
     deleteButton = (Button) findViewById(buttonId);
-    deleteButton.setBackground(createDrawableForButton(deleteKeyNormalResourceId, deleteKeyFocusedResourceId));
-    deleteButton.setTypeface(customFontLight);
+    deleteButton.setTypeface(customFontRegular);
     deleteButton.setText(Html.fromHtml("&larr;"));
     deleteButton.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -267,7 +214,7 @@ public class PinScreenActivity extends CordovaActivity {
       pin[cursorIndex++] = Character.forDigit(digit, 10);
       updateInputView();
       deleteButton.setVisibility(View.VISIBLE);
-      errorTextView.setVisibility(View.GONE);
+      //errorTextView.setVisibility(View.GONE);
       if (cursorIndex == MAX_DIGITS) {
         if (PinScreenActivity.isCreatePinFlow) {
           CreatePinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);
@@ -284,7 +231,7 @@ public class PinScreenActivity extends CordovaActivity {
       pin[--cursorIndex] = '\0';
       updateInputView();
       if (cursorIndex == 0) {
-        deleteButton.setVisibility(View.GONE);
+        deleteButton.setVisibility(View.INVISIBLE);
       }
     }
   }
@@ -292,8 +239,12 @@ public class PinScreenActivity extends CordovaActivity {
   private void updateInputView() {
     String htmlCharacter;
     for (int i = 0; i < MAX_DIGITS; i++) {
-      htmlCharacter = (pin[i] == '\0') ? HTML_CHAR_DASH : HTML_CHAR_DOT;
+      htmlCharacter = (pin[i] == '\0') ? "" : HTML_CHAR_DOT;
       pinInputs[i].setText(Html.fromHtml(htmlCharacter));
+      pinInputs[i].setBackgroundResource(inputNormaBackgroundlResourceId);
+    }
+    if (cursorIndex < MAX_DIGITS) {
+      pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
     }
   }
 
@@ -301,24 +252,7 @@ public class PinScreenActivity extends CordovaActivity {
     for (int index = 0; index < MAX_DIGITS; index++) {
       pin[index] = '\0';
     }
-    deleteButton.setVisibility(View.GONE);
+    deleteButton.setVisibility(View.INVISIBLE);
     cursorIndex = 0;
-  }
-
-  private String getDrawableNameFromFileName(final String filename) {
-    String result = "";
-    if (filename.length() > 0) {
-      final int dotPosition = filename.lastIndexOf('.');
-      result = filename.substring(0, dotPosition);
-    }
-    return result;
-  }
-
-  private StateListDrawable createDrawableForButton(final int normalStateResourceId, final int focusedStateResourceId) {
-    final StateListDrawable statesDrawables = new StateListDrawable();
-    statesDrawables.addState(new int[]{ android.R.attr.state_pressed }, resources.getDrawable(focusedStateResourceId));
-    statesDrawables.addState(new int[]{ android.R.attr.state_focused }, resources.getDrawable(focusedStateResourceId));
-    statesDrawables.addState(new int[]{ }, resources.getDrawable(normalStateResourceId));
-    return statesDrawables;
   }
 }

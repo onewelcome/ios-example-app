@@ -28,10 +28,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
-    if([[UIDevice currentDevice].model containsString:@"iPhone"])
-        return UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskPortraitUpsideDown;
-    else
-        return UIInterfaceOrientationMaskLandscapeLeft|UIInterfaceOrientationMaskLandscapeRight;
+    return self.supportedOrientations;
 }
 
 - (BOOL)shouldAutorotate {

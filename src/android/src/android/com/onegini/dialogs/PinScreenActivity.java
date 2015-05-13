@@ -26,11 +26,10 @@ public class PinScreenActivity extends CordovaActivity {
   private static final String HTML_CHAR_DOT = "&#9679;";
   private static final String HTML_CHAR_DASH = "&mdash;";
 
-  private static boolean isCreatePinFlow;
-
-  public static void setCreatePinFlow(final boolean isCreatePinFlow) {
-    PinScreenActivity.isCreatePinFlow = isCreatePinFlow;
-  }
+  public static final String EXTRA_SCREEN_TITLE = "title";
+  public static final String EXTRA_MESSAGE = "message";
+  public static final String EXTRA_CREATE_PIN_FLOW = "createPinFlow";
+  public static final String EXTRA_KEEP_CURRENT_FLOW = "keepCurrentFlow";
 
   private int deleteKeyNormalResourceId;
   private final char[] pin = new char[MAX_DIGITS];
@@ -42,6 +41,9 @@ public class PinScreenActivity extends CordovaActivity {
   private Typeface customFontRegular;
   private Typeface customFontLight;
   private int cursorIndex = 0;
+  private boolean isCreatePinFlow;
+  private String screenTitle;
+  private String screenMessage;
 
   private TextView titleTextView;
   private TextView pinForgottenTextView;
@@ -67,9 +69,7 @@ public class PinScreenActivity extends CordovaActivity {
     resources = getResources();
     packageName = getPackageName();
     setContentView(resources.getIdentifier("activity_pin_screen", "layout", packageName));
-    lockScreenOrientation();
     initialize();
-    resetPin();
     instance = this;
   }
 
@@ -88,7 +88,27 @@ public class PinScreenActivity extends CordovaActivity {
   @Override
   protected void onNewIntent(final Intent intent) {
     setIntent(intent);
-    updateTexts(intent);
+    parseIntent();
+    updateTexts();
+    resetPin();
+  }
+
+  private void parseIntent() {
+    final Intent intent = getIntent();
+    screenTitle = intent.getStringExtra(EXTRA_SCREEN_TITLE);
+    screenMessage = intent.getStringExtra(EXTRA_MESSAGE);
+    // if KEEP_CURRENT_FLOW flag was set then we don't change isCreatePinFlow value
+    if (intent.getBooleanExtra(EXTRA_KEEP_CURRENT_FLOW, false) == false) {
+      isCreatePinFlow = intent.getBooleanExtra(EXTRA_CREATE_PIN_FLOW, false);
+    }
+  }
+
+  private void initialize() {
+    lockScreenOrientation();
+    parseIntent();
+    initConfig();
+    initAssets();
+    initLayout();
     resetPin();
   }
 
@@ -99,12 +119,6 @@ public class PinScreenActivity extends CordovaActivity {
     else {
       setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
-  }
-
-  private void initialize() {
-    initConfig();
-    initAssets();
-    initLayout();
   }
 
   private void initConfig() {
@@ -172,24 +186,24 @@ public class PinScreenActivity extends CordovaActivity {
     errorTextView.setTypeface(customFontRegular);
     pinLabelTextView.setTypeface(customFontRegular);
 
-    updateTexts(getIntent());
+    updateTexts();
   }
 
-  private void updateTexts(final Intent intent) {
-    final String title = intent.getStringExtra("title");
-    if (isNotBlank(title)) {
-      titleTextView.setText(title);
+  private void updateTexts() {
+    if (isNotBlank(screenTitle)) {
+      titleTextView.setText(screenTitle);
     }
 
-    final String message = intent.getStringExtra("message");
-    if (isNotBlank(message)) {
-      errorTextView.setText(message);
+    if (isNotBlank(screenMessage)) {
+      errorTextView.setText(screenMessage);
       errorTextView.setVisibility(View.VISIBLE);
     }
     else {
       errorTextView.setText("");
       errorTextView.setVisibility(View.GONE);
     }
+
+    pinForgottenTextView.setVisibility( isCreatePinFlow ? View.GONE : View.VISIBLE);
   }
 
   private boolean isNotBlank(final String string) {
@@ -269,7 +283,7 @@ public class PinScreenActivity extends CordovaActivity {
       deleteButton.setVisibility(View.VISIBLE);
       errorTextView.setVisibility(View.GONE);
       if (cursorIndex == MAX_DIGITS) {
-        if (PinScreenActivity.isCreatePinFlow) {
+        if (isCreatePinFlow) {
           CreatePinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);
         }
         else {

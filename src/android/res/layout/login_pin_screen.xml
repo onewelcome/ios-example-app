@@ -51,7 +51,7 @@
     android:padding="15dp">
 
     <TextView
-      android:id="@+id/pin_title"
+      android:id="@+id/pin_keyboard_title"
       android:text="Log in"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

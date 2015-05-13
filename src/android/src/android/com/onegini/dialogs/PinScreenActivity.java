@@ -1,5 +1,17 @@
 package com.onegini.dialogs;
 
+import static com.onegini.model.MessageKey.HELP_LINK_TITLE;
+import static com.onegini.model.MessageKey.LOGIN_PIN_KEYBOARD_TITLE;
+import static com.onegini.model.MessageKey.PIN_FORGOTTEN_TITLE;
+import static com.onegini.util.MessageResourceReader.getMessageForKey;
+import static com.onegini.model.MessageKey.LOGIN_PIN_KEYBOARD_TITLE;
+import static com.onegini.model.MessageKey.CREATE_PIN_SCREEN_TITLE;
+import static com.onegini.model.MessageKey.CREATE_PIN_KEYBOARD_TITLE;
+import static com.onegini.model.MessageKey.CREATE_PIN_INFO_LABEL;
+import static com.onegini.model.MessageKey.CONFIRM_PIN_SCREEN_TITLE;
+import static com.onegini.model.MessageKey.CONFIRM_PIN_KEYBOARD_TITLE;
+import static com.onegini.model.MessageKey.CONFIRM_PIN_INFO_LABEL;
+
 import org.apache.cordova.CordovaActivity;
 
 import android.content.pm.ActivityInfo;
@@ -11,6 +23,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.onegini.util.DeviceUtil;
 
 public class PinScreenActivity extends CordovaActivity {
@@ -19,10 +32,13 @@ public class PinScreenActivity extends CordovaActivity {
 
   private static final String HTML_CHAR_DOT = "&#9679;";
 
-  public static final String EXTRA_SCREEN_TITLE = "title";
+  public static final String EXTRA_MODE = "mode";
   public static final String EXTRA_MESSAGE = "message";
-  public static final String EXTRA_CREATE_PIN_FLOW = "createPinFlow";
-  public static final String EXTRA_KEEP_CURRENT_FLOW = "keepCurrentFlow";
+
+  // diffrent screen 'modes'
+  public static final int SCREEN_MODE_LOGIN        = 0;
+  public static final int SCREEN_MODE_CREATE_PIN   = 1;
+  public static final int SCREEN_MODE_CONFIRM_PIN  = 2;
 
   private final char[] pin = new char[MAX_DIGITS];
 
@@ -30,16 +46,16 @@ public class PinScreenActivity extends CordovaActivity {
   private Resources resources;
   private String packageName;
   private Typeface customFontRegular;
-  private Typeface customFontLight;
+  private int mode = SCREEN_MODE_LOGIN;
   private int cursorIndex = 0;
-  private boolean isCreatePinFlow;
-  private String screenTitle;
   private String screenMessage;
 
-  private TextView titleTextView;
+  private TextView screenTitleTextView;
+  private TextView keyboardTitleTextView;
+  private TextView pinLabelTextView;
+  private TextView helpLinkTextView;
   private TextView pinForgottenTextView;
   //private TextView errorTextView;
-  private TextView pinLabelTextView;
 
   private Button deleteButton;
   private int inputFocusedBackgroundResourceId;
@@ -83,11 +99,11 @@ public class PinScreenActivity extends CordovaActivity {
 
   private void parseIntent() {
     final Intent intent = getIntent();
-    screenTitle = intent.getStringExtra(EXTRA_SCREEN_TITLE);
     screenMessage = intent.getStringExtra(EXTRA_MESSAGE);
-    // if KEEP_CURRENT_FLOW flag was set then we don't change isCreatePinFlow value
-    if (intent.getBooleanExtra(EXTRA_KEEP_CURRENT_FLOW, false) == false) {
-      isCreatePinFlow = intent.getBooleanExtra(EXTRA_CREATE_PIN_FLOW, false);
+    mode = intent.getIntExtra(EXTRA_MODE, SCREEN_MODE_LOGIN);
+    // TODO
+    if (isNotBlank(screenMessage)) {
+      Toast.makeText(this, screenMessage, Toast.LENGTH_LONG).show();
     }
   }
 
@@ -108,6 +124,7 @@ public class PinScreenActivity extends CordovaActivity {
   }
 
   private void initAssets() {
+    final boolean isCreatePinFlow = isCreatePinFlow();
     String resourceName = (isCreatePinFlow) ? "form_inactive" : "form_inactive_gray";
     inputNormaBackgroundlResourceId = resources.getIdentifier(resourceName, "drawable", packageName);
 
@@ -117,11 +134,10 @@ public class PinScreenActivity extends CordovaActivity {
     inputFocusedBackgroundResourceId = resources.getIdentifier(resourceName, "drawable", packageName);
 
     customFontRegular = Typeface.createFromAsset(getAssets(), "fonts/font_regular.ttf");
-    customFontLight = Typeface.createFromAsset(getAssets(), "fonts/font_light.ttf");
   }
 
   private void initLayout() {
-    final String layoutFilename = (isCreatePinFlow) ? "create_pin_screen" : "login_pin_screen";
+    final String layoutFilename = (isCreatePinFlow()) ? "create_pin_screen" : "login_pin_screen";
     setContentView(resources.getIdentifier(layoutFilename, "layout", packageName));
 
     initTextViews();
@@ -130,14 +146,23 @@ public class PinScreenActivity extends CordovaActivity {
   }
 
   private void initTextViews() {
-    titleTextView = (TextView) findViewById(resources.getIdentifier("pin_title", "id", packageName));
-    pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
+    // common textViews for all screen modes
+    keyboardTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_keyboard_title", "id", packageName));
+    keyboardTitleTextView.setTypeface(customFontRegular);
+
+    helpLinkTextView = (TextView) findViewById(resources.getIdentifier("help_button", "id", packageName));
+    helpLinkTextView.setTypeface(customFontRegular);
+
+    //pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
     //errorTextView = (TextView) findViewById(resources.getIdentifier("pin_error", "id", packageName));
-    //pinLabelTextView = (TextView) findViewById(resources.getIdentifier("pin_small_label", "id", packageName));
 
-    titleTextView.setTypeface(customFontRegular);
+    if (isCreatePinFlow()) {
+      screenTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_screen_title", "id", packageName));
+      screenTitleTextView.setTypeface(customFontRegular);
 
-    if (isCreatePinFlow) {
+      pinLabelTextView = (TextView) findViewById(resources.getIdentifier("pin_info_label", "id", packageName));
+      pinLabelTextView.setTypeface(customFontRegular);
+
       TextView stepTextView;
       for (int step = 1; step <= 3; step++) {
         stepTextView = (TextView) findViewById(resources.getIdentifier("step_marker_" + step, "id", packageName));
@@ -145,18 +170,31 @@ public class PinScreenActivity extends CordovaActivity {
       }
     }
     else {
+      pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
       pinForgottenTextView.setTypeface(customFontRegular);
     }
 
     //errorTextView.setTypeface(customFontRegular);
-    //pinLabelTextView.setTypeface(customFontRegular);
 
     updateTexts();
   }
 
   private void updateTexts() {
-    if (isNotBlank(screenTitle)) {
-      titleTextView.setText(screenTitle);
+    helpLinkTextView.setText(getMessageForKey(HELP_LINK_TITLE.name()));
+
+    if (mode==SCREEN_MODE_CREATE_PIN) {
+      screenTitleTextView.setText(getMessageForKey(CREATE_PIN_SCREEN_TITLE.name()));
+      keyboardTitleTextView.setText(getMessageForKey(CREATE_PIN_KEYBOARD_TITLE.name()));
+      pinLabelTextView.setText(getMessageForKey(CREATE_PIN_INFO_LABEL.name()));
+    }
+    else if (mode==SCREEN_MODE_CONFIRM_PIN) {
+      screenTitleTextView.setText(getMessageForKey(CONFIRM_PIN_SCREEN_TITLE.name()));
+      keyboardTitleTextView.setText(getMessageForKey(CONFIRM_PIN_KEYBOARD_TITLE.name()));
+      pinLabelTextView.setText(getMessageForKey(CONFIRM_PIN_INFO_LABEL.name()));
+    }
+    else {
+      keyboardTitleTextView.setText(getMessageForKey(LOGIN_PIN_KEYBOARD_TITLE.name()));
+      pinForgottenTextView.setText(getMessageForKey(PIN_FORGOTTEN_TITLE.name()));
     }
   }
 
@@ -219,7 +257,7 @@ public class PinScreenActivity extends CordovaActivity {
       deleteButton.setVisibility(View.VISIBLE);
       //errorTextView.setVisibility(View.GONE);
       if (cursorIndex == MAX_DIGITS) {
-        if (isCreatePinFlow) {
+        if (isCreatePinFlow()) {
           CreatePinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);
         }
         else {
@@ -257,5 +295,9 @@ public class PinScreenActivity extends CordovaActivity {
     }
     deleteButton.setVisibility(View.INVISIBLE);
     cursorIndex = 0;
+  }
+
+  private boolean isCreatePinFlow() {
+    return (mode==SCREEN_MODE_CREATE_PIN || mode==SCREEN_MODE_CONFIRM_PIN);
   }
 }

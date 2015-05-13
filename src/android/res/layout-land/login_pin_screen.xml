@@ -76,57 +76,71 @@
 
     <!-- Keyboard container -->
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#FFF"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="#FFF"
+      android:layout_centerInParent="true"
+      android:orientation="vertical">
 
       <RelativeLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:padding="15dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
 
         <TextView
-            android:id="@+id/pin_keyboard_title"
-            android:text="Log in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textColor="#7f6c66"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+          android:id="@+id/pin_keyboard_title"
+          android:text="Log in"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="24sp"
+          android:textColor="#7f6c66"
+          android:layout_alignParentTop="true"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true" />
+
+        <TextView
+          android:id="@+id/pin_error_message"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Sample error message"
+          android:textColor="#F00"
+          android:textSize="12sp"
+          android:layout_below="@+id/pin_keyboard_title"
+          android:layout_centerHorizontal="true"
+          android:layout_marginTop="10dp"
+          android:visibility="gone"
+          android:layout_alignEnd="@+id/pin_input"
+          android:layout_alignStart="@+id/pin_input"/>
 
         <LinearLayout
-            android:id="@+id/pin_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:layout_below="@+id/pin_keyboard_title">
+          android:id="@+id/pin_input"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:textAlignment="center"
+          android:layout_below="@id/pin_error_message"
+          android:layout_marginTop="10dp">
 
           <TextView
-              android:id="@+id/pin_input_0"
-              style="@style/PinKeyboardInputFieldTablet"/>
+            android:id="@+id/pin_input_0"
+            style="@style/PinKeyboardInputFieldTablet"/>
 
           <TextView
-              android:id="@+id/pin_input_1"
-              style="@style/PinKeyboardInputFieldTablet" />
+            android:id="@+id/pin_input_1"
+            style="@style/PinKeyboardInputFieldTablet" />
 
           <TextView
-              android:id="@+id/pin_input_2"
-              style="@style/PinKeyboardInputFieldTablet" />
+            android:id="@+id/pin_input_2"
+            style="@style/PinKeyboardInputFieldTablet" />
 
           <TextView
-              android:id="@+id/pin_input_3"
-              style="@style/PinKeyboardInputFieldTablet" />
+            android:id="@+id/pin_input_3"
+            style="@style/PinKeyboardInputFieldTablet" />
 
           <TextView
-              android:id="@+id/pin_input_4"
-              style="@style/PinKeyboardInputFieldTablet" />
-
+            android:id="@+id/pin_input_4"
+            style="@style/PinKeyboardInputFieldTablet" />
         </LinearLayout>
       </RelativeLayout>
 

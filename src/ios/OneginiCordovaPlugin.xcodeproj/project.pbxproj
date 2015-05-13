@@ -53,6 +53,7 @@
 		30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C1856519D5FC0A00212699 /* icon-60@3x.png */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
+		5C03272E1B00F499006D2DB7 /* plugin.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5C03272D1B00F499006D2DB7 /* plugin.xml */; };
 		5C1882A91ADE8AE600DE7286 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C1882A81ADE8AE600DE7286 /* SystemConfiguration.framework */; };
 		5CBBCE6D1AE549CE005CE2C9 /* libOneginiSDKiOS-3.00.00.00-SNAPSHOT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CBBCE6C1AE549CE005CE2C9 /* libOneginiSDKiOS-3.00.00.00-SNAPSHOT.a */; };
 		5CE4923D1ADD49420083246F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4923C1ADD49420083246F /* Reachability.m */; };
@@ -164,6 +165,7 @@
 		32CA4F630368D1EE00C91783 /* OneginiCordovaPlugin-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OneginiCordovaPlugin-Prefix.pch"; sourceTree = "<group>"; };
 		359253D9C6504EBD8C06520D /* AudioToolbox.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		5C03272D1B00F499006D2DB7 /* plugin.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = plugin.xml; sourceTree = "<group>"; };
 		5C1882A81ADE8AE600DE7286 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5CBBCE6C1AE549CE005CE2C9 /* libOneginiSDKiOS-3.00.00.00-SNAPSHOT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libOneginiSDKiOS-3.00.00.00-SNAPSHOT.a"; sourceTree = "<group>"; };
 		5CD4A5301ACD4DA0000FD948 /* Commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Commons.h; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				5C03272D1B00F499006D2DB7 /* plugin.xml */,
 				EB87FDF31871DA8E0020F90C /* www */,
 				EB87FDF21871DA7A0020F90C /* merges */,
 				EB87FDF11871DA420020F90C /* Staging */,
@@ -528,6 +531,7 @@
 				7E7966E11810823500FA85AD /* icon-50@2x.png in Resources */,
 				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
+				5C03272E1B00F499006D2DB7 /* plugin.xml in Resources */,
 				237380E31AC980DC00A9C28F /* pin-occupied-ic.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

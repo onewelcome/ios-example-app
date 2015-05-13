@@ -154,4 +154,10 @@
  Dictionary request parameters
  */
 - (void)fetchAnonymousResource:(CDVInvokedUrlCommand *)command;
+
+/**
+ Detect and lock in prefered screen orientation (tablet in landscape, phone in portrait)
+ */
+- (void)setupScreenOrientation:(CDVInvokedUrlCommand *)command;
+
 @end

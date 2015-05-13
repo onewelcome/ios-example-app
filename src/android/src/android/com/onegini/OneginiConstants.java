@@ -19,6 +19,7 @@ public class OneginiConstants {
   public static final String CONFIRM_NEW_PIN_CHANGE_PIN_ACTION = "confirmNewPinForChangeRequest";
   public static final String MOBILE_AUTHENTICATION_ACTION = "enrollForMobileAuthentication";
   public static final String CHECK_IS_REGISTERED_ACTION = "isRegistered";
+  public static final String SETUP_SCREEN_ORIENTATION = "setupScreenOrientation";
 
 
   // CordovaA[[ configuration properties

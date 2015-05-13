@@ -27,9 +27,7 @@ public class CurrentPinNativeDialogHandler implements OneginiCurrentPinDialog {
 
     final Intent intent = new Intent(context, PinScreenActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.putExtra("title", getMessageForKey(KEYBOARD_TITLE_ENTER_CURRENT_PIN.name()));
+    intent.putExtra(PinScreenActivity.EXTRA_SCREEN_TITLE, getMessageForKey(KEYBOARD_TITLE_ENTER_CURRENT_PIN.name()));
     context.startActivity(intent);
-
-    PinScreenActivity.setCreatePinFlow(false);
   }
 }

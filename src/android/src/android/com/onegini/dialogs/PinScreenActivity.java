@@ -1,9 +1,9 @@
 package com.onegini.dialogs;
 
+import static com.onegini.util.MessageResourceReader.getMessageForKey;
 import static com.onegini.model.MessageKey.HELP_LINK_TITLE;
 import static com.onegini.model.MessageKey.LOGIN_PIN_KEYBOARD_TITLE;
 import static com.onegini.model.MessageKey.PIN_FORGOTTEN_TITLE;
-import static com.onegini.util.MessageResourceReader.getMessageForKey;
 import static com.onegini.model.MessageKey.LOGIN_PIN_KEYBOARD_TITLE;
 import static com.onegini.model.MessageKey.CREATE_PIN_SCREEN_TITLE;
 import static com.onegini.model.MessageKey.CREATE_PIN_KEYBOARD_TITLE;
@@ -23,7 +23,6 @@ import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.onegini.util.DeviceUtil;
 
 public class PinScreenActivity extends CordovaActivity {
@@ -55,7 +54,7 @@ public class PinScreenActivity extends CordovaActivity {
   private TextView pinLabelTextView;
   private TextView helpLinkTextView;
   private TextView pinForgottenTextView;
-  //private TextView errorTextView;
+  private TextView errorTextView;
 
   private Button deleteButton;
   private int inputFocusedBackgroundResourceId;
@@ -92,19 +91,13 @@ public class PinScreenActivity extends CordovaActivity {
   @Override
   protected void onNewIntent(final Intent intent) {
     setIntent(intent);
-    parseIntent();
-    updateTexts();
-    resetPin();
+    initialize();
   }
 
   private void parseIntent() {
     final Intent intent = getIntent();
     screenMessage = intent.getStringExtra(EXTRA_MESSAGE);
     mode = intent.getIntExtra(EXTRA_MODE, SCREEN_MODE_LOGIN);
-    // TODO
-    if (isNotBlank(screenMessage)) {
-      Toast.makeText(this, screenMessage, Toast.LENGTH_LONG).show();
-    }
   }
 
   private void initialize() {
@@ -153,8 +146,8 @@ public class PinScreenActivity extends CordovaActivity {
     helpLinkTextView = (TextView) findViewById(resources.getIdentifier("help_button", "id", packageName));
     helpLinkTextView.setTypeface(customFontRegular);
 
-    //pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
-    //errorTextView = (TextView) findViewById(resources.getIdentifier("pin_error", "id", packageName));
+    errorTextView = (TextView) findViewById(resources.getIdentifier("pin_error_message", "id", packageName));
+    helpLinkTextView.setTypeface(customFontRegular);
 
     if (isCreatePinFlow()) {
       screenTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_screen_title", "id", packageName));
@@ -174,13 +167,16 @@ public class PinScreenActivity extends CordovaActivity {
       pinForgottenTextView.setTypeface(customFontRegular);
     }
 
-    //errorTextView.setTypeface(customFontRegular);
-
     updateTexts();
   }
 
   private void updateTexts() {
     helpLinkTextView.setText(getMessageForKey(HELP_LINK_TITLE.name()));
+
+    if (isNotBlank(screenMessage)) {
+      errorTextView.setText(screenMessage);
+      errorTextView.setVisibility(View.VISIBLE);
+    }
 
     if (mode==SCREEN_MODE_CREATE_PIN) {
       screenTitleTextView.setText(getMessageForKey(CREATE_PIN_SCREEN_TITLE.name()));
@@ -255,7 +251,7 @@ public class PinScreenActivity extends CordovaActivity {
       pin[cursorIndex++] = Character.forDigit(digit, 10);
       updateInputView();
       deleteButton.setVisibility(View.VISIBLE);
-      //errorTextView.setVisibility(View.GONE);
+      errorTextView.setVisibility(View.GONE);
       if (cursorIndex == MAX_DIGITS) {
         if (isCreatePinFlow()) {
           CreatePinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);

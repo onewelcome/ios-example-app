@@ -51,6 +51,8 @@ extern NSString *kDeleteKeyHighlightedStateImage;
 @property (strong, nonatomic) NSDictionary *landscapeConfig;
 @property (strong, nonatomic) NSDictionary *portraitConfig;
 
+@property (nonatomic) NSUInteger supportedOrientations;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelLeftConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelWidthConstraint;
@@ -79,4 +81,7 @@ extern NSString *kDeleteKeyHighlightedStateImage;
 - (void)invalidPinWithReason:(NSString *)message;
 
 - (void)setMessage:(NSString *)message;
+
+- (void)setSupportedInterfaceOrientations;
+
 @end

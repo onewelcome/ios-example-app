@@ -490,7 +490,7 @@ module.exports = {
    * @param url   URL to open
    */
   openInAppBrowser: function (url) {
-    oneginiCordovaPlugin.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no,clearcache=yes');
+    oneginiCordovaPlugin.inAppBrowser = window.open(url, '_blank', 'location=no,toolbar=no,clearcache=yes,hardwareback=no,dismissablewithbackbutton=no');
   },
 
   /**
@@ -523,6 +523,14 @@ module.exports = {
    */
   isiOS: function () {
     return ( navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0 || navigator.userAgent.indexOf("iPod") > 0);
+  },
+
+  /**
+   * Detect and lock in prefered screen orientation
+   * (tablet in landscape, phone in portrait)
+   */
+  setupScreenOrientation: function () {
+    exec(null, null, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.SETUP_SCREEN_ORIENTATION, []);
   },
 
   /**
@@ -588,6 +596,8 @@ module.exports = {
     RESOURCE_CALL_SCOPE_ERROR: "scopeError",
     RESOURCE_CALL_BAD_REQUEST: "resourceBadRequest",
     RESOURCE_CALL_UNAUTHORIZED: "unauthorizedClient",
-    RESOURCE_CALL_INVALID_GRANT: "invalidGrant"
+    RESOURCE_CALL_INVALID_GRANT: "invalidGrant",
+
+    SETUP_SCREEN_ORIENTATION: "setupScreenOrientation"
   }
 };

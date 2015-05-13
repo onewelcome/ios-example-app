@@ -59,10 +59,9 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
     final Intent intent = new Intent(context, PinScreenActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.putExtra("title", getMessageForKey(KEYBOARD_TITLE_CREATE_PIN.name()));
+    intent.putExtra(PinScreenActivity.EXTRA_SCREEN_TITLE, getMessageForKey(KEYBOARD_TITLE_CREATE_PIN.name()));
+    intent.putExtra(PinScreenActivity.EXTRA_CREATE_PIN_FLOW, true);
     context.startActivity(intent);
-
-    PinScreenActivity.setCreatePinFlow(true);
 
     if (OneginiClient.getInstance().getConfigModel().shouldConfirmNewPin()) {
       this.oneginiPinProvidedHandler = new OneginiPinWithConfirmationHandler() {

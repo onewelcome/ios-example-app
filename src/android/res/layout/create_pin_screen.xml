@@ -80,7 +80,7 @@
     </LinearLayout>
 
     <TextView
-      android:id="@+id/pin_title"
+      android:id="@+id/pin_screen_title"
       android:text="Log in"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -100,6 +100,7 @@
       android:padding="10dp">
 
       <TextView
+        android:id="@+id/pin_info_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Label text lorem ipsum"

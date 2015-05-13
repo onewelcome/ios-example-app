@@ -89,7 +89,7 @@
           android:padding="15dp">
 
         <TextView
-            android:id="@+id/pin_title"
+            android:id="@+id/pin_keyboard_title"
             android:text="Log in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAlignment="center"
-            android:layout_below="@+id/pin_title">
+            android:layout_below="@+id/pin_keyboard_title">
 
           <TextView
               android:id="@+id/pin_input_0"

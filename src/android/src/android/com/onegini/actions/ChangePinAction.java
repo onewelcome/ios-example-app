@@ -1,6 +1,5 @@
 package com.onegini.actions;
 
-import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
 import static com.onegini.model.MessageKey.AUTHORIZATION_ERROR_PIN_INVALID;
 import static com.onegini.model.MessageKey.REMAINING_ATTEMPTS;
 import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
@@ -21,6 +20,7 @@ import com.onegini.dialogs.PinScreenActivity;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiChangePinHandler;
 import com.onegini.util.CallbackResultBuilder;
+import com.onegini.util.PinIntentBuilder;
 
 public class ChangePinAction implements OneginiPluginAction {
 
@@ -73,7 +73,10 @@ public class ChangePinAction implements OneginiPluginAction {
         if (client.shouldUseNativeScreens()) {
           final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
           final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
-          broadcastWithMessage(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
+          new PinIntentBuilder(context)
+              .setLoginMode()
+              .addErrorMessage(message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)))
+              .startActivity();
         }
         else {
           sendCallbackResult(callbackResultBuilder

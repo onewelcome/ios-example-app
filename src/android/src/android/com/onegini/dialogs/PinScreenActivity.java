@@ -1,19 +1,27 @@
 package com.onegini.dialogs;
 
+import static com.onegini.model.MessageKey.HELP_POPUP_OK;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
 import static com.onegini.model.MessageKey.HELP_LINK_TITLE;
-import static com.onegini.model.MessageKey.LOGIN_PIN_KEYBOARD_TITLE;
 import static com.onegini.model.MessageKey.PIN_FORGOTTEN_TITLE;
+import static com.onegini.model.MessageKey.LOGIN_PIN_KEYBOARD_TITLE;
+import static com.onegini.model.MessageKey.LOGIN_PIN_HELP_MESSAGE;
+import static com.onegini.model.MessageKey.LOGIN_PIN_HELP_TITLE;
 import static com.onegini.model.MessageKey.LOGIN_PIN_KEYBOARD_TITLE;
 import static com.onegini.model.MessageKey.CREATE_PIN_SCREEN_TITLE;
 import static com.onegini.model.MessageKey.CREATE_PIN_KEYBOARD_TITLE;
 import static com.onegini.model.MessageKey.CREATE_PIN_INFO_LABEL;
+import static com.onegini.model.MessageKey.CREATE_PIN_HELP_TITLE;
+import static com.onegini.model.MessageKey.CREATE_PIN_HELP_MESSAGE;
 import static com.onegini.model.MessageKey.CONFIRM_PIN_SCREEN_TITLE;
 import static com.onegini.model.MessageKey.CONFIRM_PIN_KEYBOARD_TITLE;
 import static com.onegini.model.MessageKey.CONFIRM_PIN_INFO_LABEL;
+import static com.onegini.model.MessageKey.CONFIRM_PIN_HELP_TITLE;
+import static com.onegini.model.MessageKey.CONFIRM_PIN_HELP_MESSAGE;
 
 import org.apache.cordova.CordovaActivity;
 
+import android.app.AlertDialog;
 import android.content.pm.ActivityInfo;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -143,11 +151,17 @@ public class PinScreenActivity extends CordovaActivity {
     keyboardTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_keyboard_title", "id", packageName));
     keyboardTitleTextView.setTypeface(customFontRegular);
 
+    errorTextView = (TextView) findViewById(resources.getIdentifier("pin_error_message", "id", packageName));
+    errorTextView.setTypeface(customFontRegular);
+
     helpLinkTextView = (TextView) findViewById(resources.getIdentifier("help_button", "id", packageName));
     helpLinkTextView.setTypeface(customFontRegular);
-
-    errorTextView = (TextView) findViewById(resources.getIdentifier("pin_error_message", "id", packageName));
-    helpLinkTextView.setTypeface(customFontRegular);
+    helpLinkTextView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(final View v) {
+        showHelpDialog();
+      }
+    });
 
     if (isCreatePinFlow()) {
       screenTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_screen_title", "id", packageName));
@@ -165,6 +179,12 @@ public class PinScreenActivity extends CordovaActivity {
     else {
       pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
       pinForgottenTextView.setTypeface(customFontRegular);
+      pinForgottenTextView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+          showForgetPinDialog();
+        }
+      });
     }
 
     updateTexts();
@@ -295,5 +315,62 @@ public class PinScreenActivity extends CordovaActivity {
 
   private boolean isCreatePinFlow() {
     return (mode==SCREEN_MODE_CREATE_PIN || mode==SCREEN_MODE_CONFIRM_PIN);
+  }
+
+  private void showHelpDialog() {
+    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle(getTitleForHelpsScreen());
+    builder.setMessage(getMessageForHelpScreen());
+    builder.setNeutralButton(getMessageForKey(HELP_POPUP_OK.name()), null);
+
+    final AlertDialog dialog = builder.show();
+
+    // disable a divider
+    final int titleDividerId = resources.getIdentifier("titleDivider", "id", "android");
+    final View titleDivider = dialog.findViewById(titleDividerId);
+    if (titleDivider != null) {
+      titleDivider.setVisibility(View.INVISIBLE);
+    }
+  }
+
+  private void showForgetPinDialog() {
+    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setTitle("Forget pin");
+    builder.setMessage("lorem ipsum");
+    builder.setPositiveButton("Yes", null);
+    builder.setNegativeButton("No", null);
+
+    final AlertDialog dialog = builder.show();
+
+    // disable a divider
+    final int titleDividerId = resources.getIdentifier("titleDivider", "id", "android");
+    final View titleDivider = dialog.findViewById(titleDividerId);
+    if (titleDivider != null) {
+      titleDivider.setVisibility(View.INVISIBLE);
+    }
+  }
+
+  private String getTitleForHelpsScreen() {
+    if (mode==SCREEN_MODE_LOGIN) {
+      return getMessageForKey(LOGIN_PIN_HELP_TITLE.name());
+    }
+    else if (mode==SCREEN_MODE_CREATE_PIN) {
+      return getMessageForKey(CREATE_PIN_HELP_TITLE.name());
+    }
+    else {
+      return getMessageForKey(CONFIRM_PIN_HELP_TITLE.name());
+    }
+  }
+
+  private String getMessageForHelpScreen() {
+    if (mode==SCREEN_MODE_LOGIN) {
+      return getMessageForKey(LOGIN_PIN_HELP_MESSAGE.name());
+    }
+    else if (mode==SCREEN_MODE_CREATE_PIN) {
+      return getMessageForKey(CREATE_PIN_HELP_MESSAGE.name());
+    }
+    else {
+      return getMessageForKey(CONFIRM_PIN_HELP_MESSAGE.name());
+    }
   }
 }

@@ -115,6 +115,12 @@ public class PinScreenActivity extends CordovaActivity {
     resetPin();
   }
 
+  @Override
+  public void onBackPressed() {
+    // we don't want to be able to go back from the pin screen
+    return;
+  }
+
   private void lockScreenOrientation() {
     if (DeviceUtil.isTablet(this)) {
       setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

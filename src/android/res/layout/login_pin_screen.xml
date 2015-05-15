@@ -55,7 +55,7 @@
       android:text="Log in"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="24sp"
+      android:textSize="20sp"
       android:textColor="#7f6c66"
       android:layout_alignParentTop="true"
       android:layout_alignParentStart="true"

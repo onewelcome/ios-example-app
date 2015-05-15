@@ -35,6 +35,7 @@ public class AuthorizeAction implements OneginiPluginAction {
 
   private final CallbackResultBuilder callbackResultBuilder;
   private static CallbackContext callbackContext;
+  private static boolean executing = false;
 
   public static CallbackContext getCallbackContext() {
     return callbackContext;
@@ -48,6 +49,12 @@ public class AuthorizeAction implements OneginiPluginAction {
 
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
+    // if flow already started and not finished yet, don't start it again
+    if (executing) {
+      return;
+    }
+    executing = true;
+
     if (args.length() != 1) {
       callbackContext.error("Failed to authorize, invalid parameter.");
       return;
@@ -184,6 +191,6 @@ public class AuthorizeAction implements OneginiPluginAction {
       PinScreenActivity.getInstance().finish();
     }
     callbackContext.sendPluginResult(result);
+    executing = false;
   }
-
 }

@@ -1,7 +1,11 @@
 package com.onegini.dialogs;
 
-import static com.onegini.model.MessageKey.HELP_POPUP_OK;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
+import static com.onegini.model.MessageKey.DISCONNECT_FORGOT_PIN;
+import static com.onegini.model.MessageKey.DISCONNECT_FORGOT_PIN_TITLE;
+import static com.onegini.model.MessageKey.CONFIRM_POPUP_CANCEL;
+import static com.onegini.model.MessageKey.CONFIRM_POPUP_OK;
+import static com.onegini.model.MessageKey.HELP_POPUP_OK;
 import static com.onegini.model.MessageKey.HELP_LINK_TITLE;
 import static com.onegini.model.MessageKey.PIN_FORGOTTEN_TITLE;
 import static com.onegini.model.MessageKey.LOGIN_PIN_KEYBOARD_TITLE;
@@ -21,7 +25,7 @@ import static com.onegini.model.MessageKey.CONFIRM_PIN_HELP_MESSAGE;
 
 import org.apache.cordova.CordovaActivity;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.pm.ActivityInfo;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -153,10 +157,6 @@ public class PinScreenActivity extends CordovaActivity {
   }
 
   private void initTextViews() {
-    // common textViews for all screen modes
-    keyboardTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_keyboard_title", "id", packageName));
-    keyboardTitleTextView.setTypeface(customFontRegular);
-
     errorTextView = (TextView) findViewById(resources.getIdentifier("pin_error_message", "id", packageName));
     errorTextView.setTypeface(customFontRegular);
 
@@ -168,6 +168,13 @@ public class PinScreenActivity extends CordovaActivity {
         showHelpDialog();
       }
     });
+
+    keyboardTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_keyboard_title", "id", packageName));
+    // keyboard title is present in all cases except this one :(
+    final boolean thereIsNoKeyboardTitle = (DeviceUtil.isTablet(this)==false && isCreatePinFlow());
+    if (thereIsNoKeyboardTitle == false) {
+      keyboardTitleTextView.setTypeface(customFontRegular);
+    }
 
     if (isCreatePinFlow()) {
       screenTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_screen_title", "id", packageName));
@@ -206,13 +213,17 @@ public class PinScreenActivity extends CordovaActivity {
 
     if (mode==SCREEN_MODE_CREATE_PIN) {
       screenTitleTextView.setText(getMessageForKey(CREATE_PIN_SCREEN_TITLE.name()));
-      keyboardTitleTextView.setText(getMessageForKey(CREATE_PIN_KEYBOARD_TITLE.name()));
       pinLabelTextView.setText(getMessageForKey(CREATE_PIN_INFO_LABEL.name()));
+      if (DeviceUtil.isTablet(this)) {
+        keyboardTitleTextView.setText(getMessageForKey(CREATE_PIN_KEYBOARD_TITLE.name()));
+      }
     }
     else if (mode==SCREEN_MODE_CONFIRM_PIN) {
       screenTitleTextView.setText(getMessageForKey(CONFIRM_PIN_SCREEN_TITLE.name()));
-      keyboardTitleTextView.setText(getMessageForKey(CONFIRM_PIN_KEYBOARD_TITLE.name()));
       pinLabelTextView.setText(getMessageForKey(CONFIRM_PIN_INFO_LABEL.name()));
+      if (DeviceUtil.isTablet(this)) {
+        keyboardTitleTextView.setText(getMessageForKey(CONFIRM_PIN_KEYBOARD_TITLE.name()));
+      }
     }
     else {
       keyboardTitleTextView.setText(getMessageForKey(LOGIN_PIN_KEYBOARD_TITLE.name()));
@@ -324,36 +335,80 @@ public class PinScreenActivity extends CordovaActivity {
   }
 
   private void showHelpDialog() {
-    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setTitle(getTitleForHelpsScreen());
-    builder.setMessage(getMessageForHelpScreen());
-    builder.setNeutralButton(getMessageForKey(HELP_POPUP_OK.name()), null);
+    final int layoutId = resources.getIdentifier("alert_dialog", "layout", packageName);
+    final int styleId = resources.getIdentifier("CustomDialogTheme", "style", packageName);
 
-    final AlertDialog dialog = builder.show();
+    final Dialog dialog = new Dialog(this, styleId);
+    dialog.setContentView(layoutId);
+    dialog.show();
 
-    // disable a divider
-    final int titleDividerId = resources.getIdentifier("titleDivider", "id", "android");
-    final View titleDivider = dialog.findViewById(titleDividerId);
-    if (titleDivider != null) {
-      titleDivider.setVisibility(View.INVISIBLE);
-    }
+    final TextView titleView = (TextView) dialog.findViewById(
+        resources.getIdentifier("dialog_title", "id", packageName)
+    );
+    titleView.setTypeface(customFontRegular);
+    titleView.setText(getTitleForHelpsScreen());
+
+    final TextView messageView = (TextView) dialog.findViewById(
+        resources.getIdentifier("dialog_message", "id", packageName)
+    );
+    messageView.setTypeface(customFontRegular);
+    messageView.setText(getMessageForHelpScreen());
+
+    final Button okButton = (Button) dialog.findViewById(
+        resources.getIdentifier("dialog_ok_button", "id", packageName)
+    );
+    okButton.setTypeface(customFontRegular);
+    okButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(final View v) {
+        dialog.dismiss();
+      }
+    });
   }
 
   private void showForgetPinDialog() {
-    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setTitle("Forget pin");
-    builder.setMessage("lorem ipsum");
-    builder.setPositiveButton("Yes", null);
-    builder.setNegativeButton("No", null);
+    final int layoutId = resources.getIdentifier("confirm_dialog", "layout", packageName);
+    final int styleId = resources.getIdentifier("CustomDialogTheme", "style", packageName);
 
-    final AlertDialog dialog = builder.show();
+    final Dialog dialog = new Dialog(this, styleId);
+    dialog.setContentView(layoutId);
+    dialog.show();
 
-    // disable a divider
-    final int titleDividerId = resources.getIdentifier("titleDivider", "id", "android");
-    final View titleDivider = dialog.findViewById(titleDividerId);
-    if (titleDivider != null) {
-      titleDivider.setVisibility(View.INVISIBLE);
-    }
+    final TextView titleView = (TextView) dialog.findViewById(
+        resources.getIdentifier("dialog_title", "id", packageName)
+    );
+    titleView.setTypeface(customFontRegular);
+    titleView.setText(getMessageForKey(DISCONNECT_FORGOT_PIN_TITLE.name()));
+
+    final TextView messageView = (TextView) dialog.findViewById(
+        resources.getIdentifier("dialog_message", "id", packageName)
+    );
+    messageView.setTypeface(customFontRegular);
+    messageView.setText(getMessageForKey(DISCONNECT_FORGOT_PIN.name()));
+
+    final Button okButton = (Button) dialog.findViewById(
+        resources.getIdentifier("dialog_ok_button", "id", packageName)
+    );
+    okButton.setTypeface(customFontRegular);
+    okButton.setText(getMessageForKey(CONFIRM_POPUP_OK.name()));
+    okButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(final View v) {
+        // TODO
+      }
+    });
+
+    final Button cancelButton = (Button) dialog.findViewById(
+        resources.getIdentifier("dialog_cancel_button", "id", packageName)
+    );
+    cancelButton.setText(getMessageForKey(CONFIRM_POPUP_CANCEL.name()));
+    cancelButton.setTypeface(customFontRegular);
+    cancelButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(final View v) {
+        dialog.dismiss();
+      }
+    });
   }
 
   private String getTitleForHelpsScreen() {

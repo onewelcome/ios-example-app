@@ -198,6 +198,8 @@
     <source-file src="src/android/res/layout-land/create_pin_screen.xml" target-dir="res/layout-land"/>
     <source-file src="src/android/res/layout-land/login_pin_screen.xml" target-dir="res/layout-land"/>
     <source-file src="src/android/res/layout/keyboard.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout/alert_dialog.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout/confirm_dialog.xml" target-dir="res/layout"/>
     <source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
     <source-file src="src/android/res/values/bools.xml" target-dir="res/values"/>
     <source-file src="src/android/res/values-sw600dp/bools.xml" target-dir="res/values-sw600dp"/>

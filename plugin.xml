@@ -156,8 +156,6 @@
     <!--<source-file src="src/android/src/android/com/onegini/gcm/GCMHelper.java" target-dir="src/com/onegini/gcm/" />-->
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/model/MessageKey.java" target-dir="src/com/onegini/model/"/>
-    <source-file src="src/android/src/android/com/onegini/model/PinConfigModel.java"
-                 target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/resource/AnonymousResourceClient.java"
                  target-dir="src/com/onegini/resource/"/>
     <source-file src="src/android/src/android/com/onegini/resource/ResourceClient.java"

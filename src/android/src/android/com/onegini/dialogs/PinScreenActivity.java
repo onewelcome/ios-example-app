@@ -1,6 +1,9 @@
 package com.onegini.dialogs;
 
+import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaActivity;
+
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_PIN_FORGOTTEN;
 
 import android.content.pm.ActivityInfo;
 import android.content.Intent;
@@ -14,7 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.onegini.actions.AuthorizeAction;
 import com.onegini.model.PinConfigModel;
+import com.onegini.util.CallbackResultBuilder;
 import com.onegini.util.DeviceUtil;
 import com.onegini.util.JSONResourceReader;
 
@@ -210,6 +215,20 @@ public class PinScreenActivity extends CordovaActivity {
     }
 
     pinForgottenTextView.setVisibility( isCreatePinFlow ? View.GONE : View.VISIBLE);
+    pinForgottenTextView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(final View v) {
+        final CallbackContext callbackContext = AuthorizeAction.getCallbackContext();
+        if (callbackContext != null) {
+          callbackContext.sendPluginResult(
+              new CallbackResultBuilder()
+                  .withErrorReason(AUTHORIZATION_ERROR_PIN_FORGOTTEN.getName())
+                  .build()
+          );
+          PinScreenActivity.this.finish();
+        }
+      }
+    });
   }
 
   private boolean isNotBlank(final String string) {

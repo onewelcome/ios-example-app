@@ -196,8 +196,9 @@ module.exports = {
    *                          - errorInvalidRequest -> method called when one or more required parameters were missing
    *                          in the authorization request.
    *                          - errorInvalidGrant -> called when access grant or refresh token was invalid
-   *                          - unsupportedAppVersion -> invoked when application version is not valid and update
+   *                          - errorUnsupportedAppVersion -> invoked when application version is not valid and update
    *                          is needed
+   *                          - errorPinForgotten -> invoked when user clicked "I forgot my PIN" button
    * @param {Array} scopes    {Array} with {String}s that represent the scopes for the access token
    */
   authorize: function (router, scopes) {
@@ -245,7 +246,9 @@ module.exports = {
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.UNSUPPORTED_APP_VERSION) {
         router.errorUnsupportedAppVersion();
       }
-
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_PIN_FORGOTTEN) {
+        router.errorPinForgotten();
+      }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, scopes);
   },
 
@@ -564,6 +567,7 @@ module.exports = {
     AUTHORIZATION_ERROR_NOT_AUTHORIZED: "authorizationErrorNotAuthorized",
     AUTHORIZATION_ERROR_INVALID_REQUEST: "authorizationErrorInvalidRequest",
     AUTHORIZATION_ERROR_INVALID_GRANT_TYPE: "authorizationErrorInvalidGrantType",
+    AUTHORIZATION_ERROR_PIN_FORGOTTEN: "authorizationErrorPinForgotten",
 
     PIN_ASK_FOR_CURRENT: "askForCurrentPin",
     PIN_ASK_FOR_NEW: "askForNewPin",

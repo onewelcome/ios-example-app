@@ -16,8 +16,17 @@
 
 	currentPin = 0;
 	pinEntry = [NSMutableArray new];
+    
+    self.backKey.backgroundColor = [UIColor colorWithRed:91.0/255.0 green:126.0/255.0 blue:60.0/255.0 alpha:1];
 	
 	[self initView];
+    
+    ((UIImageView*)self.pinSlots.firstObject).image = [UIImage imageNamed:@"iphone-pinslot-selected"];
+}
+
+-(void)viewDidLayoutSubviews{
+    if (self.keyboardImageView.frame.size.width >320)
+        self.keyboardImageView.image = [UIImage imageNamed:@"iphone-keyboard@3x.png"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -49,18 +58,18 @@
 }
 
 - (void)setKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState)state {
-	UIImage *image = [UIImage imageNamed:imagePath];
-	if (image == nil) {
-		image = [UIImage imageWithContentsOfFile:imagePath];
-	}
-	
-	for (UIButton *button in keys) {
-		[button setBackgroundImage:image forState:state];
-	}
+//	UIImage *image = [UIImage imageNamed:imagePath];
+//	if (image == nil) {
+//		image = [UIImage imageWithContentsOfFile:imagePath];
+//	}
+//	
+//	for (UIButton *button in keys) {
+//		[button setBackgroundImage:image forState:state];
+//	}
 }
 
 - (void)setDeleteKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState)state {
-	[self.backKey setBackgroundImage:[UIImage imageNamed:imagePath] forState:state];
+//	[self.backKey setBackgroundImage:[UIImage imageNamed:imagePath] forState:state];
 }
 
 - (void)setKeyColor:(UIColor *)color forState:(UIControlState)state {
@@ -87,7 +96,7 @@
 		return;
 	}
 	
-	[pinEntry addObject:key.titleLabel.text];
+	[pinEntry addObject:[NSString stringWithFormat:@"%ld",(long)key.tag]];
 
 	[self evaluatePinState];
 }
@@ -123,10 +132,21 @@
 			pin.alpha = i < pinEntry.count ? 1.0 : 0.0;
 		}];
 	}
-    if (pinEntry.count == 0)
-        self.backKey.hidden = YES;
-    else
-        self.backKey.hidden = NO;
+    for (UIImageView* pinslot in self.pinSlots) {
+        pinslot.image = [UIImage imageNamed:@"iphone-pinslot"];
+    }
+    if (pinEntry.count<self.pinSlots.count){
+        ((UIImageView*)[self.pinSlots objectAtIndex:pinEntry.count]).image = [UIImage imageNamed:@"iphone-pinslot-selected"];
+    }
+    
+    if (pinEntry.count == 0){
+        self.backKey.backgroundColor = [UIColor colorWithRed:91.0/255.0 green:126.0/255.0 blue:60.0/255.0 alpha:1];
+        self.backKey.enabled = NO;
+    }
+    else{
+        self.backKey.backgroundColor = [UIColor colorWithRed:91.0/255.0 green:126.0/255.0 blue:60.0/255.0 alpha:0];
+        self.backKey.enabled = YES;
+    }
 }
 
 - (void)resetPin {

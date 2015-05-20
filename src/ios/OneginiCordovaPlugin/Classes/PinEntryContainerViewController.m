@@ -7,6 +7,7 @@
 //
 
 #import "PinEntryContainerViewController.h"
+#import "PopupViewController.h"
 
 NSString *kBackgoundImage					= @"backgoundImage";
 NSString *kKeyColor							= @"pinKeyColor";
@@ -17,14 +18,70 @@ NSString *kDeleteKeyHighlightedStateImage	= @"pinDeleteKeyHighlightedStateImage"
 NSString *kPinKeyFontName					= @"pinKeyFontName";
 NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 
+@interface PinEntryContainerViewController()
+
+@property (nonatomic) float titleLabelWidth;
+@property (nonatomic) float pinsViewY;
+@property (nonatomic) float messageLabelY;
+@property (nonatomic) float messageLabelX;
+@property (nonatomic) int pinsViewOffset;
+
+@property (nonatomic) PopupViewController* popupViewController;
+@property (nonatomic) UIView* whiteOverlay;
+
+@end
+
 @implementation PinEntryContainerViewController
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 	self.pinEntryViewController = [[PinEntryViewController alloc] initWithNibName:@"PinEntryViewController" bundle:nil];
 	[self.pinViewPlaceholder addSubview:self.pinEntryViewController.view];
+    
 	self.pinEntryViewController.delegate = self;
+    self.messageLabel.textColor = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
+    self.pinsViewOffset = 0;
+}
+
+-(void)viewDidLayoutSubviews{
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone){
+        self.pinEntryViewController.view.frame = self.view.frame;
+        self.mode = self.mode;
+    }
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone){
+        self.pinViewPlaceholder.frame = self.view.frame;
+    }
+    
+    self.popupViewController = [[PopupViewController alloc] initWithNibName:@"PopupViewController" bundle:nil];
+    
+    self.popupViewController.view.layer.masksToBounds = NO;
+    self.popupViewController.view.layer.shadowRadius = 50;
+    self.popupViewController.view.layer.shadowColor = [[UIColor colorWithWhite:0 alpha:1]CGColor];
+    self.popupViewController.view.layer.shadowOpacity = 0.5;
+    
+    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+        self.popupViewController.view.frame = CGRectMake(self.view.frame.size.width/2-740/2, self.view.frame.size.height/2-380/2, 740, 380);
+    else
+        self.popupViewController.view.frame = CGRectMake(
+                self.view.frame.size.width/2-self.popupViewController.view.frame.size.width/2,
+                self.view.frame.size.height/2-MIN(self.popupViewController.view.frame.size.height, self.view.frame.size.height)/2,
+                self.popupViewController.view.frame.size.width,
+                MIN(self.popupViewController.view.frame.size.height, self.view.frame.size.height));
+    
+    self.whiteOverlay = [[UIView alloc] initWithFrame:self.view.frame];
+    self.whiteOverlay.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    self.titleLabelWidth = self.titleLabel.frame.size.width;
+    self.pinsViewY = self.pinEntryViewController.pinsView.frame.origin.y;
+    self.messageLabelY = self.messageLabel.frame.origin.y;
+    self.mode = self.mode;
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -33,87 +90,6 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 
 - (BOOL)shouldAutorotate {
 	return YES;
-}
-
-- (BOOL)prefersStatusBarHidden {
-	return YES;
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[self applyBackgroundImage];
-	[self adjustMessageLabel];
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-	[self applyBackgroundImage];
-	[self adjustMessageLabel];
-}
-
-- (void)applyBackgroundImage {
-	NSDictionary *config = [self orientationBasedConfig];
-	
-	if (config == nil) {
-		return;
-	}
-	
-	NSString *backgroundImageName = config[@"backgroundImage"];
-	if (backgroundImageName != nil) {
-		UIImage *image = [UIImage imageNamed:backgroundImageName];
-		if (image == nil) {
-			image = [UIImage imageWithContentsOfFile:backgroundImageName];
-		}
-		
-		self.containerBackgroundImage.image = image;
-	}
-}
-
-- (void)adjustMessageLabel {
-	NSDictionary *config = [self orientationBasedConfig];
-	
-	if (config == nil) {
-		return;
-	}
-	
-	NSDictionary *validationMessageConfig = config[@"validationMessage"];
-	NSArray *frameArray = validationMessageConfig[@"frame"];
-	if (frameArray != nil && frameArray.count == 4) {
-		self.messageLabelLeftConstraint.constant = [(NSNumber *)frameArray[0] floatValue];
-		self.messageLabelTopConstraint.constant = [(NSNumber *)frameArray[1] floatValue];
-		self.messageLabelWidthConstraint.constant = [(NSNumber *)frameArray[2] floatValue];
-		self.messageLabelHeightConstraint.constant = [(NSNumber *)frameArray[3] floatValue];
-	}
-	
-	NSNumber *fontSize = validationMessageConfig[@"fontSize"];
-	if (fontSize != nil) {
-		NSString *fontName = validationMessageConfig[@"fontName"];
-		UIFont *font = fontName == nil ? [UIFont systemFontOfSize:fontSize.floatValue] : [UIFont fontWithName:fontName size:fontSize.floatValue];
-		if (font != nil) {
-			self.messageLabel.font = font;
-		}
-	}
-	
-	self.messageLabel.textColor = [self colorWithHexString:validationMessageConfig[@"textColor"]];
-}
-
-- (UIColor *)messageTextColor:(BOOL)isError {
-	NSDictionary *config = [self orientationBasedConfig];
-		
-	if (config == nil) {
-		return [UIColor blackColor];
-	}
-
-	NSDictionary *validationMessageConfig = config[@"validationMessage"];
-	if (validationMessageConfig == nil) {
-		return [UIColor blackColor];
-	}
-	
-	NSString *color = isError ? validationMessageConfig[@"errorTextColor"] : validationMessageConfig[@"textColor"];
-	return color == nil ? [UIColor blackColor] : [self colorWithHexString:color];
-}
-
-- (NSDictionary *)orientationBasedConfig {
-	BOOL isLandscape = UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
-	return isLandscape ? self.landscapeConfig : self.portraitConfig;
 }
 
 - (void)reset {
@@ -125,43 +101,187 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 }
 
 - (void)invalidPinWithReason:(NSString *)message {
+    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone){
+        if (self.mode == PINRegistrationMode || self.mode == PINRegistrationVerififyMode|| self.mode == PINChangeNewPinMode || self.mode == PINChangeNewPinVerifyMode)
+            self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY+(2*self.pinsViewOffset)-5, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
+    }
+    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
+        self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY+self.pinsViewOffset, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
+    }
+    self.messageLabel.frame = CGRectMake(self.messageLabel.frame.origin.x, self.messageLabelY+self.pinsViewOffset+self.pinsViewOffset-5, self.messageLabel.frame.size.width, self.messageLabel.frame.size.height);
 	self.messageLabel.text = message;
-	self.messageLabel.textColor = [self messageTextColor:YES];
-	
 	[self.pinEntryViewController invalidPin];
 }
 
 - (void)setMessage:(NSString *)message {
 	self.messageLabel.text = message;
-	self.messageLabel.textColor = [self messageTextColor:NO];
 }
 
--(void)setMode:(PINEntryModes)mode
-{
+-(void)setMode:(PINEntryModes)mode{
+    _mode = mode;
     switch (mode) {
         case PINCheckMode:
+            self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, self.titleLabelWidth, self.titleLabel.frame.size.height);
+            self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
+            
+            self.loginPhoto.hidden = NO;
+            self.createPinView.hidden = YES;
             self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_ENTER_PIN"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_NEW_PIN"];
+            self.subtitleLabel.text = @"";
             self.messageLabel.text = @"";
+            self.pinEntryViewController.stepIndicator.hidden = YES;
+            self.pinEntryViewController.pinsFrame.hidden = YES;
+            [self.titleLabel sizeToFit];
+            self.forgotPinButton.hidden = NO;
+            
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+                self.pinEntryViewController.pinsBackgroundView.backgroundColor = [UIColor colorWithWhite:.92 alpha:1];
+                self.pinViewPlaceholder.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x, 190, self.pinViewPlaceholder.frame.size.width, self.pinViewPlaceholder.frame.size.height);
+                self.messageLabel.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x + 22, self.pinViewPlaceholder.frame.origin.y + 60, self.pinViewPlaceholder.frame.size.width-40, self.messageLabel.frame.size.height);
+                self.pinsViewOffset = 12;
+                self.messageLabel.font = [UIFont systemFontOfSize:10];
+            }
+            else{
+                self.messageLabel.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x+self.pinEntryViewController.pinsView.frame.origin.x, self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height, self.pinEntryViewController.pinsView.frame.size.width, self.messageLabel.frame.size.height);
+                self.pinsViewOffset = 0;
+            }
             break;
         case PINRegistrationMode:
+            self.loginPhoto.hidden = YES;
+            self.createPinView.hidden = NO;
+            self.pinEntryViewController.pinsBackgroundView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+                self.pinViewPlaceholder.layer.borderColor = [UIColor colorWithWhite:.92 alpha:1].CGColor;
+                self.pinViewPlaceholder.layer.borderWidth = 1.0f;
+                self.pinViewPlaceholder.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x, 260, self.pinViewPlaceholder.frame.size.width, self.pinViewPlaceholder.frame.size.height);
+                self.messageLabel.frame = CGRectMake(50, self.messageLabelY, self.pinEntryViewController.pinsView.frame.size.width, self.messageLabel.frame.size.height);
+                self.messageLabel.font = [UIFont systemFontOfSize:16];
+                self.pinsViewOffset = 0;
+            }
+            else{
+                self.messageLabel.frame = CGRectMake(self.messageLabel.frame.origin.x, self.messageLabelY+self.pinsViewOffset, self.messageLabel.frame.size.width, self.messageLabel.frame.size.height);
+                self.pinsViewOffset = 20;
+            }
+            self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, self.titleLabelWidth, self.titleLabel.frame.size.height);
+            self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY+self.pinsViewOffset, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
             self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_CREATE_PIN"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_NEW_PIN"];
+            self.subtitleLabel.text = [self.messages objectForKey:@"KEYBOARD_MESSAGE_CREATE_PIN"];
             self.messageLabel.text = @"";
+            self.pinEntryViewController.stepIndicator.hidden = NO;
+            self.pinEntryViewController.pinsFrame.hidden = NO;
+            [self.titleLabel sizeToFit];
+            self.forgotPinButton.hidden = YES;
             break;
         case PINRegistrationVerififyMode:
+            self.loginPhoto.hidden = YES;
+            self.createPinView.hidden = NO;
+            self.pinEntryViewController.pinsBackgroundView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+                self.pinViewPlaceholder.layer.borderColor = [UIColor colorWithWhite:.92 alpha:1].CGColor;
+                self.pinViewPlaceholder.layer.borderWidth = 1.0f;
+                self.pinViewPlaceholder.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x, 260, self.pinViewPlaceholder.frame.size.width, self.pinViewPlaceholder.frame.size.height);
+                self.messageLabel.frame = CGRectMake(50, self.messageLabelY, self.pinEntryViewController.pinsView.frame.size.width, self.messageLabel.frame.size.height);
+                self.messageLabel.font = [UIFont systemFontOfSize:16];
+                self.pinsViewOffset = 0;
+            }
+            else{
+                self.messageLabel.frame = CGRectMake(self.messageLabel.frame.origin.x, self.messageLabelY+self.pinsViewOffset, self.messageLabel.frame.size.width, self.messageLabel.frame.size.height);
+                self.pinsViewOffset = 20;
+            }
+            self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, self.titleLabelWidth, self.titleLabel.frame.size.height);
+            self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY+self.pinsViewOffset, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
             self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_VERIFY_PIN"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_NEW_PIN"];
+            self.subtitleLabel.text = [self.messages objectForKey:@"KEYBOARD_MESSAGE_CREATE_PIN"];
             self.messageLabel.text = @"";
+            self.pinEntryViewController.stepIndicator.hidden = NO;
+            self.pinEntryViewController.pinsFrame.hidden = NO;
+            [self.titleLabel sizeToFit];
+            self.forgotPinButton.hidden = YES;
             break;
         case PINChangeCheckMode:
+            self.loginPhoto.hidden = NO;
+            self.createPinView.hidden = YES;
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+                self.pinEntryViewController.pinsBackgroundView.backgroundColor = [UIColor colorWithWhite:.92 alpha:1];
+                self.pinViewPlaceholder.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x, 190, self.pinViewPlaceholder.frame.size.width, self.pinViewPlaceholder.frame.size.height);
+                self.messageLabel.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x + 22, self.pinViewPlaceholder.frame.origin.y + 60, self.pinViewPlaceholder.frame.size.width-40, self.messageLabel.frame.size.height);
+                self.pinsViewOffset = 12;
+                self.messageLabel.font = [UIFont systemFontOfSize:10];
+            }
+            else{
+                self.messageLabel.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x+self.pinEntryViewController.pinsView.frame.origin.x, self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height, self.pinEntryViewController.pinsView.frame.size.width, self.messageLabel.frame.size.height);
+                self.pinsViewOffset = 0;
+            }
+            self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, self.titleLabelWidth, self.titleLabel.frame.size.height);
+            self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
             self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_ENTER_PIN"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_NEW_PIN"];
+            self.subtitleLabel.text = @"";
             self.messageLabel.text = @"";
+            self.pinEntryViewController.stepIndicator.hidden = YES;
+            self.pinEntryViewController.pinsFrame.hidden = YES;
+            [self.titleLabel sizeToFit];
+            self.forgotPinButton.hidden = NO;
             break;
         case PINChangeNewPinMode:
-            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_CREATE_PIN"];
+            self.loginPhoto.hidden = YES;
+            self.createPinView.hidden = NO;
+            self.pinEntryViewController.pinsBackgroundView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+            self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, 300, self.titleLabel.frame.size.height);
+            self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
+            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_CHANGE_PIN"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_NEW_PIN"];
+            self.subtitleLabel.text = [self.messages objectForKey:@"KEYBOARD_MESSAGE_CREATE_PIN"];
             self.messageLabel.text = @"";
+            self.pinEntryViewController.stepIndicator.hidden = YES;
+            self.pinEntryViewController.pinsFrame.hidden = NO;
+            [self.titleLabel sizeToFit];
+            self.forgotPinButton.hidden = YES;
+            
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+                self.pinViewPlaceholder.layer.borderColor = [UIColor colorWithWhite:.92 alpha:1].CGColor;
+                self.pinViewPlaceholder.layer.borderWidth = 1.0f;
+                self.pinViewPlaceholder.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x, 260, self.pinViewPlaceholder.frame.size.width, self.pinViewPlaceholder.frame.size.height);
+                self.messageLabel.frame = CGRectMake(50, self.messageLabelY, self.pinEntryViewController.pinsView.frame.size.width, self.messageLabel.frame.size.height);
+                self.messageLabel.font = [UIFont systemFontOfSize:16];
+                self.pinsViewOffset = 0;
+            }
+            else{
+                self.pinsViewOffset = 20;
+                self.messageLabel.frame = CGRectMake(self.subtitleLabel.frame.origin.x, self.messageLabelY+self.pinsViewOffset, self.messageLabel.frame.size.width, self.messageLabel.frame.size.height);
+                self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY+self.pinsViewOffset, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
+            }
             break;
         case PINChangeNewPinVerifyMode:
-            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_VERIFY_PIN"];
+            self.loginPhoto.hidden = YES;
+            self.createPinView.hidden = NO;
+            self.pinEntryViewController.pinsBackgroundView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+            self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, 300, self.titleLabel.frame.size.height);
+            self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
+            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_VERIFY_CHANGE_PIN"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_NEW_PIN"];
+            self.subtitleLabel.text = [self.messages objectForKey:@"KEYBOARD_MESSAGE_CREATE_PIN"];
             self.messageLabel.text = @"";
+            self.pinEntryViewController.stepIndicator.hidden = YES;
+            self.pinEntryViewController.pinsFrame.hidden = NO;
+            [self.titleLabel sizeToFit];
+            self.forgotPinButton.hidden = YES;
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+                self.pinViewPlaceholder.layer.borderColor = [UIColor colorWithWhite:.92 alpha:1].CGColor;
+                self.pinViewPlaceholder.layer.borderWidth = 1.0f;
+                self.pinViewPlaceholder.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x, 260, self.pinViewPlaceholder.frame.size.width, self.pinViewPlaceholder.frame.size.height);
+                self.messageLabel.frame = CGRectMake(50, self.messageLabelY, self.pinEntryViewController.pinsView.frame.size.width, self.messageLabel.frame.size.height);
+                self.messageLabel.font = [UIFont systemFontOfSize:16];
+                self.pinsViewOffset = 0;
+            }
+            else{
+                self.pinsViewOffset = 20;
+                self.messageLabel.frame = CGRectMake(self.subtitleLabel.frame.origin.x, self.messageLabelY+self.pinsViewOffset, self.messageLabel.frame.size.width, self.messageLabel.frame.size.height);
+                self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY+self.pinsViewOffset, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
+            }
             break;
         default:
             break;
@@ -174,80 +294,22 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 - (void)pinEntered:(PinEntryViewController *)controller pin:(NSString *)pin {
 	[self.delegate pinEntered:self pin:pin];
 }
-
-#pragma mark -
-#pragma mark Customization
-
-- (void)applyConfig:(NSDictionary *)config {
-	NSDictionary *idiomConfig = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [config valueForKeyPath:@"ios.ipad"] : [config valueForKeyPath:@"ios.iphone"];
-	
-	self.landscapeConfig = idiomConfig[@"landscape"];
-	self.portraitConfig = idiomConfig[@"portrait"];
-	
-	NSString *value = config[kKeyColor];
-	if (value != nil) {
-		UIColor *color = [self colorWithHexString:value];
-		[self.pinEntryViewController setKeyColor:color forState:UIControlStateNormal];
-	}
-	
-	value = config[kKeyNormalStateImage];
-	if (value != nil) {
-		[self.pinEntryViewController setKeyBackgroundImage:value forState:UIControlStateNormal];
-	}
-	
-	value = config[kKeyHighlightedStateImage];
-	if (value != nil) {
-		[self.pinEntryViewController setKeyBackgroundImage:value forState:UIControlStateHighlighted];
-	}
-	
-	value = config[kDeleteKeyNormalStateImage];
-	if (value != nil) {
-		[self.pinEntryViewController setDeleteKeyBackgroundImage:value forState:UIControlStateNormal];
-	}
-	
-	value = config[kDeleteKeyHighlightedStateImage];
-	if (value != nil) {
-		[self.pinEntryViewController setDeleteKeyBackgroundImage:value forState:UIControlStateHighlighted];
-	}
-	
-	NSNumber *numberValue = config[kPinKeyFontSize];
-	if (numberValue != nil) {
-		NSString *fontName = config[kPinKeyFontName];
-		UIFont *font = fontName == nil ? [UIFont systemFontOfSize:numberValue.floatValue] : [UIFont fontWithName:fontName size:numberValue.floatValue];
-		[self.pinEntryViewController setKeyFont:font];
-	}
-	
-	[self applyBackgroundImage];
-	[self adjustMessageLabel];
+- (IBAction)helpButtonClicked:(id)sender {
+    self.popupViewController.titleLabel.text = [self.messages objectForKey:@"HELP_POPUP_TITLE"];
+    self.popupViewController.contentTextView.text = [self.messages objectForKey:@"HELP_POPUP_MESSAGE"];
+    [self.popupViewController.proceedButton setTitle:[self.messages objectForKey:@"HELP_POPUP_BUTTON"] forState:UIControlStateNormal] ;
+    [self.view addSubview:self.whiteOverlay];
+    [self.view addSubview:self.popupViewController.view];
 }
 
-#pragma mark -
-#pragma mark Util
-// TODO move category on UIColor
-- (UIColor *) colorWithHexString: (NSString *)stringToConvert {
-	if (stringToConvert == nil || stringToConvert.length == 0) {
-		return [UIColor blackColor];
-	}
-	
-	NSString *string = stringToConvert;
-	if ([string hasPrefix:@"#"]) {
-		string = [string substringFromIndex:1];
-	}
-	
-	NSScanner *scanner = [NSScanner scannerWithString:string];
-	unsigned hexNum;
-	if (![scanner scanHexInt: &hexNum]) {
-		return nil;
-	}
-	
-	int r = (hexNum >> 16) & 0xFF;
-	int g = (hexNum >> 8) & 0xFF;
-	int b = (hexNum) & 0xFF;
-	
-	return [UIColor colorWithRed:r / 255.0f
-						   green:g / 255.0f
-							blue:b / 255.0f
-						   alpha:1.0f];
+- (IBAction)closePopupButtonClicked:(id)sender {
+    [self.whiteOverlay removeFromSuperview];
+    [self.popupViewController.view removeFromSuperview];
+}
+
+- (IBAction)proceedPopupButtonClicked:(id)sender {
+    [self.whiteOverlay removeFromSuperview];
+    [self.popupViewController.view removeFromSuperview];
 }
 
 @end

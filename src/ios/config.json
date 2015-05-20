@@ -2,13 +2,16 @@
     "kOGAppIdentifier": "DemoApp",
     "kOGAppPlatform": "ios",
     "kOGAppScheme": "oneginisdk",
-    "kOGAppVersion": "2.4.1",
-    "kAppBaseURL": "https://test-token-server.onegini.com",
+    "kOGAppVersion": "2.4.2",
+    "kAppBaseURL": "http://10.0.1.12:7878",
     "kOGShouldConfirmNewPin": true,
     "kOGShouldDirectlyShowPushMessage": true,
     "kOGKeyStorePassword": "NotSoVerySecureYet",
     "kOGMaxPinFailures": "3",
-    "kOGResourceBaseURL": "https://test-token-server.onegini.com",
+    "kOGResourceBaseURL": "http://10.0.1.12:7878",
     "kOGRedirectURL": "oneginisdk://loginsuccess",
-    "kOGUseEmbeddedWebview": true
+    "kOGUseEmbeddedWebview": true,
+    "kOGrootDetectionEnabled": false,
+    "kOGdebugDetectionEnabled": false,
+    "kOGAppSecret": "033B1FA05AE9FA489759572BA5CCE8EF0850E3B592A79F995579FEDDB3B628BB"
 }

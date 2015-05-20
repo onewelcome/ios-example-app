@@ -143,8 +143,6 @@
                  target-dir="src/com/onegini/dialogs/"/>
     <source-file src="src/android/src/android/com/onegini/dialogs/CurrentPinNonNativeDialogHandler.java"
                  target-dir="src/com/onegini/dialogs/"/>
-    <source-file src="src/android/src/android/com/onegini/dialogs/PinIntentBroadcaster.java"
-                 target-dir="src/com/onegini/dialogs"/>
     <source-file src="src/android/src/android/com/onegini/dialogs/PinScreenActivity.java"
                  target-dir="src/com/onegini/dialogs"/>
     <source-file src="src/android/src/android/com/onegini/actions/PinCallbackSession.java"
@@ -158,8 +156,6 @@
     <!--<source-file src="src/android/src/android/com/onegini/gcm/GCMHelper.java" target-dir="src/com/onegini/gcm/" />-->
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/model/MessageKey.java" target-dir="src/com/onegini/model/"/>
-    <source-file src="src/android/src/android/com/onegini/model/PinConfigModel.java"
-                 target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/resource/AnonymousResourceClient.java"
                  target-dir="src/com/onegini/resource/"/>
     <source-file src="src/android/src/android/com/onegini/resource/ResourceClient.java"
@@ -192,8 +188,16 @@
                  target-dir="src/com/onegini/util/"/>
     <source-file src="src/android/src/android/com/onegini/util/MessageResourceReader.java"
                  target-dir="src/com/onegini/util/"/>
+    <source-file src="src/android/src/android/com/onegini/util/PinIntentBuilder.java"
+                 target-dir="src/com/onegini/util/"/>
 
-    <source-file src="src/android/res/layout/activity_pin_screen.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout/create_pin_screen.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout/login_pin_screen.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout-land/create_pin_screen.xml" target-dir="res/layout-land"/>
+    <source-file src="src/android/res/layout-land/login_pin_screen.xml" target-dir="res/layout-land"/>
+    <source-file src="src/android/res/layout/keyboard.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout/alert_dialog.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout/confirm_dialog.xml" target-dir="res/layout"/>
     <source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
     <source-file src="src/android/res/values/bools.xml" target-dir="res/values"/>
     <source-file src="src/android/res/values-sw600dp/bools.xml" target-dir="res/values-sw600dp"/>
@@ -202,14 +206,18 @@
     <resource-file src="src/android/res/raw/keystore.bks" target="res/raw/keystore.bks"/>
     <resource-file src="src/android/config.json" target="res/raw/config.json"/>
 
+    <!-- assets -->
+    <resource-file src="src/android/res/drawable/form_active.9.png" target="res/drawable/form_active.9.png"/>
+    <resource-file src="src/android/res/drawable/form_inactive.9.png" target="res/drawable/form_inactive.9.png"/>
+    <resource-file src="src/android/res/drawable/form_inactive_gray.9.png" target="res/drawable/form_inactive_gray.9.png"/>
+    <resource-file src="src/android/res/drawable/step_active.9.png" target="res/drawable/step_active.9.png"/>
+    <resource-file src="src/android/res/drawable-mdpi/background.jpg" target="res/drawable-mdpi/background.jpg"/>
+    <resource-file src="src/android/res/drawable-mdpi/logo.png" target="res/drawable-mdpi/logo.png"/>
+    <resource-file src="src/android/res/drawable-xhdpi/background.jpg" target="res/drawable-xhdpi/background.jpg"/>
+    <resource-file src="src/android/res/drawable-xhdpi/logo.png" target="res/drawable-xhdpi/logo.png"/>
+
     <!-- Work in progress, these are not the correct image assets (copied from example PSD with low resolution) -->
-    <resource-file src="src/generic/pin-config.json" target="res/raw/pin_config.json"/>
-    <resource-file src="src/generic/logo.png" target="res/drawable/logo.png"/>
-    <resource-file src="src/generic/pin_delete_key_normal.png" target="res/drawable/pin_delete_key_normal.png"/>
-    <resource-file src="src/generic/pin_delete_key_highlighted.png"
-                   target="res/drawable/pin_delete_key_highlighted.png"/>
-    <resource-file src="src/generic/pin_key_normal.png" target="res/drawable/pin_key_normal.png"/>
-    <resource-file src="src/generic/pin_key_highlighted.png" target="res/drawable/pin_key_highlighted.png"/>
+    <resource-file src="src/generic/pin-config.json" target="res/raw/pin_config.json"/>    
     <resource-file src="src/generic/fonts/SourceSansPro-Regular.ttf" target="assets/fonts/font_regular.ttf"/>
     <resource-file src="src/generic/fonts/SourceSansPro-Light.ttf" target="assets/fonts/font_light.ttf"/>
     <resource-file src="src/generic/messages/messages.properties" target="res/raw/messages.properties"/>

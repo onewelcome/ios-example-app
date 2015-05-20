@@ -45,6 +45,9 @@ extern NSString *kDeleteKeyHighlightedStateImage;
 @property (weak, nonatomic) IBOutlet UIView *pinViewPlaceholder;
 @property (weak, nonatomic) IBOutlet UIImageView *containerBackgroundImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *loginPhoto;
+@property (weak, nonatomic) IBOutlet UIView *createPinView;
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 
@@ -60,13 +63,8 @@ extern NSString *kDeleteKeyHighlightedStateImage;
 
 @property (nonatomic) PINEntryModes mode;
 @property (nonatomic) NSDictionary* messages;
+@property (weak, nonatomic) IBOutlet UIButton *forgotPinButton;
 
-/**
- Apply custom style 
- 
- @param config
- */
-- (void)applyConfig:(NSDictionary *)config;
 
 /**
  Reset the PIN value and representation
@@ -81,7 +79,5 @@ extern NSString *kDeleteKeyHighlightedStateImage;
 - (void)invalidPinWithReason:(NSString *)message;
 
 - (void)setMessage:(NSString *)message;
-
-- (void)setSupportedInterfaceOrientations;
 
 @end

@@ -103,7 +103,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     NSMutableDictionary* mutablemessages = [NSMutableDictionary dictionary];
     
     for (NSString* line in lines) {
-        if (![line containsString:@"="])
+        if ([line rangeOfString:@"="].location==NSNotFound)//  ![line containsString:@"="])
             continue;
         NSArray* keyValue = [line componentsSeparatedByString:@"="];
         if (keyValue.count==2)
@@ -942,14 +942,11 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
  */
 
 - (void)showPinEntryViewInMode:(PINEntryModes)mode {
-    // Load customization from a generic JSON config file
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"pin-config" ofType:@"json"];
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    
     self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
     self.pinViewController.delegate = self;
     self.pinViewController.supportedOrientations = self.supportedOrientations;
+    self.pinViewController.mode = mode;
+    self.pinViewController.messages = messages;
     
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{kMethod:@"closeInAppBrowser"}];
     pluginResult.keepCallback = @(1);
@@ -969,9 +966,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
             topViewController = topViewController.presentedViewController;
         }
         [topViewController presentViewController:self.pinViewController animated:YES completion:^{
-            [self.pinViewController applyConfig:config];
             self.pinViewController.messages = messages;
-            self.pinViewController.mode = mode;
         }];
     });
 }

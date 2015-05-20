@@ -12,6 +12,5 @@
     "kOGRedirectURL": "oneginisdk://loginsuccess",
     "kOGUseEmbeddedWebview": true,
     "kOGrootDetectionEnabled": false,
-    "kOGdebugDetectionEnabled": false,
-    "kOGAppSecret": "033B1FA05AE9FA489759572BA5CCE8EF0850E3B592A79F995579FEDDB3B628BB"
+    "kOGdebugDetectionEnabled": false
 }

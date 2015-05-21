@@ -1,10 +1,5 @@
 package com.onegini.dialogs;
 
-import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithMessage;
-import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithTitle;
-import static com.onegini.dialogs.PinIntentBroadcaster.broadcastWithTitleAndMessage;
-import static com.onegini.model.MessageKey.KEYBOARD_TITLE_CREATE_PIN;
-import static com.onegini.model.MessageKey.KEYBOARD_TITLE_VERIFY_PIN;
 import static com.onegini.model.MessageKey.MAX_SIMILAR_DIGITS;
 import static com.onegini.model.MessageKey.PIN_BLACK_LISTED;
 import static com.onegini.model.MessageKey.PIN_CODES_DIFFERS;
@@ -16,11 +11,11 @@ import static com.onegini.util.MessageResourceReader.getMessageForKey;
 import java.util.Arrays;
 
 import android.content.Context;
-import android.content.Intent;
 import com.onegini.actions.InAppBrowserControlSession;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCreatePinDialog;
+import com.onegini.util.PinIntentBuilder;
 
 public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
@@ -57,11 +52,9 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
   public void createPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
     InAppBrowserControlSession.closeInAppBrowser();
 
-    final Intent intent = new Intent(context, PinScreenActivity.class);
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.putExtra(PinScreenActivity.EXTRA_SCREEN_TITLE, getMessageForKey(KEYBOARD_TITLE_CREATE_PIN.name()));
-    intent.putExtra(PinScreenActivity.EXTRA_CREATE_PIN_FLOW, true);
-    context.startActivity(intent);
+    new PinIntentBuilder(context)
+        .setCreatePinMode()
+        .startActivity();
 
     if (OneginiClient.getInstance().getConfigModel().shouldConfirmNewPin()) {
       this.oneginiPinProvidedHandler = new OneginiPinWithConfirmationHandler() {
@@ -77,7 +70,7 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
           }
 
           setPin(pin);
-          broadcastWithTitle(context, getMessageForKey(KEYBOARD_TITLE_VERIFY_PIN.name()));
+          new PinIntentBuilder(context).setConfirmPinMode().startActivity();
         }
 
         @Override
@@ -88,9 +81,10 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
             oneginiPinProvidedHandler.onPinProvided(pin);
           }
           else {
-            broadcastWithTitleAndMessage(context,
-                getMessageForKey(KEYBOARD_TITLE_CREATE_PIN.name()),
-                getMessageForKey(PIN_CODES_DIFFERS.name()));
+            new PinIntentBuilder(context)
+                .setCreatePinMode()
+                .addErrorMessage(getMessageForKey(PIN_CODES_DIFFERS.name()))
+                .startActivity();
           }
         }
       };
@@ -102,24 +96,36 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void pinBlackListed() {
-    broadcastWithMessage(context, getMessageForKey(PIN_BLACK_LISTED.name()));
+    new PinIntentBuilder(context)
+        .setCreatePinMode()
+        .addErrorMessage(getMessageForKey(PIN_BLACK_LISTED.name()))
+        .startActivity();
   }
 
   @Override
   public void pinShouldNotBeASequence() {
-    broadcastWithMessage(context, getMessageForKey(PIN_SHOULD_NOT_BE_A_SEQUENCE.name()));
+    new PinIntentBuilder(context)
+        .setCreatePinMode()
+        .addErrorMessage(getMessageForKey(PIN_SHOULD_NOT_BE_A_SEQUENCE.name()))
+        .startActivity();
   }
 
   @Override
   public void pinShouldNotUseSimilarDigits(final int maxSimilarDigits) {
     final String maxSimilarDigitsKey = getMessageForKey(MAX_SIMILAR_DIGITS.name());
     final String message = getMessageForKey(PIN_SHOULD_NOT_USE_SIMILAR_DIGITS.name());
-    broadcastWithMessage(context,
-        message.replace(maxSimilarDigitsKey, Integer.toString(maxSimilarDigits)));
+
+    new PinIntentBuilder(context)
+        .setCreatePinMode()
+        .addErrorMessage(message.replace(maxSimilarDigitsKey, Integer.toString(maxSimilarDigits)))
+        .startActivity();
   }
 
   @Override
   public void pinTooShort() {
-    broadcastWithMessage(context, getMessageForKey(PIN_TOO_SHORT.name()));
+    new PinIntentBuilder(context)
+        .setCreatePinMode()
+        .addErrorMessage(getMessageForKey(PIN_TOO_SHORT.name()))
+        .startActivity();
   }
 }

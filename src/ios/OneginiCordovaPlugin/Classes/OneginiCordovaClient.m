@@ -433,13 +433,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 }
 
 - (void)disconnect:(CDVInvokedUrlCommand *)command {
-    @try {
-        [self.oneginiClient disconnect];
-    }
-    @finally {
-        [self sendSuccessCallback:command.callbackId];
-        [self resetAll];
-    }
+    self.disconnectCommandTxId = command.callbackId;
+    [self.oneginiClient disconnectWithDelegate:self];
 }
 
 - (void)sendSuccessCallback:(NSString *)callbackId {
@@ -669,6 +664,18 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 	[self closePinView];
 
     [self authorizationErrorCallbackWIthReason:@"connectivityProblem"];
+}
+
+#pragma mark - OGDisconnectDelegate
+
+-(void)disconnectSuccessful{
+    [self sendSuccessCallback:self.disconnectCommandTxId];
+    [self resetAll];
+}
+
+-(void)disconnectFailureWithError:(NSError *)error{
+    [self sendSuccessCallback:self.disconnectCommandTxId];
+    [self resetAll];
 }
 
 #pragma mark -

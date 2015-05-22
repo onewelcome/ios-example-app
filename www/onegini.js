@@ -3,7 +3,7 @@ var exec = require('cordova/exec');
 module.exports = {
   /**
    * Awaits notification that the Onegini plugin initialization is finished.
-   * @param {Object} router   Object that can handle page transition for the outcome of the authorization. Should at
+   * @param {Object} router   Object that can handle page transition for the outcome of the action. Should at
    *                          least implement the following methods:
    *                          - pluginInitialized -> called once plugin is initialized successfully
    *                          - errorConnectivityProblem -> method called whenever plugin isn't able to establish
@@ -27,7 +27,7 @@ module.exports = {
   /**
    * Initiates static PIN callback session. Whenever SDK will require top level application to show PIN dialog,
    * it will use this session.
-   * @param {Object} router   Object that can handle page transition for the outcome of the authorization. Should at
+   * @param {Object} router   Object that can handle page transition for the outcome of the action. Should at
    *                          least implement the following methods:
    *                          - askForCurrentPin -> should display a screen to verify the PIN code. Must call
    *                                         checkPin(errorCallback, pin)
@@ -77,7 +77,7 @@ module.exports = {
    * Fetches a specific resource.
    * The access token validation flow is invoked if no valid access token is available.
    *
-   * @param {Object} router             Object that can handle page transition for the outcome of the authorization.
+   * @param {Object} router             Object that can handle page transition for the outcome of the action.
    *                                    Should at least implement the following methods:
    *                                    - errorConnectivityProblem -> method called whenever plugin isn't able to
    *                                    establish connection with the server
@@ -176,7 +176,7 @@ module.exports = {
   /**
    * Main entry point into the authorization process.
    *
-   * @param {Object} router   Object that can handle page transition for the outcome of the authorization. Should at
+   * @param {Object} router   Object that can handle page transition for the outcome of the action. Should at
    *                          least implement the following methods:
    *                          - requestAuthorization(url) -> redirects the user to the given url to log in
    *                          - authorizationSuccess -> should show the landing page for the authenticated user
@@ -455,6 +455,15 @@ module.exports = {
     exec(null, null, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CANCEL_CHANGE, []);
   },
 
+
+  /**
+   * Detect and lock in prefered screen orientation
+   * (tablet in landscape, phone in portrait)
+   */
+  setupScreenOrientation: function () {
+    exec(null, null, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.SETUP_SCREEN_ORIENTATION, []);
+  },
+
   /**
    * Invalidates session storage data.
    */
@@ -523,14 +532,6 @@ module.exports = {
    */
   isiOS: function () {
     return ( navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0 || navigator.userAgent.indexOf("iPod") > 0);
-  },
-
-  /**
-   * Detect and lock in prefered screen orientation
-   * (tablet in landscape, phone in portrait)
-   */
-  setupScreenOrientation: function () {
-    exec(null, null, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.SETUP_SCREEN_ORIENTATION, []);
   },
 
   /**

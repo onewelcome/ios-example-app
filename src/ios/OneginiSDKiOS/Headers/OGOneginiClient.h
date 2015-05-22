@@ -13,6 +13,7 @@
 #import "OGPinValidationDelegate.h"
 #import "OGChangePinDelegate.h"
 #import "OGPublicCommons.h"
+#import "OGDisconnectDelegate.h"
 
 @class OGConfigModel, OGAuthorizationManager, OGResourceManager, OGEnrollmentManager;
 
@@ -157,7 +158,13 @@
  Disconnect from the service, this will clear the refresh token and access token.
  Client credentials remain untouched.
  */
-- (void)disconnect;
+- (void)disconnect DEPRECATED_ATTRIBUTE;
+
+/**
+ Disconnect from the service, this will clear the refresh token and access token.
+ Client credentials remain untouched.
+ */
+- (void)disconnectWithDelegate:(id<OGDisconnectDelegate>)delegate;
 
 /**
  This will end the current session and invalidate the access token.

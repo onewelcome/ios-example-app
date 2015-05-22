@@ -10,5 +10,5 @@
     "kOGMaxPinFailures": "3",
     "kOGResourceBaseURL": "https://test-token-server.onegini.com",
     "kOGRedirectURL": "oneginisdk://loginsuccess",
-    "kOGUseEmbeddedWebview": true,
+    "kOGUseEmbeddedWebview": true
 }

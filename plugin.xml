@@ -32,6 +32,7 @@
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/PopupViewController.xib"/>
 
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGAuthorizationDelegate.h"/>
+    <header-file src="src/ios/OneginiSDKiOS/Headers/OGDisconnectDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGConfigModel.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGChangePinDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGEnrollmentHandlerDelegate.h"/>

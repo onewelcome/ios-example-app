@@ -57,21 +57,6 @@
 	}
 }
 
-- (void)setKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState)state {
-//	UIImage *image = [UIImage imageNamed:imagePath];
-//	if (image == nil) {
-//		image = [UIImage imageWithContentsOfFile:imagePath];
-//	}
-//	
-//	for (UIButton *button in keys) {
-//		[button setBackgroundImage:image forState:state];
-//	}
-}
-
-- (void)setDeleteKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState)state {
-//	[self.backKey setBackgroundImage:[UIImage imageNamed:imagePath] forState:state];
-}
-
 - (void)setKeyColor:(UIColor *)color forState:(UIControlState)state {
 	for (UIButton *button in keys) {
 		[button setTitleColor:color forState:state];

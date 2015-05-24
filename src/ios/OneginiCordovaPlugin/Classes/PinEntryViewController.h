@@ -28,8 +28,11 @@
 @interface PinEntryViewController : UIViewController
 
 @property (weak, nonatomic) id <PinEntryViewControllerDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UIImageView *stepIndicator;
+@property (weak, nonatomic) IBOutlet UIImageView *keyboardImageView;
 
 @property (weak, nonatomic) IBOutlet UIView *pinsView;
+@property (weak, nonatomic) IBOutlet UIView *pinsFrame;
 
 @property (weak, nonatomic) IBOutlet UIButton *key1;
 @property (weak, nonatomic) IBOutlet UIButton *key2;
@@ -45,6 +48,10 @@
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *keys;
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *pins;
+@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *pinSlots;
+
+@property (weak, nonatomic) IBOutlet UIView *pinsBackgroundView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 - (void)setKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState)state;
 - (void)setKeyColor:(UIColor *)color forState:(UIControlState)state;

@@ -26,7 +26,6 @@
 #define kOGUseEmbeddedWebview				@"kOGUseEmbeddedWebview"
 #define kOGStoreCookies                     @"kOGStoreCookies"
 
-
 @class OGCommons;
 
 /**

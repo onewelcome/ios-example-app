@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="SourceSansPro-Light.ttf">
+            <string>SourceSansPro-Light</string>
             <string>SourceSansPro-Light</string>
             <string>SourceSansPro-Light</string>
             <string>SourceSansPro-Light</string>
@@ -21,180 +22,241 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PinEntryViewController">
             <connections>
-                <outlet property="backKey" destination="jQT-oh-Qz3" id="uPk-IH-mIv"/>
-                <outlet property="key0" destination="Jso-fF-clK" id="hPf-vB-VG2"/>
-                <outlet property="key1" destination="Xuf-u3-hlq" id="onU-SD-fLn"/>
-                <outlet property="key2" destination="z5L-lR-yzb" id="ZmA-9e-75E"/>
-                <outlet property="key3" destination="NIH-0e-g06" id="vUA-va-ewz"/>
-                <outlet property="key4" destination="Sdn-Sm-4Vx" id="0UG-yb-XPt"/>
-                <outlet property="key5" destination="10i-x4-7R9" id="Pqw-vE-DDv"/>
-                <outlet property="key6" destination="dM5-s1-2me" id="EeP-ZO-hN5"/>
-                <outlet property="key7" destination="j1N-ca-osi" id="A34-SG-99l"/>
-                <outlet property="key8" destination="OoF-gW-Qn2" id="suc-fs-3yM"/>
-                <outlet property="key9" destination="G6q-5r-kkC" id="9ha-fw-4UL"/>
-                <outlet property="pinsView" destination="FuY-8U-Q4Z" id="nme-o2-Qp3"/>
-                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outletCollection property="keys" destination="Xuf-u3-hlq" id="wta-ex-ZUN"/>
-                <outletCollection property="keys" destination="z5L-lR-yzb" id="413-Ru-1E5"/>
-                <outletCollection property="keys" destination="NIH-0e-g06" id="bhJ-FS-Dsx"/>
-                <outletCollection property="keys" destination="Sdn-Sm-4Vx" id="6KA-ZI-hVT"/>
-                <outletCollection property="keys" destination="10i-x4-7R9" id="w0H-nR-mFA"/>
-                <outletCollection property="keys" destination="dM5-s1-2me" id="6eE-tk-5b7"/>
-                <outletCollection property="keys" destination="j1N-ca-osi" id="ci5-xO-5EM"/>
-                <outletCollection property="keys" destination="OoF-gW-Qn2" id="Thi-DU-vDW"/>
-                <outletCollection property="keys" destination="G6q-5r-kkC" id="lOX-BI-eJu"/>
-                <outletCollection property="keys" destination="Jso-fF-clK" id="4M2-WV-9fs"/>
-                <outletCollection property="pins" destination="RB0-Pn-8hS" id="1X9-h9-pjG"/>
-                <outletCollection property="pins" destination="g9L-2G-qdB" id="qWa-2N-f1X"/>
-                <outletCollection property="pins" destination="EYn-cN-8iW" id="wj4-VM-BpJ"/>
-                <outletCollection property="pins" destination="Bmd-Yo-4u4" id="nR6-m7-neR"/>
-                <outletCollection property="pins" destination="mQ7-AD-bvE" id="eEk-tH-xYM"/>
+                <outlet property="backKey" destination="tVI-p1-JuX" id="VzE-R1-9L2"/>
+                <outlet property="key0" destination="YVX-XZ-mzy" id="HSq-eU-m9E"/>
+                <outlet property="key1" destination="mEd-L3-Qpp" id="Ugn-Jp-kv7"/>
+                <outlet property="key2" destination="qK0-oh-Aho" id="FqR-7W-8uj"/>
+                <outlet property="key3" destination="0Ru-xb-pCU" id="z1f-0I-RKk"/>
+                <outlet property="key4" destination="2VN-M6-Dio" id="fkR-UE-8nH"/>
+                <outlet property="key5" destination="DfF-gL-Qfo" id="S0k-zn-nx0"/>
+                <outlet property="key6" destination="QgG-o1-90M" id="F6D-uQ-IlF"/>
+                <outlet property="key7" destination="wow-hb-rw9" id="ZaW-cz-Gdg"/>
+                <outlet property="key8" destination="hw4-Ou-W1t" id="FjJ-FY-sFh"/>
+                <outlet property="key9" destination="Had-mt-uTa" id="O8K-b8-SMV"/>
+                <outlet property="keyboardImageView" destination="qRv-Od-cCU" id="y2D-v1-Qpo"/>
+                <outlet property="pinsFrame" destination="MJx-Zn-SNn" id="Yps-Rn-VcM"/>
+                <outlet property="pinsView" destination="NEG-yZ-bKD" id="br2-Wu-XdI"/>
+                <outlet property="stepIndicator" destination="7zF-ne-Uu1" id="GAa-lq-23L"/>
+                <outlet property="view" destination="Dn8-39-sH5" id="ekh-ir-DcT"/>
+                <outletCollection property="keys" destination="0Ru-xb-pCU" id="22u-rm-L7g"/>
+                <outletCollection property="keys" destination="hw4-Ou-W1t" id="daF-kM-HXS"/>
+                <outletCollection property="keys" destination="mEd-L3-Qpp" id="FMs-0M-lCk"/>
+                <outletCollection property="keys" destination="qK0-oh-Aho" id="mmf-J7-bew"/>
+                <outletCollection property="keys" destination="0Ru-xb-pCU" id="thi-SD-wRF"/>
+                <outletCollection property="keys" destination="2VN-M6-Dio" id="sl9-WP-4Yu"/>
+                <outletCollection property="keys" destination="DfF-gL-Qfo" id="WRB-cB-DC2"/>
+                <outletCollection property="keys" destination="QgG-o1-90M" id="mAs-q5-oec"/>
+                <outletCollection property="keys" destination="wow-hb-rw9" id="Nel-Ob-3x8"/>
+                <outletCollection property="keys" destination="hw4-Ou-W1t" id="6dB-Eh-x0V"/>
+                <outletCollection property="keys" destination="Had-mt-uTa" id="HV9-qT-kNw"/>
+                <outletCollection property="keys" destination="YVX-XZ-mzy" id="jr0-Na-jU6"/>
+                <outletCollection property="pins" destination="NJk-Dx-BtL" id="jNX-8w-bLs"/>
+                <outletCollection property="pins" destination="uSN-OB-zid" id="iQV-5b-Dep"/>
+                <outletCollection property="pins" destination="Hfv-ns-pW2" id="eSE-Li-GYQ"/>
+                <outletCollection property="pins" destination="Ju0-zB-z0T" id="RF1-C4-QLd"/>
+                <outletCollection property="pins" destination="gYZ-UK-WGk" id="3OD-EC-04Z"/>
+                <outletCollection property="pinSlots" destination="nqh-VN-z98" id="6Fg-Sl-5Xj"/>
+                <outletCollection property="pinSlots" destination="dET-Rh-sid" id="A0A-tc-yC3"/>
+                <outletCollection property="pinSlots" destination="krx-HL-wSb" id="WpA-JW-fap"/>
+                <outletCollection property="pinSlots" destination="4PB-IF-6vB" id="00n-ca-i4O"/>
+                <outletCollection property="pinSlots" destination="bLS-AK-Egk" id="380-pV-ukA"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="276" height="447"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+        <view contentMode="scaleToFill" id="Dn8-39-sH5">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xuf-u3-hlq">
-                    <rect key="frame" x="8" y="88" width="80" height="80"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
-                    <state key="normal" title="1">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z5L-lR-yzb">
-                    <rect key="frame" x="98" y="88" width="80" height="80"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
-                    <state key="normal" title="2">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NIH-0e-g06">
-                    <rect key="frame" x="188" y="88" width="80" height="80"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
-                    <state key="normal" title="3">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdn-Sm-4Vx">
-                    <rect key="frame" x="8" y="178" width="80" height="80"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
-                    <state key="normal" title="4">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="10i-x4-7R9">
-                    <rect key="frame" x="98" y="178" width="80" height="80"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
-                    <state key="normal" title="5">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dM5-s1-2me">
-                    <rect key="frame" x="188" y="178" width="80" height="80"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
-                    <state key="normal" title="6">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j1N-ca-osi">
-                    <rect key="frame" x="8" y="268" width="80" height="80"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
-                    <state key="normal" title="7">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OoF-gW-Qn2">
-                    <rect key="frame" x="98" y="268" width="80" height="80"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
-                    <state key="normal" title="8">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G6q-5r-kkC">
-                    <rect key="frame" x="188" y="268" width="80" height="80"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
-                    <state key="normal" title="9">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jso-fF-clK">
-                    <rect key="frame" x="98" y="358" width="80" height="80"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
-                    <state key="normal" title="0">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jQT-oh-Qz3">
-                    <rect key="frame" x="188" y="358" width="80" height="80"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                    <state key="normal" title="⬅︎">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="onBackKeyClicked:" destination="-1" eventType="touchUpInside" id="Vgd-9e-fYz"/>
-                    </connections>
-                </button>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FuY-8U-Q4Z">
-                    <rect key="frame" x="8" y="8" width="260" height="60"/>
+                <view contentMode="scaleToFill" id="3ix-sr-TNa">
+                    <rect key="frame" x="0.0" y="80" width="320" height="274"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="pin-clear-ic" translatesAutoresizingMaskIntoConstraints="NO" id="TDA-sZ-Yfl">
-                            <rect key="frame" x="121" y="29" width="18" height="2"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iphone-steps.png" id="7zF-ne-Uu1">
+                            <rect key="frame" x="241" y="18" width="66" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="pin-clear-ic" translatesAutoresizingMaskIntoConstraints="NO" id="v6P-EY-U3m">
-                            <rect key="frame" x="163" y="29" width="18" height="2"/>
-                        </imageView>
-                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="pin-clear-ic" translatesAutoresizingMaskIntoConstraints="NO" id="6tU-62-qeH">
-                            <rect key="frame" x="204" y="29" width="18" height="2"/>
-                        </imageView>
-                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="pin-clear-ic" translatesAutoresizingMaskIntoConstraints="NO" id="KGu-7n-93P">
-                            <rect key="frame" x="81" y="29" width="18" height="2"/>
-                        </imageView>
-                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="pin-clear-ic" translatesAutoresizingMaskIntoConstraints="NO" id="nTk-fi-LFw">
-                            <rect key="frame" x="35" y="29" width="18" height="2"/>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pin-occupied-ic" translatesAutoresizingMaskIntoConstraints="NO" id="RB0-Pn-8hS">
-                            <rect key="frame" x="35" y="21" width="18" height="18"/>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pin-occupied-ic" translatesAutoresizingMaskIntoConstraints="NO" id="g9L-2G-qdB">
-                            <rect key="frame" x="81" y="21" width="18" height="18"/>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pin-occupied-ic" translatesAutoresizingMaskIntoConstraints="NO" id="EYn-cN-8iW">
-                            <rect key="frame" x="121" y="21" width="18" height="18"/>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pin-occupied-ic" translatesAutoresizingMaskIntoConstraints="NO" id="Bmd-Yo-4u4">
-                            <rect key="frame" x="163" y="21" width="18" height="18"/>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pin-occupied-ic" translatesAutoresizingMaskIntoConstraints="NO" id="mQ7-AD-bvE">
-                            <rect key="frame" x="204" y="21" width="18" height="18"/>
-                        </imageView>
+                        <view contentMode="scaleToFill" id="MJx-Zn-SNn">
+                            <rect key="frame" x="10" y="70" width="300" height="121"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="NEG-yZ-bKD">
+                            <rect key="frame" x="40" y="90" width="240" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iphone-pinslot.png" id="nqh-VN-z98">
+                                    <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iphone-pinslot.png" id="dET-Rh-sid">
+                                    <rect key="frame" x="50" y="0.0" width="40" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iphone-pinslot.png" id="krx-HL-wSb">
+                                    <rect key="frame" x="100" y="0.0" width="40" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iphone-pinslot.png" id="4PB-IF-6vB">
+                                    <rect key="frame" x="150" y="0.0" width="40" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iphone-pinslot.png" id="bLS-AK-Egk">
+                                    <rect key="frame" x="200" y="0.0" width="40" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin-occupied-ic" id="NJk-Dx-BtL">
+                                    <rect key="frame" x="14" y="19" width="12" height="12"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin-occupied-ic" id="uSN-OB-zid">
+                                    <rect key="frame" x="64" y="19" width="12" height="12"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin-occupied-ic" id="Hfv-ns-pW2">
+                                    <rect key="frame" x="114" y="19" width="12" height="12"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin-occupied-ic" id="Ju0-zB-z0T">
+                                    <rect key="frame" x="164" y="19" width="12" height="12"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin-occupied-ic" id="gYZ-UK-WGk">
+                                    <rect key="frame" x="214" y="19" width="12" height="12"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.89085906744003296" green="0.9200400710105896" blue="0.92482483386993408" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.92154091282894746" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="LyK-0P-dDL">
+                    <rect key="frame" x="0.0" y="353" width="320" height="215"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iphone-keyboard.png" id="qRv-Od-cCU">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="215"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        </imageView>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mEd-L3-Qpp">
+                            <rect key="frame" x="0.0" y="0.0" width="106" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
+                            <state key="normal">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qK0-oh-Aho">
+                            <rect key="frame" x="107" y="0.0" width="106" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
+                            <state key="normal">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0Ru-xb-pCU">
+                            <rect key="frame" x="214" y="0.0" width="106" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
+                            <state key="normal">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2VN-M6-Dio">
+                            <rect key="frame" x="0.0" y="52" width="106" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
+                            <state key="normal">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DfF-gL-Qfo">
+                            <rect key="frame" x="107" y="52" width="106" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
+                            <state key="normal">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="QgG-o1-90M">
+                            <rect key="frame" x="214" y="52" width="106" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
+                            <state key="normal">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wow-hb-rw9">
+                            <rect key="frame" x="0.0" y="106" width="106" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
+                            <state key="normal">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hw4-Ou-W1t">
+                            <rect key="frame" x="107" y="106" width="106" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
+                            <state key="normal">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Had-mt-uTa">
+                            <rect key="frame" x="214" y="106" width="106" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
+                            <state key="normal">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="YVX-XZ-mzy">
+                            <rect key="frame" x="107" y="162" width="106" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
+                            <state key="normal">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" tag="-1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="tVI-p1-JuX">
+                            <rect key="frame" x="214" y="162" width="106" height="53"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="50"/>
+                            <state key="normal">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="onBackKeyClicked:" destination="-1" eventType="touchUpInside" id="S3Y-y3-wN7"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-            <gestureRecognizers/>
-            <nil key="simulatedStatusBarMetrics"/>
-            <nil key="simulatedTopBarMetrics"/>
-            <nil key="simulatedBottomBarMetrics"/>
-            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="-69" y="439"/>
         </view>
     </objects>
     <resources>
-        <image name="pin-clear-ic" width="18" height="2"/>
+        <image name="iphone-keyboard.png" width="640" height="430"/>
+        <image name="iphone-pinslot.png" width="80" height="100"/>
+        <image name="iphone-steps.png" width="160" height="48"/>
         <image name="pin-occupied-ic" width="18" height="18"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

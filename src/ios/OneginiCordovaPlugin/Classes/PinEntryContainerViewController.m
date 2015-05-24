@@ -311,5 +311,8 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
     [self.whiteOverlay removeFromSuperview];
     [self.popupViewController.view removeFromSuperview];
 }
+- (IBAction)forgotPinClicked:(id)sender {
+    [self.delegate pinForgotten:self];
+}
 
 @end

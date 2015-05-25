@@ -31,7 +31,6 @@ import com.onegini.dialogs.PinScreenActivity;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiAuthorizationHandler;
 import com.onegini.scope.ScopeParser;
 import com.onegini.util.CallbackResultBuilder;
-import com.onegini.util.PinActivityStarter;
 
 public class AuthorizeAction implements OneginiPluginAction {
 
@@ -43,7 +42,7 @@ public class AuthorizeAction implements OneginiPluginAction {
   }
 
   /**
-   * Methoad called by native PIN screen if user clicks "Reset PIN" button.
+   * Method called by native PIN screen if user clicks "Reset PIN" button.
    */
   public static void onPinReset() {
     if (callbackContext == null || callbackContext.isFinished()) {

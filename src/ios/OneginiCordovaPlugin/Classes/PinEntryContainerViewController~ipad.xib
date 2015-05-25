@@ -12,6 +12,7 @@
                 <outlet property="loginPhoto" destination="H0A-b3-b6f" id="8pf-WO-4HS"/>
                 <outlet property="messageLabel" destination="dw4-wY-CJV" id="ryS-J4-cgD"/>
                 <outlet property="pinViewPlaceholder" destination="rMn-wU-JxI" id="Dxw-vW-CVK"/>
+                <outlet property="stepsImageView" destination="8La-wR-V4L" id="CZy-YR-CjI"/>
                 <outlet property="subtitleLabel" destination="28I-4a-RbF" id="gzE-5T-AUG"/>
                 <outlet property="titleLabel" destination="cnA-7f-eZL" id="qXk-jb-08L"/>
                 <outlet property="view" destination="iN0-l3-epB" id="YZu-fu-mFT"/>

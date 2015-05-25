@@ -28,6 +28,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 
 @property (nonatomic) PopupViewController* popupViewController;
 @property (nonatomic) UIView* whiteOverlay;
+@property (weak, nonatomic) IBOutlet UIImageView *stepsImageView;
 
 @end
 
@@ -134,6 +135,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = YES;
             self.pinEntryViewController.pinsFrame.hidden = YES;
+            self.stepsImageView.hidden = YES;
             [self.titleLabel sizeToFit];
             self.forgotPinButton.hidden = NO;
             
@@ -175,6 +177,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = NO;
             self.pinEntryViewController.pinsFrame.hidden = NO;
+            self.stepsImageView.hidden = NO;
             [self.titleLabel sizeToFit];
             self.forgotPinButton.hidden = YES;
             break;
@@ -204,6 +207,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = NO;
             self.pinEntryViewController.pinsFrame.hidden = NO;
+            self.stepsImageView.hidden = NO;
             [self.titleLabel sizeToFit];
             self.forgotPinButton.hidden = YES;
             break;
@@ -230,6 +234,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             self.subtitleLabel.text = @"";
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = YES;
+            self.stepsImageView.hidden = YES;
             self.pinEntryViewController.pinsFrame.hidden = YES;
             [self.titleLabel sizeToFit];
             self.forgotPinButton.hidden = NO;
@@ -247,6 +252,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             self.popupViewController.contentTextView.text = [self.messages objectForKey:@"CHANGE_PIN_HELP_MESSAGE"];
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = YES;
+            self.stepsImageView.hidden = YES;
             self.pinEntryViewController.pinsFrame.hidden = NO;
             [self.titleLabel sizeToFit];
             self.forgotPinButton.hidden = YES;
@@ -278,6 +284,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             self.popupViewController.contentTextView.text = [self.messages objectForKey:@"CONFIRM_CHANGE_PIN_HELP_MESSAGE"];
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = YES;
+            self.stepsImageView.hidden = YES;
             self.pinEntryViewController.pinsFrame.hidden = NO;
             [self.titleLabel sizeToFit];
             self.forgotPinButton.hidden = YES;

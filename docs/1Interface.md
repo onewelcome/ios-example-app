@@ -117,7 +117,7 @@ Disconnect from the service, this will clear the refresh token and access token 
 ### checkPin(successCallback, errorCallback, pin)
 Validates the PIN entered by the user. Can only be called within the authorization flow. In case of success, the authorize function decides the next step. If something goes wrong, the errorCallback is called.
 
-If the PIN has an invalid format (too long, too short, invalid characters), it will count as verification attempt.
+If the PIN has an invalid format (too long, too short, invalid characters), it will count as verification attempt. If application uses native pin screens, PIN validation is done internally.
 
 An INVALID_ACTION is returned if no authorization transaction is registered.
 
@@ -128,7 +128,7 @@ An INVALID_ACTION is returned if no authorization transaction is registered.
 ### setPin(errorCallback, pin) 
 Sets a PIN for the user. Can only be called within the authorization flow. In case of success, the authorize function decides the next step. If something goes wrong, the errorCallback is called. Callback is performed on initiating authorize callback handler.
 
-The app should first verify whether the PIN has the correct format and the verifyPin matches the pin.
+The app should first verify whether the PIN has the correct format and the verifyPin matches the firstly provided pin. If application uses native pin screens, PIN validation is done internally by the plugin.
 
 An INVALID_ACTION is returned if no authorization transaction is registered.
 
@@ -155,6 +155,7 @@ Changes PIN number. User will firstly be prompted to enter current PIN number an
 
 ### confirmCurrentPinForChangeRequest(errorCallback, pin)
 Verifies if entered PIN is currently valid, if true proceeds with new PIN creation in change PIN flow.  
+If application uses native pin screens, current pin verification is done internally by the plugin.
 
 **Param** `errorCallback` - Function to call when PIN verification fails
 
@@ -164,7 +165,7 @@ Verifies if entered PIN is currently valid, if true proceeds with new PIN creati
 ### confirmNewPinForChangeRequest(router, pin)    
 Sets a new PIN for the user. Can only be called within the change PIN flow. In case of success, the changePin function decides the next step. If something goes wrong, the errorCallback is called. Callback is performed on initiating changePin callback handler.
 
-The app should first verify whether the PIN has the correct format and the verifyPin matches the pin.
+The app should first verify whether the PIN has the correct format and the verifyPin matches the pin. If application uses native pin screens, both validation and new PIN set are done internally by the plugin.
 
 An INVALID_ACTION is returned if no change PIN transaction is registered.
 
@@ -180,6 +181,8 @@ An INVALID_ACTION is returned if no change PIN transaction is registered.
 
 ### validatePin(router, pin)
 Validates provided PIN number against clients pin policy.
+
+If application uses native pin screens, PIN validation is done internally by the plugin.
 
 **Param** `router` - Object that can handle PIN verification failure. Should at least implement the following methods:
   - `pinValid` - PIN validation succeeded

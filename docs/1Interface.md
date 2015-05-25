@@ -1,5 +1,6 @@
-# OneginiCordovaPlugin interface
-TODO
+# 1. OneginiCordovaPlugin interface
+
+This page describes all public methods of OneginiCordovaPlugin.
 
 ### awaitPluginInitialization(router)
 Awaits notification that the Onegini plugin initialization is finished.
@@ -205,3 +206,27 @@ Invalidates session storage data.
 
 ### preserveCurrentLocation
 Preserves currently displayed page identifier in sessions storage.
+
+
+### preserveLocation(pageId)
+Preserves specified page identifier in sessions storage.
+
+**Param** `pageId` - page to preserve
+
+
+### openInAppBrowser(url)
+Opens specified URL using inAppBrowser, should be used only if inAppBrowser plugin is active.
+
+**Param** `url` - URL to open
+
+
+### closeInAppBrowser
+Closes inAppBrowser.
+
+
+### isAndroid
+Determines whenever userAgent is Android.
+
+
+### isiOS
+Determines whenever userAgent is iOS.

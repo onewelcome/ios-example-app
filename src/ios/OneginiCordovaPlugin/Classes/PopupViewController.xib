@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="closeButton" destination="hEy-Q1-Uwc" id="6xH-E9-Nky"/>
                 <outlet property="contentTextView" destination="cHN-ek-en4" id="xRP-ML-pSI"/>
+                <outlet property="labelView" destination="6Fl-bG-x6V" id="2aL-wu-eb9"/>
                 <outlet property="proceedButton" destination="YYJ-6F-1pr" id="z9Y-Ot-HAL"/>
                 <outlet property="titleLabel" destination="btK-5S-VLo" id="ycB-U4-y67"/>
                 <outlet property="view" destination="iN0-l3-epB" id="LrB-0d-T3V"/>
@@ -34,7 +35,7 @@
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
-                                        <action selector="closePopupButtonClicked:" destination="-2" eventType="touchUpInside" id="gfe-v0-dhf"/>
+                                        <action selector="buttonCloseClick:" destination="-1" eventType="touchUpInside" id="wl0-5J-vfM"/>
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="btK-5S-VLo">
@@ -65,7 +66,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="YYJ-6F-1pr">
-                                    <rect key="frame" x="0.0" y="0.0" width="280" height="49"/>
+                                    <rect key="frame" x="80" y="0.0" width="200" height="49"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.40392156862745099" green="0.55686274509803924" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -80,13 +81,32 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
-                                        <action selector="proceedPopupButtonClicked:" destination="-2" eventType="touchUpInside" id="3VB-I8-G1f"/>
+                                        <action selector="buttonProceedClick:" destination="-1" eventType="touchUpInside" id="Fij-fD-eba"/>
                                     </connections>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="buttonPijl.png" id="vq5-e8-GmV">
                                     <rect key="frame" x="266" y="20" width="6" height="10"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="P3q-Sv-b7C">
+                                    <rect key="frame" x="0.0" y="0.0" width="72" height="49"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.50196081399917603" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" title="Cancel">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="buttonCancelClick:" destination="-1" eventType="touchUpInside" id="K5K-MU-9Gy"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>

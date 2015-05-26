@@ -9,9 +9,11 @@
             <connections>
                 <outlet property="createPinView" destination="PJa-Kc-fWw" id="FrM-kj-YAq"/>
                 <outlet property="forgotPinButton" destination="jSh-3c-Pfa" id="iHu-dd-Dgj"/>
+                <outlet property="helpButton" destination="xqW-t9-yo9" id="aR0-JF-KE7"/>
                 <outlet property="loginPhoto" destination="H0A-b3-b6f" id="8pf-WO-4HS"/>
                 <outlet property="messageLabel" destination="dw4-wY-CJV" id="ryS-J4-cgD"/>
                 <outlet property="pinViewPlaceholder" destination="rMn-wU-JxI" id="Dxw-vW-CVK"/>
+                <outlet property="stepsImageView" destination="8La-wR-V4L" id="CZy-YR-CjI"/>
                 <outlet property="subtitleLabel" destination="28I-4a-RbF" id="gzE-5T-AUG"/>
                 <outlet property="titleLabel" destination="cnA-7f-eZL" id="qXk-jb-08L"/>
                 <outlet property="view" destination="iN0-l3-epB" id="YZu-fu-mFT"/>
@@ -27,7 +29,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xqW-t9-yo9">
-                    <rect key="frame" x="847" y="41" width="147" height="30"/>
+                    <rect key="frame" x="847" y="40" width="147" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="Hulp nodig?">
@@ -94,6 +96,9 @@
                         <color key="titleColor" red="0.40392156862745099" green="0.55686274509803924" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="forgotPinClicked:" destination="-1" eventType="touchUpInside" id="1Qn-wA-Twv"/>
+                    </connections>
                 </button>
                 <view hidden="YES" contentMode="scaleToFill" id="0tu-lQ-uAf">
                     <rect key="frame" x="765" y="20" width="30" height="71"/>

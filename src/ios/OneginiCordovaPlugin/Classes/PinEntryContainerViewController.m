@@ -20,14 +20,16 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 
 @interface PinEntryContainerViewController()
 
+@property (weak, nonatomic) IBOutlet UIButton *helpButton;
 @property (nonatomic) float titleLabelWidth;
 @property (nonatomic) float pinsViewY;
 @property (nonatomic) float messageLabelY;
 @property (nonatomic) float messageLabelX;
 @property (nonatomic) int pinsViewOffset;
 
-@property (nonatomic) PopupViewController* popupViewController;
 @property (nonatomic) UIView* whiteOverlay;
+@property (weak, nonatomic) IBOutlet UIImageView *stepsImageView;
+@property (nonatomic) PopupViewController* popupViewController;
 
 @end
 
@@ -43,6 +45,8 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 	self.pinEntryViewController.delegate = self;
     self.messageLabel.textColor = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
     self.pinsViewOffset = 0;
+    [self.helpButton setTitle:[self.messages objectForKey:@"HELP_LINK_TITLE"] forState:UIControlStateNormal];
+    [self.forgotPinButton setTitle:[self.messages objectForKey:@"PIN_FORGOTTEN_TITLE"] forState:UIControlStateNormal];
 }
 
 -(void)viewDidLayoutSubviews{
@@ -56,24 +60,27 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
         self.pinViewPlaceholder.frame = self.view.frame;
     }
     
-    self.popupViewController = [[PopupViewController alloc] initWithNibName:@"PopupViewController" bundle:nil];
-    
-    self.popupViewController.view.layer.masksToBounds = NO;
-    self.popupViewController.view.layer.shadowRadius = 50;
-    self.popupViewController.view.layer.shadowColor = [[UIColor colorWithWhite:0 alpha:1]CGColor];
-    self.popupViewController.view.layer.shadowOpacity = 0.5;
-    
-    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
-        self.popupViewController.view.frame = CGRectMake(self.view.frame.size.width/2-740/2, self.view.frame.size.height/2-380/2, 740, 380);
-    else
-        self.popupViewController.view.frame = CGRectMake(
-                self.view.frame.size.width/2-self.popupViewController.view.frame.size.width/2,
-                self.view.frame.size.height/2-MIN(self.popupViewController.view.frame.size.height, self.view.frame.size.height)/2,
-                self.popupViewController.view.frame.size.width,
-                MIN(self.popupViewController.view.frame.size.height, self.view.frame.size.height));
+    self.whiteOverlay = [[UIView alloc] initWithFrame:self.view.frame];
+    self.whiteOverlay.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
     
     self.whiteOverlay = [[UIView alloc] initWithFrame:self.view.frame];
     self.whiteOverlay.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
+    
+    PopupViewController* popupViewController = self.popupViewController = [[PopupViewController alloc] initWithNibName:@"PopupViewController" bundle:nil];
+    popupViewController.view.layer.masksToBounds = NO;
+    popupViewController.view.layer.shadowRadius = 50;
+    popupViewController.view.layer.shadowColor = [[UIColor colorWithWhite:0 alpha:1]CGColor];
+    popupViewController.view.layer.shadowOpacity = 0.5;
+    
+    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+        popupViewController.view.frame = CGRectMake(self.view.frame.size.width/2-740/2, self.view.frame.size.height/2-380/2, 740, 380);
+    else
+        popupViewController.view.frame = CGRectMake(
+                                                    self.view.frame.size.width/2-popupViewController.view.frame.size.width/2,
+                                                    self.view.frame.size.height/2-MIN(popupViewController.view.frame.size.height, self.view.frame.size.height)/2,
+                                                    popupViewController.view.frame.size.width,
+                                                    MIN(popupViewController.view.frame.size.height, self.view.frame.size.height));
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -125,12 +132,13 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             
             self.loginPhoto.hidden = NO;
             self.createPinView.hidden = YES;
-            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_ENTER_PIN"];
-            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_NEW_PIN"];
+            self.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_KEYBOARD_TITLE"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_KEYBOARD_TITLE"];
             self.subtitleLabel.text = @"";
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = YES;
             self.pinEntryViewController.pinsFrame.hidden = YES;
+            self.stepsImageView.hidden = YES;
             [self.titleLabel sizeToFit];
             self.forgotPinButton.hidden = NO;
             
@@ -164,12 +172,13 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             }
             self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, self.titleLabelWidth, self.titleLabel.frame.size.height);
             self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY+self.pinsViewOffset, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
-            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_CREATE_PIN"];
-            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_NEW_PIN"];
-            self.subtitleLabel.text = [self.messages objectForKey:@"KEYBOARD_MESSAGE_CREATE_PIN"];
+            self.titleLabel.text = [self.messages objectForKey:@"CREATE_PIN_SCREEN_TITLE"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"CREATE_PIN_KEYBOARD_TITLE"];
+            self.subtitleLabel.text = [self.messages objectForKey:@"CREATE_PIN_INFO_LABEL"];
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = NO;
             self.pinEntryViewController.pinsFrame.hidden = NO;
+            self.stepsImageView.hidden = NO;
             [self.titleLabel sizeToFit];
             self.forgotPinButton.hidden = YES;
             break;
@@ -191,12 +200,13 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             }
             self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, self.titleLabelWidth, self.titleLabel.frame.size.height);
             self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY+self.pinsViewOffset, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
-            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_VERIFY_PIN"];
-            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_NEW_PIN"];
-            self.subtitleLabel.text = [self.messages objectForKey:@"KEYBOARD_MESSAGE_CREATE_PIN"];
+            self.titleLabel.text = [self.messages objectForKey:@"CONFIRM_PIN_SCREEN_TITLE"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"CONFIRM_PIN_KEYBOARD_TITLE"];
+            self.subtitleLabel.text = [self.messages objectForKey:@"CONFIRM_PIN_INFO_LABEL"];
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = NO;
             self.pinEntryViewController.pinsFrame.hidden = NO;
+            self.stepsImageView.hidden = NO;
             [self.titleLabel sizeToFit];
             self.forgotPinButton.hidden = YES;
             break;
@@ -216,11 +226,12 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             }
             self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, self.titleLabelWidth, self.titleLabel.frame.size.height);
             self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
-            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_ENTER_PIN"];
-            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_NEW_PIN"];
+            self.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_KEYBOARD_TITLE"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_KEYBOARD_TITLE"];
             self.subtitleLabel.text = @"";
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = YES;
+            self.stepsImageView.hidden = YES;
             self.pinEntryViewController.pinsFrame.hidden = YES;
             [self.titleLabel sizeToFit];
             self.forgotPinButton.hidden = NO;
@@ -231,11 +242,12 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             self.pinEntryViewController.pinsBackgroundView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
             self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, 300, self.titleLabel.frame.size.height);
             self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
-            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_CHANGE_PIN"];
-            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_NEW_PIN"];
-            self.subtitleLabel.text = [self.messages objectForKey:@"KEYBOARD_MESSAGE_CREATE_PIN"];
+            self.titleLabel.text = [self.messages objectForKey:@"CHANGE_PIN_SCREEN_TITLE"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"CREATE_PIN_KEYBOARD_TITLE"];
+            self.subtitleLabel.text = [self.messages objectForKey:@"CREATE_PIN_INFO_LABEL"];
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = YES;
+            self.stepsImageView.hidden = YES;
             self.pinEntryViewController.pinsFrame.hidden = NO;
             [self.titleLabel sizeToFit];
             self.forgotPinButton.hidden = YES;
@@ -260,11 +272,12 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             self.pinEntryViewController.pinsBackgroundView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
             self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, 300, self.titleLabel.frame.size.height);
             self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
-            self.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_VERIFY_CHANGE_PIN"];
-            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"KEYBOARD_TITLE_NEW_PIN"];
-            self.subtitleLabel.text = [self.messages objectForKey:@"KEYBOARD_MESSAGE_CREATE_PIN"];
+            self.titleLabel.text = [self.messages objectForKey:@"CONFIRM_CHANGE_PIN_SCREEN_TITLE"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"CONFIRM_PIN_KEYBOARD_TITLE"];
+            self.subtitleLabel.text = [self.messages objectForKey:@"CONFIRM_PIN_INFO_LABEL"];
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = YES;
+            self.stepsImageView.hidden = YES;
             self.pinEntryViewController.pinsFrame.hidden = NO;
             [self.titleLabel sizeToFit];
             self.forgotPinButton.hidden = YES;
@@ -294,21 +307,79 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 	[self.delegate pinEntered:self pin:pin];
 }
 - (IBAction)helpButtonClicked:(id)sender {
-    self.popupViewController.titleLabel.text = [self.messages objectForKey:@"HELP_POPUP_TITLE"];
-    self.popupViewController.contentTextView.text = [self.messages objectForKey:@"HELP_POPUP_MESSAGE"];
-    [self.popupViewController.proceedButton setTitle:[self.messages objectForKey:@"HELP_POPUP_BUTTON"] forState:UIControlStateNormal] ;
+    PopupViewController* popupViewController = self.popupViewController;
+    
+    switch (PINCheckMode) {
+        case PINCheckMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_HELP_TITLE"];
+            popupViewController.contentTextView.text = [self.messages objectForKey:@"LOGIN_PIN_HELP_MESSAGE"];
+            break;
+        case PINRegistrationMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"CREATE_PIN_HELP_TITLE"];
+            popupViewController.contentTextView.text = [self.messages objectForKey:@"CREATE_PIN_HELP_MESSAGE"];
+            break;
+        case PINRegistrationVerififyMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"CONFIRM_PIN_HELP_TITLE"];
+            popupViewController.contentTextView.text = [self.messages objectForKey:@"CONFIRM_PIN_HELP_MESSAGE"];
+            break;
+        case PINChangeCheckMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_HELP_TITLE"];
+            popupViewController.contentTextView.text = [self.messages objectForKey:@"LOGIN_PIN_HELP_MESSAGE"];
+            break;
+        case PINChangeNewPinMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"CHANGE_PIN_HELP_TITLE"];
+            popupViewController.contentTextView.text = [self.messages objectForKey:@"CHANGE_PIN_HELP_MESSAGE"];
+            break;
+        case PINChangeNewPinVerifyMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"CONFIRM_CHANGE_PIN_HELP_TITLE"];
+            popupViewController.contentTextView.text = [self.messages objectForKey:@"CONFIRM_CHANGE_PIN_HELP_MESSAGE"];
+            break;
+        default:
+            break;
+    }
+    
+    
+    [popupViewController.proceedButton setTitle:[self.messages objectForKey:@"HELP_POPUP_OK"] forState:UIControlStateNormal] ;
+    [self.view addSubview:self.whiteOverlay];
+    [self.view addSubview:popupViewController.view];
+    
+    __weak PopupViewController* weakPopupViewController = popupViewController;
+    popupViewController.proceedBlock = ^{
+        [self.whiteOverlay removeFromSuperview];
+        [weakPopupViewController.view removeFromSuperview];
+    };
+    popupViewController.cancelBlock = ^{
+        [self.whiteOverlay removeFromSuperview];
+        [weakPopupViewController.view removeFromSuperview];
+    };
+    popupViewController.closeBlock = ^{
+        [self.whiteOverlay removeFromSuperview];
+        [weakPopupViewController.view removeFromSuperview];
+    };
+}
+
+- (IBAction)forgotPinClicked:(id)sender {
+    self.popupViewController.titleLabel.text = [self.messages objectForKey:@"DISCONNECT_FORGOT_PIN_TITLE"];
+    [self.popupViewController setPopupMessage:[self.messages objectForKey:@"DISCONNECT_FORGOT_PIN"]];
+//    self.popupViewController.contentTextView.text = [self.messages objectForKey:@"DISCONNECT_FORGOT_PIN"];
+    [self.popupViewController.proceedButton setTitle:[self.messages objectForKey:@"HELP_POPUP_OK"] forState:UIControlStateNormal] ;
     [self.view addSubview:self.whiteOverlay];
     [self.view addSubview:self.popupViewController.view];
-}
-
-- (IBAction)closePopupButtonClicked:(id)sender {
-    [self.whiteOverlay removeFromSuperview];
-    [self.popupViewController.view removeFromSuperview];
-}
-
-- (IBAction)proceedPopupButtonClicked:(id)sender {
-    [self.whiteOverlay removeFromSuperview];
-    [self.popupViewController.view removeFromSuperview];
-}
+    
+    __weak PopupViewController* weakPopupViewController = self.popupViewController;
+    __weak PinEntryContainerViewController* weakSelf = self;
+    self.popupViewController.proceedBlock = ^{
+        [weakSelf.whiteOverlay removeFromSuperview];
+        [weakPopupViewController.view removeFromSuperview];
+        [weakSelf.delegate pinForgotten:weakSelf];
+    };
+    self.popupViewController.cancelBlock = ^{
+        [weakSelf.whiteOverlay removeFromSuperview];
+        [weakPopupViewController.view removeFromSuperview];
+    };
+    self.popupViewController.closeBlock = ^{
+        [weakSelf.whiteOverlay removeFromSuperview];
+        [weakPopupViewController.view removeFromSuperview];
+    };}
 
 @end

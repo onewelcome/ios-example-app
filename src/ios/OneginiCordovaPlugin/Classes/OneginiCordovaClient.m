@@ -1115,4 +1115,10 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
 }
 
+-(void)pinForgotten:(PinEntryContainerViewController *)controller
+{
+    [self closePinView];
+    [self authorizationErrorCallbackWIthReason:@"authorizationErrorPinForgotten"];
+}
+
 @end

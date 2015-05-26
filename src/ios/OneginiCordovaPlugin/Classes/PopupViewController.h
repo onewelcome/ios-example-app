@@ -15,4 +15,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *proceedButton;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 
+@property (nonatomic, copy) void (^proceedBlock)();
+@property (nonatomic, copy) void (^cancelBlock)();
+@property (nonatomic, copy) void (^closeBlock)();
+
+-(void)setPopupMessage:(NSString*)message;
+    
 @end

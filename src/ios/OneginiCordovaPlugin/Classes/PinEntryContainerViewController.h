@@ -14,6 +14,7 @@
 
 @protocol PinEntryContainerViewControllerDelegate <NSObject>
 - (void)pinEntered:(PinEntryContainerViewController *)controller pin:(NSString *)pin;
+- (void)pinForgotten:(PinEntryContainerViewController *)controller;
 @end
 
 /*

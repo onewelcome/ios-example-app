@@ -62,7 +62,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jSh-3c-Pfa">
                     <rect key="frame" x="147" y="35" width="165" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Help nodig?">
+                    <state key="normal" title="Hulp nodig?">
                         <color key="titleColor" red="0.40392156862745099" green="0.55686274509803924" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>

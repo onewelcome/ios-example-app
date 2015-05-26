@@ -48,7 +48,7 @@ public class PinScreenActivity extends CordovaActivity {
   public static final String EXTRA_MODE = "mode";
   public static final String EXTRA_MESSAGE = "message";
 
-  // diffrent screen 'modes'
+  // available screen 'modes'
   public static final int SCREEN_MODE_LOGIN        = 0;
   public static final int SCREEN_MODE_CREATE_PIN   = 1;
   public static final int SCREEN_MODE_CONFIRM_PIN  = 2;
@@ -72,7 +72,7 @@ public class PinScreenActivity extends CordovaActivity {
 
   private Button deleteButton;
   private int inputFocusedBackgroundResourceId;
-  private int inputNormaBackgroundlResourceId;
+  private int inputNormalBackgroundResourceId;
 
   private static PinScreenActivity instance;
 
@@ -139,10 +139,9 @@ public class PinScreenActivity extends CordovaActivity {
   private void initAssets() {
     final boolean isCreatePinFlow = isCreatePinFlow();
     String resourceName = (isCreatePinFlow) ? "form_inactive" : "form_inactive_gray";
-    inputNormaBackgroundlResourceId = resources.getIdentifier(resourceName, "drawable", packageName);
+    inputNormalBackgroundResourceId = resources.getIdentifier(resourceName, "drawable", packageName);
 
-    // in create pin flow focused imput doesn't have "active" background
-    // it wasn't delivered by mobgen, so has to be fixed later
+    // FIXME: in create pin flow focused input doesn't have "active" background
     resourceName = (isCreatePinFlow) ? "form_active" : "form_inactive_gray";
     inputFocusedBackgroundResourceId = resources.getIdentifier(resourceName, "drawable", packageName);
 
@@ -172,9 +171,9 @@ public class PinScreenActivity extends CordovaActivity {
     });
 
     keyboardTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_keyboard_title", "id", packageName));
-    // keyboard title is present in all cases except this one :(
-    final boolean thereIsNoKeyboardTitle = (DeviceUtil.isTablet(this)==false && isCreatePinFlow());
-    if (thereIsNoKeyboardTitle == false) {
+    // FIXME: keyboard title is present in all cases except this one
+    final boolean hasKeyboardTitle = DeviceUtil.isTablet(this) || isLoginFlow();
+    if (hasKeyboardTitle) {
       keyboardTitleTextView.setTypeface(customFontRegular);
     }
 
@@ -317,7 +316,7 @@ public class PinScreenActivity extends CordovaActivity {
     for (int i = 0; i < MAX_DIGITS; i++) {
       htmlCharacter = (pin[i] == '\0') ? "" : HTML_CHAR_DOT;
       pinInputs[i].setText(Html.fromHtml(htmlCharacter));
-      pinInputs[i].setBackgroundResource(inputNormaBackgroundlResourceId);
+      pinInputs[i].setBackgroundResource(inputNormalBackgroundResourceId);
     }
     if (cursorIndex < MAX_DIGITS) {
       pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
@@ -330,6 +329,10 @@ public class PinScreenActivity extends CordovaActivity {
     }
     deleteButton.setVisibility(View.INVISIBLE);
     cursorIndex = 0;
+  }
+
+  private boolean isLoginFlow() {
+    return !isCreatePinFlow();
   }
 
   private boolean isCreatePinFlow() {

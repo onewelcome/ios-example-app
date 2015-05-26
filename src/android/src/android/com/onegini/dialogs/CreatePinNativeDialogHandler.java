@@ -7,6 +7,8 @@ import static com.onegini.model.MessageKey.PIN_SHOULD_NOT_BE_A_SEQUENCE;
 import static com.onegini.model.MessageKey.PIN_SHOULD_NOT_USE_SIMILAR_DIGITS;
 import static com.onegini.model.MessageKey.PIN_TOO_SHORT;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
+import static com.onegini.util.PinActivityStarter.startConfirmPinScreen;
+import static com.onegini.util.PinActivityStarter.startCreatePinScreen;
 
 import java.util.Arrays;
 
@@ -15,7 +17,7 @@ import com.onegini.actions.InAppBrowserControlSession;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCreatePinDialog;
-import com.onegini.util.PinIntentBuilder;
+import com.onegini.util.PinActivityStarter;
 
 public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
@@ -52,9 +54,7 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
   public void createPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
     InAppBrowserControlSession.closeInAppBrowser();
 
-    new PinIntentBuilder(context)
-        .setCreatePinMode()
-        .startActivity();
+    startCreatePinScreen(context);
 
     if (OneginiClient.getInstance().getConfigModel().shouldConfirmNewPin()) {
       this.oneginiPinProvidedHandler = new OneginiPinWithConfirmationHandler() {
@@ -70,7 +70,7 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
           }
 
           setPin(pin);
-          new PinIntentBuilder(context).setConfirmPinMode().startActivity();
+          startConfirmPinScreen(context);
         }
 
         @Override
@@ -81,10 +81,7 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
             oneginiPinProvidedHandler.onPinProvided(pin);
           }
           else {
-            new PinIntentBuilder(context)
-                .setCreatePinMode()
-                .addErrorMessage(getMessageForKey(PIN_CODES_DIFFERS.name()))
-                .startActivity();
+            startCreatePinScreen(context, getMessageForKey(PIN_CODES_DIFFERS.name()));
           }
         }
       };
@@ -96,18 +93,12 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void pinBlackListed() {
-    new PinIntentBuilder(context)
-        .setCreatePinMode()
-        .addErrorMessage(getMessageForKey(PIN_BLACK_LISTED.name()))
-        .startActivity();
+    startCreatePinScreen(context, getMessageForKey(PIN_BLACK_LISTED.name()));
   }
 
   @Override
   public void pinShouldNotBeASequence() {
-    new PinIntentBuilder(context)
-        .setCreatePinMode()
-        .addErrorMessage(getMessageForKey(PIN_SHOULD_NOT_BE_A_SEQUENCE.name()))
-        .startActivity();
+    startCreatePinScreen(context, getMessageForKey(PIN_SHOULD_NOT_BE_A_SEQUENCE.name()));
   }
 
   @Override
@@ -115,17 +106,11 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
     final String maxSimilarDigitsKey = getMessageForKey(MAX_SIMILAR_DIGITS.name());
     final String message = getMessageForKey(PIN_SHOULD_NOT_USE_SIMILAR_DIGITS.name());
 
-    new PinIntentBuilder(context)
-        .setCreatePinMode()
-        .addErrorMessage(message.replace(maxSimilarDigitsKey, Integer.toString(maxSimilarDigits)))
-        .startActivity();
+    startCreatePinScreen(context, message.replace(maxSimilarDigitsKey, Integer.toString(maxSimilarDigits)));
   }
 
   @Override
   public void pinTooShort() {
-    new PinIntentBuilder(context)
-        .setCreatePinMode()
-        .addErrorMessage(getMessageForKey(PIN_TOO_SHORT.name()))
-        .startActivity();
+    PinActivityStarter.startCreatePinScreen(context, getMessageForKey(PIN_TOO_SHORT.name()));
   }
 }

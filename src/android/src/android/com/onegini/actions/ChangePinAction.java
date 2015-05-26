@@ -46,6 +46,7 @@ public class ChangePinAction implements OneginiPluginAction {
     final OneginiClient oneginiClient = client.getOneginiClient();
 
     changePinCallback = callbackContext;
+    ForgotPinHandler.setCallbackContext(callbackContext);
     this.context = client.getCordova().getActivity().getApplication();
 
     if (isNotConnected(context)) {

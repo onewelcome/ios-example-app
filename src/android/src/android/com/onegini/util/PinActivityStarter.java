@@ -37,7 +37,8 @@ public class PinActivityStarter {
   private static void startActivity(final Context context, final int mode, final String message) {
     final Intent intent = new Intent(context, PinScreenActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.putExtra(PinScreenActivity.EXTRA_MODE, SCREEN_MODE_LOGIN);
+    intent.putExtra(PinScreenActivity.EXTRA_MESSAGE, message);
+    intent.putExtra(PinScreenActivity.EXTRA_MODE, mode);
     context.startActivity(intent);
 
   }

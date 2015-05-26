@@ -152,7 +152,7 @@ Changes PIN number. User will firstly be prompted to enter current PIN number an
   - `invalidCurrentPin(remainingAttempts)` - should handle invalid current PIN in change PIN flow
   - `tooManyPinAttempts` - method called once user exceeds allowed number of PIN attempts
   - `errorConnectivityProblem` - method called whenever plugin isn't able to establish connection with the server
-
+  - `errorPinForgotten` - invoked when user enters "I forgot my PIN" flow from within native pin screen 
 
 ### confirmCurrentPinForChangeRequest(errorCallback, pin)
 Verifies if entered PIN is currently valid, if true proceeds with new PIN creation in change PIN flow.  

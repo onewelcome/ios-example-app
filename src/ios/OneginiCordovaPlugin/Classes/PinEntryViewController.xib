@@ -82,7 +82,7 @@
                         </view>
                         <view contentMode="scaleToFill" id="NEG-yZ-bKD">
                             <rect key="frame" x="40" y="90" width="240" height="50"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iphone-pinslot.png" id="nqh-VN-z98">
                                     <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>

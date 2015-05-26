@@ -48,7 +48,6 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 -(void)viewDidLayoutSubviews{
     if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone){
         self.pinEntryViewController.view.frame = self.view.frame;
-        self.mode = self.mode;
     }
 }
 

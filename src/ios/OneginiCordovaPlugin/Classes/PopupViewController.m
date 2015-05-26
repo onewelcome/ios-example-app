@@ -31,7 +31,7 @@
     self.contentTextView.text = message;
     CGRect labrect = [message boundingRectWithSize:self.contentTextView.frame.size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.contentTextView.font} context:Nil];
     
-    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height-(textHeight-labrect.size.height-25));`
+    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height-(textHeight-labrect.size.height-25));
 }
 
 - (IBAction)buttonProceedClick:(id)sender {

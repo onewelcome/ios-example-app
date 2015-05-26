@@ -30,7 +30,7 @@
                     <rect key="frame" x="847" y="41" width="147" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <state key="normal" title="Help nodig?">
+                    <state key="normal" title="Hulp nodig?">
                         <color key="titleColor" red="0.4039215686" green="0.5568627451" blue="0.26274509800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>

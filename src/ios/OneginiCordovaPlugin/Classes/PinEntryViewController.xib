@@ -251,7 +251,7 @@
     <resources>
         <image name="iphone-keyboard.png" width="640" height="430"/>
         <image name="iphone-pinslot.png" width="80" height="100"/>
-        <image name="iphone-steps.png" width="160" height="48"/>
+        <image name="iphone-steps.png" width="132" height="40"/>
         <image name="pin-occupied-ic" width="18" height="18"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

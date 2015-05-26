@@ -93,7 +93,8 @@ Main entry point into the authorization process.
   - `errorInvalidState` - the state parameter in the authorization request is different than the value in the callback. This indicates a possible man in the middle attack.
   - `errorInvalidRequest` - method called when one or more required parameters were missing in the authorization request.
   - `errorInvalidGrant` - called when access grant or refresh token was invalid
-  - `unsupportedAppVersion` - invoked when application version is not valid and update is needed
+  - `errorPinForgotten` - invoked when user enters "I forgot my PIN" flow from within native pin screen 
+  - `errorUnsupportedAppVersion` - invoked when application version is not valid and update is needed
 
 **Param** `scopes` - Array with Strings that represent the scopes for the access token
 
@@ -151,7 +152,7 @@ Changes PIN number. User will firstly be prompted to enter current PIN number an
   - `invalidCurrentPin(remainingAttempts)` - should handle invalid current PIN in change PIN flow
   - `tooManyPinAttempts` - method called once user exceeds allowed number of PIN attempts
   - `errorConnectivityProblem` - method called whenever plugin isn't able to establish connection with the server
-
+  - `errorPinForgotten` - invoked when user enters "I forgot my PIN" flow from within native pin screen 
 
 ### confirmCurrentPinForChangeRequest(errorCallback, pin)
 Verifies if entered PIN is currently valid, if true proceeds with new PIN creation in change PIN flow.  

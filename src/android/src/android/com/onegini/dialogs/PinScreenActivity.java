@@ -1,5 +1,7 @@
 package com.onegini.dialogs;
 
+import org.apache.cordova.CordovaActivity;
+
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
 import static com.onegini.model.MessageKey.DISCONNECT_FORGOT_PIN;
 import static com.onegini.model.MessageKey.DISCONNECT_FORGOT_PIN_TITLE;
@@ -11,7 +13,6 @@ import static com.onegini.model.MessageKey.PIN_FORGOTTEN_TITLE;
 import static com.onegini.model.MessageKey.LOGIN_PIN_KEYBOARD_TITLE;
 import static com.onegini.model.MessageKey.LOGIN_PIN_HELP_MESSAGE;
 import static com.onegini.model.MessageKey.LOGIN_PIN_HELP_TITLE;
-import static com.onegini.model.MessageKey.LOGIN_PIN_KEYBOARD_TITLE;
 import static com.onegini.model.MessageKey.CREATE_PIN_SCREEN_TITLE;
 import static com.onegini.model.MessageKey.CREATE_PIN_KEYBOARD_TITLE;
 import static com.onegini.model.MessageKey.CREATE_PIN_INFO_LABEL;
@@ -23,8 +24,6 @@ import static com.onegini.model.MessageKey.CONFIRM_PIN_INFO_LABEL;
 import static com.onegini.model.MessageKey.CONFIRM_PIN_HELP_TITLE;
 import static com.onegini.model.MessageKey.CONFIRM_PIN_HELP_MESSAGE;
 
-import org.apache.cordova.CordovaActivity;
-
 import android.app.Dialog;
 import android.content.pm.ActivityInfo;
 import android.content.Intent;
@@ -35,6 +34,10 @@ import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.onegini.actions.AuthorizeAction;
+
+import com.onegini.actions.ForgotPinHandler;
 import com.onegini.util.DeviceUtil;
 
 public class PinScreenActivity extends CordovaActivity {
@@ -46,7 +49,7 @@ public class PinScreenActivity extends CordovaActivity {
   public static final String EXTRA_MODE = "mode";
   public static final String EXTRA_MESSAGE = "message";
 
-  // diffrent screen 'modes'
+  // available screen 'modes'
   public static final int SCREEN_MODE_LOGIN        = 0;
   public static final int SCREEN_MODE_CREATE_PIN   = 1;
   public static final int SCREEN_MODE_CONFIRM_PIN  = 2;
@@ -70,7 +73,7 @@ public class PinScreenActivity extends CordovaActivity {
 
   private Button deleteButton;
   private int inputFocusedBackgroundResourceId;
-  private int inputNormaBackgroundlResourceId;
+  private int inputNormalBackgroundResourceId;
 
   private static PinScreenActivity instance;
 
@@ -137,10 +140,9 @@ public class PinScreenActivity extends CordovaActivity {
   private void initAssets() {
     final boolean isCreatePinFlow = isCreatePinFlow();
     String resourceName = (isCreatePinFlow) ? "form_inactive" : "form_inactive_gray";
-    inputNormaBackgroundlResourceId = resources.getIdentifier(resourceName, "drawable", packageName);
+    inputNormalBackgroundResourceId = resources.getIdentifier(resourceName, "drawable", packageName);
 
-    // in create pin flow focused imput doesn't have "active" background
-    // it wasn't delivered by mobgen, so has to be fixed later
+    // FIXME: in create pin flow focused input doesn't have "active" background
     resourceName = (isCreatePinFlow) ? "form_active" : "form_inactive_gray";
     inputFocusedBackgroundResourceId = resources.getIdentifier(resourceName, "drawable", packageName);
 
@@ -170,9 +172,9 @@ public class PinScreenActivity extends CordovaActivity {
     });
 
     keyboardTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_keyboard_title", "id", packageName));
-    // keyboard title is present in all cases except this one :(
-    final boolean thereIsNoKeyboardTitle = (DeviceUtil.isTablet(this)==false && isCreatePinFlow());
-    if (thereIsNoKeyboardTitle == false) {
+    // FIXME: keyboard title is present in all cases except this one
+    final boolean hasKeyboardTitle = DeviceUtil.isTablet(this) || isLoginFlow();
+    if (hasKeyboardTitle) {
       keyboardTitleTextView.setTypeface(customFontRegular);
     }
 
@@ -315,7 +317,7 @@ public class PinScreenActivity extends CordovaActivity {
     for (int i = 0; i < MAX_DIGITS; i++) {
       htmlCharacter = (pin[i] == '\0') ? "" : HTML_CHAR_DOT;
       pinInputs[i].setText(Html.fromHtml(htmlCharacter));
-      pinInputs[i].setBackgroundResource(inputNormaBackgroundlResourceId);
+      pinInputs[i].setBackgroundResource(inputNormalBackgroundResourceId);
     }
     if (cursorIndex < MAX_DIGITS) {
       pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
@@ -328,6 +330,10 @@ public class PinScreenActivity extends CordovaActivity {
     }
     deleteButton.setVisibility(View.INVISIBLE);
     cursorIndex = 0;
+  }
+
+  private boolean isLoginFlow() {
+    return !isCreatePinFlow();
   }
 
   private boolean isCreatePinFlow() {
@@ -358,6 +364,7 @@ public class PinScreenActivity extends CordovaActivity {
         resources.getIdentifier("dialog_ok_button", "id", packageName)
     );
     okButton.setTypeface(customFontRegular);
+    okButton.setText(getMessageForKey(HELP_POPUP_OK.name()));
     okButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View v) {
@@ -394,7 +401,8 @@ public class PinScreenActivity extends CordovaActivity {
     okButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View v) {
-        // TODO
+        dialog.dismiss();
+        ForgotPinHandler.resetPin();
       }
     });
 

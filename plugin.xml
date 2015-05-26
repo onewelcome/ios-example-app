@@ -180,6 +180,8 @@
                  target-dir="src/com/onegini/actions/"/>
     <source-file src="src/android/src/android/com/onegini/actions/SetupScreenOrientationAction.java"
                  target-dir="src/com/onegini/actions/"/>
+    <source-file src="src/android/src/android/com/onegini/actions/ForgotPinHandler.java"
+                 target-dir="src/com/onegini/actions/"/>
     <!--<source-file src="src/android/src/android/com/onegini/gcm/GCMHelper.java" target-dir="src/com/onegini/gcm/" />-->
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/model/MessageKey.java" target-dir="src/com/onegini/model/"/>
@@ -215,7 +217,7 @@
                  target-dir="src/com/onegini/util/"/>
     <source-file src="src/android/src/android/com/onegini/util/MessageResourceReader.java"
                  target-dir="src/com/onegini/util/"/>
-    <source-file src="src/android/src/android/com/onegini/util/PinIntentBuilder.java"
+    <source-file src="src/android/src/android/com/onegini/util/PinActivityStarter.java"
                  target-dir="src/com/onegini/util/"/>
 
     <source-file src="src/android/res/layout/create_pin_screen.xml" target-dir="res/layout"/>

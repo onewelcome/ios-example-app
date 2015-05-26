@@ -41,20 +41,6 @@ public class AuthorizeAction implements OneginiPluginAction {
     return callbackContext;
   }
 
-  /**
-   * Method called by native PIN screen if user clicks "Reset PIN" button.
-   */
-  public static void onPinReset() {
-    if (callbackContext == null || callbackContext.isFinished()) {
-      return;
-    }
-
-    sendCallbackResult(callbackResultBuilder
-      .withErrorReason(AUTHORIZATION_ERROR_PIN_FORGOTTEN.getName())
-      .build()
-    );
-  }
-
   private static void sendCallbackResult(final PluginResult result) {
     if (PinScreenActivity.getInstance() != null) {
       PinScreenActivity.getInstance().finish();
@@ -84,6 +70,7 @@ public class AuthorizeAction implements OneginiPluginAction {
       return;
     }
     this.callbackContext = callbackContext;
+    ForgotPinHandler.setCallbackContext(callbackContext);
     this.context = client.getCordova().getActivity().getApplication();
 
     if (isNotConnected(context)) {

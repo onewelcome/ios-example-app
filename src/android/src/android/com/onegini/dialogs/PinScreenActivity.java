@@ -37,6 +37,7 @@ import android.widget.TextView;
 
 import com.onegini.actions.AuthorizeAction;
 
+import com.onegini.actions.ForgotPinHandler;
 import com.onegini.util.DeviceUtil;
 
 public class PinScreenActivity extends CordovaActivity {
@@ -401,7 +402,7 @@ public class PinScreenActivity extends CordovaActivity {
       @Override
       public void onClick(final View v) {
         dialog.dismiss();
-        AuthorizeAction.onPinReset();
+        ForgotPinHandler.resetPin();
       }
     });
 

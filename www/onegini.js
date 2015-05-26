@@ -248,7 +248,6 @@ module.exports = {
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_PIN_FORGOTTEN) {
         router.errorPinForgotten();
-        oneginiCordovaPlugin.invalidateSessionState();
       }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, scopes);
   },
@@ -340,6 +339,7 @@ module.exports = {
    *                          - tooManyPinAttempts -> method called once user exceeds allowed number of PIN attempts
    *                          - errorConnectivityProblem -> method called whenever plugin isn't able to establish
    *                          connection with the server
+   *                          - errorPinForgotten -> invoked when user clicked "I forgot my PIN" button
    */
   changePin: function (router) {
     exec(function (response) {
@@ -356,6 +356,9 @@ module.exports = {
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
         router.errorConnectivityProblem();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_PIN_FORGOTTEN) {
+        router.errorPinForgotten();
       }
     }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.PIN_CHANGE, []);
   },

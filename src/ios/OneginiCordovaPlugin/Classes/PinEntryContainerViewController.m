@@ -308,8 +308,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 }
 - (IBAction)helpButtonClicked:(id)sender {
     PopupViewController* popupViewController = self.popupViewController;
-    
-    switch (PINCheckMode) {
+    switch (self.mode) {
         case PINCheckMode:
             popupViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_HELP_TITLE"];
             popupViewController.contentTextView.text = [self.messages objectForKey:@"LOGIN_PIN_HELP_MESSAGE"];
@@ -361,7 +360,6 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 - (IBAction)forgotPinClicked:(id)sender {
     self.popupViewController.titleLabel.text = [self.messages objectForKey:@"DISCONNECT_FORGOT_PIN_TITLE"];
     [self.popupViewController setPopupMessage:[self.messages objectForKey:@"DISCONNECT_FORGOT_PIN"]];
-//    self.popupViewController.contentTextView.text = [self.messages objectForKey:@"DISCONNECT_FORGOT_PIN"];
     [self.popupViewController.proceedButton setTitle:[self.messages objectForKey:@"HELP_POPUP_OK"] forState:UIControlStateNormal] ;
     [self.view addSubview:self.whiteOverlay];
     [self.view addSubview:self.popupViewController.view];

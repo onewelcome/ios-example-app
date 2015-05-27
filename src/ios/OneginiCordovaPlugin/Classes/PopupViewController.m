@@ -53,7 +53,7 @@
     }
     else{
         self.cancelButton.hidden = YES;
-        self.proceedButton.frame = self.buttonsFrame.frame;
+        self.proceedButton.frame = CGRectMake(0, 0, self.buttonsFrame.frame.size.width, self.buttonsFrame.frame.size.height);
     }
 }
 

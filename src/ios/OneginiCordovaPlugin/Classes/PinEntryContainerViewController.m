@@ -343,6 +343,8 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
     [self.view addSubview:self.whiteOverlay];
     [self.view addSubview:popupViewController.view];
     
+    popupViewController.cancelButtonVisible = NO;
+    
     __weak PopupViewController* weakPopupViewController = popupViewController;
     popupViewController.proceedBlock = ^{
         [self.whiteOverlay removeFromSuperview];
@@ -362,9 +364,12 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
     self.popupViewController.titleLabel.text = [self.messages objectForKey:@"DISCONNECT_FORGOT_PIN_TITLE"];
     [self.popupViewController setPopupMessage:[self.messages objectForKey:@"DISCONNECT_FORGOT_PIN"]];
 //    self.popupViewController.contentTextView.text = [self.messages objectForKey:@"DISCONNECT_FORGOT_PIN"];
-    [self.popupViewController.proceedButton setTitle:[self.messages objectForKey:@"HELP_POPUP_OK"] forState:UIControlStateNormal] ;
+    [self.popupViewController.proceedButton setTitle:[self.messages objectForKey:@"CONFIRM_POPUP_OK"] forState:UIControlStateNormal] ;
+    [self.popupViewController.cancelButton setTitle:[self.messages objectForKey:@"CONFIRM_POPUP_CANCEL"] forState:UIControlStateNormal] ;
     [self.view addSubview:self.whiteOverlay];
     [self.view addSubview:self.popupViewController.view];
+    
+    self.popupViewController.cancelButtonVisible = YES;
     
     __weak PopupViewController* weakPopupViewController = self.popupViewController;
     __weak PinEntryContainerViewController* weakSelf = self;

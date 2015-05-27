@@ -150,6 +150,12 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 
 	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:d];
 	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
+    [self resetAll];
+}
+
+- (void)sendResultWithoutKeepingCallback:(CDVPluginResult *)result callbackId:(NSString *)callbackId {
+    [self.commandDelegate sendPluginResult:result callbackId: callbackId];
+    [self resetAll];
 }
 
 #pragma mark -
@@ -476,8 +482,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     @try {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"authorizationSuccess"];
         result.keepCallback = @(0);
-        [self.commandDelegate sendPluginResult:result
-                                    callbackId:authorizeCommandTxId];
+        [self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
     }
     @finally {
         [self resetAll];
@@ -817,7 +822,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
         [self closePinView];
     }
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"connectivityProblem"} ];
-    [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+    [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
 }
 
 - (void)invalidCurrentPin {
@@ -832,7 +837,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
     else{
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"invalidCurrentPin"} ];
-        [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+        [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
     }
 }
 
@@ -848,7 +853,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
     else{
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"invalidCurrentPin", kRemainingAttempts:@(remaining)} ];
-        [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+        [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
     }
 }
 - (void)pinChangeErrorTooManyPinFailures
@@ -861,7 +866,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
     [self closePinView];
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"pinChangeErrorTooManyAttempts"} ];
-    [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+    [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
 }
 
 - (void)pinChanged {
@@ -876,7 +881,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     pinEntryMode = PINEntryModeUnknown;
     
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK	messageAsString:@"pinChanged"];
-    [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+    [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
 }
 
 - (void)pinChangeError {
@@ -891,7 +896,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
     else{
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"pinChangeError"} ];
-        [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+        [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
     }
 }
 
@@ -1118,7 +1123,14 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 -(void)pinForgotten:(PinEntryContainerViewController *)controller
 {
     [self closePinView];
-    [self authorizationErrorCallbackWIthReason:@"authorizationErrorPinForgotten"];
+    
+    NSDictionary *d = @{ kReason:@"authorizationErrorPinForgotten" };
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:d];
+    if (authorizeCommandTxId != nil) {
+        [self sendResultWithoutKeepingCallback:result callbackId:authorizeCommandTxId];
+    } else if (pinChangeCommandTxId != nil) {
+        [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
+    }
 }
 
 @end

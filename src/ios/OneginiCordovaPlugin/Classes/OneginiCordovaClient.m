@@ -153,11 +153,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     [self resetAll];
 }
 
-- (void)sendResultWithoutKeepingCallback:(CDVPluginResult *)result callbackId:(NSString *)callbackId {
-    [self.commandDelegate sendPluginResult:result callbackId: callbackId];
-    [self resetAll];
-}
-
 #pragma mark -
 #pragma mark Cordova entry points
 - (void)clearTokens:(CDVInvokedUrlCommand *)command {
@@ -822,7 +817,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
         [self closePinView];
     }
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"connectivityProblem"} ];
-    [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
+    [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+    pinChangeCommandTxId = nil;
 }
 
 - (void)invalidCurrentPin {
@@ -837,7 +833,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
     else{
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"invalidCurrentPin"} ];
-        [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
+        [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+        pinChangeCommandTxId = nil;
     }
 }
 
@@ -853,7 +850,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
     else{
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"invalidCurrentPin", kRemainingAttempts:@(remaining)} ];
-        [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
+        [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+        pinChangeCommandTxId = nil;
     }
 }
 - (void)pinChangeErrorTooManyPinFailures
@@ -866,7 +864,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
     [self closePinView];
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"pinChangeErrorTooManyAttempts"} ];
-    [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
+    [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+    pinChangeCommandTxId = nil;
 }
 
 - (void)pinChanged {
@@ -881,7 +880,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     pinEntryMode = PINEntryModeUnknown;
     
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK	messageAsString:@"pinChanged"];
-    [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
+    [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+    pinChangeCommandTxId = nil;
 }
 
 - (void)pinChangeError {
@@ -896,7 +896,8 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
     else{
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"pinChangeError"} ];
-        [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
+        [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+        pinChangeCommandTxId = nil;
     }
 }
 
@@ -1127,9 +1128,11 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     NSDictionary *d = @{ kReason:@"authorizationErrorPinForgotten" };
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:d];
     if (authorizeCommandTxId != nil) {
-        [self sendResultWithoutKeepingCallback:result callbackId:authorizeCommandTxId];
+        [self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
+        authorizeCommandTxId = nil;
     } else if (pinChangeCommandTxId != nil) {
-        [self sendResultWithoutKeepingCallback:result callbackId:pinChangeCommandTxId];
+        [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
+        pinChangeCommandTxId = nil;
     }
 }
 

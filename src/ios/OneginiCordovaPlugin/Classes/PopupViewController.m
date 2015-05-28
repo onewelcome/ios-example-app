@@ -10,6 +10,7 @@
 
 @interface PopupViewController ()
 @property (weak, nonatomic) IBOutlet UIView *labelView;
+@property (weak, nonatomic) IBOutlet UIView *buttonsFrame;
 
 @end
 
@@ -19,6 +20,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.contentTextView.contentInset = UIEdgeInsetsMake(-4,-4,0,0);
+    self.contentTextView.editable = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,7 +33,7 @@
     self.contentTextView.text = message;
     CGRect labrect = [message boundingRectWithSize:self.contentTextView.frame.size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.contentTextView.font} context:Nil];
     
-    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height-(textHeight-labrect.size.height-25));
+    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height-(textHeight-labrect.size.height-30));
 }
 
 - (IBAction)buttonProceedClick:(id)sender {
@@ -42,6 +44,17 @@
 }
 - (IBAction)buttonCloseClick:(id)sender {
     self.closeBlock();
+}
+
+-(void)setCancelButtonVisible:(bool)cancelButtonVisible{
+    if (cancelButtonVisible){
+        self.cancelButton.hidden = NO;
+        self.proceedButton.frame = CGRectMake(self.cancelButton.frame.size.width+8, 0, self.buttonsFrame.frame.size.width-(self.cancelButton.frame.size.width+8), self.buttonsFrame.frame.size.height);
+    }
+    else{
+        self.cancelButton.hidden = YES;
+        self.proceedButton.frame = CGRectMake(0, 0, self.buttonsFrame.frame.size.width, self.buttonsFrame.frame.size.height);
+    }
 }
 
 @end

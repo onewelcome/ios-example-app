@@ -950,16 +950,19 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 #pragma mark -
 #pragma mark Custom PIN entry
 
+-(UIViewController*)getTopViewController{
+    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while (topViewController.presentedViewController) {
+        topViewController = topViewController.presentedViewController;
+    }
+    return topViewController;
+}
 /**
  Load the custom configuration and overlay the current view with the custom PIN entry view
  */
 
 - (void)showPinEntryViewInMode:(PINEntryModes)mode {
-    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    while (topViewController.presentedViewController) {
-        topViewController = topViewController.presentedViewController;
-    }
-    if ([topViewController isKindOfClass:[PinEntryContainerViewController class]]){
+    if ([[self getTopViewController] isKindOfClass:[PinEntryContainerViewController class]]){
         return;
     }
     self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
@@ -981,7 +984,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     }
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [topViewController presentViewController:self.pinViewController animated:YES completion:^{
+        [[self getTopViewController] presentViewController:self.pinViewController animated:YES completion:^{
             self.pinViewController.messages = messages;
         }];
     });

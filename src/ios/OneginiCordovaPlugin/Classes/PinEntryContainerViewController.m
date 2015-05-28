@@ -25,6 +25,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 @property (nonatomic) float pinsViewY;
 @property (nonatomic) float messageLabelY;
 @property (nonatomic) float messageLabelX;
+@property (nonatomic) float messageLabelWidth;
 @property (nonatomic) int pinsViewOffset;
 
 @property (nonatomic) UIView* whiteOverlay;
@@ -73,6 +74,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
     self.titleLabelWidth = self.titleLabel.frame.size.width;
     self.pinsViewY = self.pinEntryViewController.pinsView.frame.origin.y;
     self.messageLabelY = self.messageLabel.frame.origin.y;
+    self.messageLabelWidth = self.messageLabel.frame.size.width;
     self.mode = self.mode;
 }
 
@@ -242,7 +244,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
                 self.pinViewPlaceholder.layer.borderColor = [UIColor colorWithWhite:.92 alpha:1].CGColor;
                 self.pinViewPlaceholder.layer.borderWidth = 1.0f;
                 self.pinViewPlaceholder.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x, 260, self.pinViewPlaceholder.frame.size.width, self.pinViewPlaceholder.frame.size.height);
-                self.messageLabel.frame = CGRectMake(50, self.messageLabelY, self.messageLabel.frame.size.width, self.messageLabel.frame.size.height);
+                self.messageLabel.frame = CGRectMake(50, self.messageLabelY, self.messageLabelWidth, self.messageLabel.frame.size.height);
                 self.messageLabel.font = [UIFont systemFontOfSize:16];
                 self.pinsViewOffset = 0;
             }
@@ -271,7 +273,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
                 self.pinViewPlaceholder.layer.borderColor = [UIColor colorWithWhite:.92 alpha:1].CGColor;
                 self.pinViewPlaceholder.layer.borderWidth = 1.0f;
                 self.pinViewPlaceholder.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x, 260, self.pinViewPlaceholder.frame.size.width, self.pinViewPlaceholder.frame.size.height);
-                self.messageLabel.frame = CGRectMake(50, self.messageLabelY, self.messageLabel.frame.size.width, self.messageLabel.frame.size.height);
+                self.messageLabel.frame = CGRectMake(50, self.messageLabelY, self.messageLabelWidth, self.messageLabel.frame.size.height);
                 self.messageLabel.font = [UIFont systemFontOfSize:16];
                 self.pinsViewOffset = 0;
             }

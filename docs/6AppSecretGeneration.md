@@ -2,11 +2,12 @@
 
 In order to allow application to perform a successful Dynamic Client Registration a fingerprint of the app needs to be provided to the client configuration on the Token Server.
 
+> Please note that each platform uses its own dedicated BinaryHashCalculator instance.
+
 
 ## Android
 
 Since version 3.02.01 Android-SDK uses calculated binary checksum as a application secret when responding to OCRA challenge in DCR flow. Such approach provides additional security protecting clients app against tampering/modification.
-Please note that for each platform uses its own dedicated BinaryHashCalculator instance.
 
 
 #### Calculating value

@@ -1,0 +1,13 @@
+{
+  "plugins": ["toc"],
+  "pluginsConfig": {},
+  "styles": {
+    "pdf": "styles/pdf.css",
+    "epub":"styles/pdf.css"
+  },
+  "fontSettings": {
+    "theme": "light",
+    "family": "serif",
+    "size": 1
+  }
+}

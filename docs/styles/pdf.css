@@ -1,0 +1,38 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12pt;
+}
+
+h1 {
+  color: #00aeef;
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+h2 {
+  color: #00aeef;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 32px;
+  margin: 0 0 72px;
+}
+
+h3 {
+  color: black;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 32px;
+  margin: 0 0 72px;
+}
+
+pre {
+  word-break: break-all;
+  /* Non standard for webkit, but it does work on the Mac when generating the PDF */
+  word-break: break-word;
+}
+
+td {
+  font-size: 5px;
+}

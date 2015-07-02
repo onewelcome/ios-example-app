@@ -56,39 +56,33 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
     startCreatePinScreen(context);
 
-    if (OneginiClient.getInstance().getConfigModel().shouldConfirmNewPin()) {
-      this.oneginiPinProvidedHandler = new OneginiPinWithConfirmationHandler() {
-        @Override
-        public void onPinProvided(final char[] pin) {
-          if (isPinVerificationCall()) {
-            verifiedPinProvided(pin);
-            return;
-          }
-
-          if (!OneginiClient.getInstance().isPinValid(pin, CreatePinNativeDialogHandler.this)) {
-            return;
-          }
-
-          setPin(pin);
-          startConfirmPinScreen(context);
+    this.oneginiPinProvidedHandler = new OneginiPinWithConfirmationHandler() {
+      @Override
+      public void onPinProvided(final char[] pin) {
+        if (isPinVerificationCall()) {
+          verifiedPinProvided(pin);
+          return;
         }
 
-        @Override
-        public void verifiedPinProvided(final char[] pin) {
-          final boolean pinsEqual = Arrays.equals(getPin(), pin);
-          setPin(null);
-          if (pinsEqual) {
-            oneginiPinProvidedHandler.onPinProvided(pin);
-          }
-          else {
-            startCreatePinScreen(context, getMessageForKey(PIN_CODES_DIFFERS.name()));
-          }
+        if (!OneginiClient.getInstance().isPinValid(pin, CreatePinNativeDialogHandler.this)) {
+          return;
         }
-      };
-    }
-    else {
-      this.oneginiPinProvidedHandler = oneginiPinProvidedHandler;
-    }
+
+        setPin(pin);
+        startConfirmPinScreen(context);
+      }
+
+      @Override
+      public void verifiedPinProvided(final char[] pin) {
+        final boolean pinsEqual = Arrays.equals(getPin(), pin);
+        setPin(null);
+        if (pinsEqual) {
+          oneginiPinProvidedHandler.onPinProvided(pin);
+        } else {
+          startCreatePinScreen(context, getMessageForKey(PIN_CODES_DIFFERS.name()));
+        }
+      }
+    };
   }
 
   @Override

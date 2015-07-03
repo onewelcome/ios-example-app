@@ -118,16 +118,6 @@ public class ConfigModel implements OneginiClientConfigModel {
     return 0;
   }
 
-  @Override
-  public boolean debugDetectionEnabled() {
-    return  debugDetectionEnabled;
-  }
-
-  @Override
-  public boolean rootDetectionEnabled() {
-    return rootDetectionEnabled;
-  }
-
   public boolean useEmbeddedWebview() {
     return useEmbeddedWebview;
   }

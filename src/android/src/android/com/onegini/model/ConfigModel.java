@@ -21,14 +21,6 @@ public class ConfigModel implements OneginiClientConfigModel {
   private int maxPinFailures;
   @SerializedName("kOGResourceBaseURL")
   private String resourceBaseUrl;
-  @SerializedName("kOGShouldConfirmNewPin")
-  private boolean shouldConfirmNewPin;
-  @SerializedName("kOGShouldDirectlyShowPushMessage")
-  private boolean shouldDirectlyShowPushMessage;
-  @SerializedName("kOGdebugDetectionEnabled")
-  private boolean debugDetectionEnabled;
-  @SerializedName("kOGrootDetectionEnabled")
-  private boolean rootDetectionEnabled;
   @SerializedName("kOGUseEmbeddedWebview")
   private boolean useEmbeddedWebview;
 
@@ -68,16 +60,6 @@ public class ConfigModel implements OneginiClientConfigModel {
   @Override
   public String getResourceBaseUrl() {
     return resourceBaseUrl;
-  }
-
-  @Override
-  public boolean shouldConfirmNewPin() {
-    return shouldConfirmNewPin;
-  }
-
-  @Override
-  public boolean shouldDirectlyShowPushMessage() {
-    return shouldDirectlyShowPushMessage;
   }
 
   @Override
@@ -130,8 +112,6 @@ public class ConfigModel implements OneginiClientConfigModel {
         ", appScheme='" + appScheme + "'" +
         ", appVersion='" + appVersion + "'" +
         ", baseURL='" + baseUrl + "'" +
-        ", confirmNewPin='" + shouldConfirmNewPin + "'" +
-        ", directlyShowPushMessage='" + shouldDirectlyShowPushMessage + "'" +
         ", maxPinFailures='" + maxPinFailures + "'" +
         ", resourceBaseURL='" + resourceBaseUrl + "'" +
         ", keyStoreHash='" + getKeyStoreHash() + "'" +

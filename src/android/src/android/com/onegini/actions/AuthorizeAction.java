@@ -15,6 +15,7 @@ import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_E
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_NOT_AUTHORIZED;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_PIN_FORGOTTEN;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES;
+import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_UNSUPPORTED_OS;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_SUCCESS;
 import static com.onegini.util.DeviceUtil.isNotConnected;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
@@ -188,6 +189,13 @@ public class AuthorizeAction implements OneginiPluginAction {
         public void authorizationErrorInvalidApplication() {
           sendCallbackResult(callbackResultBuilder
               .withErrorReason(UNSUPPORTED_APP_VERSION.getName())
+              .build());
+        }
+
+        @Override
+        public void authorizationErrorUnsupportedOS() {
+          sendCallbackResult(callbackResultBuilder
+              .withErrorReason(AUTHORIZATION_ERROR_UNSUPPORTED_OS.getName())
               .build());
         }
       });

@@ -90,6 +90,7 @@ public class PinActivityMessageMapper {
         return getMessageForKey(CONFIRM_CHANGE_PIN_KEYBOARD_TITLE.name());
       default:
         return "";
+    }
   }
 
   public static String getTitleForHelpsScreen(final int mode) {

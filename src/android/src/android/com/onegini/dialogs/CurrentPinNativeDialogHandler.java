@@ -1,8 +1,10 @@
 package com.onegini.dialogs;
 
-import static com.onegini.util.PinActivityStarter.startLoginScreen;
+import static com.onegini.helper.PinActivityStarter.startLoginScreen;
+import static com.onegini.helper.PinActivityStarter.startLoginScreenBeforeChangePin;
 
 import android.content.Context;
+import com.onegini.actions.ChangePinAction;
 import com.onegini.actions.InAppBrowserControlSession;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCurrentPinDialog;
@@ -23,6 +25,14 @@ public class CurrentPinNativeDialogHandler implements OneginiCurrentPinDialog {
 
     this.oneginiPinProvidedHandler = oneginiPinProvidedHandler;
 
-    startLoginScreen(context);
+    if (isChangePinFlow()) {
+      startLoginScreenBeforeChangePin(context);
+    } else {
+      startLoginScreen(context);
+    }
+  }
+
+  private boolean isChangePinFlow() {
+    return ChangePinAction.getChangePinCallback() != null;
   }
 }

@@ -1,4 +1,4 @@
-package com.onegini.helper;
+package com.onegini.dialogs.helper;
 
 import static com.onegini.dialogs.PinScreenActivity.SCREEN_MODE_CHANGE_PIN_CONFIRM_PIN;
 import static com.onegini.dialogs.PinScreenActivity.SCREEN_MODE_CHANGE_PIN_CREATE_PIN;

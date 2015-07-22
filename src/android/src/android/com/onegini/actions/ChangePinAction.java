@@ -1,6 +1,6 @@
 package com.onegini.actions;
 
-import static com.onegini.helper.PinActivityStarter.startLoginScreenBeforeChangePin;
+import static com.onegini.dialogs.helper.PinActivityStarter.startLoginScreenBeforeChangePin;
 import static com.onegini.model.MessageKey.AUTHORIZATION_ERROR_PIN_INVALID;
 import static com.onegini.model.MessageKey.REMAINING_ATTEMPTS;
 import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
@@ -27,6 +27,10 @@ public class ChangePinAction implements OneginiPluginAction {
   private static CallbackContext changePinCallback;
   private Application context;
   private CallbackResultBuilder callbackResultBuilder;
+
+  public static boolean isChangePinFlow() {
+    return changePinCallback != null;
+  }
 
   public static CallbackContext getChangePinCallback() {
     return changePinCallback;

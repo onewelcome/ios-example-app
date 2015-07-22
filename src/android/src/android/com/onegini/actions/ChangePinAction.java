@@ -1,5 +1,6 @@
 package com.onegini.actions;
 
+import static com.onegini.dialogs.helper.PinActivityStarter.startLoginScreenBeforeChangePin;
 import static com.onegini.model.MessageKey.AUTHORIZATION_ERROR_PIN_INVALID;
 import static com.onegini.model.MessageKey.REMAINING_ATTEMPTS;
 import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
@@ -9,7 +10,6 @@ import static com.onegini.responses.OneginiPinResponse.PIN_CHANGE_ERROR_TOO_MANY
 import static com.onegini.responses.OneginiPinResponse.PIN_CURRENT_INVALID;
 import static com.onegini.util.DeviceUtil.isNotConnected;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
-import static com.onegini.util.PinActivityStarter.startLoginScreen;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
@@ -21,13 +21,16 @@ import com.onegini.dialogs.PinScreenActivity;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiChangePinHandler;
 import com.onegini.util.CallbackResultBuilder;
-import com.onegini.util.PinActivityStarter;
 
 public class ChangePinAction implements OneginiPluginAction {
 
   private static CallbackContext changePinCallback;
   private Application context;
   private CallbackResultBuilder callbackResultBuilder;
+
+  public static boolean isChangePinFlow() {
+    return changePinCallback != null;
+  }
 
   public static CallbackContext getChangePinCallback() {
     return changePinCallback;
@@ -76,7 +79,7 @@ public class ChangePinAction implements OneginiPluginAction {
           final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
           final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
 
-          startLoginScreen(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
+          startLoginScreenBeforeChangePin(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
         }
         else {
           sendCallbackResult(callbackResultBuilder

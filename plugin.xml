@@ -216,7 +216,9 @@
                  target-dir="src/com/onegini/util/"/>
     <source-file src="src/android/src/android/com/onegini/util/MessageResourceReader.java"
                  target-dir="src/com/onegini/util/"/>
-    <source-file src="src/android/src/android/com/onegini/util/PinActivityStarter.java"
+    <source-file src="src/android/src/android/com/onegini/helper/PinActivityStarter.java"
+                 target-dir="src/com/onegini/util/"/>
+    <source-file src="src/android/src/android/com/onegini/helper/PinActivityMessageMapper.java"
                  target-dir="src/com/onegini/util/"/>
 
     <source-file src="src/android/res/layout/create_pin_screen.xml" target-dir="res/layout"/>

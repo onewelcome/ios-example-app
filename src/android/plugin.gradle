@@ -7,7 +7,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:1.0.0'
+    classpath 'com.android.tools.build:gradle:1.2.+'
   }
 }
 apply plugin: 'java'
@@ -39,7 +39,7 @@ allprojects {
 dependencies {
   compile files('dexguard/lib/dexguard_util.jar')
   // The onegini sdk
-  compile 'com.onegini.mobile.sdk.android:library:3.03.01-SNAPSHOT:release@aar'
+  compile 'com.onegini.mobile.sdk.android:library:3.04.00:release@aar'
   // Google play services
 //  compile 'com.google.android.gms:play-services-base:6.5.+'
   // Http Client

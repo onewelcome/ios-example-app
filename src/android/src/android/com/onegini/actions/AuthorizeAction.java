@@ -13,13 +13,12 @@ import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_E
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_STATE;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_NOT_AUTHENTICATED;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_NOT_AUTHORIZED;
-import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_PIN_FORGOTTEN;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_TOO_MANY_PIN_FAILURES;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_UNSUPPORTED_OS;
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_SUCCESS;
 import static com.onegini.util.DeviceUtil.isNotConnected;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
-import static com.onegini.util.PinActivityStarter.startLoginScreen;
+import static com.onegini.dialogs.helper.PinActivityStarter.startLoginScreen;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;

@@ -23,7 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.onegini.actions.ForgotPinHandler;
-import com.onegini.helper.PinActivityMessageMapper;
+import com.onegini.dialogs.helper.PinActivityMessageMapper;
 import com.onegini.util.DeviceUtil;
 
 public class PinScreenActivity extends CordovaActivity {
@@ -351,11 +351,11 @@ public class PinScreenActivity extends CordovaActivity {
   }
 
   private boolean isLoginMode() {
-    return mode==SCREEN_MODE_LOGIN;
+    return mode == SCREEN_MODE_LOGIN;
   }
 
   private boolean isRegistrationForm() {
-    return mode==SCREEN_MODE_REGISTRATION_CONFIRM_PIN || mode==SCREEN_MODE_REGISTRATION_CREATE_PIN;
+    return mode == SCREEN_MODE_REGISTRATION_CONFIRM_PIN || mode == SCREEN_MODE_REGISTRATION_CREATE_PIN;
   }
 
   // todo refactor during MS-554

@@ -18,7 +18,7 @@ import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_E
 import static com.onegini.responses.OneginiAuthorizationResponse.AUTHORIZATION_SUCCESS;
 import static com.onegini.util.DeviceUtil.isNotConnected;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
-import static com.onegini.helper.PinActivityStarter.startLoginScreen;
+import static com.onegini.dialogs.helper.PinActivityStarter.startLoginScreen;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;

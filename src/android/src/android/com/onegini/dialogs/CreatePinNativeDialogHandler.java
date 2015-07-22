@@ -1,6 +1,6 @@
 package com.onegini.dialogs;
 
-import static com.onegini.helper.PinActivityStarter.startChangePinConfirmPinScreen;
+import static com.onegini.dialogs.helper.PinActivityStarter.startChangePinConfirmPinScreen;
 import static com.onegini.model.MessageKey.MAX_SIMILAR_DIGITS;
 import static com.onegini.model.MessageKey.PIN_BLACK_LISTED;
 import static com.onegini.model.MessageKey.PIN_CODES_DIFFERS;
@@ -8,9 +8,9 @@ import static com.onegini.model.MessageKey.PIN_SHOULD_NOT_BE_A_SEQUENCE;
 import static com.onegini.model.MessageKey.PIN_SHOULD_NOT_USE_SIMILAR_DIGITS;
 import static com.onegini.model.MessageKey.PIN_TOO_SHORT;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
-import static com.onegini.helper.PinActivityStarter.startChangePinCreatePinScreen;
-import static com.onegini.helper.PinActivityStarter.startRegistrationConfirmPinScreen;
-import static com.onegini.helper.PinActivityStarter.startRegistrationCreatePinScreen;
+import static com.onegini.dialogs.helper.PinActivityStarter.startChangePinCreatePinScreen;
+import static com.onegini.dialogs.helper.PinActivityStarter.startRegistrationConfirmPinScreen;
+import static com.onegini.dialogs.helper.PinActivityStarter.startRegistrationCreatePinScreen;
 
 import java.util.Arrays;
 
@@ -56,7 +56,7 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
   public void createPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
     InAppBrowserControlSession.closeInAppBrowser();
 
-    if (isChangePinFlow()) {
+    if (ChangePinAction.isChangePinFlow()) {
       startChangePinCreatePinScreen(context);
     } else {
       startRegistrationCreatePinScreen(context);
@@ -75,7 +75,7 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
         }
 
         setPin(pin);
-        if (isChangePinFlow()) {
+        if (ChangePinAction.isChangePinFlow()) {
           startChangePinConfirmPinScreen(context);
         } else {
           startRegistrationConfirmPinScreen(context);
@@ -89,7 +89,7 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
         if (pinsEqual) {
           oneginiPinProvidedHandler.onPinProvided(pin);
         } else {
-          if (isChangePinFlow()) {
+          if (ChangePinAction.isChangePinFlow()) {
             startChangePinCreatePinScreen(context, getMessageForKey(PIN_CODES_DIFFERS.name()));
           } else {
             startRegistrationCreatePinScreen(context, getMessageForKey(PIN_CODES_DIFFERS.name()));
@@ -101,7 +101,7 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void pinBlackListed() {
-    if (isChangePinFlow()) {
+    if (ChangePinAction.isChangePinFlow()) {
       startChangePinCreatePinScreen(context, getMessageForKey(PIN_BLACK_LISTED.name()));
     } else {
       startRegistrationCreatePinScreen(context, getMessageForKey(PIN_BLACK_LISTED.name()));
@@ -110,7 +110,7 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void pinShouldNotBeASequence() {
-    if (isChangePinFlow()) {
+    if (ChangePinAction.isChangePinFlow()) {
       startChangePinCreatePinScreen(context, getMessageForKey(PIN_SHOULD_NOT_BE_A_SEQUENCE.name()));
     } else {
       startRegistrationCreatePinScreen(context, getMessageForKey(PIN_SHOULD_NOT_BE_A_SEQUENCE.name()));
@@ -122,7 +122,7 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
     final String maxSimilarDigitsKey = getMessageForKey(MAX_SIMILAR_DIGITS.name());
     final String message = getMessageForKey(PIN_SHOULD_NOT_USE_SIMILAR_DIGITS.name());
 
-    if (isChangePinFlow()) {
+    if (ChangePinAction.isChangePinFlow()) {
       startChangePinCreatePinScreen(context, message.replace(maxSimilarDigitsKey, Integer.toString(maxSimilarDigits)));
     } else {
       startRegistrationCreatePinScreen(context, message.replace(maxSimilarDigitsKey, Integer.toString(maxSimilarDigits)));
@@ -131,14 +131,11 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void pinTooShort() {
-    if (isChangePinFlow()) {
+    if (ChangePinAction.isChangePinFlow()) {
       startChangePinCreatePinScreen(context, getMessageForKey(PIN_TOO_SHORT.name()));
     } else {
       startRegistrationCreatePinScreen(context, getMessageForKey(PIN_TOO_SHORT.name()));
     }
   }
 
-  private boolean isChangePinFlow() {
-    return ChangePinAction.getChangePinCallback() != null;
-  }
 }

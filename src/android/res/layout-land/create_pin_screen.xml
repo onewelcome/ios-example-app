@@ -107,7 +107,7 @@
       <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFF"
+        android:background="#e8e8e8"
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
@@ -115,7 +115,11 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="vertical"
-          android:padding="15dp">
+          android:background="#FFF"
+          android:padding="15dp"
+          android:layout_marginTop="1dp"
+          android:layout_marginRight="1dp"
+          android:layout_marginLeft="1dp">
 
           <TextView
             android:id="@+id/pin_keyboard_title"

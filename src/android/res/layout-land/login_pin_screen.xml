@@ -135,7 +135,6 @@
           android:layout_height="wrap_content"
           android:text="Sample error message"
           android:textColor="#F00"
-          android:textSize="12sp"
           android:layout_below="@+id/pin_input"
           android:layout_centerHorizontal="true"
           android:layout_marginTop="10dp"

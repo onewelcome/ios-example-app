@@ -99,27 +99,13 @@
           android:layout_alignParentLeft="true"
           android:layout_alignParentStart="true" />
 
-        <TextView
-          android:id="@+id/pin_error_message"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Sample error message"
-          android:textColor="#F00"
-          android:textSize="12sp"
-          android:layout_below="@+id/pin_keyboard_title"
-          android:layout_centerHorizontal="true"
-          android:layout_marginTop="10dp"
-          android:visibility="gone"
-          android:layout_alignEnd="@+id/pin_input"
-          android:layout_alignStart="@+id/pin_input"/>
-
         <LinearLayout
           android:id="@+id/pin_input"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:gravity="center"
           android:textAlignment="center"
-          android:layout_below="@id/pin_error_message"
+          android:layout_below="@id/pin_keyboard_title"
           android:layout_marginTop="10dp">
 
           <TextView
@@ -142,6 +128,21 @@
             android:id="@+id/pin_input_4"
             style="@style/PinKeyboardInputFieldTablet" />
         </LinearLayout>
+
+        <TextView
+          android:id="@+id/pin_error_message"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Sample error message"
+          android:textColor="#F00"
+          android:textSize="12sp"
+          android:layout_below="@+id/pin_input"
+          android:layout_centerHorizontal="true"
+          android:layout_marginTop="10dp"
+          android:visibility="gone"
+          android:layout_alignEnd="@+id/pin_input"
+          android:layout_alignStart="@+id/pin_input"/>
+
       </RelativeLayout>
 
       <include layout="@layout/keyboard" />

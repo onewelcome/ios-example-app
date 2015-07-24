@@ -96,7 +96,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 
 - (void)invalidPinWithReason:(NSString *)message {
     if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone){
-        if (self.mode == PINRegistrationMode || self.mode == PINRegistrationVerififyMode|| self.mode == PINChangeNewPinMode || self.mode == PINChangeNewPinVerifyMode)
+        if (self.mode == PINRegistrationMode || self.mode == PINRegistrationVerififyMode|| self.mode == PINChangeNewPinMode || self.mode == PINChangeNewPinVerifyMode || self.mode == PINChangeCheckMode)
             self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY+(2*self.pinsViewOffset)-5, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
     }
     if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
@@ -199,30 +199,33 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             self.forgotPinButton.hidden = YES;
             break;
         case PINChangeCheckMode:
-            self.loginPhoto.hidden = NO;
-            self.createPinView.hidden = YES;
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
-                self.pinEntryViewController.pinsBackgroundView.backgroundColor = [UIColor colorWithWhite:.92 alpha:1];
-                self.pinViewPlaceholder.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x, 190, self.pinViewPlaceholder.frame.size.width, self.pinViewPlaceholder.frame.size.height);
-                self.messageLabel.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x + 22, self.pinViewPlaceholder.frame.origin.y + 60, self.pinViewPlaceholder.frame.size.width-40, self.messageLabel.frame.size.height);
-                self.pinsViewOffset = 12;
-                self.messageLabel.font = [UIFont systemFontOfSize:10];
-            }
-            else{
-                self.messageLabel.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x+self.pinEntryViewController.pinsView.frame.origin.x, self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height, self.pinEntryViewController.pinsView.frame.size.width, self.messageLabel.frame.size.height);
-                self.pinsViewOffset = 0;
-            }
-            self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, self.titleLabelWidth, self.titleLabel.frame.size.height);
+            self.loginPhoto.hidden = YES;
+            self.createPinView.hidden = NO;
+            self.pinEntryViewController.pinsBackgroundView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+            self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, 300, self.titleLabel.frame.size.height);
             self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
-            self.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_KEYBOARD_TITLE"];
-            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_KEYBOARD_TITLE"];
-            self.subtitleLabel.text = @"";
+            self.titleLabel.text = [self.messages objectForKey:@"LOGIN_BEFORE_CHANGE_PIN_SCREEN_TITLE"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_BEFORE_CHANGE_PIN_KEYBOARD_TITLE"];
+            self.subtitleLabel.text = [self.messages objectForKey:@"LOGIN_BEFORE_CHANGE_PIN_INFO_LABEL"];
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = YES;
             self.stepsImageView.hidden = YES;
-            self.pinEntryViewController.pinsFrame.hidden = YES;
+            self.pinEntryViewController.pinsFrame.hidden = NO;
             [self.titleLabel sizeToFit];
-            self.forgotPinButton.hidden = NO;
+            self.forgotPinButton.hidden = YES;
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+                self.pinViewPlaceholder.layer.borderColor = [UIColor colorWithWhite:.92 alpha:1].CGColor;
+                self.pinViewPlaceholder.layer.borderWidth = 1.0f;
+                self.pinViewPlaceholder.frame = CGRectMake(self.pinViewPlaceholder.frame.origin.x, 260, self.pinViewPlaceholder.frame.size.width, self.pinViewPlaceholder.frame.size.height);
+                self.messageLabel.frame = CGRectMake(50, self.messageLabelY, self.messageLabelWidth, self.messageLabel.frame.size.height);
+                self.messageLabel.font = [UIFont systemFontOfSize:16];
+                self.pinsViewOffset = 0;
+            }
+            else{
+                self.pinsViewOffset = 20;
+                self.messageLabel.frame = CGRectMake(self.subtitleLabel.frame.origin.x, self.messageLabelY+self.pinsViewOffset, self.messageLabel.frame.size.width, self.messageLabel.frame.size.height);
+                self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY+self.pinsViewOffset, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
+            }
             break;
         case PINChangeNewPinMode:
             self.loginPhoto.hidden = YES;
@@ -347,8 +350,8 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             [self.popupViewController setPopupMessage:[self.messages objectForKey:@"CONFIRM_PIN_HELP_MESSAGE"]];
             break;
         case PINChangeCheckMode:
-            popupViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_HELP_TITLE"];
-            [self.popupViewController setPopupMessage:[self.messages objectForKey:@"LOGIN_PIN_HELP_MESSAGE"]];
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_BEFORE_CHANGE_PIN_HELP_TITLE"];
+            [self.popupViewController setPopupMessage:[self.messages objectForKey:@"LOGIN_BEFORE_CHANGE_PIN_HELP_MESSAGE"]];
             break;
         case PINChangeNewPinMode:
             popupViewController.titleLabel.text = [self.messages objectForKey:@"CHANGE_PIN_HELP_TITLE"];
@@ -383,7 +386,6 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 - (IBAction)forgotPinClicked:(id)sender {
     self.popupViewController.titleLabel.text = [self.messages objectForKey:@"DISCONNECT_FORGOT_PIN_TITLE"];
     [self.popupViewController setPopupMessage:[self.messages objectForKey:@"DISCONNECT_FORGOT_PIN"]];
-//    self.popupViewController.contentTextView.text = [self.messages objectForKey:@"DISCONNECT_FORGOT_PIN"];
     [self.popupViewController.proceedButton setTitle:[self.messages objectForKey:@"CONFIRM_POPUP_OK"] forState:UIControlStateNormal] ;
     [self.popupViewController.cancelButton setTitle:[self.messages objectForKey:@"CONFIRM_POPUP_CANCEL"] forState:UIControlStateNormal] ;
     [self showPopupView];

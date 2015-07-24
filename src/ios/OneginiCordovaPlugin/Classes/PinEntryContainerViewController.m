@@ -234,8 +234,8 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, 300, self.titleLabel.frame.size.height);
             self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
             self.titleLabel.text = [self.messages objectForKey:@"CHANGE_PIN_SCREEN_TITLE"];
-            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"CREATE_PIN_KEYBOARD_TITLE"];
-            self.subtitleLabel.text = [self.messages objectForKey:@"CREATE_PIN_INFO_LABEL"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"CHANGE_PIN_KEYBOARD_TITLE"];
+            self.subtitleLabel.text = [self.messages objectForKey:@"CHANGE_PIN_INFO_LABEL"];
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = YES;
             self.stepsImageView.hidden = YES;
@@ -264,8 +264,8 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
             self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x, self.titleLabel.frame.origin.y, 300, self.titleLabel.frame.size.height);
             self.pinEntryViewController.pinsView.frame = CGRectMake(self.pinEntryViewController.pinsView.frame.origin.x, self.pinsViewY, self.pinEntryViewController.pinsView.frame.size.width, self.pinEntryViewController.pinsView.frame.size.height);
             self.titleLabel.text = [self.messages objectForKey:@"CONFIRM_CHANGE_PIN_SCREEN_TITLE"];
-            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"CONFIRM_PIN_KEYBOARD_TITLE"];
-            self.subtitleLabel.text = [self.messages objectForKey:@"CONFIRM_PIN_INFO_LABEL"];
+            self.pinEntryViewController.titleLabel.text = [self.messages objectForKey:@"CONFIRM_CHANGE_PIN_KEYBOARD_TITLE"];
+            self.subtitleLabel.text = [self.messages objectForKey:@"CONFIRM_CHANGE_PIN_INFO_LABEL"];
             self.messageLabel.text = @"";
             self.pinEntryViewController.stepIndicator.hidden = YES;
             self.stepsImageView.hidden = YES;
@@ -336,7 +336,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
 - (IBAction)helpButtonClicked:(id)sender {
     PopupViewController* popupViewController = self.popupViewController;
     
-    switch (PINCheckMode) {
+    switch (self.mode) {
         case PINCheckMode:
             popupViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_HELP_TITLE"];
             [self.popupViewController setPopupMessage:[self.messages objectForKey:@"LOGIN_PIN_HELP_MESSAGE"]];

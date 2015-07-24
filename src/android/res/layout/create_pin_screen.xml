@@ -105,18 +105,6 @@
         android:text="Label text lorem ipsum"
         android:textColor="#373f4a"/>
 
-      <TextView
-        android:id="@+id/pin_error_message"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Sample error message"
-        android:textColor="#F00"
-        android:textSize="12sp"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:visibility="gone"/>
-
       <LinearLayout
         android:id="@+id/pin_input"
         android:layout_width="fill_parent"
@@ -146,6 +134,17 @@
           style="@style/PinKeyboardInputField" />
 
       </LinearLayout>
+
+      <TextView
+          android:id="@+id/pin_error_message"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:text="Sample error message"
+          android:textColor="#F00"
+          android:textAlignment="center"
+          android:gravity="center"
+          android:layout_marginTop="10dp"
+          android:visibility="gone"/>
     </LinearLayout>
   </RelativeLayout>
 </RelativeLayout>

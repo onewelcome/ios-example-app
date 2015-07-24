@@ -305,7 +305,6 @@ public class PinScreenActivity extends CordovaActivity {
       pin[cursorIndex++] = Character.forDigit(digit, 10);
       updateInputView();
       deleteButton.setVisibility(View.VISIBLE);
-      errorTextView.setVisibility(View.GONE);
       if (cursorIndex == MAX_DIGITS) {
         onMaxDigitsReached();
       }
@@ -323,6 +322,7 @@ public class PinScreenActivity extends CordovaActivity {
   }
 
   private void onMaxDigitsReached() {
+    errorTextView.setVisibility(View.GONE);
     if (mode==SCREEN_MODE_LOGIN || mode==SCREEN_MODE_LOGIN_BEFORE_CHANGE_PIN) {
       CurrentPinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);
     } else {

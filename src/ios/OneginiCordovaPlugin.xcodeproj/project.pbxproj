@@ -78,10 +78,9 @@
 		5C5F64341B0C617500457C8E /* PinEntryViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C5F642F1B0C617500457C8E /* PinEntryViewController~ipad.xib */; };
 		5C5F64351B0C617500457C8E /* PopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5F64311B0C617500457C8E /* PopupViewController.m */; };
 		5C5F64361B0C617500457C8E /* PopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C5F64321B0C617500457C8E /* PopupViewController.xib */; };
-		5C6C322D1B0482DF00FD4B3D /* 015-S-5---Login.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C6C322C1B0482DF00FD4B3D /* 015-S-5---Login.png */; };
-		5CBBCE6D1AE549CE005CE2C9 /* libOneginiSDKiOS-3.02.00.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CBBCE6C1AE549CE005CE2C9 /* libOneginiSDKiOS-3.02.00.a */; };
 		5CC592D71B03444000E73832 /* plugin.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5CC592D61B03444000E73832 /* plugin.xml */; };
 		5CC592D91B03446500E73832 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 5CC592D81B03446500E73832 /* config.json */; };
+		5CE2810E1B62664A001DA8FC /* libOneginiSDKiOS-3.04.00.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CE2810D1B62664A001DA8FC /* libOneginiSDKiOS-3.04.00.a */; };
 		5CE4923D1ADD49420083246F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4923C1ADD49420083246F /* Reachability.m */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
@@ -218,11 +217,10 @@
 		5C5F64301B0C617500457C8E /* PopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupViewController.h; sourceTree = "<group>"; };
 		5C5F64311B0C617500457C8E /* PopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupViewController.m; sourceTree = "<group>"; };
 		5C5F64321B0C617500457C8E /* PopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopupViewController.xib; sourceTree = "<group>"; };
-		5C6C322C1B0482DF00FD4B3D /* 015-S-5---Login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "015-S-5---Login.png"; path = "../../../../../../../Downloads/vanlanschot-basis_app/afmetingen/iphone/losse-afbeeldingen/iphone5/015-S-5---Login.png"; sourceTree = "<group>"; };
-		5CBBCE6C1AE549CE005CE2C9 /* libOneginiSDKiOS-3.02.00.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libOneginiSDKiOS-3.02.00.a"; sourceTree = "<group>"; };
 		5CC592D61B03444000E73832 /* plugin.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = plugin.xml; path = ../../plugin.xml; sourceTree = "<group>"; };
 		5CC592D81B03446500E73832 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		5CD4A5301ACD4DA0000FD948 /* Commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Commons.h; sourceTree = "<group>"; };
+		5CE2810D1B62664A001DA8FC /* libOneginiSDKiOS-3.04.00.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libOneginiSDKiOS-3.04.00.a"; sourceTree = "<group>"; };
 		5CE4923B1ADD49420083246F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		5CE4923C1ADD49420083246F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		7E7966D41810823500FA85AD /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
@@ -250,9 +248,9 @@
 				23C663F21A8B805B007C1838 /* libCordova.a in Frameworks */,
 				2351A2591A655E2F00C89FF6 /* libiconv.dylib in Frameworks */,
 				2351A2571A655E2300C89FF6 /* libc++.dylib in Frameworks */,
-				5CBBCE6D1AE549CE005CE2C9 /* libOneginiSDKiOS-3.02.00.a in Frameworks */,
 				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+				5CE2810E1B62664A001DA8FC /* libOneginiSDKiOS-3.04.00.a in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,7 +328,7 @@
 		23FD95D01A9CCC3800A1AC62 /* OneginiSDKiOS */ = {
 			isa = PBXGroup;
 			children = (
-				5CBBCE6C1AE549CE005CE2C9 /* libOneginiSDKiOS-3.02.00.a */,
+				5CE2810D1B62664A001DA8FC /* libOneginiSDKiOS-3.04.00.a */,
 				23FD95D11A9CCC3800A1AC62 /* Headers */,
 			);
 			path = OneginiSDKiOS;
@@ -405,7 +403,6 @@
 				5C11CA1B1B16F998008631B0 /* sluit@2x.png */,
 				5C11CA1C1B16F998008631B0 /* sluit@3x.png */,
 				5C44849C1B04C6E8006911AB /* iphone-keyboard.png */,
-				5C6C322C1B0482DF00FD4B3D /* 015-S-5---Login.png */,
 				237380E01AC980DC00A9C28F /* pin-clear-ic.png */,
 				237380E11AC980DC00A9C28F /* pin-occupied-ic.png */,
 				23B3B5C21AC9749400F6BB9C /* Fonts */,
@@ -598,7 +595,6 @@
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				23A0C3B91A66A97B0087EEC4 /* PositiveSSLCA2.pem in Resources */,
 				7E7966E01810823500FA85AD /* icon-50.png in Resources */,
-				5C6C322D1B0482DF00FD4B3D /* 015-S-5---Login.png in Resources */,
 				7E7966E31810823500FA85AD /* icon-60@2x.png in Resources */,
 				23A0C3B81A66A97B0087EEC4 /* PositiveSSLCA2.cer in Resources */,
 				7E7966E61810823500FA85AD /* icon-small.png in Resources */,

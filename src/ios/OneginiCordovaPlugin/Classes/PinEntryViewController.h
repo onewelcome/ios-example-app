@@ -45,13 +45,25 @@
 @property (weak, nonatomic) IBOutlet UIButton *key9;
 @property (weak, nonatomic) IBOutlet UIButton *key0;
 @property (weak, nonatomic) IBOutlet UIButton *backKey;
+@property (weak, nonatomic) IBOutlet UIImageView *pinSlot1;
+@property (weak, nonatomic) IBOutlet UIImageView *pinSlot2;
+@property (weak, nonatomic) IBOutlet UIImageView *pinSlot3;
+@property (weak, nonatomic) IBOutlet UIImageView *pinSlot4;
+@property (weak, nonatomic) IBOutlet UIImageView *pinSlot5;
+@property (weak, nonatomic) IBOutlet UIImageView *pin1;
+@property (weak, nonatomic) IBOutlet UIImageView *pin2;
+@property (weak, nonatomic) IBOutlet UIImageView *pin3;
+@property (weak, nonatomic) IBOutlet UIImageView *pin4;
+@property (weak, nonatomic) IBOutlet UIImageView *pin5;
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *keys;
-@property (strong, nonatomic) IBOutletCollection(UIView) NSArray *pins;
-@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *pinSlots;
+@property (strong, nonatomic) NSArray *pins;
+@property (strong, nonatomic) NSArray *pinSlots;
 
 @property (weak, nonatomic) IBOutlet UIView *pinsBackgroundView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIView *errorLabelFrame;
+@property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 
 - (void)setKeyBackgroundImage:(NSString *)imagePath forState:(UIControlState)state;
 - (void)setKeyColor:(UIColor *)color forState:(UIControlState)state;

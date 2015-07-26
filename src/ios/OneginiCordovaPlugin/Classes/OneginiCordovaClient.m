@@ -61,7 +61,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 }
 
 - (void)pluginInitialize {
-    
 #ifdef DEBUG
     NSLog(@"pluginInitialize");
     [CDVPluginResult setVerbose:YES];
@@ -965,7 +964,13 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     if ([[self getTopViewController] isKindOfClass:[PinEntryContainerViewController class]]){
         return;
     }
-    self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
+    if ([[UIScreen mainScreen] bounds].size.height == 480){
+        self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController-4s" bundle:nil];
+    } else {
+        self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
+    }
+     
+    
     self.pinViewController.delegate = self;
     self.pinViewController.supportedOrientations = self.supportedOrientations;
     self.pinViewController.mode = mode;

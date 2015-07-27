@@ -702,7 +702,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 
     [self closePinView];
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                            messageAsDictionary:@{ kReason:@"resourceError" }];
+                                            messageAsDictionary:@{ kReason:@"connectivityProblem" }];
     [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
 }
 

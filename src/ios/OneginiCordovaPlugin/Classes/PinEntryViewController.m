@@ -9,7 +9,19 @@
 	NSMutableArray *pinEntry;
 }
 
-@synthesize keys, pins, delegate, pinsView;
+@synthesize keys, delegate, pinsView;
+
+-(NSArray *)pins{
+    if (_pins==nil)
+        _pins = @[self.pin1, self.pin2, self.pin3, self.pin4, self.pin5];
+    return _pins;
+}
+
+-(NSArray *)pinSlots{
+    if (_pinSlots == nil)
+        _pinSlots = @[self.pinSlot1, self.pinSlot2, self.pinSlot3, self.pinSlot4, self.pinSlot5];
+    return _pinSlots;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,6 +34,7 @@
 	[self initView];
     
     ((UIImageView*)self.pinSlots.firstObject).image = [UIImage imageNamed:@"iphone-pinslot-selected"];
+    self.errorLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 -(void)viewDidLayoutSubviews{
@@ -74,7 +87,7 @@
 		pinEntry = [NSMutableArray new];
 	}
 	
-	if (pinEntry.count >= pins.count) {
+	if (pinEntry.count >= self.pins.count) {
 #ifdef DEBUG
 		NSLog(@"max entries PIN reached");
 #endif
@@ -105,14 +118,14 @@
 - (void)evaluatePinState {
 	[self updatePinStateRepresentation];
 	
-	if (pinEntry.count == pins.count) {
+	if (pinEntry.count == self.pins.count) {
 		[delegate pinEntered:self pin:[pinEntry componentsJoinedByString:@""]];
 	}
 }
 
 - (void)updatePinStateRepresentation {
-	for (int i = 0; i < pins.count; i++) {
-		UIView *pin = pins[i];
+	for (int i = 0; i < self.pins.count; i++) {
+		UIView *pin = self.pins[i];
 		[UIView animateWithDuration:0.2 animations:^{
 			pin.alpha = i < pinEntry.count ? 1.0 : 0.0;
 		}];

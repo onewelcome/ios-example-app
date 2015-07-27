@@ -34,6 +34,7 @@
 	[self initView];
     
     ((UIImageView*)self.pinSlots.firstObject).image = [UIImage imageNamed:@"iphone-pinslot-selected"];
+    self.errorLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 -(void)viewDidLayoutSubviews{

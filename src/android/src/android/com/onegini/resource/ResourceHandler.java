@@ -3,6 +3,7 @@ package com.onegini.resource;
 import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.responses.ResourceCallResponse.RESOURCE_CALL_AUTH_FAILED;
 import static com.onegini.responses.ResourceCallResponse.RESOURCE_CALL_BAD_REQUEST;
+import static com.onegini.responses.ResourceCallResponse.RESOURCE_CALL_ERROR;
 import static com.onegini.responses.ResourceCallResponse.RESOURCE_CALL_INVALID_GRANT;
 import static com.onegini.responses.ResourceCallResponse.RESOURCE_CALL_SCOPE_ERROR;
 import static com.onegini.responses.ResourceCallResponse.RESOURCE_CALL_UNAUTHORIZED;
@@ -37,7 +38,7 @@ public class ResourceHandler {
       @Override
       public void resourceCallError() {
         sendCallbackResult(callbackContext, callbackResultBuilder
-            .withErrorReason(CONNECTIVITY_PROBLEM.getName())
+            .withErrorReason(RESOURCE_CALL_ERROR.getName())
             .build());
       }
 

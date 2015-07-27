@@ -50,8 +50,6 @@ extern NSString *kDeleteKeyHighlightedStateImage;
 @property (weak, nonatomic) IBOutlet UIImageView *loginPhoto;
 @property (weak, nonatomic) IBOutlet UIView *createPinView;
 
-@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
-
 @property (strong, nonatomic) NSDictionary *landscapeConfig;
 @property (strong, nonatomic) NSDictionary *portraitConfig;
 

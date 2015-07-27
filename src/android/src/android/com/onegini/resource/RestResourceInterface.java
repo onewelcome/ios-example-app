@@ -68,7 +68,7 @@ public class RestResourceInterface {
     if ("DELETE".equalsIgnoreCase(requestMethod)) {
       return DeleteRestClientImpl.class;
     }
-    return null;
+    return GetRestClientImpl.class;
   }
 
 }

@@ -61,23 +61,25 @@
       android:layout_alignParentStart="true"
       android:layout_alignParentLeft="true"/>
 
-    <TextView
-      android:id="@+id/pin_forgotten_label"
-      android:text="Did you forget your pincode?"
-      android:textColor="#72994d"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerVertical="true"
-      android:layout_alignParentStart="true"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentBottom="true"
-      android:textSize="16sp"/>
+    <Button
+        android:id="@+id/pin_forgotten_label"
+        android:text="Did you forget your pincode?"
+        android:textColor="#72994d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="16sp"
+        android:background="@android:color/transparent"/>
 
     <TextView
       android:id="@+id/pin_error_message"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="Sample error message"
+      android:textAlignment="center"
       android:textColor="#F00"
       android:layout_below="@+id/pin_input"
       android:layout_centerHorizontal="true"

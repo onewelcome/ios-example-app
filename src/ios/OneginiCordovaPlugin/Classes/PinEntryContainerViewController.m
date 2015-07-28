@@ -61,10 +61,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
         self.pinViewPlaceholder.frame = self.view.frame;
     }
     
-    self.whiteOverlay = [[UIView alloc] initWithFrame:self.view.frame];
-    self.whiteOverlay.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
-    
-    self.whiteOverlay = [[UIView alloc] initWithFrame:self.view.frame];
+    self.whiteOverlay = [[UIView alloc] initWithFrame:self.view.bounds];
     self.whiteOverlay.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
     
     [self initPopupViewContoroller];
@@ -295,25 +292,28 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
     if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
         int popupWidth = 740;
         int popupHeight = 380;
-        self.popupViewController.view.frame = CGRectMake(self.view.frame.size.width/2-popupWidth/2, self.view.frame.size.height/2-popupHeight/2, popupWidth, popupHeight);
-    }
-    else
-        self.popupViewController.view.frame = CGRectMake(
-                                                         self.view.frame.size.width/2-self.popupViewController.view.frame.size.width/2,
-                                                         self.view.frame.size.height/2-MIN(self.popupViewController.view.frame.size.height, self.view.frame.size.height)/2,
+        self.popupViewController.view.frame = CGRectMake(self.view.bounds.size.width/2-popupWidth/2, self.view.bounds.size.height/2-popupHeight/2, popupWidth, popupHeight);
+    } else {
+        self.popupViewController.view.frame = CGRectMake(self.view.bounds.size.width/2-self.popupViewController.view.frame.size.width/2,
+                                                         self.view.bounds.size.height/2-MIN(self.popupViewController.view.frame.size.height, self.view.bounds.size.height)/2,
                                                          self.popupViewController.view.frame.size.width,
-                                                         MIN(self.popupViewController.view.frame.size.height, self.view.frame.size.height));
+                                                         MIN(self.popupViewController.view.frame.size.height, self.view.bounds.size.height));
+    }
 }
 
 -(void)showPopupView{
+    [self addChildViewController:self.popupViewController];
     [self.view addSubview:self.whiteOverlay];
-    [self.view addSubview:self.popupViewController.view];
     [self centerPopupView];
+    [self.view addSubview:self.popupViewController.view];
+    [self.popupViewController didMoveToParentViewController:self];
 }
 
 -(void)closePopupView{
     [self.whiteOverlay removeFromSuperview];
+    [self.popupViewController willMoveToParentViewController:nil];
     [self.popupViewController.view removeFromSuperview];
+    [self.popupViewController removeFromParentViewController];
 }
 
 - (IBAction)helpButtonClicked:(id)sender {

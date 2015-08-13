@@ -31,6 +31,7 @@ import org.json.JSONException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.view.View;
 import android.view.WindowManager;
 import com.onegini.actions.AuthorizeAction;
 import com.onegini.actions.AwaitInitialization;
@@ -59,31 +60,13 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 
   @Override
   protected void pluginInitialize() {
-    actions.put(AWAIT_INITIALIZATION, AwaitInitialization.class);
-    actions.put(INIT_PIN_CALLBACK_SESSION, PinCallbackSession.class);
-    actions.put(IN_APP_BROWSER_CONTROL_CALLBACK_SESSION, InAppBrowserControlSession.class);
-    actions.put(SETUP_SCREEN_ORIENTATION, SetupScreenOrientationAction.class);
-
-    actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
-    actions.put(CONFIRM_CURRENT_PIN_ACTION, PinProvidedAction.class);
-    actions.put(CONFIRM_NEW_PIN_ACTION, PinProvidedAction.class);
-    actions.put(CONFIRM_CURRENT_PIN_CHANGE_PIN_ACTION, PinProvidedAction.class);
-    actions.put(CONFIRM_NEW_PIN_CHANGE_PIN_ACTION, PinProvidedAction.class);
-    actions.put(VALIDATE_PIN_ACTION, ValidatePinAction.class);
-    actions.put(CHANGE_PIN_ACTION, ChangePinAction.class);
-
-    actions.put(FETCH_RESOURCE_ACTION, FetchResourceAction.class);
-    actions.put(FETCH_ANONYMOUS_ACTION, FetchResourceAnonymouslyAction.class);
-
-    actions.put(LOGOUT_ACTION, LogoutAction.class);
-    actions.put(DISCONNECT_ACTION, DisconnectAction.class);
-    actions.put(MOBILE_AUTHENTICATION_ACTION, MobileAuthenticationAction.class);
-    actions.put(CHECK_IS_REGISTERED_ACTION, CheckIsRegisteredAction.class);
+    mapActions();
 
     final PluginInitializer initializer = new PluginInitializer();
     initializer.setup(this);
 
     preventSystemScreenshots();
+    preventTextSelection();
   }
 
   public CordovaInterface getCordova() {
@@ -104,6 +87,29 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     }
     callbackContext.error("Action \"" + action + "\" is not supported");
     return false;
+  }
+
+  private void mapActions() {
+    actions.put(AWAIT_INITIALIZATION, AwaitInitialization.class);
+    actions.put(INIT_PIN_CALLBACK_SESSION, PinCallbackSession.class);
+    actions.put(IN_APP_BROWSER_CONTROL_CALLBACK_SESSION, InAppBrowserControlSession.class);
+    actions.put(SETUP_SCREEN_ORIENTATION, SetupScreenOrientationAction.class);
+
+    actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
+    actions.put(CONFIRM_CURRENT_PIN_ACTION, PinProvidedAction.class);
+    actions.put(CONFIRM_NEW_PIN_ACTION, PinProvidedAction.class);
+    actions.put(CONFIRM_CURRENT_PIN_CHANGE_PIN_ACTION, PinProvidedAction.class);
+    actions.put(CONFIRM_NEW_PIN_CHANGE_PIN_ACTION, PinProvidedAction.class);
+    actions.put(VALIDATE_PIN_ACTION, ValidatePinAction.class);
+    actions.put(CHANGE_PIN_ACTION, ChangePinAction.class);
+
+    actions.put(FETCH_RESOURCE_ACTION, FetchResourceAction.class);
+    actions.put(FETCH_ANONYMOUS_ACTION, FetchResourceAnonymouslyAction.class);
+
+    actions.put(LOGOUT_ACTION, LogoutAction.class);
+    actions.put(DISCONNECT_ACTION, DisconnectAction.class);
+    actions.put(MOBILE_AUTHENTICATION_ACTION, MobileAuthenticationAction.class);
+    actions.put(CHECK_IS_REGISTERED_ACTION, CheckIsRegisteredAction.class);
   }
 
   private OneginiPluginAction buildActionClassFor(final String action) {
@@ -156,5 +162,16 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
    */
   private void preventSystemScreenshots() {
     getCordova().getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+  }
+
+  /**
+   * Prevent system from showing copy/paste menu after long click in webview
+   */
+  private void preventTextSelection() {
+    webView.getView().setOnLongClickListener(new View.OnLongClickListener() {
+      public boolean onLongClick(View v) {
+        return true;
+      }
+    });
   }
 }

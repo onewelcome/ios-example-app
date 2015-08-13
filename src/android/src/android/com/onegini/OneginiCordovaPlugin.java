@@ -60,7 +60,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 
   @Override
   protected void pluginInitialize() {
-    populateActionsArray();
+    mapActions();
 
     final PluginInitializer initializer = new PluginInitializer();
     initializer.setup(this);
@@ -89,7 +89,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     return false;
   }
 
-  private void populateActionsArray() {
+  private void mapActions() {
     actions.put(AWAIT_INITIALIZATION, AwaitInitialization.class);
     actions.put(INIT_PIN_CALLBACK_SESSION, PinCallbackSession.class);
     actions.put(IN_APP_BROWSER_CONTROL_CALLBACK_SESSION, InAppBrowserControlSession.class);

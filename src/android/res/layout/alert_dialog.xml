@@ -39,13 +39,9 @@
     android:layout_marginRight="10dp"/>
 
   <Button
+    style="@style/PopupButton"
     android:id="@+id/dialog_ok_button"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="OK"
-    android:background="#72994d"
-    android:textColor="#FFF"
-    android:textSize="20sp"
-    android:layout_margin="10dp" />
+    android:layout_height="wrap_content"/>
 
 </LinearLayout>

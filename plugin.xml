@@ -243,6 +243,7 @@
     <resource-file src="src/android/res/drawable/form_inactive.9.png" target="res/drawable/form_inactive.9.png"/>
     <resource-file src="src/android/res/drawable/form_inactive_gray.9.png" target="res/drawable/form_inactive_gray.9.png"/>
     <resource-file src="src/android/res/drawable/step_active.9.png" target="res/drawable/step_active.9.png"/>
+    <resource-file src="src/android/res/drawable/popup_button.xml" target="res/drawable/popup_button.xml"/>
     <resource-file src="src/android/res/drawable-mdpi/background.jpg" target="res/drawable-mdpi/background.jpg"/>
     <resource-file src="src/android/res/drawable-mdpi/logo.png" target="res/drawable-mdpi/logo.png"/>
     <resource-file src="src/android/res/drawable-xhdpi/background.jpg" target="res/drawable-xhdpi/background.jpg"/>

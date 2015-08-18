@@ -50,4 +50,14 @@
   <style name="CustomDialogTheme" parent="android:Theme.Holo.Light.Dialog">
     <item name="android:windowNoTitle">true</item>
   </style>
+
+  <style name="PopupButton">
+    <item name="android:background">@drawable/popup_button</item>
+    <item name="android:textSize">20sp</item>
+    <item name="android:textColor">#FFF</item>
+    <item name="android:layout_marginTop">10dp</item>
+    <item name="android:layout_marginBottom">10dp</item>
+    <item name="android:layout_marginLeft">10dp</item>
+    <item name="android:layout_marginRight">10dp</item>
+  </style>
 </resources>

@@ -1,5 +1,6 @@
 package com.onegini.resource;
 
+import static com.onegini.resource.ResourceRequest.toMap;
 import static com.onegini.resource.RestResourceInterface.getResourceCallMethod;
 import static com.onegini.resource.RestResourceInterface.getRestAdapterForMethod;
 
@@ -16,12 +17,14 @@ import retrofit.client.Response;
 
 public class ResourceClient extends ResourceHelperAbstract<String>{
 
+  private static final ResourceRequestHeaderInterceptor HEADER_INTERCEPTOR = new ResourceRequestHeaderInterceptor();
   private static final String REQUEST_METHOD_POST = "POST";
   private static final String REQUEST_METHOD_PUT = "PUT";
+
   private final ResourceRequest resourceRequest;
 
   public ResourceClient(final OneginiClient oneginiClient, final ResourceRequest resourceRequest) {
-    super(oneginiClient, true);
+    super(oneginiClient, HEADER_INTERCEPTOR, true);
     this.resourceRequest = resourceRequest;
   }
 
@@ -30,6 +33,10 @@ public class ResourceClient extends ResourceHelperAbstract<String>{
                                            final String... params) {
     if (resourceRequest == null) {
       return;
+    }
+
+    if (resourceRequest.hasHeaders()) {
+      HEADER_INTERCEPTOR.setHeaders(toMap(resourceRequest.getHeaders()));
     }
 
     final Object restClient = buildRestAdapterForMethod(resourceRequest.getRequestMethodString());

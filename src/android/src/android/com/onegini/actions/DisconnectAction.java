@@ -5,7 +5,6 @@ import org.json.JSONArray;
 
 import com.onegini.OneginiCordovaPlugin;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiDisconnectHandler;
-import com.onegini.mobile.sdk.android.library.handlers.OneginiRevokeHandler;
 
 public class DisconnectAction implements OneginiPluginAction {
   @Override
@@ -13,12 +12,12 @@ public class DisconnectAction implements OneginiPluginAction {
                          final OneginiCordovaPlugin client) {
     client.getOneginiClient().disconnect(new OneginiDisconnectHandler() {
       @Override
-      public void revokeSuccess() {
+      public void disconnectSuccess() {
         callbackContext.success();
       }
 
       @Override
-      public void revokeError() {
+      public void disconnectError() {
         callbackContext.error("Failed to disconnect device.");
       }
     });

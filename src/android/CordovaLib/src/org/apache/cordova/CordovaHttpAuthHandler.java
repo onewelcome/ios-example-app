@@ -16,16 +16,36 @@
        specific language governing permissions and limitations
        under the License.
 */
-
 package org.apache.cordova;
 
-import org.json.JSONException;
+import android.webkit.HttpAuthHandler;
 
-/*
- * Any exposed Javascript API MUST implement these three things!
+/**
+ * Specifies interface for HTTP auth handler object which is used to handle auth requests and
+ * specifying user credentials.
  */
-public interface ExposedJsApi {
-    public String exec(int bridgeSecret, String service, String action, String callbackId, String arguments) throws JSONException, IllegalAccessException;
-    public void setNativeToJsBridgeMode(int bridgeSecret, int value) throws IllegalAccessException;
-    public String retrieveJsMessages(int bridgeSecret, boolean fromOnlineEvent) throws IllegalAccessException;
+public class CordovaHttpAuthHandler implements ICordovaHttpAuthHandler {
+
+    private final HttpAuthHandler handler;
+
+    public CordovaHttpAuthHandler(HttpAuthHandler handler) {
+        this.handler = handler;
+    }
+    
+    /**
+     * Instructs the WebView to cancel the authentication request.
+     */
+    public void cancel () {
+        this.handler.cancel();
+    }
+    
+    /**
+     * Instructs the WebView to proceed with the authentication with the given credentials.
+     * 
+     * @param username
+     * @param password
+     */
+    public void proceed (String username, String password) {
+        this.handler.proceed(username, password);
+    }
 }

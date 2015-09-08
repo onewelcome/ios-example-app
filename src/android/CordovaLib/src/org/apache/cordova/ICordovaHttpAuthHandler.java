@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+/*
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
        distributed with this work for additional information
@@ -16,8 +15,24 @@
        KIND, either express or implied.  See the License for the
        specific language governing permissions and limitations
        under the License.
--->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="org.apache.cordova" android:versionName="1.0" android:versionCode="1">
-    <uses-sdk android:minSdkVersion="10" />
-</manifest>
+*/
+package org.apache.cordova;
+
+/**
+ * Specifies interface for HTTP auth handler object which is used to handle auth requests and
+ * specifying user credentials.
+ */
+ public interface ICordovaHttpAuthHandler {
+    /**
+     * Instructs the WebView to cancel the authentication request.
+     */
+    public void cancel ();
+    
+    /**
+     * Instructs the WebView to proceed with the authentication with the given credentials.
+     * 
+     * @param username The user name
+     * @param password The password
+     */
+    public void proceed (String username, String password);
+}

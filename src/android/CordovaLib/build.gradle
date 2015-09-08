@@ -45,8 +45,8 @@ buildscript {
 apply plugin: 'android-library'
 
 android {
-    compileSdkVersion cdvCompileSdkVersion
-    buildToolsVersion cdvBuildToolsVersion
+    compileSdkVersion 21
+    buildToolsVersion "19.1.0"
     publishNonDefault true
 
     compileOptions {

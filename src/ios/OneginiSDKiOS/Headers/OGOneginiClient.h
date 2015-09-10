@@ -14,6 +14,7 @@
 #import "OGChangePinDelegate.h"
 #import "OGPublicCommons.h"
 #import "OGDisconnectDelegate.h"
+#import "OGFingerprintDelegate.h"
 
 @class OGConfigModel, OGAuthorizationManager, OGResourceManager, OGEnrollmentManager;
 
@@ -144,6 +145,14 @@
  @param pin validation delegate
  */
 - (void)confirmNewPinForChangeRequest:(NSString *)pin validation:(id<OGPinValidationDelegate>)delegate;
+
+/**
+ Confirm the current PIN as part of the Fingerprint Authorization enrollment.
+ This method should be called after a call - (void)enrollForFingerprintAuthentication:(NSArray *)scopes delegate:(id <OGEnrollmentHandlerDelegate>)delegate;
+ 
+ @param pin
+ */
+- (void)confirmCurrentPinForFingerprintAuthorization:(NSString *)pin;
 
 /**
  Handle the response of the authorization request from the browser redirect.
@@ -356,6 +365,29 @@ The access token validation flow is invoked if no valid access token is availabl
  @param delegate
  */
 - (void)enrollForMobileAuthentication:(NSArray *)scopes delegate:(id <OGEnrollmentHandlerDelegate>)delegate;
+
+/**
+ Enrolls the currently connected device for fingerprint authentication. OGFingerprintDelegate askCurrentPinForFingerprintAuthentication method must be implemented. Pin provided by user must be passed by confirmCurrentPinForFingerprintAuthorization method to complete the flow.
+ 
+ @param scopes
+ @param delegate
+ */
+- (void)enrollForFingerprintAuthentication:(NSArray *)scopes delegate:(id <OGFingerprintDelegate>)delegate;
+
+/**
+ Unenrolls the currently connected device for fingerprint authentication.
+ 
+ @param scopes
+ @param delegate
+ */
+- (void)unenrollForFingerprintAuthenticationWithDelegate:(id <OGFingerprintDelegate>)delegate;
+
+/**
+ Determine if device is enrolled for fingerprint authentication.
+ 
+ @param delegate
+ */
+- (bool)isEnrolledForFingerprintAuthentication;
 
 /**
  When a push notification is received by the application, the notificaton must be forwarded to the client.

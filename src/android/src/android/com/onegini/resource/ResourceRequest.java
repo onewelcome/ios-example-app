@@ -96,7 +96,7 @@ public class ResourceRequest {
   }
 
   public static Map<String, String> toMap(final JSONObject object) {
-    final Map<String, String> map = new HashMap<>();
+    final Map<String, String> map = new HashMap<String, String>();
     final Iterator<String> keysItr = object.keys();
 
     try {

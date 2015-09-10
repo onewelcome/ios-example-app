@@ -29,7 +29,7 @@ public class ResourceRequest {
       } else {
         return new ResourceRequest(args.getString(0), args.getJSONArray(1), args.getString(2), args.getString(3), args.getJSONObject(4), args.getJSONObject(5));
       }
-    } catch (JSONException e) {
+    } catch (final JSONException e) {
       e.printStackTrace();
       return null;
     }
@@ -107,7 +107,8 @@ public class ResourceRequest {
         map.put(key, value);
       }
     }
-    catch (JSONException e) {
+    catch (final JSONException e) {
+      e.printStackTrace();
       return null;
     }
     return map;

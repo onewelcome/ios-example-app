@@ -24,13 +24,12 @@ public class ResourceClient extends ResourceHelperAbstract<String>{
   private final ResourceRequest resourceRequest;
 
   public ResourceClient(final OneginiClient oneginiClient, final ResourceRequest resourceRequest) {
-    super(oneginiClient, HEADER_INTERCEPTOR, true);
+    super(oneginiClient, true, HEADER_INTERCEPTOR);
     this.resourceRequest = resourceRequest;
   }
 
   @Override
-  protected void performResourceActionImpl(final OneginiResourceHandler<String> resourceHandler, final String[] scopes,
-                                           final String... params) {
+  protected void performResourceActionImpl(final OneginiResourceHandler<String> resourceHandler, final String[] scopes, final String... params) {
     if (resourceRequest == null) {
       return;
     }
@@ -50,8 +49,8 @@ public class ResourceClient extends ResourceHelperAbstract<String>{
   }
 
   private boolean isBodyRequired() {
-    return (REQUEST_METHOD_POST.equalsIgnoreCase(resourceRequest.getRequestMethodString())
-            || REQUEST_METHOD_PUT.equalsIgnoreCase(resourceRequest.getRequestMethodString()));
+    final String method = resourceRequest.getRequestMethodString();
+    return (REQUEST_METHOD_POST.equalsIgnoreCase(method) || REQUEST_METHOD_PUT.equalsIgnoreCase(method));
   }
 
   private void invokeWithoutBody(final OneginiResourceHandler<String> resourceHandler, final Object restClient,

@@ -127,7 +127,7 @@
     </config-file>
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <activity
-          android:name="com.onegini.dialogs.PinScreenActivity"
+          android:name="com.onegini.dialog.PinScreenActivity"
           android:theme="@android:style/Theme.Black.NoTitleBar"
           android:launchMode="singleTask">
       </activity>

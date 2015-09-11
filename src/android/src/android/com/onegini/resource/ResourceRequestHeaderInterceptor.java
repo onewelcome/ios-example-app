@@ -21,10 +21,6 @@ public class ResourceRequestHeaderInterceptor implements RequestInterceptor {
       request.addHeader(header.getKey(), header.getValue());
     }
 
-    nullifyHeadersOnceAdded();
-  }
-
-  public void nullifyHeadersOnceAdded() {
     setHeaders(null);
   }
 

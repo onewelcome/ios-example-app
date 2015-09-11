@@ -33,10 +33,7 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
 
     final Context context = client.getCordova().getActivity().getApplication();
     if (isNotConnected(context)) {
-      callbackContext.sendPluginResult(callbackResultBuilder
-              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
-              .build()
-      );
+      callbackContext.sendPluginResult(callbackResultBuilder.withErrorReason(CONNECTIVITY_PROBLEM.getName()).build());
       return;
     }
 
@@ -47,7 +44,7 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
     }
 
     final AnonymousResourceClient resClient = new AnonymousResourceClient(client.getOneginiClient(), resourceRequest);
-    resClient.performResourceAction(buildResourceHandlerForCallback(callbackContext), resourceRequest.getScopes(),
-        resourceRequest.getParams().toString());
+    final OneginiResourceHandler<String> oneginiResourceHandler = buildResourceHandlerForCallback(callbackContext);
+    resClient.performResourceAction(oneginiResourceHandler, resourceRequest.getScopes(), resourceRequest.getParams().toString());
   }
 }

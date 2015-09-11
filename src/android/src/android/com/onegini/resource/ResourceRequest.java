@@ -100,10 +100,10 @@ public class ResourceRequest {
     final Iterator<String> keysItr = object.keys();
 
     try {
+      String key, value;
       while(keysItr.hasNext()) {
-        final String key = keysItr.next();
-        final String value;
-          value = object.getString(key);
+        key = keysItr.next();
+        value = object.getString(key);
         map.put(key, value);
       }
     }

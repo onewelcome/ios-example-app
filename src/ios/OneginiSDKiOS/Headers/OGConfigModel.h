@@ -11,33 +11,20 @@
 #define kOGAppIdentifier					@"kOGAppIdentifier"
 #define kOGAppPlatform						@"kOGAppPlatform"
 #define kOGAppScheme						@"kOGAppScheme"
-#define kOGAppSecret						@"kOGAppSecret"
 #define kOGAppVersion						@"kOGAppVersion"
 #define kOGBaseURL							@"kAppBaseURL"
 #define kOGMaxPinFailures					@"kOGMaxPinFailures"
 #define kOGResourceBaseURL					@"kOGResourceBaseURL"
-#define kOGShouldConfirmNewPin				@"kOGShouldConfirmNewPin"
-#define kOGShouldDirectlyShowPushMessage	@"kOGShouldDirectlyShowPushMessage"
-#define kOGKeyStorePassword					@"kOGKeyStorePassword"
-#define kOGCertificatePinningKeyStore		@"kOGCertificatePinningKeyStore"
-#define kOGCertificatePinningStorePassword	@"kOGCertificatePinningStorePassword"
 #define kOGRedirectURL						@"kOGRedirectURL"
-#define kOGDeviceName						@"kOGDeviceName"
 #define kOGUseEmbeddedWebview				@"kOGUseEmbeddedWebview"
 #define kOGStoreCookies                     @"kOGStoreCookies"
+#define kOGDeviceName                       @"kOGDeviceName"
 
 @class OGCommons;
 
 /**
  This dictionary class provides a means of supplying App specific configuration properties
  used by the OneginiClient.
-
- @warning For security reasons the 'kOGAppSecret' value should not be stored in the .plist configuration file.
- The secret should either be provided by subclassing or by suppling the 'kOGAppSecret' key in the configuration dictionary.
- 
- ## Subclass notes
- Override the 'appSecret' accessor.
- 
  */
 @interface OGConfigModel : NSObject {
 	NSDictionary *dictionary;
@@ -83,9 +70,6 @@
 /**
  Application secret used in dynamic client registration.
  
- If the 'kOGAppSecret' is omitted from the dictionary, a default MD5 hash is generated from
- the concatenated values of the dictionary.
- 
  @return the current app secret
  */
 - (NSString *)appSecret;
@@ -119,20 +103,6 @@
 - (NSString *)resourceBaseURL;
 
 /**
- Confirm a new pin
- 
- @return true if you should confirm the pin created by the user, false otherwise
- */
-- (BOOL)shouldConfirmNewPin DEPRECATED_ATTRIBUTE;
-
-/**
- Always show the push message right away, or just show a small notification
- 
- @return true if the push message should be shown right away, false otherwise
- */
-- (BOOL)shouldDirectlyShowPushMessage;
-
-/**
  @return redirect URL
  */
 - (NSString *)redirectURL;
@@ -142,7 +112,7 @@
  
  @return device name
  */
-- (NSString *)deviceName;
+- (NSString *)deviceName DEPRECATED_ATTRIBUTE;
 
 /**
  If the App wants to use an embedded UIWebView instead of the external Safari browser then this parameter must be set to true.

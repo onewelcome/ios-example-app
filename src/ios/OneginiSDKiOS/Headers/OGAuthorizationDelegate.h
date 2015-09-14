@@ -148,14 +148,24 @@ typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm
 - (void)authorizationErrorInvalidGrantType;
 
 /**
- Application has invalid app platform or version
+ Application has invalid app platform or version.
  */
 - (void)authorizationErrorInvalidAppPlatformOrVersion;
+
+/**
+ Application runs on unsupported OS.
+ */
+- (void)authorizationErrorUnsupportedOS;
 
 /**
  Authorization failed because client is not authorized to perform the requested action.
  */
 - (void)authorizationErrorNotAuthorized;
+
+/**
+ * The client was not able to get a new client config during the authorization flow.
+ */
+- (void)authorizationClientConfigFailed;
 
 @optional
 

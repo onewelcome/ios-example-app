@@ -11,6 +11,7 @@ import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 
 import android.content.Context;
+import com.onegini.mobile.sdk.android.library.handlers.OneginiResourceHandler;
 import com.onegini.OneginiCordovaPlugin;
 import com.onegini.resource.AnonymousResourceClient;
 import com.onegini.resource.ResourceRequest;

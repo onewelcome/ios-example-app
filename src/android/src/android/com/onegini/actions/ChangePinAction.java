@@ -69,11 +69,6 @@ public class ChangePinAction implements OneginiPluginAction {
       }
 
       @Override
-      @Deprecated
-      public void invalidCurrentPin() {
-      }
-
-      @Override
       public void invalidCurrentPin(final int remainingAttempts) {
         if (client.shouldUseNativeScreens()) {
           final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());

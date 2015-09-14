@@ -12,12 +12,12 @@ public class DisconnectAction implements OneginiPluginAction {
                          final OneginiCordovaPlugin client) {
     client.getOneginiClient().disconnect(new OneginiDisconnectHandler() {
       @Override
-      public void revokeSuccess() {
+      public void disconnectSuccess() {
         callbackContext.success();
       }
 
       @Override
-      public void revokeError() {
+      public void disconnectError() {
         callbackContext.error("Failed to disconnect device.");
       }
     });

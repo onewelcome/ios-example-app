@@ -12,12 +12,12 @@ public class LogoutAction implements OneginiPluginAction {
                          final OneginiCordovaPlugin client) {
     client.getOneginiClient().logout(new OneginiLogoutHandler() {
       @Override
-      public void revokeSuccess() {
+      public void logoutSuccess() {
         callbackContext.success();
       }
 
       @Override
-      public void revokeError() {
+      public void logoutError() {
         callbackContext.error("Failed to logout user.");
       }
     });

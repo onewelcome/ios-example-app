@@ -33,7 +33,8 @@ public class FetchResourceAction implements OneginiPluginAction {
 
     final Context context = client.getCordova().getActivity().getApplication();
     if (isNotConnected(context)) {
-      callbackContext.sendPluginResult(callbackResultBuilder
+      callbackContext.sendPluginResult(
+          callbackResultBuilder
               .withErrorReason(CONNECTIVITY_PROBLEM.getName())
               .build()
       );

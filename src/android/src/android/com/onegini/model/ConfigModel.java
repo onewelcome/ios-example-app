@@ -1,27 +1,52 @@
 package com.onegini.model;
 
+import java.lang.RuntimeException;
+
+import org.apache.cordova.CordovaPreferences;
+
 import android.os.Build;
 import com.google.gson.annotations.SerializedName;
 import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
+import com.onegini.exception.PluginConfigException;
 
 public class ConfigModel implements OneginiClientConfigModel {
+
+  public static ConfigModel from(final CordovaPreferences preferences) {
+    final ConfigModel config = new ConfigModel();
+
+    config.appIdentifier = getStringFromPreferencesOrThrowException(preferences, "kOGAppIdentifier");
+    config.appScheme = getStringFromPreferencesOrThrowException(preferences, "kOGAppScheme");
+    config.appVersion = getStringFromPreferencesOrThrowException(preferences, "kOGAppVersion");
+    config.baseUrl = getStringFromPreferencesOrThrowException(preferences, "kOGAppBaseURL");
+    config.resourceBaseUrl = getStringFromPreferencesOrThrowException(preferences, "kOGResourceBaseURL");
+
+    config.maxPinFailures = preferences.getInteger("kOGMaxPinFailures", 3);
+    config.useEmbeddedWebview = preferences.getBoolean("kOGUseEmbeddedWebview", true);
+    config.shouldUseNativeScreens = preferences.getBoolean("kOGShouldUseNativeScreens", true);
+    config.shouldGetIdToken = preferences.getBoolean("kOGShouldGetIdToken", false);
+
+    return config;
+  }
+
+  private static String getStringFromPreferencesOrThrowException(final CordovaPreferences preferences, final String key) throws PluginConfigException {
+    final String value = preferences.getString(key, null);
+    if (value == null) {
+      throw new PluginConfigException("Missing property in config.xml file: "+key);
+    }
+    return value;
+  }
+
   private String appPlatform = "android";
-  @SerializedName("shouldGetIdToken")
-  private boolean shouldGetIdToken;
-  @SerializedName("kOGAppIdentifier")
   private String appIdentifier;
-  @SerializedName("kOGAppScheme")
   private String appScheme;
-  @SerializedName("kOGAppVersion")
   private String appVersion;
-  @SerializedName("kAppBaseURL")
   private String baseUrl;
-  @SerializedName("kOGMaxPinFailures")
-  private int maxPinFailures;
-  @SerializedName("kOGResourceBaseURL")
   private String resourceBaseUrl;
-  @SerializedName("kOGUseEmbeddedWebview")
+
+  private int maxPinFailures;
+  private boolean shouldGetIdToken;
   private boolean useEmbeddedWebview;
+  private boolean shouldUseNativeScreens;
 
   private int certificatePinningKeyStore;
   private String keyStoreHash;
@@ -101,6 +126,10 @@ public class ConfigModel implements OneginiClientConfigModel {
 
   public boolean useEmbeddedWebview() {
     return useEmbeddedWebview;
+  }
+
+  public boolean shouldUseNativeScreens() {
+    return shouldUseNativeScreens;
   }
 
   @Override

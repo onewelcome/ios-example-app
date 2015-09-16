@@ -74,7 +74,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     if ([configuration objectForKey:kOGDeviceName] == nil) {
         [configuration setObject:[self getDeviceName] forKey:kOGDeviceName];
     }
-    [configuration setObject:@"teeeest" forKey:kOGAppPlatform];
+    [configuration setObject:@"ios" forKey:kOGAppPlatform];
 
     NSString *shouldShowNativaScreens = [((MainViewController*)self.viewController).settings objectForKey:@"shouldshownativescreens"];
     useNativePinView = [shouldShowNativaScreens isEqualToString:@"true"] ? YES : NO;

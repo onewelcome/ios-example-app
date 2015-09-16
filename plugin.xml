@@ -42,6 +42,7 @@
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGPublicCommons.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGPinValidationDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGResourceHandlerDelegate.h"/>
+    <header-file src="src/ios/OneginiSDKiOS/Headers/OGFingerprintDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OneginiSDK.h"/>
 
     <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-3.05.00.a" framework="true"/>

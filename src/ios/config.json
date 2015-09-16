@@ -4,7 +4,6 @@
     "kOGAppScheme": "oneginisdk",
     "kOGAppVersion": "2.4.1",
     "kAppBaseURL": "https://test-token-server.onegini.com",
-    "kOGKeyStorePassword": "NotSoVerySecureYet",
     "kOGMaxPinFailures": "3",
     "kOGResourceBaseURL": "https://test-token-server.onegini.com",
     "kOGRedirectURL": "oneginisdk://loginsuccess",

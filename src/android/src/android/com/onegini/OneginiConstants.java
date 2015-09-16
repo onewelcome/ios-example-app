@@ -21,10 +21,6 @@ public class OneginiConstants {
   public static final String CHECK_IS_REGISTERED_ACTION = "isRegistered";
   public static final String SETUP_SCREEN_ORIENTATION = "setupScreenOrientation";
 
-
-  // CordovaA[[ configuration properties
-  public static final String SHOULD_SHOW_NATIVE_SCREENS_CONFIG_PROPERTY = "ShouldShowNativeScreens";
-
   // Values
   public static final String KEYSTORE_HASH = "7A8E3D2333A1324229712B288950E317CE5BE5F956C196CEF33B46993D371575";
 

@@ -1,7 +1,6 @@
 package com.onegini.action;
 
 import static com.onegini.OneginiConstants.KEYSTORE_HASH;
-import static com.onegini.OneginiConstants.SHOULD_SHOW_NATIVE_SCREENS_CONFIG_PROPERTY;
 
 import org.apache.cordova.Config;
 import org.apache.cordova.CordovaPreferences;
@@ -29,17 +28,18 @@ public class PluginInitializer {
   }
 
   public void setup(final OneginiCordovaPlugin client) {
+    configured = false;
+
     final Application application = client.getCordova().getActivity().getApplication();
 
-    final boolean shouldUseNativeScreen = setupUseOfNativeScreens(client);
-    setupDialogs(shouldUseNativeScreen, application.getApplicationContext());
-
-
-    final ConfigModel configModel = retrieveConfiguration(client, application);
+    final ConfigModel configModel = retrieveConfiguration();
     if (configModel == null) {
-      configured = false;
       return;
     }
+
+    final boolean shouldUseNativeScreens = configModel.shouldUseNativeScreens();
+    client.setShouldUseNativeScreens(shouldUseNativeScreens);
+    setupDialogs(shouldUseNativeScreens, application.getApplicationContext());
 
     final int keystoreResourcePointer = client.getCordova().getActivity().getResources()
         .getIdentifier("keystore", "raw", application.getPackageName());
@@ -56,13 +56,6 @@ public class PluginInitializer {
     configured = true;
   }
 
-  private boolean setupUseOfNativeScreens(final OneginiCordovaPlugin client) {
-    final CordovaPreferences preferences = Config.getPreferences();
-    final boolean shouldUseNativeScreens = preferences.getBoolean(SHOULD_SHOW_NATIVE_SCREENS_CONFIG_PROPERTY, true);
-    client.setShouldUseNativeScreens(shouldUseNativeScreens);
-    return shouldUseNativeScreens;
-  }
-
   private void setupDialogs(final boolean shouldUseNativeScreens, final Context context) {
     DialogProvider.setInstance();
     if (shouldUseNativeScreens) {
@@ -77,12 +70,8 @@ public class PluginInitializer {
         .setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler());
   }
 
-  private ConfigModel retrieveConfiguration(final OneginiCordovaPlugin client, final Application application) {
-    final int configurationPointer = client.getCordova().getActivity().getResources()
-        .getIdentifier("config", "raw", application.getPackageName());
-    final JSONResourceReader jsonResourceReader = new JSONResourceReader();
-    final String configString = jsonResourceReader.parse(client.getCordova().getActivity().getResources(), configurationPointer);
-    return jsonResourceReader.map(ConfigModel.class, configString);
+  private ConfigModel retrieveConfiguration() {
+    return ConfigModel.from(Config.getPreferences());
   }
 
   private void setupURLHandler(final OneginiClient client, final ConfigModel configModel) {

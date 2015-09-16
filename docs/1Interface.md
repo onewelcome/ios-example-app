@@ -28,7 +28,7 @@ Initiates static callback session to enable control over InAppBrowser from nativ
 **Param** `errorCallback` - Function to be called when action fails
 
 
-### fetchResource(router, path, scopes, requestMethod, paramsEncoding, params) 
+### fetchResource(router, path, scopes, requestMethod, paramsEncoding, params, headers)
 Fetches a specific resource. The access token validation flow is invoked if no valid access token is available.
 
 **Param** `router` - Object that can handle page transition for the outcome of the action. Should at least implement the following methods:
@@ -51,8 +51,10 @@ Fetches a specific resource. The access token validation flow is invoked if no v
 
 **Param** `params` - Parameters to send with the request.
 
+**Param** `headers` - Optional custom headers to send with the request.
 
-### fetchAnonymousResource(successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params)
+
+### fetchAnonymousResource(successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params, headers)
 Fetches a specific resource anonymously using a client access token. The access token validation flow is invoked if no valid access token is available.
 
 **Param** `successCallback` - Function that can handle the successful resource call. Is called with a JSON response object as argument.
@@ -68,6 +70,8 @@ Fetches a specific resource anonymously using a client access token. The access 
 **Param** `paramsEncoding` - Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
 
 **Param** `params` - Parameters to send with the request.
+
+**Param** `headers` - Optional custom headers to send with the request.
 
 
 ### isRegistered(successCallback, errorCallback)

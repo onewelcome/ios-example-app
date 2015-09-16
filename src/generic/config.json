@@ -1,6 +1,5 @@
 {
     "kOGAppIdentifier": "DemoApp",
-    "kOGAppPlatform": "ios",
     "kOGAppScheme": "oneginisdk",
     "kOGAppVersion": "2.4.1",
     "kAppBaseURL": "https://test-token-server.onegini.com",

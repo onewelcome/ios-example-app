@@ -5,12 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
 
 public class ConfigModel implements OneginiClientConfigModel {
+  private String appPlatform = "android";
   @SerializedName("shouldGetIdToken")
   private boolean shouldGetIdToken;
   @SerializedName("kOGAppIdentifier")
   private String appIdentifier;
-  @SerializedName("kOGAppPlatform")
-  private String appPlatform;
   @SerializedName("kOGAppScheme")
   private String appScheme;
   @SerializedName("kOGAppVersion")

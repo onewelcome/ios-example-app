@@ -52,7 +52,7 @@
     <asset src="src/generic/messages/messages.properties" target="res/messages.properties"/>
 
     <!-- Generic OAUTH config -->
-    <resource-file src="src/ios/config.json"/>
+    <resource-file src="src/generic/config.json"/>
 
     <resource-file src="src/generic/pin-config.json"/>
     <resource-file src="src/generic/pin_container_ipad_landscape_bg.png"/>
@@ -236,7 +236,7 @@
     <source-file src="src/android/res/values-xlarge/bools.xml" target-dir="res/values-xlarge"/>
 
     <resource-file src="src/android/res/raw/keystore.bks" target="res/raw/keystore.bks"/>
-    <resource-file src="src/android/config.json" target="res/raw/config.json"/>
+    <resource-file src="src/generic/config.json" target="res/raw/config.json"/>
 
     <!-- assets -->
     <resource-file src="src/android/res/drawable/form_active.9.png" target="res/drawable/form_active.9.png"/>

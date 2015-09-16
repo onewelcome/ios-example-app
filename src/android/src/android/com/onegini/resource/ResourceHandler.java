@@ -1,21 +1,19 @@
 package com.onegini.resource;
 
-import static com.onegini.responses.GeneralResponse.CONNECTIVITY_PROBLEM;
-import static com.onegini.responses.ResourceCallResponse.RESOURCE_CALL_AUTH_FAILED;
-import static com.onegini.responses.ResourceCallResponse.RESOURCE_CALL_BAD_REQUEST;
-import static com.onegini.responses.ResourceCallResponse.RESOURCE_CALL_ERROR;
-import static com.onegini.responses.ResourceCallResponse.RESOURCE_CALL_INVALID_GRANT;
-import static com.onegini.responses.ResourceCallResponse.RESOURCE_CALL_SCOPE_ERROR;
-import static com.onegini.responses.ResourceCallResponse.RESOURCE_CALL_UNAUTHORIZED;
+import static com.onegini.response.ResourceCallResponse.RESOURCE_CALL_AUTH_FAILED;
+import static com.onegini.response.ResourceCallResponse.RESOURCE_CALL_BAD_REQUEST;
+import static com.onegini.response.ResourceCallResponse.RESOURCE_CALL_ERROR;
+import static com.onegini.response.ResourceCallResponse.RESOURCE_CALL_INVALID_GRANT;
+import static com.onegini.response.ResourceCallResponse.RESOURCE_CALL_SCOPE_ERROR;
+import static com.onegini.response.ResourceCallResponse.RESOURCE_CALL_UNAUTHORIZED;
 
 import java.util.List;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 
-import com.onegini.dialogs.PinScreenActivity;
+import com.onegini.dialog.PinScreenActivity;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiResourceHandler;
-import com.onegini.responses.GeneralResponse;
 import com.onegini.util.CallbackResultBuilder;
 import retrofit.client.Header;
 

@@ -1,5 +1,6 @@
 package com.onegini.resource;
 
+import static com.onegini.resource.ResourceRequest.toMap;
 import static com.onegini.resource.RestResourceInterface.getResourceCallMethod;
 import static com.onegini.resource.RestResourceInterface.getRestAdapterForMethod;
 
@@ -16,20 +17,25 @@ import retrofit.client.Response;
 
 public class ResourceClient extends ResourceHelperAbstract<String>{
 
+  private static final ResourceRequestHeaderInterceptor HEADER_INTERCEPTOR = new ResourceRequestHeaderInterceptor();
   private static final String REQUEST_METHOD_POST = "POST";
   private static final String REQUEST_METHOD_PUT = "PUT";
+
   private final ResourceRequest resourceRequest;
 
   public ResourceClient(final OneginiClient oneginiClient, final ResourceRequest resourceRequest) {
-    super(oneginiClient, true);
+    super(oneginiClient, true, HEADER_INTERCEPTOR);
     this.resourceRequest = resourceRequest;
   }
 
   @Override
-  protected void performResourceActionImpl(final OneginiResourceHandler<String> resourceHandler, final String[] scopes,
-                                           final String... params) {
+  protected void performResourceActionImpl(final OneginiResourceHandler<String> resourceHandler, final String[] scopes, final String... params) {
     if (resourceRequest == null) {
       return;
+    }
+
+    if (resourceRequest.hasHeaders()) {
+      HEADER_INTERCEPTOR.setHeaders(toMap(resourceRequest.getHeaders()));
     }
 
     final Object restClient = buildRestAdapterForMethod(resourceRequest.getRequestMethodString());
@@ -43,8 +49,8 @@ public class ResourceClient extends ResourceHelperAbstract<String>{
   }
 
   private boolean isBodyRequired() {
-    return (REQUEST_METHOD_POST.equalsIgnoreCase(resourceRequest.getRequestMethodString())
-            || REQUEST_METHOD_PUT.equalsIgnoreCase(resourceRequest.getRequestMethodString()));
+    final String method = resourceRequest.getRequestMethodString();
+    return (REQUEST_METHOD_POST.equalsIgnoreCase(method) || REQUEST_METHOD_PUT.equalsIgnoreCase(method));
   }
 
   private void invokeWithoutBody(final OneginiResourceHandler<String> resourceHandler, final Object restClient,

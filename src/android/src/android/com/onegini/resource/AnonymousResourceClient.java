@@ -1,5 +1,6 @@
 package com.onegini.resource;
 
+import static com.onegini.resource.ResourceRequest.toMap;
 import static com.onegini.resource.RestResourceInterface.getResourceCallMethod;
 import static com.onegini.resource.RestResourceInterface.getRestAdapterForMethod;
 
@@ -15,6 +16,8 @@ import retrofit.client.Response;
 
 public class AnonymousResourceClient extends AnonymousResourceHelperAbstract<String> {
 
+  private static final ResourceRequestHeaderInterceptor HEADER_INTERCEPTOR = new ResourceRequestHeaderInterceptor();
+
   private ResourceRequest resourceRequest;
 
   public AnonymousResourceClient(final OneginiClient oneginiClient, final ResourceRequest resourceRequest) {
@@ -27,6 +30,10 @@ public class AnonymousResourceClient extends AnonymousResourceHelperAbstract<Str
                                            String[] strings, final String... params) {
     if (resourceRequest == null) {
       return;
+    }
+
+    if (resourceRequest.hasHeaders()) {
+      HEADER_INTERCEPTOR.setHeaders(toMap(resourceRequest.getHeaders()));
     }
 
     final Object restClient = buildRestAdapterForMethod(resourceRequest.getRequestMethodString());

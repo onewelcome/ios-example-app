@@ -99,8 +99,9 @@ module.exports = {
    * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
    * @param {String} paramsEncoding     Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
    * @param {Object} params             Parameters to send with the request.
+   * @param {Object} headers            Optional custom headers to send with the request.
    */
-  fetchResource: function (router, path, scopes, requestMethod, paramsEncoding, params) {
+  fetchResource: function (router, path, scopes, requestMethod, paramsEncoding, params, headers) {
     oneginiCordovaPlugin.preserveCurrentLocation();
 
     exec(function (response) {
@@ -127,7 +128,7 @@ module.exports = {
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_INVALID_GRANT) {
         router.resourceCallInvalidGrant();
       }
-    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, [path, scopes, requestMethod, paramsEncoding, params]);
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, [path, scopes, requestMethod, paramsEncoding, params, headers]);
   },
 
   /**
@@ -144,9 +145,9 @@ module.exports = {
    * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
    * @param {String} paramsEncoding     Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
    * @param {Object} params             Parameters to send with the request.
+   * @param {Object} headers            Optional custom headers to send with the request.
    */
-  fetchAnonymousResource: function (successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding,
-                                    params) {
+  fetchAnonymousResource: function (successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params, headers) {
     // not implemented in the base app yet
     exec(function (response) {
       if (successCallback) {
@@ -156,7 +157,7 @@ module.exports = {
       if (errorCallback) {
         errorCallback(error);
       }
-    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, [path, scopes, requestMethod, paramsEncoding, params]);
+    }, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, [path, scopes, requestMethod, paramsEncoding, params, headers]);
   },
 
   /**

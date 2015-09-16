@@ -13,9 +13,7 @@
 NSString* const kReason				= @"reason";
 NSString* const kRemainingAttempts	= @"remainingAttempts";
 NSString* const kMethod				= @"method";
-NSString* const kError				= @"error";
 NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
-NSString* const kOGUseNativePinView = @"kOGUseNativePinView";
 NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4AGzANBgkqhkiG9w0BAQUFADBvMQswCQYDVQQGEwJTRTEUMBIGA1UEChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFkZFRydXN0IEV4dGVybmFsIFRUUCBOZXR3b3JrMSIwIAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBSb290MB4XDTEyMDIxNjAwMDAwMFoXDTIwMDUzMDEwNDgzOFowczELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxGTAXBgNVBAMTEFBvc2l0aXZlU1NMIENBIDIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDo6jnjIqaqucQA0OeqZztDB71Pkuu8vgGjQK3g70QotdA6voBUF4V6a4RsNjbloyTi/igBkLzX3Q+5K05IdwVpr95XMLHo+xoD9jxbUx6hAUlocnPWMytDqTcyUg+uJ1YxMGCtyb1zLDnukNh1sCUhYHsqfwL9goUfdE+SNHNcHQCgsMDqmOK+ARRYFygiinddUCXNmmym5QzlqyjDsiCJ8AckHpXCLsDl6ez2PRIHSD3SwyNWQezT3zVLyOf2hgVSEEOajBd8i6q8eODwRTusgFX+KJPhChFo9FJXb/5IC1tdGmpnc5mCtJ5DYD7HWyoSbhruyzmuwzWdqLxdsC/DAgMBAAGjggF3MIIBczAfBgNVHSMEGDAWgBStvZh6NLQm9/rEJlTvA73gJMtUGjAdBgNVHQ4EFgQUmeRAX2sUXj4F2d3TY1T8Yrj3AKwwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQAwEQYDVR0gBAowCDAGBgRVHSAAMEQGA1UdHwQ9MDswOaA3oDWGM2h0dHA6Ly9jcmwudXNlcnRydXN0LmNvbS9BZGRUcnVzdEV4dGVybmFsQ0FSb290LmNybDCBswYIKwYBBQUHAQEEgaYwgaMwPwYIKwYBBQUHMAKGM2h0dHA6Ly9jcnQudXNlcnRydXN0LmNvbS9BZGRUcnVzdEV4dGVybmFsQ0FSb290LnA3YzA5BggrBgEFBQcwAoYtaHR0cDovL2NydC51c2VydHJ1c3QuY29tL0FkZFRydXN0VVROU0dDQ0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0GCSqGSIb3DQEBBQUAA4IBAQCcNuNOrvGKu2yXjI9LZ9Cf2ISqnyFfNaFbxCtjDei8d12nxDf9Sy2e6B1pocCEzNFti/OBy59LdLBJKjHoN0DrH9mXoxoR1Sanbg+61b4s/bSRZNy+OxlQDXqV8wQTqbtHD4tc0azCe3chUN1bq+70ptjUSlNrTa24yOfmUlhNQ0zCoiNPDsAgOa/fT0JbHtMJ9BgJWSrZ6EoYvzL7+i1ki4fKWyvouAt+vhcSxwOCKa9Yr4WEXT0K3yNRw82vEL+AaXeRCk/luuGtm87fM04wO+mPZn+C+mv626PAcwDj1hKvTfIPWhRRH224hoFiB85ccsJP81cqcdnUl4XmGFO3";
 
 @interface MainViewController()
@@ -66,28 +64,30 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     [CDVPluginResult setVerbose:YES];
 #endif
     pinEntryMode = PINEntryModeUnknown;
-    
-    NSString *configJsonFilePath = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"json"];
-    NSData *configJsonData = [NSData dataWithContentsOfFile:configJsonFilePath];
-    NSError *deserializationError = nil;
-    NSMutableDictionary * configuration = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:configJsonData options:kNilOptions error:&deserializationError]];
-    if ([configuration objectForKey:kOGDeviceName] == nil) {
-        [configuration setObject:[self getDeviceName] forKey:kOGDeviceName];
-    }
-    [configuration setObject:@"ios" forKey:kOGAppPlatform];
 
-    NSString *shouldShowNativaScreens = [((MainViewController*)self.viewController).settings objectForKey:@"shouldshownativescreens"];
-    useNativePinView = [shouldShowNativaScreens isEqualToString:@"true"] ? YES : NO;
+    [self prepareConfiguration];
 
-    self.configModel = [[OGConfigModel alloc] initWithDictionary:configuration];
     self.oneginiClient = [[OGOneginiClient alloc] initWithConfig:configModel delegate:self];
-    
+
     [oneginiClient setX509PEMCertificates:@[certificate]];
     
-    if (self.configModel && self.oneginiClient && deserializationError==nil)
+    if (self.configModel && self.oneginiClient)
         self.initializationSuccessful = YES;
     
     [self loadMessagesFromFile:@"messages.properties"];
+}
+
+-(void) prepareConfiguration {
+    NSDictionary *settings = ((MainViewController*)self.viewController).settings;
+    [settings setValue: @"ios" forKey: kOGAppPlatform];
+
+    self.configModel = [[OGConfigModel alloc] initWithDictionary:settings];
+    NSString *shouldShowNativaScreens = [settings objectForKey:@"shouldshownativescreens"];
+    useNativePinView = [shouldShowNativaScreens isEqualToString:@"true"] ? YES : NO;
+
+//    if ([configuration objectForKey:kOGDeviceName] == nil) {
+//        [configuration setObject:[self getDeviceName] forKey:kOGDeviceName];
+//    }
 }
 
 -(void)loadMessagesFromFile:(NSString*)fileName

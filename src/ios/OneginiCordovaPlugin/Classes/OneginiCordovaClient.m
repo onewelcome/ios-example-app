@@ -85,9 +85,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     NSString *shouldShowNativaScreens = [settings objectForKey:@"shouldshownativescreens"];
     useNativePinView = [shouldShowNativaScreens isEqualToString:@"true"] ? YES : NO;
 
-//    if ([configuration objectForKey:kOGDeviceName] == nil) {
-//        [configuration setObject:[self getDeviceName] forKey:kOGDeviceName];
-//    }
 }
 
 -(void)loadMessagesFromFile:(NSString*)fileName
@@ -903,12 +900,6 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 
 #pragma mark -
 #pragma mark Util
-- (NSString*)getDeviceName {
-    UIDevice *dev = [UIDevice currentDevice];
-    NSString *name = [NSString stringWithFormat:@"%@_%@_%@", dev.name, dev.systemName, dev.systemVersion];
-    return [[name componentsSeparatedByString:@" "] componentsJoinedByString:@"_"];
-}
-
 - (HTTPRequestMethod)requestMethodForString:(NSString *)requestMethodString {
     if ([requestMethodString isEqualToString:@"GET"]) {
         return GET;

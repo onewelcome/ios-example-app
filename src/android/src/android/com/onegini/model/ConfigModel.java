@@ -125,19 +125,4 @@ public class ConfigModel implements OneginiClientConfigModel {
   public boolean useEmbeddedWebview() {
     return useEmbeddedWebview;
   }
-
-  @Override
-  public String toString() {
-    return "ConfigModel{" +
-        "  appIdentifier='" + appIdentifier + "'" +
-        ", appPlatform='" + appPlatform + "'" +
-        ", appScheme='" + appScheme + "'" +
-        ", appVersion='" + appVersion + "'" +
-        ", baseURL='" + baseUrl + "'" +
-        ", maxPinFailures='" + maxPinFailures + "'" +
-        ", resourceBaseURL='" + resourceBaseUrl + "'" +
-        ", keyStoreHash='" + getKeyStoreHash() + "'" +
-        ", idTokenRequested='" + shouldGetIdToken + "'" +
-        "}";
-  }
 }

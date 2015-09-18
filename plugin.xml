@@ -19,6 +19,8 @@
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/Reachability.m"/>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/OneginiCordovaClient.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/OneginiCordovaClient.m"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/XMLReader.h"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/XMLReader.m"/>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.m"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.xib"/>

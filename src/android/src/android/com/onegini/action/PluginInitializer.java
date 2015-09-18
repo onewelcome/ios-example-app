@@ -28,8 +28,6 @@ public class PluginInitializer {
   }
 
   public void setup(final OneginiCordovaPlugin client) {
-    configured = false;
-
     final Application application = client.getCordova().getActivity().getApplication();
 
     final ConfigModel configModel = retrieveConfiguration();

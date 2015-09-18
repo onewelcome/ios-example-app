@@ -21,7 +21,7 @@ public class ResourceRequest {
 
   public static ResourceRequest buildRequestFromArgs(final JSONArray args) {
     try {
-      if (args.get(5).equals(null)) {
+      if (args.isNull(5)) {
         return new ResourceRequest(args.getString(0), args.getJSONArray(1), args.getString(2), args.getString(3), args.getJSONObject(4));
       } else {
         return new ResourceRequest(args.getString(0), args.getJSONArray(1), args.getString(2), args.getString(3), args.getJSONObject(4), args.getJSONObject(5));

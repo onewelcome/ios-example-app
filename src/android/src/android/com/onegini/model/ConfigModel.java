@@ -14,11 +14,11 @@ public class ConfigModel implements OneginiClientConfigModel {
   public static ConfigModel from(final CordovaPreferences preferences) {
     final ConfigModel config = new ConfigModel();
 
-    config.appIdentifier = getStringFromPreferencesOrThrowException(preferences, "kOGAppIdentifier");
-    config.appScheme = getStringFromPreferencesOrThrowException(preferences, "kOGAppScheme");
-    config.appVersion = getStringFromPreferencesOrThrowException(preferences, "kOGAppVersion");
-    config.baseUrl = getStringFromPreferencesOrThrowException(preferences, "kOGAppBaseURL");
-    config.resourceBaseUrl = getStringFromPreferencesOrThrowException(preferences, "kOGResourceBaseURL");
+    config.appIdentifier = getStringFromPreferences(preferences, "kOGAppIdentifier");
+    config.appScheme = getStringFromPreferences(preferences, "kOGAppScheme");
+    config.appVersion = getStringFromPreferences(preferences, "kOGAppVersion");
+    config.baseUrl = getStringFromPreferences(preferences, "kOGAppBaseURL");
+    config.resourceBaseUrl = getStringFromPreferences(preferences, "kOGResourceBaseURL");
 
     config.maxPinFailures = preferences.getInteger("kOGMaxPinFailures", 3);
     config.useEmbeddedWebview = preferences.getBoolean("kOGUseEmbeddedWebview", true);
@@ -27,7 +27,7 @@ public class ConfigModel implements OneginiClientConfigModel {
     return config;
   }
 
-  private static String getStringFromPreferencesOrThrowException(final CordovaPreferences preferences, final String key) throws PluginConfigException {
+  private static String getStringFromPreferences(final CordovaPreferences preferences, final String key) throws PluginConfigException {
     final String value = preferences.getString(key, null);
     if (value == null) {
       throw new PluginConfigException("Missing property in config.xml file: "+key);

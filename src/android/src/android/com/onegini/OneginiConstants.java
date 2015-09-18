@@ -22,6 +22,6 @@ public class OneginiConstants {
   public static final String SETUP_SCREEN_ORIENTATION = "setupScreenOrientation";
 
   // Values
-  public static final String KEYSTORE_HASH = "7A8E3D2333A1324229712B288950E317CE5BE5F956C196CEF33B46993D371575";
+  public static final String KEYSTORE_HASH = "1eb7a88b2a72356d27176df6b3fc8804d78846913ad5a54d277a70f260e12af3";
 
 }

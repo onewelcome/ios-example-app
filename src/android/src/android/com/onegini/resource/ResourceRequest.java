@@ -12,9 +12,6 @@ import com.onegini.scope.ScopeParser;
 
 public class ResourceRequest {
 
-  public static final int PARAMETERS_WITHOUT_HEADERS_LENGTH = 5;
-  public static final int PARAMETERS_WITH_HEADERS_LENGTH = 6;
-
   private final String path;
   private final String[] scopes;
   private final String requestMethodString;
@@ -24,7 +21,7 @@ public class ResourceRequest {
 
   public static ResourceRequest buildRequestFromArgs(final JSONArray args) {
     try {
-      if (args.length() == PARAMETERS_WITHOUT_HEADERS_LENGTH) {
+      if (args.isNull(5)) {
         return new ResourceRequest(args.getString(0), args.getJSONArray(1), args.getString(2), args.getString(3), args.getJSONObject(4));
       } else {
         return new ResourceRequest(args.getString(0), args.getJSONArray(1), args.getString(2), args.getString(3), args.getJSONObject(4), args.getJSONObject(5));

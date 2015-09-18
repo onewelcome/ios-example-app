@@ -65,6 +65,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
     NSLog(@"pluginInitialize");
     [CDVPluginResult setVerbose:YES];
 #endif
+    useNativePinView = YES;
     pinEntryMode = PINEntryModeUnknown;
     
     NSString *configJsonFilePath = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"json"];

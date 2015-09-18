@@ -19,6 +19,8 @@
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/Reachability.m"/>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/OneginiCordovaClient.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/OneginiCordovaClient.m"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/XMLReader.h"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/XMLReader.m"/>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.m"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.xib"/>
@@ -51,9 +53,6 @@
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>
     <resource-file src="src/generic/messages/messages.properties"/>
     <asset src="src/generic/messages/messages.properties" target="res/messages.properties"/>
-
-    <!-- Generic OAUTH config -->
-    <resource-file src="src/ios/config.json"/>
 
     <resource-file src="src/generic/pin-config.json"/>
     <resource-file src="src/generic/pin_container_ipad_landscape_bg.png"/>
@@ -111,20 +110,6 @@
       <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
       <uses-permission android:name="android.permission.WAKE_LOCK"/>
       <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-
-      <permission android:name="com.onegini.mobile.sdk.android.demo.permission.C2D_MESSAGE"
-                  android:protectionLevel="signature"/>
-      <uses-permission android:name="com.onegini.mobile.sdk.android.demo.permission.C2D_MESSAGE"/>
-
-    </config-file>
-    <config-file target="AndroidManifest.xml" parent="/*/application/activity">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="oneginisdk"/>
-      </intent-filter>
     </config-file>
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <activity
@@ -162,6 +147,16 @@
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/ValidatePinAction.java"
                  target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/action/PinCallbackSession.java"
+                 target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/action/URLHandler.java"
+                 target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/action/CheckIsRegisteredAction.java"
+                 target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/action/SetupScreenOrientationAction.java"
+                 target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/action/ForgotPinHandler.java"
+                 target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/dialog/ConfirmationDialogSelectorHandler.java"
                  target-dir="src/com/onegini/dialog/"/>
     <source-file src="src/android/src/android/com/onegini/dialog/CreatePinNativeDialogHandler.java"
@@ -174,16 +169,8 @@
                  target-dir="src/com/onegini/dialog/"/>
     <source-file src="src/android/src/android/com/onegini/dialog/PinScreenActivity.java"
                  target-dir="src/com/onegini/dialog"/>
-    <source-file src="src/android/src/android/com/onegini/action/PinCallbackSession.java"
-                 target-dir="src/com/onegini/action/"/>
-    <source-file src="src/android/src/android/com/onegini/action/URLHandler.java"
-                 target-dir="src/com/onegini/action/"/>
-    <source-file src="src/android/src/android/com/onegini/action/CheckIsRegisteredAction.java"
-                 target-dir="src/com/onegini/action/"/>
-    <source-file src="src/android/src/android/com/onegini/action/SetupScreenOrientationAction.java"
-                 target-dir="src/com/onegini/action/"/>
-    <source-file src="src/android/src/android/com/onegini/action/ForgotPinHandler.java"
-                 target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/exception/PluginConfigException.java"
+                 target-dir="src/com/onegini/exception"/>
     <!--<source-file src="src/android/src/android/com/onegini/gcm/GCMHelper.java" target-dir="src/com/onegini/gcm/" />-->
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/model/MessageKey.java" target-dir="src/com/onegini/model/"/>
@@ -239,7 +226,6 @@
     <source-file src="src/android/res/values-xlarge/bools.xml" target-dir="res/values-xlarge"/>
 
     <resource-file src="src/android/res/raw/keystore.bks" target="res/raw/keystore.bks"/>
-    <resource-file src="src/android/config.json" target="res/raw/config.json"/>
 
     <!-- assets -->
     <resource-file src="src/android/res/drawable/form_active.9.png" target="res/drawable/form_active.9.png"/>

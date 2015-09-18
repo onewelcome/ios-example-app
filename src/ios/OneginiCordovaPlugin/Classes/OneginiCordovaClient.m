@@ -107,7 +107,7 @@ NSString* const certificate         = @"MIIE5TCCA82gAwIBAgIQB28SRoFFnCjVSNaXxA4A
 
 - (NSString *)loadFileToString:(NSString*)path {
     NSError *error;
-    NSString *fileContent = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:path ofType:nil] encoding:kCFStringEncodingUTF8 error:&error];
+    NSString *fileContent = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:path ofType:nil] encoding:NSUTF8StringEncoding error:&error];
 
     if (error) {
         NSLog(@"Error reading %@ file", path);

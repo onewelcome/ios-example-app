@@ -37,7 +37,8 @@ public class PluginInitializer {
       return;
     }
 
-    final boolean shouldUseNativeScreens = configModel.shouldUseNativeScreens();
+    // @todo we need to decide if non-native PIN screen should be maintained
+    final boolean shouldUseNativeScreens = true;
     client.setShouldUseNativeScreens(shouldUseNativeScreens);
     setupDialogs(shouldUseNativeScreens, application.getApplicationContext());
 

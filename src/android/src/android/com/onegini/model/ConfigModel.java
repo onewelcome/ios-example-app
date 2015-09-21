@@ -1,13 +1,10 @@
 package com.onegini.model;
 
-import java.lang.RuntimeException;
-
 import org.apache.cordova.CordovaPreferences;
 
 import android.os.Build;
-import com.google.gson.annotations.SerializedName;
-import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
 import com.onegini.exception.PluginConfigException;
+import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
 
 public class ConfigModel implements OneginiClientConfigModel {
 

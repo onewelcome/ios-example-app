@@ -47,7 +47,7 @@
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGFingerprintDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OneginiSDK.h"/>
 
-    <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-3.05.00.a" framework="true"/>
+    <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-4.00.00.a" framework="true"/>
 
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>
@@ -62,7 +62,7 @@
     <resource-file src="src/generic/pin_key_normal.png"/>
     <resource-file src="src/generic/pin-occupied-ic.png"/>
     <resource-file src="src/generic/pin-clear-ic.png"/>
-    
+
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/buttonPijl.png"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/buttonPijl@2x.png"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/buttonPijl@3x.png"/>
@@ -79,12 +79,12 @@
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/sluit.png"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/sluit@2x.png"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/sluit@3x.png"/>
-    
+
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/achtergrond1.jpg"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/achtergrond1@2x.jpg"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/achtergrond2.jpg"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/achtergrond2@2x.jpg"/>
-    
+
     <resource-file src="src/generic/fonts/SourceSansPro-ExtraLight.ttf"/>
     <resource-file src="src/generic/fonts/SourceSansPro-ExtraLightItalic.ttf"/>
     <resource-file src="src/generic/fonts/SourceSansPro-Italic.ttf"/>
@@ -239,7 +239,7 @@
     <resource-file src="src/android/res/drawable-xhdpi/logo.png" target="res/drawable-xhdpi/logo.png"/>
 
     <!-- Work in progress, these are not the correct image assets (copied from example PSD with low resolution) -->
-    <resource-file src="src/generic/pin-config.json" target="res/raw/pin_config.json"/>    
+    <resource-file src="src/generic/pin-config.json" target="res/raw/pin_config.json"/>
     <resource-file src="src/generic/fonts/SourceSansPro-Regular.ttf" target="assets/fonts/font_regular.ttf"/>
     <resource-file src="src/generic/fonts/SourceSansPro-Light.ttf" target="assets/fonts/font_light.ttf"/>
     <resource-file src="src/generic/messages/messages.properties" target="res/raw/messages.properties"/>

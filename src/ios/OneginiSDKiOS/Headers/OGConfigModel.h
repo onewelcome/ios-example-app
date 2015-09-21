@@ -12,7 +12,7 @@
 #define kOGAppPlatform						@"kOGAppPlatform"
 #define kOGAppScheme						@"kOGAppScheme"
 #define kOGAppVersion						@"kOGAppVersion"
-#define kOGBaseURL							@"kAppBaseURL"
+#define kOGAppBaseURL						@"kOGAppBaseURL"
 #define kOGMaxPinFailures					@"kOGMaxPinFailures"
 #define kOGResourceBaseURL					@"kOGResourceBaseURL"
 #define kOGRedirectURL						@"kOGRedirectURL"

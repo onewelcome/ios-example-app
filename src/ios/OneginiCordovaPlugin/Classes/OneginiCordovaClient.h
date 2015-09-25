@@ -12,7 +12,7 @@
 #import "MainViewController.h"
 #import "Commons.h"
 
-@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate, PinEntryContainerViewControllerDelegate, OGDisconnectDelegate>
+@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate, PinEntryContainerViewControllerDelegate, OGDisconnectDelegate, OGLogoutDelegate>
 
 @property (strong, nonatomic) OGOneginiClient *oneginiClient;
 @property (strong, nonatomic) OGConfigModel *configModel;
@@ -27,6 +27,8 @@
 @property (copy, nonatomic) NSString *pinValidateCommandTxId;
 @property (copy, nonatomic) NSString *pinChangeCommandTxId;
 @property (copy, nonatomic) NSString *disconnectCommandTxId;
+@property (copy, nonatomic) NSString *logoutCommandTxId;
+
 
 /** FOR TESTING PURPOSE ONLY */
 - (void)clearTokens:(CDVInvokedUrlCommand *)command;

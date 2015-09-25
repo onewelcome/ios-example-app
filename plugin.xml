@@ -39,6 +39,7 @@
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGConfigModel.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGChangePinDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGDisconnectDelegate.h"/>
+    <header-file src="src/ios/OneginiSDKiOS/Headers/OGLogoutDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGEnrollmentHandlerDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGOneginiClient.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGPublicCommons.h"/>

@@ -14,8 +14,6 @@
  */
 @protocol OGChangePinDelegate <NSObject>
 
-- (void)invalidCurrentPin DEPRECATED_ATTRIBUTE;
-
 /**
  The access grant or refresh token provided by the client is invalid.
  

@@ -39,6 +39,7 @@
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGConfigModel.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGChangePinDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGDisconnectDelegate.h"/>
+    <header-file src="src/ios/OneginiSDKiOS/Headers/OGLogoutDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGEnrollmentHandlerDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGOneginiClient.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGPublicCommons.h"/>
@@ -47,7 +48,7 @@
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGFingerprintDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OneginiSDK.h"/>
 
-    <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-4.00.01.a" framework="true"/>
+    <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-4.01.00.a" framework="true"/>
 
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>

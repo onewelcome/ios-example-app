@@ -2,7 +2,6 @@ package com.onegini.gcm;
 
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,26 +14,18 @@ import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiMobileAuthEnrollmentHandler;
 
 public class GCMHelper {
-  Context context;
+  private static final String PROPERTY_REG_ID = "registration_id";
+  private static final String PROPERTY_APP_VERSION = "appVersion";
 
+  private static final String SENDER_ID = "586427927998";
+
+  private static final String TAG = "GCMDemo";
+
+  private Context context;
   private OneginiClient oneginiClient;
 
-  public static final String PROPERTY_REG_ID = "registration_id";
-  private static final String PROPERTY_APP_VERSION = "appVersion";
-  private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-
-  String SENDER_ID = "586427927998";
-
-  /**
-   * Tag used on log messages.
-   */
-  static final String TAG = "GCMDemo";
-
-  GoogleCloudMessaging gcm;
-  AtomicInteger msgId = new AtomicInteger();
-  SharedPreferences prefs;
-
-  String regid;
+  private GoogleCloudMessaging gcm;
+  private String regid;
 
   public GCMHelper(Context context) {
     this.context = context;

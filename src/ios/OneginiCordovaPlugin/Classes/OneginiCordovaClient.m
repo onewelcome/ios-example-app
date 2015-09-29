@@ -155,7 +155,7 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
 }
 
 - (void)onAppTerminate {
-    [oneginiClient logout:nil];
+    [oneginiClient logoutWithDelegate:self];
 }
 
 #pragma mark -
@@ -454,18 +454,13 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
 }
 
 - (void)logout:(CDVInvokedUrlCommand *)command {
-    @try {
-        [self.oneginiClient logout:nil];
-    }
-    @finally {
-        [self sendSuccessCallback:command.callbackId];
-        [self resetAll];
-    }
+    self.logoutCommandTxId = command.callbackId;
+    [self.oneginiClient logoutWithDelegate:self];
 }
 
 - (void)disconnect:(CDVInvokedUrlCommand *)command {
     self.disconnectCommandTxId = command.callbackId;
-    [self.oneginiClient disconnectWithDelegate:self];
+    [self.oneginiClient disconnectWithDelegate:self]; 
 }
 
 - (void)sendSuccessCallback:(NSString *)callbackId {
@@ -672,8 +667,7 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     [self authorizationErrorCallbackWIthReason:@"authorizationErrorNoAuthorizationGrant"];
 }
 
--(void)authorizationErrorInvalidAppPlatformOrVersion
-{
+-(void)authorizationErrorInvalidAppPlatformOrVersion {
     [self closePinView];
 
     [self authorizationErrorCallbackWIthReason:@"unsupportedAppVersion"];
@@ -687,6 +681,18 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
                                             pinSize:(NSUInteger)pinSize	maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt
                                             confirm:(PushAuthenticationWithPinConfirmation)confirm {
     // Not implemented, should be made optional in the SDK
+}
+
+- (void)authorizationErrorUnsupportedOS {
+    [self closePinView];
+    
+    [self authorizationErrorCallbackWIthReason:@"authorizationErrorUnsupportedOS"];
+}
+
+- (void)authorizationClientConfigFailed {
+    [self closePinView];
+    
+    [self authorizationErrorCallbackWIthReason:@"connectivityProblem"];
 }
 
 // @optional
@@ -705,6 +711,18 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
 
 -(void)disconnectFailureWithError:(NSError *)error{
     [self sendSuccessCallback:self.disconnectCommandTxId];
+    [self resetAll];
+}
+
+#pragma mark -
+#pragma mark - OGLogoutDelegate
+
+-(void)logoutSuccessful {
+    [self sendSuccessCallback:self.logoutCommandTxId];
+    [self resetAll];
+}
+-(void)logoutFailureWithError:(NSError*)error {
+    [self sendSuccessCallback:self.logoutCommandTxId];
     [self resetAll];
 }
 

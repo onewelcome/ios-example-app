@@ -18,7 +18,6 @@
 #define kOGRedirectURL						@"kOGRedirectURL"
 #define kOGUseEmbeddedWebview				@"kOGUseEmbeddedWebview"
 #define kOGStoreCookies                     @"kOGStoreCookies"
-#define kOGDeviceName                       @"kOGDeviceName"
 
 @class OGCommons;
 
@@ -106,13 +105,6 @@
  @return redirect URL
  */
 - (NSString *)redirectURL;
-
-/**
- The device name is used in the dynamic client registration and identifies the device in the oAuth portal
- 
- @return device name
- */
-- (NSString *)deviceName DEPRECATED_ATTRIBUTE;
 
 /**
  If the App wants to use an embedded UIWebView instead of the external Safari browser then this parameter must be set to true.

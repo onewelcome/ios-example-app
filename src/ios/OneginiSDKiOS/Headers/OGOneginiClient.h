@@ -15,6 +15,7 @@
 #import "OGPublicCommons.h"
 #import "OGDisconnectDelegate.h"
 #import "OGFingerprintDelegate.h"
+#import "OGLogoutDelegate.h"
 
 @class OGConfigModel, OGAuthorizationManager, OGResourceManager, OGEnrollmentManager;
 
@@ -79,13 +80,6 @@
  @return true if change request procedure is started
  */
 - (void)changePinRequest:(id <OGChangePinDelegate>)delegate;
-
-/**
- Determine if the device is linked to a user
-  
- @return true, if the device is linked to a user
- */
-- (BOOL)isRegistered DEPRECATED_ATTRIBUTE;
 
 /**
  Determine if the client is registered.
@@ -167,12 +161,6 @@
  Disconnect from the service, this will clear the refresh token and access token.
  Client credentials remain untouched.
  */
-- (void)disconnect DEPRECATED_ATTRIBUTE;
-
-/**
- Disconnect from the service, this will clear the refresh token and access token.
- Client credentials remain untouched.
- */
 - (void)disconnectWithDelegate:(id<OGDisconnectDelegate>)delegate;
 
 /**
@@ -181,7 +169,7 @@
  
  @param result callback, true if logout is successful
  */
-- (void)logout:(void (^)(BOOL))result;
+- (void)logoutWithDelegate:(id<OGLogoutDelegate>)delegate;
 
 /**
  Clear the client credentials. 

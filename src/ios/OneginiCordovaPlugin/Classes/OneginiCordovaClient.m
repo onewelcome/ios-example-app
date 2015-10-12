@@ -419,13 +419,18 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     NSString *requestMethodString = [command.arguments objectAtIndex:2];
     NSString *paramsEncodingString = [command.arguments objectAtIndex:3];
     NSDictionary *params = [command.arguments objectAtIndex:4];
+    NSDictionary *headers = [command.arguments objectAtIndex:5];
 
     HTTPRequestMethod requestMethod = [self requestMethodForString:requestMethodString];
     HTTPClientParameterEncoding parameterEncoding = [self parameterEncodingForString:paramsEncodingString];
 
     self.fetchResourceCommandTxId = command.callbackId;
 
-    [oneginiClient fetchResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding delegate:self];
+    if (headers){
+        [oneginiClient fetchResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding headers:headers delegate:self];
+    } else {
+        [oneginiClient fetchResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding delegate:self];
+    }
 }
 
 - (void)fetchAnonymousResource:(CDVInvokedUrlCommand *)command {
@@ -444,13 +449,18 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     NSString *requestMethodString = [command.arguments objectAtIndex:2];
     NSString *paramsEncodingString = [command.arguments objectAtIndex:3];
     NSDictionary *params = [command.arguments objectAtIndex:4];
-
+    NSDictionary *headers = [command.arguments objectAtIndex:5];
+    
     HTTPRequestMethod requestMethod = [self requestMethodForString:requestMethodString];
     HTTPClientParameterEncoding parameterEncoding = [self parameterEncodingForString:paramsEncodingString];
 
     self.fetchResourceCommandTxId = command.callbackId;
 
-    [oneginiClient fetchAnonymousResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding delegate:self];
+    if (headers){
+        [oneginiClient fetchAnonymousResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding headers:headers delegate:self];
+    } else {
+        [oneginiClient fetchAnonymousResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding delegate:self];
+    }
 }
 
 - (void)logout:(CDVInvokedUrlCommand *)command {

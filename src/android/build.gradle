@@ -30,11 +30,13 @@ allprojects {
     targetCompatibility = 1.6
     repositories {
         maven {
-         url "https://buildserver.onegini.com/nexus/content/groups/public/"
-         credentials {
-            username mavenUser
-            password mavenPassword
-        }
+          url "https://repo.onegini.com/artifactory/public"
+          credentials {
+            if(project.hasProperty('artifactory_user') && project.hasProperty('artifactory_password')) {
+              username artifactory_user
+              password artifactory_password
+            }
+          }
     }
     mavenLocal()
     mavenCentral()

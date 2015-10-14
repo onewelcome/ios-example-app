@@ -25,10 +25,12 @@ allprojects {
     maven { url "$androidHome/extras/google/m2repository/"}
 
     maven {
-      url "https://buildserver.onegini.com/nexus/content/groups/public/"
+      url "https://repo.onegini.com/artifactory/public"
       credentials {
-        username mavenUser
-        password mavenPassword
+        if(project.hasProperty('artifactory_user') && project.hasProperty('artifactory_password')) {
+          username artifactory_user
+          password artifactory_password
+        }
       }
     }
     mavenLocal()
@@ -39,7 +41,7 @@ allprojects {
 dependencies {
   compile files('dexguard/lib/dexguard_util.jar')
   // The onegini sdk
-  compile 'com.onegini.mobile.sdk.android:library:4.02.01:release@aar'
+  compile 'com.onegini.mobile.sdk.android:library:4.02.01-SNAPSHOT:release@aar'
   // Google play services
 //  compile 'com.google.android.gms:play-services-base:7.8.0'
 //  compile 'com.google.android.gms:play-services-gcm:7.8.0'

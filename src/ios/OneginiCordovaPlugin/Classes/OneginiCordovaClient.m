@@ -420,11 +420,10 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     NSString *paramsEncodingString = [command.arguments objectAtIndex:3];
     NSDictionary *params = [command.arguments objectAtIndex:4];
     NSDictionary *headers = nil;
-    if (command.arguments.count>5)
+    if (command.arguments.count>5){
         headers = [command.arguments objectAtIndex:5];
-    
-    headers = [self convertNumbersToStringsInDictionary:headers];
-
+        headers = [self convertNumbersToStringsInDictionary:headers];
+    }
     HTTPRequestMethod requestMethod = [self requestMethodForString:requestMethodString];
     HTTPClientParameterEncoding parameterEncoding = [self parameterEncodingForString:paramsEncodingString];
 
@@ -454,11 +453,10 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     NSString *paramsEncodingString = [command.arguments objectAtIndex:3];
     NSDictionary *params = [command.arguments objectAtIndex:4];
     NSDictionary *headers = nil;
-    if (command.arguments.count>5)
+    if (command.arguments.count>5){
         headers = [command.arguments objectAtIndex:5];
-    
-    headers = [self convertNumbersToStringsInDictionary:headers];
-    
+        headers = [self convertNumbersToStringsInDictionary:headers];
+    }
     HTTPRequestMethod requestMethod = [self requestMethodForString:requestMethodString];
     HTTPClientParameterEncoding parameterEncoding = [self parameterEncodingForString:paramsEncodingString];
 

@@ -419,7 +419,11 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     NSString *requestMethodString = [command.arguments objectAtIndex:2];
     NSString *paramsEncodingString = [command.arguments objectAtIndex:3];
     NSDictionary *params = [command.arguments objectAtIndex:4];
-    NSDictionary *headers = [command.arguments objectAtIndex:5];
+    NSDictionary *headers = nil;
+    if (command.arguments.count>5)
+        headers = [command.arguments objectAtIndex:5];
+    
+    headers = [self convertNumbersToStringsInDictionary:headers];
 
     HTTPRequestMethod requestMethod = [self requestMethodForString:requestMethodString];
     HTTPClientParameterEncoding parameterEncoding = [self parameterEncodingForString:paramsEncodingString];
@@ -449,7 +453,11 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     NSString *requestMethodString = [command.arguments objectAtIndex:2];
     NSString *paramsEncodingString = [command.arguments objectAtIndex:3];
     NSDictionary *params = [command.arguments objectAtIndex:4];
-    NSDictionary *headers = [command.arguments objectAtIndex:5];
+    NSDictionary *headers = nil;
+    if (command.arguments.count>5)
+        headers = [command.arguments objectAtIndex:5];
+    
+    headers = [self convertNumbersToStringsInDictionary:headers];
     
     HTTPRequestMethod requestMethod = [self requestMethodForString:requestMethodString];
     HTTPClientParameterEncoding parameterEncoding = [self parameterEncodingForString:paramsEncodingString];
@@ -997,6 +1005,19 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
         ((MainViewController*)self.viewController).supportedOrientations = [NSArray arrayWithObjects:[NSNumber numberWithInteger:UIInterfaceOrientationPortrait], [NSNumber numberWithInteger:UIInterfaceOrientationPortraitUpsideDown], nil];
         self.supportedOrientations = UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskPortraitUpsideDown;
     }
+}
+
+
+-(NSDictionary*)convertNumbersToStringsInDictionary:(NSDictionary*)dictionary{
+    NSMutableDictionary* convertedDictionary = [[NSMutableDictionary alloc]init];
+    for (NSString* key in dictionary.allKeys) {
+        id object = [dictionary objectForKey:key];
+        if ([object isKindOfClass:[NSNumber class]])
+            [convertedDictionary setValue:[object stringValue] forKey:key];
+        else
+            [convertedDictionary setValue:object forKey:key];
+    }
+    return convertedDictionary;
 }
 
 #pragma mark -

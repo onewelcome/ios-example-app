@@ -431,10 +431,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     NSString *requestMethodString = [command.arguments objectAtIndex:2];
     NSString *paramsEncodingString = [command.arguments objectAtIndex:3];
     NSDictionary *params = [command.arguments objectAtIndex:4];
-    NSDictionary *headers = [command.arguments objectAtIndex:5];
-    if (headers != nil) {
-        headers = [self convertNumbersToStringsInDictionary:headers];
-    }
+    NSDictionary *headers = [[command.arguments objectAtIndex:5] isKindOfClass: [NSNull class]] ? nil : [command.arguments objectAtIndex:5];
     
     HTTPRequestMethod requestMethod = [self requestMethodForString:requestMethodString];
     HTTPClientParameterEncoding parameterEncoding = [self parameterEncodingForString:paramsEncodingString];
@@ -442,14 +439,14 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     self.fetchResourceCommandTxId = command.callbackId;
 
     if (isAnonymous) {
-        if (headers){
-            [oneginiClient fetchAnonymousResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding headers:headers delegate:self];
+        if (headers != nil){
+            [oneginiClient fetchAnonymousResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding headers:[self convertNumbersToStringsInDictionary:headers] delegate:self];
         } else {
             [oneginiClient fetchAnonymousResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding delegate:self];
         }
     } else {
-        if (headers){
-            [oneginiClient fetchResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding headers:headers delegate:self];
+        if (headers != nil){
+            [oneginiClient fetchResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding headers:[self convertNumbersToStringsInDictionary:headers] delegate:self];
         } else {
             [oneginiClient fetchResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding delegate:self];
         }

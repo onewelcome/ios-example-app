@@ -1,0 +1,61 @@
+apply plugin: 'maven'
+
+def pluginSDKiOSDir = 'src/ios/OneginiSDKiOS'
+def headersDir = pluginSDKiOSDir + '/Headers'
+
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+  }
+}
+
+allprojects {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+
+    maven {
+      url "https://repo.onegini.com/artifactory/public"
+      credentials {
+        if(project.hasProperty('artifactory_user') && project.hasProperty('artifactory_password')) {
+          username artifactory_user
+          password artifactory_password
+        }
+      }
+    }
+  }
+}
+
+configurations {
+  compile
+}
+
+dependencies {
+  // The onegini sdk
+  compile 'com.onegini.mobile.sdk.ios:OneginiSDKiOS:4.03.00:Release-fat-binary@a'
+  compile 'com.onegini.mobile.sdk.ios:OneginiSDKiOS:4.03.00:Release-iphoneos.headers@tar'
+}
+
+task prepareTargetDirectory {
+  delete fileTree(dir: pluginSDKiOSDir)
+  file(pluginSDKiOSDir).mkdirs();
+  file(headersDir).mkdirs();
+}
+
+task downloadLibs(type: Copy, dependsOn: prepareTargetDirectory) {
+  into(pluginSDKiOSDir)
+  from(configurations.compile)
+}
+
+task resolveDependencies(type: Copy, dependsOn: downloadLibs) {
+  def headersPackage
+
+  configurations.compile.each {
+    if (it.name.endsWith(".tar")) {
+      headersPackage = it.absoluteFile;
+    }
+  }
+  from tarTree(headersPackage)
+  into headersDir
+}

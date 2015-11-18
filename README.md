@@ -17,7 +17,7 @@ for iOS simulator.
 #### Resolving dependencies
 Plugin dependencies needs to be resolved before it can be installed in Cordova application.
 
-    gradle -b plugin.gradle clean resolveDependencies
+    gradle clean resolveDependencies
 
 
 # 2. Package contents.

@@ -14,6 +14,12 @@ for iOS real device deployment support, or/and
     npm install -g ios-sim
 for iOS simulator.
 
+#### Resolving dependencies
+Plugin dependencies needs to be resolved before it can be installed in Cordova application.
+
+    gradle -b plugin.gradle clean resolveDependencies
+
+
 # 2. Package contents.
 Cordova-plugin package contents: <br>
 ./platforms - contains platform specific plugin implementation - currently iOS <br>

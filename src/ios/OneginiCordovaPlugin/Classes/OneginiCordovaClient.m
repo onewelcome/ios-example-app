@@ -403,54 +403,54 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     }
 }
 
+static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
+
 - (void)fetchResource:(CDVInvokedUrlCommand *)command {
-    if (![self isConnected]){
-        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
-        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-    }
-    if (command.arguments.count != 6) {
-        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 5 arguments but received %lu", (unsigned long)command.arguments.count]];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-        return;
-    }
-
-    NSString *path = [command.arguments objectAtIndex:0];
-    NSArray *scopes = [command.arguments objectAtIndex:1];
-    NSString *requestMethodString = [command.arguments objectAtIndex:2];
-    NSString *paramsEncodingString = [command.arguments objectAtIndex:3];
-    NSDictionary *params = [command.arguments objectAtIndex:4];
-
-    HTTPRequestMethod requestMethod = [self requestMethodForString:requestMethodString];
-    HTTPClientParameterEncoding parameterEncoding = [self parameterEncodingForString:paramsEncodingString];
-
-    self.fetchResourceCommandTxId = command.callbackId;
-
-    [oneginiClient fetchResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding delegate:self];
+    [self performResourceCall:command isAnonymous:NO];
 }
 
 - (void)fetchAnonymousResource:(CDVInvokedUrlCommand *)command {
+    [self performResourceCall:command isAnonymous:YES];
+}
+
+- (void)performResourceCall:(CDVInvokedUrlCommand*)command isAnonymous:(BOOL)isAnonymous {
     if (![self isConnected]){
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        return;
     }
-    if (command.arguments.count != 6) {
-        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 5 arguments but received %lu", (unsigned long)command.arguments.count]];
+    
+    if (command.arguments.count != PARAMETERS_WITH_HEADERS_LENGTH) {
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 6 arguments but received %lu", (unsigned long)command.arguments.count]];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         return;
     }
-
+    
     NSString *path = [command.arguments objectAtIndex:0];
     NSArray *scopes = [command.arguments objectAtIndex:1];
     NSString *requestMethodString = [command.arguments objectAtIndex:2];
     NSString *paramsEncodingString = [command.arguments objectAtIndex:3];
     NSDictionary *params = [command.arguments objectAtIndex:4];
-
+    NSDictionary *headers = [[command.arguments objectAtIndex:5] isKindOfClass: [NSNull class]] ? nil : [command.arguments objectAtIndex:5];
+    
     HTTPRequestMethod requestMethod = [self requestMethodForString:requestMethodString];
     HTTPClientParameterEncoding parameterEncoding = [self parameterEncodingForString:paramsEncodingString];
-
+    
     self.fetchResourceCommandTxId = command.callbackId;
 
-    [oneginiClient fetchAnonymousResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding delegate:self];
+    if (isAnonymous) {
+        if (headers != nil){
+            [oneginiClient fetchAnonymousResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding headers:[self convertNumbersToStringsInDictionary:headers] delegate:self];
+        } else {
+            [oneginiClient fetchAnonymousResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding delegate:self];
+        }
+    } else {
+        if (headers != nil){
+            [oneginiClient fetchResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding headers:[self convertNumbersToStringsInDictionary:headers] delegate:self];
+        } else {
+            [oneginiClient fetchResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding delegate:self];
+        }
+    }
 }
 
 - (void)logout:(CDVInvokedUrlCommand *)command {
@@ -987,6 +987,19 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
         ((MainViewController*)self.viewController).supportedOrientations = [NSArray arrayWithObjects:[NSNumber numberWithInteger:UIInterfaceOrientationPortrait], [NSNumber numberWithInteger:UIInterfaceOrientationPortraitUpsideDown], nil];
         self.supportedOrientations = UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskPortraitUpsideDown;
     }
+}
+
+
+-(NSDictionary*)convertNumbersToStringsInDictionary:(NSDictionary*)dictionary{
+    NSMutableDictionary* convertedDictionary = [[NSMutableDictionary alloc]init];
+    for (NSString* key in dictionary.allKeys) {
+        id object = [dictionary objectForKey:key];
+        if ([object isKindOfClass:[NSNumber class]])
+            [convertedDictionary setValue:[object stringValue] forKey:key];
+        else
+            [convertedDictionary setValue:object forKey:key];
+    }
+    return convertedDictionary;
 }
 
 #pragma mark -

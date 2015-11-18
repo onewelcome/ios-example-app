@@ -48,7 +48,7 @@
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGFingerprintDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OneginiSDK.h"/>
 
-    <source-file src="src/ios/OneginiSDKiOS/libOneginiSDKiOS-4.02.00.a" framework="true"/>
+    <source-file src="src/ios/OneginiSDKiOS/OneginiSDKiOS-4.03.00-Release-fat-binary.a" framework="true"/>
 
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>

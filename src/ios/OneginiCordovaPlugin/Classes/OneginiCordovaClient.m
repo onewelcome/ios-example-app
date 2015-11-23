@@ -260,11 +260,16 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
 
 - (void)authorize:(CDVInvokedUrlCommand *)command {
 	[self resetAll];
+    if (command.arguments.count != 1) {
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        return;
+    }
 
 	self.authorizeCommandTxId = command.callbackId;
-
+    
     if ([self isConnected])
-        [oneginiClient authorize:command.arguments];
+        [oneginiClient authorize: [command.arguments objectAtIndex:0]];
     else
         [self authorizationErrorCallbackWIthReason:@"connectivityProblem"];
 }

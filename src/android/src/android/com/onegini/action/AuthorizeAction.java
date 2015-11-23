@@ -65,6 +65,11 @@ public class AuthorizeAction implements OneginiPluginAction {
       return;
     }
 
+    if (args.length() != 1) {
+      callbackContext.error("Failed to authorize, invalid parameter.");
+      return;
+    }
+
     this.callbackContext = callbackContext;
     ForgotPinHandler.setCallbackContext(callbackContext);
     this.context = client.getCordova().getActivity().getApplication();
@@ -77,7 +82,7 @@ public class AuthorizeAction implements OneginiPluginAction {
     }
 
     try {
-      final String[] scopes = new ScopeParser().getScopesAsArray(args);
+      final String[] scopes = new ScopeParser().getScopesAsArray(args.getJSONArray(0));
 
       client.getOneginiClient().authorize(scopes, new OneginiAuthorizationHandler() {
         @Override

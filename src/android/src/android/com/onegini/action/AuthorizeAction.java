@@ -23,6 +23,7 @@ import static com.onegini.util.MessageResourceReader.getMessageForKey;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import android.content.Context;
 import com.onegini.OneginiCordovaPlugin;
@@ -70,12 +71,18 @@ public class AuthorizeAction implements OneginiPluginAction {
 
     if (isNotConnected(context)) {
       sendCallbackResult(callbackResultBuilder
-              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
-              .build());
+          .withErrorReason(CONNECTIVITY_PROBLEM.getName())
+          .build());
       return;
     }
 
-    final String[] scopes = new ScopeParser().getScopesAsArray(args);
+    String[] scopes = new String[args.length()];
+    if (args.length() > 0) {
+      try {
+        scopes = new ScopeParser().getScopesAsArray(args.getJSONArray(0));
+      } catch (final JSONException exception) {
+      }
+    }
 
     client.getOneginiClient().authorize(scopes, new OneginiAuthorizationHandler() {
       @Override

@@ -259,14 +259,19 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
 }
 
 - (void)authorize:(CDVInvokedUrlCommand *)command {
-	[self resetAll];
+    [self resetAll];
+    self.authorizeCommandTxId = command.callbackId;
 
-	self.authorizeCommandTxId = command.callbackId;
-
-    if ([self isConnected])
-        [oneginiClient authorize:command.arguments];
-    else
+    if (![self isConnected]) {
         [self authorizationErrorCallbackWIthReason:@"connectivityProblem"];
+        return;
+    }
+    id scopeArgument = [command.arguments firstObject];
+    if([scopeArgument isKindOfClass:[NSArray class]] && ((NSArray*)scopeArgument).count>0){
+        [oneginiClient authorize:scopeArgument];
+    } else {
+        [oneginiClient authorize:nil];
+    }
 }
 
 - (void)isAuthorized:(CDVInvokedUrlCommand *)command {

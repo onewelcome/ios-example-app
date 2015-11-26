@@ -266,11 +266,11 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
         [self authorizationErrorCallbackWIthReason:@"connectivityProblem"];
         return;
     }
-
-    if (command.arguments.count > 0) {
-        [oneginiClient authorize: [command.arguments objectAtIndex:0]];
+    id scopeArgument = [command.arguments firstObject];
+    if([scopeArgument isKindOfClass:[NSArray class]] && ((NSArray*)scopeArgument).count>0){
+        [oneginiClient authorize:scopeArgument];
     } else {
-        [oneginiClient authorize: nil];
+        [oneginiClient authorize:nil];
     }
 }
 

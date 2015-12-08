@@ -15,3 +15,6 @@ src/android/CordovaLib/build
 src/android/build
 
 *.orig
+
+.gradle/
+build/

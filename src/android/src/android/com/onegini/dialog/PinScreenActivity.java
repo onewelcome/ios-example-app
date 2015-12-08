@@ -18,7 +18,9 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,7 +32,7 @@ public class PinScreenActivity extends CordovaActivity {
 
   private static final int MAX_DIGITS = 5;
 
-  private static final String HTML_CHAR_DOT = "&#9679;";
+  private static final Spanned HTML_CHAR_DOT = Html.fromHtml("&#9679;");
 
   public static final String EXTRA_MODE = "mode";
   public static final String EXTRA_MESSAGE = "message";
@@ -302,10 +304,14 @@ public class PinScreenActivity extends CordovaActivity {
 
   private void onDigitKeyClicked(final int digit) {
     if (cursorIndex < MAX_DIGITS) {
-      pin[cursorIndex++] = Character.forDigit(digit, 10);
-      updateInputView();
       deleteButton.setVisibility(View.VISIBLE);
-      if (cursorIndex == MAX_DIGITS) {
+      pinInputs[cursorIndex].setText(HTML_CHAR_DOT);
+      pinInputs[cursorIndex].setBackgroundResource(inputNormalBackgroundResourceId);
+      pin[cursorIndex++] = Character.forDigit(digit, 10);
+      if (cursorIndex < MAX_DIGITS) {
+        pinInputs[cursorIndex].setText("");
+        pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
+      } else {
         onMaxDigitsReached();
       }
     }
@@ -313,8 +319,10 @@ public class PinScreenActivity extends CordovaActivity {
 
   private void onDeleteKeyClicked() {
     if (cursorIndex > 0) {
+      pinInputs[cursorIndex].setBackgroundResource(inputNormalBackgroundResourceId);
       pin[--cursorIndex] = '\0';
-      updateInputView();
+      pinInputs[cursorIndex].setText("");
+      pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
       if (cursorIndex == 0) {
         deleteButton.setVisibility(View.INVISIBLE);
       }
@@ -323,18 +331,24 @@ public class PinScreenActivity extends CordovaActivity {
 
   private void onMaxDigitsReached() {
     errorTextView.setVisibility(View.GONE);
-    if (mode==SCREEN_MODE_LOGIN || mode==SCREEN_MODE_LOGIN_BEFORE_CHANGE_PIN) {
-      CurrentPinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);
-    } else {
-      CreatePinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);
-    }
+    deleteButton.setVisibility(View.INVISIBLE);
+    // slightly delay the SDK call, so it won't make a lag during UI changes
+    final Handler handler = new Handler();
+    handler.postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        if (mode == SCREEN_MODE_LOGIN || mode == SCREEN_MODE_LOGIN_BEFORE_CHANGE_PIN) {
+          CurrentPinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);
+        } else {
+          CreatePinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);
+        }
+      }
+    }, 100);
   }
 
   private void updateInputView() {
-    String htmlCharacter;
     for (int i = 0; i < MAX_DIGITS; i++) {
-      htmlCharacter = (pin[i] == '\0') ? "" : HTML_CHAR_DOT;
-      pinInputs[i].setText(Html.fromHtml(htmlCharacter));
+      pinInputs[i].setText((pin[i] == '\0') ? "" : HTML_CHAR_DOT);
       pinInputs[i].setBackgroundResource(inputNormalBackgroundResourceId);
     }
     if (cursorIndex < MAX_DIGITS) {

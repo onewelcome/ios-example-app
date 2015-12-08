@@ -12,6 +12,8 @@ import com.onegini.scope.ScopeParser;
 
 public class ResourceRequest {
 
+  public static final int PARAMETERS_WITH_HEADERS_LENGTH = 6;
+
   private final String path;
   private final String[] scopes;
   private final String requestMethodString;
@@ -33,13 +35,7 @@ public class ResourceRequest {
   }
 
   public static String[] parseScopes(final JSONArray scopes) {
-    final ScopeParser scopeParser = new ScopeParser();
-    try {
-      return scopeParser.getScopesAsArray(scopes);
-    } catch (JSONException e) {
-      e.printStackTrace();
-      return null;
-    }
+    return new ScopeParser().getScopesAsArray(scopes);
   }
 
   public ResourceRequest(final String path, final JSONArray scopes, final String requestMethodString, final String paramsEncodingString,

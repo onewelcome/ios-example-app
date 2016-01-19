@@ -39,14 +39,14 @@
 
   <include
     layout="@layout/keyboard"
-    android:id="@+id/included_keyboard"/>
+    android:id="@+id/pin_keyboard" />
 
   <!-- body -->
   <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f0f0f0"
-    android:layout_above="@+id/included_keyboard"
+    android:layout_above="@+id/pin_keyboard"
     android:layout_below="@+id/screen_header"
     android:padding="15dp">
 

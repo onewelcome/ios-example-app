@@ -18,17 +18,17 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import com.onegini.action.ForgotPinHandler;
 import com.onegini.dialog.helper.PinActivityMessageMapper;
 import com.onegini.util.DeviceUtil;
 
-public class PinScreenActivity extends CordovaActivity {
+public class PinScreenActivity extends CordovaActivity implements PinKeyboardActivity {
 
   private static final int MAX_DIGITS = 5;
 
@@ -45,15 +45,14 @@ public class PinScreenActivity extends CordovaActivity {
   public static final int SCREEN_MODE_CHANGE_PIN_CREATE_PIN     = 4;
   public static final int SCREEN_MODE_CHANGE_PIN_CONFIRM_PIN    = 5;
 
-  private final char[] pin = new char[MAX_DIGITS];
-
   private final TextView[] pinInputs = new TextView[MAX_DIGITS];
   private Resources resources;
   private String packageName;
   private Typeface customFontRegular;
   private int mode = SCREEN_MODE_LOGIN;
-  private int cursorIndex = 0;
   private String screenMessage;
+  private PinKeyboard pinKeyboard;
+  private int cursorIndex = 0;
 
   private TextView screenTitleTextView;
   private TextView keyboardTitleTextView;
@@ -62,7 +61,7 @@ public class PinScreenActivity extends CordovaActivity {
   private TextView pinForgottenTextView;
   private TextView errorTextView;
 
-  private Button deleteButton;
+
   private int inputFocusedBackgroundResourceId;
   private int inputNormalBackgroundResourceId;
 
@@ -85,13 +84,7 @@ public class PinScreenActivity extends CordovaActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    updateInputView();
-  }
-
-  @Override
-  protected void onPause() {
-    resetPin();
-    super.onPause();
+    resetView();
   }
 
   @Override
@@ -110,7 +103,7 @@ public class PinScreenActivity extends CordovaActivity {
     parseIntent();
     initAssets();
     initLayout();
-    resetPin();
+    initKeyboard();
   }
 
   @Override
@@ -146,7 +139,14 @@ public class PinScreenActivity extends CordovaActivity {
 
     initTextViews();
     initPinInputs();
-    initPinButtons();
+  }
+
+  private void initKeyboard() {
+    if (mode == SCREEN_MODE_LOGIN || mode == SCREEN_MODE_LOGIN_BEFORE_CHANGE_PIN) {
+      pinKeyboard = new PinKeyboard(this, MAX_DIGITS, CurrentPinNativeDialogHandler.oneginiPinProvidedHandler);
+    } else {
+      pinKeyboard = new PinKeyboard(this, MAX_DIGITS, CreatePinNativeDialogHandler.oneginiPinProvidedHandler);
+    }
   }
 
   private void initTextViews() {
@@ -268,100 +268,41 @@ public class PinScreenActivity extends CordovaActivity {
     }
   }
 
-  private void initPinButtons() {
-    int buttonId;
-    for (int digit = 0; digit < 10; digit++) {
-      buttonId = resources.getIdentifier("pin_key_" + digit, "id", packageName);
-      initPinDigitButton(buttonId, digit);
-    }
-
-    final int delButtonId = resources.getIdentifier("pin_key_del", "id", packageName);
-    initPinDeleteButton(delButtonId);
+  @Override
+  public TableLayout getKeyboardLayout() {
+    return (TableLayout) findViewById(resources.getIdentifier("pin_keyboard", "id", packageName));
   }
 
-  private void initPinDigitButton(final int buttonId, final int buttonValue) {
-    final Button pinButton = (Button) findViewById(buttonId);
-    pinButton.setTypeface(customFontRegular);
-    pinButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(final View v) {
-        onDigitKeyClicked(buttonValue);
-      }
-    });
+  @Override
+  public void onDeleteKeyClicked() {
+    pinInputs[cursorIndex].setBackgroundResource(inputNormalBackgroundResourceId);
+    cursorIndex--;
+    pinInputs[cursorIndex].setText("");
+    pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
   }
 
-  private void initPinDeleteButton(final int buttonId) {
-    deleteButton = (Button) findViewById(buttonId);
-    deleteButton.setTypeface(customFontRegular);
-    deleteButton.setText(Html.fromHtml("&larr;"));
-    deleteButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(final View v) {
-        onDeleteKeyClicked();
-      }
-    });
-  }
+  @Override
+  public void onDigitKeyClicked(final boolean lastDigitReceived) {
+    pinInputs[cursorIndex].setText(HTML_CHAR_DOT);
+    pinInputs[cursorIndex].setBackgroundResource(inputNormalBackgroundResourceId);
 
-  private void onDigitKeyClicked(final int digit) {
-    if (cursorIndex < MAX_DIGITS) {
-      deleteButton.setVisibility(View.VISIBLE);
-      pinInputs[cursorIndex].setText(HTML_CHAR_DOT);
-      pinInputs[cursorIndex].setBackgroundResource(inputNormalBackgroundResourceId);
-      pin[cursorIndex++] = Character.forDigit(digit, 10);
-      if (cursorIndex < MAX_DIGITS) {
-        pinInputs[cursorIndex].setText("");
-        pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
-      } else {
-        onMaxDigitsReached();
-      }
-    }
-  }
-
-  private void onDeleteKeyClicked() {
-    if (cursorIndex > 0) {
-      pinInputs[cursorIndex].setBackgroundResource(inputNormalBackgroundResourceId);
-      pin[--cursorIndex] = '\0';
+    if (lastDigitReceived) {
+      errorTextView.setVisibility(View.GONE);
+    } else {
+      cursorIndex++;
       pinInputs[cursorIndex].setText("");
       pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
-      if (cursorIndex == 0) {
-        deleteButton.setVisibility(View.INVISIBLE);
-      }
     }
   }
 
-  private void onMaxDigitsReached() {
-    errorTextView.setVisibility(View.GONE);
-    deleteButton.setVisibility(View.INVISIBLE);
-    // slightly delay the SDK call, so it won't make a lag during UI changes
-    final Handler handler = new Handler();
-    handler.postDelayed(new Runnable() {
-      @Override
-      public void run() {
-        if (mode == SCREEN_MODE_LOGIN || mode == SCREEN_MODE_LOGIN_BEFORE_CHANGE_PIN) {
-          CurrentPinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);
-        } else {
-          CreatePinNativeDialogHandler.oneginiPinProvidedHandler.onPinProvided(pin);
-        }
-      }
-    }, 100);
-  }
-
-  private void updateInputView() {
+  private void resetView() {
+    cursorIndex = 0;
+    pinKeyboard.reset();
     for (int i = 0; i < MAX_DIGITS; i++) {
-      pinInputs[i].setText((pin[i] == '\0') ? "" : HTML_CHAR_DOT);
+      pinInputs[i].setText("");
       pinInputs[i].setBackgroundResource(inputNormalBackgroundResourceId);
     }
-    if (cursorIndex < MAX_DIGITS) {
-      pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
-    }
-  }
-
-  private void resetPin() {
-    for (int index = 0; index < MAX_DIGITS; index++) {
-      pin[index] = '\0';
-    }
-    deleteButton.setVisibility(View.INVISIBLE);
-    cursorIndex = 0;
+    pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
   }
 
   private boolean isLoginMode() {

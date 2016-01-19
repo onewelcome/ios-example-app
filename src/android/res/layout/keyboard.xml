@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/pin_keyboard"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:background="#668945"
@@ -70,7 +69,7 @@
     <Button
       android:id="@+id/pin_key_del"
       style="@style/PinKeyboardKeyButton"
-      android:text="X"
+      android:text="\u232b"
       android:visibility="invisible"/>
   </TableRow>
 </TableLayout>

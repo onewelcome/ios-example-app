@@ -169,6 +169,10 @@
                  target-dir="src/com/onegini/dialog/"/>
     <source-file src="src/android/src/android/com/onegini/dialog/PinScreenActivity.java"
                  target-dir="src/com/onegini/dialog"/>
+    <source-file src="src/android/src/android/com/onegini/dialog/PinKeyboard.java"
+                 target-dir="src/com/onegini/dialog"/>
+    <source-file src="src/android/src/android/com/onegini/dialog/PinKeyboardActivity.java"
+                 target-dir="src/com/onegini/dialog"/>
     <source-file src="src/android/src/android/com/onegini/exception/PluginConfigException.java"
                  target-dir="src/com/onegini/exception"/>
     <!--<source-file src="src/android/src/android/com/onegini/gcm/GCMHelper.java" target-dir="src/com/onegini/gcm/" />-->

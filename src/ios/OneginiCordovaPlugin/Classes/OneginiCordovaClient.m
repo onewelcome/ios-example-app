@@ -1031,11 +1031,10 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         self.pinViewController = [[PinViewController alloc] initWithNibName:@"PINViewController" bundle:nil];
     }
 
-
+    self.pinViewController.messages = messages;
     self.pinViewController.delegate = self;
     self.pinViewController.supportedOrientations = self.supportedOrientations;
     self.pinViewController.mode = mode;
-    self.pinViewController.messages = messages;
 
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{kMethod:@"closeInAppBrowser"}];
     pluginResult.keepCallback = @(1);
@@ -1117,6 +1116,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 #pragma mark PinEntryContainerViewControllerDelegate
 - (void)pinEntered:(NSString *)pin {
 
+    [self.pinViewController reset];
     switch (pinEntryMode) {
         case PINCheckMode: {
             [oneginiClient confirmCurrentPin:pin];
@@ -1178,6 +1178,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
                 verifyPin = nil;
                 pinEntryMode = PINChangeNewPinMode;
                 self.pinViewController.mode = PINChangeNewPinMode;
+                [self.pinViewController reset];
                 [self.pinViewController invalidPinWithReason:[messages objectForKey:@"PIN_CODES_DIFFERS"]];
             } else {
                 // The user entered the second verification PIN, check if they are equal and confirm the PIN

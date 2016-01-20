@@ -7,6 +7,7 @@
 //
 
 #import "PinViewController.h"
+#import "PopupViewController.h"
 
 @interface PinViewController()
 
@@ -17,6 +18,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *errorLabel;
+@property (weak, nonatomic) IBOutlet UIButton *helpButton;
+@property (weak, nonatomic) IBOutlet UIButton *pinForgottenButton;
+
+@property (nonatomic) PopupViewController* popupViewController;
 
 @property (weak, nonatomic) IBOutlet UIButton *key1;
 @property (weak, nonatomic) IBOutlet UIButton *key2;
@@ -48,10 +53,14 @@
 -(void)viewDidLoad{
     [super viewDidLoad];
     self.pinEntry = [NSMutableArray new];
+    [self.helpButton setTitle:[self.messages objectForKey:@"HELP_LINK_TITLE"] forState:UIControlStateNormal];
+    [self.pinForgottenButton setTitle:[self.messages objectForKey:@"PIN_FORGOTTEN_TITLE"] forState:UIControlStateNormal];
 }
 
--(void)invalidPin {
-    
+-(void)viewWillAppear:(BOOL)animated{   
+    [super viewDidAppear:animated];
+    self.mode = self.mode;
+    [self initPopupViewContoroller];
 }
 
 -(void)invalidPinWithReason:(NSString *)message {
@@ -74,24 +83,32 @@
     _mode = mode;
     switch (mode) {
         case PINCheckMode:
-            self.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_KEYBOARD_TITLE"];
+            self.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_SCREEN_TITLE"];
+            self.errorLabel.text = @"";
             break;
         case PINRegistrationMode:
             self.titleLabel.text = [self.messages objectForKey:@"CREATE_PIN_SCREEN_TITLE"];
+            self.errorLabel.text = @"";
             break;
         case PINRegistrationVerififyMode:
             self.titleLabel.text = [self.messages objectForKey:@"CONFIRM_PIN_SCREEN_TITLE"];
+            self.errorLabel.text = @"";
             break;
         case PINChangeCheckMode:
             self.titleLabel.text = [self.messages objectForKey:@"LOGIN_BEFORE_CHANGE_PIN_SCREEN_TITLE"];
+            self.errorLabel.text = @"";
             break;
         case PINChangeNewPinMode:
             self.titleLabel.text = [self.messages objectForKey:@"CHANGE_PIN_SCREEN_TITLE"];
+            self.errorLabel.text = @"";
             break;
         case PINChangeNewPinVerifyMode:
             self.titleLabel.text = [self.messages objectForKey:@"CONFIRM_CHANGE_PIN_SCREEN_TITLE"];
+            self.errorLabel.text = @"";
             break;
         default:
+            self.titleLabel.text = @"";
+            self.errorLabel.text = @"";
             break;
     }
 }
@@ -166,6 +183,115 @@
     }
     self.pinEntry = [NSMutableArray new];
     self.currentPin = 0;
+}
+
+
+-(void)initPopupViewContoroller{
+    PopupViewController* popupViewController = self.popupViewController = [[PopupViewController alloc] initWithNibName:@"PopupViewController" bundle:nil];
+    popupViewController.view.layer.masksToBounds = NO;
+    popupViewController.view.layer.shadowRadius = 50;
+    popupViewController.view.layer.shadowColor = [[UIColor colorWithWhite:0 alpha:1]CGColor];
+    popupViewController.view.layer.shadowOpacity = 0.5;
+}
+
+-(void)centerPopupView{
+    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
+        int popupWidth = 740;
+        int popupHeight = 380;
+        self.popupViewController.view.frame = CGRectMake(self.view.bounds.size.width/2-popupWidth/2, self.view.bounds.size.height/2-popupHeight/2, popupWidth, popupHeight);
+    } else {
+        self.popupViewController.view.frame = CGRectMake(self.view.bounds.size.width/2-self.popupViewController.view.frame.size.width/2,
+                                                         self.view.bounds.size.height/2-MIN(self.popupViewController.view.frame.size.height, self.view.bounds.size.height)/2,
+                                                         self.popupViewController.view.frame.size.width,
+                                                         MIN(self.popupViewController.view.frame.size.height, self.view.bounds.size.height));
+    }
+}
+
+-(void)showPopupView{
+    [self addChildViewController:self.popupViewController];
+    [self centerPopupView];
+    [self.view addSubview:self.popupViewController.view];
+    [self.popupViewController didMoveToParentViewController:self];
+}
+
+-(void)closePopupView{
+    [self.popupViewController willMoveToParentViewController:nil];
+    [self.popupViewController.view removeFromSuperview];
+    [self.popupViewController removeFromParentViewController];
+}
+
+- (IBAction)helpButtonClicked:(id)sender {
+    PopupViewController* popupViewController = self.popupViewController;
+    
+    switch (self.mode) {
+        case PINCheckMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_HELP_TITLE"];
+            [self.popupViewController setPopupMessage:[self.messages objectForKey:@"LOGIN_PIN_HELP_MESSAGE"]];
+            break;
+        case PINRegistrationMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"CREATE_PIN_HELP_TITLE"];
+            [self.popupViewController setPopupMessage:[self.messages objectForKey:@"CREATE_PIN_HELP_MESSAGE"]];
+            break;
+        case PINRegistrationVerififyMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"CONFIRM_PIN_HELP_TITLE"];
+            [self.popupViewController setPopupMessage:[self.messages objectForKey:@"CONFIRM_PIN_HELP_MESSAGE"]];
+            break;
+        case PINChangeCheckMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_BEFORE_CHANGE_PIN_HELP_TITLE"];
+            [self.popupViewController setPopupMessage:[self.messages objectForKey:@"LOGIN_BEFORE_CHANGE_PIN_HELP_MESSAGE"]];
+            break;
+        case PINChangeNewPinMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"CHANGE_PIN_HELP_TITLE"];
+            [self.popupViewController setPopupMessage:[self.messages objectForKey:@"CHANGE_PIN_HELP_MESSAGE"]];
+            break;
+        case PINChangeNewPinVerifyMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"CONFIRM_CHANGE_PIN_HELP_TITLE"];
+            [self.popupViewController setPopupMessage:[self.messages objectForKey:@"CONFIRM_CHANGE_PIN_HELP_MESSAGE"]];
+            break;
+        default:
+            break;
+    }
+    [popupViewController.proceedButton setTitle:[self.messages objectForKey:@"HELP_POPUP_OK"] forState:UIControlStateNormal] ;
+    [self showPopupView];
+    
+    popupViewController.cancelButtonVisible = NO;
+    
+    __weak PinViewController* weakSelf = self;
+    popupViewController.proceedBlock = ^{
+        [weakSelf closePopupView];
+    };
+    popupViewController.cancelBlock = ^{
+        [weakSelf closePopupView];
+    };
+    popupViewController.closeBlock = ^{
+        [weakSelf closePopupView];
+    };
+}
+
+- (IBAction)forgotPinClicked:(id)sender {
+    self.popupViewController.titleLabel.text = [self.messages objectForKey:@"DISCONNECT_FORGOT_PIN_TITLE"];
+    [self.popupViewController setPopupMessage:[self.messages objectForKey:@"DISCONNECT_FORGOT_PIN"]];
+    [self.popupViewController.proceedButton setTitle:[self.messages objectForKey:@"CONFIRM_POPUP_OK"] forState:UIControlStateNormal] ;
+    [self.popupViewController.cancelButton setTitle:[self.messages objectForKey:@"CONFIRM_POPUP_CANCEL"] forState:UIControlStateNormal] ;
+    [self showPopupView];
+    
+    self.popupViewController.cancelButtonVisible = YES;
+    
+    __weak PinViewController* weakSelf = self;
+    self.popupViewController.proceedBlock = ^{
+        [weakSelf closePopupView];
+        [weakSelf.delegate pinForgotten];
+    };
+    self.popupViewController.cancelBlock = ^{
+        [weakSelf closePopupView];
+    };
+    self.popupViewController.closeBlock = ^{
+        [weakSelf closePopupView];
+    };
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return self.supportedOrientations;
 }
 
 @end

@@ -12,7 +12,7 @@
 @protocol PinViewControllerDelegate <NSObject>
 
 - (void)pinEntered:(NSString *)pin;
-- (void)pinForgottern;
+- (void)pinForgotten;
 
 @end
 
@@ -22,8 +22,6 @@
 @property (weak, nonatomic) id <PinViewControllerDelegate> delegate;
 @property (nonatomic) NSUInteger supportedOrientations;
 @property (nonatomic) NSDictionary *messages;
-
-- (void)invalidPin;
 
 - (void)invalidPinWithReason:(NSString *)message;
 

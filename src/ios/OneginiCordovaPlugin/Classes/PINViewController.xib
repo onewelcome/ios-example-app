@@ -24,6 +24,7 @@
             <connections>
                 <outlet property="backKey" destination="xJ4-86-Ikq" id="67X-qR-ivQ"/>
                 <outlet property="errorLabel" destination="KVu-Hh-LF0" id="PH9-ET-jRQ"/>
+                <outlet property="helpButton" destination="L3F-oS-bHL" id="gMr-C7-oDw"/>
                 <outlet property="key0" destination="gqW-MG-w36" id="Sxq-2z-VpV"/>
                 <outlet property="key1" destination="jIJ-rh-ayR" id="Luu-nm-AiZ"/>
                 <outlet property="key2" destination="RDN-td-yGp" id="XjR-R4-Q5Y"/>
@@ -39,6 +40,7 @@
                 <outlet property="pin3" destination="0Om-Aa-PZ5" id="kGN-cY-Jvt"/>
                 <outlet property="pin4" destination="Jy4-Yd-1sg" id="7k9-Bp-xvC"/>
                 <outlet property="pin5" destination="0Dp-1M-ns7" id="Yxs-Wh-ThS"/>
+                <outlet property="pinForgottenButton" destination="v1u-aY-kzD" id="g08-EB-YUM"/>
                 <outlet property="pinSlot1" destination="zfF-vv-yWw" id="sB7-Us-TUC"/>
                 <outlet property="pinSlot2" destination="UaK-2c-eHb" id="W2D-v0-zOu"/>
                 <outlet property="pinSlot3" destination="NvV-d8-0BE" id="Ucx-DJ-r5q"/>
@@ -57,6 +59,16 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="v1u-aY-kzD">
+                            <rect key="frame" x="8" y="302" width="273" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <state key="normal" title="Button">
+                                <color key="titleColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="forgotPinClicked:" destination="-1" eventType="touchUpInside" id="vdf-Dt-5nJ"/>
+                            </connections>
+                        </button>
                         <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="WWk-J4-I7k">
                             <rect key="frame" x="8" y="92" width="304" height="384"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -69,8 +81,8 @@
                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provided pin is not valid" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KVu-Hh-LF0">
-                                    <rect key="frame" x="8" y="154" width="288" height="26"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provided pin is not valid" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KVu-Hh-LF0">
+                                    <rect key="frame" x="8" y="146" width="288" height="59"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
@@ -283,6 +295,16 @@
                                     <rect key="frame" x="8" y="20" width="47" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="L3F-oS-bHL">
+                                    <rect key="frame" x="218" y="22" width="94" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Button">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="helpButtonClicked:" destination="-1" eventType="touchUpInside" id="8m2-oh-PJ9"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
@@ -292,7 +314,7 @@
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="0.0" colorSpace="calibratedRGB"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-            <point key="canvasLocation" x="250" y="263"/>
+            <point key="canvasLocation" x="251" y="236"/>
         </view>
     </objects>
     <resources>

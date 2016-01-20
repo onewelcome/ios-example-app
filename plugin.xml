@@ -68,6 +68,7 @@
     <resource-file src="src/generic/pin-occupied-ic.png"/>
     <resource-file src="src/generic/pin-clear-ic.png"/>
 
+    <resource-file src="src/ios/OneginiCordovaPlugin/Resources/key.png"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/buttonPijl.png"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/buttonPijl@2x.png"/>
     <resource-file src="src/ios/OneginiCordovaPlugin/Resources/buttonPijl@3x.png"/>

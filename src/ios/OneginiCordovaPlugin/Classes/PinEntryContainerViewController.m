@@ -347,8 +347,6 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
         default:
             break;
     }
-    
-    
     [popupViewController.proceedButton setTitle:[self.messages objectForKey:@"HELP_POPUP_OK"] forState:UIControlStateNormal] ;
     [self showPopupView];
     
@@ -385,6 +383,7 @@ NSString *kPinKeyFontSize					= @"pinKeyFontSize";
     };
     self.popupViewController.closeBlock = ^{
         [weakSelf closePopupView];
-    };}
+    };
+}
 
 @end

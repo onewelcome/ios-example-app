@@ -81,6 +81,10 @@
 		5C7C00B61BAC4C0900FDAA56 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C00B51BAC4C0900FDAA56 /* XMLReader.m */; };
 		5CB099AB1B65781800D1ADF6 /* PinEntryContainerViewController-4s.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CB099A91B65781800D1ADF6 /* PinEntryContainerViewController-4s.xib */; };
 		5CB099AC1B65781800D1ADF6 /* PinEntryViewController-4s.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CB099AA1B65781800D1ADF6 /* PinEntryViewController-4s.xib */; };
+		5CC1A7401C4E394E00F8B2A7 /* PinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CC1A73F1C4E394E00F8B2A7 /* PinViewController.m */; };
+		5CC1A7471C4E4C4200F8B2A7 /* PINViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CC1A7451C4E4C4200F8B2A7 /* PINViewController.xib */; };
+		5CC1A7481C4E4C4200F8B2A7 /* PINViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CC1A7461C4E4C4200F8B2A7 /* PINViewController~ipad.xib */; };
+		5CC1A74A1C4E612C00F8B2A7 /* key.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CC1A7491C4E612C00F8B2A7 /* key.png */; };
 		5CC592D71B03444000E73832 /* plugin.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5CC592D61B03444000E73832 /* plugin.xml */; };
 		5CE4923D1ADD49420083246F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CE4923C1ADD49420083246F /* Reachability.m */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
@@ -223,6 +227,11 @@
 		5C7C00B51BAC4C0900FDAA56 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		5CB099A91B65781800D1ADF6 /* PinEntryContainerViewController-4s.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PinEntryContainerViewController-4s.xib"; sourceTree = "<group>"; };
 		5CB099AA1B65781800D1ADF6 /* PinEntryViewController-4s.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PinEntryViewController-4s.xib"; sourceTree = "<group>"; };
+		5CC1A73E1C4E394E00F8B2A7 /* PinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinViewController.h; sourceTree = "<group>"; };
+		5CC1A73F1C4E394E00F8B2A7 /* PinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinViewController.m; sourceTree = "<group>"; };
+		5CC1A7451C4E4C4200F8B2A7 /* PINViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PINViewController.xib; sourceTree = "<group>"; };
+		5CC1A7461C4E4C4200F8B2A7 /* PINViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PINViewController~ipad.xib"; sourceTree = "<group>"; };
+		5CC1A7491C4E612C00F8B2A7 /* key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = key.png; sourceTree = "<group>"; };
 		5CC592D61B03444000E73832 /* plugin.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = plugin.xml; path = ../../plugin.xml; sourceTree = "<group>"; };
 		5CD4A5301ACD4DA0000FD948 /* Commons.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Commons.h; sourceTree = "<group>"; };
 		5CE4923B1ADD49420083246F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -292,6 +301,10 @@
 				1D3623250D0F684500981E51 /* AppDelegate.m */,
 				23DBAF421A6528A4001836C4 /* OneginiCordovaClient.h */,
 				23DBAF431A6528A4001836C4 /* OneginiCordovaClient.m */,
+				5CC1A73E1C4E394E00F8B2A7 /* PinViewController.h */,
+				5CC1A73F1C4E394E00F8B2A7 /* PinViewController.m */,
+				5CC1A7451C4E4C4200F8B2A7 /* PINViewController.xib */,
+				5CC1A7461C4E4C4200F8B2A7 /* PINViewController~ipad.xib */,
 			);
 			name = Classes;
 			path = OneginiCordovaPlugin/Classes;
@@ -393,6 +406,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5CC1A7491C4E612C00F8B2A7 /* key.png */,
 				5C11CA0A1B16F998008631B0 /* achtergrond1.jpg */,
 				5C11CA0B1B16F998008631B0 /* achtergrond1@2x.jpg */,
 				5C11CA0C1B16F998008631B0 /* achtergrond2.jpg */,
@@ -600,6 +614,7 @@
 				23B3B5CE1AC974A400F6BB9C /* SourceSansPro-Light.ttf in Resources */,
 				237380E21AC980DC00A9C28F /* pin-clear-ic.png in Resources */,
 				5C44849D1B04C6E8006911AB /* iphone-keyboard.png in Resources */,
+				5CC1A7481C4E4C4200F8B2A7 /* PINViewController~ipad.xib in Resources */,
 				5C11CA2B1B16F998008631B0 /* logo~ipad.png in Resources */,
 				5CB099AB1B65781800D1ADF6 /* PinEntryContainerViewController-4s.xib in Resources */,
 				5C11CA261B16F998008631B0 /* iphone-pinslot-selected.png in Resources */,
@@ -609,6 +624,8 @@
 				7E7966E31810823500FA85AD /* icon-60@2x.png in Resources */,
 				23A0C3B81A66A97B0087EEC4 /* PositiveSSLCA2.cer in Resources */,
 				7E7966E61810823500FA85AD /* icon-small.png in Resources */,
+				5CC1A74A1C4E612C00F8B2A7 /* key.png in Resources */,
+				5CC1A7471C4E4C4200F8B2A7 /* PINViewController.xib in Resources */,
 				3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */,
 				5C11CA291B16F998008631B0 /* logo.png in Resources */,
 				23B3B5D21AC974A400F6BB9C /* SourceSansPro-SemiboldItalic.ttf in Resources */,
@@ -670,7 +687,9 @@
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				23CC2D081AA43F890056F377 /* OneginiCordovaClient.m in Sources */,
 				5C7C00B61BAC4C0900FDAA56 /* XMLReader.m in Sources */,
+				5CC1A7401C4E394E00F8B2A7 /* PinViewController.m in Sources */,
 				23B3B5B41AC9746A00F6BB9C /* PinEntryViewController.m in Sources */,
+				5C1666B31C4F89E500413295 /* SecurityController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,6 +710,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -727,6 +747,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OneginiCordovaPlugin/OneginiCordovaPlugin-Prefix.pch";

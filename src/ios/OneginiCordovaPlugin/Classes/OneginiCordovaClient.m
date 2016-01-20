@@ -1022,13 +1022,13 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
  */
 
 - (void)showPinEntryViewInMode:(PINEntryModes)mode {
-    if ([[self getTopViewController] isKindOfClass:[PinEntryContainerViewController class]]){
+    if ([[self getTopViewController] isKindOfClass:[PinViewController class]]){
         return;
     }
     if ([[UIScreen mainScreen] bounds].size.height == 480){
-        self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController-4s" bundle:nil];
+        self.pinViewController = [[PinViewController alloc] initWithNibName:@"PINViewController" bundle:nil];
     } else {
-        self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
+        self.pinViewController = [[PinViewController alloc] initWithNibName:@"PINViewController" bundle:nil];
     }
 
 
@@ -1115,7 +1115,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 
 #pragma mark -
 #pragma mark PinEntryContainerViewControllerDelegate
-- (void)pinEntered:(PinEntryContainerViewController *)controller pin:(NSString *)pin {
+- (void)pinEntered:(NSString *)pin {
 
     switch (pinEntryMode) {
         case PINCheckMode: {
@@ -1193,8 +1193,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     }
 }
 
--(void)pinForgotten:(PinEntryContainerViewController *)controller
-{
+-(void)pinForgotten{
     [self closePinView];
 
     NSDictionary *d = @{ kReason:@"authorizationErrorPinForgotten" };

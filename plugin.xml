@@ -35,7 +35,10 @@
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/PopupViewController.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/PopupViewController.m"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/PopupViewController.xib"/>
-
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PINViewController~ipad.xib"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PINViewController.xib"/>
+    <header-file src="src/ios/OneginiCordovaPlugin/Classes/PinViewController.h"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinViewController.m"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGAuthorizationDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGConfigModel.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGChangePinDelegate.h"/>

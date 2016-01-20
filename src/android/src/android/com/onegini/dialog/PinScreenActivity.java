@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -145,7 +146,7 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     errorTextView.setVisibility(View.INVISIBLE);
 
     helpLinkTextView = (TextView) findViewById(resources.getIdentifier("help_button", "id", packageName));
-    helpLinkTextView.setOnClickListener(new View.OnClickListener() {
+    helpLinkTextView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(final View v) {
         showHelpDialog();
@@ -155,7 +156,7 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
     if (isLoginMode()) {
       pinForgottenTextView.setVisibility(View.VISIBLE);
-      pinForgottenTextView.setOnClickListener(new View.OnClickListener() {
+      pinForgottenTextView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(final View v) {
           showForgetPinDialog();
@@ -237,30 +238,13 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     return mode == SCREEN_MODE_LOGIN;
   }
 
-  // todo refactor during MS-554
   private void showHelpDialog() {
-    final int layoutId = resources.getIdentifier("alert_dialog", "layout", packageName);
-    final int styleId = resources.getIdentifier("CustomDialogTheme", "style", packageName);
-
-    final Dialog dialog = new Dialog(this, styleId);
-    dialog.setContentView(layoutId);
+    final Dialog dialog = createStyledDialog("alert_dialog");
     dialog.show();
 
-    final TextView titleView = (TextView) dialog.findViewById(
-        resources.getIdentifier("dialog_title", "id", packageName)
-    );
-    titleView.setText(PinActivityMessageMapper.getTitleForHelpsScreen(mode));
-
-    final TextView messageView = (TextView) dialog.findViewById(
-        resources.getIdentifier("dialog_message", "id", packageName)
-    );
-    messageView.setText(PinActivityMessageMapper.getMessageForHelpScreen(mode));
-
-    final Button okButton = (Button) dialog.findViewById(
-        resources.getIdentifier("dialog_ok_button", "id", packageName)
-    );
-    okButton.setText(getMessageForKey(HELP_POPUP_OK.name()));
-    okButton.setOnClickListener(new View.OnClickListener() {
+    setDialogTitle(dialog, PinActivityMessageMapper.getTitleForHelpsScreen(mode));
+    setDialogMessage(dialog, PinActivityMessageMapper.getMessageForHelpScreen(mode));
+    prepareOkButton(dialog, getMessageForKey(HELP_POPUP_OK.name()), new OnClickListener() {
       @Override
       public void onClick(final View v) {
         dialog.dismiss();
@@ -268,42 +252,51 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     });
   }
 
-  // todo refactor during MS-554
   private void showForgetPinDialog() {
-    final int layoutId = resources.getIdentifier("confirm_dialog", "layout", packageName);
-    final int styleId = resources.getIdentifier("CustomDialogTheme", "style", packageName);
-
-    final Dialog dialog = new Dialog(this, styleId);
-    dialog.setContentView(layoutId);
+    final Dialog dialog = createStyledDialog("confirm_dialog");
     dialog.show();
 
-    final TextView titleView = (TextView) dialog.findViewById(
-        resources.getIdentifier("dialog_title", "id", packageName)
-    );
-    titleView.setText(getMessageForKey(DISCONNECT_FORGOT_PIN_TITLE.name()));
-
-    final TextView messageView = (TextView) dialog.findViewById(
-        resources.getIdentifier("dialog_message", "id", packageName)
-    );
-    messageView.setText(getMessageForKey(DISCONNECT_FORGOT_PIN.name()));
-
-    final Button okButton = (Button) dialog.findViewById(
-        resources.getIdentifier("dialog_ok_button", "id", packageName)
-    );
-    okButton.setText(getMessageForKey(CONFIRM_POPUP_OK.name()));
-    okButton.setOnClickListener(new View.OnClickListener() {
+    setDialogTitle(dialog, getMessageForKey(DISCONNECT_FORGOT_PIN_TITLE.name()));
+    setDialogMessage(dialog, getMessageForKey(DISCONNECT_FORGOT_PIN.name()));
+    prepareOkButton(dialog, getMessageForKey(CONFIRM_POPUP_OK.name()), new OnClickListener() {
       @Override
       public void onClick(final View v) {
         dialog.dismiss();
         ForgotPinHandler.resetPin();
       }
     });
+    prepareCancelButton(dialog);
+  }
 
-    final Button cancelButton = (Button) dialog.findViewById(
-        resources.getIdentifier("dialog_cancel_button", "id", packageName)
-    );
+  private Dialog createStyledDialog(final String dialogLayoutName) {
+    final int layoutId = resources.getIdentifier(dialogLayoutName, "layout", packageName);
+    final int styleId = resources.getIdentifier("CustomDialogTheme", "style", packageName);
+
+    final Dialog dialog = new Dialog(this, styleId);
+    dialog.setContentView(layoutId);
+    return dialog;
+  }
+
+  private void setDialogTitle(final Dialog dialog, final String title) {
+    final TextView titleView = (TextView) dialog.findViewById(resources.getIdentifier("dialog_title", "id", packageName));
+    titleView.setText(title);
+  }
+
+  private void setDialogMessage(final Dialog dialog, final String message) {
+    final TextView messageView = (TextView) dialog.findViewById(resources.getIdentifier("dialog_message", "id", packageName));
+    messageView.setText(message);
+  }
+
+  private void prepareOkButton(final Dialog dialog, final String title, final OnClickListener listener) {
+    final Button okButton = (Button) dialog.findViewById(resources.getIdentifier("dialog_ok_button", "id", packageName));
+    okButton.setText(title);
+    okButton.setOnClickListener(listener);
+  }
+
+  private void prepareCancelButton(final Dialog dialog) {
+    final Button cancelButton = (Button) dialog.findViewById(resources.getIdentifier("dialog_cancel_button", "id", packageName));
     cancelButton.setText(getMessageForKey(CONFIRM_POPUP_CANCEL.name()));
-    cancelButton.setOnClickListener(new View.OnClickListener() {
+    cancelButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(final View v) {
         dialog.dismiss();

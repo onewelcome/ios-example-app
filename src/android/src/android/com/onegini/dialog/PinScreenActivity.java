@@ -16,7 +16,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
@@ -48,7 +47,6 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
   private final TextView[] pinInputs = new TextView[MAX_DIGITS];
   private Resources resources;
   private String packageName;
-  private Typeface customFontRegular;
   private int mode = SCREEN_MODE_LOGIN;
   private String screenMessage;
   private PinKeyboard pinKeyboard;
@@ -122,20 +120,12 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
   }
 
   private void initAssets() {
-    final boolean isLoginMode = isLoginMode();
-    String resourceName = (isLoginMode) ? "form_inactive_gray" : "form_inactive";
-    inputNormalBackgroundResourceId = resources.getIdentifier(resourceName, "drawable", packageName);
-
-    // in create pin flow focused input doesn't have "active" background
-    resourceName = (isLoginMode) ? "form_inactive_gray" : "form_active";
-    inputFocusedBackgroundResourceId = resources.getIdentifier(resourceName, "drawable", packageName);
-
-    customFontRegular = Typeface.createFromAsset(getAssets(), "fonts/font_regular.ttf");
+    inputNormalBackgroundResourceId = resources.getIdentifier("form_inactive", "drawable", packageName);
+    inputFocusedBackgroundResourceId = resources.getIdentifier("form_active", "drawable", packageName);
   }
 
   private void initLayout() {
-    final String layoutFilename = (isLoginMode()) ? "login_pin_screen" : "create_pin_screen";
-    setContentView(resources.getIdentifier(layoutFilename, "layout", packageName));
+    setContentView(resources.getIdentifier("pin_screen", "layout", packageName));
 
     initTextViews();
     initPinInputs();
@@ -152,28 +142,34 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
   private void initTextViews() {
     initCommonTextViews();
     initKeyboardTextView();
-
-    if (isLoginMode()) {
-      initPinForgottenTextView();
-    } else {
-      initCreatePinTextViews();
-    }
-
     updateTexts();
   }
 
   private void initCommonTextViews() {
     errorTextView = (TextView) findViewById(resources.getIdentifier("pin_error_message", "id", packageName));
-    errorTextView.setTypeface(customFontRegular);
+    errorTextView.setVisibility(View.INVISIBLE);
 
     helpLinkTextView = (TextView) findViewById(resources.getIdentifier("help_button", "id", packageName));
-    helpLinkTextView.setTypeface(customFontRegular);
     helpLinkTextView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View v) {
         showHelpDialog();
       }
     });
+
+    pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
+    if (isLoginMode()) {
+      pinForgottenTextView.setVisibility(View.VISIBLE);
+      pinForgottenTextView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+          showForgetPinDialog();
+        }
+      });
+    } else {
+      pinForgottenTextView.setVisibility(View.GONE);
+    }
+
   }
 
   private void initKeyboardTextView() {
@@ -181,46 +177,13 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     final boolean hasKeyboardTitle = DeviceUtil.isTablet(this) || isLoginMode();
     if (hasKeyboardTitle) {
       keyboardTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_keyboard_title", "id", packageName));
-      keyboardTitleTextView.setTypeface(customFontRegular);
     }
   }
 
-  private void initPinForgottenTextView() {
-    pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
-    pinForgottenTextView.setTypeface(customFontRegular);
-    pinForgottenTextView.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(final View v) {
-        showForgetPinDialog();
-      }
-    });
-  }
-
-  private void initCreatePinTextViews() {
+  /*private void initCreatePinTextViews() {
     screenTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_screen_title", "id", packageName));
-    screenTitleTextView.setTypeface(customFontRegular);
-
     pinLabelTextView = (TextView) findViewById(resources.getIdentifier("pin_info_label", "id", packageName));
-    pinLabelTextView.setTypeface(customFontRegular);
-
-    if (isRegistrationForm()) {
-      initStepMarkersTextViews();
-    } else {
-      hideStepMarkersTextViews();
-    }
-  }
-
-  private void initStepMarkersTextViews() {
-    TextView stepTextView;
-    for (int step = 1; step <= 3; step++) {
-      stepTextView = (TextView) findViewById(resources.getIdentifier("step_marker_" + step, "id", packageName));
-      stepTextView.setTypeface(customFontRegular);
-    }
-  }
-
-  private void hideStepMarkersTextViews() {
-    findViewById(resources.getIdentifier("steps_marker", "id", packageName)).setVisibility(View.GONE);
-  }
+  }*/
 
   private void updateTexts() {
     helpLinkTextView.setText(getMessageForKey(HELP_LINK_TITLE.name()));
@@ -230,14 +193,14 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
       errorTextView.setVisibility(View.VISIBLE);
     }
 
-    if (isLoginMode()) {
+    /*if (isLoginMode()) {
       updateTextsInLoginMode();
     } else {
       updateTextInNonLoginMode();
-    }
+    }*/
   }
 
-  private void updateTextsInLoginMode() {
+  /*private void updateTextsInLoginMode() {
     keyboardTitleTextView.setText(getMessageForKey(LOGIN_PIN_KEYBOARD_TITLE.name()));
     pinForgottenTextView.setText(getMessageForKey(PIN_FORGOTTEN_TITLE.name()));
   }
@@ -248,7 +211,7 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     if (DeviceUtil.isTablet(this)) {
       keyboardTitleTextView.setText(PinActivityMessageMapper.getTitleForKeyboard(mode));
     }
-  }
+  }*/
 
   private boolean isNotBlank(final String string) {
     return !isBlank(string);
@@ -287,7 +250,7 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     pinInputs[cursorIndex].setBackgroundResource(inputNormalBackgroundResourceId);
 
     if (lastDigitReceived) {
-      errorTextView.setVisibility(View.GONE);
+      errorTextView.setVisibility(View.INVISIBLE);
     } else {
       cursorIndex++;
       pinInputs[cursorIndex].setText("");
@@ -309,10 +272,6 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     return mode == SCREEN_MODE_LOGIN;
   }
 
-  private boolean isRegistrationForm() {
-    return mode == SCREEN_MODE_REGISTRATION_CONFIRM_PIN || mode == SCREEN_MODE_REGISTRATION_CREATE_PIN;
-  }
-
   // todo refactor during MS-554
   private void showHelpDialog() {
     final int layoutId = resources.getIdentifier("alert_dialog", "layout", packageName);
@@ -325,19 +284,16 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     final TextView titleView = (TextView) dialog.findViewById(
         resources.getIdentifier("dialog_title", "id", packageName)
     );
-    titleView.setTypeface(customFontRegular);
     titleView.setText(PinActivityMessageMapper.getTitleForHelpsScreen(mode));
 
     final TextView messageView = (TextView) dialog.findViewById(
         resources.getIdentifier("dialog_message", "id", packageName)
     );
-    messageView.setTypeface(customFontRegular);
     messageView.setText(PinActivityMessageMapper.getMessageForHelpScreen(mode));
 
     final Button okButton = (Button) dialog.findViewById(
         resources.getIdentifier("dialog_ok_button", "id", packageName)
     );
-    okButton.setTypeface(customFontRegular);
     okButton.setText(getMessageForKey(HELP_POPUP_OK.name()));
     okButton.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -359,19 +315,16 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     final TextView titleView = (TextView) dialog.findViewById(
         resources.getIdentifier("dialog_title", "id", packageName)
     );
-    titleView.setTypeface(customFontRegular);
     titleView.setText(getMessageForKey(DISCONNECT_FORGOT_PIN_TITLE.name()));
 
     final TextView messageView = (TextView) dialog.findViewById(
         resources.getIdentifier("dialog_message", "id", packageName)
     );
-    messageView.setTypeface(customFontRegular);
     messageView.setText(getMessageForKey(DISCONNECT_FORGOT_PIN.name()));
 
     final Button okButton = (Button) dialog.findViewById(
         resources.getIdentifier("dialog_ok_button", "id", packageName)
     );
-    okButton.setTypeface(customFontRegular);
     okButton.setText(getMessageForKey(CONFIRM_POPUP_OK.name()));
     okButton.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -385,7 +338,6 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
         resources.getIdentifier("dialog_cancel_button", "id", packageName)
     );
     cancelButton.setText(getMessageForKey(CONFIRM_POPUP_CANCEL.name()));
-    cancelButton.setTypeface(customFontRegular);
     cancelButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View v) {

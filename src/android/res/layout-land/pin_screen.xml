@@ -4,12 +4,12 @@
   android:id="@+id/screen_container"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="#fff">
+  android:background="@color/onegini_gray">
 
   <!-- header -->
   <RelativeLayout
     android:id="@+id/screen_header"
-    android:background="#FFF"
+    android:background="@color/onegini_blue"
     android:layout_width="match_parent"
     android:layout_height="64dp"
     android:layout_alignParentTop="true"
@@ -18,10 +18,10 @@
 
     <ImageView
       android:id="@+id/pin_logo"
-      android:src="@drawable/logo"
+      android:src="@drawable/onegini_logo"
       android:layout_width="wrap_content"
-      android:layout_height="48dp"
-      android:scaleType="fitXY"
+      android:layout_height="32dp"
+      android:scaleType="fitStart"
       android:layout_centerVertical="true"
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"/>
@@ -29,7 +29,7 @@
     <TextView
       android:id="@+id/help_button"
       android:text="Help?"
-      android:textColor="#72994d"
+      android:textColor="#FFF"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerVertical="true"
@@ -40,6 +40,7 @@
   </RelativeLayout>
 
   <!-- footer -->
+  <!--
   <RelativeLayout
     android:id="@+id/screen_footer"
     android:background="#FFF"
@@ -48,32 +49,28 @@
     android:paddingLeft="15dp"
     android:layout_alignParentBottom="true">
 
-  <Button
-      android:id="@+id/pin_forgotten_label"
-      android:text="Did you forget your pincode?"
-      android:textColor="#72994d"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerVertical="true"
-      android:layout_alignParentStart="true"
-      android:layout_alignParentLeft="true"
-      android:background="@android:color/transparent"/>
+
 
   </RelativeLayout>
-
+  -->
   <!-- body -->
   <RelativeLayout
     android:id="@+id/screen_body"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_above="@+id/screen_footer"
-    android:layout_below="@+id/screen_header">
+    android:layout_below="@+id/screen_header"
+      android:padding="15dp">
 
-    <ImageView
-      android:src="@drawable/background"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:scaleType="centerCrop"/>
+    <Button
+        android:id="@+id/pin_forgotten_label"
+        android:text="Did you forget your pincode?"
+        android:textColor="@color/onegini_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"/>
 
     <!-- Keyboard container -->
     <LinearLayout
@@ -94,11 +91,9 @@
           android:text="Log in"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textSize="20sp"
-          android:textColor="#7f6c66"
-          android:layout_alignParentTop="true"
-          android:layout_alignParentLeft="true"
-          android:layout_alignParentStart="true" />
+          android:textSize="24sp"
+          android:textColor="#666"
+          android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
 
         <LinearLayout
           android:id="@+id/pin_input"
@@ -135,11 +130,11 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="Sample error message"
-          android:textColor="#F00"
+          android:textColor="#666"
           android:layout_below="@+id/pin_input"
           android:layout_centerHorizontal="true"
           android:layout_marginTop="10dp"
-          android:visibility="gone"
+          android:visibility="invisible"
           android:layout_alignEnd="@+id/pin_input"
           android:layout_alignStart="@+id/pin_input"/>
 

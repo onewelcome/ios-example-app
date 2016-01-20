@@ -235,6 +235,9 @@
     <resource-file src="src/android/res/drawable/form_inactive.9.png" target="res/drawable/form_inactive.9.png"/>
     <resource-file src="src/android/res/drawable/onegini_logo.9.png" target="res/drawable/onegini_logo.9.png"/>
     <resource-file src="src/android/res/drawable/popup_button.xml" target="res/drawable/popup_button.xml"/>
+    <resource-file src="src/android/res/drawable-mdpi/ic_backspace.png" target="res/drawable-mdpi/ic_backspace.png"/>
+    <resource-file src="src/android/res/drawable-hdpi/ic_backspace.png" target="res/drawable-hdpi/ic_backspace.png"/>
+    <resource-file src="src/android/res/drawable-xhdpi/ic_backspace.png" target="res/drawable-xhdpi/ic_backspace.png"/>
 
     <!-- Work in progress, these are not the correct image assets (copied from example PSD with low resolution) -->
     <resource-file src="src/generic/pin-config.json" target="res/raw/pin_config.json"/>

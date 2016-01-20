@@ -66,10 +66,11 @@
       android:id="@+id/pin_key_0"
       style="@style/PinKeyboardKeyButton"
       android:text="0"/>
-    <Button
+    <ImageButton
       android:id="@+id/pin_key_del"
       style="@style/PinKeyboardKeyButton"
-      android:text="\u232b"
-      android:visibility="invisible"/>
+      android:src="@drawable/ic_backspace"
+      android:visibility="invisible"
+      android:scaleType="center"/>
   </TableRow>
 </TableLayout>

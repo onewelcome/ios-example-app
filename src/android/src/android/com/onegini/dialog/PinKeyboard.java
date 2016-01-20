@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
 
@@ -18,7 +19,7 @@ public class PinKeyboard {
   private final OneginiPinProvidedHandler pinProvidedHandler;
 
   private int cursorIndex = 0;
-  private Button deleteButton;
+  private ImageButton deleteButton;
 
   public PinKeyboard(final PinKeyboardActivity keyboardActivity, final int maxDigits, final OneginiPinProvidedHandler pinProvidedHandler) {
     this.keyboardActivity = keyboardActivity;
@@ -60,7 +61,7 @@ public class PinKeyboard {
   }
 
   private void initPinDeleteButton(final int buttonId) {
-    deleteButton = (Button) keyboardLayout.findViewById(buttonId);
+    deleteButton = (ImageButton) keyboardLayout.findViewById(buttonId);
     deleteButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View v) {

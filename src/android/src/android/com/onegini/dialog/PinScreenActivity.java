@@ -99,6 +99,7 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     initAssets();
     initLayout();
     initKeyboard();
+    resetView();
   }
 
   @Override

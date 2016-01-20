@@ -6,8 +6,6 @@ import static com.onegini.model.MessageKey.DISCONNECT_FORGOT_PIN;
 import static com.onegini.model.MessageKey.DISCONNECT_FORGOT_PIN_TITLE;
 import static com.onegini.model.MessageKey.HELP_LINK_TITLE;
 import static com.onegini.model.MessageKey.HELP_POPUP_OK;
-import static com.onegini.model.MessageKey.LOGIN_PIN_KEYBOARD_TITLE;
-import static com.onegini.model.MessageKey.PIN_FORGOTTEN_TITLE;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
 
 import org.apache.cordova.CordovaActivity;
@@ -53,8 +51,6 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
   private int cursorIndex = 0;
 
   private TextView screenTitleTextView;
-  private TextView keyboardTitleTextView;
-  private TextView pinLabelTextView;
   private TextView helpLinkTextView;
   private TextView pinForgottenTextView;
   private TextView errorTextView;
@@ -141,7 +137,6 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
 
   private void initTextViews() {
     initCommonTextViews();
-    initKeyboardTextView();
     updateTexts();
   }
 
@@ -170,48 +165,18 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
       pinForgottenTextView.setVisibility(View.GONE);
     }
 
-  }
-
-  private void initKeyboardTextView() {
-    // keyboard title is present in some cases
-    final boolean hasKeyboardTitle = DeviceUtil.isTablet(this) || isLoginMode();
-    if (hasKeyboardTitle) {
-      keyboardTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_keyboard_title", "id", packageName));
-    }
-  }
-
-  /*private void initCreatePinTextViews() {
     screenTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_screen_title", "id", packageName));
-    pinLabelTextView = (TextView) findViewById(resources.getIdentifier("pin_info_label", "id", packageName));
-  }*/
+  }
 
   private void updateTexts() {
+    screenTitleTextView.setText(PinActivityMessageMapper.getTitleForScreen(mode));
     helpLinkTextView.setText(getMessageForKey(HELP_LINK_TITLE.name()));
 
     if (isNotBlank(screenMessage)) {
       errorTextView.setText(screenMessage);
       errorTextView.setVisibility(View.VISIBLE);
     }
-
-    /*if (isLoginMode()) {
-      updateTextsInLoginMode();
-    } else {
-      updateTextInNonLoginMode();
-    }*/
   }
-
-  /*private void updateTextsInLoginMode() {
-    keyboardTitleTextView.setText(getMessageForKey(LOGIN_PIN_KEYBOARD_TITLE.name()));
-    pinForgottenTextView.setText(getMessageForKey(PIN_FORGOTTEN_TITLE.name()));
-  }
-
-  private void updateTextInNonLoginMode() {
-    screenTitleTextView.setText(PinActivityMessageMapper.getTitleForScreen(mode));
-    pinLabelTextView.setText(PinActivityMessageMapper.getMessageForPinLabel(mode));
-    if (DeviceUtil.isTablet(this)) {
-      keyboardTitleTextView.setText(PinActivityMessageMapper.getTitleForKeyboard(mode));
-    }
-  }*/
 
   private boolean isNotBlank(final String string) {
     return !isBlank(string);

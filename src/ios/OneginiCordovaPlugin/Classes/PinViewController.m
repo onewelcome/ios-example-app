@@ -177,15 +177,6 @@
     }
 }
 
-- (void)resetPin {
-    for (int i = 0; i < self.pinEntry.count; i++) {
-        self.pinEntry[i] = @"#";
-    }
-    self.pinEntry = [NSMutableArray new];
-    self.currentPin = 0;
-}
-
-
 -(void)initPopupViewContoroller{
     PopupViewController* popupViewController = self.popupViewController = [[PopupViewController alloc] initWithNibName:@"PopupViewController" bundle:nil];
     popupViewController.view.layer.masksToBounds = NO;

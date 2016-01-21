@@ -15,10 +15,6 @@
 		237380E31AC980DC00A9C28F /* pin-occupied-ic.png in Resources */ = {isa = PBXBuildFile; fileRef = 237380E11AC980DC00A9C28F /* pin-occupied-ic.png */; };
 		23A0C3B81A66A97B0087EEC4 /* PositiveSSLCA2.cer in Resources */ = {isa = PBXBuildFile; fileRef = 23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */; };
 		23A0C3B91A66A97B0087EEC4 /* PositiveSSLCA2.pem in Resources */ = {isa = PBXBuildFile; fileRef = 23A0C3B71A66A97B0087EEC4 /* PositiveSSLCA2.pem */; };
-		23B3B5B21AC9746A00F6BB9C /* PinEntryContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B5AD1AC9746A00F6BB9C /* PinEntryContainerViewController.m */; };
-		23B3B5B31AC9746A00F6BB9C /* PinEntryContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5AE1AC9746A00F6BB9C /* PinEntryContainerViewController.xib */; };
-		23B3B5B41AC9746A00F6BB9C /* PinEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23B3B5B01AC9746A00F6BB9C /* PinEntryViewController.m */; };
-		23B3B5B51AC9746A00F6BB9C /* PinEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5B11AC9746A00F6BB9C /* PinEntryViewController.xib */; };
 		23B3B5BD1AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5B81AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png */; };
 		23B3B5BE1AC9748300F6BB9C /* pin_key_delete_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5B91AC9748300F6BB9C /* pin_key_delete_normal.png */; };
 		23B3B5BF1AC9748300F6BB9C /* pin_key_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 23B3B5BA1AC9748300F6BB9C /* pin_key_highlighted.png */; };
@@ -74,13 +70,9 @@
 		5C11CA2F1B16F998008631B0 /* sluit@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C11CA1C1B16F998008631B0 /* sluit@3x.png */; };
 		5C1882A91ADE8AE600DE7286 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C1882A81ADE8AE600DE7286 /* SystemConfiguration.framework */; };
 		5C44849D1B04C6E8006911AB /* iphone-keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C44849C1B04C6E8006911AB /* iphone-keyboard.png */; };
-		5C5F64331B0C617500457C8E /* PinEntryContainerViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C5F642E1B0C617500457C8E /* PinEntryContainerViewController~ipad.xib */; };
-		5C5F64341B0C617500457C8E /* PinEntryViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C5F642F1B0C617500457C8E /* PinEntryViewController~ipad.xib */; };
 		5C5F64351B0C617500457C8E /* PopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5F64311B0C617500457C8E /* PopupViewController.m */; };
 		5C5F64361B0C617500457C8E /* PopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C5F64321B0C617500457C8E /* PopupViewController.xib */; };
 		5C7C00B61BAC4C0900FDAA56 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C00B51BAC4C0900FDAA56 /* XMLReader.m */; };
-		5CB099AB1B65781800D1ADF6 /* PinEntryContainerViewController-4s.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CB099A91B65781800D1ADF6 /* PinEntryContainerViewController-4s.xib */; };
-		5CB099AC1B65781800D1ADF6 /* PinEntryViewController-4s.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CB099AA1B65781800D1ADF6 /* PinEntryViewController-4s.xib */; };
 		5CC1A7401C4E394E00F8B2A7 /* PinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CC1A73F1C4E394E00F8B2A7 /* PinViewController.m */; };
 		5CC1A7471C4E4C4200F8B2A7 /* PINViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CC1A7451C4E4C4200F8B2A7 /* PINViewController.xib */; };
 		5CC1A7481C4E4C4200F8B2A7 /* PINViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CC1A7461C4E4C4200F8B2A7 /* PINViewController~ipad.xib */; };
@@ -142,12 +134,6 @@
 		2385F6731A932FA0007ADE4B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		23A0C3B61A66A97B0087EEC4 /* PositiveSSLCA2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = PositiveSSLCA2.cer; sourceTree = "<group>"; };
 		23A0C3B71A66A97B0087EEC4 /* PositiveSSLCA2.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PositiveSSLCA2.pem; sourceTree = "<group>"; };
-		23B3B5AC1AC9746A00F6BB9C /* PinEntryContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinEntryContainerViewController.h; sourceTree = "<group>"; };
-		23B3B5AD1AC9746A00F6BB9C /* PinEntryContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinEntryContainerViewController.m; sourceTree = "<group>"; };
-		23B3B5AE1AC9746A00F6BB9C /* PinEntryContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinEntryContainerViewController.xib; sourceTree = "<group>"; };
-		23B3B5AF1AC9746A00F6BB9C /* PinEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinEntryViewController.h; sourceTree = "<group>"; };
-		23B3B5B01AC9746A00F6BB9C /* PinEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinEntryViewController.m; sourceTree = "<group>"; };
-		23B3B5B11AC9746A00F6BB9C /* PinEntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinEntryViewController.xib; sourceTree = "<group>"; };
 		23B3B5B81AC9748300F6BB9C /* pin_container_ipad_landscape_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_container_ipad_landscape_bg.png; sourceTree = "<group>"; };
 		23B3B5B91AC9748300F6BB9C /* pin_key_delete_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_key_delete_normal.png; sourceTree = "<group>"; };
 		23B3B5BA1AC9748300F6BB9C /* pin_key_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin_key_highlighted.png; sourceTree = "<group>"; };
@@ -218,15 +204,11 @@
 		5C12765A1B2732A900808F42 /* OGDisconnectDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDisconnectDelegate.h; sourceTree = "<group>"; };
 		5C1882A81ADE8AE600DE7286 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5C44849C1B04C6E8006911AB /* iphone-keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphone-keyboard.png"; sourceTree = "<group>"; };
-		5C5F642E1B0C617500457C8E /* PinEntryContainerViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PinEntryContainerViewController~ipad.xib"; sourceTree = "<group>"; };
-		5C5F642F1B0C617500457C8E /* PinEntryViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PinEntryViewController~ipad.xib"; sourceTree = "<group>"; };
 		5C5F64301B0C617500457C8E /* PopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupViewController.h; sourceTree = "<group>"; };
 		5C5F64311B0C617500457C8E /* PopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupViewController.m; sourceTree = "<group>"; };
 		5C5F64321B0C617500457C8E /* PopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopupViewController.xib; sourceTree = "<group>"; };
 		5C7C00B41BAC4C0800FDAA56 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
 		5C7C00B51BAC4C0900FDAA56 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
-		5CB099A91B65781800D1ADF6 /* PinEntryContainerViewController-4s.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PinEntryContainerViewController-4s.xib"; sourceTree = "<group>"; };
-		5CB099AA1B65781800D1ADF6 /* PinEntryViewController-4s.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PinEntryViewController-4s.xib"; sourceTree = "<group>"; };
 		5CC1A73E1C4E394E00F8B2A7 /* PinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinViewController.h; sourceTree = "<group>"; };
 		5CC1A73F1C4E394E00F8B2A7 /* PinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinViewController.m; sourceTree = "<group>"; };
 		5CC1A7451C4E4C4200F8B2A7 /* PINViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PINViewController.xib; sourceTree = "<group>"; };
@@ -278,22 +260,12 @@
 			children = (
 				5C7C00B41BAC4C0800FDAA56 /* XMLReader.h */,
 				5C7C00B51BAC4C0900FDAA56 /* XMLReader.m */,
-				5CB099A91B65781800D1ADF6 /* PinEntryContainerViewController-4s.xib */,
-				5CB099AA1B65781800D1ADF6 /* PinEntryViewController-4s.xib */,
-				5C5F642E1B0C617500457C8E /* PinEntryContainerViewController~ipad.xib */,
-				5C5F642F1B0C617500457C8E /* PinEntryViewController~ipad.xib */,
 				5C5F64301B0C617500457C8E /* PopupViewController.h */,
 				5C5F64311B0C617500457C8E /* PopupViewController.m */,
 				5C5F64321B0C617500457C8E /* PopupViewController.xib */,
 				5CE4923B1ADD49420083246F /* Reachability.h */,
 				5CE4923C1ADD49420083246F /* Reachability.m */,
 				5CD4A5301ACD4DA0000FD948 /* Commons.h */,
-				23B3B5AC1AC9746A00F6BB9C /* PinEntryContainerViewController.h */,
-				23B3B5AD1AC9746A00F6BB9C /* PinEntryContainerViewController.m */,
-				23B3B5AE1AC9746A00F6BB9C /* PinEntryContainerViewController.xib */,
-				23B3B5AF1AC9746A00F6BB9C /* PinEntryViewController.h */,
-				23B3B5B01AC9746A00F6BB9C /* PinEntryViewController.m */,
-				23B3B5B11AC9746A00F6BB9C /* PinEntryViewController.xib */,
 				302D95EE14D2391D003F00A1 /* MainViewController.h */,
 				302D95EF14D2391D003F00A1 /* MainViewController.m */,
 				302D95F014D2391D003F00A1 /* MainViewController.xib */,
@@ -601,12 +573,10 @@
 				7E7966E41810823500FA85AD /* icon-76.png in Resources */,
 				7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */,
 				23B3B5CF1AC974A400F6BB9C /* SourceSansPro-LightItalic.ttf in Resources */,
-				23B3B5B51AC9746A00F6BB9C /* PinEntryViewController.xib in Resources */,
 				308D05371370CCF300D202BF /* icon-72.png in Resources */,
 				30B4F30119D5E07200D9F7D8 /* Default-736h.png in Resources */,
 				5C5F64361B0C617500457C8E /* PopupViewController.xib in Resources */,
 				5C11CA2C1B16F998008631B0 /* logo~ipad@2x.png in Resources */,
-				5C5F64341B0C617500457C8E /* PinEntryViewController~ipad.xib in Resources */,
 				5C11CA231B16F998008631B0 /* buttonPijl@3x.png in Resources */,
 				5C11CA211B16F998008631B0 /* buttonPijl.png in Resources */,
 				308D05381370CCF300D202BF /* icon.png in Resources */,
@@ -616,7 +586,6 @@
 				5C44849D1B04C6E8006911AB /* iphone-keyboard.png in Resources */,
 				5CC1A7481C4E4C4200F8B2A7 /* PINViewController~ipad.xib in Resources */,
 				5C11CA2B1B16F998008631B0 /* logo~ipad.png in Resources */,
-				5CB099AB1B65781800D1ADF6 /* PinEntryContainerViewController-4s.xib in Resources */,
 				5C11CA261B16F998008631B0 /* iphone-pinslot-selected.png in Resources */,
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				23A0C3B91A66A97B0087EEC4 /* PositiveSSLCA2.pem in Resources */,
@@ -648,7 +617,6 @@
 				30B4F30019D5E07200D9F7D8 /* Default-667h.png in Resources */,
 				7E7966DE1810823500FA85AD /* icon-40.png in Resources */,
 				5C11CA201B16F998008631B0 /* achtergrond2@2x.jpg in Resources */,
-				5CB099AC1B65781800D1ADF6 /* PinEntryViewController-4s.xib in Resources */,
 				5C11CA2D1B16F998008631B0 /* sluit.png in Resources */,
 				3088BBC1154F3926009F9C59 /* Default@2x~iphone.png in Resources */,
 				7E7966E21810823500FA85AD /* icon-60.png in Resources */,
@@ -656,7 +624,6 @@
 				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
 				23B3B5BF1AC9748300F6BB9C /* pin_key_highlighted.png in Resources */,
 				30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */,
-				23B3B5B31AC9746A00F6BB9C /* PinEntryContainerViewController.xib in Resources */,
 				23B3B5D01AC974A400F6BB9C /* SourceSansPro-Regular.ttf in Resources */,
 				30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */,
 				5C11CA241B16F998008631B0 /* ipad-steps.png in Resources */,
@@ -666,7 +633,6 @@
 				5C11CA2E1B16F998008631B0 /* sluit@2x.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
 				5CC592D71B03444000E73832 /* plugin.xml in Resources */,
-				5C5F64331B0C617500457C8E /* PinEntryContainerViewController~ipad.xib in Resources */,
 				237380E31AC980DC00A9C28F /* pin-occupied-ic.png in Resources */,
 				5C11CA221B16F998008631B0 /* buttonPijl@2x.png in Resources */,
 			);
@@ -681,14 +647,12 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
-				23B3B5B21AC9746A00F6BB9C /* PinEntryContainerViewController.m in Sources */,
 				5C5F64351B0C617500457C8E /* PopupViewController.m in Sources */,
 				5CE4923D1ADD49420083246F /* Reachability.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				23CC2D081AA43F890056F377 /* OneginiCordovaClient.m in Sources */,
 				5C7C00B61BAC4C0900FDAA56 /* XMLReader.m in Sources */,
 				5CC1A7401C4E394E00F8B2A7 /* PinViewController.m in Sources */,
-				23B3B5B41AC9746A00F6BB9C /* PinEntryViewController.m in Sources */,
 				5C1666B31C4F89E500413295 /* SecurityController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

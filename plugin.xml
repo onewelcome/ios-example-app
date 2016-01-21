@@ -22,16 +22,6 @@
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/OneginiCordovaClient.m"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/XMLReader.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/XMLReader.m"/>
-    <header-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.h"/>
-    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.m"/>
-    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController.xib"/>
-    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController-4s.xib"/>
-    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryContainerViewController~ipad.xib"/>
-    <header-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryViewController.h"/>
-    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryViewController.m"/>
-    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryViewController.xib"/>
-    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryViewController-4s.xib"/>
-    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinEntryViewController~ipad.xib"/>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/PopupViewController.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/PopupViewController.m"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/PopupViewController.xib"/>

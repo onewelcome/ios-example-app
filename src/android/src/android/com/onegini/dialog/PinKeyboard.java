@@ -1,7 +1,6 @@
 package com.onegini.dialog;
 
 import android.content.res.Resources;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -10,27 +9,33 @@ import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler
 
 public class PinKeyboard {
 
-  private final PinKeyboardActivity keyboardActivity;
-  private final TableLayout keyboardLayout;
-  private final Resources resources;
-  private final String packageName;
+  private final PinKeyboardListener handler;
+
   private final int maxDigits;
   private final char[] pin;
-  private final OneginiPinProvidedHandler pinProvidedHandler;
 
   private int cursorIndex = 0;
   private ImageButton deleteButton;
 
-  public PinKeyboard(final PinKeyboardActivity keyboardActivity, final int maxDigits, final OneginiPinProvidedHandler pinProvidedHandler) {
-    this.keyboardActivity = keyboardActivity;
-    keyboardLayout = keyboardActivity.getKeyboardLayout();
-    resources = keyboardActivity.getResources();
-    packageName = keyboardActivity.getPackageName();
+  public PinKeyboard(final PinKeyboardListener handler, final int maxDigits) {
+    this.handler = handler;
     this.maxDigits = maxDigits;
-    this.pinProvidedHandler = pinProvidedHandler;
 
     pin = new char[maxDigits];
-    initLayout();
+  }
+
+  public void initLayout(final TableLayout keyboardLayout, final Resources resources, final String packageName) {
+    int resourceId;
+    for (int digit = 0; digit < 10; digit++) {
+      resourceId = resources.getIdentifier("pin_key_" + digit, "id", packageName);
+      initPinDigitButton(keyboardLayout, resourceId, digit);
+    }
+    initPinDeleteButton(keyboardLayout, resources.getIdentifier("pin_key_del", "id", packageName));
+  }
+
+  public void submitPin(final OneginiPinProvidedHandler pinProvidedHandler) {
+    pinProvidedHandler.onPinProvided(pin);
+    clearPin();
   }
 
   public void reset() {
@@ -39,18 +44,7 @@ public class PinKeyboard {
     cursorIndex = 0;
   }
 
-  private void initLayout() {
-    int buttonId;
-    for (int digit = 0; digit < 10; digit++) {
-      buttonId = resources.getIdentifier("pin_key_" + digit, "id", packageName);
-      initPinDigitButton(buttonId, digit);
-    }
-
-    final int delButtonId = resources.getIdentifier("pin_key_del", "id", packageName);
-    initPinDeleteButton(delButtonId);
-  }
-
-  private void initPinDigitButton(final int buttonId, final int buttonValue) {
+  private void initPinDigitButton(final TableLayout keyboardLayout, final int buttonId, final int buttonValue) {
     final Button pinButton = (Button) keyboardLayout.findViewById(buttonId);
     pinButton.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -60,7 +54,7 @@ public class PinKeyboard {
     });
   }
 
-  private void initPinDeleteButton(final int buttonId) {
+  private void initPinDeleteButton(final TableLayout keyboardLayout, final int buttonId) {
     deleteButton = (ImageButton) keyboardLayout.findViewById(buttonId);
     deleteButton.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -74,11 +68,11 @@ public class PinKeyboard {
     if (cursorIndex < maxDigits) {
       deleteButton.setVisibility(View.VISIBLE);
       pin[cursorIndex++] = Character.forDigit(digit, 10);
-      final boolean maxDigitReached = cursorIndex >= maxDigits;
-      keyboardActivity.onDigitKeyClicked(maxDigitReached);
-      if (maxDigitReached) {
-        onMaxDigitsReached();
+      final boolean lastDigitProvided = cursorIndex >= maxDigits;
+      if (lastDigitProvided) {
+        deleteButton.setVisibility(View.INVISIBLE);
       }
+      handler.onPinDigitAdded(lastDigitProvided);
     }
   }
 
@@ -88,21 +82,8 @@ public class PinKeyboard {
       if (cursorIndex == 0) {
         deleteButton.setVisibility(View.INVISIBLE);
       }
-      keyboardActivity.onDeleteKeyClicked();
+      handler.onPinDigitRemoved();
     }
-  }
-
-  private void onMaxDigitsReached() {
-    deleteButton.setVisibility(View.INVISIBLE);
-    // slightly delay the SDK call, so it won't make a lag during UI changes
-    final Handler handler = new Handler();
-    handler.postDelayed(new Runnable() {
-      @Override
-      public void run() {
-        pinProvidedHandler.onPinProvided(pin);
-        clearPin();
-      }
-    }, 100);
   }
 
   private void clearPin() {

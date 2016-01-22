@@ -12,7 +12,7 @@ public class PinKeyboard {
   private final PinKeyboardListener handler;
 
   private final int maxDigits;
-  private final char[] pin;
+  private char[] pin;
 
   private int cursorIndex = 0;
   private ImageButton deleteButton;
@@ -20,7 +20,6 @@ public class PinKeyboard {
   public PinKeyboard(final PinKeyboardListener handler, final int maxDigits) {
     this.handler = handler;
     this.maxDigits = maxDigits;
-
     pin = new char[maxDigits];
   }
 
@@ -34,7 +33,7 @@ public class PinKeyboard {
   }
 
   public void submitPin(final OneginiPinProvidedHandler pinProvidedHandler) {
-    pinProvidedHandler.onPinProvided(pin);
+    pinProvidedHandler.onPinProvided(pin.clone());
     clearPin();
   }
 
@@ -90,5 +89,6 @@ public class PinKeyboard {
     for (int index = 0; index < maxDigits; index++) {
       pin[index] = '\0';
     }
+    pin = new char[maxDigits];
   }
 }

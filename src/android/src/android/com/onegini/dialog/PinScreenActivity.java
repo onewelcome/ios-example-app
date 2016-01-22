@@ -105,7 +105,6 @@ public class PinScreenActivity extends CordovaActivity {
     initListeners();
     initLayout();
     initKeyboard();
-    resetView();
   }
 
   @Override

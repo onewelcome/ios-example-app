@@ -180,6 +180,83 @@ module.exports = {
   },
 
   /**
+   * Enrolls the currently connected device for mobile push authentication.
+   *
+   * @param {Object} router   Object that can handle page transition for the outcome of the action. Should at
+   *                          least implement the following methods:
+   *                          - enrollmentSuccess ->
+   *                          - error ->
+   *                          - errorAuthenticationError ->
+   *                          - errorDeviceAlreadyEnrolled ->
+   *                          - errorInvalidClientCredentials ->
+   *                          - errorInvalidRequest ->
+   *                          - errorInvalidTransaction ->
+   *                          - errorNotAvailable ->
+   *                          - errorUserAlreadyEnrolled ->
+   * @param {Array} scopes    {Array} with {String}s that represent the scopes for the access token
+   */
+  enrollForMobileAuthentication: function (router, scopes) {
+    var onSuccess = function (response) {
+      /*
+       The response method contains the name of the method in the OGAuthorizationDelegate protocol
+       */
+      if (response == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_SUCCESS) {
+        router.enrollmentSuccess();
+      }
+    };
+
+    var onError = function (error) {
+      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR) {
+        router.error();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_AUTHENTICATION_ERROR) {
+        router.errorAuthenticationError();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_DEVICE_ALREADY_ENROLLED) {
+        router.errorDeviceAlreadyEnrolled();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_CLIENT_CREDENTIALS) {
+        router.errorInvalidClientCredentials();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_REQUEST) {
+        router.errorInvalidRequest();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_TRANSACTION) {
+        router.errorInvalidTransaction();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_NOT_AVAILABLE) {
+        router.errorNotAvailable();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_USER_ALREADY_ENROLLED) {
+        router.errorUserAlreadyEnrolled();
+      }
+    };
+
+    if (scopes && scopes.length > 0) {
+      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLL, [scopes]);
+    } else {
+      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLL, []);
+    }
+  },
+
+  /**
+   * Determine if the user is registered.
+   *
+   * @param successCallback   Function to be called when user is already registered
+   * @param errorCallback     Function to be called when user is not yet registered
+   */
+  isEnrolledForMobileAuthentication: function (successCallback, errorCallback) {
+    var onSuccess = function (response) {
+      successCallback();
+    };
+    var onError = function (error) {
+      errorCallback();
+    };
+
+    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_IS_ENROLLED, []);
+  },
+
+  /**
    * Determine if the user is registered.
    *
    * @param successCallback   Function to be called when user is already registered
@@ -652,6 +729,18 @@ module.exports = {
     RESOURCE_CALL_UNAUTHORIZED: "unauthorizedClient",
     RESOURCE_CALL_INVALID_GRANT: "invalidGrant",
 
-    SETUP_SCREEN_ORIENTATION: "setupScreenOrientation"
+    SETUP_SCREEN_ORIENTATION: "setupScreenOrientation",
+
+    MOBILE_AUTHENTICATION_ENROLL: "enrollForMobileAuthentication",
+    MOBILE_AUTHENTICATION_IS_ENROLLED: "isEnrolledForMobileAuthentication",
+    MOBILE_AUTHENTICATION_ENROLLMENT_SUCCESS: "enrollmentSuccess",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR: "enrollmentError",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_NOT_AVAILABLE: "enrollmentErrorNotAvailable",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_REQUEST: "enrollmentErrorInvalidRequest",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_TRANSACTION: "enrollmentErrorInvalidTransaction",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_AUTHENTICATION_ERROR: "enrollmentErrorAuthenticationError",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_USER_ALREADY_ENROLLED: "enrollmentErrorUserAlreadyEnrolled",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_DEVICE_ALREADY_ENROLLED: "enrollmentErrorDeviceAlreadyEnrolled",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_CLIENT_CREDENTIALS: "enrollmentErrorInvalidClientCredentials"
   }
 };

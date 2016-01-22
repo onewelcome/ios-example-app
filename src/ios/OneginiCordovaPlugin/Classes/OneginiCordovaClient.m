@@ -1269,7 +1269,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 }
 
 -(void)enrollmentInvalidRequest{
-    [self enrollmentErrorCallbackWIthReason:@"enrollmentErrorNotAvailable" error:nil];
+    [self enrollmentErrorCallbackWIthReason:@"enrollmentErrorInvalidRequest" error:nil];
 }
 
 -(void)enrollmentInvalidTransaction{

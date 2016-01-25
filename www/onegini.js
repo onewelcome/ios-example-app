@@ -184,15 +184,15 @@ module.exports = {
    *
    * @param {Object} router   Object that can handle page transition for the outcome of the action. Should at
    *                          least implement the following methods:
-   *                          - enrollmentSuccess ->
-   *                          - error ->
-   *                          - errorAuthenticationError ->
-   *                          - errorDeviceAlreadyEnrolled ->
-   *                          - errorInvalidClientCredentials ->
-   *                          - errorInvalidRequest ->
-   *                          - errorInvalidTransaction ->
-   *                          - errorNotAvailable ->
-   *                          - errorUserAlreadyEnrolled ->
+   *                          - enrollmentSuccess -> enrollment success
+   *                          - error -> generic enrollment error handler
+   *                          - errorAuthenticationError -> failed to authenticate the user for enrollment
+   *                          - errorDeviceAlreadyEnrolled -> the device is already enrolled
+   *                          - errorInvalidClientCredentials -> provided client credentials are invalid
+   *                          - errorInvalidRequest -> one or more request parameters missing
+   *                          - errorInvalidTransaction -> the transaction id used during enrollment is invalid, probably because the transaction validity period is expired
+   *                          - errorNotAvailable -> enrollment for mobile authentication is currently disabled
+   *                          - errorUserAlreadyEnrolled -> user is already enrolled for mobile authentication
    * @param {Array} scopes    {Array} with {String}s that represent the scopes for the access token
    */
   enrollForMobileAuthentication: function (router, scopes) {
@@ -239,12 +239,12 @@ module.exports = {
     }
   },
 
-  /**
-   * Determine if the user is registered.
-   *
-   * @param successCallback   Function to be called when user is already registered
-   * @param errorCallback     Function to be called when user is not yet registered
-   */
+    /**
+     * Determine if the user is enrolled for mobile authentication.
+     *
+     * @param successCallback   Function to be called when user is already enrolled
+     * @param errorCallback     Function to be called when user is not yet enrolled
+     */
   isEnrolledForMobileAuthentication: function (successCallback, errorCallback) {
     var onSuccess = function (response) {
       successCallback();

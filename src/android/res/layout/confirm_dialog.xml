@@ -8,7 +8,7 @@
   <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#806d68"
+    android:background="@color/onegini_blue"
     android:padding="10dp">
 
     <TextView
@@ -30,13 +30,6 @@
     android:textSize="18sp"
     android:padding="10dp"
     android:minWidth="200dp"/>
-
-  <View
-    android:layout_width="fill_parent"
-    android:layout_height="1px"
-    android:background="#e8e8e8"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"/>
 
   <LinearLayout
     android:layout_width="fill_parent"

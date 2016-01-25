@@ -11,8 +11,7 @@
 
 @interface PinViewController()
 
-@property (nonatomic) NSInteger currentPin;
-@property (nonatomic) NSArray *pins;
+@property (nonatomic) NSArray *pin;
 @property (nonatomic) NSArray *pinSlots;
 @property (nonatomic) NSMutableArray *pinEntry;
 
@@ -60,17 +59,17 @@
 -(void)viewWillAppear:(BOOL)animated{   
     [super viewDidAppear:animated];
     self.mode = self.mode;
-    [self initPopupViewContoroller];
+    [self initPopupViewController];
 }
 
 -(void)invalidPinWithReason:(NSString *)message {
     self.errorLabel.text = message;
 }
 
--(NSArray *)pins {
-    if (_pins==nil)
-        _pins = @[self.pin1, self.pin2, self.pin3, self.pin4, self.pin5];
-    return _pins;
+-(NSArray *)pin {
+    if (_pin ==nil)
+        _pin = @[self.pin1, self.pin2, self.pin3, self.pin4, self.pin5];
+    return _pin;
 }
 
 -(NSArray *)pinSlots {
@@ -118,7 +117,7 @@
         self.pinEntry = [NSMutableArray new];
     }
     
-    if (self.pinEntry.count >= self.pins.count) {
+    if (self.pinEntry.count >= self.pin.count) {
 #ifdef DEBUG
         NSLog(@"max entries PIN reached");
 #endif
@@ -139,7 +138,7 @@
 - (void)evaluatePinState {
     [self updatePinStateRepresentation];
     
-    if (self.pinEntry.count == self.pins.count) {
+    if (self.pinEntry.count == self.pin.count) {
         [self.delegate pinEntered:[self.pinEntry componentsJoinedByString:@""]];
     }
 }
@@ -149,13 +148,12 @@
         self.pinEntry[i] = @"#";
     }
     self.pinEntry = [NSMutableArray new];
-    self.currentPin = 0;
    	[self updatePinStateRepresentation];
 }
 
 -(void)updatePinStateRepresentation {
-    for (int i = 0; i < self.pins.count; i++) {
-        UIView *pin = self.pins[i];
+    for (int i = 0; i < self.pin.count; i++) {
+        UIView *pin = self.pin[i];
         [UIView animateWithDuration:0.2 animations:^{
             pin.alpha = i < self.pinEntry.count ? 1.0 : 0.0;
         }];
@@ -177,12 +175,12 @@
     }
 }
 
--(void)initPopupViewContoroller{
-    PopupViewController* popupViewController = self.popupViewController = [[PopupViewController alloc] initWithNibName:@"PopupViewController" bundle:nil];
-    popupViewController.view.layer.masksToBounds = NO;
-    popupViewController.view.layer.shadowRadius = 50;
-    popupViewController.view.layer.shadowColor = [[UIColor colorWithWhite:0 alpha:1]CGColor];
-    popupViewController.view.layer.shadowOpacity = 0.5;
+-(void)initPopupViewController {
+    self.popupViewController = [[PopupViewController alloc] initWithNibName:@"PopupViewController" bundle:nil];
+    self.popupViewController.view.layer.masksToBounds = NO;
+    self.popupViewController.view.layer.shadowRadius = 50;
+    self.popupViewController.view.layer.shadowColor = [[UIColor colorWithWhite:0 alpha:1]CGColor];
+    self.popupViewController.view.layer.shadowOpacity = 0.5;
 }
 
 -(void)centerPopupView{

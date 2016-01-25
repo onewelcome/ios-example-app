@@ -165,7 +165,7 @@
                  target-dir="src/com/onegini/dialog"/>
     <source-file src="src/android/src/android/com/onegini/dialog/PinKeyboard.java"
                  target-dir="src/com/onegini/dialog"/>
-    <source-file src="src/android/src/android/com/onegini/dialog/PinKeyboardActivity.java"
+    <source-file src="src/android/src/android/com/onegini/dialog/helper/PinKeyboardHandler.java"
                  target-dir="src/com/onegini/dialog"/>
     <source-file src="src/android/src/android/com/onegini/exception/PluginConfigException.java"
                  target-dir="src/com/onegini/exception"/>

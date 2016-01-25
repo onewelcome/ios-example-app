@@ -15,8 +15,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.Spanned;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,13 +23,13 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import com.onegini.action.ForgotPinHandler;
 import com.onegini.dialog.helper.PinActivityMessageMapper;
+import com.onegini.dialog.helper.PinKeyboardHandler;
+import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
 import com.onegini.util.DeviceUtil;
 
-public class PinScreenActivity extends CordovaActivity implements PinKeyboardActivity {
+public class PinScreenActivity extends CordovaActivity {
 
   private static final int MAX_DIGITS = 5;
-
-  private static final Spanned HTML_CHAR_DOT = Html.fromHtml("&#9679;");
 
   public static final String EXTRA_MODE = "mode";
   public static final String EXTRA_MESSAGE = "message";
@@ -49,16 +48,15 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
   private int mode = SCREEN_MODE_LOGIN;
   private String screenMessage;
   private PinKeyboard pinKeyboard;
-  private int cursorIndex = 0;
 
   private TextView screenTitleTextView;
   private TextView helpLinkTextView;
   private TextView pinForgottenTextView;
   private TextView errorTextView;
 
-
-  private int inputFocusedBackgroundResourceId;
-  private int inputNormalBackgroundResourceId;
+  private PinKeyboardHandler pinKeyboardHandler;
+  private OnClickListener helpButtonListener;
+  private OnClickListener pinForgottenListener;
 
   private static PinScreenActivity instance;
 
@@ -96,10 +94,9 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
 
   private void initialize() {
     parseIntent();
-    initAssets();
+    initListeners();
     initLayout();
     initKeyboard();
-    resetView();
   }
 
   @Override
@@ -117,24 +114,20 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     }
   }
 
-  private void initAssets() {
-    inputNormalBackgroundResourceId = resources.getIdentifier("form_inactive", "drawable", packageName);
-    inputFocusedBackgroundResourceId = resources.getIdentifier("form_active", "drawable", packageName);
-  }
-
   private void initLayout() {
     setContentView(resources.getIdentifier("pin_screen", "layout", packageName));
-
     initTextViews();
     initPinInputs();
   }
 
   private void initKeyboard() {
-    if (mode == SCREEN_MODE_LOGIN || mode == SCREEN_MODE_LOGIN_BEFORE_CHANGE_PIN) {
-      pinKeyboard = new PinKeyboard(this, MAX_DIGITS, CurrentPinNativeDialogHandler.oneginiPinProvidedHandler);
-    } else {
-      pinKeyboard = new PinKeyboard(this, MAX_DIGITS, CreatePinNativeDialogHandler.oneginiPinProvidedHandler);
-    }
+    pinKeyboardHandler = new PinKeyboardHandler(getPinProvidedHandler(), pinInputs, MAX_DIGITS);
+    pinKeyboardHandler.setInputFocusedBackgroundResourceId(resources.getIdentifier("form_active", "drawable", packageName));
+    pinKeyboardHandler.setInputNormalBackgroundResourceId(resources.getIdentifier("form_inactive", "drawable", packageName));
+    pinKeyboard = new PinKeyboard(pinKeyboardHandler);
+
+    final TableLayout keyboardLayout = (TableLayout) findViewById(resources.getIdentifier("pin_keyboard", "id", packageName));
+    pinKeyboard.initLayout(keyboardLayout, getResources(), getPackageName());
   }
 
   private void initTextViews() {
@@ -147,27 +140,29 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     errorTextView.setVisibility(View.INVISIBLE);
 
     helpLinkTextView = (TextView) findViewById(resources.getIdentifier("help_button", "id", packageName));
-    helpLinkTextView.setOnClickListener(new OnClickListener() {
+    helpLinkTextView.setOnClickListener(helpButtonListener);
+
+    pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
+    pinForgottenTextView.setVisibility(isLoginMode() ? View.VISIBLE : View.GONE);
+    pinForgottenTextView.setOnClickListener(pinForgottenListener);
+
+    screenTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_screen_title", "id", packageName));
+  }
+
+  private void initListeners() {
+    helpButtonListener = new OnClickListener() {
       @Override
       public void onClick(final View v) {
         showHelpDialog();
       }
-    });
+    };
 
-    pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
-    if (isLoginMode()) {
-      pinForgottenTextView.setVisibility(View.VISIBLE);
-      pinForgottenTextView.setOnClickListener(new OnClickListener() {
-        @Override
-        public void onClick(final View v) {
-          showForgetPinDialog();
-        }
-      });
-    } else {
-      pinForgottenTextView.setVisibility(View.GONE);
-    }
-
-    screenTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_screen_title", "id", packageName));
+    pinForgottenListener = new OnClickListener() {
+      @Override
+      public void onClick(final View v) {
+        showForgetPinDialog();
+      }
+    };
   }
 
   private void updateTexts() {
@@ -191,6 +186,14 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     return false;
   }
 
+  private OneginiPinProvidedHandler getPinProvidedHandler() {
+    if (mode == SCREEN_MODE_LOGIN || mode == SCREEN_MODE_LOGIN_BEFORE_CHANGE_PIN) {
+      return CurrentPinNativeDialogHandler.oneginiPinProvidedHandler;
+    } else {
+      return  CreatePinNativeDialogHandler.oneginiPinProvidedHandler;
+    }
+  }
+
   private void initPinInputs() {
     for (int input = 0; input < MAX_DIGITS; input++) {
       final int inputId = resources.getIdentifier("pin_input_" + input, "id", packageName);
@@ -198,41 +201,12 @@ public class PinScreenActivity extends CordovaActivity implements PinKeyboardAct
     }
   }
 
-  @Override
-  public TableLayout getKeyboardLayout() {
-    return (TableLayout) findViewById(resources.getIdentifier("pin_keyboard", "id", packageName));
-  }
-
-  @Override
-  public void onDeleteKeyClicked() {
-    pinInputs[cursorIndex].setBackgroundResource(inputNormalBackgroundResourceId);
-    cursorIndex--;
-    pinInputs[cursorIndex].setText("");
-    pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
-  }
-
-  @Override
-  public void onDigitKeyClicked(final boolean lastDigitReceived) {
-    pinInputs[cursorIndex].setText(HTML_CHAR_DOT);
-    pinInputs[cursorIndex].setBackgroundResource(inputNormalBackgroundResourceId);
-
-    if (lastDigitReceived) {
-      errorTextView.setVisibility(View.INVISIBLE);
-    } else {
-      cursorIndex++;
-      pinInputs[cursorIndex].setText("");
-      pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
-    }
+  private void onPinProvided() {
+    errorTextView.setVisibility(View.INVISIBLE);
   }
 
   private void resetView() {
-    cursorIndex = 0;
-    pinKeyboard.reset();
-    for (int i = 0; i < MAX_DIGITS; i++) {
-      pinInputs[i].setText("");
-      pinInputs[i].setBackgroundResource(inputNormalBackgroundResourceId);
-    }
-    pinInputs[cursorIndex].setBackgroundResource(inputFocusedBackgroundResourceId);
+    pinKeyboardHandler.reset();
   }
 
   private boolean isLoginMode() {

@@ -123,19 +123,24 @@
 
     <source-file src="src/android/src/android/com/onegini/OneginiConstants.java" target-dir="src/com/onegini/"/>
     <source-file src="src/android/src/android/com/onegini/OneginiCordovaPlugin.java" target-dir="src/com/onegini/"/>
-    <source-file src="src/android/src/android/com/onegini/action/PluginInitializer.java"
+    <!-- action -->
+    <source-file src="src/android/src/android/com/onegini/action/AuthorizeAction.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/AwaitInitialization.java"
                  target-dir="src/com/onegini/action/"/>
-    <source-file src="src/android/src/android/com/onegini/action/AuthorizeAction.java"
-                 target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/ChangePinAction.java"
+                 target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/action/CheckIsEnrolledAction.java"
+                 target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/action/CheckIsRegisteredAction.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/DisconnectAction.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/FetchResourceAction.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/FetchResourceAnonymouslyAction.java"
+                 target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/action/ForgotPinHandler.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/InAppBrowserControlSession.java"
                  target-dir="src/com/onegini/action/"/>
@@ -145,20 +150,19 @@
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/OneginiPluginAction.java"
                  target-dir="src/com/onegini/action/"/>
-    <source-file src="src/android/src/android/com/onegini/action/PinProvidedAction.java"
-                 target-dir="src/com/onegini/action/"/>
-    <source-file src="src/android/src/android/com/onegini/action/ValidatePinAction.java"
-                 target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/PinCallbackSession.java"
                  target-dir="src/com/onegini/action/"/>
-    <source-file src="src/android/src/android/com/onegini/action/URLHandler.java"
-                 target-dir="src/com/onegini/action/"/>
-    <source-file src="src/android/src/android/com/onegini/action/CheckIsRegisteredAction.java"
+    <source-file src="src/android/src/android/com/onegini/action/PinProvidedAction.java"
+                 target-dir="src/com/onegini/action/"/>                                  
+    <source-file src="src/android/src/android/com/onegini/action/PluginInitializer.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/SetupScreenOrientationAction.java"
                  target-dir="src/com/onegini/action/"/>
-    <source-file src="src/android/src/android/com/onegini/action/ForgotPinHandler.java"
+    <source-file src="src/android/src/android/com/onegini/action/URLHandler.java"
+                 target-dir="src/com/onegini/action/"/>    
+    <source-file src="src/android/src/android/com/onegini/action/ValidatePinAction.java"
                  target-dir="src/com/onegini/action/"/>
+    <!-- dialog -->
     <source-file src="src/android/src/android/com/onegini/dialog/ConfirmationDialogSelectorHandler.java"
                  target-dir="src/com/onegini/dialog/"/>
     <source-file src="src/android/src/android/com/onegini/dialog/CreatePinNativeDialogHandler.java"
@@ -171,11 +175,19 @@
                  target-dir="src/com/onegini/dialog/"/>
     <source-file src="src/android/src/android/com/onegini/dialog/PinScreenActivity.java"
                  target-dir="src/com/onegini/dialog"/>
+    <source-file src="src/android/src/android/com/onegini/dialog/helper/PinActivityStarter.java"
+                 target-dir="src/com/onegini/util/"/>
+    <source-file src="src/android/src/android/com/onegini/dialog/helper/PinActivityMessageMapper.java"
+                 target-dir="src/com/onegini/util/"/>
+    <!-- exception -->
     <source-file src="src/android/src/android/com/onegini/exception/PluginConfigException.java"
                  target-dir="src/com/onegini/exception"/>
+    <!-- gcm -->
     <!--<source-file src="src/android/src/android/com/onegini/gcm/GCMHelper.java" target-dir="src/com/onegini/gcm/" />-->
+    <!-- model -->
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/model/MessageKey.java" target-dir="src/com/onegini/model/"/>
+    <!-- resource -->
     <source-file src="src/android/src/android/com/onegini/resource/AnonymousResourceClient.java"
                  target-dir="src/com/onegini/resource/"/>
     <source-file src="src/android/src/android/com/onegini/resource/ResourceClient.java"
@@ -188,6 +200,7 @@
                  target-dir="src/com/onegini/resource/"/>
     <source-file src="src/android/src/android/com/onegini/resource/RestResourceInterface.java"
                  target-dir="src/com/onegini/resource/"/>
+    <!-- response -->
     <source-file src="src/android/src/android/com/onegini/response/GeneralResponse.java"
                  target-dir="src/com/onegini/response/"/>
     <source-file src="src/android/src/android/com/onegini/response/InAppBrowserControlResponse.java"
@@ -200,7 +213,9 @@
                  target-dir="src/com/onegini/response/"/>
     <source-file src="src/android/src/android/com/onegini/response/ResourceCallResponse.java"
                  target-dir="src/com/onegini/response/"/>
+    <!-- scope -->
     <source-file src="src/android/src/android/com/onegini/scope/ScopeParser.java" target-dir="src/com/onegini/scope/"/>
+    <!-- util -->
     <source-file src="src/android/src/android/com/onegini/util/CallbackResultBuilder.java"
                  target-dir="src/com/onegini/util/"/>
     <source-file src="src/android/src/android/com/onegini/util/HashUtil.java" target-dir="src/com/onegini/util/"/>
@@ -209,10 +224,6 @@
     <source-file src="src/android/src/android/com/onegini/util/JSONResourceReader.java"
                  target-dir="src/com/onegini/util/"/>
     <source-file src="src/android/src/android/com/onegini/util/MessageResourceReader.java"
-                 target-dir="src/com/onegini/util/"/>
-    <source-file src="src/android/src/android/com/onegini/dialog/helper/PinActivityStarter.java"
-                 target-dir="src/com/onegini/util/"/>
-    <source-file src="src/android/src/android/com/onegini/dialog/helper/PinActivityMessageMapper.java"
                  target-dir="src/com/onegini/util/"/>
 
     <source-file src="src/android/res/layout/create_pin_screen.xml" target-dir="res/layout"/>

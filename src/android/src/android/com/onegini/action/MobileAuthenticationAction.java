@@ -38,9 +38,7 @@ public class MobileAuthenticationAction implements OneginiPluginAction {
 
     final Context context = client.getCordova().getActivity().getApplication();
     if (isNotConnected(context)) {
-      callbackContext.sendPluginResult(callbackResultBuilder
-              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
-              .build()
+      callbackContext.sendPluginResult(callbackResultBuilder.withErrorReason(CONNECTIVITY_PROBLEM.getName()).build()
       );
       return;
     }

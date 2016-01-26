@@ -197,12 +197,7 @@ module.exports = {
    */
   enrollForMobileAuthentication: function (router, scopes) {
     var onSuccess = function (response) {
-      /*
-       The response method contains the name of the method in the OGAuthorizationDelegate protocol
-       */
-      if (response == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_SUCCESS) {
         router.enrollmentSuccess();
-      }
     };
 
     var onError = function (error) {
@@ -231,12 +226,13 @@ module.exports = {
         router.errorUserAlreadyEnrolled();
       }
     };
-
+    var methodArgs;
     if (scopes && scopes.length > 0) {
-      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLL, [scopes]);
+      methodArgs = [scopes];
     } else {
-      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLL, []);
+      methodArgs = [];
     }
+    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLL, methodArgs);
   },
 
     /**
@@ -352,12 +348,13 @@ module.exports = {
         router.errorPinForgotten();
       }
     };
-
+  var methodArgs;
     if (scopes && scopes.length > 0) {
-      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, [scopes]);
+      methodArgs = [scopes];
     } else {
-      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, []);
+      methodArgs = [];
     }
+    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, methodArgs);
   },
 
   /**

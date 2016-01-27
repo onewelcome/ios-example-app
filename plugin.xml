@@ -116,9 +116,11 @@
           android:launchMode="singleTask">
       </activity>
     </config-file>
-    
+
+    <!-- Google Play Services, GCM -->
+    <framework src="com.google.android.gms:play-services-base:7.8.0" />
     <framework src="com.google.android.gms:play-services-gcm:7.8.0" />
-    
+
     <source-file src="src/android/src/android/com/onegini/OneginiConstants.java" target-dir="src/com/onegini/"/>
     <source-file src="src/android/src/android/com/onegini/OneginiCordovaPlugin.java" target-dir="src/com/onegini/"/>
     <!-- action -->
@@ -127,8 +129,6 @@
     <source-file src="src/android/src/android/com/onegini/action/AwaitInitialization.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/ChangePinAction.java"
-                 target-dir="src/com/onegini/action/"/>
-    <source-file src="src/android/src/android/com/onegini/action/CheckIsEnrolledAction.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/CheckIsRegisteredAction.java"
                  target-dir="src/com/onegini/action/"/>
@@ -141,6 +141,8 @@
     <source-file src="src/android/src/android/com/onegini/action/ForgotPinHandler.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/InAppBrowserControlSession.java"
+                 target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/action/IsPushAuthenticationAvailableAction.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/LogoutAction.java"
                  target-dir="src/com/onegini/action/"/>

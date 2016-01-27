@@ -169,11 +169,7 @@
                  target-dir="src/com/onegini/dialog/"/>
     <source-file src="src/android/src/android/com/onegini/dialog/CreatePinNativeDialogHandler.java"
                  target-dir="src/com/onegini/dialog/"/>
-    <source-file src="src/android/src/android/com/onegini/dialog/CreatePinNonNativeDialogHandler.java"
-                 target-dir="src/com/onegini/dialog/"/>
     <source-file src="src/android/src/android/com/onegini/dialog/CurrentPinNativeDialogHandler.java"
-                 target-dir="src/com/onegini/dialog/"/>
-    <source-file src="src/android/src/android/com/onegini/dialog/CurrentPinNonNativeDialogHandler.java"
                  target-dir="src/com/onegini/dialog/"/>
     <source-file src="src/android/src/android/com/onegini/dialog/PinScreenActivity.java"
                  target-dir="src/com/onegini/dialog"/>

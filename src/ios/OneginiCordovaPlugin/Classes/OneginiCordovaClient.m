@@ -10,6 +10,9 @@
 #import <Cordova/NSDictionary+Extensions.h>
 #import "Reachability.h"
 #import "XMLReader.h"
+#import "PushConfirmationViewController.h"
+#import "MessagesModel.h"
+#import "PushWithPinConfirmationViewController.h"
 
 NSString* const kIsEnrolledKey      = @"isEnrolledForMobileAuthentication";
 NSString* const kReason				= @"reason";
@@ -46,8 +49,6 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     /** Temporary storage of the first PIN for verification with the second entry */
 #warning TODO apply memory protection
     NSString *verifyPin;
-
-    NSDictionary* messages;
 }
 
 @synthesize oneginiClient, pluginInitializedCommandTxId, authorizeCommandTxId, configModel;
@@ -75,8 +76,6 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
 
         if (self.configModel && self.oneginiClient)
             self.initializationSuccessful = YES;
-
-        [self loadMessagesFromFile:@"messages.properties"];
     }
 }
 
@@ -121,32 +120,6 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
 -(NSString *)loadConfigurationFile {
     NSString * configPath = @"config.xml";
     return [self loadFileToString:configPath];
-}
-
--(void)loadMessagesFromFile:(NSString*)fileName
-{
-    NSString *properties = [self loadFileToString:fileName];
-
-    NSError *error;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\{.*\\}" options:NSRegularExpressionCaseInsensitive error:&error];
-
-    properties = [regex stringByReplacingMatchesInString:properties options:0 range:NSMakeRange(0, [properties length]) withTemplate:@"%@"];
-    NSMutableArray *lines = [[properties componentsSeparatedByCharactersInSet: [NSCharacterSet newlineCharacterSet]] mutableCopy];
-
-    NSMutableDictionary* mutablemessages = [NSMutableDictionary dictionary];
-
-    for (NSString* line in lines) {
-        if ([line rangeOfString:@"="].location==NSNotFound)//  ![line containsString:@"="])
-            continue;
-        NSArray* keyValue = [line componentsSeparatedByString:@"="];
-        if (keyValue.count==2)
-            [mutablemessages setObject:keyValue[1] forKey:keyValue[0]];
-        else if (keyValue.count==1)
-            [mutablemessages setObject:@"" forKey:keyValue[0]];
-        else
-            NSLog(@"Error reading messages.properties file");
-    }
-    messages = mutablemessages;
 }
 
 - (void)handleOpenURL:(NSNotification *)notification {
@@ -616,7 +589,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
             [self resetAll];
         }
     } else {
-        [self.pinViewController invalidPinWithReason:[NSString stringWithFormat:[messages objectForKey:@"AUTHORIZATION_ERROR_PIN_INVALID"],@(remaining)]];
+        [self.pinViewController invalidPinWithReason:[NSString stringWithFormat:[[MessagesModel sharedInstance].messages objectForKey:@"AUTHORIZATION_ERROR_PIN_INVALID"],@(remaining)]];
     }
 }
 
@@ -681,13 +654,15 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 }
 
 - (void)askForPushAuthenticationConfirmation:(NSString *)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm {
-    // Not implemented, should be made optional in the SDK
+    PushConfirmationViewController* pushConfirmationViewController = [[PushConfirmationViewController alloc]initWithMessage:message confirmationBlock:confirm NibName:@"PushConfirmationViewController" bundle:nil];
+    [[self getTopViewController] presentViewController:pushConfirmationViewController animated:NO completion:^{}];
 }
 
 - (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message notificationType:(NSString *)notificationType
                                             pinSize:(NSUInteger)pinSize	maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt
                                             confirm:(PushAuthenticationWithPinConfirmation)confirm {
-    // Not implemented, should be made optional in the SDK
+    PushWithPinConfirmationViewController* pushWithPinConfirmationViewController = [[PushWithPinConfirmationViewController alloc]initWithMessage:message retryAttempts:retryAttempt maxAttempts:maxAttempts confirmationBlock:confirm NibName:@"PushWithPinConfirmationViewController" bundle:nil];
+    [[self getTopViewController] presentViewController:pushWithPinConfirmationViewController animated:NO completion:^{}];
 }
 
 - (void)authorizationErrorUnsupportedOS {
@@ -809,7 +784,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 - (void)pinBlackListed {
     if (self.pinViewController != nil) {
         [self retryPinEntryAfterValidationFailure];
-        [self.pinViewController invalidPinWithReason:[messages objectForKey:@"PIN_BLACK_LISTED"]];
+        [self.pinViewController invalidPinWithReason:[[MessagesModel sharedInstance].messages objectForKey:@"PIN_BLACK_LISTED"]];
     } else {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                 messageAsDictionary:@{ kReason:@"pinBlackListed" }];
@@ -821,7 +796,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 - (void)pinShouldNotBeASequence {
     if (self.pinViewController != nil) {
         [self retryPinEntryAfterValidationFailure];
-        [self.pinViewController invalidPinWithReason:[messages objectForKey:@"PIN_SHOULD_NOT_BE_A_SEQUENCE"]];
+        [self.pinViewController invalidPinWithReason:[[MessagesModel sharedInstance].messages objectForKey:@"PIN_SHOULD_NOT_BE_A_SEQUENCE"]];
     } else {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                 messageAsDictionary:@{ kReason:@"pinShouldNotBeASequence" }];
@@ -832,7 +807,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 - (void)pinShouldNotUseSimilarDigits:(NSUInteger)count {
     if (self.pinViewController != nil) {
         [self retryPinEntryAfterValidationFailure];
-        [self.pinViewController invalidPinWithReason:[NSString stringWithFormat:[messages objectForKey:@"PIN_SHOULD_NOT_USE_SIMILAR_DIGITS"], @(count)]];
+        [self.pinViewController invalidPinWithReason:[NSString stringWithFormat:[[MessagesModel sharedInstance].messages objectForKey:@"PIN_SHOULD_NOT_USE_SIMILAR_DIGITS"], @(count)]];
     } else {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                 messageAsDictionary:@{ kReason:@"pinShouldNotUseSimilarDigits", kMaxSimilarDigits:@(count) }];
@@ -843,7 +818,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 - (void)pinTooShort {
     if (self.pinViewController != nil) {
         [self retryPinEntryAfterValidationFailure];
-        [self.pinViewController invalidPinWithReason:[messages objectForKey:@"PIN_TOO_SHORT"]];
+        [self.pinViewController invalidPinWithReason:[[MessagesModel sharedInstance].messages objectForKey:@"PIN_TOO_SHORT"]];
     } else {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                 messageAsDictionary:@{ kReason:@"pinTooShort" }];
@@ -901,7 +876,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         return;
     }
     if (self.pinViewController){
-        [self.pinViewController invalidPinWithReason: [NSString stringWithFormat:[messages objectForKey:@"AUTHORIZATION_ERROR_PIN_INVALID"],@(remaining)]];
+        [self.pinViewController invalidPinWithReason: [NSString stringWithFormat:[[MessagesModel sharedInstance].messages objectForKey:@"AUTHORIZATION_ERROR_PIN_INVALID"],@(remaining)]];
     }
     else{
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"invalidCurrentPin", kRemainingAttempts:@(remaining)} ];
@@ -947,7 +922,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         return;
     }
     if (self.pinViewController){
-        [self.pinViewController invalidPinWithReason:[messages objectForKey:@"AUTHORIZATION_ERROR_PIN_CHANGE_FAILED"]];
+        [self.pinViewController invalidPinWithReason:[[MessagesModel sharedInstance].messages objectForKey:@"AUTHORIZATION_ERROR_PIN_CHANGE_FAILED"]];
     }
     else{
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"pinChangeError"} ];
@@ -1033,10 +1008,11 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         self.pinViewController = [[PinViewController alloc] initWithNibName:@"PINViewController" bundle:nil];
     }
 
-    self.pinViewController.messages = messages;
+    self.pinViewController.messages = [MessagesModel sharedInstance].messages;
     self.pinViewController.delegate = self;
     self.pinViewController.supportedOrientations = self.supportedOrientations;
     self.pinViewController.mode = mode;
+   
 
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{kMethod:@"closeInAppBrowser"}];
     pluginResult.keepCallback = @(1);
@@ -1052,7 +1028,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [[self getTopViewController] presentViewController:self.pinViewController animated:YES completion:^{
-            self.pinViewController.messages = messages;
+            self.pinViewController.messages = [MessagesModel sharedInstance].messages;
         }];
     });
 }
@@ -1146,7 +1122,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
                 verifyPin = nil;
                 pinEntryMode = PINRegistrationMode;
                 self.pinViewController.mode = PINRegistrationMode;
-                [self.pinViewController invalidPinWithReason:[messages objectForKey:@"PIN_CODES_DIFFERS"]];
+                [self.pinViewController invalidPinWithReason:[[MessagesModel sharedInstance].messages objectForKey:@"PIN_CODES_DIFFERS"]];
             } else {
                 // The user entered the second verification PIN, check if they are equal and confirm the PIN
                 verifyPin = nil;
@@ -1180,8 +1156,8 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
                 verifyPin = nil;
                 pinEntryMode = PINChangeNewPinMode;
                 self.pinViewController.mode = PINChangeNewPinMode;
-                [self.pinViewController reset];
-                [self.pinViewController invalidPinWithReason:[messages objectForKey:@"PIN_CODES_DIFFERS"]];
+				[self.pinViewController reset];
+                [self.pinViewController invalidPinWithReason:[[MessagesModel sharedInstance].messages objectForKey:@"PIN_CODES_DIFFERS"]];
             } else {
                 // The user entered the second verification PIN, check if they are equal and confirm the PIN
                 verifyPin = nil;

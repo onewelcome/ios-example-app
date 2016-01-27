@@ -29,7 +29,14 @@
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/PINViewController.xib"/>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/PinViewController.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/PinViewController.m"/>
-
+    <header-file src="src/ios/OneginiCordovaPlugin/Classes/PushConfirmationViewController.h"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PushConfirmationViewController.m"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PushConfirmationViewController.xib"/>
+    <header-file src="src/ios/OneginiCordovaPlugin/Classes/PushWithPinConfirmationViewController.h"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PushWithPinConfirmationViewController.m"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/PushWithPinConfirmationViewController.xib"/>
+    <header-file src="src/ios/OneginiCordovaPlugin/Classes/MessagesModel.h"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/MessagesModel.m"/>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/AppDelegate.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/AppDelegate.m"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGAuthorizationDelegate.h"/>

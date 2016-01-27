@@ -17,8 +17,6 @@ public class GCMHelper {
   private static final String PROPERTY_REG_ID = "registration_id";
   private static final String PROPERTY_APP_VERSION = "appVersion";
 
-  private static final String SENDER_ID = "586427927998";
-
   private static final String TAG = "GCMDemo";
 
   private Context context;
@@ -33,6 +31,7 @@ public class GCMHelper {
 
   public void registerGCMService(final OneginiClient oneginiClient,
                                  final String[] scopes,
+                                 final String senderId,
                                  final OneginiMobileAuthEnrollmentHandler mobileAuthEnrollmentHandler) {
     this.oneginiClient = oneginiClient;
     gcm = GoogleCloudMessaging.getInstance(context);
@@ -41,7 +40,7 @@ public class GCMHelper {
       regid = getRegistrationId(context);
 
       if (regid.isEmpty()) {
-        registerInBackground(scopes, mobileAuthEnrollmentHandler);
+        registerInBackground(scopes, senderId, mobileAuthEnrollmentHandler);
       }
       else {
         oneginiClient.enrollForMobileAuthentication(regid, scopes, mobileAuthEnrollmentHandler);
@@ -105,7 +104,7 @@ public class GCMHelper {
    * Registers the application with GCM servers asynchronously. <p> Stores the registration ID and app versionCode in
    * the application's shared preferences.
    */
-  private void registerInBackground(final String[] scopes,
+  private void registerInBackground(final String[] scopes, final String senderId,
                                     final OneginiMobileAuthEnrollmentHandler mobileAuthEnrollmentHandler) {
     new AsyncTask<Void, Void, String>() {
       @Override
@@ -116,7 +115,7 @@ public class GCMHelper {
           if (gcm == null) {
             gcm = GoogleCloudMessaging.getInstance(context);
           }
-          regid = gcm.register(SENDER_ID);
+          regid = gcm.register(senderId);
           msg = "Device registered, registration ID=" + regid;
 
           // You should send the registration ID to your server over HTTP,

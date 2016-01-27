@@ -12,7 +12,6 @@ import com.onegini.dialog.ConfirmationDialogSelectorHandler;
 import com.onegini.dialog.CreatePinNativeDialogHandler;
 import com.onegini.dialog.CurrentPinNativeDialogHandler;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
-import com.onegini.mobile.sdk.android.library.utils.dialogs.DialogProvider;
 import com.onegini.model.ConfigModel;
 import com.onegini.util.MessageResourceReader;
 
@@ -32,8 +31,6 @@ public class PluginInitializer {
       return;
     }
 
-    setupDialogs(application.getApplicationContext());
-
     final int keystoreResourcePointer = client.getCordova().getActivity().getResources().getIdentifier("keystore", "raw", application.getPackageName());
     configModel.setCertificatePinningKeyStore(keystoreResourcePointer);
     configModel.setKeyStoreHash(KEYSTORE_HASH);
@@ -42,6 +39,7 @@ public class PluginInitializer {
     final OneginiClient oneginiClient = OneginiClient.setupInstance(applicationContext, configModel);
     client.setOneginiClient(oneginiClient);
 
+    setupDialogs(application.getApplicationContext());
     setupURLHandler(oneginiClient, configModel);
     MessageResourceReader.setupInstance(applicationContext);
 
@@ -49,12 +47,11 @@ public class PluginInitializer {
   }
 
   private void setupDialogs(final Context context) {
-    DialogProvider.setInstance();
-    final DialogProvider instance = DialogProvider.getInstance();
-    instance.setOneginiCreatePinDialog(new CreatePinNativeDialogHandler(context));
-    instance.setOneginiCurrentPinDialog(new CurrentPinNativeDialogHandler(context));
-    instance.setConfirmationWithPinDialog(new AcceptWithPinDialog(context));
-    instance.getConfirmationDialog().setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler(context));
+    final OneginiClient client = OneginiClient.getInstance();
+    client.setCreatePinDialog(new CreatePinNativeDialogHandler(context));
+    client.setCurrentPinDialog(new CurrentPinNativeDialogHandler(context));
+    client.setConfirmationWithPinDialog(new AcceptWithPinDialog(context));
+    client.setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler(context));
   }
 
   private ConfigModel retrieveConfiguration() {

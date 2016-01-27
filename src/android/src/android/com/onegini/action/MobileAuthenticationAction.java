@@ -6,6 +6,7 @@ import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_DEVIC
 import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_ERROR;
 import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_INVALID_CREDENTIALS;
 import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_INVALID_REQUEST;
+import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_INVALID_TRANSACTION;
 import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_NOT_AVAILABLE;
 import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_SUCCESS;
 import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_USER_ALREADY_ENROLLED;
@@ -135,7 +136,7 @@ public class MobileAuthenticationAction implements OneginiPluginAction {
       public void enrollmentInvalidTransaction() {
         callbackContext.sendPluginResult(
             callbackResultBuilder
-                .withErrorReason(ENROLLMENT_ERROR.getName())
+                .withErrorReason(ENROLLMENT_INVALID_TRANSACTION.getName())
                 .build());
       }
     };

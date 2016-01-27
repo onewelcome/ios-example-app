@@ -2,9 +2,9 @@
 // TODO: remove dependencies duplications in plugin.gradle and build.gradle
 buildscript {
   repositories {
-    jcenter()
     mavenLocal()
     mavenCentral()
+    jcenter()
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:1.3.+'
@@ -20,6 +20,10 @@ allprojects {
   sourceCompatibility = 1.6
   targetCompatibility = 1.6
   repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+
     def androidHome = System.getenv("ANDROID_HOME")
     maven { url "$androidHome/extras/android/m2repository/" }
     maven { url "$androidHome/extras/google/m2repository/"}
@@ -33,19 +37,18 @@ allprojects {
         }
       }
     }
-    mavenLocal()
-    mavenCentral()
   }
 }
 
 dependencies {
-  compile files('dexguard/lib/dexguard_util.jar')
+  // Dependency injection
+  compile 'com.google.dagger:dagger:2.0.2'
   // The onegini sdk
-  compile 'com.onegini.mobile.sdk.android:library:4.02.02:release@aar'
+  compile 'com.onegini.mobile.sdk.android:library:5.00.01:release@aar'
   // Google play services
 //  compile 'com.google.android.gms:play-services-base:7.8.0'
 //  compile 'com.google.android.gms:play-services-gcm:7.8.0'
-  // Http Client
+//   Http Client
   compile 'com.squareup.okhttp:okhttp:2.3.0'
   compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
   // Rest Client
@@ -90,9 +93,11 @@ task downloadAndPrepareLibs(type: Copy, dependsOn: downloadLibs) {
   from zipTree(aarLibrary)
   into workDirectory
   include "classes.jar"
+  include "libs/*.jar"
   rename { filename ->
     filename.replace('classes', name)
   }
+
 }
 
 task prepareLibrares(dependsOn: 'downloadAndPrepareLibs') {
@@ -107,6 +112,12 @@ task prepareLibrares(dependsOn: 'downloadAndPrepareLibs') {
           } else {
             zipfileset(src: "build/jarjar/" + it.name + ".jar")
           }
+        }
+
+        FileTree additionalLibs = fileTree(dir: workDirectory + '/libs')
+        additionalLibs.include '*.jar'
+        additionalLibs.each {
+          File file -> zipfileset(src: workDirectory  + '/libs/' + file.name)
         }
       }
     }

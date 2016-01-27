@@ -1022,20 +1022,19 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
  */
 
 - (void)showPinEntryViewInMode:(PINEntryModes)mode {
-    if ([[self getTopViewController] isKindOfClass:[PinEntryContainerViewController class]]){
+    if ([[self getTopViewController] isKindOfClass:[PinViewController class]]){
         return;
     }
     if ([[UIScreen mainScreen] bounds].size.height == 480){
-        self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController-4s" bundle:nil];
+        self.pinViewController = [[PinViewController alloc] initWithNibName:@"PINViewController" bundle:nil];
     } else {
-        self.pinViewController = [[PinEntryContainerViewController alloc] initWithNibName:@"PinEntryContainerViewController" bundle:nil];
+        self.pinViewController = [[PinViewController alloc] initWithNibName:@"PINViewController" bundle:nil];
     }
 
-
+    self.pinViewController.messages = messages;
     self.pinViewController.delegate = self;
     self.pinViewController.supportedOrientations = self.supportedOrientations;
     self.pinViewController.mode = mode;
-    self.pinViewController.messages = messages;
 
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{kMethod:@"closeInAppBrowser"}];
     pluginResult.keepCallback = @(1);
@@ -1115,8 +1114,9 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 
 #pragma mark -
 #pragma mark PinEntryContainerViewControllerDelegate
-- (void)pinEntered:(PinEntryContainerViewController *)controller pin:(NSString *)pin {
+- (void)pinEntered:(NSString *)pin {
 
+    [self.pinViewController reset];
     switch (pinEntryMode) {
         case PINCheckMode: {
             [oneginiClient confirmCurrentPin:pin];
@@ -1178,6 +1178,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
                 verifyPin = nil;
                 pinEntryMode = PINChangeNewPinMode;
                 self.pinViewController.mode = PINChangeNewPinMode;
+                [self.pinViewController reset];
                 [self.pinViewController invalidPinWithReason:[messages objectForKey:@"PIN_CODES_DIFFERS"]];
             } else {
                 // The user entered the second verification PIN, check if they are equal and confirm the PIN
@@ -1193,8 +1194,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     }
 }
 
--(void)pinForgotten:(PinEntryContainerViewController *)controller
-{
+-(void)pinForgotten{
     [self closePinView];
 
     NSDictionary *d = @{ kReason:@"authorizationErrorPinForgotten" };

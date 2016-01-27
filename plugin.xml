@@ -205,7 +205,9 @@
     <source-file src="src/android/src/android/com/onegini/exception/PluginConfigException.java"
                  target-dir="src/com/onegini/exception"/>
     <!-- gcm -->
+    <source-file src="src/android/src/android/com/onegini/gcm/GcmBroadcastReceiver.java" target-dir="src/com/onegini/gcm/" />
     <source-file src="src/android/src/android/com/onegini/gcm/GCMHelper.java" target-dir="src/com/onegini/gcm/" />
+    <source-file src="src/android/src/android/com/onegini/gcm/GcmIntentService.java" target-dir="src/com/onegini/gcm/" />
     <!-- model -->
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/model/MessageKey.java" target-dir="src/com/onegini/model/"/>

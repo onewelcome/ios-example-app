@@ -180,6 +180,79 @@ module.exports = {
   },
 
   /**
+   * Enrolls the currently connected device for mobile push authentication.
+   *
+   * @param {Object} router   Object that can handle page transition for the outcome of the action. Should at
+   *                          least implement the following methods:
+   *                          - enrollmentSuccess -> enrollment success
+   *                          - error -> generic enrollment error handler
+   *                          - errorAuthenticationError -> failed to authenticate the user for enrollment
+   *                          - errorDeviceAlreadyEnrolled -> the device is already enrolled
+   *                          - errorInvalidClientCredentials -> provided client credentials are invalid
+   *                          - errorInvalidRequest -> one or more request parameters missing
+   *                          - errorInvalidTransaction -> the transaction id used during enrollment is invalid, probably because the transaction validity period is expired
+   *                          - errorNotAvailable -> enrollment for mobile authentication is currently disabled
+   *                          - errorUserAlreadyEnrolled -> user is already enrolled for mobile authentication
+   * @param {Array} scopes    {Array} with {String}s that represent the scopes for the access token
+   */
+  enrollForMobileAuthentication: function (router, scopes) {
+    var onSuccess = function (response) {
+        router.enrollmentSuccess();
+    };
+
+    var onError = function (error) {
+      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR) {
+        router.error();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_AUTHENTICATION_ERROR) {
+        router.errorAuthenticationError();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_DEVICE_ALREADY_ENROLLED) {
+        router.errorDeviceAlreadyEnrolled();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_CLIENT_CREDENTIALS) {
+        router.errorInvalidClientCredentials();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_REQUEST) {
+        router.errorInvalidRequest();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_TRANSACTION) {
+        router.errorInvalidTransaction();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_NOT_AVAILABLE) {
+        router.errorNotAvailable();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_USER_ALREADY_ENROLLED) {
+        router.errorUserAlreadyEnrolled();
+      }
+    };
+    var methodArgs;
+    if (scopes && scopes.length > 0) {
+      methodArgs = [scopes];
+    } else {
+      methodArgs = [];
+    }
+    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLL, methodArgs);
+  },
+
+    /**
+     * Determine if the user is enrolled for mobile authentication.
+     *
+     * @param successCallback   Function to be called when user is already enrolled
+     * @param errorCallback     Function to be called when user is not yet enrolled
+     */
+  isEnrolledForMobileAuthentication: function (successCallback, errorCallback) {
+    var onSuccess = function (response) {
+      successCallback();
+    };
+    var onError = function (error) {
+      errorCallback();
+    };
+
+    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_IS_ENROLLED, []);
+  },
+
+  /**
    * Determine if the user is registered.
    *
    * @param successCallback   Function to be called when user is already registered
@@ -275,12 +348,13 @@ module.exports = {
         router.errorPinForgotten();
       }
     };
-
+  var methodArgs;
     if (scopes && scopes.length > 0) {
-      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, [scopes]);
+      methodArgs = [scopes];
     } else {
-      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, []);
+      methodArgs = [];
     }
+    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, methodArgs);
   },
 
   /**
@@ -652,6 +726,18 @@ module.exports = {
     RESOURCE_CALL_UNAUTHORIZED: "unauthorizedClient",
     RESOURCE_CALL_INVALID_GRANT: "invalidGrant",
 
-    SETUP_SCREEN_ORIENTATION: "setupScreenOrientation"
+    SETUP_SCREEN_ORIENTATION: "setupScreenOrientation",
+
+    MOBILE_AUTHENTICATION_ENROLL: "enrollForMobileAuthentication",
+    MOBILE_AUTHENTICATION_IS_ENROLLED: "isEnrolledForMobileAuthentication",
+    MOBILE_AUTHENTICATION_ENROLLMENT_SUCCESS: "enrollmentSuccess",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR: "enrollmentError",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_NOT_AVAILABLE: "enrollmentErrorNotAvailable",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_REQUEST: "enrollmentErrorInvalidRequest",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_TRANSACTION: "enrollmentErrorInvalidTransaction",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_AUTHENTICATION_ERROR: "enrollmentErrorAuthenticationError",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_USER_ALREADY_ENROLLED: "enrollmentErrorUserAlreadyEnrolled",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_DEVICE_ALREADY_ENROLLED: "enrollmentErrorDeviceAlreadyEnrolled",
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_CLIENT_CREDENTIALS: "enrollmentErrorInvalidClientCredentials"
   }
 };

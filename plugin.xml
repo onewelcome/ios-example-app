@@ -165,6 +165,13 @@
     <source-file src="src/android/src/android/com/onegini/action/ValidatePinAction.java"
                  target-dir="src/com/onegini/action/"/>
     <!-- dialog -->
+    <source-file src="src/android/src/android/com/onegini/dialog/AcceptWithPinDialog.java"
+                 target-dir="src/com/onegini/dialog/"/>
+    <source-file src="src/android/src/android/com/onegini/dialog/AcceptWithPinDialogActivity.java"
+                 target-dir="src/com/onegini/dialog/"/>
+    <source-file src="src/android/src/android/com/onegini/dialog/BasePinDialogActivity.java"
+                 target-dir="src/com/onegini/dialog/"/>
+
     <source-file src="src/android/src/android/com/onegini/dialog/ConfirmationDialogSelectorHandler.java"
                  target-dir="src/com/onegini/dialog/"/>
     <source-file src="src/android/src/android/com/onegini/dialog/CreatePinNativeDialogHandler.java"
@@ -231,6 +238,7 @@
     <source-file src="src/android/res/layout/keyboard.xml" target-dir="res/layout"/>
     <source-file src="src/android/res/layout/alert_dialog.xml" target-dir="res/layout"/>
     <source-file src="src/android/res/layout/confirm_dialog.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout/pin_accept_dialog.xml" target-dir="res/layout"/>
     <source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
     <source-file src="src/android/res/values/bools.xml" target-dir="res/values"/>
     <source-file src="src/android/res/values-sw600dp/bools.xml" target-dir="res/values-sw600dp"/>

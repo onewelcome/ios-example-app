@@ -7,6 +7,7 @@ import org.apache.cordova.Config;
 import android.app.Application;
 import android.content.Context;
 import com.onegini.OneginiCordovaPlugin;
+import com.onegini.dialog.AcceptWithPinDialog;
 import com.onegini.dialog.ConfirmationDialogSelectorHandler;
 import com.onegini.dialog.CreatePinNativeDialogHandler;
 import com.onegini.dialog.CurrentPinNativeDialogHandler;
@@ -49,9 +50,11 @@ public class PluginInitializer {
 
   private void setupDialogs(final Context context) {
     DialogProvider.setInstance();
-    DialogProvider.getInstance().setOneginiCreatePinDialog(new CreatePinNativeDialogHandler(context));
-    DialogProvider.getInstance().setOneginiCurrentPinDialog(new CurrentPinNativeDialogHandler(context));
-    DialogProvider.getInstance().getConfirmationDialog().setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler());
+    final DialogProvider instance = DialogProvider.getInstance();
+    instance.setOneginiCreatePinDialog(new CreatePinNativeDialogHandler(context));
+    instance.setOneginiCurrentPinDialog(new CurrentPinNativeDialogHandler(context));
+    instance.setConfirmationWithPinDialog(new AcceptWithPinDialog(context));
+    instance.getConfirmationDialog().setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler());
   }
 
   private ConfigModel retrieveConfiguration() {

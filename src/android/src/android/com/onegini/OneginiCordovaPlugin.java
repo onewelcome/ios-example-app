@@ -15,7 +15,7 @@ import static com.onegini.OneginiConstants.INIT_PIN_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.IN_APP_BROWSER_CONTROL_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.LOGOUT_ACTION;
 import static com.onegini.OneginiConstants.MOBILE_AUTHENTICATION_ENROLL_ACTION;
-import static com.onegini.OneginiConstants.CHECK_MOBILE_AUTHENTICATION_IS_ENROLLED_ACTION;
+import static com.onegini.OneginiConstants.CHECK_MOBILE_AUTHENTICATION_AVAILABLE_ACTION;
 import static com.onegini.OneginiConstants.SETUP_SCREEN_ORIENTATION;
 import static com.onegini.OneginiConstants.VALIDATE_PIN_ACTION;
 
@@ -35,7 +35,7 @@ import android.view.WindowManager;
 import com.onegini.action.AuthorizeAction;
 import com.onegini.action.AwaitInitialization;
 import com.onegini.action.ChangePinAction;
-import com.onegini.action.CheckIsEnrolledAction;
+import com.onegini.action.IsPushAuthenticationAvailableAction;
 import com.onegini.action.CheckIsRegisteredAction;
 import com.onegini.action.DisconnectAction;
 import com.onegini.action.FetchResourceAction;
@@ -109,7 +109,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     actions.put(DISCONNECT_ACTION, DisconnectAction.class);
     actions.put(MOBILE_AUTHENTICATION_ENROLL_ACTION, MobileAuthenticationAction.class);
     actions.put(CHECK_IS_REGISTERED_ACTION, CheckIsRegisteredAction.class);
-    actions.put(CHECK_MOBILE_AUTHENTICATION_IS_ENROLLED_ACTION, CheckIsEnrolledAction.class);
+    actions.put(CHECK_MOBILE_AUTHENTICATION_AVAILABLE_ACTION, IsPushAuthenticationAvailableAction.class);
   }
 
   private OneginiPluginAction buildActionClassFor(final String action) {

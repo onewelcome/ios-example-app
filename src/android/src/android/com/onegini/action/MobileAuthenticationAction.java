@@ -6,6 +6,7 @@ import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_DEVIC
 import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_ERROR;
 import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_INVALID_CREDENTIALS;
 import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_INVALID_REQUEST;
+import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_INVALID_TRANSACTION;
 import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_NOT_AVAILABLE;
 import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_SUCCESS;
 import static com.onegini.response.MobileAuthEnrollmentResponse.ENROLLMENT_USER_ALREADY_ENROLLED;
@@ -17,7 +18,9 @@ import org.json.JSONException;
 
 import android.content.Context;
 import com.onegini.OneginiCordovaPlugin;
+import com.onegini.gcm.GCMHelper;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiMobileAuthEnrollmentHandler;
+import com.onegini.model.ConfigModel;
 import com.onegini.resource.ResourceRequest;
 import com.onegini.util.CallbackResultBuilder;
 
@@ -45,20 +48,17 @@ public class MobileAuthenticationAction implements OneginiPluginAction {
 
     try {
       final String[] scopes = ResourceRequest.parseScopes(args.getJSONArray(0));
-      enroll(scopes, callbackContext, client);
+      final ConfigModel configModel = (ConfigModel) client.getOneginiClient().getConfigModel();
+      final String gcmSenderId = configModel.getGcmSenderId();
+      enroll(client, scopes, gcmSenderId, callbackContext);
     } catch (JSONException e) {
       callbackContext.error("Invalid parameter, failed to read scopes," + e.getMessage());
     }
   }
 
-  private void enroll(final String[] scopes, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
-    /*
-    Registration for Push notifications is currently disabled as it requires including additional
-    classes within the plugin.
-
-    final GCMHelper gcmHelper = new GCMHelper(client.getCordova().getActivity().getApplicationContext());
-    gcmHelper.registerGCMService(client.getOneginiClient(), scopes, buildEnrollHandlerForCallback(callbackContext));
-    */
+  private void enroll(final OneginiCordovaPlugin client, final String[] scopes, final String gcmSenderId, final CallbackContext callbackContext) {
+    final GCMHelper gcmHelper = new GCMHelper(client.getCordova().getActivity());
+    gcmHelper.registerGCMService(client.getOneginiClient(), scopes, gcmSenderId, buildEnrollHandlerForCallback(callbackContext));
   }
 
   private OneginiMobileAuthEnrollmentHandler buildEnrollHandlerForCallback(final CallbackContext callbackContext) {
@@ -136,7 +136,7 @@ public class MobileAuthenticationAction implements OneginiPluginAction {
       public void enrollmentInvalidTransaction() {
         callbackContext.sendPluginResult(
             callbackResultBuilder
-                .withErrorReason(ENROLLMENT_ERROR.getName())
+                .withErrorReason(ENROLLMENT_INVALID_TRANSACTION.getName())
                 .build());
       }
     };

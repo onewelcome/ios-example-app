@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import android.content.Context;
 import com.onegini.OneginiCordovaPlugin;
 
-public class CheckIsEnrolledAction implements OneginiPluginAction {
+public class IsPushAuthenticationAvailableAction implements OneginiPluginAction {
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
     final Context applicationContext = client.cordova.getActivity().getApplicationContext();

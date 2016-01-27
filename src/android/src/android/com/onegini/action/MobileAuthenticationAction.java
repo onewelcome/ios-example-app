@@ -56,7 +56,7 @@ public class MobileAuthenticationAction implements OneginiPluginAction {
   }
 
   private void enroll(final OneginiCordovaPlugin client, final String[] scopes, final String gcmSenderId, final CallbackContext callbackContext) {
-    final GCMHelper gcmHelper = new GCMHelper(client.getCordova().getActivity().getApplicationContext());
+    final GCMHelper gcmHelper = new GCMHelper(client.getCordova().getActivity());
     gcmHelper.registerGCMService(client.getOneginiClient(), scopes, gcmSenderId, buildEnrollHandlerForCallback(callbackContext));
   }
 

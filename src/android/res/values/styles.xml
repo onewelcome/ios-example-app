@@ -12,7 +12,7 @@
     <item name="android:gravity">center</item>
     <item name="android:textAlignment">center</item>
     <item name="android:scaleType">fitXY</item>
-    <item name="android:background">#72994d</item>
+    <item name="android:background">#00AEEF</item>
     <item name="android:includeFontPadding">false</item>
   </style>
 
@@ -23,7 +23,7 @@
     <item name="android:textSize">30sp</item>
     <item name="android:layout_margin">4dp</item>
     <item name="android:textStyle">bold</item>
-    <item name="android:background">@drawable/form_inactive_gray</item>
+    <item name="android:background">@drawable/form_inactive</item>
     <item name="android:textAlignment">center</item>
     <item name="android:gravity">center</item>
     <item name="android:layout_gravity">center</item>
@@ -32,19 +32,6 @@
   <style name="PinKeyboardInputFieldTablet" parent="PinKeyboardInputField">
     <item name="android:layout_width">48dp</item>
     <item name="android:textSize">26sp</item>
-  </style>
-
-  <style name="PinKeyboardStepMarker">
-    <item name="android:layout_width">20dp</item>
-    <item name="android:layout_height">20dp</item>
-    <item name="android:textColor">#fff</item>
-    <item name="android:background">@drawable/step_active</item>
-    <item name="android:includeFontPadding">false</item>
-    <item name="android:textSize">14sp</item>
-    <item name="android:gravity">center</item>
-    <item name="android:layout_gravity">center</item>
-    <item name="android:textAlignment">center</item>
-    <item name="android:padding">0dp</item>
   </style>
 
   <style name="CustomDialogTheme" parent="android:Theme.Holo.Light.Dialog">

@@ -119,6 +119,16 @@
           android:theme="@android:style/Theme.Black.NoTitleBar"
           android:launchMode="singleTask">
       </activity>
+      <activity
+          android:name=".helpers.NotificationAlertActivity"
+          android:configChanges="orientation"
+          android:screenOrientation="portrait">
+      </activity>
+      <activity
+          android:name=".helpers.NotificationAlertActivity"
+          android:configChanges="orientation"
+          android:screenOrientation="portrait">
+      </activity>
     </config-file>
     
     <framework src="com.google.android.gms:play-services-gcm:7.8.0" />
@@ -166,24 +176,29 @@
                  target-dir="src/com/onegini/action/"/>
     <!-- dialog -->
     <source-file src="src/android/src/android/com/onegini/dialog/AcceptWithPinDialog.java"
-                 target-dir="src/com/onegini/dialog/"/>
+                 target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/AcceptWithPinDialogActivity.java"
-                 target-dir="src/com/onegini/dialog/"/>
+                 target-dir="src/com/onegini/dialog/" />
+    <source-file src="src/android/src/android/com/onegini/dialog/BaseAlertActivity.java"
+                 target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/BasePinDialogActivity.java"
-                 target-dir="src/com/onegini/dialog/"/>
-
+                 target-dir="src/com/onegini/dialog/" />
+    <source-file src="src/android/src/android/com/onegini/dialog/ConfirmationDialog.java"
+                 target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/ConfirmationDialogSelectorHandler.java"
-                 target-dir="src/com/onegini/dialog/"/>
+                 target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/CreatePinNativeDialogHandler.java"
-                 target-dir="src/com/onegini/dialog/"/>
+                 target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/CurrentPinNativeDialogHandler.java"
-                 target-dir="src/com/onegini/dialog/"/>
+                 target-dir="src/com/onegini/dialog/" />
+    <source-file src="src/android/src/android/com/onegini/dialog/NotificationAlertActivity.java"
+                 target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/PinScreenActivity.java"
-                 target-dir="src/com/onegini/dialog"/>
-    <source-file src="src/android/src/android/com/onegini/dialog/helper/PinActivityStarter.java"
-                 target-dir="src/com/onegini/util/"/>
+                 target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/helper/PinActivityMessageMapper.java"
-                 target-dir="src/com/onegini/util/"/>
+                 target-dir="src/com/onegini/dialog/helper/" />
+    <source-file src="src/android/src/android/com/onegini/dialog/helper/PinActivityStarter.java"
+                 target-dir="src/com/onegini/dialog/helper/" />
     <!-- exception -->
     <source-file src="src/android/src/android/com/onegini/exception/PluginConfigException.java"
                  target-dir="src/com/onegini/exception"/>
@@ -231,31 +246,30 @@
     <source-file src="src/android/src/android/com/onegini/util/MessageResourceReader.java"
                  target-dir="src/com/onegini/util/"/>
 
-    <source-file src="src/android/res/layout/create_pin_screen.xml" target-dir="res/layout"/>
-    <source-file src="src/android/res/layout/login_pin_screen.xml" target-dir="res/layout"/>
-    <source-file src="src/android/res/layout-land/create_pin_screen.xml" target-dir="res/layout-land"/>
-    <source-file src="src/android/res/layout-land/login_pin_screen.xml" target-dir="res/layout-land"/>
-    <source-file src="src/android/res/layout/keyboard.xml" target-dir="res/layout"/>
-    <source-file src="src/android/res/layout/alert_dialog.xml" target-dir="res/layout"/>
-    <source-file src="src/android/res/layout/confirm_dialog.xml" target-dir="res/layout"/>
-    <source-file src="src/android/res/layout/pin_accept_dialog.xml" target-dir="res/layout"/>
-    <source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
-    <source-file src="src/android/res/values/bools.xml" target-dir="res/values"/>
-    <source-file src="src/android/res/values-sw600dp/bools.xml" target-dir="res/values-sw600dp"/>
-    <source-file src="src/android/res/values-xlarge/bools.xml" target-dir="res/values-xlarge"/>
-
-    <resource-file src="src/android/res/raw/keystore.bks" target="res/raw/keystore.bks"/>
-
     <!-- assets -->
-    <resource-file src="src/android/res/drawable/form_active.9.png" target="res/drawable/form_active.9.png"/>
-    <resource-file src="src/android/res/drawable/form_inactive.9.png" target="res/drawable/form_inactive.9.png"/>
-    <resource-file src="src/android/res/drawable/form_inactive_gray.9.png" target="res/drawable/form_inactive_gray.9.png"/>
-    <resource-file src="src/android/res/drawable/step_active.9.png" target="res/drawable/step_active.9.png"/>
-    <resource-file src="src/android/res/drawable/popup_button.xml" target="res/drawable/popup_button.xml"/>
-    <resource-file src="src/android/res/drawable-mdpi/background.jpg" target="res/drawable-mdpi/background.jpg"/>
-    <resource-file src="src/android/res/drawable-mdpi/logo.png" target="res/drawable-mdpi/logo.png"/>
-    <resource-file src="src/android/res/drawable-xhdpi/background.jpg" target="res/drawable-xhdpi/background.jpg"/>
-    <resource-file src="src/android/res/drawable-xhdpi/logo.png" target="res/drawable-xhdpi/logo.png"/>
+    <resource-file src="src/android/res/drawable/form_active.9.png" target="res/drawable/form_active.9.png" />
+    <resource-file src="src/android/res/drawable/form_inactive.9.png" target="res/drawable/form_inactive.9.png" />
+    <resource-file src="src/android/res/drawable/form_inactive_gray.9.png" target="res/drawable/form_inactive_gray.9.png" />
+    <resource-file src="src/android/res/drawable/popup_button.xml" target="res/drawable/popup_button.xml" />
+    <resource-file src="src/android/res/drawable/step_active.9.png" target="res/drawable/step_active.9.png" />
+    <resource-file src="src/android/res/drawable-mdpi/background.jpg" target="res/drawable-mdpi/background.jpg" />
+    <resource-file src="src/android/res/drawable-mdpi/logo.png" target="res/drawable-mdpi/logo.png" />
+    <resource-file src="src/android/res/drawable-xhdpi/background.jpg" target="res/drawable-xhdpi/background.jpg" />
+    <resource-file src="src/android/res/drawable-xhdpi/logo.png" target="res/drawable-xhdpi/logo.png" />
+    <resource-file src="src/android/res/layout/alert_dialog.xml" target="res/layout/alert_dialog.xml" />
+    <resource-file src="src/android/res/layout/alert_vertical.xml" target="res/layout/alert_vertical.xml" />
+    <resource-file src="src/android/res/layout/confirm_dialog.xml" target="res/layout/confirm_dialog.xml" />
+    <resource-file src="src/android/res/layout/create_pin_screen.xml" target="res/layout/create_pin_screen.xml" />
+    <resource-file src="src/android/res/layout/keyboard.xml" target="res/layout/keyboard.xml" />
+    <resource-file src="src/android/res/layout/login_pin_screen.xml" target="res/layout/login_pin_screen.xml" />
+    <resource-file src="src/android/res/layout/pin_accept_dialog.xml" target="res/layout/pin_accept_dialog.xml" />
+    <resource-file src="src/android/res/layout-land/create_pin_screen.xml" target="res/layout-land/create_pin_screen.xml" />
+    <resource-file src="src/android/res/layout-land/login_pin_screen.xml" target="res/layout-land/login_pin_screen.xml" />
+    <resource-file src="src/android/res/raw/keystore.bks" target="res/raw/keystore.bks" />
+    <resource-file src="src/android/res/values/bools.xml" target="res/values/bools.xml" />
+    <resource-file src="src/android/res/values/styles.xml" target="res/values/styles.xml" />
+    <resource-file src="src/android/res/values-sw600dp/bools.xml" target="res/values-sw600dp/bools.xml" />
+    <resource-file src="src/android/res/values-xlarge/bools.xml" target="res/values-xlarge/bools.xml" />
 
     <!-- Work in progress, these are not the correct image assets (copied from example PSD with low resolution) -->
     <resource-file src="src/generic/pin-config.json" target="res/raw/pin_config.json"/>

@@ -54,7 +54,7 @@ public class PluginInitializer {
     instance.setOneginiCreatePinDialog(new CreatePinNativeDialogHandler(context));
     instance.setOneginiCurrentPinDialog(new CurrentPinNativeDialogHandler(context));
     instance.setConfirmationWithPinDialog(new AcceptWithPinDialog(context));
-    instance.getConfirmationDialog().setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler());
+    instance.getConfirmationDialog().setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler(context));
   }
 
   private ConfigModel retrieveConfiguration() {

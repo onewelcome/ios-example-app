@@ -108,6 +108,16 @@
     <config-file target="AndroidManifest.xml" parent="/manifest">
       <uses-permission android:name="android.permission.INTERNET"/>
       <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+      <uses-permission android:name="android.permission.WAKE_LOCK" />
+      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    </config-file>
+        <config-file target="AndroidManifest.xml" parent="application/activity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="oneginisdk"/>
+      </intent-filter>
     </config-file>
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <activity
@@ -116,16 +126,18 @@
           android:launchMode="singleTask">
       </activity>
       <activity
-          android:name=".helpers.NotificationAlertActivity"
+          android:name="com.onegini.helpers.NotificationAlertActivity"
           android:configChanges="orientation"
           android:screenOrientation="portrait">
       </activity>
       <activity
-          android:name=".helpers.NotificationAlertActivity"
+          android:name="com.onegini.helpers.BaseAlertActivity"
           android:configChanges="orientation"
           android:screenOrientation="portrait">
       </activity>
+      <service android:name="com.onegini.gcm.GcmIntentService" />
     </config-file>
+
 
     <!-- Google Play Services, GCM -->
     <framework src="com.google.android.gms:play-services-base:7.8.0" />

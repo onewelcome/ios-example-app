@@ -111,14 +111,6 @@
       <uses-permission android:name="android.permission.WAKE_LOCK" />
       <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     </config-file>
-        <config-file target="AndroidManifest.xml" parent="application/activity">
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW"/>
-        <category android:name="android.intent.category.DEFAULT"/>
-        <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="oneginisdk"/>
-      </intent-filter>
-    </config-file>
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <activity
           android:name="com.onegini.dialog.PinScreenActivity"
@@ -138,6 +130,26 @@
       <service android:name="com.onegini.gcm.GcmIntentService" />
     </config-file>
 
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <receiver
+          android:name="com.onegini.gcm.GcmReceiver"
+          android:permission="com.google.android.c2dm.permission.SEND" >
+        <intent-filter>
+          <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+          <category android:name="$PACKAGE_NAME" />
+        </intent-filter>
+      </receiver>
+    </config-file>
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+      <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
+      <receiver android:name="com.onegini.gcm.GcmReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+        <intent-filter>
+          <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+          <category android:name="$PACKAGE_NAME" />
+        </intent-filter>
+      </receiver>
+    </config-file>
 
     <!-- Google Play Services, GCM -->
     <framework src="com.google.android.gms:play-services-base:7.8.0" />

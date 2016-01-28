@@ -126,12 +126,12 @@
           android:launchMode="singleTask">
       </activity>
       <activity
-          android:name="com.onegini.helpers.NotificationAlertActivity"
+          android:name="com.onegini.dialog.NotificationAlertActivity"
           android:configChanges="orientation"
           android:screenOrientation="portrait">
       </activity>
       <activity
-          android:name="com.onegini.helpers.BaseAlertActivity"
+          android:name="com.onegini.dialog.AcceptWithPinDialogActivity"
           android:configChanges="orientation"
           android:screenOrientation="portrait">
       </activity>

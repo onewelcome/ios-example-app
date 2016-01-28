@@ -145,7 +145,7 @@ public abstract class BasePinDialogActivity extends Activity
 
     int remainingAttempts = 3; //CommonDataModel.getInstance().getRemainingAttempts(); TODO
     if (remainingAttempts > 0) {
-      String wrongPinText = this.getString(resources.getIdentifier("wrong_pin_text", "string", packageName)) + remainingAttempts;
+      String wrongPinText = "Wrong PIN. Attempt(s):" + remainingAttempts;
       if (wrongPinTextView == null) {
         Log.w(getComponentName().toShortString(), "wrong pin text iew is missing in the layout");
       }

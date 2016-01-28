@@ -190,7 +190,7 @@ public class PinScreenActivity extends CordovaActivity {
     if (mode == SCREEN_MODE_LOGIN || mode == SCREEN_MODE_LOGIN_BEFORE_CHANGE_PIN) {
       return CurrentPinNativeDialogHandler.oneginiPinProvidedHandler;
     } else {
-      return  CreatePinNativeDialogHandler.oneginiPinProvidedHandler;
+      return CreatePinNativeDialogHandler.oneginiPinProvidedHandler;
     }
   }
 

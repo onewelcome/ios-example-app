@@ -29,9 +29,7 @@ public class GCMHelper {
     this.context = context;
   }
 
-  public void registerGCMService(final OneginiClient oneginiClient,
-                                 final String[] scopes,
-                                 final String senderId,
+  public void registerGCMService(final OneginiClient oneginiClient, final String[] scopes, final String senderId,
                                  final OneginiMobileAuthEnrollmentHandler mobileAuthEnrollmentHandler) {
     this.oneginiClient = oneginiClient;
     gcm = GoogleCloudMessaging.getInstance(context);
@@ -82,8 +80,7 @@ public class GCMHelper {
   private SharedPreferences getGCMPreferences(final Context context) {
     // This sample app persists the registration ID in shared preferences, but
     // how you store the regID in your app is up to you.
-    return context.getSharedPreferences(context.getApplicationInfo().name,
-        Context.MODE_PRIVATE);
+    return context.getSharedPreferences(context.getApplicationInfo().name, Context.MODE_PRIVATE);
   }
 
   /**
@@ -91,8 +88,7 @@ public class GCMHelper {
    */
   private static int getAppVersion(final Context context) {
     try {
-      PackageInfo packageInfo = context.getPackageManager()
-          .getPackageInfo(context.getPackageName(), 0);
+      PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
       return packageInfo.versionCode;
     } catch (PackageManager.NameNotFoundException e) {
       // should never happen
@@ -110,7 +106,7 @@ public class GCMHelper {
       @Override
       protected String doInBackground(Void... params) {
 
-        String msg = "";
+        String msg;
         try {
           if (gcm == null) {
             gcm = GoogleCloudMessaging.getInstance(context);
@@ -134,11 +130,6 @@ public class GCMHelper {
         }
 
         return msg;
-      }
-
-      @Override
-      protected void onPostExecute(String msg) {
-        Log.v("TEST", msg);
       }
     }.execute(null, null, null);
   }

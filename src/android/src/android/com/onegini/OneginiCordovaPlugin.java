@@ -73,8 +73,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
   }
 
   @Override
-  public boolean execute(final String action, final JSONArray args,
-                         final CallbackContext callbackContext) throws JSONException {
+  public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
     if (actions.containsKey(action)) {
       final OneginiPluginAction actionInstance = buildActionClassFor(action);
       if (actionInstance == null) {

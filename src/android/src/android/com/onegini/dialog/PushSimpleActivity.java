@@ -1,29 +1,25 @@
 package com.onegini.dialog;
 
+import org.apache.cordova.CordovaActivity;
+
 import android.app.Activity;
-import android.app.KeyguardManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.onegini.mobile.sdk.android.library.utils.dialogs.AlertInterface;
 
-public abstract class BaseAlertActivity extends Activity {
+
+public class PushSimpleActivity extends CordovaActivity {
+
+  private TextView alertText;
 
   @Override
-  protected void onCreate(final Bundle savedInstanceState) {
-
-    KeyguardManager keyguardManager = (KeyguardManager) getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
-    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-      if (keyguardManager.isKeyguardLocked() && keyguardManager.isKeyguardSecure()) {
-        //setTheme(R.style.customDialogLocked);
-      }
-    }
-
+  public void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
@@ -46,28 +42,24 @@ public abstract class BaseAlertActivity extends Activity {
     populate();
   }
 
-  /**
-   * This method is invoked from {@link #onCreate(android.os.Bundle)}
-   *
-   * @return the layout for this activity.
-   */
-  abstract protected int getContentView();
+  protected int getContentView() {
+    return getResources().getIdentifier("push_simple_dialog", "layout", getPackageName());
+  }
 
-  /**
-   * Find the views and setup and other view related properties. This method is invoked from {@link
-   * #onCreate(android.os.Bundle)}
-   */
-  abstract protected void setupViews();
+  protected void setupViews() {
+    alertText = (TextView) findViewById(getResources().getIdentifier("alert_text", "id", getPackageName()));
+  }
 
-  /**
-   * Populate the views. This method is invoked after {@link #setupViews()}
-   */
-  abstract protected void populate();
+  protected void populate() {
+    alertText.setText(getIntent().getStringExtra("message"));
+  }
 
-  abstract protected AlertInterface.AlertHandler getAlertHandler();
+  protected AlertInterface.AlertHandler getAlertHandler() {
+    return ConfirmationDialog.handler;
+  }
 
   private void _setupPositiveButton(final PowerManager.WakeLock screenOn) {
-    final Button positiveButton = (Button) findViewById(getResources().getIdentifier("positiveButton", "id", getPackageName()));
+    final Button positiveButton = (Button) findViewById(getResources().getIdentifier("positive_button", "id", getPackageName()));
 
     String title = getIntent().getStringExtra("positiveButtonTitle");
     if (title != null) {
@@ -87,7 +79,7 @@ public abstract class BaseAlertActivity extends Activity {
   }
 
   private void _setupNegativeButton(final PowerManager.WakeLock screenOn) {
-    final Button negativeButton = (Button) findViewById(getResources().getIdentifier("negativeButton", "id", getPackageName()));
+    final Button negativeButton = (Button) findViewById(getResources().getIdentifier("negative_button", "id", getPackageName()));
 
     String title = getIntent().getStringExtra("negativeButtonTitle");
     if (title != null) {

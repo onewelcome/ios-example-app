@@ -126,7 +126,7 @@
           android:launchMode="singleTask">
       </activity>
       <activity
-          android:name="com.onegini.dialog.NotificationAlertActivity"
+          android:name="com.onegini.dialog.PushSimpleActivity"
           android:configChanges="orientation"
           android:screenOrientation="portrait">
       </activity>
@@ -199,8 +199,6 @@
                  target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/AcceptWithPinDialogActivity.java"
                  target-dir="src/com/onegini/dialog/" />
-    <source-file src="src/android/src/android/com/onegini/dialog/BaseAlertActivity.java"
-                 target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/BasePinDialogActivity.java"
                  target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/ConfirmationDialog.java"
@@ -211,9 +209,9 @@
                  target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/CurrentPinNativeDialogHandler.java"
                  target-dir="src/com/onegini/dialog/" />
-    <source-file src="src/android/src/android/com/onegini/dialog/NotificationAlertActivity.java"
-                 target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/PinScreenActivity.java"
+                 target-dir="src/com/onegini/dialog"/>
+    <source-file src="src/android/src/android/com/onegini/dialog/PushSimpleActivity.java"
                  target-dir="src/com/onegini/dialog"/>
     <source-file src="src/android/src/android/com/onegini/dialog/helper/PinActivityStarter.java"
                  target-dir="src/com/onegini/util/"/>
@@ -280,11 +278,11 @@
     <resource-file src="src/android/res/drawable-mdpi/ic_backspace.png" target="res/drawable-mdpi/ic_backspace.png" />
     <resource-file src="src/android/res/drawable-xhdpi/ic_backspace.png" target="res/drawable-xhdpi/ic_backspace.png" />
     <resource-file src="src/android/res/layout/alert_dialog.xml" target="res/layout/alert_dialog.xml" />
-    <resource-file src="src/android/res/layout/alert_vertical.xml" target="res/layout/alert_vertical.xml" />
     <resource-file src="src/android/res/layout/confirm_dialog.xml" target="res/layout/confirm_dialog.xml" />
     <resource-file src="src/android/res/layout/keyboard.xml" target="res/layout/keyboard.xml" />
     <resource-file src="src/android/res/layout/pin_accept_dialog.xml" target="res/layout/pin_accept_dialog.xml" />
     <resource-file src="src/android/res/layout/pin_screen.xml" target="res/layout/pin_screen.xml" />
+    <resource-file src="src/android/res/layout/push_simple_dialog.xml" target="res/layout/push_simple_dialog.xml" />
     <resource-file src="src/android/res/layout-land/pin_screen.xml" target="res/layout-land/pin_screen.xml" />
     <resource-file src="src/android/res/raw/keystore.bks" target="res/raw/keystore.bks" />
     <resource-file src="src/android/res/values/bools.xml" target="res/values/bools.xml" />

@@ -201,10 +201,7 @@ module.exports = {
     };
 
     var onError = function (error) {
-      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR) {
-        router.error();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_AUTHENTICATION_ERROR) {
+      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_AUTHENTICATION_ERROR) {
         router.errorAuthenticationError();
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_DEVICE_ALREADY_ENROLLED) {
@@ -225,6 +222,9 @@ module.exports = {
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_USER_ALREADY_ENROLLED) {
         router.errorUserAlreadyEnrolled();
       }
+      else {
+        router.error();
+      }
     };
     var methodArgs;
     if (scopes && scopes.length > 0) {
@@ -233,23 +233,6 @@ module.exports = {
       methodArgs = [];
     }
     exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLL, methodArgs);
-  },
-
-    /**
-     * Determine if the user is enrolled for mobile authentication.
-     *
-     * @param successCallback   Function to be called when user is already enrolled
-     * @param errorCallback     Function to be called when user is not yet enrolled
-     */
-  isEnrolledForMobileAuthentication: function (successCallback, errorCallback) {
-    var onSuccess = function (response) {
-      successCallback();
-    };
-    var onError = function (error) {
-      errorCallback();
-    };
-
-    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_IS_ENROLLED, []);
   },
 
   /**
@@ -729,7 +712,6 @@ module.exports = {
     SETUP_SCREEN_ORIENTATION: "setupScreenOrientation",
 
     MOBILE_AUTHENTICATION_ENROLL: "enrollForMobileAuthentication",
-    MOBILE_AUTHENTICATION_IS_ENROLLED: "isEnrolledForMobileAuthentication",
     MOBILE_AUTHENTICATION_ENROLLMENT_SUCCESS: "enrollmentSuccess",
     MOBILE_AUTHENTICATION_ENROLLMENT_ERROR: "enrollmentError",
     MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_NOT_AVAILABLE: "enrollmentErrorNotAvailable",

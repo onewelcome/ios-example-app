@@ -231,11 +231,11 @@ Opens specified URL using inAppBrowser, should be used only if inAppBrowser plug
 Closes inAppBrowser.
 
 ### enrollForMobileAuthentication(router, scopes)
-Enrolls the currently connected device for mobile push authentication.
+Enrolls currently connected device for mobile push authentication.
 
 **Param** `router` - Object that can handle page transition for the outcome of the action. Should at least implement the following methods:
   - `enrollmentSuccess` - enrollment success
-  - `error` - generic enrollment error handler
+  - `error` - indicated general enrollment error
   - `errorAuthenticationError` - failed to authenticate the user for enrollment
   - `errorDeviceAlreadyEnrolled` -  the device is already enrolled
   - `errorInvalidClientCredentials` - provided client credentials are invalid
@@ -245,14 +245,6 @@ Enrolls the currently connected device for mobile push authentication.
   - `errorUserAlreadyEnrolled` - user is already enrolled for mobile authentication
   
 **Param** `scopes` - Array with Strings that represent the scopes for the access token
-
-### isEnrolledForMobileAuthentication:(successCallback, errorCallback)
-Determine if the user is enrolled for mobile authentication.
-
-**Param** `successCallback` - Function to be called when user is already enrolled
-
-**Param** `errorCallback` - Function to be called when user is not yet enrolleds
-
 
 ### isAndroid
 Determines whenever userAgent is Android.

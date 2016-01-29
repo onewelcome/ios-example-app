@@ -1,8 +1,11 @@
 package com.onegini.dialog;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -22,14 +25,9 @@ import android.widget.Toast;
 
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Base pin entry dialog activity. Subclass must provide a layout with at least the pin entry boxes.
- */
-public abstract class BasePinDialogActivity extends Activity
+public class PushWithPinActivity extends Activity
     implements TextView.OnEditorActionListener, View.OnFocusChangeListener {
+
 
   protected Resources resources;
   protected String packageName;
@@ -46,6 +44,8 @@ public abstract class BasePinDialogActivity extends Activity
 
   TextView pinDialogTitleTextView;
   TextView wrongPinTextView;
+
+  TextView titleText;
 
   ProgressBar progressBar;
 
@@ -77,12 +77,9 @@ public abstract class BasePinDialogActivity extends Activity
     setupViews();
   }
 
-  /**
-   * The layout for the content view is provided by a concrete subclass
-   *
-   * @return layout identifier
-   */
-  abstract int getContentView();
+  int getContentView() {
+    return resources.getIdentifier("pin_accept_dialog", "layout", packageName);
+  }
 
   @Override
   protected void onStart() {
@@ -129,6 +126,8 @@ public abstract class BasePinDialogActivity extends Activity
       pinButton.setOnFocusChangeListener(this);
       pinButton.addTextChangedListener(new PinBoxTextWatcher(pinButton));
     }
+
+    titleText = (TextView) findViewById(resources.getIdentifier("titleText", "id", packageName));
   }
 
   /**
@@ -152,6 +151,24 @@ public abstract class BasePinDialogActivity extends Activity
       else {
         wrongPinTextView.setText(wrongPinText);
       }
+    }
+
+    final Intent intent = getIntent();
+
+    if (titleText != null) {
+      String s = intent.getStringExtra("title");
+      titleText.setText(s);
+    }
+
+    int attemptCount = intent.getIntExtra("attemptCount", 0);
+    int maxAllowedAttempts = intent.getIntExtra("maxAllowedAttempts", 3);
+
+    if (attemptCount > 0) {
+      wrongPinTextView.setVisibility(View.VISIBLE);
+      wrongPinTextView.setText(String.format("Wrong PIN, attempt(s)%d/%d", attemptCount + 1, maxAllowedAttempts));
+    }
+    else {
+      wrongPinTextView.setVisibility(View.INVISIBLE);
     }
   }
 
@@ -178,16 +195,22 @@ public abstract class BasePinDialogActivity extends Activity
       callHandler(userPin);
     }
     else {
-      Toast.makeText(BasePinDialogActivity.this, "PIN not complete",
+      Toast.makeText(PushWithPinActivity.this, "PIN not complete",
           Toast.LENGTH_SHORT).show();
     }
   }
 
-  /**
-   * /* The handler interfaces are different for each type of dialog so the subclass must handle the handler
-   * invocation.
-   */
-  abstract protected void callHandler(String userPin);
+  protected void callHandler(final String userPin) {
+    try {
+      if (screenOn.isHeld()) {
+        screenOn.release();
+      }
+      AcceptWithPinDialog.handler.confirmationPositiveClick(userPin.toCharArray());
+    }
+    finally {
+      finish();
+    }
+  }
 
   private String evaluatePinComplete() {
     StringBuilder sb = new StringBuilder();
@@ -239,6 +262,18 @@ public abstract class BasePinDialogActivity extends Activity
       pinButtons.get(index).requestFocus();
     } else {
       sendLoginRequest();
+    }
+  }
+
+  public void onDenyButtonClicked(View v) {
+    try {
+      if (screenOn.isHeld()) {
+        screenOn.release();
+      }
+      AcceptWithPinDialog.handler.confirmationNegativeClick();
+    }
+    finally {
+      finish();
     }
   }
 

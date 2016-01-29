@@ -130,9 +130,8 @@
           android:theme="@android:style/Theme.Black.NoTitleBar">
       </activity>
       <activity
-          android:name="com.onegini.dialog.AcceptWithPinDialogActivity"
-          android:configChanges="orientation"
-          android:screenOrientation="portrait">
+          android:name="com.onegini.dialog.PushWithPinActivity"
+          android:theme="@android:style/Theme.Black.NoTitleBar">
       </activity>
       <service android:name="com.onegini.gcm.GcmIntentService" />
       <receiver
@@ -196,10 +195,6 @@
     <!-- dialog -->
     <source-file src="src/android/src/android/com/onegini/dialog/AcceptWithPinDialog.java"
                  target-dir="src/com/onegini/dialog/" />
-    <source-file src="src/android/src/android/com/onegini/dialog/AcceptWithPinDialogActivity.java"
-                 target-dir="src/com/onegini/dialog/" />
-    <source-file src="src/android/src/android/com/onegini/dialog/BasePinDialogActivity.java"
-                 target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/ConfirmationDialog.java"
                  target-dir="src/com/onegini/dialog/" />
     <source-file src="src/android/src/android/com/onegini/dialog/ConfirmationDialogSelectorHandler.java"
@@ -211,6 +206,8 @@
     <source-file src="src/android/src/android/com/onegini/dialog/PinScreenActivity.java"
                  target-dir="src/com/onegini/dialog"/>
     <source-file src="src/android/src/android/com/onegini/dialog/PushSimpleActivity.java"
+                 target-dir="src/com/onegini/dialog"/>
+    <source-file src="src/android/src/android/com/onegini/dialog/PushWithPinActivity.java"
                  target-dir="src/com/onegini/dialog"/>
     <source-file src="src/android/src/android/com/onegini/dialog/helper/PinActivityStarter.java"
                  target-dir="src/com/onegini/util/"/>

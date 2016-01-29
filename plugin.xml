@@ -16,9 +16,6 @@
       </feature>
     </config-file>
 
-    <header-file src="src/ios/OneginiCordovaPlugin/Classes/SecurityController.h"/>
-    <source-file src="src/ios/OneginiCordovaPlugin/Classes/SecurityController.m"/>
-
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/Commons.h"/>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/Reachability.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/Reachability.m"/>

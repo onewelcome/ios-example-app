@@ -276,7 +276,6 @@
     <resource-file src="src/android/res/layout/alert_dialog.xml" target="res/layout/alert_dialog.xml" />
     <resource-file src="src/android/res/layout/confirm_dialog.xml" target="res/layout/confirm_dialog.xml" />
     <resource-file src="src/android/res/layout/keyboard.xml" target="res/layout/keyboard.xml" />
-    <resource-file src="src/android/res/layout/pin_accept_dialog.xml" target="res/layout/pin_accept_dialog.xml" />
     <resource-file src="src/android/res/layout/pin_screen.xml" target="res/layout/pin_screen.xml" />
     <resource-file src="src/android/res/layout/push_simple_dialog.xml" target="res/layout/push_simple_dialog.xml" />
     <resource-file src="src/android/res/layout-land/pin_screen.xml" target="res/layout-land/pin_screen.xml" />

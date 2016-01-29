@@ -24,7 +24,8 @@ public class AcceptWithPinDialog implements ConfirmationWithPin {
     this.handler = confirmationWithPinHandler;
 
     final Intent intent = new Intent(context, PushWithPinActivity.class);
-    intent.putExtra("title", title);
+    // title is acutally not used by SDK
+    //intent.putExtra("title", title);
     intent.putExtra("message", message);
     intent.putExtra("attemptCount", attemptCount);
     intent.putExtra("maxAllowedAttempts", maxAllowedAttempts);

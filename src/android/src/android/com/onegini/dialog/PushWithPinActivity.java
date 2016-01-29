@@ -1,304 +1,156 @@
 package com.onegini.dialog;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.cordova.CordovaActivity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.Button;
+import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.onegini.mobile.sdk.android.library.OneginiClient;
+import com.onegini.dialog.helper.PinKeyboardHandler;
+import com.onegini.dialog.helper.PinKeyboardHandler.PinProvidedListener;
+import com.onegini.util.DeviceUtil;
 
-public class PushWithPinActivity extends Activity
-    implements TextView.OnEditorActionListener, View.OnFocusChangeListener {
+public class PushWithPinActivity extends CordovaActivity {
 
+  private static final int MAX_DIGITS = 5;
 
-  protected Resources resources;
-  protected String packageName;
+  private Resources resources;
+  private String packageName;
+  private PowerManager.WakeLock screenOn;
 
-  OneginiClient client;
+  private PinKeyboard pinKeyboard;
+  private final TextView[] pinInputs = new TextView[MAX_DIGITS];
 
-  List<EditText> pinButtons;
+  private TextView screenTitleTextView;
+  private TextView helpLinkTextView;
+  private TextView pinForgottenTextView;
+  private TextView errorTextView;
+  private Button denyButton;
 
-  EditText pinBox0;
-  EditText pinBox1;
-  EditText pinBox2;
-  EditText pinBox3;
-  EditText pinBox4;
-
-  TextView pinDialogTitleTextView;
-  TextView wrongPinTextView;
-
-  TextView titleText;
-
-  ProgressBar progressBar;
-
-  PowerManager.WakeLock screenOn;
-
-  // Prevent the focus change from the last pin box to the first pin box when the keyboard transitions to hidden state.
-  private boolean ignoreFocusChange = false;
+  private PinKeyboardHandler pinKeyboardHandler;
+  private PinProvidedListener pinProvidedListener;
 
   @Override
-  protected void onCreate(final Bundle savedInstanceState) {
+  public void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
+    setupScreenLock();
     resources = getResources();
     packageName = getPackageName();
 
+    setContentView(resources.getIdentifier("pin_screen", "layout", packageName));
+
+    initLayout();
+    initKeyboard();
+    parseIntent();
+  }
+
+  private void setupScreenLock() {
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON, WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-
-    screenOn = ((PowerManager) getSystemService(POWER_SERVICE))
-        .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "ALERT!");
+    screenOn = ((PowerManager) getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "ALERT!");
     screenOn.acquire();
 
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-
-    setContentView(getContentView());
-
-    setupViews();
+    lockScreenOrientation();
   }
 
-  int getContentView() {
-    return resources.getIdentifier("pin_accept_dialog", "layout", packageName);
-  }
+  private void initLayout() {
+    initPinInputs();
 
-  @Override
-  protected void onStart() {
-    super.onStart();
+    errorTextView = (TextView) findViewById(resources.getIdentifier("pin_error_message", "id", packageName));
+    errorTextView.setVisibility(View.INVISIBLE);
 
-    populate();
-  }
+    helpLinkTextView = (TextView) findViewById(resources.getIdentifier("help_button", "id", packageName));
+    helpLinkTextView.setVisibility(View.GONE);
 
-  @Override
-  protected void onStop() {
-    super.onStop();
+    pinForgottenTextView = (TextView) findViewById(resources.getIdentifier("pin_forgotten_label", "id", packageName));
+    pinForgottenTextView.setVisibility(View.GONE);
 
-    hideProgressBar();
-  }
+    screenTitleTextView = (TextView) findViewById(resources.getIdentifier("pin_screen_title", "id", packageName));
 
-  /**
-   * Extract the views from the layout and apply custom settings. Subclasses must call super. Invoked from {@link
-   * #onCreate(android.os.Bundle)}
-   */
-  protected void setupViews() {
-    client = OneginiClient.getInstance();
-
-
-    wrongPinTextView = (TextView) findViewById(resources.getIdentifier("wrongPinTextView", "id", packageName));
-    pinDialogTitleTextView = (TextView) findViewById(resources.getIdentifier("pinDialogTitleTextView", "id", packageName));
-
-    progressBar = (ProgressBar) findViewById(resources.getIdentifier("progressBar", "id", packageName));
-
-    pinBox0 = (EditText) findViewById(resources.getIdentifier("pinBox0", "id", packageName));
-    pinBox1 = (EditText) findViewById(resources.getIdentifier("pinBox1", "id", packageName));
-    pinBox2 = (EditText) findViewById(resources.getIdentifier("pinBox2", "id", packageName));
-    pinBox3 = (EditText) findViewById(resources.getIdentifier("pinBox3", "id", packageName));
-    pinBox4 = (EditText) findViewById(resources.getIdentifier("pinBox4", "id", packageName));
-
-    pinButtons = new ArrayList<EditText>();
-    pinButtons.add(pinBox0);
-    pinButtons.add(pinBox1);
-    pinButtons.add(pinBox2);
-    pinButtons.add(pinBox3);
-    pinButtons.add(pinBox4);
-
-    for (EditText pinButton : pinButtons) {
-      pinButton.setOnEditorActionListener(this);
-      pinButton.setOnFocusChangeListener(this);
-      pinButton.addTextChangedListener(new PinBoxTextWatcher(pinButton));
-    }
-
-    titleText = (TextView) findViewById(resources.getIdentifier("titleText", "id", packageName));
-  }
-
-  /**
-   * Populate the views after they have been setup in {@link #setupViews()}. Invoked from {@link #onStart()}
-   */
-  protected void populate() {
-    String title = getIntent().getStringExtra("message");
-    if (pinDialogTitleTextView == null) {
-      Log.w(getComponentName().toShortString(), "pin dialog title view is missing in the layout");
-    }
-    else {
-      pinDialogTitleTextView.setText(title);
-    }
-
-    int remainingAttempts = 3; //CommonDataModel.getInstance().getRemainingAttempts(); TODO
-    if (remainingAttempts > 0) {
-      String wrongPinText = "Wrong PIN. Attempt(s):" + remainingAttempts;
-      if (wrongPinTextView == null) {
-        Log.w(getComponentName().toShortString(), "wrong pin text iew is missing in the layout");
+    denyButton = (Button) findViewById(resources.getIdentifier("pin_deny_button", "id", packageName));
+    denyButton.setVisibility(View.VISIBLE);
+    denyButton.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(final View v) {
+        AcceptWithPinDialog.handler.confirmationNegativeClick();
+        close();
       }
-      else {
-        wrongPinTextView.setText(wrongPinText);
-      }
-    }
+    });
+  }
 
+  private void initKeyboard() {
+    pinProvidedListener = new PinProvidedListener() {
+      @Override
+      public void onPinProvided(final char[] pin) {
+        AcceptWithPinDialog.handler.confirmationPositiveClick(pin);
+        close();
+      }
+    };
+
+    pinKeyboardHandler = new PinKeyboardHandler(pinProvidedListener, pinInputs);
+    pinKeyboardHandler.setInputFocusedBackgroundResourceId(resources.getIdentifier("form_active", "drawable", packageName));
+    pinKeyboardHandler.setInputNormalBackgroundResourceId(resources.getIdentifier("form_inactive", "drawable", packageName));
+    pinKeyboardHandler.reset();
+    pinKeyboard = new PinKeyboard(pinKeyboardHandler);
+
+    final TableLayout keyboardLayout = (TableLayout) findViewById(resources.getIdentifier("pin_keyboard", "id", packageName));
+    pinKeyboard.initLayout(keyboardLayout, getResources(), getPackageName());
+  }
+
+  private void initPinInputs() {
+    for (int input = 0; input < MAX_DIGITS; input++) {
+      final int inputId = resources.getIdentifier("pin_input_" + input, "id", packageName);
+      pinInputs[input] = (TextView) findViewById(inputId);
+    }
+  }
+
+  private void parseIntent() {
     final Intent intent = getIntent();
 
-    if (titleText != null) {
-      String s = intent.getStringExtra("title");
-      titleText.setText(s);
-    }
+    screenTitleTextView.setText(intent.getStringExtra("message"));
 
     int attemptCount = intent.getIntExtra("attemptCount", 0);
     int maxAllowedAttempts = intent.getIntExtra("maxAllowedAttempts", 3);
 
     if (attemptCount > 0) {
-      wrongPinTextView.setVisibility(View.VISIBLE);
-      wrongPinTextView.setText(String.format("Wrong PIN, attempt(s)%d/%d", attemptCount + 1, maxAllowedAttempts));
+      errorTextView.setVisibility(View.VISIBLE);
+      errorTextView.setText(String.format("Wrong PIN, attempt(s)%d/%d", attemptCount + 1, maxAllowedAttempts));
     }
     else {
-      wrongPinTextView.setVisibility(View.INVISIBLE);
+      errorTextView.setVisibility(View.INVISIBLE);
     }
   }
+
 
   @Override
   public void onBackPressed() {
     // No back on the main activity
   }
 
-  @Override
-  public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-    if (actionId == EditorInfo.IME_ACTION_DONE) {
-      sendLoginRequest();
-      return false;
+  private void close() {
+    if (screenOn.isHeld()) {
+      screenOn.release();
+      finish();
     }
-
-    return true;
   }
 
-  protected void sendLoginRequest() {
-    String userPin = evaluatePinComplete();
-
-    if (userPin != null && userPin.length() == pinButtons.size()) {
-      showProgressBar();
-      callHandler(userPin);
+  private void lockScreenOrientation() {
+    if (DeviceUtil.isTablet(this)) {
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
     else {
-      Toast.makeText(PushWithPinActivity.this, "PIN not complete",
-          Toast.LENGTH_SHORT).show();
-    }
-  }
-
-  protected void callHandler(final String userPin) {
-    try {
-      if (screenOn.isHeld()) {
-        screenOn.release();
-      }
-      AcceptWithPinDialog.handler.confirmationPositiveClick(userPin.toCharArray());
-    }
-    finally {
-      finish();
-    }
-  }
-
-  private String evaluatePinComplete() {
-    StringBuilder sb = new StringBuilder();
-    for (EditText pinBox : pinButtons) {
-      if (pinBox.getText().length() == 0) {
-        return null;
-      }
-
-      sb.append(pinBox.getText().toString());
-    }
-
-    return sb.toString();
-  }
-
-  protected void showProgressBar() {
-    if (progressBar != null) {
-      progressBar.setVisibility(View.VISIBLE);
-    }
-  }
-
-  protected void hideProgressBar() {
-    if (progressBar != null) {
-      progressBar.setVisibility(View.INVISIBLE);
-    }
-  }
-
-  protected void hideKeyboard(View v) {
-    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-  }
-
-  @Override
-  public void onFocusChange(final View v, final boolean hasFocus) {
-    if (ignoreFocusChange) {
-      return;
-    }
-
-    if (hasFocus) {
-      if (v instanceof EditText) {
-        EditText pinBox = (EditText) v;
-        pinBox.setText("");
-      }
-    }
-  }
-
-  private void focusNextPinBox(EditText pinBox) {
-    if (pinBox != pinBox4) {
-      int index = Math.min(pinButtons.indexOf(pinBox) + 1, pinButtons.size());
-      pinButtons.get(index).requestFocus();
-    } else {
-      sendLoginRequest();
-    }
-  }
-
-  public void onDenyButtonClicked(View v) {
-    try {
-      if (screenOn.isHeld()) {
-        screenOn.release();
-      }
-      AcceptWithPinDialog.handler.confirmationNegativeClick();
-    }
-    finally {
-      finish();
-    }
-  }
-
-  class PinBoxTextWatcher implements TextWatcher {
-    EditText pinBox;
-
-    PinBoxTextWatcher(EditText pinBox) {
-      this.pinBox = pinBox;
-    }
-
-    @Override
-    public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
-      // Ignore
-    }
-
-    @Override
-    public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
-      if (!TextUtils.isEmpty(s)) {
-        focusNextPinBox(pinBox);
-      }
-    }
-
-    @Override
-    public void afterTextChanged(final Editable s) {
-      // Ignore
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
   }
 }

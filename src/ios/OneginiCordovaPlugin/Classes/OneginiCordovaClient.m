@@ -11,7 +11,6 @@
 #import "Reachability.h"
 #import "XMLReader.h"
 
-NSString* const kIsEnrolledKey      = @"isEnrolledForMobileAuthentication";
 NSString* const kReason				= @"reason";
 NSString* const kRemainingAttempts	= @"remainingAttempts";
 NSString* const kMethod				= @"method";
@@ -1216,25 +1215,14 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     [self resetAll];
     self.enrollmentCommandTxId = command.callbackId;
     id scopeArgument = [command.arguments firstObject];
-    if([scopeArgument isKindOfClass:[NSArray class]] && ((NSArray*)scopeArgument).count>0){
+    if([scopeArgument isKindOfClass:[NSArray class]] && ((NSArray*)scopeArgument).count > 0){
         [[OGOneginiClient sharedInstance] enrollForMobileAuthentication:scopeArgument delegate:self];
     } else {
         [[OGOneginiClient sharedInstance] enrollForMobileAuthentication:nil delegate:self];
     }
 }
 
--(void)isEnrolledForMobileAuthentication:(CDVInvokedUrlCommand *)command{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSNumber* isEnrolled = [userDefaults objectForKey:kIsEnrolledKey];
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:isEnrolled.boolValue];
-    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-}
-
 -(void)enrollmentSuccess{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@(YES) forKey:kIsEnrolledKey];
-    [userDefaults synchronize];
-    
     if (self.enrollmentCommandTxId == nil) {
 #ifdef DEBUG
         NSLog(@"enrollmentSuccess");

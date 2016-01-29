@@ -159,8 +159,13 @@
 - (void)fetchAnonymousResource:(CDVInvokedUrlCommand *)command;
 
 /**
- Detect and lock in prefered screen orientation (tablet in landscape, phone in portrait)
+ Detect and lock in prefered screen orientation (tablet in landscape, phone in portrait).
  */
 - (void)setupScreenOrientation:(CDVInvokedUrlCommand *)command;
+
+/**
+ Enrolls currently connected device for mobile push authentication.
+ */
+-(void)enrollForMobileAuthentication:(CDVInvokedUrlCommand *)command;
 
 @end

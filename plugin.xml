@@ -15,6 +15,10 @@
         <param name="onload" value="true"/>
       </feature>
     </config-file>
+
+    <header-file src="src/ios/OneginiCordovaPlugin/Classes/SecurityController.h"/>
+    <source-file src="src/ios/OneginiCordovaPlugin/Classes/SecurityController.m"/>
+
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/Commons.h"/>
     <header-file src="src/ios/OneginiCordovaPlugin/Classes/Reachability.h"/>
     <source-file src="src/ios/OneginiCordovaPlugin/Classes/Reachability.m"/>
@@ -92,7 +96,6 @@
     <resource-file src="src/generic/fonts/SourceSansPro-LightItalic.ttf"/>
     <resource-file src="src/generic/fonts/SourceSansPro-Regular.ttf"/>
     <resource-file src="src/generic/fonts/SourceSansPro-Semibold.ttf"/>
-    <resource-file src="src/generic/fonts/SourceSansPro-SemiboldItalic.ttf"/>
 
     <framework src="libiconv.dylib"/>
     <framework src="libc++.dylib"/>

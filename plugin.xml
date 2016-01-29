@@ -127,8 +127,7 @@
       </activity>
       <activity
           android:name="com.onegini.dialog.PushSimpleActivity"
-          android:configChanges="orientation"
-          android:screenOrientation="portrait">
+          android:theme="@android:style/Theme.Black.NoTitleBar">
       </activity>
       <activity
           android:name="com.onegini.dialog.AcceptWithPinDialogActivity"

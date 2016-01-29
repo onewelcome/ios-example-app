@@ -2,7 +2,8 @@ package com.onegini.dialog;
 
 import org.apache.cordova.CordovaActivity;
 
-import android.app.Activity;
+import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.MotionEvent;
@@ -12,76 +13,71 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.onegini.mobile.sdk.android.library.utils.dialogs.AlertInterface;
+import com.onegini.util.DeviceUtil;
 
 
 public class PushSimpleActivity extends CordovaActivity {
 
+  private Resources resources;
+  private String packageName;
+  private PowerManager.WakeLock screenOn;
+
   private TextView alertText;
+  private Button possitiveButton;
+  private Button negativeButton;
 
   @Override
   public void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setupScreenLock();
 
+    resources = getResources();
+    packageName = getPackageName();
+
+    setContentView(resources.getIdentifier("push_simple_dialog", "layout", packageName));
+    initLayout();
+
+  }
+
+  private void setupScreenLock() {
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-    getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
-        WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
+    getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON, WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-    final PowerManager.WakeLock screenOn = ((PowerManager) getSystemService(POWER_SERVICE))
-        .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "ALERT!");
+    screenOn = ((PowerManager) getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "ALERT!");
     screenOn.acquire();
 
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-
-    setContentView(getContentView());
-
-    _setupPositiveButton(screenOn);
-    _setupNegativeButton(screenOn);
-
-    setupViews();
-    populate();
+    lockScreenOrientation();
   }
 
-  protected int getContentView() {
-    return getResources().getIdentifier("push_simple_dialog", "layout", getPackageName());
-  }
+  private void initLayout() {
+    alertText = (TextView) findViewById(resources.getIdentifier("alert_text", "id", packageName));
+    possitiveButton = (Button) findViewById(resources.getIdentifier("positive_button", "id", packageName));
+    negativeButton = (Button) findViewById(resources.getIdentifier("negative_button", "id", packageName));
 
-  protected void setupViews() {
-    alertText = (TextView) findViewById(getResources().getIdentifier("alert_text", "id", getPackageName()));
-  }
-
-  protected void populate() {
     alertText.setText(getIntent().getStringExtra("message"));
+    setupPositiveButton();
+    setupNegativeButton();
   }
 
-  protected AlertInterface.AlertHandler getAlertHandler() {
-    return ConfirmationDialog.handler;
-  }
-
-  private void _setupPositiveButton(final PowerManager.WakeLock screenOn) {
-    final Button positiveButton = (Button) findViewById(getResources().getIdentifier("positive_button", "id", getPackageName()));
-
-    String title = getIntent().getStringExtra("positiveButtonTitle");
+  private void setupPositiveButton() {
+    final String title = getIntent().getStringExtra("positiveButtonTitle");
     if (title != null) {
-      positiveButton.setText(title);
+      possitiveButton.setText(title);
     }
 
-    positiveButton.setOnClickListener(new View.OnClickListener() {
+    possitiveButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View view) {
-        if (screenOn.isHeld()) {
-          screenOn.release();
-        }
-        getAlertHandler().alertPositiveClick();
-        finish();
+        ConfirmationDialog.handler.alertPositiveClick();
+        close();
       }
     });
   }
 
-  private void _setupNegativeButton(final PowerManager.WakeLock screenOn) {
-    final Button negativeButton = (Button) findViewById(getResources().getIdentifier("negative_button", "id", getPackageName()));
-
-    String title = getIntent().getStringExtra("negativeButtonTitle");
+  private void setupNegativeButton() {
+    final String title = getIntent().getStringExtra("negativeButtonTitle");
     if (title != null) {
       negativeButton.setText(title);
     }
@@ -89,11 +85,8 @@ public class PushSimpleActivity extends CordovaActivity {
     negativeButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(final View view) {
-        if (screenOn.isHeld()) {
-          screenOn.release();
-        }
-        getAlertHandler().alertNegativeClick();
-        finish();
+        ConfirmationDialog.handler.alertNegativeClick();
+        close();
       }
     });
   }
@@ -113,5 +106,21 @@ public class PushSimpleActivity extends CordovaActivity {
   @Override
   public void onBackPressed() {
     // prevent close alert by back button
+  }
+
+  private void close() {
+    if (screenOn.isHeld()) {
+      screenOn.release();
+      finish();
+    }
+  }
+
+  private void lockScreenOrientation() {
+    if (DeviceUtil.isTablet(this)) {
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    }
+    else {
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
   }
 }

@@ -30,13 +30,12 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/screen_header"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
-    android:layout_marginTop="80dp"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:layout_centerHorizontal="true" >
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true">
 
     <TextView
         android:id="@+id/alert_text"
@@ -45,7 +44,7 @@
         android:text="Simple push message"
         android:textColor="#666"
         android:textStyle="bold"
-        android:textSize="40sp"
+        android:textSize="36sp"
         android:gravity="center"/>
 
     <Button

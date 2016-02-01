@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.onegini.action.ForgotPinHandler;
 import com.onegini.dialog.helper.PinActivityMessageMapper;
 import com.onegini.dialog.helper.PinKeyboardHandler;
+import com.onegini.dialog.helper.PinKeyboardHandler.PinProvidedListener;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
 import com.onegini.util.DeviceUtil;
 
@@ -57,6 +58,7 @@ public class PinScreenActivity extends CordovaActivity {
   private PinKeyboardHandler pinKeyboardHandler;
   private OnClickListener helpButtonListener;
   private OnClickListener pinForgottenListener;
+  private PinProvidedListener pinProvidedListener;
 
   private static PinScreenActivity instance;
 
@@ -121,7 +123,7 @@ public class PinScreenActivity extends CordovaActivity {
   }
 
   private void initKeyboard() {
-    pinKeyboardHandler = new PinKeyboardHandler(getPinProvidedHandler(), pinInputs, MAX_DIGITS);
+    pinKeyboardHandler = new PinKeyboardHandler(pinProvidedListener, pinInputs);
     pinKeyboardHandler.setInputFocusedBackgroundResourceId(resources.getIdentifier("form_active", "drawable", packageName));
     pinKeyboardHandler.setInputNormalBackgroundResourceId(resources.getIdentifier("form_inactive", "drawable", packageName));
     pinKeyboard = new PinKeyboard(pinKeyboardHandler);
@@ -150,6 +152,21 @@ public class PinScreenActivity extends CordovaActivity {
   }
 
   private void initListeners() {
+    pinProvidedListener = new PinProvidedListener() {
+      @Override
+      public void onPinProvided(final char[] pin) {
+        errorTextView.setVisibility(View.INVISIBLE);
+        // slightly delay the SDK call, so it won't make a lag during UI changes
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            getPinProvidedHandler().onPinProvided(pin);
+          }
+        }, 100);
+      }
+    };
+
     helpButtonListener = new OnClickListener() {
       @Override
       public void onClick(final View v) {
@@ -190,7 +207,7 @@ public class PinScreenActivity extends CordovaActivity {
     if (mode == SCREEN_MODE_LOGIN || mode == SCREEN_MODE_LOGIN_BEFORE_CHANGE_PIN) {
       return CurrentPinNativeDialogHandler.oneginiPinProvidedHandler;
     } else {
-      return  CreatePinNativeDialogHandler.oneginiPinProvidedHandler;
+      return CreatePinNativeDialogHandler.oneginiPinProvidedHandler;
     }
   }
 
@@ -199,10 +216,6 @@ public class PinScreenActivity extends CordovaActivity {
       final int inputId = resources.getIdentifier("pin_input_" + input, "id", packageName);
       pinInputs[input] = (TextView) findViewById(inputId);
     }
-  }
-
-  private void onPinProvided() {
-    errorTextView.setVisibility(View.INVISIBLE);
   }
 
   private void resetView() {

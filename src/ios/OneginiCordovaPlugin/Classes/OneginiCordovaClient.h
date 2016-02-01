@@ -12,7 +12,7 @@
 #import "MainViewController.h"
 #import "Commons.h"
 
-@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate, PinViewControllerDelegate, OGDisconnectDelegate, OGLogoutDelegate>
+@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate, PinViewControllerDelegate, OGDisconnectDelegate, OGLogoutDelegate, OGEnrollmentHandlerDelegate>
 
 @property (strong, nonatomic) OGOneginiClient *oneginiClient;
 @property (strong, nonatomic) OGConfigModel *configModel;
@@ -28,7 +28,7 @@
 @property (copy, nonatomic) NSString *pinChangeCommandTxId;
 @property (copy, nonatomic) NSString *disconnectCommandTxId;
 @property (copy, nonatomic) NSString *logoutCommandTxId;
-
+@property (copy, nonatomic) NSString *enrollmentCommandTxId;
 
 /** FOR TESTING PURPOSE ONLY */
 - (void)clearTokens:(CDVInvokedUrlCommand *)command;
@@ -159,8 +159,13 @@
 - (void)fetchAnonymousResource:(CDVInvokedUrlCommand *)command;
 
 /**
- Detect and lock in prefered screen orientation (tablet in landscape, phone in portrait)
+ Detect and lock in prefered screen orientation (tablet in landscape, phone in portrait).
  */
 - (void)setupScreenOrientation:(CDVInvokedUrlCommand *)command;
+
+/**
+ Enrolls currently connected device for mobile push authentication.
+ */
+-(void)enrollForMobileAuthentication:(CDVInvokedUrlCommand *)command;
 
 @end

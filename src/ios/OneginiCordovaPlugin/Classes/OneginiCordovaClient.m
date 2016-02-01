@@ -165,6 +165,7 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     self.fetchResourceCommandTxId = nil;
     self.pinValidateCommandTxId = nil;
     self.pinChangeCommandTxId = nil;
+    self.enrollmentCommandTxId = nil;
 }
 
 - (void)authorizationErrorCallbackWIthReason:(NSString *)reason {
@@ -1206,6 +1207,83 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
         pinChangeCommandTxId = nil;
     }
+}
+
+#pragma mark - Mobile authentication enrollment
+
+-(void)enrollForMobileAuthentication:(CDVInvokedUrlCommand *)command{
+    [self resetAll];
+    self.enrollmentCommandTxId = command.callbackId;
+    id scopeArgument = [command.arguments firstObject];
+    if([scopeArgument isKindOfClass:[NSArray class]] && ((NSArray*)scopeArgument).count > 0){
+        [[OGOneginiClient sharedInstance] enrollForMobileAuthentication:scopeArgument delegate:self];
+    } else {
+        [[OGOneginiClient sharedInstance] enrollForMobileAuthentication:nil delegate:self];
+    }
+}
+
+-(void)enrollmentSuccess{
+    if (self.enrollmentCommandTxId == nil) {
+#ifdef DEBUG
+        NSLog(@"enrollmentSuccess");
+#endif
+        [self resetAll];
+        return;
+    }
+    @try {
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"enrollmentSuccess"];
+        result.keepCallback = @(0);
+        [self.commandDelegate sendPluginResult:result callbackId:self.enrollmentCommandTxId];
+    }
+    @finally {
+        [self resetAll];
+    }
+}
+
+- (void)enrollmentErrorCallbackWIthReason:(NSString *)reason error:(NSError *)error {
+    if (self.enrollmentCommandTxId == nil) {
+        return;
+    }
+    NSDictionary *d = @{ kReason:reason };
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:d];
+    [self.commandDelegate sendPluginResult:result callbackId:self.enrollmentCommandTxId];
+    [self resetAll];
+}
+
+-(void)enrollmentError{
+    [self enrollmentErrorCallbackWIthReason:@"enrollmentError" error:nil];
+}
+
+-(void)enrollmentError:(NSError *)error{
+    [self enrollmentErrorCallbackWIthReason:@"enrollmentError" error:error];
+}
+
+-(void)enrollmentNotAvailable{
+    [self enrollmentErrorCallbackWIthReason:@"enrollmentErrorNotAvailable" error:nil];
+}
+
+-(void)enrollmentInvalidRequest{
+    [self enrollmentErrorCallbackWIthReason:@"enrollmentErrorInvalidRequest" error:nil];
+}
+
+-(void)enrollmentInvalidTransaction{
+    [self enrollmentErrorCallbackWIthReason:@"enrollmentErrorInvalidTransaction" error:nil];
+}
+
+-(void)enrollmentAuthenticationError{
+    [self enrollmentErrorCallbackWIthReason:@"enrollmentErrorAuthenticationError" error:nil];
+}
+
+-(void)enrollmentUserAlreadyEnrolled{
+    [self enrollmentErrorCallbackWIthReason:@"enrollmentErrorUserAlreadyEnrolled" error:nil];
+}
+
+-(void)enrollmentDeviceAlreadyEnrolled{
+    [self enrollmentErrorCallbackWIthReason:@"enrollmentErrorDeviceAlreadyEnrolled" error:nil];
+}
+
+-(void)enrollmentInvalidClientCredentials{
+    [self enrollmentErrorCallbackWIthReason:@"enrollmentErrorInvalidClientCredentials" error:nil];
 }
 
 @end

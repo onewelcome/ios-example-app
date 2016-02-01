@@ -102,7 +102,6 @@ Main entry point into the authorization process.
 
 **Param** `scopes` - Array with Strings that represent the scopes for the access token
 
-
 ### logout:(successCallback, errorCallback)
 This will remove current session data and invalidate the access token. The refresh token and client credentials remain untouched.
 
@@ -231,6 +230,21 @@ Opens specified URL using inAppBrowser, should be used only if inAppBrowser plug
 ### closeInAppBrowser
 Closes inAppBrowser.
 
+### enrollForMobileAuthentication(router, scopes)
+Enrolls currently connected device for mobile push authentication.
+
+**Param** `router` - Object that can handle page transition for the outcome of the action. Should at least implement the following methods:
+  - `enrollmentSuccess` - enrollment success
+  - `error` - indicated general enrollment error
+  - `errorAuthenticationError` - failed to authenticate the user for enrollment
+  - `errorDeviceAlreadyEnrolled` -  the device is already enrolled
+  - `errorInvalidClientCredentials` - provided client credentials are invalid
+  - `errorInvalidRequest` - one or more request parameters missing
+  - `errorInvalidTransaction` - the transaction id used during enrollment is invalid, probably because the transaction validity period is expired
+  - `errorNotAvailable` - enrollment for mobile authentication is currently disabled
+  - `errorUserAlreadyEnrolled` - user is already enrolled for mobile authentication
+  
+**Param** `scopes` - Array with Strings that represent the scopes for the access token
 
 ### isAndroid
 Determines whenever userAgent is Android.

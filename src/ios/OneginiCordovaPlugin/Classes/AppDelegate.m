@@ -29,6 +29,7 @@
 #import "MainViewController.h"
 
 #import <Cordova/CDVPlugin.h>
+#import "OGOneginiClient.h"
 
 @implementation AppDelegate
 
@@ -51,6 +52,8 @@
         NSURLCache* sharedCache = [[[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"] autorelease];
 #endif
     [NSURLCache setSharedURLCache:sharedCache];
+    
+    [self registerForNotifications];
 
     self = [super init];
     return self;
@@ -115,25 +118,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:CDVLocalNotification object:notification];
 }
 
-- (void)                                 application:(UIApplication*)application
-    didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
-{
-    // re-post ( broadcast )
-    NSString* token = [[[[deviceToken description]
-        stringByReplacingOccurrencesOfString:@"<" withString:@""]
-        stringByReplacingOccurrencesOfString:@">" withString:@""]
-        stringByReplacingOccurrencesOfString:@" " withString:@""];
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotification object:token];
-}
-
-- (void)                                 application:(UIApplication*)application
-    didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
-{
-    // re-post ( broadcast )
-    [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotificationError object:error];
-}
-
 - (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window
 {
     // iPhone doesn't support upside down by default, while the iPad does.  Override to allow all orientations always, and let the root view controller decide what's allowed (the supported orientations mask gets intersected).
@@ -146,5 +130,68 @@
 {
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
+
+
+- (void)registerForNotifications {
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+#ifdef __IPHONE_8_0
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert
+                                                                                             | UIUserNotificationTypeBadge
+                                                                                             | UIUserNotificationTypeSound) categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+#endif
+    } else {
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+    }
+}
+
+-(void)registerForRemoteNotificationTypes {
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+}
+
+- (void)processLaunchOptions:(NSDictionary*)options {
+    if (options==nil)
+        return;
+    
+    NSDictionary *userInfo = [options objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    [self handlePush:userInfo];
+}
+
+- (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo {
+    [self handlePush:userInfo];
+}
+
+- (void)handlePush:(NSDictionary*)userInfo {
+    if (userInfo == nil)
+        return;
+    [[OGOneginiClient sharedInstance] handlePushNotification:userInfo];
+}
+
+#ifdef __IPHONE_8_0
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    [application registerForRemoteNotifications];
+}
+
+#endif
+
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    // re-post ( broadcast )
+    NSString* token = [[[[deviceToken description]
+                         stringByReplacingOccurrencesOfString:@"<" withString:@""]
+                        stringByReplacingOccurrencesOfString:@">" withString:@""]
+                       stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotification object:token];
+    
+    [[OGOneginiClient sharedInstance] storeDevicePushTokenInSession:deviceToken];
+}
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotificationError object:error];
+}
+
 
 @end

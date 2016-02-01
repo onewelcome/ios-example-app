@@ -7,10 +7,10 @@ import org.apache.cordova.Config;
 import android.app.Application;
 import android.content.Context;
 import com.onegini.OneginiCordovaPlugin;
+import com.onegini.dialog.AcceptWithPinDialog;
+import com.onegini.dialog.ConfirmationDialogSelectorHandler;
 import com.onegini.dialog.CreatePinNativeDialogHandler;
-import com.onegini.dialog.CreatePinNonNativeDialogHandler;
 import com.onegini.dialog.CurrentPinNativeDialogHandler;
-import com.onegini.dialog.CurrentPinNonNativeDialogHandler;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.model.ConfigModel;
 import com.onegini.util.MessageResourceReader;
@@ -31,35 +31,27 @@ public class PluginInitializer {
       return;
     }
 
-    // @todo we need to decide if non-native PIN screen should be maintained
-    final boolean shouldUseNativeScreens = true;
-    client.setShouldUseNativeScreens(shouldUseNativeScreens);
-
-    final int keystoreResourcePointer = client.getCordova().getActivity().getResources()
-        .getIdentifier("keystore", "raw", application.getPackageName());
+    final int keystoreResourcePointer = client.getCordova().getActivity().getResources().getIdentifier("keystore", "raw", application.getPackageName());
     configModel.setCertificatePinningKeyStore(keystoreResourcePointer);
     configModel.setKeyStoreHash(KEYSTORE_HASH);
 
     final Context applicationContext = client.cordova.getActivity().getApplicationContext();
     final OneginiClient oneginiClient = OneginiClient.setupInstance(applicationContext, configModel);
-    setupDialogs(shouldUseNativeScreens, oneginiClient, applicationContext);
-
     client.setOneginiClient(oneginiClient);
 
+    setupDialogs(application.getApplicationContext());
     setupURLHandler(oneginiClient, configModel);
     MessageResourceReader.setupInstance(applicationContext);
 
     configured = true;
   }
 
-  private void setupDialogs(final boolean shouldUseNativeScreens, final OneginiClient oneginiClient, final Context context) {
-    if (shouldUseNativeScreens) {
-      oneginiClient.setCreatePinDialog(new CreatePinNativeDialogHandler(context));
-      oneginiClient.setCurrentPinDialog(new CurrentPinNativeDialogHandler(context));
-    } else {
-      oneginiClient.setCreatePinDialog(new CreatePinNonNativeDialogHandler());
-      oneginiClient.setCurrentPinDialog(new CurrentPinNonNativeDialogHandler());
-    }
+  private void setupDialogs(final Context context) {
+    final OneginiClient client = OneginiClient.getInstance();
+    client.setCreatePinDialog(new CreatePinNativeDialogHandler(context));
+    client.setCurrentPinDialog(new CurrentPinNativeDialogHandler(context));
+    client.setConfirmationWithPinDialog(new AcceptWithPinDialog(context));
+    client.setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler(context));
   }
 
   private ConfigModel retrieveConfiguration() {

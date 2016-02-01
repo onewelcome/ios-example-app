@@ -130,18 +130,10 @@ public class AuthorizeAction implements OneginiPluginAction {
       @Override
       public void authorizationErrorInvalidGrant(int remainingAttempts) {
         // that is the only notification which impacts the pin screen within OneginiAuthorizationHandler
-        if (client.shouldUseNativeScreens()) {
-          final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
-          final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
+        final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
+        final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
 
-          startLoginScreen(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
-        }
-        else {
-          sendCallbackResult(callbackResultBuilder
-              .withErrorReason(AUTHORIZATION_ERROR_INVALID_GRANT.getName())
-              .withRemainingAttempts(remainingAttempts)
-              .build());
-        }
+        startLoginScreen(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
       }
 
       @Override

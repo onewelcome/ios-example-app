@@ -70,18 +70,10 @@ public class ChangePinAction implements OneginiPluginAction {
 
       @Override
       public void invalidCurrentPin(final int remainingAttempts) {
-        if (client.shouldUseNativeScreens()) {
-          final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
-          final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
+        final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
+        final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
 
-          startLoginScreenBeforeChangePin(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
-        }
-        else {
-          sendCallbackResult(callbackResultBuilder
-              .withRemainingAttempts(remainingAttempts)
-              .withErrorReason(PIN_CURRENT_INVALID.getName())
-              .build());
-        }
+        startLoginScreenBeforeChangePin(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
       }
 
       @Override

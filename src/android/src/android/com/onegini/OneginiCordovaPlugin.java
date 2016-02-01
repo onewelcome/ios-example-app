@@ -56,7 +56,6 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 
   private static Map<String, Class<? extends OneginiPluginAction>> actions = new HashMap<String, Class<? extends OneginiPluginAction>>();
   private OneginiClient oneginiClient;
-  private boolean shouldUseNativeScreens;
 
   @Override
   protected void pluginInitialize() {
@@ -74,8 +73,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
   }
 
   @Override
-  public boolean execute(final String action, final JSONArray args,
-                         final CallbackContext callbackContext) throws JSONException {
+  public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
     if (actions.containsKey(action)) {
       final OneginiPluginAction actionInstance = buildActionClassFor(action);
       if (actionInstance == null) {
@@ -147,14 +145,6 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
       throw new RuntimeException("client not initialized");
     }
     return oneginiClient;
-  }
-
-  public void setShouldUseNativeScreens(final boolean shouldUseNativeScreens) {
-    this.shouldUseNativeScreens = shouldUseNativeScreens;
-  }
-
-  public boolean shouldUseNativeScreens() {
-    return shouldUseNativeScreens;
   }
 
   /**

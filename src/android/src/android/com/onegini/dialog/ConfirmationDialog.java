@@ -22,7 +22,6 @@ public class ConfirmationDialog implements AlertInterface {
 
     final Intent intent = new Intent(context, PushSimpleActivity.class);
     intent.putExtra("message", message);
-    intent.putExtra("title", title);
     intent.putExtra("positiveButtonTitle", positiveButton);
     intent.putExtra("negativeButtonTitle", negativeButton);
     intent.addFlags(FLAG_ACTIVITY_NEW_TASK);

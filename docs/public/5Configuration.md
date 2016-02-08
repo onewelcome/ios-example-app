@@ -18,6 +18,7 @@ The configuration file must contain fallowing properties:
 - "kOGAppBaseURL": Token Server instance address, for secure HTTPS connection please refer to [Certificate pinning](4Certificatepinning.md)
 - "kOGResourceBaseURL": Resource Server instance address, for secure HTTPS connection please refer to [Certificate pinning](4Certificatepinning.md)
 - "kOGRedirectURL": redirection URL prefix which should be accepted by the SDK within authorization flow
+- "kOGgcmSenderId": GCM project identifier, substitute you own sender ID here. This is the project number you got from the API Console.
 
 The configuration file can also define optional properties:
 - "kOGMaxPinFailures": int, allowed number of PIN attempts (default value is 3)

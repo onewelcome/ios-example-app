@@ -17,8 +17,6 @@ public class GCMHelper {
   private static final String PROPERTY_REG_ID = "registration_id";
   private static final String PROPERTY_APP_VERSION = "appVersion";
 
-  private static final String SENDER_ID = "586427927998";
-
   private static final String TAG = "GCMDemo";
 
   private Context context;
@@ -31,8 +29,7 @@ public class GCMHelper {
     this.context = context;
   }
 
-  public void registerGCMService(final OneginiClient oneginiClient,
-                                 final String[] scopes,
+  public void registerGCMService(final OneginiClient oneginiClient, final String[] scopes, final String senderId,
                                  final OneginiMobileAuthEnrollmentHandler mobileAuthEnrollmentHandler) {
     this.oneginiClient = oneginiClient;
     gcm = GoogleCloudMessaging.getInstance(context);
@@ -41,7 +38,7 @@ public class GCMHelper {
       regid = getRegistrationId(context);
 
       if (regid.isEmpty()) {
-        registerInBackground(scopes, mobileAuthEnrollmentHandler);
+        registerInBackground(scopes, senderId, mobileAuthEnrollmentHandler);
       }
       else {
         oneginiClient.enrollForMobileAuthentication(regid, scopes, mobileAuthEnrollmentHandler);
@@ -83,8 +80,7 @@ public class GCMHelper {
   private SharedPreferences getGCMPreferences(final Context context) {
     // This sample app persists the registration ID in shared preferences, but
     // how you store the regID in your app is up to you.
-    return context.getSharedPreferences(context.getApplicationInfo().name,
-        Context.MODE_PRIVATE);
+    return context.getSharedPreferences(context.getApplicationInfo().name, Context.MODE_PRIVATE);
   }
 
   /**
@@ -92,8 +88,7 @@ public class GCMHelper {
    */
   private static int getAppVersion(final Context context) {
     try {
-      PackageInfo packageInfo = context.getPackageManager()
-          .getPackageInfo(context.getPackageName(), 0);
+      PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
       return packageInfo.versionCode;
     } catch (PackageManager.NameNotFoundException e) {
       // should never happen
@@ -105,18 +100,18 @@ public class GCMHelper {
    * Registers the application with GCM servers asynchronously. <p> Stores the registration ID and app versionCode in
    * the application's shared preferences.
    */
-  private void registerInBackground(final String[] scopes,
+  private void registerInBackground(final String[] scopes, final String senderId,
                                     final OneginiMobileAuthEnrollmentHandler mobileAuthEnrollmentHandler) {
     new AsyncTask<Void, Void, String>() {
       @Override
       protected String doInBackground(Void... params) {
 
-        String msg = "";
+        String msg;
         try {
           if (gcm == null) {
             gcm = GoogleCloudMessaging.getInstance(context);
           }
-          regid = gcm.register(SENDER_ID);
+          regid = gcm.register(senderId);
           msg = "Device registered, registration ID=" + regid;
 
           // You should send the registration ID to your server over HTTP,
@@ -135,11 +130,6 @@ public class GCMHelper {
         }
 
         return msg;
-      }
-
-      @Override
-      protected void onPostExecute(String msg) {
-        Log.v("TEST", msg);
       }
     }.execute(null, null, null);
   }

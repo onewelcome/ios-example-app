@@ -14,7 +14,8 @@ import static com.onegini.OneginiConstants.FETCH_RESOURCE_ACTION;
 import static com.onegini.OneginiConstants.INIT_PIN_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.IN_APP_BROWSER_CONTROL_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.LOGOUT_ACTION;
-import static com.onegini.OneginiConstants.MOBILE_AUTHENTICATION_ACTION;
+import static com.onegini.OneginiConstants.MOBILE_AUTHENTICATION_ENROLL_ACTION;
+import static com.onegini.OneginiConstants.CHECK_MOBILE_AUTHENTICATION_AVAILABLE_ACTION;
 import static com.onegini.OneginiConstants.SETUP_SCREEN_ORIENTATION;
 import static com.onegini.OneginiConstants.VALIDATE_PIN_ACTION;
 
@@ -34,6 +35,7 @@ import android.view.WindowManager;
 import com.onegini.action.AuthorizeAction;
 import com.onegini.action.AwaitInitialization;
 import com.onegini.action.ChangePinAction;
+import com.onegini.action.IsPushAuthenticationAvailableAction;
 import com.onegini.action.CheckIsRegisteredAction;
 import com.onegini.action.DisconnectAction;
 import com.onegini.action.FetchResourceAction;
@@ -54,7 +56,6 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 
   private static Map<String, Class<? extends OneginiPluginAction>> actions = new HashMap<String, Class<? extends OneginiPluginAction>>();
   private OneginiClient oneginiClient;
-  private boolean shouldUseNativeScreens;
 
   @Override
   protected void pluginInitialize() {
@@ -72,8 +73,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
   }
 
   @Override
-  public boolean execute(final String action, final JSONArray args,
-                         final CallbackContext callbackContext) throws JSONException {
+  public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
     if (actions.containsKey(action)) {
       final OneginiPluginAction actionInstance = buildActionClassFor(action);
       if (actionInstance == null) {
@@ -106,8 +106,9 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 
     actions.put(LOGOUT_ACTION, LogoutAction.class);
     actions.put(DISCONNECT_ACTION, DisconnectAction.class);
-    actions.put(MOBILE_AUTHENTICATION_ACTION, MobileAuthenticationAction.class);
+    actions.put(MOBILE_AUTHENTICATION_ENROLL_ACTION, MobileAuthenticationAction.class);
     actions.put(CHECK_IS_REGISTERED_ACTION, CheckIsRegisteredAction.class);
+    actions.put(CHECK_MOBILE_AUTHENTICATION_AVAILABLE_ACTION, IsPushAuthenticationAvailableAction.class);
   }
 
   private OneginiPluginAction buildActionClassFor(final String action) {
@@ -144,14 +145,6 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
       throw new RuntimeException("client not initialized");
     }
     return oneginiClient;
-  }
-
-  public void setShouldUseNativeScreens(final boolean shouldUseNativeScreens) {
-    this.shouldUseNativeScreens = shouldUseNativeScreens;
-  }
-
-  public boolean shouldUseNativeScreens() {
-    return shouldUseNativeScreens;
   }
 
   /**

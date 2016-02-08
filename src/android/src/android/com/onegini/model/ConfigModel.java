@@ -16,6 +16,7 @@ public class ConfigModel implements OneginiClientConfigModel {
     config.appVersion = getStringFromPreferences(preferences, "kOGAppVersion");
     config.baseUrl = getStringFromPreferences(preferences, "kOGAppBaseURL");
     config.resourceBaseUrl = getStringFromPreferences(preferences, "kOGResourceBaseURL");
+    config.gcmSenderId = getStringFromPreferences(preferences, "kOGgcmSenderId");
 
     config.maxPinFailures = preferences.getInteger("kOGMaxPinFailures", 3);
     config.useEmbeddedWebview = preferences.getBoolean("kOGUseEmbeddedWebview", true);
@@ -38,6 +39,7 @@ public class ConfigModel implements OneginiClientConfigModel {
   private String appVersion;
   private String baseUrl;
   private String resourceBaseUrl;
+  private String gcmSenderId;
 
   private int maxPinFailures;
   private boolean shouldGetIdToken;
@@ -121,5 +123,9 @@ public class ConfigModel implements OneginiClientConfigModel {
 
   public boolean useEmbeddedWebview() {
     return useEmbeddedWebview;
+  }
+
+  public String getGcmSenderId() {
+    return gcmSenderId;
   }
 }

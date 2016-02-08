@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/onegini_gray">
+
+  <!-- header -->
+  <RelativeLayout
+      android:id="@+id/screen_header"
+      android:background="@color/onegini_blue"
+      android:layout_width="match_parent"
+      android:layout_height="64dp"
+      android:layout_alignParentTop="true"
+      android:paddingLeft="15dp"
+      android:paddingRight="15dp">
+
+    <ImageView
+        android:id="@+id/pin_logo"
+        android:src="@drawable/onegini_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:scaleType="fitStart"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+  </RelativeLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true">
+
+    <TextView
+        android:id="@+id/alert_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Simple push message"
+        android:textColor="#666"
+        android:textStyle="bold"
+        android:textSize="36sp"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/positive_button"
+        style="@style/PushButton"
+        android:text="Accept" />
+
+    <Button
+        android:id="@+id/negative_button"
+        style="@style/PushButton"
+        android:text="Deny"/>
+  </LinearLayout>
+</RelativeLayout>

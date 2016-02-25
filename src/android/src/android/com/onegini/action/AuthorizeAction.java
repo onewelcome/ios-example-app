@@ -172,13 +172,6 @@ public class AuthorizeAction implements OneginiPluginAction {
       }
 
       @Override
-      public void authorizationClientConfigFailed() {
-        sendCallbackResult(callbackResultBuilder
-            .withErrorReason(AUTHORIZATION_ERROR.getName())
-            .build());
-      }
-
-      @Override
       public void authorizationErrorInvalidApplication() {
         sendCallbackResult(callbackResultBuilder
             .withErrorReason(UNSUPPORTED_APP_VERSION.getName())

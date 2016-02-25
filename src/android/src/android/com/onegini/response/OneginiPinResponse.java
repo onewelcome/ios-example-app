@@ -13,6 +13,7 @@ public enum OneginiPinResponse {
   PIN_MAX_SIMILAR_DIGITS("maxSimilarDigits"),
   PIN_TOO_SHORT("pinTooShort"),
   PIN_ENTRY_ERROR("pinEntryError"),
+  PIN_VALIDATION_FAILED_INVALID_CLIENT("pinValidationErrorInvalidClient"),
 
   // Pin change flow responses
   PIN_CURRENT_INVALID("invalidCurrentPin"),

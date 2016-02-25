@@ -18,6 +18,7 @@ import android.content.Context;
 import com.onegini.action.ChangePinAction;
 import com.onegini.action.InAppBrowserControlSession;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
+import com.onegini.mobile.sdk.android.library.exception.OneginiClientNotValidatedException;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
 import com.onegini.mobile.sdk.android.library.utils.dialogs.OneginiCreatePinDialog;
 
@@ -70,7 +71,11 @@ public class CreatePinNativeDialogHandler implements OneginiCreatePinDialog {
           return;
         }
 
-        if (!OneginiClient.getInstance().isPinValid(pin, CreatePinNativeDialogHandler.this)) {
+        try {
+          if (!OneginiClient.getInstance().isPinValid(pin, CreatePinNativeDialogHandler.this)) {
+            return;
+          }
+        } catch (OneginiClientNotValidatedException e) {
           return;
         }
 

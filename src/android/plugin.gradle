@@ -41,10 +41,8 @@ allprojects {
 }
 
 dependencies {
-  // Dependency injection
-  compile 'com.google.dagger:dagger:2.0.2'
   // The onegini sdk
-  compile 'com.onegini.mobile.sdk.android:library:5.00.02-SNAPSHOT:debug@aar'
+  compile 'com.onegini.mobile.sdk.android:library:5.01.01-SNAPSHOT:release@aar'
 //   Http Client
   compile 'com.squareup.okhttp:okhttp:2.3.0'
   compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'

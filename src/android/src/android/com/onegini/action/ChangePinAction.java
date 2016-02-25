@@ -7,7 +7,7 @@ import static com.onegini.response.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.response.OneginiPinResponse.PIN_CHANGED;
 import static com.onegini.response.OneginiPinResponse.PIN_CHANGE_ERROR;
 import static com.onegini.response.OneginiPinResponse.PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS;
-import static com.onegini.response.OneginiPinResponse.PIN_CURRENT_INVALID;
+import static com.onegini.response.OneginiPinResponse.PIN_VALIDATION_FAILED_INVALID_CLIENT;
 import static com.onegini.util.DeviceUtil.isNotConnected;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
 
@@ -80,6 +80,13 @@ public class ChangePinAction implements OneginiPluginAction {
       public void pinChangeErrorTooManyPinFailures() {
         sendCallbackResult(callbackResultBuilder
             .withErrorReason(PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS.getName())
+            .build());
+      }
+
+      @Override
+      public void pinChangeErrorInvalidClient() {
+        sendCallbackResult(callbackResultBuilder
+            .withErrorReason(PIN_VALIDATION_FAILED_INVALID_CLIENT.getName())
             .build());
       }
 

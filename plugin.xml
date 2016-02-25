@@ -154,6 +154,9 @@
     <!-- Google Play Services, GCM -->
     <framework src="com.google.android.gms:play-services-base:7.8.0" />
     <framework src="com.google.android.gms:play-services-gcm:7.8.0" />
+    <framework src="com.android.support:multidex:1.0.0" />
+
+    <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
 
     <!-- Onegini SDK dependencies -->
     <source-file src="src/android/lib/plugin-dependencies.jar" target-dir="libs/"/>

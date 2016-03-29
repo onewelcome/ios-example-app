@@ -235,6 +235,32 @@ module.exports = {
     exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.MOBILE_AUTHENTICATION_ENROLL, methodArgs);
   },
 
+
+  /**
+   * Enrolls the currently connected device for fingerprint authentication.
+   *
+   * @param {Object} router   Object that can handle page transition for the outcome of the action. Should at
+   *                          least implement the following methods:
+   *                          - enrollmentSuccess -> enrollment success
+   *                          - error -> generic enrollment error handler
+   *                          - errorTooManyPinAttempts -> method called once user exceeds allowed number of PIN attempts
+   */
+  enrollForFingerprintAuthentication: function (router) {
+    var onSuccess = function (response) {
+      router.enrollmentSuccess();
+    };
+
+    var onError = function (error) {
+      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.FINGERPRINT_ENROLMENT_FAILURE_TOO_MANY_PIN_ATTEMPTS) {
+        router.errorTooManyPinAttempts();
+      }
+      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.FINGERPRINT_ENROLMENT_FAILURE) {
+        router.error();
+      }
+    }
+    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FINGERPRINT_ENROLL_FOR_FINGERPRINT_AUTHENTICATION, []);
+  },
+
   /**
    * Determine if the user is registered.
    *
@@ -331,7 +357,7 @@ module.exports = {
         router.errorPinForgotten();
       }
     };
-  var methodArgs;
+    var methodArgs;
     if (scopes && scopes.length > 0) {
       methodArgs = [scopes];
     } else {
@@ -720,6 +746,11 @@ module.exports = {
     MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_AUTHENTICATION_ERROR: "enrollmentErrorAuthenticationError",
     MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_USER_ALREADY_ENROLLED: "enrollmentErrorUserAlreadyEnrolled",
     MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_DEVICE_ALREADY_ENROLLED: "enrollmentErrorDeviceAlreadyEnrolled",
-    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_CLIENT_CREDENTIALS: "enrollmentErrorInvalidClientCredentials"
+    MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_CLIENT_CREDENTIALS: "enrollmentErrorInvalidClientCredentials",
+
+    FINGERPRINT_ENROLL_FOR_FINGERPRINT_AUTHENTICATION: "enrollForFingerprintAuthentication",
+    FINGERPRINT_ENROLMENT_SUCCESS: "fingerprint_enrolment_success",
+    FINGERPRINT_ENROLMENT_FAILURE: "fingerprint_enrolment_failure",
+    FINGERPRINT_ENROLMENT_FAILURE_TOO_MANY_PIN_ATTEMPTS: "fingerprint_enrolment_failure_too_many_attempts"
   }
 };

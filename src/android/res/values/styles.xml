@@ -61,4 +61,13 @@
     <item name="android:paddingTop">10dp</item>
     <item name="android:paddingBottom">10dp</item>
   </style>
+
+  <!--<style name="ButtonStyle">-->
+    <!--<item name="android:layout_width">match_parent</item>-->
+    <!--<item name="android:layout_height">48dp</item>-->
+    <!--<item name="android:textSize">20sp</item>-->
+    <!--<item name="android:textColor">@drawable/button_text</item>-->
+    <!--<item name="android:background">#FFF</item>-->
+    <!--<item name="android:gravity">center</item>-->
+  <!--</style>-->
 </resources>

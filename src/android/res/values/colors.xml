@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <item name="onegini_blue" type="color">#009EDF</item>
-  <item name="onegini_gray" type="color">#F8F8F8</item>
+  <color name="onegini_blue">#009EDF</color>
+  <color name="onegini_gray">#F8F8F8</color>
+  <color name="white">#FFF</color>
+  <color name="black">#000</color>
+  <color name="dark_gray">#333</color>
+  <color name="background_white">#FFFFFF</color>
+  <color name="blue">#FF008FCE</color>
+  <color name="light_blue">#CC008FCE</color>
+  <color name="red">#F00</color>
 </resources>

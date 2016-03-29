@@ -140,6 +140,12 @@
           android:name="com.onegini.dialog.PushWithPinActivity"
           android:theme="@android:style/Theme.Black.NoTitleBar">
       </activity>
+      <activity android:name=".dialog.FingerprintActivity"
+                android:theme="@android:style/Theme.Black.NoTitleBar">
+      </activity>
+      <activity android:name=".dialog.PushWithFingerprintActivity"
+                android:theme="@android:style/Theme.Black.NoTitleBar">
+      </activity>
       <service android:name="com.onegini.gcm.GcmIntentService" />
       <receiver
           android:name="com.onegini.gcm.GcmBroadcastReceiver"
@@ -202,6 +208,8 @@
                  target-dir="src/com/onegini/action/"/>    
     <source-file src="src/android/src/android/com/onegini/action/ValidatePinAction.java"
                  target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/action/EnrollForFingerprintAction.java"
+                 target-dir="src/com/onegini/action/"/>
     <!-- dialog -->
     <source-file src="src/android/src/android/com/onegini/dialog/AcceptWithPinDialog.java"
                  target-dir="src/com/onegini/dialog/" />
@@ -227,6 +235,14 @@
                  target-dir="src/com/onegini/dialog"/>
     <source-file src="src/android/src/android/com/onegini/dialog/helper/PinKeyboardHandler.java"
                  target-dir="src/com/onegini/dialog"/>
+    <source-file src="src/android/src/android/com/onegini/dialog/FingerprintActivity.java"
+                 target-dir="src/com/onegini/dialog"/>
+    <source-file src="src/android/src/android/com/onegini/dialog/FingerprintDialog.java"
+                 target-dir="src/com/onegini/dialog"/>
+    <source-file src="src/android/src/android/com/onegini/dialog/PushAuthenticateWithFingerprintDialog.java"
+                 target-dir="src/com/onegini/dialog"/>
+    <source-file src="src/android/src/android/com/onegini/dialog/PushWithFingerprintActivity.java"
+                 target-dir="src/com/onegini/dialog"/>
     <!-- exception -->
     <source-file src="src/android/src/android/com/onegini/exception/PluginConfigException.java"
                  target-dir="src/com/onegini/exception"/>
@@ -234,6 +250,8 @@
     <source-file src="src/android/src/android/com/onegini/gcm/GcmBroadcastReceiver.java" target-dir="src/com/onegini/gcm/" />
     <source-file src="src/android/src/android/com/onegini/gcm/GCMHelper.java" target-dir="src/com/onegini/gcm/" />
     <source-file src="src/android/src/android/com/onegini/gcm/GcmIntentService.java" target-dir="src/com/onegini/gcm/" />
+    <!-- fingerprint -->
+    <source-file src="src/android/src/android/com/onegini/response/FingerprintResponse.java" target-dir="src/com/onegini/response/"/>
     <!-- model -->
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/model/MessageKey.java" target-dir="src/com/onegini/model/"/>

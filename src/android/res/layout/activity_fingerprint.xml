@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:gravity="center_horizontal"
+  android:orientation="vertical"
+  android:padding="16dp">
+
+  <TextView
+    android:id="@+id/fingerprint_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Confirm with fingerprint"
+    android:textColor="#FF008FCE"
+    android:textSize="32sp"
+    android:layout_marginTop="20dp"
+    android:gravity="center_horizontal"
+    android:textAlignment="center"/>
+
+  <TextView
+    android:id="@+id/pin_fallback_button"
+    style="@style/ButtonStyle"
+    android:text="I want to use my PIN"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="48dp"/>
+
+  <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_horizontal"
+    android:id="@+id/relativeLayout"
+    android:layout_above="@id/pin_fallback_button"
+    android:layout_below="@id/fingerprint_title">
+
+    <TextView
+      android:id="@+id/fingerprint_message"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Touch sensor"
+      android:textSize="28sp"
+      android:layout_above="@+id/fingerprint_ico"
+      android:layout_centerHorizontal="true"
+      android:layout_marginBottom="16dp"/>
+    <ImageView
+      android:layout_width="64dp"
+      android:layout_height="64dp"
+      android:src="@drawable/ic_fingerprint"
+      android:id="@+id/fingerprint_ico"
+      android:layout_centerVertical="true"
+      android:layout_centerHorizontal="true"/>
+  </RelativeLayout>
+
+</RelativeLayout>

@@ -1,13 +1,24 @@
 {
-  "plugins": ["toc"],
-  "pluginsConfig": {},
+  "gitbook": "2.x.x",
+  "title": "Onegini Cordova Plugin",
+  "plugins": [
+    "expandable-chapters",
+    "toc",
+    "onegini-styling",
+    "-fontsettings"
+  ],
   "styles": {
     "pdf": "styles/pdf.css",
-    "epub":"styles/pdf.css"
+    "epub": "styles/pdf.css"
   },
-  "fontSettings": {
-    "theme": "light",
-    "family": "serif",
-    "size": 1
+  "links": {
+    "gitbook": false,
+    "sharing": {
+      "google": false,
+      "facebook": false,
+      "twitter": false,
+      "weibo": false,
+      "all": false
+    }
   }
 }

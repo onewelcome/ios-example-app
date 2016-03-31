@@ -1,0 +1,22 @@
+{
+  "name": "cordova-plugin",
+  "version": "0.0.1",
+  "dependencies": {
+    "gitbook-cli": "2.1.x",
+    "gitbook-plugin-toc": "0.0.x",
+    "gitbook-plugin-expandable-chapters": "0.1.x",
+    "gitbook-plugin-onegini-styling": "git+ssh://git@ssh.gitlab.onegini.com:10022/documentation/gitbook-plugin-html-fragments.git#1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "clean": "rm -fr */_book node_modules",
+    "internal": "node_modules/.bin/gitbook serve internal",
+    "public": "node_modules/.bin/gitbook serve public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.onegini.com/mobile-platform/cordova-plugin"
+  },
+  "author": "Onegini B.V.",
+  "license": "UNLICENSED"
+}

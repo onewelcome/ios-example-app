@@ -6,4 +6,4 @@
 * [Certificate pinning](4Certificatepinning.md)
 * [Configuration](5Configuration.md)
 * [AppSecret generation](6AppSecretGeneration.md)
-* [Release notes](Release-notes/1.0.ms)
+* [Release notes](Release-notes/1.0.md)

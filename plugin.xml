@@ -116,6 +116,7 @@
       <uses-permission android:name="android.permission.INTERNET"/>
       <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
       <uses-permission android:name="android.permission.WAKE_LOCK" />
+      <uses-permission android:name="android.permission.USE_FINGERPRINT" />
       <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
       <permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
       <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
@@ -125,6 +126,14 @@
           <category android:name="$PACKAGE_NAME" />
         </intent-filter>
       </receiver>
+    </config-file>
+    <config-file target="AndroidManifest.xml" parent="application/activity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="oneginisdk"/>
+      </intent-filter>
     </config-file>
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <activity
@@ -140,10 +149,10 @@
           android:name="com.onegini.dialog.PushWithPinActivity"
           android:theme="@android:style/Theme.Black.NoTitleBar">
       </activity>
-      <activity android:name=".dialog.FingerprintActivity"
+      <activity android:name="com.onegini.dialog.FingerprintActivity"
                 android:theme="@android:style/Theme.Black.NoTitleBar">
       </activity>
-      <activity android:name=".dialog.PushWithFingerprintActivity"
+      <activity android:name="com.onegini.dialog.PushWithFingerprintActivity"
                 android:theme="@android:style/Theme.Black.NoTitleBar">
       </activity>
       <service android:name="com.onegini.gcm.GcmIntentService" />
@@ -298,14 +307,20 @@
     <resource-file src="src/android/res/drawable/form_inactive.9.png" target="res/drawable/form_inactive.9.png" />
     <resource-file src="src/android/res/drawable/onegini_logo.9.png" target="res/drawable/onegini_logo.9.png" />
     <resource-file src="src/android/res/drawable/popup_button.xml" target="res/drawable/popup_button.xml" />
+    <resource-file src="src/android/res/drawable/button_text.xml" target="res/drawable/button_text.xml" />
     <resource-file src="src/android/res/drawable-hdpi/ic_backspace.png" target="res/drawable-hdpi/ic_backspace.png" />
     <resource-file src="src/android/res/drawable-mdpi/ic_backspace.png" target="res/drawable-mdpi/ic_backspace.png" />
     <resource-file src="src/android/res/drawable-xhdpi/ic_backspace.png" target="res/drawable-xhdpi/ic_backspace.png" />
+    <resource-file src="src/android/res/drawable-hdpi/ic_fingerprint.png" target="res/drawable-hdpi/ic_fingerprint.png" />
+    <resource-file src="src/android/res/drawable-mdpi/ic_fingerprint.png" target="res/drawable-mdpi/ic_fingerprint.png" />
+    <resource-file src="src/android/res/drawable-xhdpi/ic_fingerprint.png" target="res/drawable-xhdpi/ic_fingerprint.png" />
     <resource-file src="src/android/res/layout/alert_dialog.xml" target="res/layout/alert_dialog.xml" />
     <resource-file src="src/android/res/layout/confirm_dialog.xml" target="res/layout/confirm_dialog.xml" />
     <resource-file src="src/android/res/layout/keyboard.xml" target="res/layout/keyboard.xml" />
     <resource-file src="src/android/res/layout/pin_screen.xml" target="res/layout/pin_screen.xml" />
     <resource-file src="src/android/res/layout/push_simple_dialog.xml" target="res/layout/push_simple_dialog.xml" />
+    <resource-file src="src/android/res/layout/activity_fingerprint.xml" target="res/layout/activity_fingerprint.xml" />
+    <resource-file src="src/android/res/layout/activity_push_fingerprint.xml" target="res/layout/activity_push_fingerprint.xml" />
     <resource-file src="src/android/res/layout-land/pin_screen.xml" target="res/layout-land/pin_screen.xml" />
     <resource-file src="src/android/res/raw/keystore.bks" target="res/raw/keystore.bks" />
     <resource-file src="src/android/res/values/bools.xml" target="res/values/bools.xml" />

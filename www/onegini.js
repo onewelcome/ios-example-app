@@ -261,6 +261,10 @@ module.exports = {
     exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FINGERPRINT_ENROLL_FOR_FINGERPRINT_AUTHENTICATION, []);
   },
 
+  disableFingerprintAuthentication: function() {
+    exec(null, null, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FINGERPRINT_AUTHENTICATION_DISABLE, []);
+  },
+
   checkFingerpringAuthenticationState: function(fingerprintEnabledCallback, fingerprintDisabledCallback) {
     var onFingerprintEnabledCallback = function () {
       fingerprintEnabledCallback();
@@ -759,6 +763,7 @@ module.exports = {
     MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_CLIENT_CREDENTIALS: "enrollmentErrorInvalidClientCredentials",
 
     FINGERPRINT_AUTHENTICATION_STATE: "checkFingerpringAuthenticationState",
+    FINGERPRINT_AUTHENTICATION_DISABLE: "disableFingerprintAuthentication",
     FINGERPRINT_ENROLL_FOR_FINGERPRINT_AUTHENTICATION: "enrollForFingerprintAuthentication",
     FINGERPRINT_ENROLMENT_SUCCESS: "fingerprint_enrolment_success",
     FINGERPRINT_ENROLMENT_FAILURE: "fingerprint_enrolment_failure",

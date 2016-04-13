@@ -22,6 +22,7 @@ public class OneginiConstants {
   public static final String CHECK_MOBILE_AUTHENTICATION_AVAILABLE_ACTION = "isMobileAuthenticationAvailable";
   public static final String SETUP_SCREEN_ORIENTATION = "setupScreenOrientation";
   public static final String ENROLL_FOR_FINGEPRINT_AUTHENITCATION = "enrollForFingerprintAuthentication";
+  public static final String DISABLE_FINGEPRINT_AUTHENITCATION = "disableFingerprintAuthentication";
   public static final String FINGERPRINT_AUTHENTICATION_STATE = "checkFingerpringAuthenticationState";
 
   // Values

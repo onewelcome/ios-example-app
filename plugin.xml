@@ -219,6 +219,8 @@
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/EnrollForFingerprintAction.java"
                  target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/action/DisableFingerprintAuthenticationAction.java"
+                 target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/FingerprintAuthenticationStateAction.java"
                  target-dir="src/com/onegini/action/"/>
     <!-- dialog -->

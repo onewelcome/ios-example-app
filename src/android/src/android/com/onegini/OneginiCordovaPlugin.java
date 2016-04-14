@@ -4,6 +4,7 @@ import static com.onegini.OneginiConstants.AUTHORIZE_ACTION;
 import static com.onegini.OneginiConstants.AWAIT_INITIALIZATION;
 import static com.onegini.OneginiConstants.CHANGE_PIN_ACTION;
 import static com.onegini.OneginiConstants.CHECK_IS_REGISTERED_ACTION;
+import static com.onegini.OneginiConstants.CHECK_MOBILE_AUTHENTICATION_AVAILABLE_ACTION;
 import static com.onegini.OneginiConstants.CONFIRM_CURRENT_PIN_ACTION;
 import static com.onegini.OneginiConstants.CONFIRM_CURRENT_PIN_CHANGE_PIN_ACTION;
 import static com.onegini.OneginiConstants.CONFIRM_NEW_PIN_ACTION;
@@ -15,7 +16,7 @@ import static com.onegini.OneginiConstants.INIT_PIN_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.IN_APP_BROWSER_CONTROL_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.LOGOUT_ACTION;
 import static com.onegini.OneginiConstants.MOBILE_AUTHENTICATION_ENROLL_ACTION;
-import static com.onegini.OneginiConstants.CHECK_MOBILE_AUTHENTICATION_AVAILABLE_ACTION;
+import static com.onegini.OneginiConstants.REAUTHORIZE_ACTION;
 import static com.onegini.OneginiConstants.SETUP_SCREEN_ORIENTATION;
 import static com.onegini.OneginiConstants.VALIDATE_PIN_ACTION;
 
@@ -35,18 +36,19 @@ import android.view.WindowManager;
 import com.onegini.action.AuthorizeAction;
 import com.onegini.action.AwaitInitialization;
 import com.onegini.action.ChangePinAction;
-import com.onegini.action.IsPushAuthenticationAvailableAction;
 import com.onegini.action.CheckIsRegisteredAction;
 import com.onegini.action.DisconnectAction;
 import com.onegini.action.FetchResourceAction;
 import com.onegini.action.FetchResourceAnonymouslyAction;
 import com.onegini.action.InAppBrowserControlSession;
+import com.onegini.action.IsPushAuthenticationAvailableAction;
 import com.onegini.action.LogoutAction;
 import com.onegini.action.MobileAuthenticationAction;
 import com.onegini.action.OneginiPluginAction;
 import com.onegini.action.PinCallbackSession;
 import com.onegini.action.PinProvidedAction;
 import com.onegini.action.PluginInitializer;
+import com.onegini.action.ReauthorizeAction;
 import com.onegini.action.SetupScreenOrientationAction;
 import com.onegini.action.ValidatePinAction;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
@@ -94,6 +96,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     actions.put(SETUP_SCREEN_ORIENTATION, SetupScreenOrientationAction.class);
 
     actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
+    actions.put(REAUTHORIZE_ACTION, ReauthorizeAction.class);
     actions.put(CONFIRM_CURRENT_PIN_ACTION, PinProvidedAction.class);
     actions.put(CONFIRM_NEW_PIN_ACTION, PinProvidedAction.class);
     actions.put(CONFIRM_CURRENT_PIN_CHANGE_PIN_ACTION, PinProvidedAction.class);
@@ -148,8 +151,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
   }
 
   /**
-   * Prevent system from taking app screenshot when going into background and showing the screenshot
-   * in the Task Manager.
+   * Prevent system from taking app screenshot when going into background and showing the screenshot in the Task Manager.
    */
   private void preventSystemScreenshots() {
     getCordova().getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);

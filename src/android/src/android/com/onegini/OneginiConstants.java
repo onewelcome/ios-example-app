@@ -7,6 +7,7 @@ public class OneginiConstants {
   public static final String INIT_PIN_CALLBACK_SESSION = "initPinCallbackSession";
   public static final String IN_APP_BROWSER_CONTROL_CALLBACK_SESSION = "inAppBrowserControlSession";
   public static final String AUTHORIZE_ACTION = "authorize";
+  public static final String REAUTHORIZE_ACTION = "reauthorize";
   public static final String FETCH_RESOURCE_ACTION = "fetchResource";
   public static final String FETCH_ANONYMOUS_ACTION = "fetchAnonymousResource";
   public static final String LOGOUT_ACTION = "logout";

@@ -164,7 +164,17 @@
     <source-file src="src/android/src/android/com/onegini/OneginiConstants.java" target-dir="src/com/onegini/"/>
     <source-file src="src/android/src/android/com/onegini/OneginiCordovaPlugin.java" target-dir="src/com/onegini/"/>
     <!-- action -->
+    <source-file src="src/android/src/android/com/onegini/action/authorization/DefaultOneginiAuthorizationHandler.java"
+                 target-dir="src/com/onegini/action/authorization/"/>
+    <source-file src="src/android/src/android/com/onegini/action/authorization/AuthorizationActionHandler.java"
+                 target-dir="src/com/onegini/action/authorization/"/>
+    <source-file src="src/android/src/android/com/onegini/action/authorization/AuthorizationActionHandlerFactory.java"
+                 target-dir="src/com/onegini/action/authorization/"/>
+    <source-file src="src/android/src/android/com/onegini/action/authorization/AuthorizationActionExecutor.java"
+                 target-dir="src/com/onegini/action/authorization/"/>
     <source-file src="src/android/src/android/com/onegini/action/AuthorizeAction.java"
+                 target-dir="src/com/onegini/action/"/>
+    <source-file src="src/android/src/android/com/onegini/action/ReauthorizeAction.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/AwaitInitialization.java"
                  target-dir="src/com/onegini/action/"/>

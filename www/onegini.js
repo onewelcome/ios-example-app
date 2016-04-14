@@ -281,63 +281,39 @@ module.exports = {
    * @param {Array} scopes    {Array} with {String}s that represent the scopes for the access token
    */
   authorize: function (router, scopes) {
-    var onSuccess = function (response) {
-      /*
-       The response method contains the name of the method in the OGAuthorizationDelegate protocol
-       */
-      if (response == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_SUCCESS) {
-        router.authorizationSuccess();
-      }
-      else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_REQUESTED) {
-        router.requestAuthorization(response.url);
-      }
-    };
+    new AuthorizationAction(oneginiCordovaPlugin).authorize(router, scopes);
+  },
 
-    var onError = function (error) {
-      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_PIN) {
-        router.errorInvalidCurrentPin(error.remainingAttempts, scopes);
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_TOO_MANY_PIN_ATTEMPTS) {
-        router.errorTooManyPinAttempts();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_CLIENT_REGISTRATION_FAILED) {
-        router.errorRegistrationFailed();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
-        router.errorConnectivityProblem();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_NOT_AUTHENTICATED) {
-        router.errorNotAuthenticated();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_NOT_AUTHORIZED) {
-        router.errorNotAuthorized();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_SCOPE) {
-        router.errorInvalidScope();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_STATE) {
-        router.errorInvalidState();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_REQUEST) {
-        router.errorInvalidRequest();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_GRANT_TYPE) {
-        router.errorInvalidGrant();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.UNSUPPORTED_APP_VERSION) {
-        router.errorUnsupportedAppVersion();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_PIN_FORGOTTEN) {
-        router.errorPinForgotten();
-      }
-    };
-  var methodArgs;
-    if (scopes && scopes.length > 0) {
-      methodArgs = [scopes];
-    } else {
-      methodArgs = [];
-    }
-    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE, methodArgs);
+  /**
+   * Main entry point into the reauthorization process.
+   *
+   * @param {Object} router   Object that can handle page transition for the outcome of the action. Should at
+   *                          least implement the following methods:
+   *                          - requestAuthorization(url) -> redirects the user to the given url to log in
+   *                          - authorizationSuccess -> should show the landing page for the authenticated user
+   *                          - errorInvalidCurrentPin(remainingAttempts, scopes) -> indicates that the entered PIN
+   *                          number was invalid and provides an information about remaining PIN attempts
+   *                          - errorTooManyPinAttempts -> method called once user exceeds allowed number of PIN
+   *                          attempts
+   *                          - errorRegistrationFailed -> invoked when client registration fails
+   *                          - errorConnectivityProblem -> method called whenever plugin isn't able to establish
+   *                          connection with the server
+   *                          - errorNotAuthenticated -> invoked when client credentials are invalid
+   *                          - errorNotAuthorized -> called when client was not authorized to perform action
+   *                          - errorInvalidScope -> one or more of the scopes requested authorization for were not
+   *                          available
+   *                          - errorInvalidState -> the state parameter in the authorization request is different than
+   *                          the value in the callback. This indicates a possible man in the middle attack.
+   *                          - errorInvalidRequest -> method called when one or more required parameters were missing
+   *                          in the authorization request.
+   *                          - errorInvalidGrant -> called when access grant or refresh token was invalid
+   *                          - errorUnsupportedAppVersion -> invoked when application version is not valid and update
+   *                          is needed
+   *                          - errorPinForgotten -> invoked when user clicked "I forgot my PIN" button
+   * @param {Array} scopes    {Array} with {String}s that represent the scopes for the access token
+   */
+  reauthorize: function (router, scopes) {
+    new AuthorizationAction(oneginiCordovaPlugin).reauthorize(router, scopes);
   },
 
   /**
@@ -662,6 +638,7 @@ module.exports = {
     IS_REGISTERED: "isRegistered",
 
     AUTHORIZATION_AUTHORIZE: "authorize",
+    AUTHORIZATION_REAUTHORIZE: "reauthorize",
     AUTHORIZATION_REQUESTED: "requestAuthorization",
     AUTHORIZATION_SUCCESS: "authorizationSuccess",
     AUTHORIZATION_FAILURE: "authorizationFailure",
@@ -723,3 +700,73 @@ module.exports = {
     MOBILE_AUTHENTICATION_ENROLLMENT_ERROR_INVALID_CLIENT_CREDENTIALS: "enrollmentErrorInvalidClientCredentials"
   }
 };
+
+function AuthorizationAction(oneginiCordovaPlugin) {
+  var authorize = function(authorizationType) {
+    return function (router, scopes) {
+      var onSuccess = function (response) {
+        /*
+         The response method contains the name of the method in the OGAuthorizationDelegate protocol
+         */
+        if (response == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_SUCCESS) {
+          router.authorizationSuccess();
+        }
+        else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_REQUESTED) {
+          router.requestAuthorization(response.url);
+        }
+      };
+
+      var onError = function (error) {
+        if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_PIN) {
+          router.errorInvalidCurrentPin(error.remainingAttempts, scopes);
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_TOO_MANY_PIN_ATTEMPTS) {
+          router.errorTooManyPinAttempts();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_CLIENT_REGISTRATION_FAILED) {
+          router.errorRegistrationFailed();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
+          router.errorConnectivityProblem();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_NOT_AUTHENTICATED) {
+          router.errorNotAuthenticated();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_NOT_AUTHORIZED) {
+          router.errorNotAuthorized();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_SCOPE) {
+          router.errorInvalidScope();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_STATE) {
+          router.errorInvalidState();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_REQUEST) {
+          router.errorInvalidRequest();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_INVALID_GRANT_TYPE) {
+          router.errorInvalidGrant();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.UNSUPPORTED_APP_VERSION) {
+          router.errorUnsupportedAppVersion();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_ERROR_PIN_FORGOTTEN) {
+          router.errorPinForgotten();
+        }
+      };
+      var methodArgs;
+      if (scopes && scopes.length > 0) {
+        methodArgs = [scopes];
+      }
+      else {
+        methodArgs = [];
+      }
+      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, authorizationType, methodArgs);
+    }
+  };
+
+  return {
+    authorize: authorize(oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_AUTHORIZE),
+    reauthorize: authorize(oneginiCordovaPlugin.OG_CONSTANTS.AUTHORIZATION_REAUTHORIZE)
+  }
+}

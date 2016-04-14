@@ -5,6 +5,7 @@ import static com.onegini.response.OneginiAuthorizationResponse.AUTHORIZATION_RE
 import org.apache.cordova.CallbackContext;
 
 import android.net.Uri;
+import com.onegini.action.authorization.AuthorizationActionExecutor;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiURLHandler;
 import com.onegini.util.CallbackResultBuilder;
 
@@ -18,7 +19,7 @@ public class URLHandler implements OneginiURLHandler {
 
   @Override
   public void onOpenURL(final Uri uri) {
-    final CallbackContext context = AuthorizeAction.getCallbackContext();
+    final CallbackContext context = AuthorizationActionExecutor.getCallbackContext();
     if (context == null) {
       return;
     }

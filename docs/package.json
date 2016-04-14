@@ -5,7 +5,11 @@
     "gitbook-cli": "2.1.x",
     "gitbook-plugin-toc": "0.0.x",
     "gitbook-plugin-expandable-chapters": "0.1.x",
-    "gitbook-plugin-onegini-styling": "git+ssh://git@ssh.gitlab.onegini.com:10022/documentation/gitbook-plugin-html-fragments.git#1.0.0"
+    "gitbook-plugin-onegini-styling": "git+ssh://git@ssh.gitlab.onegini.com:10022/documentation/gitbook-plugin-html-fragments.git#1.0.0",
+    "gitbook-plugin-disqus": "0.1.x",
+    "gitbook-plugin-anker-enable": "0.0.x",
+    "gitbook-plugin-prism": "1.0.x",
+    "gitbook-plugin-websequencediagrams": "0.0.x"
   },
   "devDependencies": {},
   "scripts": {

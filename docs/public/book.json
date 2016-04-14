@@ -5,8 +5,18 @@
     "expandable-chapters",
     "toc",
     "onegini-styling",
-    "-fontsettings"
+    "-fontsettings",
+    "disqus",
+    "anker-enable",
+    "prism",
+    "-highlight",
+    "websequencediagrams"
   ],
+  "pluginsConfig": {
+    "disqus": {
+      "shortName": "onegini-docs"
+    }
+  },
   "styles": {
     "pdf": "styles/pdf.css",
     "epub": "styles/pdf.css"

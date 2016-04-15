@@ -150,7 +150,8 @@
           android:theme="@android:style/Theme.Black.NoTitleBar">
       </activity>
       <activity android:name="com.onegini.dialog.FingerprintActivity"
-                android:theme="@android:style/Theme.Black.NoTitleBar">
+                android:theme="@android:style/Theme.Black.NoTitleBar"
+                android:launchMode="singleTop">
       </activity>
       <activity android:name="com.onegini.dialog.PushWithFingerprintActivity"
                 android:theme="@android:style/Theme.Black.NoTitleBar">

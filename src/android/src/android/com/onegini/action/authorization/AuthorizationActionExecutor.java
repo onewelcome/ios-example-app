@@ -29,24 +29,25 @@ public class AuthorizationActionExecutor {
     this.authorizationActionHandler = authorizationActionHandler;
   }
 
-  public void execute(final JSONArray args, final CallbackContext callbackContext,
-                      final OneginiCordovaPlugin client) {
-    if (hasPreviousAuthorizationCompleted()) {
-
+  public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
+    if (isPreviousAuthorizationCompleted()) {
       saveCallbackContextForGlobalUsage(callbackContext);
+      authorize(args, client);
+    }
+  }
 
-      final Context context = client.getCordova().getActivity().getApplication();
-      final CallbackResultBuilder callbackResultBuilder = new CallbackResultBuilder();
+  private void authorize(final JSONArray args, final OneginiCordovaPlugin client) {
+    final Context context = client.getCordova().getActivity().getApplication();
+    final CallbackResultBuilder callbackResultBuilder = new CallbackResultBuilder();
 
-      if (isConnected(context)) {
-        String[] scopes = getScopes(args);
-        OneginiAuthorizationHandler authorizationHandler = new DefaultOneginiAuthorizationHandler(callbackResultBuilder, callbackContext, context);
-        authorizationActionHandler.authorize(scopes, authorizationHandler);
-      } else {
-        sendCallbackResult(callbackResultBuilder
-            .withErrorReason(CONNECTIVITY_PROBLEM.getName())
-            .build());
-      }
+    if (isConnected(context)) {
+      String[] scopes = getScopes(args);
+      OneginiAuthorizationHandler authorizationHandler = new DefaultOneginiAuthorizationHandler(callbackResultBuilder, callbackContext, context);
+      authorizationActionHandler.authorize(scopes, authorizationHandler);
+    } else {
+      sendCallbackResult(callbackResultBuilder
+          .withErrorReason(CONNECTIVITY_PROBLEM.getName())
+          .build());
     }
   }
 
@@ -70,7 +71,7 @@ public class AuthorizationActionExecutor {
     callbackContext.sendPluginResult(result);
   }
 
-  private boolean hasPreviousAuthorizationCompleted() {
+  private boolean isPreviousAuthorizationCompleted() {
     return callbackContext == null || callbackContext.isFinished();
   }
 

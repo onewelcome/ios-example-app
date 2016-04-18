@@ -19,6 +19,7 @@ import static com.onegini.OneginiConstants.INIT_PIN_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.IN_APP_BROWSER_CONTROL_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.LOGOUT_ACTION;
 import static com.onegini.OneginiConstants.MOBILE_AUTHENTICATION_ENROLL_ACTION;
+import static com.onegini.OneginiConstants.REAUTHORIZE_ACTION;
 import static com.onegini.OneginiConstants.SETUP_SCREEN_ORIENTATION;
 import static com.onegini.OneginiConstants.VALIDATE_PIN_ACTION;
 
@@ -53,6 +54,7 @@ import com.onegini.action.OneginiPluginAction;
 import com.onegini.action.PinCallbackSession;
 import com.onegini.action.PinProvidedAction;
 import com.onegini.action.PluginInitializer;
+import com.onegini.action.ReauthorizeAction;
 import com.onegini.action.SetupScreenOrientationAction;
 import com.onegini.action.ValidatePinAction;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
@@ -100,6 +102,7 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     actions.put(SETUP_SCREEN_ORIENTATION, SetupScreenOrientationAction.class);
 
     actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
+    actions.put(REAUTHORIZE_ACTION, ReauthorizeAction.class);
     actions.put(CONFIRM_CURRENT_PIN_ACTION, PinProvidedAction.class);
     actions.put(CONFIRM_NEW_PIN_ACTION, PinProvidedAction.class);
     actions.put(CONFIRM_CURRENT_PIN_CHANGE_PIN_ACTION, PinProvidedAction.class);

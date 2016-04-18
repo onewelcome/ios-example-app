@@ -8,11 +8,11 @@ import com.onegini.action.authorization.AuthorizationActionExecutor;
 import com.onegini.action.authorization.AuthorizationActionHandler;
 import com.onegini.action.authorization.AuthorizationActionHandlerFactory;
 
-public class AuthorizeAction implements OneginiPluginAction {
+public class ReauthorizeAction implements OneginiPluginAction {
 
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
-    final AuthorizationActionHandler authorizationActionHandler = new AuthorizationActionHandlerFactory(client).buildForAuthorization();
+    final AuthorizationActionHandler authorizationActionHandler = new AuthorizationActionHandlerFactory(client).buildForReauthorization();
     new AuthorizationActionExecutor(authorizationActionHandler).execute(args, callbackContext, client);
   }
 

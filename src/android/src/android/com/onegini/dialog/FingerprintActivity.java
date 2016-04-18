@@ -1,18 +1,23 @@
 package com.onegini.dialog;
 
+import static com.onegini.dialog.PinScreenActivity.SCREEN_MODE_LOGIN;
 import static com.onegini.model.MessageKey.FINGERPRINT_TRY_AGAIN;
 import static com.onegini.model.MessageKey.FINGERPRINT_VERIFICATION;
+import static com.onegini.model.MessageKey.HELP_POPUP_OK;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.onegini.dialog.helper.PinActivityMessageMapper;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiAuthenticatorFallbackHandler;
 
 public class FingerprintActivity extends Activity {
@@ -31,6 +36,9 @@ public class FingerprintActivity extends Activity {
   ImageView fingerprintIco;
   TextView fingerprintMessage;
   TextView pinFallbackButton;
+  TextView helpLinkTextView;
+
+  private View.OnClickListener helpButtonListener;
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
@@ -39,6 +47,15 @@ public class FingerprintActivity extends Activity {
     fingerprintIco = (ImageView) findViewById(getResources().getIdentifier("fingerprint_ico", "id", getPackageName()));
     fingerprintMessage = (TextView) findViewById(getResources().getIdentifier("fingerprint_message", "id", getPackageName()));
     pinFallbackButton = (TextView) findViewById(getResources().getIdentifier("pin_fallback_button", "id", getPackageName()));
+    helpLinkTextView = (TextView) findViewById(getResources().getIdentifier("help_button", "id", getPackageName()));
+    helpLinkTextView.setOnClickListener(helpButtonListener);
+    helpButtonListener = new View.OnClickListener() {
+      @Override
+      public void onClick(final View v) {
+        showHelpDialog();
+      }
+    };
+
     initFallbackButton();
   }
 
@@ -63,6 +80,45 @@ public class FingerprintActivity extends Activity {
         }
       }
     });
+  }
+
+  private void showHelpDialog() {
+    final Dialog dialog = createStyledDialog("alert_dialog");
+    dialog.show();
+
+    setDialogTitle(dialog, PinActivityMessageMapper.getTitleForHelpsScreen(SCREEN_MODE_LOGIN));
+    setDialogMessage(dialog, PinActivityMessageMapper.getMessageForHelpScreen(SCREEN_MODE_LOGIN));
+    prepareOkButton(dialog, getMessageForKey(HELP_POPUP_OK.name()), new View.OnClickListener() {
+      @Override
+      public void onClick(final View v) {
+        dialog.dismiss();
+      }
+    });
+  }
+
+  private Dialog createStyledDialog(final String dialogLayoutName) {
+    final int layoutId = getResources().getIdentifier(dialogLayoutName, "layout", getPackageName());
+    final int styleId = getResources().getIdentifier("CustomDialogTheme", "style", getPackageName());
+
+    final Dialog dialog = new Dialog(this, styleId);
+    dialog.setContentView(layoutId);
+    return dialog;
+  }
+
+  private void setDialogTitle(final Dialog dialog, final String title) {
+    final TextView titleView = (TextView) dialog.findViewById(getResources().getIdentifier("dialog_title", "id", getPackageName()));
+    titleView.setText(title);
+  }
+
+  private void setDialogMessage(final Dialog dialog, final String message) {
+    final TextView messageView = (TextView) dialog.findViewById(getResources().getIdentifier("dialog_message", "id", getPackageName()));
+    messageView.setText(message);
+  }
+
+  private void prepareOkButton(final Dialog dialog, final String title, final View.OnClickListener listener) {
+    final Button okButton = (Button) dialog.findViewById(getResources().getIdentifier("dialog_ok_button", "id", getPackageName()));
+    okButton.setText(title);
+    okButton.setOnClickListener(listener);
   }
 
   private void showFingerprintIco() {

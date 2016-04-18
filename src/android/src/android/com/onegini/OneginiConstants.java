@@ -7,6 +7,7 @@ public class OneginiConstants {
   public static final String INIT_PIN_CALLBACK_SESSION = "initPinCallbackSession";
   public static final String IN_APP_BROWSER_CONTROL_CALLBACK_SESSION = "inAppBrowserControlSession";
   public static final String AUTHORIZE_ACTION = "authorize";
+  public static final String REAUTHORIZE_ACTION = "reauthorize";
   public static final String FETCH_RESOURCE_ACTION = "fetchResource";
   public static final String FETCH_ANONYMOUS_ACTION = "fetchAnonymousResource";
   public static final String LOGOUT_ACTION = "logout";
@@ -21,6 +22,9 @@ public class OneginiConstants {
   public static final String CHECK_IS_REGISTERED_ACTION = "isRegistered";
   public static final String CHECK_MOBILE_AUTHENTICATION_AVAILABLE_ACTION = "isMobileAuthenticationAvailable";
   public static final String SETUP_SCREEN_ORIENTATION = "setupScreenOrientation";
+  public static final String ENROLL_FOR_FINGEPRINT_AUTHENITCATION = "enrollForFingerprintAuthentication";
+  public static final String DISABLE_FINGEPRINT_AUTHENITCATION = "disableFingerprintAuthentication";
+  public static final String FINGERPRINT_AUTHENTICATION_STATE = "checkFingerpringAuthenticationState";
 
   // Values
   public static final String KEYSTORE_HASH = "1eb7a88b2a72356d27176df6b3fc8804d78846913ad5a54d277a70f260e12af3";

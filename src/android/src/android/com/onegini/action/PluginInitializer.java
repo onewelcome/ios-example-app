@@ -11,6 +11,9 @@ import com.onegini.dialog.AcceptWithPinDialog;
 import com.onegini.dialog.ConfirmationDialogSelectorHandler;
 import com.onegini.dialog.CreatePinNativeDialogHandler;
 import com.onegini.dialog.CurrentPinNativeDialogHandler;
+import com.onegini.dialog.FingerprintActivity;
+import com.onegini.dialog.FingerprintDialog;
+import com.onegini.dialog.PushAuthenticateWithFingerprintDialog;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.model.ConfigModel;
 import com.onegini.util.MessageResourceReader;
@@ -52,6 +55,8 @@ public class PluginInitializer {
     client.setCurrentPinDialog(new CurrentPinNativeDialogHandler(context));
     client.setConfirmationWithPinDialog(new AcceptWithPinDialog(context));
     client.setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler(context));
+    FingerprintActivity.setFingerprintAuthorizationFallbackHandler(client.setFingerprintDialog(new FingerprintDialog(context)));
+    client.setConfirmationWithFingerprintDialog(new PushAuthenticateWithFingerprintDialog(context));
   }
 
   private ConfigModel retrieveConfiguration() {

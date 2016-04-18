@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/onegini_gray">
+
+  <!-- header -->
+  <RelativeLayout
+      android:id="@+id/screen_header"
+      android:background="@color/onegini_blue"
+      android:layout_width="match_parent"
+      android:layout_height="64dp"
+      android:layout_alignParentTop="true"
+      android:paddingLeft="15dp"
+      android:paddingRight="15dp">
+
+    <ImageView
+        android:id="@+id/pin_logo"
+        android:src="@drawable/onegini_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:scaleType="fitStart"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/help_button"
+        android:text="Help?"
+        android:textColor="#FFF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:textSize="16sp"/>
+
+  </RelativeLayout>
+
+  <TextView
+    android:id="@+id/pin_fallback_button"
+    style="@style/ButtonStyle"
+    android:text="I want to use my PIN"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="48dp"/>
+
+  <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_horizontal"
+    android:id="@+id/relativeLayout"
+    android:layout_above="@id/pin_fallback_button"
+    android:layout_below="@id/screen_header">
+
+    <TextView
+      android:id="@+id/fingerprint_message"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Touch sensor"
+      android:textSize="28sp"
+      android:layout_above="@+id/fingerprint_ico"
+      android:layout_centerHorizontal="true"
+      android:layout_marginBottom="16dp"/>
+    <ImageView
+      android:layout_width="64dp"
+      android:layout_height="64dp"
+      android:src="@drawable/ic_fingerprint"
+      android:id="@+id/fingerprint_ico"
+      android:layout_centerVertical="true"
+      android:layout_centerHorizontal="true"/>
+  </RelativeLayout>
+
+</RelativeLayout>

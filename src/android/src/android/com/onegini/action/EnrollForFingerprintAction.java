@@ -13,6 +13,7 @@ import org.json.JSONArray;
 
 import android.app.Application;
 import com.onegini.OneginiCordovaPlugin;
+import com.onegini.dialog.PinScreenActivity;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiFingerprintEnrollmentHandler;
 import com.onegini.util.CallbackResultBuilder;
@@ -33,6 +34,9 @@ public class EnrollForFingerprintAction implements OneginiPluginAction {
     oneginiClient.enrollForFingerprintAuthentication(new OneginiFingerprintEnrollmentHandler() {
       @Override
       public void enrollmentSuccess() {
+        if (PinScreenActivity.getInstance() != null) {
+          PinScreenActivity.getInstance().finish();
+        }
         callbackContext.success(FINGERPRINT_ENROLMENT_SUCCESS.getName());
       }
 

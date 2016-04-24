@@ -53,6 +53,9 @@ module.exports = {
       else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_CURRENT) {
         router.askForPin();
       }
+      else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_CURRENT_FOR_FINGERPRINT){
+        router.askCurrentPinForFingerprintAuthentication();
+      }
       else if (response.method == oneginiCordovaPlugin.OG_CONSTANTS.PIN_ASK_FOR_NEW) {
         router.askForNewPin(oneginiCordovaPlugin.setPin);
       }
@@ -711,6 +714,7 @@ module.exports = {
     PIN_ASK_FOR_NEW_FOR_CHANGE_REQUEST: "askNewPinForChangeRequest",
     PIN_CONFIRM_NEW_FOR_CHANGE_REQUEST: "confirmNewPinForChangeRequest",
     PIN_CONFIRM_CURRENT_FOR_CHANGE_REQUEST: "confirmCurrentPinForChangeRequest",
+    PIN_ASK_FOR_CURRENT_FOR_FINGERPRINT: "askCurrentPinForFingerprintAuthentication",
     PIN_CANCEL_CHANGE: "cancelPinChange",
     PIN_INVALID: "invalidCurrentPin",
 

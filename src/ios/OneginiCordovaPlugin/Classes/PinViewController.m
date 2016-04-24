@@ -82,27 +82,38 @@
     _mode = mode;
     switch (mode) {
         case PINCheckMode:
+            self.pinForgottenButton.hidden = NO;
             self.titleLabel.text = [self.messages objectForKey:@"LOGIN_PIN_SCREEN_TITLE"];
             self.errorLabel.text = @"";
             break;
         case PINRegistrationMode:
+            self.pinForgottenButton.hidden = YES;
             self.titleLabel.text = [self.messages objectForKey:@"CREATE_PIN_SCREEN_TITLE"];
             self.errorLabel.text = @"";
             break;
         case PINRegistrationVerififyMode:
+            self.pinForgottenButton.hidden = YES;
             self.titleLabel.text = [self.messages objectForKey:@"CONFIRM_PIN_SCREEN_TITLE"];
             self.errorLabel.text = @"";
             break;
         case PINChangeCheckMode:
+            self.pinForgottenButton.hidden = NO;
             self.titleLabel.text = [self.messages objectForKey:@"LOGIN_BEFORE_CHANGE_PIN_SCREEN_TITLE"];
             self.errorLabel.text = @"";
             break;
         case PINChangeNewPinMode:
+            self.pinForgottenButton.hidden = YES;
             self.titleLabel.text = [self.messages objectForKey:@"CHANGE_PIN_SCREEN_TITLE"];
             self.errorLabel.text = @"";
             break;
         case PINChangeNewPinVerifyMode:
+            self.pinForgottenButton.hidden = YES;
             self.titleLabel.text = [self.messages objectForKey:@"CONFIRM_CHANGE_PIN_SCREEN_TITLE"];
+            self.errorLabel.text = @"";
+            break;
+        case PINFingerprintCheckMode:
+            self.pinForgottenButton.hidden = NO;
+            self.titleLabel.text = [self.messages objectForKey:@"LOGIN_BEFORE_FINGERPRINT_ENROLLMENT_TITLE"];
             self.errorLabel.text = @"";
             break;
         default:
@@ -236,6 +247,10 @@
         case PINChangeNewPinVerifyMode:
             popupViewController.titleLabel.text = [self.messages objectForKey:@"CONFIRM_CHANGE_PIN_HELP_TITLE"];
             [self.popupViewController setPopupMessage:[self.messages objectForKey:@"CONFIRM_CHANGE_PIN_HELP_MESSAGE"]];
+            break;
+        case PINFingerprintCheckMode:
+            popupViewController.titleLabel.text = [self.messages objectForKey:@"LOGIN_BEFORE_FINGERPRINT_ENROLLMENT_HELP_TITLE"];
+            [self.popupViewController setPopupMessage:[self.messages objectForKey:@"LOGIN_BEFORE_FINGERPRINT_ENROLLMENT_HELP_MESSAGE"]];
             break;
         default:
             break;

@@ -6,9 +6,9 @@
  to you under the Apache License, Version 2.0 (the
  "License"); you may not use this file except in compliance
  with the License.  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing,
  software distributed under the License is distributed on an
  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -17,6 +17,18 @@
  under the License.
  */
 
-#ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-#endif
+#import "CDVAvailability.h"
+#import "CDVAvailabilityDeprecated.h"
+#import "CDVAppDelegate.h"
+#import "CDVPlugin.h"
+#import "CDVPluginResult.h"
+#import "CDVViewController.h"
+#import "CDVCommandDelegate.h"
+#import "CDVURLProtocol.h"
+#import "CDVInvokedUrlCommand.h"
+#import "CDVWhitelist.h"
+#import "CDVPlugin.h"
+#import "CDVPluginResult.h"
+#import "CDVScreenOrientationDelegate.h"
+#import "CDVTimer.h"
+#import "CDVUserAgentUtil.h"

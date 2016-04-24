@@ -33,8 +33,8 @@ configurations {
 
 dependencies {
   // The onegini sdk
-  compile 'com.onegini.mobile.sdk.ios:OneginiSDKiOS:4.08.00:Release-fat-binary@a'
-  compile 'com.onegini.mobile.sdk.ios:OneginiSDKiOS:4.08.00:Release-iphoneos.headers@tar'
+  compile 'com.onegini.mobile.sdk.ios:OneginiSDKiOS:4.08.04:Release-fat-binary@a'
+  compile 'com.onegini.mobile.sdk.ios:OneginiSDKiOS:4.08.04:Release-iphoneos.headers@tar'
 }
 
 task prepareTargetDirectory {

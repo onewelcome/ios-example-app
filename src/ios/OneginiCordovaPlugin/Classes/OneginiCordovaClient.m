@@ -486,8 +486,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 }
 
 -(void)checkFingerpringAuthenticationState:(CDVInvokedUrlCommand *)command{
-    [self.oneginiClient isFingerprintAuthenticationAvailable];
-    if (oneginiClient.isFingerprintAuthenticationAvailable)
+    if ([self.oneginiClient isEnrolledForFingerprintAuthentication])
         [self sendSuccessCallback:command.callbackId];
     else
         [self sendErrorCallback:command.callbackId];

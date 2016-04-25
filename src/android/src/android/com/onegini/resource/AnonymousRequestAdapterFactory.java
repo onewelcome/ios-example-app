@@ -5,7 +5,6 @@ import static com.onegini.resource.RestResource.PostRestClientImpl;
 import static com.onegini.resource.RestResource.PutRestClientImpl;
 
 import com.onegini.mobile.sdk.android.library.OneginiClient;
-import com.onegini.mobile.sdk.android.library.helpers.TypedBodyConverter;
 import com.onegini.resource.RestResource.GetRestClientImpl;
 import retrofit.RestAdapter;
 
@@ -37,8 +36,8 @@ public class AnonymousRequestAdapterFactory implements RequestAdapterFactory {
     return new RestAdapter.Builder()
         .setClient(oneginiClient.getAnonymousResourceRetrofitClient())
         .setEndpoint(oneginiClient.getConfigModel().getResourceBaseUrl())
-        .setConverter(new TypedBodyConverter())
-        .setLogLevel(RestAdapter.LogLevel.FULL)
+        .setConverter(new RetrofitByteConverter())
+        .setLogLevel(RestAdapter.LogLevel.BASIC)
         .build();
   }
 

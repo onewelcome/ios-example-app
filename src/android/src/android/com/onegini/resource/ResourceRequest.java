@@ -12,21 +12,20 @@ import com.onegini.scope.ScopeParser;
 
 public class ResourceRequest {
 
-  public static final int PARAMETERS_WITH_HEADERS_LENGTH = 6;
+  public static final int PARAMETERS_WITH_HEADERS_LENGTH = 5;
 
   private final String path;
   private final String[] scopes;
   private final String requestMethodString;
-  private final String paramsEncodingString;
   private final JSONObject params;
   private final JSONObject headers;
 
   public static ResourceRequest buildRequestFromArgs(final JSONArray args) {
     try {
-      if (args.isNull(5)) {
-        return new ResourceRequest(args.getString(0), args.getJSONArray(1), args.getString(2), args.getString(3), args.getJSONObject(4));
+      if (args.isNull(4)) {
+        return new ResourceRequest(args.getString(0), args.getJSONArray(1), args.getString(2), args.getJSONObject(3));
       } else {
-        return new ResourceRequest(args.getString(0), args.getJSONArray(1), args.getString(2), args.getString(3), args.getJSONObject(4), args.getJSONObject(5));
+        return new ResourceRequest(args.getString(0), args.getJSONArray(1), args.getString(2), args.getJSONObject(3), args.getJSONObject(4));
       }
     } catch (final JSONException e) {
       e.printStackTrace();
@@ -38,17 +37,16 @@ public class ResourceRequest {
     return new ScopeParser().getScopesAsArray(scopes);
   }
 
-  public ResourceRequest(final String path, final JSONArray scopes, final String requestMethodString, final String paramsEncodingString,
+  public ResourceRequest(final String path, final JSONArray scopes, final String requestMethodString,
                          final JSONObject params) {
-    this(path, scopes, requestMethodString, paramsEncodingString, params, null);
+    this(path, scopes, requestMethodString, params, null);
   }
 
-  public ResourceRequest(final String path, final JSONArray scopes, final String requestMethodString, final String paramsEncodingString,
+  public ResourceRequest(final String path, final JSONArray scopes, final String requestMethodString,
                          final JSONObject params, final JSONObject headers) {
     this.path = formatPaht(path);
     this.scopes = parseScopes(scopes);
     this.requestMethodString = requestMethodString;
-    this.paramsEncodingString = paramsEncodingString;
     this.params = params;
     this.headers = headers;
   }
@@ -63,10 +61,6 @@ public class ResourceRequest {
 
   public String getRequestMethodString() {
     return requestMethodString;
-  }
-
-  public String getParamsEncodingString() {
-    return paramsEncodingString;
   }
 
   public JSONObject getParams() {
@@ -94,13 +88,12 @@ public class ResourceRequest {
 
     try {
       String key, value;
-      while(keysItr.hasNext()) {
+      while (keysItr.hasNext()) {
         key = keysItr.next();
         value = object.getString(key);
         map.put(key, value);
       }
-    }
-    catch (final JSONException e) {
+    } catch (final JSONException e) {
       e.printStackTrace();
       return null;
     }

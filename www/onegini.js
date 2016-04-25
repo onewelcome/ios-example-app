@@ -108,38 +108,10 @@ module.exports = {
    * @param {Object} params             Parameters to send with the request.
    * @param {Object} headers            Optional custom headers to send with the request.
    */
-  fetchResource: function (router, path, scopes, requestMethod, paramsEncoding, params, headers) {
+  fetchResource: function (onSuccess, onError, path, scopes, requestMethod, params, headers) {
     oneginiCordovaPlugin.preserveCurrentLocation();
 
-    var onSuccess = function (response) {
-      router.resourceFetched(response);
-    };
-
-    var onError = function (error) {
-      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
-        router.errorConnectivityProblem();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_ERROR) {
-        router.resourceCallError();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_AUTH_FAILED) {
-        router.resourceCallAuthenticationFailed();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_SCOPE_ERROR) {
-        router.resourceCallScopeError();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_BAD_REQUEST) {
-        router.resourceCallBadRequest();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_UNAUTHORIZED) {
-        router.resourceCallUnauthorized();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_INVALID_GRANT) {
-        router.resourceCallInvalidGrant();
-      }
-    };
-
-    var methodArgs = [path, scopes, requestMethod, paramsEncoding, params, headers];
+    var methodArgs = [path, scopes, requestMethod, params, headers];
 
     exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
   },

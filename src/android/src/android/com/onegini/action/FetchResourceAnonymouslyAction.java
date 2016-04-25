@@ -22,7 +22,7 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
     if (args.length() != PARAMETERS_WITH_HEADERS_LENGTH) {
-      callbackContext.error("Invalid parameter, expected 6, got " + args.length() + ".");
+      callbackContext.error("Invalid parameter, expected 5, got " + args.length() + ".");
       return;
     }
 

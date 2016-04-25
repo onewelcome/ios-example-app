@@ -280,6 +280,8 @@
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/model/MessageKey.java" target-dir="src/com/onegini/model/"/>
     <!-- resource -->
+    <source-file src="src/android/src/android/com/onegini/resource/RetrofitByteConverter.java"
+                 target-dir="src/com/onegini/resource/"/>
     <source-file src="src/android/src/android/com/onegini/resource/GetResourceRequestCommand.java"
                  target-dir="src/com/onegini/resource/"/>
     <source-file src="src/android/src/android/com/onegini/resource/PostResourceRequestCommand.java"
@@ -321,6 +323,8 @@
     <source-file src="src/android/src/android/com/onegini/scope/ScopeParser.java" target-dir="src/com/onegini/scope/"/>
     <!-- util -->
     <source-file src="src/android/src/android/com/onegini/util/CallbackResultBuilder.java"
+                 target-dir="src/com/onegini/util/"/>
+    <source-file src="src/android/src/android/com/onegini/util/ResourcePluginResultBuilder.java"
                  target-dir="src/com/onegini/util/"/>
     <source-file src="src/android/src/android/com/onegini/util/HashUtil.java" target-dir="src/com/onegini/util/"/>
     <source-file src="src/android/src/android/com/onegini/util/DeviceUtil.java" target-dir="src/com/onegini/util/"/>

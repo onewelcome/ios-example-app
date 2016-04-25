@@ -13,27 +13,27 @@ public class RestResource {
   public interface GetRestClientImpl {
     @GET("/{path}")
     void call(@Path(value = "path", encode = false) String requestPath,
-              Callback<String> callback);
+              Callback<byte[]> callback);
   }
 
   public interface DeleteRestClientImpl {
     @DELETE("/{path}")
     void call(@Path(value = "path", encode = false) String requestPath,
-              Callback<String> callback);
+              Callback<byte[]> callback);
   }
 
   public interface PutRestClientImpl {
     @PUT("/{path}")
     void call(@Path(value = "path", encode = false) String requestPath,
               @Body String bodyString,
-              Callback<String> callback);
+              Callback<byte[]> callback);
   }
 
   public interface PostRestClientImpl {
     @POST("/{path}")
     void call(@Path(value = "path", encode = false) String requestPath,
               @Body String bodyString,
-              Callback<String> callback);
+              Callback<byte[]> callback);
   }
 
 }

@@ -1,12 +1,10 @@
 package com.onegini.resource;
 
-import static com.onegini.response.ResourceCallResponse.RESOURCE_CALL_ERROR;
-
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 
 import com.onegini.dialog.PinScreenActivity;
-import com.onegini.util.CallbackResultBuilder;
+import com.onegini.util.ResourcePluginResultBuilder;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -19,21 +17,17 @@ public class ResourceRequestCallback {
     this.callbackContext = callbackContext;
   }
 
-  public Callback<String> buildResponseCallback() {
-    final CallbackResultBuilder callbackResultBuilder = new CallbackResultBuilder();
-    return new Callback<String>() {
+  public Callback<byte[]> buildResponseCallback() {
+    return new Callback<byte[]>() {
       @Override
-      public void success(final String responseBody, final Response response) {
-        sendCallbackResult(callbackContext, callbackResultBuilder
-            .withSuccessMessage(responseBody)
-            .build());
+      public void success(final byte[] responseBody, final Response response) {
+        sendCallbackResult(callbackContext, new ResourcePluginResultBuilder(responseBody, response).withSuccess().build());
       }
 
       @Override
       public void failure(final RetrofitError error) {
-        sendCallbackResult(callbackContext, callbackResultBuilder
-            .withErrorReason(RESOURCE_CALL_ERROR.getName())
-            .build());
+        final byte[] responseBody = RetrofitByteConverter.fromTypedInput(error.getResponse().getBody());
+        sendCallbackResult(callbackContext, new ResourcePluginResultBuilder(responseBody, error.getResponse()).withError().build());
       }
     };
   }

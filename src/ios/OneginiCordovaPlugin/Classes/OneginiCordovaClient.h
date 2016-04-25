@@ -64,6 +64,11 @@
 - (void)authorize:(CDVInvokedUrlCommand *)command;
 
 /**
+ Initiate the reauthorization flow
+ */
+- (void)reauthorize:(CDVInvokedUrlCommand *)command;
+
+/**
  Change the registered PIN. The callback is invoked with a request to show a PIN change entry dialog.
  */
 - (void)changePin:(CDVInvokedUrlCommand *)command;
@@ -169,10 +174,19 @@
  */
 -(void)enrollForMobileAuthentication:(CDVInvokedUrlCommand *)command;
 
+/**
+ Enrolls currently connected device for fingerprint authentication.
+ */
 - (void)enrollForFingerprintAuthentication:(CDVInvokedUrlCommand *)command;
 
+/**
+ Disable fingerprint authentication for currently connected device.
+ */
 - (void)disableFingerprintAuthentication:(CDVInvokedUrlCommand *)command;
 
+/**
+ Check finger print authentication state for currently connected device.
+ */
 - (void)checkFingerpringAuthenticationState:(CDVInvokedUrlCommand *)command;
 
 @end

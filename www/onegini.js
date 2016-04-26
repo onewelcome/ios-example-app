@@ -82,29 +82,15 @@ module.exports = {
 
   /**
    * Fetches a specific resource.
-   * The access token validation flow is invoked if no valid access token is available.
    *
-   * @param {Object} router             Object that can handle page transition for the outcome of the action.
-   *                                    Should at least implement the following methods:
-   *                                    - errorConnectivityProblem -> method called whenever plugin isn't able to
-   *                                    establish connection with the server
-   *                                    - resourceFetched -> method to be called once resource is successfully fetched,
-   *                                    resource content is passed as a param
-   *                                    - resourceCallError -> indicates general resource call error
-   *                                    - resourceCallAuthenticationFailed -> called whenever authentication for
-   *                                    accessing specific resource fails
-   *                                    - resourceCallScopeError -> method called when the scope linked to the provided
-   *                                    access token is not the needed scope
-   *                                    - resourceCallBadRequest -> resource call ended up with bad request
-   *                                    - resourceCallUnauthorized -> method called requested grant type is not allowed
-   *                                    for this client
-   *                                    - resourceCallInvalidGrant -> Method called when the grant type to get
-   *                                    the client credentials is not enabled
+   * @param onSuccess                   Callback method executed on success, should have definition like this:
+   *                                    - onSuccess(headers, status, reason, requestUrl, body);
+   * @param onError                     Callback method executed on failure, should have definition like this:
+   *                                    - onError(headers, status, reason, requestUrl, body);
    * @param {String} path               Location on the resource server to return the resource. The base URI of the
    *                                    resource server is.
    * @param {Array} scopes              Array of Strings with scopes to fetch the resource.
    * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
-   * @param {String} paramsEncoding     Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
    * @param {Object} params             Parameters to send with the request.
    * @param {Object} headers            Optional custom headers to send with the request.
    */
@@ -113,7 +99,26 @@ module.exports = {
 
     var methodArgs = [path, scopes, requestMethod, params, headers];
 
-    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
+    var success = function(response) {
+      var headers = JSON.stringify(response.headers);
+      var status = JSON.stringify(response.status);
+      var reason = JSON.stringify(response.reason);
+      var requestUrl = JSON.stringify(response.url);
+      var body = window.atob(response.body);
+
+      onSuccess(headers, status, reason, requestUrl, body);
+    };
+    var error = function(response) {
+      var headers = JSON.stringify(response.headers);
+      var status = JSON.stringify(response.status);
+      var reason = JSON.stringify(response.reason);
+      var requestUrl = JSON.stringify(response.url);
+      var body = window.atob(response.body);
+
+      onError(headers, status, reason, requestUrl, body);
+    };
+
+    exec(success, error, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
   },
 
   /**

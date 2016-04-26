@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 
 import org.apache.commons.io.IOUtils;
 
+import com.onegini.mobile.sdk.android.library.helpers.TypedBodyConverter;
 import retrofit.converter.ConversionException;
 import retrofit.converter.Converter;
 import retrofit.mime.TypedInput;
@@ -19,7 +20,7 @@ public class RetrofitByteConverter implements Converter {
 
   @Override
   public TypedOutput toBody(final Object object) {
-    throw new UnsupportedOperationException();
+    return new TypedBodyConverter().toBody(object);
   }
 
   public static byte[] fromTypedInput(final TypedInput input) {

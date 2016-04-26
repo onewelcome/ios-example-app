@@ -56,7 +56,11 @@ public class ResourcePluginResultBuilder {
   }
 
   private String buildSerializedBody() {
-    return Base64.toBase64String(responseBody);
+    if (responseBody == null) {
+      return "";
+    } else {
+      return Base64.toBase64String(responseBody);
+    }
   }
 
   private Map<String, String> buildHeaders() {

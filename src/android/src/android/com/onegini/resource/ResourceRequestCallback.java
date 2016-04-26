@@ -26,9 +26,18 @@ public class ResourceRequestCallback {
 
       @Override
       public void failure(final RetrofitError error) {
-        final byte[] responseBody = RetrofitByteConverter.fromTypedInput(error.getResponse().getBody());
+        final byte[] responseBody = getErrorResponseBody(error);
         sendCallbackResult(callbackContext, new ResourcePluginResultBuilder(responseBody, error.getResponse()).withError().build());
       }
+
+      private byte[] getErrorResponseBody(final RetrofitError error) {
+        if (error.getResponse() != null && error.getResponse().getBody() != null) {
+          return RetrofitByteConverter.fromTypedInput(error.getResponse().getBody());
+        } else {
+          return new byte[0];
+        }
+      }
+
     };
   }
 

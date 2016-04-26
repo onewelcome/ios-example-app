@@ -57,7 +57,7 @@
                             <rect key="frame" x="150" y="110" width="142" height="58"/>
                             <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                            <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="3"/>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="5" maxX="5" maxY="3"/>
                             <size key="titleShadowOffset" width="2.2250738585072014e-308" height="0.0"/>
                             <state key="normal" title="CONFIRM" image="fingerprint.png">
                                 <color key="titleShadowColor" red="0.49803921569999998" green="0.49803921569999998" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>

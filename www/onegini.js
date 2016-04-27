@@ -1,6 +1,102 @@
 var exec = require('cordova/exec');
 
 module.exports = {
+
+  /**
+   * Handles wrapped XmlHttpRequest responsible for fetching resources from onegini resource server. It gives possibility to load resources by calling standard
+   * ajax request. With JQuery it will look like:
+   *
+   * // override XmlHttpRequest
+   * oneginiCordovaPlugin.xmlHttpRequest.create();
+   * $.ajax({
+   *   url: 'http://resource-server.com/my/resource',
+   *   method: 'GET',
+   *   success: function(response) {
+   *     console.log('resource fetched');
+   *   },
+   *   fail: function(error) {
+   *     console.log('fail to fetch resource');
+   *   },
+   * });
+   * // revert XmlHttpRequest if needed
+   * oneginiCordovaPlugin.xmlHttpRequest.revert();
+   *
+   */
+  xmlHttpRequest: {
+
+    ProxiedXMLHttpRequest: XMLHttpRequest,
+
+    revert: function() {
+      XMLHttpRequest = this.ProxiedXMLHttpRequest;
+    },
+
+    create: function() {
+      var LocalProxiedXMLHttpRequest = this.ProxiedXMLHttpRequest;
+      XMLHttpRequest = function () {
+        var proxied = new LocalProxiedXMLHttpRequest();
+        var proxy = this;
+        var $path, $method;
+
+        proxy.open = function () {
+          console.log('!!!!! open');
+          $method = arguments[0];
+          $path = arguments[1];
+          proxied.open.apply(proxied, arguments);
+        };
+
+        proxy.send = function () {
+          console.log('!!!!! send');
+          var ACCESS_SCOPES = ['read'];
+          var prepareBody = function () {
+            var requestBody = arguments[0];
+            if (requestBody === null || requestBody === undefined) {
+              return JSON.parse("{}");
+            }
+            else {
+              return (JSON.parse(requestBody));
+            }
+          };
+          var onSuccess = function (headers, status, reason, requestUrl, body) {
+            proxy.responseText = body;
+            proxied.onload.apply(proxied, arguments);
+          };
+          var onError = function (headers, status, reason, requestUrl, body) {
+            proxy.responseText = body;
+            proxied.onload.apply(proxied, arguments);
+          };
+          oneginiCordovaPlugin.fetchResource(onSuccess, onError, $path, ACCESS_SCOPES, $method, prepareBody());
+        };
+
+        ["status", "statusText", "responseType", "response", "readyState", "responseXML", "upload"].forEach(function (item) {
+          Object.defineProperty(proxy, item, {
+            get: function () {
+              return proxied[item];
+            }
+          });
+        });
+
+        ["ontimeout", "timeout", "withCredentials", "onload", "onprogress"].forEach(function (item) {
+          Object.defineProperty(proxy, item, {
+            get: function () {
+              return proxied[item];
+            },
+            set: function (val) {
+              proxied[item] = val;
+            }
+          });
+        });
+
+        ["addEventListener", "abort", "getAllResponseHeaders", "getResponseHeader", "overrideMimeType", "setRequestHeader"].forEach(function (item) {
+          Object.defineProperty(proxy, item, {
+            value: function () {
+              return proxied[item].apply(proxied, arguments);
+            }
+          });
+        });
+      }
+    }
+  },
+
   /**
    * Awaits notification that the Onegini plugin initialization is finished.
    * @param {Object} router   Object that can handle page transition for the outcome of the action. Should at

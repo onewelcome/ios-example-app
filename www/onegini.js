@@ -35,17 +35,15 @@ module.exports = {
       XMLHttpRequest = function () {
         var proxied = new LocalProxiedXMLHttpRequest();
         var proxy = this;
-        var $path, $method;
+        var $path, $method, $status;
 
         proxy.open = function () {
-          console.log('!!!!! open');
           $method = arguments[0];
           $path = arguments[1];
           proxied.open.apply(proxied, arguments);
         };
 
         proxy.send = function () {
-          console.log('!!!!! send');
           var ACCESS_SCOPES = ['read'];
           var prepareBody = function () {
             var requestBody = arguments[0];
@@ -57,17 +55,23 @@ module.exports = {
             }
           };
           var onSuccess = function (headers, status, reason, requestUrl, body) {
+            $status = status;
             proxy.responseText = body;
+            proxy.readyState = 4;
+            proxy.status = $status;
             proxied.onload.apply(proxied, arguments);
           };
           var onError = function (headers, status, reason, requestUrl, body) {
+            $status = status;
             proxy.responseText = body;
+            proxy.readyState = 4;
+            proxy.status = $status;
             proxied.onload.apply(proxied, arguments);
           };
           oneginiCordovaPlugin.fetchResource(onSuccess, onError, $path, ACCESS_SCOPES, $method, prepareBody());
         };
 
-        ["status", "statusText", "responseType", "response", "readyState", "responseXML", "upload"].forEach(function (item) {
+        ["statusText", "responseType", "response", "responseXML", "upload"].forEach(function (item) {
           Object.defineProperty(proxy, item, {
             get: function () {
               return proxied[item];
@@ -75,7 +79,7 @@ module.exports = {
           });
         });
 
-        ["ontimeout", "timeout", "withCredentials", "onload", "onprogress"].forEach(function (item) {
+        ["ontimeout", "timeout", "withCredentials", "onload", "onerror", "onprogress"].forEach(function (item) {
           Object.defineProperty(proxy, item, {
             get: function () {
               return proxied[item];
@@ -205,11 +209,11 @@ module.exports = {
       onSuccess(headers, status, reason, requestUrl, body);
     };
     var error = function(response) {
-      var headers = JSON.stringify(response.headers);
-      var status = JSON.stringify(response.status);
-      var reason = JSON.stringify(response.reason);
-      var requestUrl = JSON.stringify(response.url);
-      var body = window.atob(response.body);
+      var headers = [];
+      var status = 400;
+      var reason = response;
+      var requestUrl = "";
+      var body = "";
 
       onError(headers, status, reason, requestUrl, body);
     };
@@ -218,37 +222,43 @@ module.exports = {
   },
 
   /**
-   * Fetches a specific resource anonymously using a client access token.
-   * The access token validation flow is invoked if no valid access token is available.
+   * Fetches a specific resource anonymously.
    *
-   * @param {Function} successCallback  Function that can handle the successful resource call. Is called with a JSON
-   *                                    response object as argument.
-   * @param {Function} errorCallback    Function that can handle an unsuccessful resource call. Is called with the
-   *                                    error object as argument.
+   * @param onSuccess                   Callback method executed on success, should have definition like this:
+   *                                    - onSuccess(headers, status, reason, requestUrl, body);
+   * @param onError                     Callback method executed on failure, should have definition like this:
+   *                                    - onError(headers, status, reason, requestUrl, body);
    * @param {String} path               Location on the resource server to return the resource. The base URI of the
    *                                    resource server is.
    * @param {Array} scopes              Array of Strings with scopes to fetch the resource.
    * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
-   * @param {String} paramsEncoding     Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
    * @param {Object} params             Parameters to send with the request.
    * @param {Object} headers            Optional custom headers to send with the request.
    */
-  fetchAnonymousResource: function (successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params, headers) {
-    // not implemented in the base app yet
+  fetchAnonymousResource: function (onSuccess, onError, path, scopes, requestMethod, params, headers) {
+    oneginiCordovaPlugin.preserveCurrentLocation();
 
-    var onSuccess = function (response) {
-      if (successCallback) {
-        successCallback(response);
-      }
+    var methodArgs = [path, scopes, requestMethod, params, headers];
+
+    var success = function(response) {
+      var headers = JSON.stringify(response.headers);
+      var status = JSON.stringify(response.status);
+      var reason = JSON.stringify(response.reason);
+      var requestUrl = JSON.stringify(response.url);
+      var body = window.atob(response.body);
+
+      onSuccess(headers, status, reason, requestUrl, body);
+    };
+    var error = function(response) {
+      var headers = [];
+      var status = 400;
+      var reason = response;
+      var requestUrl = "";
+      var body = "";
+
+      onError(headers, status, reason, requestUrl, body);
     };
 
-    var onError = function (error) {
-      if (errorCallback) {
-        errorCallback(error);
-      }
-    };
-
-    var methodArgs = [path, scopes, requestMethod, paramsEncoding, params, headers];
     exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, methodArgs);
   },
 

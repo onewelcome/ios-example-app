@@ -298,9 +298,7 @@
                  target-dir="src/com/onegini/resource/"/>
     <source-file src="src/android/src/android/com/onegini/resource/RequestAdapterFactory.java"
                  target-dir="src/com/onegini/resource/"/>
-    <source-file src="src/android/src/android/com/onegini/resource/AnonymousRequestAdapterFactory.java"
-                 target-dir="src/com/onegini/resource/"/>
-    <source-file src="src/android/src/android/com/onegini/resource/AuthorizedRequestAdapterFactory.java"
+    <source-file src="src/android/src/android/com/onegini/resource/ResourceRequestHeaderInterceptor.java"
                  target-dir="src/com/onegini/resource/"/>
     <source-file src="src/android/src/android/com/onegini/resource/ResourceClientFactory.java"
                  target-dir="src/com/onegini/resource/"/>

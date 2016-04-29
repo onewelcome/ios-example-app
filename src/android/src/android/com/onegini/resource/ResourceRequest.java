@@ -1,5 +1,9 @@
 package com.onegini.resource;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,6 +72,24 @@ public class ResourceRequest {
       return path.replaceFirst("/", "");
     }
     return path;
+  }
+
+  public static Map<String, String> toMap(final JSONObject object) {
+    final Map<String, String> map = new HashMap<String, String>();
+    final Iterator<String> keysItr = object.keys();
+
+    try {
+      String key, value;
+      while (keysItr.hasNext()) {
+        key = keysItr.next();
+        value = object.getString(key);
+        map.put(key, value);
+      }
+    } catch (final JSONException e) {
+      e.printStackTrace();
+      return null;
+    }
+    return map;
   }
 
 }

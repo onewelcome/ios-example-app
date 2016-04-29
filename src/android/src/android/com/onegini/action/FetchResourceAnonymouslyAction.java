@@ -11,7 +11,6 @@ import org.json.JSONArray;
 
 import android.content.Context;
 import com.onegini.OneginiCordovaPlugin;
-import com.onegini.resource.AnonymousRequestAdapterFactory;
 import com.onegini.resource.RequestAdapterFactory;
 import com.onegini.resource.ResourceClientFactory;
 import com.onegini.resource.ResourceRequest;
@@ -38,7 +37,8 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
 
       final String requestMethod = resourceRequest.getRequestMethodString();
       final ResourceRequestCallback resourceRequestCallback = new ResourceRequestCallback(callbackContext);
-      final RequestAdapterFactory requestAdapterFactory = new AnonymousRequestAdapterFactory(client.getOneginiClient());
+      final RequestAdapterFactory requestAdapterFactory =
+          new RequestAdapterFactory(client.getOneginiClient().getAnonymousResourceRetrofitClient(), client.getOneginiClient(), resourceRequest);
 
       new ResourceClientFactory(resourceRequestCallback, requestAdapterFactory)
           .build(requestMethod)

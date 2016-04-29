@@ -10,18 +10,21 @@ module.exports = {
    * With JQuery it will look like:
    *
    * // override XmlHttpRequest
-   * oneginiCordovaPlugin.xmlHttpRequest.create();
-   * $.ajax({
-   *   url: 'http://resource-server.com/my/resource',
-   *   method: 'GET',
-   *   success: function(response) {
-   *     console.log('resource fetched');
-   *   },
-   *   fail: function(error) {
-   *     console.log('fail to fetch resource');
-   *   },
-   * });
+   * var onCreated = function() {
+   *   console.log(''wrapped xhr created);
+   *   $.ajax({
+   *     url: 'http://resource-server.com/my/resource',
+   *     method: 'GET',
+   *     success: function(response) {
+   *       console.log('resource fetched');
+   *     },
+   *     fail: function(error) {
+   *       console.log('fail to fetch resource');
+   *     },
+   *   });
+   * };
    * // revert XmlHttpRequest if needed
+   * oneginiCordovaPlugin.xmlHttpRequest.create(onCreated);
    * oneginiCordovaPlugin.xmlHttpRequest.revert();
    *
    */
@@ -33,10 +36,11 @@ module.exports = {
       XMLHttpRequest = this.ProxiedXMLHttpRequest;
     },
 
-    create: function() {
+    create: function(onCompleted) {
       var LocalProxiedXMLHttpRequest = this.ProxiedXMLHttpRequest;
       oneginiCordovaPlugin.readConfigProperty(oneginiCordovaPlugin.OG_CONSTANTS.APP_BASE_URL_CONFIG_KEY, function(appBaseUrl) {
         create(appBaseUrl);
+        onCompleted();
       });
 
       function create(appBaseUrl) {

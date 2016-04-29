@@ -8,13 +8,15 @@ import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
 
 public class ConfigModel implements OneginiClientConfigModel {
 
+  public static String CONFIG_KEY_APP_BASE_URL = "kOGAppBaseURL";
+
   public static ConfigModel from(final CordovaPreferences preferences) {
     final ConfigModel config = new ConfigModel();
 
     config.appIdentifier = getStringFromPreferences(preferences, "kOGAppIdentifier");
     config.appScheme = getStringFromPreferences(preferences, "kOGAppScheme");
     config.appVersion = getStringFromPreferences(preferences, "kOGAppVersion");
-    config.baseUrl = getStringFromPreferences(preferences, "kOGAppBaseURL");
+    config.baseUrl = getStringFromPreferences(preferences, CONFIG_KEY_APP_BASE_URL);
     config.resourceBaseUrl = getStringFromPreferences(preferences, "kOGResourceBaseURL");
     config.gcmSenderId = getStringFromPreferences(preferences, "kOGgcmSenderId");
 
@@ -25,7 +27,7 @@ public class ConfigModel implements OneginiClientConfigModel {
     return config;
   }
 
-  private static String getStringFromPreferences(final CordovaPreferences preferences, final String key) throws PluginConfigException {
+  public static String getStringFromPreferences(final CordovaPreferences preferences, final String key) throws PluginConfigException {
     final String value = preferences.getString(key, null);
     if (value == null) {
       throw new PluginConfigException("Missing property in config.xml file: "+key);

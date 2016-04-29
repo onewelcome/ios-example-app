@@ -188,6 +188,8 @@
                  target-dir="src/com/onegini/action/authorization/"/>
     <source-file src="src/android/src/android/com/onegini/action/authorization/AuthorizationActionExecutor.java"
                  target-dir="src/com/onegini/action/authorization/"/>
+    <source-file src="src/android/src/android/com/onegini/action/PropertyReaderAction.java"
+                 target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/AuthorizeAction.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/ReauthorizeAction.java"

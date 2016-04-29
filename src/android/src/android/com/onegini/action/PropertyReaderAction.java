@@ -1,22 +1,16 @@
 package com.onegini.action;
 
-import static com.onegini.model.ConfigModel.CONFIG_KEY_APP_BASE_URL;
-
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.Config;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.onegini.OneginiCordovaPlugin;
+import com.onegini.exception.PluginConfigException;
 import com.onegini.model.ConfigModel;
 import com.onegini.util.CallbackResultBuilder;
 
 public class PropertyReaderAction implements OneginiPluginAction {
-
-  private static List<String> supportedKeys = Arrays.asList(CONFIG_KEY_APP_BASE_URL);
 
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
@@ -30,9 +24,9 @@ public class PropertyReaderAction implements OneginiPluginAction {
   }
 
   private String readProperty(final String propertyKey) {
-    if (supportedKeys.contains(propertyKey)) {
+    try {
       return ConfigModel.getStringFromPreferences(Config.getPreferences(), propertyKey);
-    } else {
+    } catch (PluginConfigException e) {
       return "";
     }
   }

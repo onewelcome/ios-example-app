@@ -41,7 +41,7 @@ public class ResourceRequestCallback {
     };
   }
 
-  private static void sendCallbackResult(final CallbackContext callbackContext, final PluginResult result) {
+  public static void sendCallbackResult(final CallbackContext callbackContext, final PluginResult result) {
     if (PinScreenActivity.getInstance() != null) {
       PinScreenActivity.getInstance().finish();
     }

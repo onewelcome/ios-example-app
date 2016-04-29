@@ -8,15 +8,13 @@ import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
 
 public class ConfigModel implements OneginiClientConfigModel {
 
-  public static String CONFIG_KEY_APP_BASE_URL = "kOGAppBaseURL";
-
   public static ConfigModel from(final CordovaPreferences preferences) {
     final ConfigModel config = new ConfigModel();
 
     config.appIdentifier = getStringFromPreferences(preferences, "kOGAppIdentifier");
     config.appScheme = getStringFromPreferences(preferences, "kOGAppScheme");
     config.appVersion = getStringFromPreferences(preferences, "kOGAppVersion");
-    config.baseUrl = getStringFromPreferences(preferences, CONFIG_KEY_APP_BASE_URL);
+    config.baseUrl = getStringFromPreferences(preferences, "kOGAppBaseURL");
     config.resourceBaseUrl = getStringFromPreferences(preferences, "kOGResourceBaseURL");
     config.gcmSenderId = getStringFromPreferences(preferences, "kOGgcmSenderId");
 

@@ -75,7 +75,6 @@ module.exports = {
 
           proxy.send = function () {
             if ($isRequestToResourceServer) {
-              var ACCESS_SCOPES = ['read'];
               var prepareBody = function () {
                 var requestBody = arguments[0];
                 if (requestBody === null || requestBody === undefined) {
@@ -85,21 +84,13 @@ module.exports = {
                   return (JSON.parse(requestBody));
                 }
               };
-              var onSuccess = function (headers, status, reason, requestUrl, body) {
-                $status = status;
+              var onResponse = function (headers, status, reason, requestUrl, body) {
                 proxy.responseText = body;
                 proxy.readyState = 4;
-                proxy.status = $status;
+                proxy.status = status;
                 proxied.onload.apply(proxied, arguments);
               };
-              var onError = function (headers, status, reason, requestUrl, body) {
-                $status = status;
-                proxy.responseText = body;
-                proxy.readyState = 4;
-                proxy.status = $status;
-                proxied.onload.apply(proxied, arguments);
-              };
-              oneginiCordovaPlugin.fetchResource(onSuccess, onError, $path, ACCESS_SCOPES, $method, prepareBody());
+              oneginiCordovaPlugin.fetchResource(onResponse, $path, $method, prepareBody());
             } else {
               return proxied.send.apply(proxied, arguments);
             }
@@ -218,83 +209,59 @@ module.exports = {
   /**
    * Fetches a specific resource.
    *
-   * @param onSuccess                   Callback method executed on success, should have definition like this:
-   *                                    - onSuccess(headers, status, reason, requestUrl, body);
-   * @param onError                     Callback method executed on failure, should have definition like this:
-   *                                    - onError(headers, status, reason, requestUrl, body);
+   * @param onResponse                  Callback method executed on success, should have definition like this:
+   *                                    - onResponse(headers, status, reason, requestUrl, body);
    * @param {String} path               Location on the resource server to return the resource. The base URI of the
    *                                    resource server is.
-   * @param {Array} scopes              Array of Strings with scopes to fetch the resource.
    * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
    * @param {Object} params             Parameters to send with the request.
    * @param {Object} headers            Optional custom headers to send with the request.
    */
-  fetchResource: function (onSuccess, onError, path, scopes, requestMethod, params, headers) {
+  fetchResource: function (onResponse, path, requestMethod, params, headers) {
     oneginiCordovaPlugin.preserveCurrentLocation();
 
-    var methodArgs = [path, scopes, requestMethod, params, headers];
+    var methodArgs = [path, requestMethod, params, headers];
 
-    var success = function(response) {
+    var responseCallback = function(response) {
       var headers = JSON.stringify(response.headers);
       var status = JSON.stringify(response.status);
       var reason = JSON.stringify(response.reason);
       var requestUrl = JSON.stringify(response.url);
       var body = window.atob(response.body);
 
-      onSuccess(headers, status, reason, requestUrl, body);
-    };
-    var error = function(response) {
-      var headers = [];
-      var status = 400;
-      var reason = "";
-      var requestUrl = "";
-      var body = window.atob(response.body);
-
-      onError(headers, status, reason, requestUrl, body);
+      onResponse(headers, status, reason, requestUrl, body);
     };
 
-    exec(success, error, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
+    exec(responseCallback, responseCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
   },
 
   /**
    * Fetches a specific resource anonymously.
    *
-   * @param onSuccess                   Callback method executed on success, should have definition like this:
-   *                                    - onSuccess(headers, status, reason, requestUrl, body);
-   * @param onError                     Callback method executed on failure, should have definition like this:
-   *                                    - onError(headers, status, reason, requestUrl, body);
+   * @param onResponse                  Callback method executed on success, should have definition like this:
+   *                                    - onResponse(headers, status, reason, requestUrl, body);
    * @param {String} path               Location on the resource server to return the resource. The base URI of the
    *                                    resource server is.
-   * @param {Array} scopes              Array of Strings with scopes to fetch the resource.
    * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
    * @param {Object} params             Parameters to send with the request.
    * @param {Object} headers            Optional custom headers to send with the request.
    */
-  fetchAnonymousResource: function (onSuccess, onError, path, scopes, requestMethod, params, headers) {
+  fetchAnonymousResource: function (onResponse, path, requestMethod, params, headers) {
     oneginiCordovaPlugin.preserveCurrentLocation();
 
-    var methodArgs = [path, scopes, requestMethod, params, headers];
+    var methodArgs = [path, requestMethod, params, headers];
 
-    var success = function(response) {
+    var responseCallback = function(response) {
       var headers = JSON.stringify(response.headers);
       var status = JSON.stringify(response.status);
       var reason = JSON.stringify(response.reason);
       var requestUrl = JSON.stringify(response.url);
       var body = window.atob(response.body);
 
-      onSuccess(headers, status, reason, requestUrl, body);
-    };
-    var error = function(response) {
-      var headers = [];
-      var status = 400;
-      var reason = "";
-      var requestUrl = "";
-      var body = window.atob(response.body);
-
-      onError(headers, status, reason, requestUrl, body);
+      onResponse(headers, status, reason, requestUrl, body);
     };
 
-    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, methodArgs);
+    exec(responseCallback, responseCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, methodArgs);
   },
 
   /**

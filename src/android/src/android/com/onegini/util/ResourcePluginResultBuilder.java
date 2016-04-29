@@ -3,6 +3,8 @@ package com.onegini.util;
 import static org.apache.cordova.PluginResult.Status.ERROR;
 import static org.apache.cordova.PluginResult.Status.OK;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +25,11 @@ public class ResourcePluginResultBuilder {
   public ResourcePluginResultBuilder(final byte[] responseBody, final Response responseObject) {
     this.responseBody = responseBody;
     this.responseObject = responseObject;
+  }
+
+  public ResourcePluginResultBuilder(final String responseBody) {
+    this.responseBody = responseBody.getBytes();
+    this.responseObject = new Response("", 400, "", Collections.EMPTY_LIST, null);
   }
 
   public ResourcePluginResultBuilder withSuccess() {

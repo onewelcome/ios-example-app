@@ -4,7 +4,10 @@ module.exports = {
 
   /**
    * Handles wrapped XmlHttpRequest responsible for fetching resources from onegini resource server. It gives possibility to load resources by calling standard
-   * ajax request. With JQuery it will look like:
+   * ajax request.
+   * Attention! It take some time to prepare XmlHttpRequest because of internal configuration requests.
+   *
+   * With JQuery it will look like:
    *
    * // override XmlHttpRequest
    * oneginiCordovaPlugin.xmlHttpRequest.create();
@@ -32,71 +35,99 @@ module.exports = {
 
     create: function() {
       var LocalProxiedXMLHttpRequest = this.ProxiedXMLHttpRequest;
-      XMLHttpRequest = function () {
-        var proxied = new LocalProxiedXMLHttpRequest();
-        var proxy = this;
-        var $path, $method, $status;
+      oneginiCordovaPlugin.readConfigProperty(oneginiCordovaPlugin.OG_CONSTANTS.APP_BASE_URL_CONFIG_KEY, function(appBaseUrl) {
+        create(appBaseUrl);
+      });
 
-        proxy.open = function () {
-          $method = arguments[0];
-          $path = arguments[1];
-          proxied.open.apply(proxied, arguments);
-        };
+      function create(appBaseUrl) {
+        XMLHttpRequest = function () {
+          var proxied = new LocalProxiedXMLHttpRequest();
+          var proxy = this;
+          var $path, $method, $status, $isRequestToResourceServer = true;
 
-        proxy.send = function () {
-          var ACCESS_SCOPES = ['read'];
-          var prepareBody = function () {
-            var requestBody = arguments[0];
-            if (requestBody === null || requestBody === undefined) {
-              return JSON.parse("{}");
-            }
-            else {
-              return (JSON.parse(requestBody));
+          proxy.open = function() {
+            var _arguments = arguments;
+            var requestUrl = _arguments[1];
+            $isRequestToResourceServer = (function() {
+              var start = requestUrl.indexOf(appBaseUrl);
+              return start != -1;
+            })();
+
+            if ($isRequestToResourceServer) {
+              $path = requestUrl.substring(appBaseUrl.length);
+              $method = _arguments[0];
+              return proxied.open.apply(proxied, _arguments);
+            } else {
+              ["status", "responseText", "readyState"].forEach(function (item) {
+                Object.defineProperty(proxy, item, {
+                  get: function () {
+                    return proxied[item];
+                  }
+                });
+              });
+              return proxied.open.apply(proxied, _arguments);
             }
           };
-          var onSuccess = function (headers, status, reason, requestUrl, body) {
-            $status = status;
-            proxy.responseText = body;
-            proxy.readyState = 4;
-            proxy.status = $status;
-            proxied.onload.apply(proxied, arguments);
+
+          proxy.send = function () {
+            if ($isRequestToResourceServer) {
+              var ACCESS_SCOPES = ['read'];
+              var prepareBody = function () {
+                var requestBody = arguments[0];
+                if (requestBody === null || requestBody === undefined) {
+                  return JSON.parse("{}");
+                }
+                else {
+                  return (JSON.parse(requestBody));
+                }
+              };
+              var onSuccess = function (headers, status, reason, requestUrl, body) {
+                $status = status;
+                proxy.responseText = body;
+                proxy.readyState = 4;
+                proxy.status = $status;
+                proxied.onload.apply(proxied, arguments);
+              };
+              var onError = function (headers, status, reason, requestUrl, body) {
+                $status = status;
+                proxy.responseText = body;
+                proxy.readyState = 4;
+                proxy.status = $status;
+                proxied.onload.apply(proxied, arguments);
+              };
+              oneginiCordovaPlugin.fetchResource(onSuccess, onError, $path, ACCESS_SCOPES, $method, prepareBody());
+            } else {
+              return proxied.send.apply(proxied, arguments);
+            }
           };
-          var onError = function (headers, status, reason, requestUrl, body) {
-            $status = status;
-            proxy.responseText = body;
-            proxy.readyState = 4;
-            proxy.status = $status;
-            proxied.onload.apply(proxied, arguments);
-          };
-          oneginiCordovaPlugin.fetchResource(onSuccess, onError, $path, ACCESS_SCOPES, $method, prepareBody());
-        };
 
-        ["statusText", "responseType", "response", "responseXML", "upload"].forEach(function (item) {
-          Object.defineProperty(proxy, item, {
-            get: function () {
-              return proxied[item];
-            }
+          ["statusText", "responseType", "response", "responseXML", "upload"].forEach(function (item) {
+            Object.defineProperty(proxy, item, {
+              get: function () {
+                return proxied[item];
+              }
+            });
           });
-        });
 
-        ["ontimeout", "timeout", "withCredentials", "onload", "onerror", "onprogress"].forEach(function (item) {
-          Object.defineProperty(proxy, item, {
-            get: function () {
-              return proxied[item];
-            },
-            set: function (val) {
-              proxied[item] = val;
-            }
+          ["ontimeout", "timeout", "withCredentials", "onload", "onerror", "onprogress", "onreadystatechange"].forEach(function (item) {
+            Object.defineProperty(proxy, item, {
+              get: function () {
+                return proxied[item];
+              },
+              set: function (val) {
+                proxied[item] = val;
+              }
+            });
           });
-        });
 
-        ["addEventListener", "abort", "getAllResponseHeaders", "getResponseHeader", "overrideMimeType", "setRequestHeader"].forEach(function (item) {
-          Object.defineProperty(proxy, item, {
-            value: function () {
-              return proxied[item].apply(proxied, arguments);
-            }
+          ["addEventListener", "abort", "getAllResponseHeaders", "getResponseHeader", "overrideMimeType", "setRequestHeader"].forEach(function (item) {
+            Object.defineProperty(proxy, item, {
+              value: function () {
+                return proxied[item].apply(proxied, arguments);
+              }
+            });
           });
-        });
+        }
       }
     }
   },
@@ -211,9 +242,9 @@ module.exports = {
     var error = function(response) {
       var headers = [];
       var status = 400;
-      var reason = response;
+      var reason = "";
       var requestUrl = "";
-      var body = "";
+      var body = window.atob(response.body);
 
       onError(headers, status, reason, requestUrl, body);
     };
@@ -252,9 +283,9 @@ module.exports = {
     var error = function(response) {
       var headers = [];
       var status = 400;
-      var reason = response;
+      var reason = "";
       var requestUrl = "";
-      var body = "";
+      var body = window.atob(response.body);
 
       onError(headers, status, reason, requestUrl, body);
     };
@@ -742,6 +773,17 @@ module.exports = {
     return ( navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0 || navigator.userAgent.indexOf("iPod") > 0);
   },
 
+  readConfigProperty: function(propertyKey, onFetched) {
+    var onSuccess = function(propertyValue) {
+      onFetched(propertyValue);
+    };
+    var onError = function(propertyValue) {
+      onFetched(propertyValue);
+    };
+    var methodArgs = [propertyKey];
+    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.READ_CONFIG_PROPERTY_ACTION, methodArgs);
+  },
+
   /**
    * List of constant values used in communication with OneginiCordovaPlugin.
    */
@@ -827,9 +869,13 @@ module.exports = {
     FINGERPRINT_ENROLL_FOR_FINGERPRINT_AUTHENTICATION: "enrollForFingerprintAuthentication",
     FINGERPRINT_ENROLMENT_SUCCESS: "fingerprint_enrolment_success",
     FINGERPRINT_ENROLMENT_FAILURE: "fingerprint_enrolment_failure",
-    FINGERPRINT_ENROLMENT_FAILURE_TOO_MANY_PIN_ATTEMPTS: "fingerprint_enrolment_failure_too_many_attempts"
+    FINGERPRINT_ENROLMENT_FAILURE_TOO_MANY_PIN_ATTEMPTS: "fingerprint_enrolment_failure_too_many_attempts",
+
+    READ_CONFIG_PROPERTY_ACTION: "readConfigProperty",
+
+    APP_BASE_URL_CONFIG_KEY: "kOGAppBaseURL"
   }
-};
+}
 
 function AuthorizationAction(oneginiCordovaPlugin) {
   var authorize = function(authorizationType) {

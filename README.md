@@ -1,1 +1,2 @@
-# ios-example-app
+# iOS Example App using Onegini iOS SDK
+

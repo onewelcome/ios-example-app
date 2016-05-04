@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>kOGAppIdentifier</key>
-	<string>InnoBankDev</string>
+	<string>ExampleApp</string>
 	<key>kOGAppScheme</key>
-	<string>innobankdev</string>
+	<string>oneginidemoapp</string>
 	<key>kOGAppPlatform</key>
 	<string>ios</string>
 	<key>kOGAppVersion</key>
@@ -17,7 +17,7 @@
 	<key>kOGResourceBaseURL</key>
 	<string>https://tokenserver-demo-test.onegini.com</string>
 	<key>kOGRedirectURL</key>
-	<string>innobankdev://loginsuccess</string>
+	<string>oneginiexample://loginsuccess</string>
 	<key>kOGStoreCookies</key>
 	<true/>
 	<key>kOGUseEmbeddedWebview</key>

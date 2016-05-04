@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		C531DF6D1CD8C8FC00C4BBF2 /* OneginiSDKiOS-4.08.04-Release-iphonesimulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C531DF6C1CD8C8FC00C4BBF2 /* OneginiSDKiOS-4.08.04-Release-iphonesimulator.a */; };
+		C54139BC1CD9F6C80033DBA8 /* COMODORSADomainValidationSecureServerCA.cer in Resources */ = {isa = PBXBuildFile; fileRef = C54139B71CD9F6C80033DBA8 /* COMODORSADomainValidationSecureServerCA.cer */; };
+		C54139BD1CD9F6C80033DBA8 /* COMODORSADomainValidationSecureServerCA.pem in Resources */ = {isa = PBXBuildFile; fileRef = C54139B81CD9F6C80033DBA8 /* COMODORSADomainValidationSecureServerCA.pem */; };
+		C54139BE1CD9F6C80033DBA8 /* OGConfiguration.plist in Resources */ = {isa = PBXBuildFile; fileRef = C54139B91CD9F6C80033DBA8 /* OGConfiguration.plist */; };
+		C54139BF1CD9F6C80033DBA8 /* PositiveSSLCA2.cer in Resources */ = {isa = PBXBuildFile; fileRef = C54139BA1CD9F6C80033DBA8 /* PositiveSSLCA2.cer */; };
+		C54139C01CD9F6C80033DBA8 /* PositiveSSLCA2.pem in Resources */ = {isa = PBXBuildFile; fileRef = C54139BB1CD9F6C80033DBA8 /* PositiveSSLCA2.pem */; };
 		C572A2DC1CD893C400B137DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C572A2DB1CD893C400B137DC /* main.m */; };
 		C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C572A2DE1CD893C400B137DC /* AppDelegate.m */; };
 		C572A2E51CD893C400B137DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E31CD893C400B137DC /* Main.storyboard */; };
@@ -15,20 +20,20 @@
 		C572A2EA1CD893C400B137DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E81CD893C400B137DC /* LaunchScreen.storyboard */; };
 		C5FE9E3A1CD8ACE000142A20 /* bundles.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9E061CD8ACE000142A20 /* bundles.txt */; };
 		C5FE9E3B1CD8ACE000142A20 /* README.TXT in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9E071CD8ACE000142A20 /* README.TXT */; };
-		C5FE9E4D1CD8B2FD00142A20 /* OGConfiguration.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9E4C1CD8B2FD00142A20 /* OGConfiguration.plist */; };
 		C5FE9E911CD8C0D200142A20 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E901CD8C0D200142A20 /* Security.framework */; };
 		C5FE9E931CD8C0D800142A20 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E921CD8C0D800142A20 /* SystemConfiguration.framework */; };
 		C5FE9E951CD8C0DE00142A20 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E941CD8C0DE00142A20 /* MobileCoreServices.framework */; };
 		C5FE9E971CD8C0F300142A20 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E961CD8C0F300142A20 /* libiconv.tbd */; };
 		C5FE9E991CD8C10000142A20 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E981CD8C10000142A20 /* libc++.tbd */; };
-		C5FE9ECB1CD8C4E500142A20 /* COMODORSADomainValidationSecureServerCA.cer in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9EC71CD8C4E500142A20 /* COMODORSADomainValidationSecureServerCA.cer */; };
-		C5FE9ECC1CD8C4E500142A20 /* COMODORSADomainValidationSecureServerCA.pem in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9EC81CD8C4E500142A20 /* COMODORSADomainValidationSecureServerCA.pem */; };
-		C5FE9ECD1CD8C4E500142A20 /* PositiveSSLCA2.cer in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9EC91CD8C4E500142A20 /* PositiveSSLCA2.cer */; };
-		C5FE9ECE1CD8C4E500142A20 /* PositiveSSLCA2.pem in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9ECA1CD8C4E500142A20 /* PositiveSSLCA2.pem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C531DF6C1CD8C8FC00C4BBF2 /* OneginiSDKiOS-4.08.04-Release-iphonesimulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "OneginiSDKiOS-4.08.04-Release-iphonesimulator.a"; path = "../../../../.m2/repository/com/onegini/mobile/sdk/ios/OneginiSDKiOS/4.08.04/OneginiSDKiOS-4.08.04-Release-iphonesimulator.a"; sourceTree = "<group>"; };
+		C54139B71CD9F6C80033DBA8 /* COMODORSADomainValidationSecureServerCA.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = COMODORSADomainValidationSecureServerCA.cer; sourceTree = "<group>"; };
+		C54139B81CD9F6C80033DBA8 /* COMODORSADomainValidationSecureServerCA.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COMODORSADomainValidationSecureServerCA.pem; sourceTree = "<group>"; };
+		C54139B91CD9F6C80033DBA8 /* OGConfiguration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OGConfiguration.plist; sourceTree = "<group>"; };
+		C54139BA1CD9F6C80033DBA8 /* PositiveSSLCA2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = PositiveSSLCA2.cer; sourceTree = "<group>"; };
+		C54139BB1CD9F6C80033DBA8 /* PositiveSSLCA2.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PositiveSSLCA2.pem; sourceTree = "<group>"; };
 		C572A2D71CD893C400B137DC /* OneginiDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneginiDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C572A2DB1CD893C400B137DC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C572A2DD1CD893C400B137DC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -66,7 +71,6 @@
 		C5FE9E271CD8ACE000142A20 /* OGResourceHandlerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGResourceHandlerDelegate.h; sourceTree = "<group>"; };
 		C5FE9E281CD8ACE000142A20 /* OneginiSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiSDK.h; sourceTree = "<group>"; };
 		C5FE9E391CD8ACE000142A20 /* libOneginiSDKiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOneginiSDKiOS.a; sourceTree = "<group>"; };
-		C5FE9E4C1CD8B2FD00142A20 /* OGConfiguration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OGConfiguration.plist; sourceTree = "<group>"; };
 		C5FE9E901CD8C0D200142A20 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C5FE9E921CD8C0D800142A20 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C5FE9E941CD8C0DE00142A20 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -100,10 +104,6 @@
 		C5FE9EBA1CD8C19500142A20 /* OneginiSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiSDK.h; sourceTree = "<group>"; };
 		C5FE9EBF1CD8C19500142A20 /* libOneginiSDKiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOneginiSDKiOS.a; sourceTree = "<group>"; };
 		C5FE9EC31CD8C19500142A20 /* libOneginiSDKiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOneginiSDKiOS.a; sourceTree = "<group>"; };
-		C5FE9EC71CD8C4E500142A20 /* COMODORSADomainValidationSecureServerCA.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = COMODORSADomainValidationSecureServerCA.cer; sourceTree = "<group>"; };
-		C5FE9EC81CD8C4E500142A20 /* COMODORSADomainValidationSecureServerCA.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COMODORSADomainValidationSecureServerCA.pem; sourceTree = "<group>"; };
-		C5FE9EC91CD8C4E500142A20 /* PositiveSSLCA2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = PositiveSSLCA2.cer; sourceTree = "<group>"; };
-		C5FE9ECA1CD8C4E500142A20 /* PositiveSSLCA2.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PositiveSSLCA2.pem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,14 +140,24 @@
 		C531DF801CD8FE6400C4BBF2 /* OneginiSDK */ = {
 			isa = PBXGroup;
 			children = (
-				C5FE9EC61CD8C4E500142A20 /* Certificate */,
 				C5FE9E9A1CD8C19500142A20 /* headers */,
 				C5FE9EBB1CD8C19500142A20 /* libs */,
 				C5FE9E011CD8ACE000142A20 /* target */,
-				C5FE9E4C1CD8B2FD00142A20 /* OGConfiguration.plist */,
 			);
 			name = OneginiSDK;
 			path = OneginiDemoApp;
+			sourceTree = "<group>";
+		};
+		C54139B61CD9F6C80033DBA8 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				C54139B71CD9F6C80033DBA8 /* COMODORSADomainValidationSecureServerCA.cer */,
+				C54139B81CD9F6C80033DBA8 /* COMODORSADomainValidationSecureServerCA.pem */,
+				C54139B91CD9F6C80033DBA8 /* OGConfiguration.plist */,
+				C54139BA1CD9F6C80033DBA8 /* PositiveSSLCA2.cer */,
+				C54139BB1CD9F6C80033DBA8 /* PositiveSSLCA2.pem */,
+			);
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 		C572A2CE1CD893C400B137DC = {
@@ -183,6 +193,7 @@
 		C572A2DA1CD893C400B137DC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C54139B61CD9F6C80033DBA8 /* Configuration */,
 				C572A2EB1CD893C400B137DC /* Info.plist */,
 				C572A2DB1CD893C400B137DC /* main.m */,
 			);
@@ -567,18 +578,6 @@
 			path = OneginiSDKiOS;
 			sourceTree = "<group>";
 		};
-		C5FE9EC61CD8C4E500142A20 /* Certificate */ = {
-			isa = PBXGroup;
-			children = (
-				C5FE9EC71CD8C4E500142A20 /* COMODORSADomainValidationSecureServerCA.cer */,
-				C5FE9EC81CD8C4E500142A20 /* COMODORSADomainValidationSecureServerCA.pem */,
-				C5FE9EC91CD8C4E500142A20 /* PositiveSSLCA2.cer */,
-				C5FE9ECA1CD8C4E500142A20 /* PositiveSSLCA2.pem */,
-			);
-			name = Certificate;
-			path = "../../ios-demo-application/src/xcode/Certificate";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -637,16 +636,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5FE9ECD1CD8C4E500142A20 /* PositiveSSLCA2.cer in Resources */,
+				C54139BF1CD9F6C80033DBA8 /* PositiveSSLCA2.cer in Resources */,
 				C572A2EA1CD893C400B137DC /* LaunchScreen.storyboard in Resources */,
 				C572A2E71CD893C400B137DC /* Assets.xcassets in Resources */,
-				C5FE9ECB1CD8C4E500142A20 /* COMODORSADomainValidationSecureServerCA.cer in Resources */,
 				C5FE9E3A1CD8ACE000142A20 /* bundles.txt in Resources */,
-				C5FE9E4D1CD8B2FD00142A20 /* OGConfiguration.plist in Resources */,
 				C572A2E51CD893C400B137DC /* Main.storyboard in Resources */,
-				C5FE9ECE1CD8C4E500142A20 /* PositiveSSLCA2.pem in Resources */,
 				C5FE9E3B1CD8ACE000142A20 /* README.TXT in Resources */,
-				C5FE9ECC1CD8C4E500142A20 /* COMODORSADomainValidationSecureServerCA.pem in Resources */,
+				C54139BE1CD9F6C80033DBA8 /* OGConfiguration.plist in Resources */,
+				C54139C01CD9F6C80033DBA8 /* PositiveSSLCA2.pem in Resources */,
+				C54139BC1CD9F6C80033DBA8 /* COMODORSADomainValidationSecureServerCA.cer in Resources */,
+				C54139BD1CD9F6C80033DBA8 /* COMODORSADomainValidationSecureServerCA.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

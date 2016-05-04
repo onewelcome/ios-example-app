@@ -14,6 +14,14 @@
 
 @implementation AuthorizationService
 
+- (instancetype)initWithClient:(OGOneginiClient *)client {
+    self = [super initWithClient:client];
+    if (self) {
+        client.authorizationDelegate = self;
+    }
+    return self;
+}
+
 - (void)login {
     [self.client authorize:@[@"read"]];
 }

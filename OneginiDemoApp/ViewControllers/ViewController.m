@@ -8,10 +8,26 @@
 
 #import "ViewController.h"
 
+#import "OneginiClientBuilder.h"
+#import "AuthorizationService.h"
+
+@interface ViewController ()
+
+@property (nonatomic, strong) AuthorizationService *authService;
+
+@end
+
 @implementation ViewController
 
-- (IBAction)login:(id)sender {
+- (void)viewDidLoad {
+    [super viewDidLoad];
     
+    OGOneginiClient *client = [OneginiClientBuilder buildClient];
+    self.authService = [[AuthorizationService alloc] initWithClient:client];
+}
+
+- (IBAction)login:(id)sender {
+    [self.authService login];
 }
 
 @end

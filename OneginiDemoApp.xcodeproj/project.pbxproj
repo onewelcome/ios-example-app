@@ -12,6 +12,7 @@
 		C54139941CD9D3A10033DBA8 /* OneginiService.m in Sources */ = {isa = PBXBuildFile; fileRef = C54139921CD9D3A10033DBA8 /* OneginiService.m */; };
 		C54139971CD9D3F90033DBA8 /* AuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = C54139961CD9D3F90033DBA8 /* AuthorizationService.m */; };
 		C54139B21CD9F55C0033DBA8 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = C54139B11CD9F55C0033DBA8 /* Constants.m */; };
+		C54139B51CD9F5FA0033DBA8 /* OneginiClientBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = C54139B41CD9F5FA0033DBA8 /* OneginiClientBuilder.m */; };
 		C572A2DC1CD893C400B137DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C572A2DB1CD893C400B137DC /* main.m */; };
 		C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C572A2DE1CD893C400B137DC /* AppDelegate.m */; };
 		C572A2E51CD893C400B137DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E31CD893C400B137DC /* Main.storyboard */; };
@@ -42,6 +43,8 @@
 		C54139991CD9D3FF0033DBA8 /* AuthorizationServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizationServiceProtocol.h; sourceTree = "<group>"; };
 		C54139B01CD9F55C0033DBA8 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		C54139B11CD9F55C0033DBA8 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		C54139B31CD9F5FA0033DBA8 /* OneginiClientBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiClientBuilder.h; sourceTree = "<group>"; };
+		C54139B41CD9F5FA0033DBA8 /* OneginiClientBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneginiClientBuilder.m; sourceTree = "<group>"; };
 		C572A2D71CD893C400B137DC /* OneginiDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneginiDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C572A2DB1CD893C400B137DC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C572A2DD1CD893C400B137DC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -196,6 +199,8 @@
 			children = (
 				C54139B01CD9F55C0033DBA8 /* Constants.h */,
 				C54139B11CD9F55C0033DBA8 /* Constants.m */,
+				C54139B31CD9F5FA0033DBA8 /* OneginiClientBuilder.h */,
+				C54139B41CD9F5FA0033DBA8 /* OneginiClientBuilder.m */,
 			);
 			path = Misk;
 			sourceTree = "<group>";
@@ -717,6 +722,7 @@
 				C54139941CD9D3A10033DBA8 /* OneginiService.m in Sources */,
 				C541398B1CD9D3010033DBA8 /* ViewController.m in Sources */,
 				C54139B21CD9F55C0033DBA8 /* Constants.m in Sources */,
+				C54139B51CD9F5FA0033DBA8 /* OneginiClientBuilder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

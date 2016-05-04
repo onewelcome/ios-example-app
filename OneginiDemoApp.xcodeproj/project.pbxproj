@@ -10,6 +10,7 @@
 		C531DF6D1CD8C8FC00C4BBF2 /* OneginiSDKiOS-4.08.04-Release-iphonesimulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C531DF6C1CD8C8FC00C4BBF2 /* OneginiSDKiOS-4.08.04-Release-iphonesimulator.a */; };
 		C541398B1CD9D3010033DBA8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C541398A1CD9D3010033DBA8 /* ViewController.m */; };
 		C54139941CD9D3A10033DBA8 /* OneginiService.m in Sources */ = {isa = PBXBuildFile; fileRef = C54139921CD9D3A10033DBA8 /* OneginiService.m */; };
+		C54139971CD9D3F90033DBA8 /* AuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = C54139961CD9D3F90033DBA8 /* AuthorizationService.m */; };
 		C572A2DC1CD893C400B137DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C572A2DB1CD893C400B137DC /* main.m */; };
 		C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C572A2DE1CD893C400B137DC /* AppDelegate.m */; };
 		C572A2E51CD893C400B137DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E31CD893C400B137DC /* Main.storyboard */; };
@@ -35,6 +36,9 @@
 		C541398A1CD9D3010033DBA8 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		C54139911CD9D3A10033DBA8 /* OneginiService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiService.h; sourceTree = "<group>"; };
 		C54139921CD9D3A10033DBA8 /* OneginiService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneginiService.m; sourceTree = "<group>"; };
+		C54139951CD9D3F90033DBA8 /* AuthorizationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizationService.h; sourceTree = "<group>"; };
+		C54139961CD9D3F90033DBA8 /* AuthorizationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizationService.m; sourceTree = "<group>"; };
+		C54139991CD9D3FF0033DBA8 /* AuthorizationServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizationServiceProtocol.h; sourceTree = "<group>"; };
 		C572A2D71CD893C400B137DC /* OneginiDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneginiDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C572A2DB1CD893C400B137DC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C572A2DD1CD893C400B137DC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -168,10 +172,20 @@
 		C541398E1CD9D3A10033DBA8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				C54139951CD9D3F90033DBA8 /* AuthorizationService.h */,
+				C54139961CD9D3F90033DBA8 /* AuthorizationService.m */,
 				C54139911CD9D3A10033DBA8 /* OneginiService.h */,
 				C54139921CD9D3A10033DBA8 /* OneginiService.m */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		C54139981CD9D3FF0033DBA8 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				C54139991CD9D3FF0033DBA8 /* AuthorizationServiceProtocol.h */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		C572A2CE1CD893C400B137DC = {
@@ -195,6 +209,7 @@
 		C572A2D91CD893C400B137DC /* OneginiDemoApp */ = {
 			isa = PBXGroup;
 			children = (
+				C54139981CD9D3FF0033DBA8 /* Protocols */,
 				C541398E1CD9D3A10033DBA8 /* Services */,
 				C54139881CD9D3010033DBA8 /* ViewControllers */,
 				C572A2DD1CD893C400B137DC /* AppDelegate.h */,
@@ -683,6 +698,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C54139971CD9D3F90033DBA8 /* AuthorizationService.m in Sources */,
 				C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */,
 				C572A2DC1CD893C400B137DC /* main.m in Sources */,
 				C54139941CD9D3A10033DBA8 /* OneginiService.m in Sources */,

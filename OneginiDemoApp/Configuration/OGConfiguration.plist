@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>kOGAppIdentifier</key>
-	<string>InnoBankDev</string>
+	<string>ExampleApp</string>
 	<key>kOGAppScheme</key>
-	<string>innobankdev</string>
+	<string>oneginiexample</string>
 	<key>kOGAppPlatform</key>
 	<string>ios</string>
 	<key>kOGAppVersion</key>
-	<string>1.0</string>
+	<string>1.0.0</string>
 	<key>kOGAppBaseURL</key>
-	<string>https://tokenserver-demo-test.onegini.com</string>
+	<string>https://tokenserver-demo.onegini.com</string>
 	<key>kOGMaxPinFailures</key>
 	<string>3</string>
 	<key>kOGResourceBaseURL</key>
-	<string>https://tokenserver-demo-test.onegini.com</string>
+	<string>https://tokenserver-demo.onegini.com</string>
 	<key>kOGRedirectURL</key>
-	<string>innobankdev://loginsuccess</string>
+	<string>oneginiexample://loginsuccess</string>
 	<key>kOGStoreCookies</key>
 	<true/>
 	<key>kOGUseEmbeddedWebview</key>
@@ -25,6 +25,6 @@
 	<key>kOGDeviceName</key>
 	<string>Test</string>
 	<key>kOGResourceGatewayURL</key>
-	<string>https://resourcegateway-demo-test.onegini.com</string>
+	<string>https://resourcegateway-demo.onegini.com</string>
 </dict>
 </plist>

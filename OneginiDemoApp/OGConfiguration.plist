@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>kOGAppIdentifier</key>
+	<string>InnoBankDev</string>
+	<key>kOGAppScheme</key>
+	<string>innobankdev</string>
+	<key>kOGAppPlatform</key>
+	<string>ios</string>
+	<key>kOGAppVersion</key>
+	<string>1.0</string>
+	<key>kOGAppBaseURL</key>
+	<string>https://tokenserver-demo-test.onegini.com</string>
+	<key>kOGMaxPinFailures</key>
+	<string>3</string>
+	<key>kOGResourceBaseURL</key>
+	<string>https://tokenserver-demo-test.onegini.com</string>
+	<key>kOGRedirectURL</key>
+	<string>innobankdev://loginsuccess</string>
+	<key>kOGStoreCookies</key>
+	<true/>
+	<key>kOGUseEmbeddedWebview</key>
+	<true/>
+	<key>kOGDeviceName</key>
+	<string>Test</string>
+	<key>kOGResourceGatewayURL</key>
+	<string>https://resourcegateway-demo-test.onegini.com</string>
+</dict>
+</plist>

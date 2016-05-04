@@ -34,5 +34,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>OGConfigurationFile</key>
+	<string>OGConfiguration.plist</string>
 </dict>
 </plist>

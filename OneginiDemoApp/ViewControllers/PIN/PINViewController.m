@@ -7,12 +7,18 @@
 //
 
 #import "PINViewController.h"
+#import "PINEntryView.h"
 
 @interface PINViewController ()
 
-@property (nonatomic, weak) IBOutlet UIButton *removeDigitButton;
+
+
 @property (nonatomic, weak) IBOutlet UILabel *headerLabel;
 @property (nonatomic, weak) IBOutlet UILabel *messageLabel;
+
+@property (nonatomic, weak) IBOutlet UIView *pinEntryPlaceholder;
+@property (nonatomic, strong) PINEntryView *pinEntryView;
+@property (nonatomic, weak) IBOutlet UIButton *removeDigitButton;
 
 @property (nonatomic, strong) NSString *currentPIN;
 
@@ -27,6 +33,10 @@
     if (self.title.length > 0) {
         self.headerLabel.text = self.title;
     }
+    
+    self.pinEntryView = [[PINEntryView alloc] initWithPINlength:5 andFrame:CGRectMake(0, 0, self.pinEntryPlaceholder.frame.size.width, self.pinEntryPlaceholder.frame.size.height)];
+    [self.pinEntryPlaceholder addSubview:self.pinEntryView];
+
 }
 
 - (void)showError:(NSError *)error {
@@ -82,6 +92,8 @@
 - (void)didChangePIN {
     BOOL shouldHide = self.currentPIN.length == 0;
     self.removeDigitButton.hidden = shouldHide;
+    
+    [self.pinEntryView updateWithCurrentPinLength:self.currentPIN.length];
 }
 
 @end

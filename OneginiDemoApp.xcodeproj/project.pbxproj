@@ -23,6 +23,7 @@
 		C572A2E51CD893C400B137DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E31CD893C400B137DC /* Main.storyboard */; };
 		C572A2E71CD893C400B137DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E61CD893C400B137DC /* Assets.xcassets */; };
 		C572A2EA1CD893C400B137DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E81CD893C400B137DC /* LaunchScreen.storyboard */; };
+		C574387B1CDB117300C7262E /* PINEnrollmentService.m in Sources */ = {isa = PBXBuildFile; fileRef = C574387A1CDB117300C7262E /* PINEnrollmentService.m */; };
 		C5FE9E3A1CD8ACE000142A20 /* bundles.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9E061CD8ACE000142A20 /* bundles.txt */; };
 		C5FE9E3B1CD8ACE000142A20 /* README.TXT in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9E071CD8ACE000142A20 /* README.TXT */; };
 		C5FE9E911CD8C0D200142A20 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E901CD8C0D200142A20 /* Security.framework */; };
@@ -58,6 +59,9 @@
 		C572A2E61CD893C400B137DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C572A2E91CD893C400B137DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C572A2EB1CD893C400B137DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C57438791CDB117300C7262E /* PINEnrollmentService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PINEnrollmentService.h; sourceTree = "<group>"; };
+		C574387A1CDB117300C7262E /* PINEnrollmentService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PINEnrollmentService.m; sourceTree = "<group>"; };
+		C574387F1CDB14FF00C7262E /* PINEnrollmentServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PINEnrollmentServiceProtocol.h; sourceTree = "<group>"; };
 		C5FE9E061CD8ACE000142A20 /* bundles.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bundles.txt; sourceTree = "<group>"; };
 		C5FE9E071CD8ACE000142A20 /* README.TXT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.TXT; sourceTree = "<group>"; };
 		C5FE9E0C1CD8ACE000142A20 /* OGAuthorizationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAuthorizationDelegate.h; sourceTree = "<group>"; };
@@ -180,6 +184,8 @@
 				C54139961CD9D3F90033DBA8 /* AuthorizationService.m */,
 				C54139911CD9D3A10033DBA8 /* OneginiService.h */,
 				C54139921CD9D3A10033DBA8 /* OneginiService.m */,
+				C57438791CDB117300C7262E /* PINEnrollmentService.h */,
+				C574387A1CDB117300C7262E /* PINEnrollmentService.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -188,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				C54139991CD9D3FF0033DBA8 /* AuthorizationServiceProtocol.h */,
+				C574387F1CDB14FF00C7262E /* PINEnrollmentServiceProtocol.h */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -721,6 +728,7 @@
 				C54139941CD9D3A10033DBA8 /* OneginiService.m in Sources */,
 				C541398B1CD9D3010033DBA8 /* ViewController.m in Sources */,
 				C54139B21CD9F55C0033DBA8 /* Constants.m in Sources */,
+				C574387B1CDB117300C7262E /* PINEnrollmentService.m in Sources */,
 				C54139B51CD9F5FA0033DBA8 /* OneginiClientBuilder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

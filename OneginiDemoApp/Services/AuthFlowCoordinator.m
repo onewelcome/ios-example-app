@@ -31,6 +31,8 @@
 @property (nonatomic, weak) UIViewController *loginViewController;
 @property (nonatomic, weak) PINViewController *pinViewController;
 
+@property (nonatomic, copy) NSString *pin1;
+
 @end
 
 @implementation AuthFlowCoordinator
@@ -60,10 +62,14 @@
     self.loginViewController = viewController;
 }
 
-- (void)showPINController {
+- (void)showPINControlleForVerification:(BOOL)verification {
     PINViewController *viewController = [PINViewController new];
     viewController.maxCountOfNumbers = 5;
     viewController.delegate = self;
+    if (verification) {
+        viewController.title = @"Verify PIN";
+    }
+    
     [self.navigationController pushViewController:viewController animated:YES];
     
     self.pinViewController = viewController;
@@ -92,13 +98,13 @@
 
 - (void)authCoordinatorDidAskForCurrentPIN:(AuthCoordinator *)coordinator {
     NSLog(@"Ask for current PIN");
-    [self showPINController];
+    [self showPINControlleForVerification:NO];
 }
 
 - (void)authCoordinator:(AuthCoordinator *)coordinator presentCreatePINWithMaxCountOfNumbers:(NSInteger)countNumbers {
     NSLog(@"Present view to enter pin");
     [self.loginViewController dismissViewControllerAnimated:YES completion:NULL];
-    [self showPINController];
+    [self showPINControlleForVerification:NO];
 }
 
 - (void)authCoordinator:(AuthCoordinator *)coordinator didFailPINEnrollmentWithError:(NSError *)error {
@@ -121,8 +127,23 @@
 - (void)pinViewController:(PINViewController *)viewController didEnterPIN:(NSString *)pin {
     if (self.authCoordinator.isRegistered) {
         [self.authCoordinator enterCurrentPIN:pin];
-    } else {
-        [self.authCoordinator setNewPin:pin];
+        return;
+    }
+    
+    // Hotfix to handle wrong pins
+    if (self.pin1.length > 0) {
+        BOOL pinIsVerified = [self.pin1 isEqualToString:pin];
+        if (pinIsVerified) {
+            [self.authCoordinator setNewPin:pin];
+        } else {
+            // show error
+            self.pin1 = nil;
+            [self showPINControlleForVerification:NO];
+        }
+    }
+    else {
+        self.pin1 = pin;
+        [self showPINControlleForVerification:YES];
     }
 }
 

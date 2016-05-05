@@ -10,8 +10,9 @@
 
 @interface PINViewController ()
 
-@property (weak, nonatomic) IBOutlet UIButton *removeDigitButton;
-@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (nonatomic, weak) IBOutlet UIButton *removeDigitButton;
+@property (nonatomic, weak) IBOutlet UILabel *headerLabel;
+@property (nonatomic, weak) IBOutlet UILabel *messageLabel;
 
 @property (nonatomic, strong) NSString *currentPIN;
 
@@ -23,6 +24,9 @@
     [super viewDidLoad];
     
     self.currentPIN = @"";
+    if (self.title.length > 0) {
+        self.headerLabel.text = self.title;
+    }
 }
 
 - (void)showError:(NSError *)error {

@@ -60,7 +60,11 @@
     [self.client confirmCurrentPin:pin];
 }
 
-#pragma mark - 
+- (BOOL)isRegistered {
+    return [self.client isClientRegistered];
+}
+
+#pragma mark -
 
 - (void)handleAuthError:(NSError *)error {
     [self.delegate authCoordinator:self didFailLoginWithError:error];

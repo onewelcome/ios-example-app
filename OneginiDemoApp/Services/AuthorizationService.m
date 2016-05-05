@@ -14,6 +14,8 @@
 
 @implementation AuthorizationService
 
+@synthesize delegate = _delegate;
+
 - (instancetype)initWithClient:(OGOneginiClient *)client {
     self = [super initWithClient:client];
     if (self) {
@@ -26,6 +28,10 @@
     [self.client authorize:@[@"read"]];
 }
 
+- (void)handleError:(NSError *)error {
+    [self.delegate authorizationService:self didFailLoginWithError:error];
+}
+
 #pragma mark - OGAuthorizationDelegate
 
 - (void)authorizationSuccess {
@@ -33,31 +39,34 @@
 }
 
 - (void)requestAuthorization:(NSURL *)url {
-    
+    [self.delegate authorizationService:self didStartLoginWithURL:url];
 }
 
 - (void)askForNewPin:(NSUInteger)pinSize {
-    
+    [self.delegate authorizationService:self didRequestPINEnrollemntWithCountNumbers:pinSize];
 }
 
 - (void)askForCurrentPin {
-    
+    [self handleError:nil];
 }
 
 - (void)askCurrentPinForChangeRequest {
-    
+    [self handleError:nil];
 }
 
 - (void)askNewPinForChangeRequest:(NSUInteger)pinSize {
-    
+    [self handleError:nil];
 }
 
 - (void)askForPushAuthenticationConfirmation:(NSString *)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm {
-    
+    [self handleError:nil];
 }
 
-- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message notificationType:(NSString *)notificationType
-                                            pinSize:(NSUInteger)pinSize	maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt
+- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message
+                                   notificationType:(NSString *)notificationType
+                                            pinSize:(NSUInteger)pinSize
+                                        maxAttempts:(NSUInteger)maxAttempts
+                                       retryAttempt:(NSUInteger)retryAttempt
                                             confirm:(PushAuthenticationWithPinConfirmation)confirm {
     
 }
@@ -67,63 +76,63 @@
 }
 
 - (void)authorizationError {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorTooManyPinFailures {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorInvalidGrant:(NSUInteger)remaining {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorNoAuthorizationGrant {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorNoAccessToken {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorInvalidRequest {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorClientRegistrationFailed:(NSError *)error {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorInvalidState {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorInvalidScope {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorNotAuthenticated {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorInvalidGrantType {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorInvalidAppPlatformOrVersion {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorUnsupportedOS {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationErrorNotAuthorized {
-    
+    [self handleError:nil];
 }
 
 - (void)authorizationError:(NSError *)error {
-    
+    [self handleError:nil];
 }
 
 @end

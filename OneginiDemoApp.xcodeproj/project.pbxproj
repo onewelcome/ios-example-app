@@ -25,6 +25,7 @@
 		C572A2EA1CD893C400B137DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E81CD893C400B137DC /* LaunchScreen.storyboard */; };
 		C574387B1CDB117300C7262E /* PINEnrollmentService.m in Sources */ = {isa = PBXBuildFile; fileRef = C574387A1CDB117300C7262E /* PINEnrollmentService.m */; };
 		C574387E1CDB11C400C7262E /* AuthCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = C574387D1CDB11C400C7262E /* AuthCoordinator.m */; };
+		C5BAAEC81CDA462800801205 /* SecurityController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BAAEC71CDA462800801205 /* SecurityController.m */; };
 		C5FE9E3A1CD8ACE000142A20 /* bundles.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9E061CD8ACE000142A20 /* bundles.txt */; };
 		C5FE9E3B1CD8ACE000142A20 /* README.TXT in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9E071CD8ACE000142A20 /* README.TXT */; };
 		C5FE9E911CD8C0D200142A20 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E901CD8C0D200142A20 /* Security.framework */; };
@@ -60,11 +61,16 @@
 		C572A2E61CD893C400B137DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C572A2E91CD893C400B137DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C572A2EB1CD893C400B137DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+
 		C57438791CDB117300C7262E /* PINEnrollmentService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PINEnrollmentService.h; sourceTree = "<group>"; };
 		C574387A1CDB117300C7262E /* PINEnrollmentService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PINEnrollmentService.m; sourceTree = "<group>"; };
 		C574387C1CDB11C400C7262E /* AuthCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthCoordinator.h; sourceTree = "<group>"; };
 		C574387D1CDB11C400C7262E /* AuthCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthCoordinator.m; sourceTree = "<group>"; };
 		C574387F1CDB14FF00C7262E /* PINEnrollmentServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PINEnrollmentServiceProtocol.h; sourceTree = "<group>"; };
+
+		C5BAAEC61CDA462800801205 /* SecurityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityController.h; sourceTree = "<group>"; };
+		C5BAAEC71CDA462800801205 /* SecurityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityController.m; sourceTree = "<group>"; };
+
 		C5FE9E061CD8ACE000142A20 /* bundles.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bundles.txt; sourceTree = "<group>"; };
 		C5FE9E071CD8ACE000142A20 /* README.TXT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.TXT; sourceTree = "<group>"; };
 		C5FE9E0C1CD8ACE000142A20 /* OGAuthorizationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAuthorizationDelegate.h; sourceTree = "<group>"; };
@@ -223,6 +229,13 @@
 				C54139C41CD9F8CA0033DBA8 /* OGConfiguration.plist */,
 				C54139C51CD9F8CA0033DBA8 /* PositiveSSLCA2.cer */,
 				C54139C61CD9F8CA0033DBA8 /* PositiveSSLCA2.pem */,
+				C5BAAEC61CDA462800801205 /* SecurityController.h */,
+				C5BAAEC71CDA462800801205 /* SecurityController.m */,
+				C54139B71CD9F6C80033DBA8 /* COMODORSADomainValidationSecureServerCA.cer */,
+				C54139B81CD9F6C80033DBA8 /* COMODORSADomainValidationSecureServerCA.pem */,
+				C54139B91CD9F6C80033DBA8 /* OGConfiguration.plist */,
+				C54139BA1CD9F6C80033DBA8 /* PositiveSSLCA2.cer */,
+				C54139BB1CD9F6C80033DBA8 /* PositiveSSLCA2.pem */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -728,6 +741,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C54139971CD9D3F90033DBA8 /* AuthorizationService.m in Sources */,
+				C5BAAEC81CDA462800801205 /* SecurityController.m in Sources */,
 				C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */,
 				C572A2DC1CD893C400B137DC /* main.m in Sources */,
 				C54139941CD9D3A10033DBA8 /* OneginiService.m in Sources */,

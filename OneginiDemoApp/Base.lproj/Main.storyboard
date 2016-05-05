@@ -16,36 +16,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tND-fJ-eHo">
-                                <rect key="frame" x="0.0" y="240" width="600" height="120"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o9c-KS-AKI">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
-                                        <state key="normal" title="Login"/>
-                                        <connections>
-                                            <action selector="login:" destination="kyR-PN-XS1" eventType="touchUpInside" id="3Xd-GO-yGs"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2q0-jQ-nRo">
-                                        <rect key="frame" x="0.0" y="30" width="600" height="30"/>
-                                        <state key="normal" title="Fetch resource"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xl2-lX-RPa">
-                                        <rect key="frame" x="0.0" y="60" width="600" height="30"/>
-                                        <state key="normal" title="Logout"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6KN-yY-sKw">
-                                        <rect key="frame" x="0.0" y="90" width="600" height="30"/>
-                                        <state key="normal" title="Disconnect"/>
-                                    </button>
-                                </subviews>
-                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cb6-8p-S7q">
+                                <rect key="frame" x="231" y="281" width="138" height="38"/>
+                                <inset key="contentEdgeInsets" minX="50" minY="10" maxX="50" maxY="10"/>
+                                <state key="normal" title="Login"/>
+                                <connections>
+                                    <action selector="login:" destination="kyR-PN-XS1" eventType="touchUpInside" id="xpq-GI-Ldm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="tND-fJ-eHo" firstAttribute="centerY" secondItem="tnU-xe-nCq" secondAttribute="centerY" id="XsN-Eg-I8M"/>
-                            <constraint firstItem="tND-fJ-eHo" firstAttribute="leading" secondItem="tnU-xe-nCq" secondAttribute="leading" id="dT2-a7-1vt"/>
-                            <constraint firstAttribute="trailing" secondItem="tND-fJ-eHo" secondAttribute="trailing" id="lH6-PZ-LIE"/>
+                            <constraint firstItem="Cb6-8p-S7q" firstAttribute="centerX" secondItem="tnU-xe-nCq" secondAttribute="centerX" id="1f5-GE-eT8"/>
+                            <constraint firstItem="Cb6-8p-S7q" firstAttribute="centerY" secondItem="tnU-xe-nCq" secondAttribute="centerY" id="YRR-OJ-2wY"/>
                         </constraints>
                     </view>
                 </viewController>

@@ -11,6 +11,7 @@
 @interface PINViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *removeDigitButton;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 
 @property (nonatomic, strong) NSString *currentPIN;
 
@@ -26,6 +27,11 @@
 
 - (void)showError:(NSError *)error {
     NSLog(@"Show error: %@", error.localizedDescription);
+}
+
+- (void)wrongPINRemainigAttempts:(NSUInteger)remaining {
+    self.messageLabel.text = [NSString stringWithFormat:@"Wrong PIN. Attempt(s) left: %@", @(remaining)];
+    self.currentPIN = @"";
 }
 
 #pragma mark -

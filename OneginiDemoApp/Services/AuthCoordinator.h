@@ -18,10 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)authCoordinator:(AuthCoordinator *)coordinator didStartLoginWithURL:(NSURL *)url;
 - (void)authCoordinatorDidFinishLogin:(AuthCoordinator *)coordinator;
 - (void)authCoordinator:(AuthCoordinator *)coordinator didFailLoginWithError:(NSError *)error;
+- (void)authCoordinatorDidEnterWrongPIN:(AuthCoordinator *)coordinator remainingAttempts:(NSUInteger)remaining;
 - (void)authCoordinatorDidAskForCurrentPIN:(AuthCoordinator *)coordinator;
 
 - (void)authCoordinator:(AuthCoordinator *)coordinator presentCreatePINWithMaxCountOfNumbers:(NSInteger)countNumbers;
-- (void)authCoordinatorDidFinishPINEnrollment:(AuthCoordinator *)coordinator;
 - (void)authCoordinator:(AuthCoordinator *)coordinator didFailPINEnrollmentWithError:(NSError *)error;
 
 @end

@@ -23,5 +23,6 @@
 @property (nonatomic) NSUInteger maxCountOfNumbers;
 
 - (void)showError:(NSError *)error;
+- (void)wrongPINRemainigAttempts:(NSUInteger)remaining;
 
 @end

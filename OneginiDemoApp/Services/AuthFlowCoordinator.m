@@ -27,7 +27,9 @@
 @property (nonatomic, strong) AuthCoordinator *authCoordinator;
 
 @property (nonatomic, strong) UINavigationController *navigationController;
+
 @property (nonatomic, weak) UIViewController *loginViewController;
+@property (nonatomic, weak) PINViewController *pinViewController;
 
 @end
 
@@ -47,6 +49,7 @@
     viewController.delegate = self;
     
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [self.navigationController setNavigationBarHidden:YES];
     window.rootViewController = self.navigationController;
 }
 
@@ -62,6 +65,8 @@
     viewController.maxCountOfNumbers = 5;
     viewController.delegate = self;
     [self.navigationController pushViewController:viewController animated:YES];
+    
+    self.pinViewController = viewController;
 }
 
 - (void)showProfileController {
@@ -96,12 +101,13 @@
     [self showPINController];
 }
 
-- (void)authCoordinatorDidFinishPINEnrollment:(AuthCoordinator *)coordinator {
-    NSLog(@"Finish PIN enrollment");
-}
-
 - (void)authCoordinator:(AuthCoordinator *)coordinator didFailPINEnrollmentWithError:(NSError *)error {
     NSLog(@"PIN enrollment error: %@)", error.localizedDescription);
+    [self.pinViewController showError:error];
+}
+
+- (void)authCoordinatorDidEnterWrongPIN:(AuthCoordinator *)coordinator remainingAttempts:(NSUInteger)remaining {
+    [self.pinViewController wrongPINRemainigAttempts:remaining];
 }
 
 #pragma mark - WelcomeViewControllerDelegate

@@ -130,7 +130,7 @@
 }
 
 - (void)authorizationErrorInvalidGrant:(NSUInteger)remaining {
-    [self handleAuthError:nil];
+    [self.delegate authCoordinatorDidEnterWrongPIN:self remainingAttempts:remaining];
 }
 
 - (void)authorizationErrorNoAuthorizationGrant {

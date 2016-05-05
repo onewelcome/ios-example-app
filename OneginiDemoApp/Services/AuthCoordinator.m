@@ -46,6 +46,10 @@
     [self.pinEnrollmentService setNewPin:pin];
 }
 
+- (void)enterCurrentPIN:(NSString *)pin {
+    [self.authService enterCurrentPIN:pin];
+}
+
 #pragma mark - PINEnrollmentServiceDelegate
 
 - (void)authorizationService:(id<AuthorizationService>)service didStartLoginWithURL:(NSURL *)url {
@@ -62,6 +66,10 @@
 
 - (void)authorizationServiceDidFinishLogin:(id<AuthorizationService>)service {
     [self.delegate authCoordinatorDidFinishLogin:self];
+}
+
+- (void)authorizationServiceDidAskForCurrentPIN:(id<AuthorizationService>)service {
+    [self.delegate authCoordinatorDidAskForCurrentPIN:self];
 }
 
 #pragma mark - PINEnrollmentServiceDelegate

@@ -28,6 +28,10 @@
     [self.client authorize:@[@"read"]];
 }
 
+- (void)enterCurrentPIN:(NSString *)pin {
+    [self.client confirmCurrentPin:pin];
+}
+
 - (void)handleError:(NSError *)error {
     [self.delegate authorizationService:self didFailLoginWithError:error];
 }
@@ -47,19 +51,21 @@
 }
 
 - (void)askForCurrentPin {
-    [self handleError:nil];
+    [self.delegate authorizationServiceDidAskForCurrentPIN:self];
 }
 
 - (void)askCurrentPinForChangeRequest {
-    [self handleError:nil];
+    
 }
 
 - (void)askNewPinForChangeRequest:(NSUInteger)pinSize {
-    [self handleError:nil];
+    
 }
 
-- (void)askForPushAuthenticationConfirmation:(NSString *)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm {
-    [self handleError:nil];
+- (void)askForPushAuthenticationConfirmation:(NSString *)message
+                            notificationType:(NSString *)notificationType
+                                     confirm:(PushAuthenticationConfirmation)confirm {
+    
 }
 
 - (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message
@@ -71,7 +77,9 @@
     
 }
 
-- (void)askForPushAuthenticationWithFingerprint:(NSString*)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm {
+- (void)askForPushAuthenticationWithFingerprint:(NSString*)message
+                               notificationType:(NSString *)notificationType
+                                        confirm:(PushAuthenticationConfirmation)confirm {
     
 }
 

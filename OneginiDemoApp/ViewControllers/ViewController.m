@@ -56,6 +56,10 @@
     NSLog(@"Login error: %@", error.localizedDescription);
 }
 
+- (void)authCoordinatorDidAskForCurrentPIN:(AuthCoordinator *)coordinator {
+    [self.authCoordinator enterCurrentPIN:@"11111"];
+}
+
 - (void)authCoordinator:(AuthCoordinator *)coordinator presentCreatePINWithMaxCountOfNumbers:(NSInteger)countNumbers {
     NSLog(@"Present view to enter pin");
     [self.authCoordinator setNewPin:@"11111"];

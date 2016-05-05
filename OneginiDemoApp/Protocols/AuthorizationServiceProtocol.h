@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)authorizationService:(id<AuthorizationService>)service didRequestPINEnrollemntWithCountNumbers:(NSInteger)count;
 - (void)authorizationServiceDidFinishLogin:(id<AuthorizationService>)service;
 
+- (void)authorizationServiceDidAskForCurrentPIN:(id<AuthorizationService>)service;
+
 @end
 
 @protocol AuthorizationService <NSObject>
@@ -26,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<AuthorizationServiceDelegate> delegate;
 
 - (void)login;
+- (void)enterCurrentPIN:(NSString *)pin;
 
 @end
 

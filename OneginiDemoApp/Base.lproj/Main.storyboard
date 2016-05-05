@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Welcome View Controller-->
         <scene sceneID="4oL-vn-IJQ">
             <objects>
-                <viewController id="kyR-PN-XS1" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="kyR-PN-XS1" customClass="WelcomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hMf-i3-Qwk"/>
                         <viewControllerLayoutGuide type="bottom" id="Dci-di-UuE"/>

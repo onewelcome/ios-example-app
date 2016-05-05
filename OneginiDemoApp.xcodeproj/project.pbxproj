@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C502CA911CDB49D600FB18E7 /* AuthFlowCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = C502CA901CDB49D600FB18E7 /* AuthFlowCoordinator.m */; };
+		C502CAA41CDB4C4900FB18E7 /* PINViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C502CA9F1CDB4C4900FB18E7 /* PINViewController.m */; };
+		C502CAA51CDB4C4900FB18E7 /* PINViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C502CAA01CDB4C4900FB18E7 /* PINViewController.xib */; };
+		C502CAA91CDB62B600FB18E7 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C502CAA71CDB62B600FB18E7 /* ProfileViewController.m */; };
+		C502CAAA1CDB62B600FB18E7 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C502CAA81CDB62B600FB18E7 /* ProfileViewController.xib */; };
 		C531DF6D1CD8C8FC00C4BBF2 /* OneginiSDKiOS-4.08.04-Release-iphonesimulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C531DF6C1CD8C8FC00C4BBF2 /* OneginiSDKiOS-4.08.04-Release-iphonesimulator.a */; };
-		C541398B1CD9D3010033DBA8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C541398A1CD9D3010033DBA8 /* ViewController.m */; };
+		C541398B1CD9D3010033DBA8 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C541398A1CD9D3010033DBA8 /* WelcomeViewController.m */; };
 		C54139B21CD9F55C0033DBA8 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = C54139B11CD9F55C0033DBA8 /* Constants.m */; };
 		C54139B51CD9F5FA0033DBA8 /* OneginiClientBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = C54139B41CD9F5FA0033DBA8 /* OneginiClientBuilder.m */; };
 		C54139C71CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.cer in Resources */ = {isa = PBXBuildFile; fileRef = C54139C21CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.cer */; };
@@ -33,9 +38,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C502CA8F1CDB49D600FB18E7 /* AuthFlowCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthFlowCoordinator.h; sourceTree = "<group>"; };
+		C502CA901CDB49D600FB18E7 /* AuthFlowCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthFlowCoordinator.m; sourceTree = "<group>"; };
+		C502CA9E1CDB4C4900FB18E7 /* PINViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PINViewController.h; sourceTree = "<group>"; };
+		C502CA9F1CDB4C4900FB18E7 /* PINViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PINViewController.m; sourceTree = "<group>"; };
+		C502CAA01CDB4C4900FB18E7 /* PINViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PINViewController.xib; sourceTree = "<group>"; };
+		C502CAA61CDB62B600FB18E7 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		C502CAA71CDB62B600FB18E7 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		C502CAA81CDB62B600FB18E7 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		C531DF6C1CD8C8FC00C4BBF2 /* OneginiSDKiOS-4.08.04-Release-iphonesimulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "OneginiSDKiOS-4.08.04-Release-iphonesimulator.a"; path = "../../../../.m2/repository/com/onegini/mobile/sdk/ios/OneginiSDKiOS/4.08.04/OneginiSDKiOS-4.08.04-Release-iphonesimulator.a"; sourceTree = "<group>"; };
-		C54139891CD9D3010033DBA8 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		C541398A1CD9D3010033DBA8 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		C54139891CD9D3010033DBA8 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
+		C541398A1CD9D3010033DBA8 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		C54139B01CD9F55C0033DBA8 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		C54139B11CD9F55C0033DBA8 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		C54139B31CD9F5FA0033DBA8 /* OneginiClientBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiClientBuilder.h; sourceTree = "<group>"; };
@@ -138,6 +151,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C502CA971CDB4C4900FB18E7 /* PIN */ = {
+			isa = PBXGroup;
+			children = (
+				C502CA9E1CDB4C4900FB18E7 /* PINViewController.h */,
+				C502CA9F1CDB4C4900FB18E7 /* PINViewController.m */,
+				C502CAA01CDB4C4900FB18E7 /* PINViewController.xib */,
+			);
+			path = PIN;
+			sourceTree = "<group>";
+		};
 		C531DF7F1CD8FE5400C4BBF2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,8 +189,12 @@
 		C54139881CD9D3010033DBA8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				C54139891CD9D3010033DBA8 /* ViewController.h */,
-				C541398A1CD9D3010033DBA8 /* ViewController.m */,
+				C502CA971CDB4C4900FB18E7 /* PIN */,
+				C54139891CD9D3010033DBA8 /* WelcomeViewController.h */,
+				C541398A1CD9D3010033DBA8 /* WelcomeViewController.m */,
+				C502CAA61CDB62B600FB18E7 /* ProfileViewController.h */,
+				C502CAA71CDB62B600FB18E7 /* ProfileViewController.m */,
+				C502CAA81CDB62B600FB18E7 /* ProfileViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -177,6 +204,8 @@
 			children = (
 				C574387C1CDB11C400C7262E /* AuthCoordinator.h */,
 				C574387D1CDB11C400C7262E /* AuthCoordinator.m */,
+				C502CA8F1CDB49D600FB18E7 /* AuthFlowCoordinator.h */,
+				C502CA901CDB49D600FB18E7 /* AuthFlowCoordinator.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -685,11 +714,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C502CAA51CDB4C4900FB18E7 /* PINViewController.xib in Resources */,
 				C572A2EA1CD893C400B137DC /* LaunchScreen.storyboard in Resources */,
 				C572A2E71CD893C400B137DC /* Assets.xcassets in Resources */,
 				C5FE9E3A1CD8ACE000142A20 /* bundles.txt in Resources */,
 				C54139CA1CD9F8CA0033DBA8 /* PositiveSSLCA2.cer in Resources */,
 				C54139CB1CD9F8CA0033DBA8 /* PositiveSSLCA2.pem in Resources */,
+				C502CAAA1CDB62B600FB18E7 /* ProfileViewController.xib in Resources */,
 				C572A2E51CD893C400B137DC /* Main.storyboard in Resources */,
 				C54139C71CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.cer in Resources */,
 				C5FE9E3B1CD8ACE000142A20 /* README.TXT in Resources */,
@@ -706,10 +737,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5BAAEC81CDA462800801205 /* SecurityController.m in Sources */,
+				C502CA911CDB49D600FB18E7 /* AuthFlowCoordinator.m in Sources */,
 				C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */,
+				C502CAA41CDB4C4900FB18E7 /* PINViewController.m in Sources */,
+				C502CAA91CDB62B600FB18E7 /* ProfileViewController.m in Sources */,
 				C572A2DC1CD893C400B137DC /* main.m in Sources */,
 				C574387E1CDB11C400C7262E /* AuthCoordinator.m in Sources */,
-				C541398B1CD9D3010033DBA8 /* ViewController.m in Sources */,
+				C541398B1CD9D3010033DBA8 /* WelcomeViewController.m in Sources */,
 				C54139B21CD9F55C0033DBA8 /* Constants.m in Sources */,
 				C54139B51CD9F5FA0033DBA8 /* OneginiClientBuilder.m in Sources */,
 			);

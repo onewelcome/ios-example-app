@@ -23,6 +23,15 @@
 
 @implementation AuthCoordinator
 
+- (instancetype)initWithOneginiClient:(OGOneginiClient *)client {
+    self = [super init];
+    if (self) {
+        self.client = client;
+        self.client.authorizationDelegate = self;
+    }
+    return self;
+}
+
 // Create dependencies here for demo purpose only. It shoud be set from the outside
 - (instancetype)init {
     self = [super init];

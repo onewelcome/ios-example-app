@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class AuthCoordinator;
+@class OGOneginiClient;
 
 @protocol AuthCoordinatorDelegate <NSObject>
 
@@ -26,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface AuthCoordinator : NSObject
+
+- (instancetype)initWithOneginiClient:(OGOneginiClient *)client;
 
 @property (nonatomic, weak, nullable) id<AuthCoordinatorDelegate> delegate;
 @property (nonatomic, readonly) BOOL isRegistered;

@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)authorizationService:(id<AuthorizationService>)service didStartLoginWithURL:(NSURL *)url;
 - (void)authorizationService:(id<AuthorizationService>)service didFailLoginWithError:(NSError *)error;
 - (void)authorizationService:(id<AuthorizationService>)service didRequestPINEnrollemntWithCountNumbers:(NSInteger)count;
+- (void)authorizationServiceDidFinishLogin:(id<AuthorizationService>)service;
 
 @end
 

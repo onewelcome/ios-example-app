@@ -35,7 +35,7 @@
 #pragma mark - OGAuthorizationDelegate
 
 - (void)authorizationSuccess {
-    
+    [self.delegate authorizationServiceDidFinishLogin:self];
 }
 
 - (void)requestAuthorization:(NSURL *)url {

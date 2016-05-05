@@ -20,7 +20,6 @@
 
 - (void)setNewPin:(NSString *)pin {
     [self.client confirmNewPin:pin validation:self];
-    [self.delegate PINEnrollmentServiceDidFinishEnrollment:self];
 }
 
 #pragma mark - Private API

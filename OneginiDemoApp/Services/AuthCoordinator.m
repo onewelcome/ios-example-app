@@ -57,8 +57,11 @@
 }
 
 - (void)authorizationService:(id<AuthorizationService>)service didRequestPINEnrollemntWithCountNumbers:(NSInteger)count {
-    [self.delegate authCoordinatorDidFinishLogin:self];
     [self.delegate authCoordinator:self presentCreatePINWithMaxCountOfNumbers:count];
+}
+
+- (void)authorizationServiceDidFinishLogin:(id<AuthorizationService>)service {
+    [self.delegate authCoordinatorDidFinishLogin:self];
 }
 
 #pragma mark - PINEnrollmentServiceDelegate

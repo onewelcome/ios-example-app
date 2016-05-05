@@ -28,10 +28,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AuthCoordinator : NSObject
 
 @property (nonatomic, weak, nullable) id<AuthCoordinatorDelegate> delegate;
+@property (nonatomic, readonly) BOOL isRegistered;
 
-- (void)login;
+- (void)registerUser;
 - (void)setNewPin:(NSString *)pin;
 
+- (void)login;
 - (void)enterCurrentPIN:(NSString *)pin;
 
 @end

@@ -29,6 +29,7 @@
 		C572A2E71CD893C400B137DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E61CD893C400B137DC /* Assets.xcassets */; };
 		C572A2EA1CD893C400B137DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E81CD893C400B137DC /* LaunchScreen.storyboard */; };
 		C574387E1CDB11C400C7262E /* AuthCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = C574387D1CDB11C400C7262E /* AuthCoordinator.m */; };
+		C5A29A571CDC833900E6B1D4 /* ApplicationRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A29A561CDC833900E6B1D4 /* ApplicationRouter.m */; };
 		C5BAAEC81CDA462800801205 /* SecurityController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BAAEC71CDA462800801205 /* SecurityController.m */; };
 		C5FE9E3A1CD8ACE000142A20 /* bundles.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9E061CD8ACE000142A20 /* bundles.txt */; };
 		C5FE9E3B1CD8ACE000142A20 /* README.TXT in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9E071CD8ACE000142A20 /* README.TXT */; };
@@ -74,6 +75,8 @@
 		C572A2EB1CD893C400B137DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C574387C1CDB11C400C7262E /* AuthCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthCoordinator.h; sourceTree = "<group>"; };
 		C574387D1CDB11C400C7262E /* AuthCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthCoordinator.m; sourceTree = "<group>"; };
+		C5A29A551CDC833900E6B1D4 /* ApplicationRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationRouter.h; sourceTree = "<group>"; };
+		C5A29A561CDC833900E6B1D4 /* ApplicationRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationRouter.m; sourceTree = "<group>"; };
 		C5BAAEC61CDA462800801205 /* SecurityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityController.h; sourceTree = "<group>"; };
 		C5BAAEC71CDA462800801205 /* SecurityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityController.m; sourceTree = "<group>"; };
 		C5FE9E061CD8ACE000142A20 /* bundles.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bundles.txt; sourceTree = "<group>"; };
@@ -212,6 +215,8 @@
 		C541398E1CD9D3A10033DBA8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				C5A29A551CDC833900E6B1D4 /* ApplicationRouter.h */,
+				C5A29A561CDC833900E6B1D4 /* ApplicationRouter.m */,
 				C574387C1CDB11C400C7262E /* AuthCoordinator.h */,
 				C574387D1CDB11C400C7262E /* AuthCoordinator.m */,
 				C502CA8F1CDB49D600FB18E7 /* AuthFlowCoordinator.h */,
@@ -749,6 +754,7 @@
 				C5BAAEC81CDA462800801205 /* SecurityController.m in Sources */,
 				C502CA911CDB49D600FB18E7 /* AuthFlowCoordinator.m in Sources */,
 				C502CAB11CDB7D1000FB18E7 /* PINEntryCell.m in Sources */,
+				C5A29A571CDC833900E6B1D4 /* ApplicationRouter.m in Sources */,
 				C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */,
 				C502CAB31CDB7D1000FB18E7 /* PINEntryView.m in Sources */,
 				C502CAA41CDB4C4900FB18E7 /* PINViewController.m in Sources */,

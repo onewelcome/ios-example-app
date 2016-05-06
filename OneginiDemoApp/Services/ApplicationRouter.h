@@ -1,0 +1,21 @@
+//
+//  ApplicationRouter.h
+//  OneginiDemoApp
+//
+//  Created by Sergey Butenko on 6/5/16.
+//  Copyright © 2016 Onegini. All rights reserved.
+//
+
+@import UIKit;
+
+@class AuthFlowCoordinator;
+
+@interface ApplicationRouter : NSObject
+
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithAuthFlowCoordinator:(AuthFlowCoordinator *)authFlowCoordinator;
+
+- (void)executeInWindow:(UIWindow *)window;
+
+@end

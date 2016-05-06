@@ -14,7 +14,6 @@
 // ViewControllers
 #import "WelcomeViewController.h"
 #import "PINViewController.h"
-#import "ProfileViewController.h"
 #import <SafariServices/SafariServices.h>
 
 @interface AuthFlowCoordinator ()
@@ -46,13 +45,14 @@
     return self;
 }
 
-- (void)executeInWindow:(UIWindow *)window {
-    WelcomeViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController]; 
+- (void)executeInNavigation:(UINavigationController *)navigationController {
+    self.navigationController = navigationController;
+    
+    WelcomeViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
     viewController.delegate = self;
     
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [self.navigationController pushViewController:viewController animated:YES];
     [self.navigationController setNavigationBarHidden:YES];
-    window.rootViewController = self.navigationController;
 }
 
 - (void)showLoginControllerWithURL:(NSURL *)url {
@@ -75,11 +75,6 @@
     self.pinViewController = viewController;
 }
 
-- (void)showProfileController {
-    ProfileViewController *viewController = [ProfileViewController new];
-    [self.navigationController pushViewController:viewController animated:YES];
-}
-
 #pragma mark - AuthCoordinatorDelegate
 
 - (void)authCoordinator:(AuthCoordinator *)coordinator didStartLoginWithURL:(NSURL *)url {
@@ -89,7 +84,7 @@
 
 - (void)authCoordinatorDidFinishLogin:(AuthCoordinator *)coordinator {
     NSLog(@"Finish login");
-    [self showProfileController];
+    [self.delegate authFlowCoordinatorDidFinish:self];
 }
 
 - (void)authCoordinator:(AuthCoordinator *)coordinator didFailLoginWithError:(NSError *)error {

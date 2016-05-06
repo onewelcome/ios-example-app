@@ -1,12 +1,12 @@
 //
-//  AuthFlowCoordinator.m
+//  AuthRouter.m
 //  OneginiDemoApp
 //
 //  Created by Sergey Butenko on 5/5/16.
 //  Copyright © 2016 Onegini. All rights reserved.
 //
 
-#import "AuthFlowCoordinator.h"
+#import "AuthRouter.h"
 
 // Services
 #import "AuthCoordinator.h"
@@ -14,17 +14,15 @@
 // ViewControllers
 #import "WelcomeViewController.h"
 #import "PINViewController.h"
-#import "ProfileViewController.h"
 #import <SafariServices/SafariServices.h>
 
-@interface AuthFlowCoordinator ()
+@interface AuthRouter ()
 <
     AuthCoordinatorDelegate,
     AuthCoordinatorLogoutDelegate,
     AuthCoordinatorDisconnectDelegate,
     PINViewControllerDelegate,
-    WelcomeViewControllerDelegate,
-    ProfileViewControllerDelegate
+    WelcomeViewControllerDelegate
 >
 
 @property (nonatomic, strong) AuthCoordinator *authCoordinator;
@@ -38,7 +36,7 @@
 
 @end
 
-@implementation AuthFlowCoordinator
+@implementation AuthRouter
 
 - (instancetype)initWithAuthCoordinator:(AuthCoordinator *)authCoordinator {
     self = [super init];
@@ -51,13 +49,14 @@
     return self;
 }
 
-- (void)executeInWindow:(UIWindow *)window {
-    WelcomeViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController]; 
+- (void)executeInNavigation:(UINavigationController *)navigationController {
+    self.navigationController = navigationController;
+    
+    WelcomeViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
     viewController.delegate = self;
     
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [self.navigationController pushViewController:viewController animated:YES];
     [self.navigationController setNavigationBarHidden:YES];
-    window.rootViewController = self.navigationController;
 }
 
 - (void)showLoginControllerWithURL:(NSURL *)url {
@@ -80,12 +79,6 @@
     self.pinViewController = viewController;
 }
 
-- (void)showProfileController {
-    ProfileViewController *viewController = [ProfileViewController new];
-    viewController.delegate = self;
-    [self.navigationController pushViewController:viewController animated:YES];
-}
-
 #pragma mark - AuthCoordinatorDelegate
 
 - (void)authCoordinator:(AuthCoordinator *)coordinator didStartLoginWithURL:(NSURL *)url {
@@ -95,7 +88,7 @@
 
 - (void)authCoordinatorDidFinishLogin:(AuthCoordinator *)coordinator {
     NSLog(@"Finish login");
-    [self showProfileController];
+    [self.delegate authRouterDidFinish:self];
 }
 
 - (void)authCoordinator:(AuthCoordinator *)coordinator didFailLoginWithError:(NSError *)error {
@@ -162,6 +155,7 @@
     if (self.pin1.length > 0) {
         BOOL pinIsVerified = [self.pin1 isEqualToString:pin];
         if (pinIsVerified) {
+            self.pin1 = nil;
             [self.authCoordinator setNewPin:pin];
         } else {
             // show error
@@ -173,16 +167,6 @@
         self.pin1 = pin;
         [self showPINControlleForVerification:YES];
     }
-}
-
-#pragma mark ProfileViewControllerDelegate
-
-- (void)profileViewControllerDidTapOnLogout:(ProfileViewController *)viewController {
-    [self.authCoordinator logout];
-}
-
-- (void)profileViewControllerDidTapOnDisconnect:(ProfileViewController *)viewController {
-    [self.authCoordinator disconnect];
 }
 
 @end

@@ -8,7 +8,6 @@
 
 #import "PINEntryView.h"
 #import "PINEntryCell.h"
-#import "Constants.h"
 
 @interface PINEntryView()
 

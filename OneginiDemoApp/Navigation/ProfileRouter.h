@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class ProfileRouter;
+
+@protocol ProfileRouterDelegate <NSObject>
+
+- (void)profileRouterDidLogout:(ProfileRouter *)router;
+
+@end
+
 @interface ProfileRouter : NSObject
+
+@property (nonatomic, weak) id<ProfileRouterDelegate> delegate;
 
 - (void)executeInNavigation:(UINavigationController *)navigationController;
 

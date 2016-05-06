@@ -11,7 +11,11 @@
 #import "AuthRouter.h"
 #import "ProfileRouter.h"
 
-@interface ApplicationRouter () <AuthRouterDelegate>
+@interface ApplicationRouter ()
+<
+    AuthRouterDelegate,
+    ProfileRouterDelegate
+>
 
 @property (nonatomic, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) AuthRouter *authRouter;
@@ -28,6 +32,7 @@
         self.authRouter.delegate = self;
         
         self.profileRouter = profileRouter;
+        self.profileRouter.delegate = self;
         
         self.navigationController = [[UINavigationController alloc] init];
         [self.navigationController setNavigationBarHidden:YES];
@@ -52,6 +57,13 @@
 
 - (void)authRouterDidFinish:(AuthRouter *)router {
     [self showProfile];
+}
+
+#pragma mark - ProfileRouterDelegate
+
+- (void)profileRouterDidLogout:(ProfileRouter *)router {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self showAuthorization];
 }
 
 @end

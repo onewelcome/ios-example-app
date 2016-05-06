@@ -21,6 +21,7 @@
 <
     AuthCoordinatorDelegate,
     AuthCoordinatorLogoutDelegate,
+    AuthCoordinatorDisconnectDelegate,
     PINViewControllerDelegate,
     WelcomeViewControllerDelegate,
     ProfileViewControllerDelegate
@@ -45,6 +46,7 @@
         self.authCoordinator = authCoordinator;
         self.authCoordinator.delegate = self;
         self.authCoordinator.logoutDelegate = self;
+        self.authCoordinator.disconnectDelegate = self;
     }
     return self;
 }
@@ -130,13 +132,25 @@
     NSLog(@"Logout error: %@)", error.localizedDescription);
 }
 
-#pragma mark - WelcomeViewControllerDelegate
+#pragma mark - AuthCoordinatorDisconnectDelegate
+
+- (void)authCoordinatorDidFinishDisconnection:(AuthCoordinator *)coordinator {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)authCoordinator:(AuthCoordinator *)coordinator didFailDisconnectionWithError:(NSError *)error {
+    NSLog(@"Disconnect error: %@)", error.localizedDescription);
+}
+
+#pragma mark - Modules
+
+#pragma mark WelcomeViewControllerDelegate
 
 - (void)welcomeViewControllerDidTapLogin:(WelcomeViewController *)viewController {
     [self.authCoordinator login];
 }
 
-#pragma mark - PINViewControllerDelegate
+#pragma mark PINViewControllerDelegate
 
 - (void)pinViewController:(PINViewController *)viewController didEnterPIN:(NSString *)pin {
     if (self.authCoordinator.isRegistered) {
@@ -161,10 +175,14 @@
     }
 }
 
-#pragma mark - ProfileViewControllerDelegate
+#pragma mark ProfileViewControllerDelegate
 
 - (void)profileViewControllerDidTapOnLogout:(ProfileViewController *)viewController {
     [self.authCoordinator logout];
+}
+
+- (void)profileViewControllerDidTapOnDisconnect:(ProfileViewController *)viewController {
+    [self.authCoordinator disconnect];
 }
 
 @end

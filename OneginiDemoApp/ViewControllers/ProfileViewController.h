@@ -12,7 +12,10 @@
 
 @protocol ProfileViewControllerDelegate <NSObject>
 
+@optional
+
 - (void)profileViewControllerDidTapOnLogout:(ProfileViewController *)viewController;
+- (void)profileViewControllerDidTapOnDisconnect:(ProfileViewController *)viewController;
 
 @end
 

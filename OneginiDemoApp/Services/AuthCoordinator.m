@@ -15,7 +15,8 @@
 <
     OGAuthorizationDelegate,
     OGPinValidationDelegate,
-    OGLogoutDelegate
+    OGLogoutDelegate,
+    OGDisconnectDelegate
 >
 
 @property (nonatomic, strong) OGOneginiClient *client;
@@ -67,6 +68,10 @@
 
 - (void)logout {
     [self.client logoutWithDelegate:self];
+}
+
+- (void)disconnect {
+    [self.client disconnectWithDelegate:self];
 }
 
 #pragma mark -
@@ -219,6 +224,20 @@
 - (void)logoutFailureWithError:(NSError *)error {
     if ([self.logoutDelegate respondsToSelector:@selector(authCoordinator:didFailLogoutWithError:)]) {
         [self.logoutDelegate authCoordinator:self didFailLogoutWithError:error];
+    }
+}
+
+#pragma mark - OGDisconnectDelegate 
+
+- (void)disconnectSuccessful {
+    if ([self.disconnectDelegate respondsToSelector:@selector(authCoordinatorDidFinishDisconnection:)]) {
+        [self.disconnectDelegate authCoordinatorDidFinishDisconnection:self];
+    }
+}
+
+- (void)disconnectFailureWithError:(NSError *)error {
+    if ([self.disconnectDelegate respondsToSelector:@selector(authCoordinator:didFailDisconnectionWithError:)]) {
+        [self.disconnectDelegate authCoordinator:self didFailDisconnectionWithError:error];
     }
 }
 

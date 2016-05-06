@@ -20,8 +20,10 @@
 @interface AuthFlowCoordinator ()
 <
     AuthCoordinatorDelegate,
+    AuthCoordinatorLogoutDelegate,
     PINViewControllerDelegate,
-    WelcomeViewControllerDelegate
+    WelcomeViewControllerDelegate,
+    ProfileViewControllerDelegate
 >
 
 @property (nonatomic, strong) AuthCoordinator *authCoordinator;
@@ -42,6 +44,7 @@
     if (self) {
         self.authCoordinator = authCoordinator;
         self.authCoordinator.delegate = self;
+        self.authCoordinator.logoutDelegate = self;
     }
     return self;
 }
@@ -77,6 +80,7 @@
 
 - (void)showProfileController {
     ProfileViewController *viewController = [ProfileViewController new];
+    viewController.delegate = self;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
@@ -116,6 +120,16 @@
     [self.pinViewController wrongPINRemainigAttempts:remaining];
 }
 
+#pragma mark - AuthCoordinatorLogoutDelegate
+
+- (void)authCoordinatorDidFinishLogout:(AuthCoordinator *)coordinator {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)authCoordinator:(AuthCoordinator *)coordinator didFailLogoutWithError:(NSError *)error {
+    NSLog(@"Logout error: %@)", error.localizedDescription);
+}
+
 #pragma mark - WelcomeViewControllerDelegate
 
 - (void)welcomeViewControllerDidTapLogin:(WelcomeViewController *)viewController {
@@ -145,6 +159,12 @@
         self.pin1 = pin;
         [self showPINControlleForVerification:YES];
     }
+}
+
+#pragma mark - ProfileViewControllerDelegate
+
+- (void)profileViewControllerDidTapOnLogout:(ProfileViewController *)viewController {
+    [self.authCoordinator logout];
 }
 
 @end

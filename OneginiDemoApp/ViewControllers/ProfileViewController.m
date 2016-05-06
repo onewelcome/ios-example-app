@@ -18,4 +18,8 @@
     [super viewDidLoad];
 }
 
+- (IBAction)logout:(id)sender {
+    [self.delegate profileViewControllerDidTapOnLogout:self];
+}
+
 @end

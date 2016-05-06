@@ -210,61 +210,171 @@ module.exports = {
   },
 
   /**
-   * Fetches a specific resource.
+   * Fetches a specific resource. To provide compatibility with previous version, two declarations are available:
    *
-   * @param onResponse                  Callback method executed on success, should have definition like this:
+   * NEW DECLARATION
+   *
+   * @param callback                    Callback method executed on success, should have definition like this:
    *                                    - onResponse(headers, status, reason, requestUrl, body);
    * @param {String} path               Location on the resource server to return the resource. The base URI of the
    *                                    resource server is.
    * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
    * @param {Object} params             Parameters to send with the request.
    * @param {Object} headers            Optional custom headers to send with the request.
+   *
+   * DEPRECATED (OLD) DECLARATION
+   *
+   * @param {Object} callback           Object that can handle page transition for the outcome of the action.
+   *                                    Should at least implement the following methods:
+   *                                    - errorConnectivityProblem -> method called whenever plugin isn't able to
+   *                                    establish connection with the server
+   *                                    - resourceFetched -> method to be called once resource is successfully fetched,
+   *                                    resource content is passed as a param
+   *                                    - resourceCallError -> indicates general resource call error
+   *                                    - resourceCallAuthenticationFailed -> called whenever authentication for
+   *                                    accessing specific resource fails
+   *                                    - resourceCallScopeError -> method called when the scope linked to the provided
+   *                                    access token is not the needed scope
+   *                                    - resourceCallBadRequest -> resource call ended up with bad request
+   *                                    - resourceCallUnauthorized -> method called requested grant type is not allowed
+   *                                    for this client
+   *                                    - resourceCallInvalidGrant -> Method called when the grant type to get
+   *                                    the client credentials is not enabled
+   * @param {String} path               Location on the resource server to return the resource. The base URI of the
+   *                                    resource server is.
+   * @param {Array} scopes              Array of Strings with scopes to fetch the resource.
+   * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+   * @param {String} paramsEncoding     Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
+   * @param {Object} params             Parameters to send with the request.
+   * @param {Object} headers            Optional custom headers to send with the request.
    */
-  fetchResource: function (onResponse, path, requestMethod, params, headers) {
-    oneginiCordovaPlugin.preserveCurrentLocation();
+  fetchResource: function (callback, path, scopes, requestMethod, paramsEncoding, params, headers) {
+    function isOldApi() {
+      return typeof callback.resourceFetched === 'function';
+    }
+    function fetchResource(router, path, scopes, requestMethod, paramsEncoding, params, headers) {
+      oneginiCordovaPlugin.preserveCurrentLocation();
 
-    var methodArgs = [path, requestMethod, params, headers];
+      var onSuccess = function (response) {
+        var body = window.atob(response.body);
+        router.resourceFetched(body);
+      };
 
-    var responseCallback = function(response) {
-      var headers = JSON.stringify(response.headers);
-      var status = JSON.stringify(response.status);
-      var reason = JSON.stringify(response.reason);
-      var requestUrl = JSON.stringify(response.url);
-      var body = window.atob(response.body);
+      var onError = function (response) {
+        router.resourceCallError();
+      };
 
-      onResponse(headers, status, reason, requestUrl, body);
-    };
+      var methodArgs = [path, requestMethod, params, headers];
 
-    exec(responseCallback, responseCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
+      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
+    }
+    function fetchResourceNewApi(onResponse, path, requestMethod, params, headers) {
+      oneginiCordovaPlugin.preserveCurrentLocation();
+
+      var responseCallback = function(response) {
+        var headers = JSON.stringify(response.headers);
+        var status = JSON.stringify(response.status);
+        var reason = JSON.stringify(response.reason);
+        var requestUrl = JSON.stringify(response.url);
+        var body = window.atob(response.body);
+
+        onResponse(headers, status, reason, requestUrl, body);
+      };
+      var methodArgs = [path, requestMethod, params, headers];
+
+      exec(responseCallback, responseCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
+    }
+
+    if (isOldApi()) {
+      fetchResource(callback, path, scopes, requestMethod, paramsEncoding, params, headers);
+    } else {
+      fetchResourceNewApi(callback, path, scopes, requestMethod, paramsEncoding);
+    }
   },
 
   /**
    * Fetches a specific resource anonymously.
    *
-   * @param onResponse                  Callback method executed on success, should have definition like this:
+   * To provide compatibility with previous version, two declarations are available:
+   *
+   * NEW DECLARATION
+   *
+   * @param callback                    Callback method executed on success, should have definition like this:
    *                                    - onResponse(headers, status, reason, requestUrl, body);
    * @param {String} path               Location on the resource server to return the resource. The base URI of the
    *                                    resource server is.
    * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
    * @param {Object} params             Parameters to send with the request.
    * @param {Object} headers            Optional custom headers to send with the request.
+   *
+   * DEPRECATED (OLD) DECLARATION
+   *
+   * @param {Object} callback           Object that can handle page transition for the outcome of the action.
+   *                                    Should at least implement the following methods:
+   *                                    - errorConnectivityProblem -> method called whenever plugin isn't able to
+   *                                    establish connection with the server
+   *                                    - resourceFetched -> method to be called once resource is successfully fetched,
+   *                                    resource content is passed as a param
+   *                                    - resourceCallError -> indicates general resource call error
+   *                                    - resourceCallAuthenticationFailed -> called whenever authentication for
+   *                                    accessing specific resource fails
+   *                                    - resourceCallScopeError -> method called when the scope linked to the provided
+   *                                    access token is not the needed scope
+   *                                    - resourceCallBadRequest -> resource call ended up with bad request
+   *                                    - resourceCallUnauthorized -> method called requested grant type is not allowed
+   *                                    for this client
+   *                                    - resourceCallInvalidGrant -> Method called when the grant type to get
+   *                                    the client credentials is not enabled
+   * @param {String} path               Location on the resource server to return the resource. The base URI of the
+   *                                    resource server is.
+   * @param {Array} scopes              Array of Strings with scopes to fetch the resource.
+   * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+   * @param {String} paramsEncoding     Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
+   * @param {Object} params             Parameters to send with the request.
+   * @param {Object} headers            Optional custom headers to send with the request.
    */
-  fetchAnonymousResource: function (onResponse, path, requestMethod, params, headers) {
-    oneginiCordovaPlugin.preserveCurrentLocation();
+  fetchAnonymousResource: function (callback, path, scopes, requestMethod, paramsEncoding, params, headers) {
+    function isOldApi() {
+      return typeof callback.resourceFetched === 'function';
+    }
+    function fetchAnonymousResource(router, path, scopes, requestMethod, paramsEncoding, params, headers) {
+      oneginiCordovaPlugin.preserveCurrentLocation();
 
-    var methodArgs = [path, requestMethod, params, headers];
+      var onSuccess = function (response) {
+        var body = window.atob(response.body);
+        router.resourceFetched(body);
+      };
 
-    var responseCallback = function(response) {
-      var headers = JSON.stringify(response.headers);
-      var status = JSON.stringify(response.status);
-      var reason = JSON.stringify(response.reason);
-      var requestUrl = JSON.stringify(response.url);
-      var body = window.atob(response.body);
+      var onError = function (response) {
+        router.resourceCallError();
+      };
 
-      onResponse(headers, status, reason, requestUrl, body);
-    };
+      var methodArgs = [path, requestMethod, params, headers];
 
-    exec(responseCallback, responseCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, methodArgs);
+      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, methodArgs);
+    }
+    function fetchAnonymousResourceNewApi(onResponse, path, requestMethod, params, headers) {
+      oneginiCordovaPlugin.preserveCurrentLocation();
+
+      var responseCallback = function(response) {
+        var headers = JSON.stringify(response.headers);
+        var status = JSON.stringify(response.status);
+        var reason = JSON.stringify(response.reason);
+        var requestUrl = JSON.stringify(response.url);
+        var body = window.atob(response.body);
+
+        onResponse(headers, status, reason, requestUrl, body);
+      };
+      var methodArgs = [path, requestMethod, params, headers];
+
+      exec(responseCallback, responseCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, methodArgs);
+    }
+
+    if (isOldApi()) {
+      fetchAnonymousResource(callback, path, scopes, requestMethod, paramsEncoding, params, headers);
+    } else {
+      fetchAnonymousResourceNewApi(callback, path, scopes, requestMethod, paramsEncoding);
+    }
   },
 
   /**

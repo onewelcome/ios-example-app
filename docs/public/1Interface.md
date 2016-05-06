@@ -51,6 +51,32 @@ Fetches a specific resource. The access token validation flow is invoked if no v
 **Param** `headers` - Optional custom headers to send with the request.
 
 
+### \[DEPRECATED\] fetchResource(router, path, scopes, requestMethod, paramsEncoding, params, headers)
+Fetches a specific resource. The access token validation flow is invoked if no valid access token is available.
+
+**Param** `router` - Object that can handle page transition for the outcome of the action. Should at least implement the following methods:
+  - `errorConnectivityProblem` - method called whenever plugin isn't able to establish connection with the server
+  - `resourceFetched` - method to be called once resource is successfully fetched, resource content is passed as a param
+  - `resourceCallError` - indicates general resource call error
+  - `resourceCallAuthenticationFailed` - called whenever authentication for accessing specific resource fails
+  - `resourceCallScopeError` - method called when the scope linked to the provided access token is not the needed scope
+  - `resourceCallBadRequest` - resource call ended up with bad request
+  - `resourceCallUnauthorized` - method called requested grant type is not allowed for this client
+  - `resourceCallInvalidGrant` - method called when the grant type to get the client credentials is not enabled
+
+**Param** `path` - Location on the resource server to return the resource. The base URI of the resource server is.
+
+**Param** `scopes` - Array of Strings with scopes to fetch the resource.
+
+**Param** `requestMethod` - HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+
+**Param** `paramsEncoding` - Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
+
+**Param** `params` - Parameters to send with the request.
+
+**Param** `headers` - Optional custom headers to send with the request.
+
+
 ### fetchAnonymousResource(onResponse, path, requestMethod, params, headers)
 Fetches a specific resource anonymously using a client access token. The access token validation flow is invoked if no valid access token is available.
 
@@ -59,6 +85,25 @@ Fetches a specific resource anonymously using a client access token. The access 
 **Param** `path` - Location on the resource server to return the resource. The base URI of the resource server is.
 
 **Param** `requestMethod` - HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+
+**Param** `params` - Parameters to send with the request.
+
+**Param** `headers` - Optional custom headers to send with the request.
+
+### \[DEPRECATED\] fetchAnonymousResource(successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params, headers)
+Fetches a specific resource anonymously using a client access token. The access token validation flow is invoked if no valid access token is available.
+
+**Param** `successCallback` - Function that can handle the successful resource call. Is called with a JSON response object as argument.
+
+**Param** `errorCallback` - Function that can handle an unsuccessful resource call. Is called with the error object as argument.
+
+**Param** `path` - Location on the resource server to return the resource. The base URI of the resource server is.
+
+**Param** `scopes` - Array of Strings with scopes to fetch the resource.
+
+**Param** `requestMethod` - HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+
+**Param** `paramsEncoding` - Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
 
 **Param** `params` - Parameters to send with the request.
 

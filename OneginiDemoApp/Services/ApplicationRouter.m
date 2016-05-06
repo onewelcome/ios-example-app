@@ -8,25 +8,25 @@
 
 #import "ApplicationRouter.h"
 
-#import "AuthFlowCoordinator.h"
+#import "AuthRouter.h"
 #import "OneginiClientBuilder.h"
 #import "ProfileViewController.h"
 
-@interface ApplicationRouter () <AuthFlowCoordinatorDelegate>
+@interface ApplicationRouter () <AuthRouterDelegate>
 
 @property (nonatomic, strong) UINavigationController *navigationController;
 
-@property (nonatomic, strong) AuthFlowCoordinator *authFlowCoordinator;
+@property (nonatomic, strong) AuthRouter *authRouter;
 
 @end
 
 @implementation ApplicationRouter
 
-- (instancetype)initWithAuthFlowCoordinator:(AuthFlowCoordinator *)authFlowCoordinator {
+- (instancetype)initWithAuthRouter:(AuthRouter *)authRouter {
     self = [super init];
     if (self) {
-        self.authFlowCoordinator = authFlowCoordinator;
-        self.authFlowCoordinator.delegate = self;
+        self.authRouter = authRouter;
+        self.authRouter.delegate = self;
     }
     return self;
 }
@@ -36,7 +36,7 @@
     [self.navigationController setNavigationBarHidden:YES];
     window.rootViewController = self.navigationController;
     
-    [self.authFlowCoordinator executeInNavigation:self.navigationController];
+    [self.authRouter executeInNavigation:self.navigationController];
 }
 
 - (void)showProfile {
@@ -44,9 +44,9 @@
     [self.navigationController setViewControllers:@[viewController] animated:YES];
 }
 
-#pragma mark - AuthFlowCoordinatorDelegate
+#pragma mark - AuthRouterDelegate
 
-- (void)authFlowCoordinatorDidFinish:(AuthFlowCoordinator *)coordinator {
+- (void)authRouterDidFinish:(AuthRouter *)router {
     [self showProfile];
 }
 

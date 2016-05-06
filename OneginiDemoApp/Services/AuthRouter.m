@@ -1,12 +1,12 @@
 //
-//  AuthFlowCoordinator.m
+//  AuthRouter.m
 //  OneginiDemoApp
 //
 //  Created by Sergey Butenko on 5/5/16.
 //  Copyright © 2016 Onegini. All rights reserved.
 //
 
-#import "AuthFlowCoordinator.h"
+#import "AuthRouter.h"
 
 // Services
 #import "AuthCoordinator.h"
@@ -16,7 +16,7 @@
 #import "PINViewController.h"
 #import <SafariServices/SafariServices.h>
 
-@interface AuthFlowCoordinator ()
+@interface AuthRouter ()
 <
     AuthCoordinatorDelegate,
     PINViewControllerDelegate,
@@ -34,7 +34,7 @@
 
 @end
 
-@implementation AuthFlowCoordinator
+@implementation AuthRouter
 
 - (instancetype)initWithAuthCoordinator:(AuthCoordinator *)authCoordinator {
     self = [super init];
@@ -84,7 +84,7 @@
 
 - (void)authCoordinatorDidFinishLogin:(AuthCoordinator *)coordinator {
     NSLog(@"Finish login");
-    [self.delegate authFlowCoordinatorDidFinish:self];
+    [self.delegate authRouterDidFinish:self];
 }
 
 - (void)authCoordinator:(AuthCoordinator *)coordinator didFailLoginWithError:(NSError *)error {

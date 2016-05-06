@@ -8,13 +8,13 @@
 
 @import UIKit;
 
-@class AuthFlowCoordinator;
+@class AuthRouter;
 
 @interface ApplicationRouter : NSObject
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithAuthFlowCoordinator:(AuthFlowCoordinator *)authFlowCoordinator;
+- (instancetype)initWithAuthRouter:(AuthRouter *)authRouter;
 
 - (void)executeInWindow:(UIWindow *)window;
 

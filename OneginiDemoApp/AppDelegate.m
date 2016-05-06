@@ -11,7 +11,7 @@
 
 #import "ApplicationRouter.h"
 #import "OneginiClientBuilder.h"
-#import "AuthFlowCoordinator.h"
+#import "AuthRouter.h"
 
 @interface AppDelegate ()
 
@@ -34,8 +34,8 @@
 - (ApplicationRouter *)buildApplicationRouter {
     OGOneginiClient *client = [OneginiClientBuilder buildClient];
     AuthCoordinator *coordinator = [[AuthCoordinator alloc] initWithOneginiClient:client];
-    AuthFlowCoordinator *flowCoordinator = [[AuthFlowCoordinator alloc] initWithAuthCoordinator:coordinator];
-    ApplicationRouter *router = [[ApplicationRouter alloc] initWithAuthFlowCoordinator:flowCoordinator];
+    AuthRouter *authRouter = [[AuthRouter alloc] initWithAuthCoordinator:coordinator];
+    ApplicationRouter *router = [[ApplicationRouter alloc] initWithAuthRouter:authRouter];
     return router;
 }
 

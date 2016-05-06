@@ -1,5 +1,5 @@
 //
-//  AuthFlowCoordinator.h
+//  AuthRouter.h
 //  OneginiDemoApp
 //
 //  Created by Sergey Butenko on 5/5/16.
@@ -9,21 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "AuthCoordinator.h"
 
-@class AuthFlowCoordinator;
+@class AuthRouter;
 
-@protocol AuthFlowCoordinatorDelegate <NSObject>
+@protocol AuthRouterDelegate <NSObject>
 
-- (void)authFlowCoordinatorDidFinish:(AuthFlowCoordinator *)coordinator;
+- (void)authRouterDidFinish:(AuthRouter *)router;
 
 @end
 
-@interface AuthFlowCoordinator : NSObject
+@interface AuthRouter : NSObject
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithAuthCoordinator:(AuthCoordinator *)authCoordinator;
 
-@property (nonatomic, weak) id<AuthFlowCoordinatorDelegate> delegate;
+@property (nonatomic, weak) id<AuthRouterDelegate> delegate;
 
 - (void)executeInNavigation:(UINavigationController *)navigationController;
 

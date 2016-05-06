@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C502CA911CDB49D600FB18E7 /* AuthFlowCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = C502CA901CDB49D600FB18E7 /* AuthFlowCoordinator.m */; };
+		C502CA911CDB49D600FB18E7 /* AuthRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = C502CA901CDB49D600FB18E7 /* AuthRouter.m */; };
 		C502CAA41CDB4C4900FB18E7 /* PINViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C502CA9F1CDB4C4900FB18E7 /* PINViewController.m */; };
 		C502CAA51CDB4C4900FB18E7 /* PINViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C502CAA01CDB4C4900FB18E7 /* PINViewController.xib */; };
 		C502CAA91CDB62B600FB18E7 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C502CAA71CDB62B600FB18E7 /* ProfileViewController.m */; };
@@ -38,8 +38,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C502CA8F1CDB49D600FB18E7 /* AuthFlowCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthFlowCoordinator.h; sourceTree = "<group>"; };
-		C502CA901CDB49D600FB18E7 /* AuthFlowCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthFlowCoordinator.m; sourceTree = "<group>"; };
+		C502CA8F1CDB49D600FB18E7 /* AuthRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthRouter.h; sourceTree = "<group>"; };
+		C502CA901CDB49D600FB18E7 /* AuthRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthRouter.m; sourceTree = "<group>"; };
 		C502CA9E1CDB4C4900FB18E7 /* PINViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PINViewController.h; sourceTree = "<group>"; };
 		C502CA9F1CDB4C4900FB18E7 /* PINViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PINViewController.m; sourceTree = "<group>"; };
 		C502CAA01CDB4C4900FB18E7 /* PINViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PINViewController.xib; sourceTree = "<group>"; };
@@ -212,8 +212,8 @@
 				C5A29A561CDC833900E6B1D4 /* ApplicationRouter.m */,
 				C574387C1CDB11C400C7262E /* AuthCoordinator.h */,
 				C574387D1CDB11C400C7262E /* AuthCoordinator.m */,
-				C502CA8F1CDB49D600FB18E7 /* AuthFlowCoordinator.h */,
-				C502CA901CDB49D600FB18E7 /* AuthFlowCoordinator.m */,
+				C502CA8F1CDB49D600FB18E7 /* AuthRouter.h */,
+				C502CA901CDB49D600FB18E7 /* AuthRouter.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -739,7 +739,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5BAAEC81CDA462800801205 /* SecurityController.m in Sources */,
-				C502CA911CDB49D600FB18E7 /* AuthFlowCoordinator.m in Sources */,
+				C502CA911CDB49D600FB18E7 /* AuthRouter.m in Sources */,
 				C502CAB11CDB7D1000FB18E7 /* PINEntryCell.m in Sources */,
 				C5A29A571CDC833900E6B1D4 /* ApplicationRouter.m in Sources */,
 				C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */,

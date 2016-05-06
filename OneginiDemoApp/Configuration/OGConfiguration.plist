@@ -11,11 +11,11 @@
 	<key>kOGAppVersion</key>
 	<string>1.0.0</string>
 	<key>kOGAppBaseURL</key>
-	<string>https://tokenserver-demo.onegini.com</string>
+	<string>https://tokenserver-demo-test.onegini.com</string>
 	<key>kOGMaxPinFailures</key>
 	<string>3</string>
 	<key>kOGResourceBaseURL</key>
-	<string>https://tokenserver-demo.onegini.com</string>
+	<string>https://tokenserver-demo-test.onegini.com</string>
 	<key>kOGRedirectURL</key>
 	<string>oneginiexample://loginsuccess</string>
 	<key>kOGStoreCookies</key>
@@ -25,6 +25,6 @@
 	<key>kOGDeviceName</key>
 	<string>Test</string>
 	<key>kOGResourceGatewayURL</key>
-	<string>https://resourcegateway-demo.onegini.com</string>
+	<string>https://resourcegateway-demo-test.onegini.com</string>
 </dict>
 </plist>

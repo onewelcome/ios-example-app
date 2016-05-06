@@ -19,6 +19,7 @@
 @interface AuthRouter ()
 <
     AuthCoordinatorDelegate,
+    AuthCoordinatorLogoutDelegate,
     PINViewControllerDelegate,
     WelcomeViewControllerDelegate
 >
@@ -41,6 +42,7 @@
     if (self) {
         self.authCoordinator = authCoordinator;
         self.authCoordinator.delegate = self;
+        self.authCoordinator.logoutDelegate = self;
     }
     return self;
 }
@@ -109,6 +111,16 @@
 
 - (void)authCoordinatorDidEnterWrongPIN:(AuthCoordinator *)coordinator remainingAttempts:(NSUInteger)remaining {
     [self.pinViewController wrongPINRemainigAttempts:remaining];
+}
+
+#pragma mark - AuthCoordinatorLogoutDelegate
+
+- (void)authCoordinatorDidFinishLogout:(AuthCoordinator *)coordinator {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)authCoordinator:(AuthCoordinator *)coordinator didFailLogoutWithError:(NSError *)error {
+    NSLog(@"Logout error: %@)", error.localizedDescription);
 }
 
 #pragma mark - WelcomeViewControllerDelegate

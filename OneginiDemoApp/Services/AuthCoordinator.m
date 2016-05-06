@@ -14,7 +14,8 @@
 @interface AuthCoordinator ()
 <
     OGAuthorizationDelegate,
-    OGPinValidationDelegate
+    OGPinValidationDelegate,
+    OGLogoutDelegate
 >
 
 @property (nonatomic, strong) OGOneginiClient *client;
@@ -62,6 +63,10 @@
 
 - (BOOL)isRegistered {
     return [self.client isClientRegistered];
+}
+
+- (void)logout {
+    [self.client logoutWithDelegate:self];
 }
 
 #pragma mark -
@@ -201,6 +206,20 @@
 
 - (void)pinEntryError:(NSError *)error {
     [self handlePINError:error];
+}
+
+#pragma mark - OGLogoutDelegate
+
+- (void)logoutSuccessful {
+    if ([self.logoutDelegate respondsToSelector:@selector(authCoordinatorDidFinishLogout:)]) {
+        [self.logoutDelegate authCoordinatorDidFinishLogout:self];
+    }
+}
+
+- (void)logoutFailureWithError:(NSError *)error {
+    if ([self.logoutDelegate respondsToSelector:@selector(authCoordinator:didFailLogoutWithError:)]) {
+        [self.logoutDelegate authCoordinator:self didFailLogoutWithError:error];
+    }
 }
 
 @end

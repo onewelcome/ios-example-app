@@ -34,12 +34,21 @@
                         <action selector="disconnect:" destination="-1" eventType="touchUpInside" id="l6n-IJ-yLt"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7XT-BQ-zzU">
+                    <rect key="frame" x="130" y="352" width="116" height="30"/>
+                    <state key="normal" title="Download profile"/>
+                    <connections>
+                        <action selector="getProfile:" destination="-1" eventType="touchUpInside" id="vcp-oi-CJ9"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="8ui-yk-FRc" firstAttribute="centerX" secondItem="pz4-sP-mfq" secondAttribute="centerX" id="HKp-4F-3jH"/>
+                <constraint firstItem="7XT-BQ-zzU" firstAttribute="centerX" secondItem="Yyu-u6-PfZ" secondAttribute="centerX" id="NMo-vi-n17"/>
                 <constraint firstItem="Yyu-u6-PfZ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="SvL-pK-4Xi"/>
                 <constraint firstItem="Yyu-u6-PfZ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="UGe-b2-amZ"/>
+                <constraint firstItem="7XT-BQ-zzU" firstAttribute="top" secondItem="Yyu-u6-PfZ" secondAttribute="bottom" constant="8" id="b5M-Vx-nGr"/>
                 <constraint firstItem="pz4-sP-mfq" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="gdY-qm-Shv"/>
                 <constraint firstAttribute="bottom" secondItem="pz4-sP-mfq" secondAttribute="bottom" constant="18" id="iF4-8j-4P2"/>
                 <constraint firstItem="pz4-sP-mfq" firstAttribute="top" secondItem="8ui-yk-FRc" secondAttribute="bottom" constant="8" id="y6d-sF-5l0"/>

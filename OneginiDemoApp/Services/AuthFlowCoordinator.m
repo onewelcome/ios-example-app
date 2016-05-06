@@ -134,6 +134,7 @@
     if (self.pin1.length > 0) {
         BOOL pinIsVerified = [self.pin1 isEqualToString:pin];
         if (pinIsVerified) {
+            self.pin1 = nil;
             [self.authCoordinator setNewPin:pin];
         } else {
             // show error

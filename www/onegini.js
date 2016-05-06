@@ -38,7 +38,7 @@ module.exports = {
 
     create: function(onCompleted) {
       var LocalProxiedXMLHttpRequest = this.ProxiedXMLHttpRequest;
-      oneginiCordovaPlugin.readConfigProperty(oneginiCordovaPlugin.OG_CONSTANTS.APP_BASE_URL_CONFIG_KEY, function(appBaseUrl) {
+      oneginiCordovaPlugin.readConfigProperty(oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_SERVER_BASE_URL_CONFIG_KEY, function(appBaseUrl) {
         create(appBaseUrl);
         onCompleted();
       });
@@ -844,9 +844,9 @@ module.exports = {
 
     READ_CONFIG_PROPERTY_ACTION: "readConfigProperty",
 
-    APP_BASE_URL_CONFIG_KEY: "kOGAppBaseURL"
+    RESOURCE_SERVER_BASE_URL_CONFIG_KEY: "kOGResourceBaseURL"
   }
-}
+};
 
 function AuthorizationAction(oneginiCordovaPlugin) {
   var authorize = function(authorizationType) {

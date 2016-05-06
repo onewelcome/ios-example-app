@@ -22,7 +22,8 @@ public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
     if (args.length() != PARAMETERS_WITH_HEADERS_LENGTH) {
-      sendCallbackResult(callbackContext, new ResourcePluginResultBuilder("Invalid parameter, expected 4, got " + args.length() + ".").withError().build());
+      final String message = String.format("Invalid parameter, expected %d, got %d", PARAMETERS_WITH_HEADERS_LENGTH, args.length());
+      sendCallbackResult(callbackContext, new ResourcePluginResultBuilder(message).withError().build());
       return;
     }
 

@@ -15,67 +15,44 @@ public class PropertyReaderAction implements OneginiPluginAction {
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
     if (isValidRequest(args)) {
-      final ConfigProperty requestedProperty = new ConfigProperty(args);
-      final String propertyValue = readProperty(requestedProperty.getKey());
-      sendResult(callbackContext, propertyValue);
+      final String key = readKey(args);
+      final String value = readProperty(key);
+      sendResult(callbackContext, value);
     } else {
       sendEmptyResult(callbackContext);
     }
   }
 
-  private String readProperty(final String propertyKey) {
+  private boolean isValidRequest(final JSONArray args) {
+    return isRequestedKeyValid(args);
+  }
+
+  private boolean isRequestedKeyValid(final JSONArray args) {
+    return args.length() == 1 && !args.optString(0).isEmpty();
+  }
+
+  private String readKey(final JSONArray args) {
     try {
-      return ConfigModel.getStringFromPreferences(Config.getPreferences(), propertyKey);
-    } catch (PluginConfigException e) {
+      return args.getString(0);
+    } catch (final JSONException e) {
       return "";
     }
   }
 
-  private void sendEmptyResult(final CallbackContext callbackContext) {
-    sendResult(callbackContext, "");
+  private String readProperty(final String key) {
+    try {
+      return ConfigModel.getStringFromPreferences(Config.getPreferences(), key);
+    } catch (PluginConfigException e) {
+      return "";
+    }
   }
 
   private void sendResult(final CallbackContext callbackContext, final String propertyValue) {
     callbackContext.sendPluginResult(new CallbackResultBuilder().withSuccessMessage(propertyValue).build());
   }
 
-  private boolean isValidRequest(final JSONArray args) {
-    return new RequestValidator(args).isValid();
-  }
-
-  private static class ConfigProperty {
-
-    private final JSONArray args;
-
-    ConfigProperty(final JSONArray args) {
-      this.args = args;
-    }
-
-    String getKey() {
-      try {
-        return args.getString(0);
-      } catch (JSONException e) {
-        return "";
-      }
-    }
-
-  }
-
-  private static class RequestValidator {
-
-    private JSONArray args;
-
-    public RequestValidator(final JSONArray args) {
-      this.args = args;
-    }
-
-    boolean isValid() {
-      return isConfigParameterValid();
-    }
-
-    private boolean isConfigParameterValid() {
-      return args.length() == 1 && !args.optString(0).isEmpty();
-    }
+  private void sendEmptyResult(final CallbackContext callbackContext) {
+    sendResult(callbackContext, "");
   }
 
 }

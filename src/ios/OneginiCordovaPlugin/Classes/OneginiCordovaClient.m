@@ -7,12 +7,13 @@
 //
 
 #import "OneginiCordovaClient.h"
-#import <Cordova/NSDictionary+Extensions.h>
+#import <Cordova/NSDictionary+CordovaPreferences.h>
 #import "Reachability.h"
 #import "XMLReader.h"
 #import "PushConfirmationViewController.h"
 #import "MessagesModel.h"
 #import "PushWithPinConfirmationViewController.h"
+#import "PushWithFingerprintConfirmationViewController.h"
 
 NSString* const kReason				= @"reason";
 NSString* const kRemainingAttempts	= @"remainingAttempts";
@@ -139,6 +140,7 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     self.pinValidateCommandTxId = nil;
     self.pinChangeCommandTxId = nil;
     self.enrollmentCommandTxId = nil;
+    self.fingerprintEnrollmentCommandTxId = nil;
 }
 
 - (void)authorizationErrorCallbackWIthReason:(NSString *)reason {
@@ -163,7 +165,7 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     NSError *error;
     if (![[OGOneginiClient sharedInstance] clearTokens:&error]) {
 #ifdef DEBUG
-        NSLog("clearTokens error %@", error);
+        NSLog(@"clearTokens error %@", error);
 #endif
     }
 }
@@ -245,6 +247,22 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
         [oneginiClient authorize:scopeArgument];
     } else {
         [oneginiClient authorize:nil];
+    }
+}
+
+- (void)reauthorize:(CDVInvokedUrlCommand *)command {
+    [self resetAll];
+    self.authorizeCommandTxId = command.callbackId;
+    
+    if (![self isConnected]) {
+        [self authorizationErrorCallbackWIthReason:@"connectivityProblem"];
+        return;
+    }
+    id scopeArgument = [command.arguments firstObject];
+    if([scopeArgument isKindOfClass:[NSArray class]] && ((NSArray*)scopeArgument).count>0){
+        [oneginiClient reauthorize:scopeArgument];
+    } else {
+        [oneginiClient reauthorize:nil];
     }
 }
 
@@ -450,6 +468,28 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 - (void)sendErrorCallback:(NSString *)callbackId {
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     [self.commandDelegate sendPluginResult:result callbackId:callbackId];
+}
+
+- (void)enrollForFingerprintAuthentication:(CDVInvokedUrlCommand *)command  {
+    self.fingerprintEnrollmentCommandTxId = command.callbackId;
+    
+    id scopeArgument = [command.arguments firstObject];
+    if([scopeArgument isKindOfClass:[NSArray class]] && ((NSArray*)scopeArgument).count>0){
+        [self.oneginiClient enrollForFingerprintAuthentication:scopeArgument delegate:self];
+    } else {
+        [self.oneginiClient enrollForFingerprintAuthentication:nil delegate:self];
+    }
+}
+
+-(void)disableFingerprintAuthentication:(CDVInvokedUrlCommand *)command{
+    [self.oneginiClient disableFingerprintAuthentication];
+}
+
+-(void)checkFingerpringAuthenticationState:(CDVInvokedUrlCommand *)command{
+    if ([self.oneginiClient isEnrolledForFingerprintAuthentication])
+        [self sendSuccessCallback:command.callbackId];
+    else
+        [self sendErrorCallback:command.callbackId];
 }
 
 #pragma mark -
@@ -662,6 +702,11 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
                                             confirm:(PushAuthenticationWithPinConfirmation)confirm {
     PushWithPinConfirmationViewController* pushWithPinConfirmationViewController = [[PushWithPinConfirmationViewController alloc]initWithMessage:message retryAttempts:retryAttempt maxAttempts:maxAttempts confirmationBlock:confirm NibName:@"PushWithPinConfirmationViewController" bundle:nil];
     [[self getTopViewController] presentViewController:pushWithPinConfirmationViewController animated:NO completion:^{}];
+}
+
+-(void)askForPushAuthenticationWithFingerprint:(NSString *)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm{
+    PushWithFingerprintConfirmationViewController* pushConfirmationViewController = [[PushWithFingerprintConfirmationViewController alloc]initWithMessage:message confirmationBlock:confirm NibName:@"PushWithFingerprintConfirmationViewController" bundle:nil];
+    [[self getTopViewController] presentViewController:pushConfirmationViewController animated:NO completion:^{}];
 }
 
 - (void)authorizationErrorUnsupportedOS {
@@ -930,6 +975,102 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     }
 }
 
+#pragma mark - FingerprintDelegate
+
+-(void)askCurrentPinForFingerprintAuthentication{
+    if (pinDialogCommandTxId == nil) {
+#ifdef DEBUG
+        NSLog(@"askForCurrentPin: pinCommandTxId is nil");
+#endif
+        return;
+    }
+    if (useNativePinView) {
+        pinEntryMode = PINFingerprintCheckMode;
+        [self showPinEntryViewInMode:PINFingerprintCheckMode];
+    } else {
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askCurrentPinForFingerprint"}];
+        result.keepCallback = @(1);
+        [self.commandDelegate sendPluginResult:result callbackId:pinDialogCommandTxId];
+    }
+}
+
+-(void)fingerprintAuthenticationEnrollmentSuccessful{
+    if (self.fingerprintEnrollmentCommandTxId == nil) {
+#ifdef DEBUG
+        NSLog(@"fingerprint_enrolment_success");
+#endif
+        [self resetAll];
+        return;
+    }
+    [self closePinView];
+    @try {
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"fingerprint_enrolment_success"];
+        result.keepCallback = @(0);
+        [self.commandDelegate sendPluginResult:result callbackId:self.fingerprintEnrollmentCommandTxId];
+    }
+    @finally {
+        [self resetAll];
+    }
+}
+
+-(void)fingerprintAuthenticationEnrollmentFailure{
+    if (self.fingerprintEnrollmentCommandTxId == nil) {
+#ifdef DEBUG
+        NSLog(@"fingerprint_enrolment_failure");
+#endif
+        [self resetAll];
+        return;
+    }
+    @try {
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"fingerprint_enrolment_failure"];
+        result.keepCallback = @(0);
+        [self.commandDelegate sendPluginResult:result callbackId:self.fingerprintEnrollmentCommandTxId];
+    }
+    @finally {
+        [self resetAll];
+    }
+}
+
+-(void)fingerprintAuthenticationEnrollmentErrorInvalidPin:(NSUInteger)attemptCount{
+    if (self.fingerprintEnrollmentCommandTxId == nil) {
+#ifdef DEBUG
+        NSLog(@"fingerprint_enrolment_failure");
+#endif
+        [self resetAll];
+        return;
+    }
+    if (self.pinViewController){
+        [self.pinViewController invalidPinWithReason: [NSString stringWithFormat:[[MessagesModel sharedInstance].messages objectForKey:@"AUTHORIZATION_ERROR_PIN_INVALID"],@(attemptCount)]];
+    }
+    @try {
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"fingerprint_enrolment_failure_invalid_pin", kRemainingAttempts:@(attemptCount)}];
+        result.keepCallback = @(0);
+        [self.commandDelegate sendPluginResult:result callbackId:self.fingerprintEnrollmentCommandTxId];
+    }
+    @finally {
+        [self resetAll];
+    }
+}
+
+-(void)fingerprintAuthenticationEnrollmentErrorTooManyPinFailures{
+    if (self.fingerprintEnrollmentCommandTxId == nil) {
+#ifdef DEBUG
+        NSLog(@"fingerprint_enrolment_failure");
+#endif
+        [self resetAll];
+        return;
+    }
+    [self closePinView];
+    @try {
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"fingerprint_enrolment_failure_too_many_attempts"];
+        result.keepCallback = @(0);
+        [self.commandDelegate sendPluginResult:result callbackId:self.fingerprintEnrollmentCommandTxId];
+    }
+    @finally {
+        [self resetAll];
+    }
+}
+
 #pragma mark -
 #pragma mark Util
 - (HTTPRequestMethod)requestMethodForString:(NSString *)requestMethodString {
@@ -1097,6 +1238,10 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     switch (pinEntryMode) {
         case PINCheckMode: {
             [oneginiClient confirmCurrentPin:pin];
+            break;
+        }
+        case PINFingerprintCheckMode:{
+            [oneginiClient confirmCurrentPinForFingerprintAuthorization:pin];
             break;
         }
         case PINRegistrationMode: {

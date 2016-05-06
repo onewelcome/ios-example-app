@@ -12,7 +12,7 @@
 #import "MainViewController.h"
 #import "Commons.h"
 
-@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate, PinViewControllerDelegate, OGDisconnectDelegate, OGLogoutDelegate, OGEnrollmentHandlerDelegate>
+@interface OneginiCordovaClient : CDVPlugin <OGAuthorizationDelegate, OGResourceHandlerDelegate, OGPinValidationDelegate, OGChangePinDelegate, PinViewControllerDelegate, OGDisconnectDelegate, OGLogoutDelegate, OGEnrollmentHandlerDelegate, OGFingerprintDelegate>
 
 @property (strong, nonatomic) OGOneginiClient *oneginiClient;
 @property (strong, nonatomic) OGConfigModel *configModel;
@@ -29,6 +29,7 @@
 @property (copy, nonatomic) NSString *disconnectCommandTxId;
 @property (copy, nonatomic) NSString *logoutCommandTxId;
 @property (copy, nonatomic) NSString *enrollmentCommandTxId;
+@property (copy, nonatomic) NSString *fingerprintEnrollmentCommandTxId;
 
 /** FOR TESTING PURPOSE ONLY */
 - (void)clearTokens:(CDVInvokedUrlCommand *)command;
@@ -61,6 +62,11 @@
  Initiate the authorization flow
  */
 - (void)authorize:(CDVInvokedUrlCommand *)command;
+
+/**
+ Initiate the reauthorization flow
+ */
+- (void)reauthorize:(CDVInvokedUrlCommand *)command;
 
 /**
  Change the registered PIN. The callback is invoked with a request to show a PIN change entry dialog.
@@ -167,5 +173,20 @@
  Enrolls currently connected device for mobile push authentication.
  */
 -(void)enrollForMobileAuthentication:(CDVInvokedUrlCommand *)command;
+
+/**
+ Enrolls currently connected device for fingerprint authentication.
+ */
+- (void)enrollForFingerprintAuthentication:(CDVInvokedUrlCommand *)command;
+
+/**
+ Disable fingerprint authentication for currently connected device.
+ */
+- (void)disableFingerprintAuthentication:(CDVInvokedUrlCommand *)command;
+
+/**
+ Check finger print authentication state for currently connected device.
+ */
+- (void)checkFingerpringAuthenticationState:(CDVInvokedUrlCommand *)command;
 
 @end

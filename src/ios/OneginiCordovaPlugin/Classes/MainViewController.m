@@ -103,14 +103,6 @@
 
 #pragma mark UIWebDelegate implementation
 
-- (void)webViewDidFinishLoad:(UIWebView*)theWebView
-{
-    // Black base color for background matches the native apps
-    theWebView.backgroundColor = [UIColor blackColor];
-
-    return [super webViewDidFinishLoad:theWebView];
-}
-
 /* Comment out the block below to over-ride */
 
 /*

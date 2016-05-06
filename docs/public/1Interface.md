@@ -246,6 +246,26 @@ Enrolls currently connected device for mobile push authentication.
   
 **Param** `scopes` - Array with Strings that represent the scopes for the access token
 
+### enrollForFingerprintAuthentication(router)
+Enrolls currently connected device for fingerprint authentication
+
+**Param** `router` - Object that can handle page transition for the outcome of the action. Should at least implement the following methods:
+  - `enrollmentSuccess` - enrollment success
+  - `error` - indicated general enrollment error
+  - `errorTooManyPinAttempts` - method called once user exceeds allowed number of PIN attempts
+
+
+### checkFingerpringAuthenticationState(successCallback, errorCallback)
+Determine if the user is enrolled for fingerprint authentication.
+
+**Param** `successCallback` - Function to be called when user is already enrolled for fingerprint authentication
+
+**Param** `errorCallback` - Function to be called when user is not yet enrolled for fingerprint authentication
+
+### disableFingerprintAuthentication 
+Disable fingerprint authentication. Fingerprint data are deleted from device and revoked from token server. If revoke request fails local data are nethertheless deleted from device.
+
+
 ### isAndroid
 Determines whenever userAgent is Android.
 

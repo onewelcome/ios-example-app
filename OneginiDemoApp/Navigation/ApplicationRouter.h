@@ -6,15 +6,15 @@
 //  Copyright © 2016 Onegini. All rights reserved.
 //
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
-@class AuthRouter;
+@class AuthRouter, ProfileRouter;
 
 @interface ApplicationRouter : NSObject
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithAuthRouter:(AuthRouter *)authRouter;
+- (instancetype)initWithAuthRouter:(AuthRouter *)authRouter profileRouter:(ProfileRouter *)profileRouter;
 
 - (void)executeInWindow:(UIWindow *)window;
 

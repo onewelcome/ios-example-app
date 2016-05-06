@@ -27,6 +27,7 @@
 		C5A29A651CDCA55900E6B1D4 /* AuthRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A29A5E1CDCA55900E6B1D4 /* AuthRouter.m */; };
 		C5A29A661CDCA55900E6B1D4 /* AuthCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A29A611CDCA55900E6B1D4 /* AuthCoordinator.m */; };
 		C5A29A671CDCA55900E6B1D4 /* OneginiClientBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A29A631CDCA55900E6B1D4 /* OneginiClientBuilder.m */; };
+		C5A29A6A1CDCA58C00E6B1D4 /* ProfileRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A29A691CDCA58C00E6B1D4 /* ProfileRouter.m */; };
 		C5BAAEC81CDA462800801205 /* SecurityController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BAAEC71CDA462800801205 /* SecurityController.m */; };
 		C5FE9E3A1CD8ACE000142A20 /* bundles.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9E061CD8ACE000142A20 /* bundles.txt */; };
 		C5FE9E3B1CD8ACE000142A20 /* README.TXT in Resources */ = {isa = PBXBuildFile; fileRef = C5FE9E071CD8ACE000142A20 /* README.TXT */; };
@@ -70,6 +71,8 @@
 		C5A29A611CDCA55900E6B1D4 /* AuthCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthCoordinator.m; sourceTree = "<group>"; };
 		C5A29A621CDCA55900E6B1D4 /* OneginiClientBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiClientBuilder.h; sourceTree = "<group>"; };
 		C5A29A631CDCA55900E6B1D4 /* OneginiClientBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneginiClientBuilder.m; sourceTree = "<group>"; };
+		C5A29A681CDCA58C00E6B1D4 /* ProfileRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileRouter.h; sourceTree = "<group>"; };
+		C5A29A691CDCA58C00E6B1D4 /* ProfileRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileRouter.m; sourceTree = "<group>"; };
 		C5BAAEC61CDA462800801205 /* SecurityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityController.h; sourceTree = "<group>"; };
 		C5BAAEC71CDA462800801205 /* SecurityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityController.m; sourceTree = "<group>"; };
 		C5FE9E061CD8ACE000142A20 /* bundles.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bundles.txt; sourceTree = "<group>"; };
@@ -268,6 +271,8 @@
 				C5A29A5C1CDCA55900E6B1D4 /* ApplicationRouter.m */,
 				C5A29A5D1CDCA55900E6B1D4 /* AuthRouter.h */,
 				C5A29A5E1CDCA55900E6B1D4 /* AuthRouter.m */,
+				C5A29A681CDCA58C00E6B1D4 /* ProfileRouter.h */,
+				C5A29A691CDCA58C00E6B1D4 /* ProfileRouter.m */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -750,6 +755,7 @@
 				C502CAA91CDB62B600FB18E7 /* ProfileViewController.m in Sources */,
 				C572A2DC1CD893C400B137DC /* main.m in Sources */,
 				C541398B1CD9D3010033DBA8 /* WelcomeViewController.m in Sources */,
+				C5A29A6A1CDCA58C00E6B1D4 /* ProfileRouter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

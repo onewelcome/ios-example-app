@@ -12,6 +12,7 @@
 #import "ApplicationRouter.h"
 #import "OneginiClientBuilder.h"
 #import "AuthRouter.h"
+#import "ProfileRouter.h"
 
 @interface AppDelegate ()
 
@@ -35,7 +36,10 @@
     OGOneginiClient *client = [OneginiClientBuilder buildClient];
     AuthCoordinator *coordinator = [[AuthCoordinator alloc] initWithOneginiClient:client];
     AuthRouter *authRouter = [[AuthRouter alloc] initWithAuthCoordinator:coordinator];
-    ApplicationRouter *router = [[ApplicationRouter alloc] initWithAuthRouter:authRouter];
+    ProfileRouter *profileRouter = [ProfileRouter new];
+
+    ApplicationRouter *router = [[ApplicationRouter alloc] initWithAuthRouter:authRouter profileRouter:profileRouter];
+    
     return router;
 }
 

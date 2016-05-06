@@ -8,15 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@class ProfileRouter;
+@class ProfileRouter, Auth;
 
 @protocol ProfileRouterDelegate <NSObject>
 
 - (void)profileRouterDidLogout:(ProfileRouter *)router;
+- (void)profileRouterDidDisconnect:(ProfileRouter *)router;
 
 @end
 
 @interface ProfileRouter : NSObject
+
+//- (instancetype)initWithAuthCoordinator:(AuthCoordinator *)authCoordinator;
 
 @property (nonatomic, weak) id<ProfileRouterDelegate> delegate;
 

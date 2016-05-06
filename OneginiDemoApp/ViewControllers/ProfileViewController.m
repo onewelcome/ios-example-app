@@ -19,7 +19,15 @@
 }
 
 - (IBAction)logout:(id)sender {
-    [self.delegate profileViewControllerDidTapOnLogout:self];
+    if ([self.delegate respondsToSelector:@selector(profileViewControllerDidTapOnLogout:)]) {
+        [self.delegate profileViewControllerDidTapOnLogout:self];
+    }
+}
+
+- (IBAction)disconnect:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(profileViewControllerDidTapOnDisconnect:)]) {
+        [self.delegate profileViewControllerDidTapOnDisconnect:self];
+    }
 }
 
 @end

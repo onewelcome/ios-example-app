@@ -15,6 +15,11 @@
 @end
 
 @implementation ProfileRouter
+//
+//- (instancetype)initWithAuthCoordinator:(AuthCoordinator *)authCoordinator
+//{
+//    return retu;
+//}
 
 - (void)executeInNavigation:(UINavigationController *)navigationController {
     ProfileViewController *viewController = [ProfileViewController new];
@@ -26,7 +31,15 @@
 #pragma mark - ProfileViewControllerDelegate
 
 - (void)profileViewControllerDidTapOnLogout:(ProfileViewController *)viewController {
-    [self.delegate profileRouterDidLogout:self];
+    if ([self.delegate respondsToSelector:@selector(profileRouterDidLogout:)]) {
+        [self.delegate profileRouterDidLogout:self];
+    }
+}
+
+- (void)profileViewControllerDidTapOnDisconnect:(ProfileViewController *)viewController {
+    if ([self.delegate respondsToSelector:@selector(profileRouterDidDisconnect:)]) {
+        [self.delegate profileRouterDidDisconnect:self];
+    }
 }
 
 @end

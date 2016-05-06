@@ -35,12 +35,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@protocol AuthCoordinatorDisconnectDelegate <NSObject>
+
+@optional
+
+- (void)authCoordinatorDidFinishDisconnection:(AuthCoordinator *)coordinator;
+- (void)authCoordinator:(AuthCoordinator *)coordinator didFailDisconnectionWithError:(NSError *)error;
+
+@end
+
 @interface AuthCoordinator : NSObject
 
 - (instancetype)initWithOneginiClient:(OGOneginiClient *)client;
 
 @property (nonatomic, weak, nullable) id<AuthCoordinatorDelegate> delegate;
 @property (nonatomic, weak, nullable) id<AuthCoordinatorLogoutDelegate> logoutDelegate;
+@property (nonatomic, weak, nullable) id<AuthCoordinatorDisconnectDelegate> disconnectDelegate;
+
 @property (nonatomic, readonly) BOOL isRegistered;
 
 - (void)registerUser;
@@ -50,6 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)enterCurrentPIN:(NSString *)pin;
 
 - (void)logout;
+- (void)disconnect;
 
 @end
 

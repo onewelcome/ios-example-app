@@ -10,6 +10,7 @@
 
 #import "AuthRouter.h"
 #import "ProfileRouter.h"
+#import "OneginiSDK.h"
 
 @interface ApplicationRouter ()
 <
@@ -62,6 +63,15 @@
 #pragma mark - ProfileRouterDelegate
 
 - (void)profileRouterDidLogout:(ProfileRouter *)router {
+    [[OGOneginiClient sharedInstance] logoutWithDelegate:nil];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self showAuthorization];
+}
+
+- (void)profileRouterDidDisconnect:(ProfileRouter *)router {
+    [[OGOneginiClient sharedInstance] disconnectWithDelegate:nil];
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
     [self showAuthorization];
 }

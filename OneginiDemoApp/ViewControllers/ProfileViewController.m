@@ -9,21 +9,7 @@
 #import "ProfileViewController.h"
 #import "APIClient.h"
 
-@interface ProfileViewController ()
-
-@property (nonatomic, strong) APIClient *apiClient;
-
-@end
-
 @implementation ProfileViewController
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.apiClient = [APIClient new];
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,7 +28,7 @@
 }
 
 - (IBAction)getProfile:(id)sender {
-    [self.apiClient getProfile:^(Profile *profile, NSError *error) {
+    [[APIClient sharedClient] getProfile:^(Profile *profile, NSError *error) {
     
     }];
 }

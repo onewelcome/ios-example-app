@@ -14,6 +14,8 @@ typedef void(^ProfileCompletionBlock)(Profile *profile, NSError *error);
 
 @interface APIClient : NSObject
 
++ (instancetype)sharedClient;
+
 - (void)getProfile:(ProfileCompletionBlock)completion;
 
 @end

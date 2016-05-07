@@ -12,6 +12,7 @@
 
 @interface APIClient () <OGResourceHandlerDelegate>
 
+@property (nonatomic, strong) NSURL *baseURL;
 @property (nonatomic, strong) OGOneginiClient *client;
 
 @property (nonatomic, copy) ProfileCompletionBlock callback;
@@ -24,18 +25,28 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        NSString *configurationFilename = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"OGConfigurationFile"];
+        NSString *configurationFilePath = [[NSBundle mainBundle] pathForResource:configurationFilename ofType:nil];
+        NSMutableDictionary *config = [[NSDictionary dictionaryWithContentsOfFile:configurationFilePath] mutableCopy];
+        self.baseURL = [[NSURL alloc] initWithString:config[@"kOGResourceGatewayURL"]];
+        
         self.client = [OGOneginiClient sharedInstance];
     }
     return self;
 }
 
-- (void)getProfile:(ProfileCompletionBlock)completion {
-    NSString *configurationFilename = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"OGConfigurationFile"];
-    NSString *configurationFilePath = [[NSBundle mainBundle] pathForResource:configurationFilename ofType:nil];
++ (instancetype)sharedClient {
+    static APIClient *_sharedClient = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedClient = [[[self class] alloc] init];
+    });
     
-    NSMutableDictionary *config = [[NSDictionary dictionaryWithContentsOfFile:configurationFilePath] mutableCopy];
-    NSURL *baseURL = [[NSURL alloc] initWithString:config[@"kOGResourceGatewayURL"]];
-    NSURL *url = [baseURL URLByAppendingPathComponent:@"api/persons"];
+    return _sharedClient;
+}
+
+- (void)getProfile:(ProfileCompletionBlock)completion {
+    NSURL *url = [self.baseURL URLByAppendingPathComponent:@"api/persons"];
     
     self.callback = completion;
     [self.client fetchResource:url.absoluteString scopes:nil requestMethod:GET params:nil delegate:self];

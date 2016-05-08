@@ -11,21 +11,7 @@
 #import "LogoutController.h"
 #import "DisconnectController.h"
 
-@interface ProfileViewController ()
-
-@property (nonatomic, strong) ResourceController *apiClient;
-
-@end
-
 @implementation ProfileViewController
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.apiClient = [ResourceController new];
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,7 +26,7 @@
 }
 
 - (IBAction)getProfile:(id)sender {
-    [self.apiClient getProfile:^(Profile *profile, NSError *error) {
+    [[ResourceController sharedInstance] getProfile:^(Profile *profile, NSError *error) {
     
     }];
 }

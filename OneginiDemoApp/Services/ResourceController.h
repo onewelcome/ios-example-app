@@ -14,6 +14,8 @@ typedef void(^ProfileCompletionBlock)(Profile *profile, NSError *error);
 
 @interface ResourceController : NSObject
 
++ (instancetype)sharedInstance;
+
 - (void)getProfile:(ProfileCompletionBlock)completion;
 
 @end

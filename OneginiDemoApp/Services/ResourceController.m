@@ -13,20 +13,38 @@
 @interface ResourceController () <OGResourceHandlerDelegate>
 
 @property (nonatomic, copy) ProfileCompletionBlock callback;
+@property (nonatomic, strong) NSURL *baseURL;
 
 @end
 
 // Create dependencies here for demo purpose only. It shoud be set from the outside
 @implementation ResourceController
 
++(instancetype)sharedInstance{
+    static ResourceController *singleton;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        singleton = [[self alloc] init];
+    });
+    
+    return singleton;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        NSString *configurationFilename = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"OGConfigurationFile"];
+        NSString *configurationFilePath = [[NSBundle mainBundle] pathForResource:configurationFilename ofType:nil];
+        NSMutableDictionary *config = [[NSDictionary dictionaryWithContentsOfFile:configurationFilePath] mutableCopy];
+        self.baseURL = [[NSURL alloc] initWithString:config[@"kOGResourceGatewayURL"]];
+    }
+    return self;
+}
+
 - (void)getProfile:(ProfileCompletionBlock)completion {
-    NSString *configurationFilename = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"OGConfigurationFile"];
-    NSString *configurationFilePath = [[NSBundle mainBundle] pathForResource:configurationFilename ofType:nil];
-    
-    NSMutableDictionary *config = [[NSDictionary dictionaryWithContentsOfFile:configurationFilePath] mutableCopy];
-    NSURL *baseURL = [[NSURL alloc] initWithString:config[@"kOGResourceGatewayURL"]];
-    NSURL *url = [baseURL URLByAppendingPathComponent:@"api/persons"];
-    
+    NSURL *url = [self.baseURL URLByAppendingPathComponent:@"api/persons"];
+
     self.callback = completion;
     [[OGOneginiClient sharedInstance] fetchResource:url.absoluteString scopes:nil requestMethod:GET params:nil delegate:self];
 }

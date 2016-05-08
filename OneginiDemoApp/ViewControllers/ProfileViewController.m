@@ -8,6 +8,8 @@
 
 #import "ProfileViewController.h"
 #import "APIClient.h"
+#import "FlowController.h"
+#import "AuthCoordinator.h"
 
 @interface ProfileViewController ()
 
@@ -30,15 +32,11 @@
 }
 
 - (IBAction)logout:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(profileViewControllerDidTapOnLogout:)]) {
-        [self.delegate profileViewControllerDidTapOnLogout:self];
-    }
+    [[AuthCoordinator sharedInstance]logout];
 }
 
 - (IBAction)disconnect:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(profileViewControllerDidTapOnDisconnect:)]) {
-        [self.delegate profileViewControllerDidTapOnDisconnect:self];
-    }
+    [[AuthCoordinator sharedInstance]disconnect];
 }
 
 - (IBAction)getProfile:(id)sender {

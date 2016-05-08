@@ -70,7 +70,7 @@
     self.currentPIN = [self.currentPIN stringByAppendingString:@(digit).description];
     
     if (self.currentPIN.length == self.maxCountOfNumbers) {
-        [self.delegate pinViewController:self didEnterPIN:self.currentPIN];
+        self.pinEntered(self.currentPIN);
     }
 }
 

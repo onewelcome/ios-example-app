@@ -10,14 +10,6 @@
 
 @class WelcomeViewController;
 
-@protocol WelcomeViewControllerDelegate <NSObject>
-
-- (void)welcomeViewControllerDidTapLogin:(WelcomeViewController *)viewController;
-
-@end
-
 @interface WelcomeViewController : UIViewController
-
-@property (nonatomic, weak) id<WelcomeViewControllerDelegate> delegate;
 
 @end

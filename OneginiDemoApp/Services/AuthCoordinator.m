@@ -10,14 +10,9 @@
 
 #import "OneginiSDK.h"
 #import "OneginiClientBuilder.h"
+#import "FlowController.h"
 
-@interface AuthCoordinator ()
-<
-    OGAuthorizationDelegate,
-    OGPinValidationDelegate,
-    OGLogoutDelegate,
-    OGDisconnectDelegate
->
+@interface AuthCoordinator () <OGAuthorizationDelegate, OGPinValidationDelegate, OGLogoutDelegate, OGDisconnectDelegate>
 
 @property (nonatomic, strong) OGOneginiClient *client;
 
@@ -25,23 +20,17 @@
 
 @implementation AuthCoordinator
 
-- (instancetype)initWithOneginiClient:(OGOneginiClient *)client {
-    self = [super init];
-    if (self) {
-        self.client = client;
-        self.client.authorizationDelegate = self;
-    }
-    return self;
-}
-
-// Create dependencies here for demo purpose only. It shoud be set from the outside
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.client = [OneginiClientBuilder buildClient];
-        self.client.authorizationDelegate = self;
-    }
-    return self;
++ (AuthCoordinator *)sharedInstance {
+    static AuthCoordinator *singleton;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        singleton = [[self alloc] init];
+        singleton.client = [OneginiClientBuilder buildClient];
+        singleton.client.authorizationDelegate = singleton;
+    });
+    
+    return singleton;
 }
 
 #pragma mark - Public API
@@ -77,29 +66,33 @@
 #pragma mark -
 
 - (void)handleAuthError:(NSError *)error {
-    [self.delegate authCoordinator:self didFailLoginWithError:error];
+    [[FlowController sharedInstance] authenticationFailedWithError];
 }
 
 - (void)handlePINError:(NSError *)error {
-    [self.delegate authCoordinator:self didFailPINEnrollmentWithError:error];
+    [[FlowController sharedInstance] pinPolicyValidationFailed];
 }
 
 #pragma mark - OGAuthorizationDelegate
 
 - (void)authorizationSuccess {
-    [self.delegate authCoordinatorDidFinishLogin:self];
+    [[FlowController sharedInstance] authorizationSucceded];
 }
 
 - (void)requestAuthorization:(NSURL *)url {
-    [self.delegate authCoordinator:self didStartLoginWithURL:url];
+    [[FlowController sharedInstance] openURL:url];
 }
 
 - (void)askForNewPin:(NSUInteger)pinSize {
-    [self.delegate authCoordinator:self presentCreatePINWithMaxCountOfNumbers:pinSize];
+    [[FlowController sharedInstance] createPinWithSize:pinSize completion:^(NSString * pin) {
+        [self.client confirmNewPin:pin validation:self];
+    }];
 }
 
 - (void)askForCurrentPin {
-    [self.delegate authCoordinatorDidAskForCurrentPIN:self];
+    [[FlowController sharedInstance] askForCurrentPinCompletion:^(NSString *pin) {
+        [self.client confirmCurrentPin:pin];
+    }];
 }
 
 - (void)askCurrentPinForChangeRequest {
@@ -140,7 +133,7 @@
 }
 
 - (void)authorizationErrorInvalidGrant:(NSUInteger)remaining {
-    [self.delegate authCoordinatorDidEnterWrongPIN:self remainingAttempts:remaining];
+    [[FlowController sharedInstance] wrongPinEnteredRemaining:remaining];
 }
 
 - (void)authorizationErrorNoAuthorizationGrant {
@@ -216,29 +209,21 @@
 #pragma mark - OGLogoutDelegate
 
 - (void)logoutSuccessful {
-    if ([self.logoutDelegate respondsToSelector:@selector(authCoordinatorDidFinishLogout:)]) {
-        [self.logoutDelegate authCoordinatorDidFinishLogout:self];
-    }
+    [[FlowController sharedInstance]logout];
 }
 
 - (void)logoutFailureWithError:(NSError *)error {
-    if ([self.logoutDelegate respondsToSelector:@selector(authCoordinator:didFailLogoutWithError:)]) {
-        [self.logoutDelegate authCoordinator:self didFailLogoutWithError:error];
-    }
+    [[FlowController sharedInstance]logout];
 }
 
 #pragma mark - OGDisconnectDelegate 
 
 - (void)disconnectSuccessful {
-    if ([self.disconnectDelegate respondsToSelector:@selector(authCoordinatorDidFinishDisconnection:)]) {
-        [self.disconnectDelegate authCoordinatorDidFinishDisconnection:self];
-    }
+    [[FlowController sharedInstance]disconnect];
 }
 
 - (void)disconnectFailureWithError:(NSError *)error {
-    if ([self.disconnectDelegate respondsToSelector:@selector(authCoordinator:didFailDisconnectionWithError:)]) {
-        [self.disconnectDelegate authCoordinator:self didFailDisconnectionWithError:error];
-    }
+    [[FlowController sharedInstance]disconnect];
 }
 
 @end

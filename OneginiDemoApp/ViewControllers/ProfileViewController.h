@@ -10,17 +10,6 @@
 
 @class ProfileViewController;
 
-@protocol ProfileViewControllerDelegate <NSObject>
-
-@optional
-
-- (void)profileViewControllerDidTapOnLogout:(ProfileViewController *)viewController;
-- (void)profileViewControllerDidTapOnDisconnect:(ProfileViewController *)viewController;
-
-@end
-
 @interface ProfileViewController : UIViewController
-
-@property (nonatomic, weak) id<ProfileViewControllerDelegate> delegate;
 
 @end

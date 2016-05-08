@@ -10,15 +10,9 @@
 
 @class PINViewController;
 
-@protocol PINViewControllerDelegate <NSObject>
-
-- (void)pinViewController:(PINViewController *)viewController didEnterPIN:(NSString *)pin;
-
-@end
-
 @interface PINViewController : UIViewController
 
-@property (nonatomic, weak) id<PINViewControllerDelegate> delegate;
+@property (nonatomic, copy) void (^pinEntered)(NSString* pin);
 
 @property (nonatomic) NSUInteger maxCountOfNumbers;
 

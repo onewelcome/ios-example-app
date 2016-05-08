@@ -7,13 +7,13 @@
 //
 
 #import "ProfileViewController.h"
-#import "APIClient.h"
-#import "FlowController.h"
-#import "AuthCoordinator.h"
+#import "ResourceController.h"
+#import "LogoutController.h"
+#import "DisconnectController.h"
 
 @interface ProfileViewController ()
 
-@property (nonatomic, strong) APIClient *apiClient;
+@property (nonatomic, strong) ResourceController *apiClient;
 
 @end
 
@@ -22,7 +22,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.apiClient = [APIClient new];
+        self.apiClient = [ResourceController new];
     }
     return self;
 }
@@ -32,11 +32,11 @@
 }
 
 - (IBAction)logout:(id)sender {
-    [[AuthCoordinator sharedInstance]logout];
+    [[LogoutController sharedInstance]logout];
 }
 
 - (IBAction)disconnect:(id)sender {
-    [[AuthCoordinator sharedInstance]disconnect];
+    [[DisconnectController sharedInstance]disconnect];
 }
 
 - (IBAction)getProfile:(id)sender {

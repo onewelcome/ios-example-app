@@ -6,28 +6,18 @@
 //  Copyright © 2016 Onegini. All rights reserved.
 //
 
-#import "APIClient.h"
+#import "ResourceController.h"
 #import "OneginiSDK.h"
 #import "Profile.h"
 
-@interface APIClient () <OGResourceHandlerDelegate>
-
-@property (nonatomic, strong) OGOneginiClient *client;
+@interface ResourceController () <OGResourceHandlerDelegate>
 
 @property (nonatomic, copy) ProfileCompletionBlock callback;
 
 @end
 
 // Create dependencies here for demo purpose only. It shoud be set from the outside
-@implementation APIClient
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.client = [OGOneginiClient sharedInstance];
-    }
-    return self;
-}
+@implementation ResourceController
 
 - (void)getProfile:(ProfileCompletionBlock)completion {
     NSString *configurationFilename = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"OGConfigurationFile"];
@@ -38,7 +28,7 @@
     NSURL *url = [baseURL URLByAppendingPathComponent:@"api/persons"];
     
     self.callback = completion;
-    [self.client fetchResource:url.absoluteString scopes:nil requestMethod:GET params:nil delegate:self];
+    [[OGOneginiClient sharedInstance] fetchResource:url.absoluteString scopes:nil requestMethod:GET params:nil delegate:self];
 }
 
 - (void)handleResponse:(NSData *)response {

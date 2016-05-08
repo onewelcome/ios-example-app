@@ -10,6 +10,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
++ (UINavigationController *)sharedNavigationController;
 @property (strong, nonatomic) UIWindow *window;
 
 @end

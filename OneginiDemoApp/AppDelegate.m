@@ -9,15 +9,27 @@
 #import "AppDelegate.h"
 #import "OneginiSDK.h"
 #import "OneginiClientBuilder.h"
-#import "FlowController.h"
+#import "WelcomeViewController.h"
 
 @implementation AppDelegate
 
++ (UINavigationController *)sharedNavigationController {
+    static UINavigationController *sharedNavigationController;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedNavigationController = [[UINavigationController alloc]initWithRootViewController:[WelcomeViewController new]];
+        sharedNavigationController.navigationBarHidden = YES;
+    });
+    return sharedNavigationController;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [OneginiClientBuilder buildClient];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    self.window.rootViewController = [FlowController sharedInstance].navigationCOntroller;
+    self.window.rootViewController = [AppDelegate sharedNavigationController];
     [self.window makeKeyAndVisible];
     
     return YES;

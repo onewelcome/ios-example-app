@@ -7,7 +7,7 @@
 //
 
 #import "WelcomeViewController.h"
-#import "AuthCoordinator.h"
+#import "AuthorizationController.h"
 
 @interface WelcomeViewController()
 
@@ -19,7 +19,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if ([[AuthCoordinator sharedInstance] isRegistered]){
+    if ([[AuthorizationController sharedInstance] isRegistered]){
         [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
     } else {
         [self.loginButton setTitle:@"Register" forState:UIControlStateNormal];
@@ -27,7 +27,7 @@
 }
 
 - (IBAction)login:(id)sender {
-    [[AuthCoordinator sharedInstance] login];
+    [[AuthorizationController sharedInstance] login];
 }
 
 @end

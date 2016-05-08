@@ -12,7 +12,7 @@
 
 typedef void(^ProfileCompletionBlock)(Profile *profile, NSError *error);
 
-@interface APIClient : NSObject
+@interface ResourceController : NSObject
 
 - (void)getProfile:(ProfileCompletionBlock)completion;
 

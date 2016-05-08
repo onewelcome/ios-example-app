@@ -10,24 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class AuthCoordinator;
-@class OGOneginiClient;
+@interface AuthorizationController : NSObject
 
-@interface AuthCoordinator : NSObject
-
-+ (AuthCoordinator *)sharedInstance;
++ (AuthorizationController *)sharedInstance;
 
 @property (nonatomic, readonly) BOOL isRegistered;
 
-- (void)registerUser;
-- (void)setNewPin:(NSString *)pin;
-- (BOOL)isRegistered;
-
 - (void)login;
-- (void)enterCurrentPIN:(NSString *)pin;
-
-- (void)logout;
-- (void)disconnect;
 
 @end
 

@@ -10,9 +10,9 @@
 #import <UIKit/UIKit.h>
 
 typedef enum : NSUInteger {
-    PINCheckMode,					// Ask current PIN
-    PINRegistrationMode,			// Ask new PIN first entry
-    PINRegistrationVerififyMode,	// Ask new PIN second entry (verification)
+    PINCheckMode,
+    PINRegistrationMode,
+    PINRegistrationVerifyMode,
 } PINEntryMode;
 
 @interface PinViewController : UIViewController
@@ -22,9 +22,7 @@ typedef enum : NSUInteger {
 @property (nonatomic) NSInteger pinLength;
 
 - (void)invalidPinWithReason:(NSString *)message;
-
 - (void)showError:(NSString*)error;
-- (void)wrongPINRemainigAttempts:(NSUInteger)remaining;
 - (void)reset;
 
 @end

@@ -11,7 +11,6 @@
 @interface PinViewController()
 
 @property (weak, nonatomic) IBOutlet UIView *pinSlotsView;
-//@property (nonatomic) NSArray *pin;
 @property (nonatomic) NSArray *pinSlots;
 @property (nonatomic) NSMutableArray *pinEntry;
 @property (nonatomic) NSMutableArray *pinEntryToVerify;
@@ -35,27 +34,45 @@
 
 @implementation PinViewController
 
--(void)viewDidLoad{
+- (void)viewDidLoad{
     [super viewDidLoad];
     self.pinEntry = [NSMutableArray new];
     self.pinEntryToVerify = [NSMutableArray new];
     
-    NSMutableArray *pinSlotsArray = [NSMutableArray new];
+    [self buildPinSlots];
+}
+
+- (void)buildPinSlots{
     float pinSlotMargin = 10;
     float pinSlotWidth = (self.pinSlotsView.frame.size.width-(pinSlotMargin*(self.pinLength-1)))/self.pinLength;
+    
+    NSMutableArray *pinSlotsArray = [NSMutableArray new];
     for (int i=0; i<self.pinLength; i++) {
         CGRect pinSlotFrame = CGRectMake(i*(pinSlotWidth+pinSlotMargin), 0, pinSlotWidth, self.pinSlotsView.frame.size.height);
-        UIView *pinSlotView = [[UIView alloc]initWithFrame:pinSlotFrame];
-        pinSlotView.layer.cornerRadius = 5;
-        pinSlotView.layer.borderColor = [UIColor blackColor].CGColor;
-        pinSlotView.layer.borderWidth = 2;
-        pinSlotView.layer.masksToBounds = YES;
-        pinSlotView.backgroundColor = [UIColor whiteColor];
+        UIView *pinSlotView = [self pinSlotWithFrame:pinSlotFrame];
         [pinSlotsArray addObject:pinSlotView];
         [self.pinSlotsView addSubview:pinSlotView];
     }
     self.pinSlots = [NSArray arrayWithArray:pinSlotsArray];
-    ((UIView*)[self.pinSlots objectAtIndex:0]).layer.borderWidth = 3;
+    [self selectSlotAtIndex:0];
+}
+
+- (UIView*)pinSlotWithFrame:(CGRect)frame{
+    UIView *pinSlotView = [[UIView alloc]initWithFrame:frame];
+    pinSlotView.layer.cornerRadius = 5;
+    pinSlotView.layer.borderColor = [UIColor blackColor].CGColor;
+    pinSlotView.layer.borderWidth = 1;
+    pinSlotView.layer.masksToBounds = YES;
+    pinSlotView.backgroundColor = [UIColor whiteColor];
+    return pinSlotView;
+}
+
+- (void)selectSlotAtIndex:(NSInteger)index{
+    ((UIView*)[self.pinSlots objectAtIndex:index]).layer.borderWidth = 2;
+}
+
+- (void)deselectSlotAtIndex:(NSInteger)index{
+    ((UIView*)[self.pinSlots objectAtIndex:index]).layer.borderWidth = 1;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -78,7 +95,7 @@
             self.titleLabel.text = @"Create PIN";
             self.errorLabel.text = @"";
             break;
-        case PINRegistrationVerififyMode:
+        case PINRegistrationVerifyMode:
             self.titleLabel.text = @"Verify PIN";
             self.errorLabel.text = @"";
             break;
@@ -123,11 +140,11 @@
             }
             case PINRegistrationMode:{
                 self.pinEntryToVerify = self.pinEntry.copy;
-                self.mode = PINRegistrationVerififyMode;
+                self.mode = PINRegistrationVerifyMode;
                 [self reset];
                 break;
             }
-            case PINRegistrationVerififyMode:{
+            case PINRegistrationVerifyMode:{
                 NSString *pincodeToVerify = [self.pinEntryToVerify componentsJoinedByString:@""];
                 NSString *pincode = [self.pinEntry componentsJoinedByString:@""];
                 if ([pincode isEqualToString:pincodeToVerify]){
@@ -162,11 +179,13 @@
         pinIndicator.frame = CGRectMake(slot.frame.size.width/2-pinIndicatorImage.size.width/2, slot.frame.size.height/2-pinIndicatorImage.size.height/2, pinIndicatorImage.size.width, pinIndicatorImage.size.height);
         [slot addSubview:pinIndicator];
     }
-    for (UIView* pinslot in self.pinSlots) {
-        pinslot.layer.borderWidth = 2;
+    
+    for (int i=0; i<self.pinSlots.count; i++) {
+        [self deselectSlotAtIndex:i];
     }
+    
     if (self.pinEntry.count<self.pinSlots.count){
-        ((UIView*)[self.pinSlots objectAtIndex:self.pinEntry.count]).layer.borderWidth = 3;
+        [self selectSlotAtIndex:self.pinEntry.count];
     }
     
     if (self.pinEntry.count == 0){

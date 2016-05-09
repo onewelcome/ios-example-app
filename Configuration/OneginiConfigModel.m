@@ -1,0 +1,25 @@
+#import "OneginiConfigModel.h"
+
+@implementation OneginiConfigModel
+
++(NSArray*)certificates{
+    return @[@"MIIFTzCCBDegAwIBAgIRAOulabXarZyLXNaK0oA+ZFkwDQYJKoZIhvcNAQELBQAwgZAxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMTYwNAYDVQQDEy1DT01PRE8gUlNBIERvbWFpbiBWYWxpZGF0aW9uIFNlY3VyZSBTZXJ2ZXIgQ0EwHhcNMTUwNzAxMDAwMDAwWhcNMTYwNzE1MjM1OTU5WjBaMSEwHwYDVQQLExhEb21haW4gQ29udHJvbCBWYWxpZGF0ZWQxHTAbBgNVBAsTFFBvc2l0aXZlU1NMIFdpbGRjYXJkMRYwFAYDVQQDDA0qLm9uZWdpbmkuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6/JixzyJJ0/BKCD+ybqbt/lYhcmEvyiLKK07L3EiAZfZzCdygMyXfhKKc72Y+pdSOrsaj96PT6EkYkSKchmFPpdfdwoj0njxec4wLyL3Qf5/j+7U++TeK7Jqub45r3TKRnGnKV2DITd+jxvbydMoZ9iwYmohyV5/J2/nYyv3cp/KhuMwv8g+kd4v2g+yrgJ+ew9K82DSGBA8bWB43xd/avOpogwd6imHfWaUnvxQ/WrXkUIwP2XdOBARB7X7RoYSb1gx4BIGteZtmcJbz9A0/uoDCPniEqNU7kdLWFtR9YRm+QMyEkMhQu8MZkEa+eSMBPnMKo/NcOW/+0mWSKASZQIDAQABo4IB1zCCAdMwHwYDVR0jBBgwFoAUkK9qOpRaC9iQ6hJWc99DtDoo2ucwHQYDVR0OBBYEFJZy0KFkYIJVrWxUmXNdeT0cyeK2MA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjBPBgNVHSAESDBGMDoGCysGAQQBsjEBAgIHMCswKQYIKwYBBQUHAgEWHWh0dHBzOi8vc2VjdXJlLmNvbW9kby5jb20vQ1BTMAgGBmeBDAECATBUBgNVHR8ETTBLMEmgR6BFhkNodHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9DT01PRE9SU0FEb21haW5WYWxpZGF0aW9uU2VjdXJlU2VydmVyQ0EuY3JsMIGFBggrBgEFBQcBAQR5MHcwTwYIKwYBBQUHMAKGQ2h0dHA6Ly9jcnQuY29tb2RvY2EuY29tL0NPTU9ET1JTQURvbWFpblZhbGlkYXRpb25TZWN1cmVTZXJ2ZXJDQS5jcnQwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9kb2NhLmNvbTAlBgNVHREEHjAcgg0qLm9uZWdpbmkuY29tggtvbmVnaW5pLmNvbTANBgkqhkiG9w0BAQsFAAOCAQEAcqklnwqhNs+zo3T4TF4zsUS5s+ZU/sttKbmVitZUEHNlPE3yphQWaYNWrqWOth4cn41hfCxRDLGGz74xb1jhJeFqtugeHEgYKcFlk2zP72r9fub24l18tm039KimXY6ePlxxAWHb/yhZSQa45JBAsKx505y8/C+iSbsS3th8joJ1JTdoKEcL9lpSY+S/uDM630LCbElN32AjHhc9HTUpmXpgg4kIzfPk/2VsEh80V7nIIr3Szl42RniqC00e8fBqsIU5Z9u9mapq7H8FRiBYtofIlht1Nd+QEq57zrJ4Oe5qh9B9Ecj/C0UtntgJsPw5kHmIY8P28xGAfL90+/Wigw==",];
+}
+
++(NSDictionary*)configuration{
+	return @{
+		@"kOGAppIdentifier":@"ExampleApp",
+	  	@"kOGAppScheme":@"oneginiexample",
+	  	@"kOGAppPlatform":@"ios",
+	  	@"kOGAppVersion":@"1.0.0",
+		@"kOGAppBaseURL":@"https://tokenserver-demo-test.onegini.com",
+		@"kOGMaxPinFailures":@"3",
+		@"kOGResourceBaseURL":@"https://resourcegateway-demo-test.onegini.com",
+		@"kOGRedirectURL":@"oneginiexample://loginsuccess",
+		@"kOGStoreCookies":@(YES),
+		@"kOGUseEmbeddedWebview":@(YES),
+		@"kOGDeviceName":@"",
+	};
+}
+
+@end

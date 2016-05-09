@@ -214,45 +214,34 @@ module.exports = {
    *
    * NEW DECLARATION
    *
-   * @param callback                    Callback method executed on success, should have definition like this:
-   *                                    - onResponse(headers, status, reason, requestUrl, body);
-   * @param {String} path               Location on the resource server to return the resource. The base URI of the
-   *                                    resource server is.
-   * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
-   * @param {Object} params             Parameters to send with the request.
-   * @param {Object} headers            Optional custom headers to send with the request.
+   * @param callback                          Callback method executed on success, should have definition like this:
+   *                                          - onResponse(headers, status, reason, requestUrl, body);
+   * @param {String} param1 (path)            Location on the resource server to return the resource. The base URI of the
+   *                                          resource server is.
+   * @param {String} param2 (requestMethod)   HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+   * @param {Object} param3 (params)          Parameters to send with the request.
+   * @param {Object} param4 (headers)         Optional custom headers to send with the request.
    *
    * DEPRECATED (OLD) DECLARATION
    *
-   * @param {Object} callback           Object that can handle page transition for the outcome of the action.
-   *                                    Should at least implement the following methods:
-   *                                    - errorConnectivityProblem -> method called whenever plugin isn't able to
-   *                                    establish connection with the server
-   *                                    - resourceFetched -> method to be called once resource is successfully fetched,
-   *                                    resource content is passed as a param
-   *                                    - resourceCallError -> indicates general resource call error
-   *                                    - resourceCallAuthenticationFailed -> called whenever authentication for
-   *                                    accessing specific resource fails
-   *                                    - resourceCallScopeError -> method called when the scope linked to the provided
-   *                                    access token is not the needed scope
-   *                                    - resourceCallBadRequest -> resource call ended up with bad request
-   *                                    - resourceCallUnauthorized -> method called requested grant type is not allowed
-   *                                    for this client
-   *                                    - resourceCallInvalidGrant -> Method called when the grant type to get
-   *                                    the client credentials is not enabled
-   * @param {String} path               Location on the resource server to return the resource. The base URI of the
-   *                                    resource server is.
-   * @param {Array} scopes              Array of Strings with scopes to fetch the resource.
-   * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
-   * @param {String} paramsEncoding     Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
-   * @param {Object} params             Parameters to send with the request.
-   * @param {Object} headers            Optional custom headers to send with the request.
+   * @param {Object} callback                 Object that can handle page transition for the outcome of the action.
+   *                                          Should at least implement the following methods:
+   *                                          - resourceFetched -> method to be called once resource is successfully fetched,
+   *                                          resource content is passed as a param
+   *                                          - resourceCallError -> indicates general resource call error
+   * @param {String} param1 (path)            Location on the resource server to return the resource. The base URI of the
+   *                                          resource server is.
+   * @param {Array} param2 (scopes)           @deprecated not used anymore
+   * @param {String} param3 (requestMethod)   HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+   * @param {String} param4 (paramsEncoding)  @deprecated not used anymore
+   * @param {Object} param5 (params)          Parameters to send with the request.
+   * @param {Object} param6 (headers)         Optional custom headers to send with the request.
    */
-  fetchResource: function (callback, path, scopes, requestMethod, paramsEncoding, params, headers) {
+  fetchResource: function (callback, param1, param2, param3, param4, param5, param6) {
     function isOldApi() {
       return typeof callback.resourceFetched === 'function';
     }
-    function fetchResource(router, path, scopes, requestMethod, paramsEncoding, params, headers) {
+    function fetchResource(router, path, requestMethod, params, headers) {
       oneginiCordovaPlugin.preserveCurrentLocation();
 
       var onSuccess = function (response) {
@@ -285,10 +274,19 @@ module.exports = {
       exec(responseCallback, responseCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
     }
 
+    var _path, _requestMethod, _params, _headers;
     if (isOldApi()) {
-      fetchResource(callback, path, scopes, requestMethod, paramsEncoding, params, headers);
+      _path = param1;
+      _requestMethod = param3;
+      _params = param5;
+      _headers = param6;
+      fetchResource(callback, _path, _requestMethod, _params, _headers);
     } else {
-      fetchResourceNewApi(callback, path, scopes, requestMethod, paramsEncoding);
+      _path = param1;
+      _requestMethod = param2;
+      _params = param3;
+      _headers = param4;
+      fetchResourceNewApi(callback, _path, _requestMethod, _params, _headers);
     }
   },
 

@@ -19,6 +19,7 @@ import static com.onegini.OneginiConstants.INIT_PIN_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.IN_APP_BROWSER_CONTROL_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.LOGOUT_ACTION;
 import static com.onegini.OneginiConstants.MOBILE_AUTHENTICATION_ENROLL_ACTION;
+import static com.onegini.OneginiConstants.READ_CONFIG_PROPERTY_ACTION;
 import static com.onegini.OneginiConstants.REAUTHORIZE_ACTION;
 import static com.onegini.OneginiConstants.SETUP_SCREEN_ORIENTATION;
 import static com.onegini.OneginiConstants.VALIDATE_PIN_ACTION;
@@ -54,6 +55,7 @@ import com.onegini.action.OneginiPluginAction;
 import com.onegini.action.PinCallbackSession;
 import com.onegini.action.PinProvidedAction;
 import com.onegini.action.PluginInitializer;
+import com.onegini.action.PropertyReaderAction;
 import com.onegini.action.ReauthorizeAction;
 import com.onegini.action.SetupScreenOrientationAction;
 import com.onegini.action.ValidatePinAction;
@@ -123,6 +125,8 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     actions.put(ENROLL_FOR_FINGEPRINT_AUTHENITCATION, EnrollForFingerprintAction.class);
     actions.put(DISABLE_FINGEPRINT_AUTHENITCATION, DisableFingerprintAuthenticationAction.class);
     actions.put(FINGERPRINT_AUTHENTICATION_STATE, FingerprintAuthenticationStateAction.class);
+
+    actions.put(READ_CONFIG_PROPERTY_ACTION, PropertyReaderAction.class);
   }
 
   private OneginiPluginAction buildActionClassFor(final String action) {

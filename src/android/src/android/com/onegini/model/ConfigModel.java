@@ -25,7 +25,7 @@ public class ConfigModel implements OneginiClientConfigModel {
     return config;
   }
 
-  private static String getStringFromPreferences(final CordovaPreferences preferences, final String key) throws PluginConfigException {
+  public static String getStringFromPreferences(final CordovaPreferences preferences, final String key) throws PluginConfigException {
     final String value = preferences.getString(key, null);
     if (value == null) {
       throw new PluginConfigException("Missing property in config.xml file: "+key);

@@ -28,7 +28,30 @@ Initiates static callback session to enable control over InAppBrowser from nativ
 **Param** `errorCallback` - Function to be called when action fails
 
 
-### fetchResource(router, path, scopes, requestMethod, paramsEncoding, params, headers)
+### xmlHttpRequest.create(onCompleted)
+Overrides standard XmlHttpRequest to pass request through resource server so instead of sending request directly to specified address it will be passed to 
+resource server.
+
+**Param** onCompleted callback method called after new XmlHttpRequest is ready to use
+
+### xmlHttpRequest.revert()
+Restores original XmlHttpRequest.
+
+### fetchResource(onResponse, path, requestMethod, params, headers)
+Fetches a specific resource. The access token validation flow is invoked if no valid access token is available.
+
+**Param** `onResponse` - Callback method called after request has been completed. Method declaration should look like this `onResponse(headers, status, reason, requestUrl, body)`
+
+**Param** `path` - Location on the resource server to return the resource. The base URI of the resource server is.
+
+**Param** `requestMethod` - HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+
+**Param** `params` - Parameters to send with the request.
+
+**Param** `headers` - Optional custom headers to send with the request.
+
+
+### \[DEPRECATED\] fetchResource(router, path, scopes, requestMethod, paramsEncoding, params, headers)
 Fetches a specific resource. The access token validation flow is invoked if no valid access token is available.
 
 **Param** `router` - Object that can handle page transition for the outcome of the action. Should at least implement the following methods:
@@ -54,7 +77,20 @@ Fetches a specific resource. The access token validation flow is invoked if no v
 **Param** `headers` - Optional custom headers to send with the request.
 
 
-### fetchAnonymousResource(successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params, headers)
+### fetchAnonymousResource(onResponse, path, requestMethod, params, headers)
+Fetches a specific resource anonymously using a client access token. The access token validation flow is invoked if no valid access token is available.
+
+**Param** `onResponse` - Callback method called after request has been completed. Method declaration should look like this `onResponse(headers, status, reason, requestUrl, body)`
+
+**Param** `path` - Location on the resource server to return the resource. The base URI of the resource server is.
+
+**Param** `requestMethod` - HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+
+**Param** `params` - Parameters to send with the request.
+
+**Param** `headers` - Optional custom headers to send with the request.
+
+### \[DEPRECATED\] fetchAnonymousResource(successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params, headers)
 Fetches a specific resource anonymously using a client access token. The access token validation flow is invoked if no valid access token is available.
 
 **Param** `successCallback` - Function that can handle the successful resource call. Is called with a JSON response object as argument.

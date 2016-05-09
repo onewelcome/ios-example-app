@@ -1,52 +1,52 @@
 package com.onegini.action;
 
-import static com.onegini.resource.ResourceHandler.buildResourceHandlerForCallback;
+import static com.onegini.resource.ResourceRequest.PARAMETERS_WITH_HEADERS_LENGTH;
 import static com.onegini.resource.ResourceRequest.buildRequestFromArgs;
+import static com.onegini.resource.ResourceRequestCallback.sendCallbackResult;
 import static com.onegini.response.GeneralResponse.CONNECTIVITY_PROBLEM;
-import static com.onegini.util.DeviceUtil.isNotConnected;
+import static com.onegini.util.DeviceUtil.isConnected;
 
 import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 
 import android.content.Context;
-import com.onegini.mobile.sdk.android.library.handlers.OneginiResourceHandler;
 import com.onegini.OneginiCordovaPlugin;
-import com.onegini.resource.AnonymousResourceClient;
+import com.onegini.resource.RequestAdapterFactory;
+import com.onegini.resource.ResourceClientFactory;
 import com.onegini.resource.ResourceRequest;
-import com.onegini.util.CallbackResultBuilder;
+import com.onegini.resource.ResourceRequestCallback;
+import com.onegini.util.ResourcePluginResultBuilder;
 
 public class FetchResourceAnonymouslyAction implements OneginiPluginAction {
 
-  private final CallbackResultBuilder callbackResultBuilder;
-
-  public FetchResourceAnonymouslyAction() {
-    callbackResultBuilder = new CallbackResultBuilder();
-  }
-
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
-    if (args.length() != 6) {
-      callbackContext.error("Invalid parameter, expected 6, got " + args.length() + ".");
+    if (args.length() != PARAMETERS_WITH_HEADERS_LENGTH) {
+      final String message = String.format("Invalid parameter, expected %d, got %d", PARAMETERS_WITH_HEADERS_LENGTH, args.length());
+      sendCallbackResult(callbackContext, new ResourcePluginResultBuilder(message).withError().build());
       return;
     }
 
     final Context context = client.getCordova().getActivity().getApplication();
-    if (isNotConnected(context)) {
-      callbackContext.sendPluginResult(
-          callbackResultBuilder
-              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
-              .build());
-      return;
-    }
 
-    final ResourceRequest resourceRequest = buildRequestFromArgs(args);
-    if (resourceRequest == null) {
-      callbackContext.error("Failed to fetch resource, invalid params.");
-      return;
-    }
+    if (isConnected(context)) {
+      final ResourceRequest resourceRequest = buildRequestFromArgs(args);
+      if (resourceRequest == null) {
+        sendCallbackResult(callbackContext, new ResourcePluginResultBuilder("Failed to fetch resource, invalid params.").withError().build());
+        return;
+      }
 
-    final AnonymousResourceClient resClient = new AnonymousResourceClient(client.getOneginiClient(), resourceRequest);
-    final OneginiResourceHandler<String> oneginiResourceHandler = buildResourceHandlerForCallback(callbackContext);
-    resClient.performResourceAction(oneginiResourceHandler, resourceRequest.getScopes(), resourceRequest.getParams().toString());
+      final String requestMethod = resourceRequest.getRequestMethodString();
+      final ResourceRequestCallback resourceRequestCallback = new ResourceRequestCallback(callbackContext);
+      final RequestAdapterFactory requestAdapterFactory =
+          new RequestAdapterFactory(client.getOneginiClient().getAnonymousResourceRetrofitClient(), client.getOneginiClient(), resourceRequest);
+
+      new ResourceClientFactory(resourceRequestCallback, requestAdapterFactory)
+          .build(requestMethod)
+          .send(client.getOneginiClient(), resourceRequest, callbackContext, context);
+    } else {
+      sendCallbackResult(callbackContext, new ResourcePluginResultBuilder(CONNECTIVITY_PROBLEM.getName()).withError().build());
+    }
   }
+
 }

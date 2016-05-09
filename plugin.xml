@@ -192,6 +192,8 @@
                  target-dir="src/com/onegini/action/authorization/"/>
     <source-file src="src/android/src/android/com/onegini/action/authorization/AuthorizationActionExecutor.java"
                  target-dir="src/com/onegini/action/authorization/"/>
+    <source-file src="src/android/src/android/com/onegini/action/PropertyReaderAction.java"
+                 target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/AuthorizeAction.java"
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/ReauthorizeAction.java"
@@ -284,17 +286,29 @@
     <source-file src="src/android/src/android/com/onegini/model/ConfigModel.java" target-dir="src/com/onegini/model/"/>
     <source-file src="src/android/src/android/com/onegini/model/MessageKey.java" target-dir="src/com/onegini/model/"/>
     <!-- resource -->
-    <source-file src="src/android/src/android/com/onegini/resource/AnonymousResourceClient.java"
+    <source-file src="src/android/src/android/com/onegini/resource/RetrofitByteConverter.java"
                  target-dir="src/com/onegini/resource/"/>
-    <source-file src="src/android/src/android/com/onegini/resource/ResourceClient.java"
+    <source-file src="src/android/src/android/com/onegini/resource/GetResourceRequestCommand.java"
                  target-dir="src/com/onegini/resource/"/>
-    <source-file src="src/android/src/android/com/onegini/resource/ResourceHandler.java"
+    <source-file src="src/android/src/android/com/onegini/resource/PostResourceRequestCommand.java"
                  target-dir="src/com/onegini/resource/"/>
-    <source-file src="src/android/src/android/com/onegini/resource/ResourceRequest.java"
+    <source-file src="src/android/src/android/com/onegini/resource/DeleteResourceRequestCommand.java"
+                 target-dir="src/com/onegini/resource/"/>
+    <source-file src="src/android/src/android/com/onegini/resource/PutResourceRequestCommand.java"
+                 target-dir="src/com/onegini/resource/"/>
+    <source-file src="src/android/src/android/com/onegini/resource/ResourceRequestCommand.java"
+                 target-dir="src/com/onegini/resource/"/>
+    <source-file src="src/android/src/android/com/onegini/resource/ResourceRequestCallback.java"
+                 target-dir="src/com/onegini/resource/"/>
+    <source-file src="src/android/src/android/com/onegini/resource/RequestAdapterFactory.java"
                  target-dir="src/com/onegini/resource/"/>
     <source-file src="src/android/src/android/com/onegini/resource/ResourceRequestHeaderInterceptor.java"
                  target-dir="src/com/onegini/resource/"/>
-    <source-file src="src/android/src/android/com/onegini/resource/RestResourceInterface.java"
+    <source-file src="src/android/src/android/com/onegini/resource/ResourceClientFactory.java"
+                 target-dir="src/com/onegini/resource/"/>
+      <source-file src="src/android/src/android/com/onegini/resource/ResourceRequest.java"
+                 target-dir="src/com/onegini/resource/"/>
+    <source-file src="src/android/src/android/com/onegini/resource/RestResource.java"
                  target-dir="src/com/onegini/resource/"/>
     <!-- response -->
     <source-file src="src/android/src/android/com/onegini/response/GeneralResponse.java"
@@ -313,6 +327,8 @@
     <source-file src="src/android/src/android/com/onegini/scope/ScopeParser.java" target-dir="src/com/onegini/scope/"/>
     <!-- util -->
     <source-file src="src/android/src/android/com/onegini/util/CallbackResultBuilder.java"
+                 target-dir="src/com/onegini/util/"/>
+    <source-file src="src/android/src/android/com/onegini/util/ResourcePluginResultBuilder.java"
                  target-dir="src/com/onegini/util/"/>
     <source-file src="src/android/src/android/com/onegini/util/HashUtil.java" target-dir="src/com/onegini/util/"/>
     <source-file src="src/android/src/android/com/onegini/util/DeviceUtil.java" target-dir="src/com/onegini/util/"/>

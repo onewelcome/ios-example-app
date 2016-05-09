@@ -1,6 +1,132 @@
 var exec = require('cordova/exec');
 
 module.exports = {
+
+  /**
+   * Handles wrapped XmlHttpRequest responsible for fetching resources from onegini resource server. It gives possibility to load resources by calling standard
+   * ajax request.
+   * Attention! It take some time to prepare XmlHttpRequest because of internal configuration requests.
+   *
+   * With JQuery it will look like:
+   *
+   * // override XmlHttpRequest
+   * var onCreated = function() {
+   *   console.log(''wrapped xhr created);
+   *   $.ajax({
+   *     url: 'http://resource-server.com/my/resource',
+   *     method: 'GET',
+   *     success: function(response) {
+   *       console.log('resource fetched');
+   *     },
+   *     fail: function(error) {
+   *       console.log('fail to fetch resource');
+   *     },
+   *   });
+   * };
+   * // revert XmlHttpRequest if needed
+   * oneginiCordovaPlugin.xmlHttpRequest.create(onCreated);
+   * oneginiCordovaPlugin.xmlHttpRequest.revert();
+   *
+   */
+  xmlHttpRequest: {
+
+    ProxiedXMLHttpRequest: XMLHttpRequest,
+
+    revert: function() {
+      XMLHttpRequest = this.ProxiedXMLHttpRequest;
+    },
+
+    create: function(onCompleted) {
+      var LocalProxiedXMLHttpRequest = this.ProxiedXMLHttpRequest;
+      oneginiCordovaPlugin.readConfigProperty(oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_SERVER_BASE_URL_CONFIG_KEY, function(appBaseUrl) {
+        create(appBaseUrl);
+        onCompleted();
+      });
+
+      function create(appBaseUrl) {
+        XMLHttpRequest = function () {
+          var proxied = new LocalProxiedXMLHttpRequest();
+          var proxy = this;
+          var $path, $method, $status, $isRequestToResourceServer = true;
+
+          proxy.open = function() {
+            var _arguments = arguments;
+            var requestUrl = _arguments[1];
+            $isRequestToResourceServer = (function() {
+              var start = requestUrl.indexOf(appBaseUrl);
+              return start != -1;
+            })();
+
+            if ($isRequestToResourceServer) {
+              $path = requestUrl.substring(appBaseUrl.length);
+              $method = _arguments[0];
+              return proxied.open.apply(proxied, _arguments);
+            } else {
+              ["status", "responseText", "readyState"].forEach(function (item) {
+                Object.defineProperty(proxy, item, {
+                  get: function () {
+                    return proxied[item];
+                  }
+                });
+              });
+              return proxied.open.apply(proxied, _arguments);
+            }
+          };
+
+          proxy.send = function () {
+            if ($isRequestToResourceServer) {
+              var prepareBody = function () {
+                var requestBody = arguments[0];
+                if (requestBody === null || requestBody === undefined) {
+                  return JSON.parse("{}");
+                }
+                else {
+                  return (JSON.parse(requestBody));
+                }
+              };
+              var onResponse = function (headers, status, reason, requestUrl, body) {
+                proxy.responseText = body;
+                proxy.readyState = 4;
+                proxy.status = status;
+                proxied.onload.apply(proxied, arguments);
+              };
+              oneginiCordovaPlugin.fetchResource(onResponse, $path, $method, prepareBody());
+            } else {
+              return proxied.send.apply(proxied, arguments);
+            }
+          };
+
+          ["statusText", "responseType", "response", "responseXML", "upload"].forEach(function (item) {
+            Object.defineProperty(proxy, item, {
+              get: function () {
+                return proxied[item];
+              }
+            });
+          });
+
+          ["ontimeout", "timeout", "withCredentials", "onload", "onerror", "onprogress", "onreadystatechange"].forEach(function (item) {
+            Object.defineProperty(proxy, item, {
+              get: function () {
+                return proxied[item];
+              },
+              set: function (val) {
+                proxied[item] = val;
+              }
+            });
+          });
+
+          ["addEventListener", "abort", "getAllResponseHeaders", "getResponseHeader", "overrideMimeType", "setRequestHeader"].forEach(function (item) {
+            Object.defineProperty(proxy, item, {
+              value: function () {
+                return proxied[item].apply(proxied, arguments);
+              }
+            });
+          });
+        }
+      }
+    }
+  },
+
   /**
    * Awaits notification that the Onegini plugin initialization is finished.
    * @param {Object} router   Object that can handle page transition for the outcome of the action. Should at
@@ -84,10 +210,104 @@ module.exports = {
   },
 
   /**
-   * Fetches a specific resource.
-   * The access token validation flow is invoked if no valid access token is available.
+   * Fetches a specific resource. To provide compatibility with previous version, two declarations are available:
    *
-   * @param {Object} router             Object that can handle page transition for the outcome of the action.
+   * NEW DECLARATION
+   *
+   * @param callback                          Callback method executed on success, should have definition like this:
+   *                                          - onResponse(headers, status, reason, requestUrl, body);
+   * @param {String} param1 (path)            Location on the resource server to return the resource. The base URI of the
+   *                                          resource server is.
+   * @param {String} param2 (requestMethod)   HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+   * @param {Object} param3 (params)          Parameters to send with the request.
+   * @param {Object} param4 (headers)         Optional custom headers to send with the request.
+   *
+   * DEPRECATED (OLD) DECLARATION
+   *
+   * @param {Object} callback                 Object that can handle page transition for the outcome of the action.
+   *                                          Should at least implement the following methods:
+   *                                          - resourceFetched -> method to be called once resource is successfully fetched,
+   *                                          resource content is passed as a param
+   *                                          - resourceCallError -> indicates general resource call error
+   * @param {String} param1 (path)            Location on the resource server to return the resource. The base URI of the
+   *                                          resource server is.
+   * @param {Array} param2 (scopes)           @deprecated not used anymore
+   * @param {String} param3 (requestMethod)   HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+   * @param {String} param4 (paramsEncoding)  @deprecated not used anymore
+   * @param {Object} param5 (params)          Parameters to send with the request.
+   * @param {Object} param6 (headers)         Optional custom headers to send with the request.
+   */
+  fetchResource: function (callback, param1, param2, param3, param4, param5, param6) {
+    function isOldApi() {
+      return typeof callback.resourceFetched === 'function';
+    }
+    function fetchResource(router, path, requestMethod, params, headers) {
+      oneginiCordovaPlugin.preserveCurrentLocation();
+
+      var onSuccess = function (response) {
+        var body = window.atob(response.body);
+        router.resourceFetched(body);
+      };
+
+      var onError = function (response) {
+        router.resourceCallError();
+      };
+
+      var methodArgs = [path, requestMethod, params, headers];
+
+      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
+    }
+    function fetchResourceNewApi(onResponse, path, requestMethod, params, headers) {
+      oneginiCordovaPlugin.preserveCurrentLocation();
+
+      var responseCallback = function(response) {
+        var headers = JSON.stringify(response.headers);
+        var status = JSON.stringify(response.status);
+        var reason = JSON.stringify(response.reason);
+        var requestUrl = JSON.stringify(response.url);
+        var body = window.atob(response.body);
+
+        onResponse(headers, status, reason, requestUrl, body);
+      };
+      var methodArgs = [path, requestMethod, params, headers];
+
+      exec(responseCallback, responseCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
+    }
+
+    var _path, _requestMethod, _params, _headers;
+    if (isOldApi()) {
+      _path = param1;
+      _requestMethod = param3;
+      _params = param5;
+      _headers = param6;
+      fetchResource(callback, _path, _requestMethod, _params, _headers);
+    } else {
+      _path = param1;
+      _requestMethod = param2;
+      _params = param3;
+      _headers = param4;
+      fetchResourceNewApi(callback, _path, _requestMethod, _params, _headers);
+    }
+  },
+
+  /**
+   * Fetches a specific resource anonymously.
+   *
+   * To provide compatibility with previous version, two declarations are available:
+   *
+   * NEW DECLARATION
+   *
+   * @param callback                    Callback method executed on success, should have definition like this:
+   *                                    - onResponse(headers, status, reason, requestUrl, body);
+   * @param {String} path               Location on the resource server to return the resource. The base URI of the
+   *                                    resource server is.
+   * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
+   * @param {Object} params             Parameters to send with the request.
+   * @param {Object} headers            Optional custom headers to send with the request.
+   *
+   * DEPRECATED (OLD) DECLARATION
+   *
+   * @param {Object} callback           Object that can handle page transition for the outcome of the action.
    *                                    Should at least implement the following methods:
    *                                    - errorConnectivityProblem -> method called whenever plugin isn't able to
    *                                    establish connection with the server
@@ -111,75 +331,48 @@ module.exports = {
    * @param {Object} params             Parameters to send with the request.
    * @param {Object} headers            Optional custom headers to send with the request.
    */
-  fetchResource: function (router, path, scopes, requestMethod, paramsEncoding, params, headers) {
-    oneginiCordovaPlugin.preserveCurrentLocation();
+  fetchAnonymousResource: function (callback, path, scopes, requestMethod, paramsEncoding, params, headers) {
+    function isOldApi() {
+      return typeof callback.resourceFetched === 'function';
+    }
+    function fetchAnonymousResource(router, path, scopes, requestMethod, paramsEncoding, params, headers) {
+      oneginiCordovaPlugin.preserveCurrentLocation();
 
-    var onSuccess = function (response) {
-      router.resourceFetched(response);
-    };
+      var onSuccess = function (response) {
+        var body = window.atob(response.body);
+        router.resourceFetched(body);
+      };
 
-    var onError = function (error) {
-      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
-        router.errorConnectivityProblem();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_ERROR) {
+      var onError = function (response) {
         router.resourceCallError();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_AUTH_FAILED) {
-        router.resourceCallAuthenticationFailed();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_SCOPE_ERROR) {
-        router.resourceCallScopeError();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_BAD_REQUEST) {
-        router.resourceCallBadRequest();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_UNAUTHORIZED) {
-        router.resourceCallUnauthorized();
-      }
-      else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_INVALID_GRANT) {
-        router.resourceCallInvalidGrant();
-      }
-    };
+      };
 
-    var methodArgs = [path, scopes, requestMethod, paramsEncoding, params, headers];
+      var methodArgs = [path, requestMethod, params, headers];
 
-    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
-  },
+      exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, methodArgs);
+    }
+    function fetchAnonymousResourceNewApi(onResponse, path, requestMethod, params, headers) {
+      oneginiCordovaPlugin.preserveCurrentLocation();
 
-  /**
-   * Fetches a specific resource anonymously using a client access token.
-   * The access token validation flow is invoked if no valid access token is available.
-   *
-   * @param {Function} successCallback  Function that can handle the successful resource call. Is called with a JSON
-   *                                    response object as argument.
-   * @param {Function} errorCallback    Function that can handle an unsuccessful resource call. Is called with the
-   *                                    error object as argument.
-   * @param {String} path               Location on the resource server to return the resource. The base URI of the
-   *                                    resource server is.
-   * @param {Array} scopes              Array of Strings with scopes to fetch the resource.
-   * @param {String} requestMethod      HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
-   * @param {String} paramsEncoding     Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
-   * @param {Object} params             Parameters to send with the request.
-   * @param {Object} headers            Optional custom headers to send with the request.
-   */
-  fetchAnonymousResource: function (successCallback, errorCallback, path, scopes, requestMethod, paramsEncoding, params, headers) {
-    // not implemented in the base app yet
+      var responseCallback = function(response) {
+        var headers = JSON.stringify(response.headers);
+        var status = JSON.stringify(response.status);
+        var reason = JSON.stringify(response.reason);
+        var requestUrl = JSON.stringify(response.url);
+        var body = window.atob(response.body);
 
-    var onSuccess = function (response) {
-      if (successCallback) {
-        successCallback(response);
-      }
-    };
+        onResponse(headers, status, reason, requestUrl, body);
+      };
+      var methodArgs = [path, requestMethod, params, headers];
 
-    var onError = function (error) {
-      if (errorCallback) {
-        errorCallback(error);
-      }
-    };
+      exec(responseCallback, responseCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, methodArgs);
+    }
 
-    var methodArgs = [path, scopes, requestMethod, paramsEncoding, params, headers];
-    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_ANONYMOUS_RESOURCE, methodArgs);
+    if (isOldApi()) {
+      fetchAnonymousResource(callback, path, scopes, requestMethod, paramsEncoding, params, headers);
+    } else {
+      fetchAnonymousResourceNewApi(callback, path, scopes, requestMethod, paramsEncoding);
+    }
   },
 
   /**
@@ -662,6 +855,17 @@ module.exports = {
     return ( navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("iPad") > 0 || navigator.userAgent.indexOf("iPod") > 0);
   },
 
+  readConfigProperty: function(propertyKey, onFetched) {
+    var onSuccess = function(propertyValue) {
+      onFetched(propertyValue);
+    };
+    var onError = function(propertyValue) {
+      onFetched(propertyValue);
+    };
+    var methodArgs = [propertyKey];
+    exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.READ_CONFIG_PROPERTY_ACTION, methodArgs);
+  },
+
   /**
    * List of constant values used in communication with OneginiCordovaPlugin.
    */
@@ -748,7 +952,11 @@ module.exports = {
     FINGERPRINT_ENROLL_FOR_FINGERPRINT_AUTHENTICATION: "enrollForFingerprintAuthentication",
     FINGERPRINT_ENROLMENT_SUCCESS: "fingerprint_enrolment_success",
     FINGERPRINT_ENROLMENT_FAILURE: "fingerprint_enrolment_failure",
-    FINGERPRINT_ENROLMENT_FAILURE_TOO_MANY_PIN_ATTEMPTS: "fingerprint_enrolment_failure_too_many_attempts"
+    FINGERPRINT_ENROLMENT_FAILURE_TOO_MANY_PIN_ATTEMPTS: "fingerprint_enrolment_failure_too_many_attempts",
+
+    READ_CONFIG_PROPERTY_ACTION: "readConfigProperty",
+
+    RESOURCE_SERVER_BASE_URL_CONFIG_KEY: "kOGResourceBaseURL"
   }
 };
 

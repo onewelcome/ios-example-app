@@ -7,10 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OneginiSDK.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface AuthorizationController : NSObject
+@interface AuthorizationController : NSObject <OGAuthorizationDelegate, OGPinValidationDelegate>
 
 + (AuthorizationController *)sharedInstance;
 
@@ -19,5 +18,3 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)login;
 
 @end
-
-NS_ASSUME_NONNULL_END

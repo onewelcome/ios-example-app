@@ -7,9 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "OneginiSDK.h"
-#import "OneginiClientBuilder.h"
 #import "WelcomeViewController.h"
+#import "AuthorizationController.h"
 
 @implementation AppDelegate
 
@@ -25,7 +24,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [OneginiClientBuilder buildClient];
+    self.client = [[OGOneginiClient alloc]initWithDelegate:[AuthorizationController sharedInstance]];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     

@@ -7,12 +7,7 @@
 //
 
 #import "DisconnectController.h"
-#import "OneginiSDK.h"
 #import "AppDelegate.h"
-
-@interface DisconnectController () <OGDisconnectDelegate>
-
-@end
 
 @implementation DisconnectController
 

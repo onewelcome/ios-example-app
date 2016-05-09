@@ -8,8 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-// do not remove. even it is not in use directly, OG finds it in the runtime
+/**
+ *  Class responsible for toggling debug/jailbreak detection. This class is read by the Onegini SDK trough reflection.
+ */
 @interface SecurityController : NSObject
+
 +(bool)rootDetection;
 +(bool)debugDetection;
+
 @end

@@ -7,12 +7,7 @@
 //
 
 #import "LogoutController.h"
-#import "OneginiSDK.h"
 #import "AppDelegate.h"
-
-@interface LogoutController() <OGLogoutDelegate>
-
-@end
 
 @implementation LogoutController
 

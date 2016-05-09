@@ -7,15 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OneginiSDK.h"
 
 @class Profile;
 
-typedef void(^ProfileCompletionBlock)(Profile *profile, NSError *error);
-
-@interface ResourceController : NSObject
+@interface ResourceController : NSObject <OGResourceHandlerDelegate>
 
 + (instancetype)sharedInstance;
 
-- (void)getProfile:(ProfileCompletionBlock)completion;
+- (void)getProfile:(void(^)(Profile *profile, NSError *error))completion;
 
 @end

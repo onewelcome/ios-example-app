@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OneginiSDK.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 + (UINavigationController *)sharedNavigationController;
-@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic) UIWindow *window;
+@property (nonatomic) OGOneginiClient *client;
 
 @end

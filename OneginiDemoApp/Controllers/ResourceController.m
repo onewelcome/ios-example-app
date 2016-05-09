@@ -7,17 +7,14 @@
 //
 
 #import "ResourceController.h"
-#import "OneginiSDK.h"
 #import "Profile.h"
 
-@interface ResourceController () <OGResourceHandlerDelegate>
+@interface ResourceController ()
 
-@property (nonatomic, copy) ProfileCompletionBlock callback;
-@property (nonatomic, strong) NSURL *baseURL;
+@property (nonatomic, copy) void(^callback)(Profile *profile, NSError *error);
 
 @end
 
-// Create dependencies here for demo purpose only. It shoud be set from the outside
 @implementation ResourceController
 
 +(instancetype)sharedInstance{
@@ -31,22 +28,9 @@
     return singleton;
 }
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        NSString *configurationFilename = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"OGConfigurationFile"];
-        NSString *configurationFilePath = [[NSBundle mainBundle] pathForResource:configurationFilename ofType:nil];
-        NSMutableDictionary *config = [[NSDictionary dictionaryWithContentsOfFile:configurationFilePath] mutableCopy];
-        self.baseURL = [[NSURL alloc] initWithString:config[@"kOGResourceGatewayURL"]];
-    }
-    return self;
-}
-
-- (void)getProfile:(ProfileCompletionBlock)completion {
-    NSURL *url = [self.baseURL URLByAppendingPathComponent:@"api/persons"];
-
+- (void)getProfile:(void(^)(Profile *profile, NSError *error))completion {
     self.callback = completion;
-    [[OGOneginiClient sharedInstance] fetchResource:url.absoluteString scopes:nil requestMethod:GET params:nil delegate:self];
+    [[OGOneginiClient sharedInstance] fetchResource:@"/api/persons" scopes:nil requestMethod:GET params:nil delegate:self];
 }
 
 - (void)handleResponse:(NSData *)response {

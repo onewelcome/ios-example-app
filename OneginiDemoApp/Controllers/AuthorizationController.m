@@ -7,15 +7,10 @@
 //
 
 #import "AuthorizationController.h"
-#import "OneginiSDK.h"
 #import "AppDelegate.h"
 #import "PinViewController.h"
 #import "ProfileViewController.h"
 #import "WebBrowserViewController.h"
-
-@interface AuthorizationController () <OGAuthorizationDelegate, OGPinValidationDelegate>
-
-@end
 
 @implementation AuthorizationController
 
@@ -38,28 +33,6 @@
 
 - (BOOL)isRegistered {
     return [[OGOneginiClient sharedInstance] isClientRegistered];
-}
-
-#pragma mark -
-
-- (void)handleAuthError:(NSString *)error {
-    [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Authorization Error" message:error preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* okButton = [UIAlertAction
-                               actionWithTitle:@"Ok"
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction * action){}];
-    [alert addAction:okButton];
-    [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)handlePinPolicyValidationError:(NSString *)error {
-    if ([[AppDelegate sharedNavigationController].topViewController isKindOfClass:PinViewController.class]){
-        PinViewController *pinViewController = (PinViewController*)[AppDelegate sharedNavigationController].topViewController;
-        pinViewController.mode = PINRegistrationMode;
-        [pinViewController reset];
-        [pinViewController showError:error];
-    }
 }
 
 #pragma mark - OGAuthorizationDelegate
@@ -214,6 +187,28 @@
 
 - (void)pinEntryError:(NSError *)error {
     [self handlePinPolicyValidationError:@"Pin is not valid!"];
+}
+
+#pragma mark - 
+
+- (void)handleAuthError:(NSString *)error {
+    [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Authorization Error" message:error preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* okButton = [UIAlertAction
+                               actionWithTitle:@"Ok"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action){}];
+    [alert addAction:okButton];
+    [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)handlePinPolicyValidationError:(NSString *)error {
+    if ([[AppDelegate sharedNavigationController].topViewController isKindOfClass:PinViewController.class]){
+        PinViewController *pinViewController = (PinViewController*)[AppDelegate sharedNavigationController].topViewController;
+        pinViewController.mode = PINRegistrationMode;
+        [pinViewController reset];
+        [pinViewController showError:error];
+    }
 }
 
 

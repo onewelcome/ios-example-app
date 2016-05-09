@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		48AFD40334F9EEA498D38656 /* tokenserver-demo-test.onegini.com.pem in Resources */ = {isa = PBXBuildFile; fileRef = C7E241857883E7C202DEA963 /* tokenserver-demo-test.onegini.com.pem */; };
 		5C8A03AD1CDE90AE007ADA14 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A03AC1CDE90AE007ADA14 /* WelcomeViewController.xib */; };
 		5C8A03B31CDFA7C2007ADA14 /* WebBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A03B11CDFA7C2007ADA14 /* WebBrowserViewController.m */; };
 		5C8A03B41CDFA7C2007ADA14 /* WebBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A03B21CDFA7C2007ADA14 /* WebBrowserViewController.xib */; };
@@ -16,13 +17,10 @@
 		5C8A03C91CDFF178007ADA14 /* DisconnectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A03C81CDFF178007ADA14 /* DisconnectController.m */; };
 		5CAE98B01CE0929C009C1D1A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */; };
 		5CAE98C11CE0933D009C1D1A /* OneginiSDKiOS-4.08.04-Release-fat-binary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CAE98C01CE0933D009C1D1A /* OneginiSDKiOS-4.08.04-Release-fat-binary.a */; };
-		5CAE98C41CE09365009C1D1A /* OneginiClientBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE98C31CE09365009C1D1A /* OneginiClientBuilder.m */; };
+		5CAE98C61CE0DEF8009C1D1A /* OneginiConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */; };
 		C502CAA91CDB62B600FB18E7 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C502CAA71CDB62B600FB18E7 /* ProfileViewController.m */; };
 		C502CAAA1CDB62B600FB18E7 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C502CAA81CDB62B600FB18E7 /* ProfileViewController.xib */; };
 		C541398B1CD9D3010033DBA8 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C541398A1CD9D3010033DBA8 /* WelcomeViewController.m */; };
-		C54139C71CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.cer in Resources */ = {isa = PBXBuildFile; fileRef = C54139C21CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.cer */; };
-		C54139C81CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.pem in Resources */ = {isa = PBXBuildFile; fileRef = C54139C31CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.pem */; };
-		C54139C91CD9F8CA0033DBA8 /* OGConfiguration.plist in Resources */ = {isa = PBXBuildFile; fileRef = C54139C41CD9F8CA0033DBA8 /* OGConfiguration.plist */; };
 		C572A2DC1CD893C400B137DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C572A2DB1CD893C400B137DC /* main.m */; };
 		C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C572A2DE1CD893C400B137DC /* AppDelegate.m */; };
 		C572A2E71CD893C400B137DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E61CD893C400B137DC /* Assets.xcassets */; };
@@ -35,6 +33,8 @@
 		C5FE9E951CD8C0DE00142A20 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E941CD8C0DE00142A20 /* MobileCoreServices.framework */; };
 		C5FE9E971CD8C0F300142A20 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E961CD8C0F300142A20 /* libiconv.tbd */; };
 		C5FE9E991CD8C10000142A20 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E981CD8C10000142A20 /* libc++.tbd */; };
+		E4459662EEBC767C4F350A5A /* OneginiConfigModel.h in Headers */ = {isa = PBXBuildFile; fileRef = AF975CF4D99994DAF5BD2E6B /* OneginiConfigModel.h */; };
+		FE4DA5D3D36E8E9BCF56FAFC /* tokenserver-demo-test.onegini.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = CB2E2640AC9BD8B06787756E /* tokenserver-demo-test.onegini.com.cer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,16 +64,13 @@
 		5CAE98BE1CE0933D009C1D1A /* OGResourceHandlerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGResourceHandlerDelegate.h; sourceTree = "<group>"; };
 		5CAE98BF1CE0933D009C1D1A /* OneginiSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiSDK.h; sourceTree = "<group>"; };
 		5CAE98C01CE0933D009C1D1A /* OneginiSDKiOS-4.08.04-Release-fat-binary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "OneginiSDKiOS-4.08.04-Release-fat-binary.a"; sourceTree = "<group>"; };
-		5CAE98C21CE09365009C1D1A /* OneginiClientBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiClientBuilder.h; sourceTree = "<group>"; };
-		5CAE98C31CE09365009C1D1A /* OneginiClientBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneginiClientBuilder.m; sourceTree = "<group>"; };
+		5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneginiConfigModel.m; path = Configuration/OneginiConfigModel.m; sourceTree = "<group>"; };
+		AF975CF4D99994DAF5BD2E6B /* OneginiConfigModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OneginiConfigModel.h; path = Configuration/OneginiConfigModel.h; sourceTree = "<group>"; };
 		C502CAA61CDB62B600FB18E7 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		C502CAA71CDB62B600FB18E7 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		C502CAA81CDB62B600FB18E7 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		C54139891CD9D3010033DBA8 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		C541398A1CD9D3010033DBA8 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
-		C54139C21CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = COMODORSADomainValidationSecureServerCA.cer; sourceTree = "<group>"; };
-		C54139C31CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COMODORSADomainValidationSecureServerCA.pem; sourceTree = "<group>"; };
-		C54139C41CD9F8CA0033DBA8 /* OGConfiguration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OGConfiguration.plist; sourceTree = "<group>"; };
 		C572A2D71CD893C400B137DC /* OneginiDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneginiDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C572A2DB1CD893C400B137DC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C572A2DD1CD893C400B137DC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -86,13 +83,15 @@
 		C5A29A731CDCE78A00E6B1D4 /* ResourceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceController.m; sourceTree = "<group>"; };
 		C5A29A761CDCE78F00E6B1D4 /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
 		C5A29A771CDCE78F00E6B1D4 /* Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Profile.m; sourceTree = "<group>"; };
-		C5BAAEC61CDA462800801205 /* SecurityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityController.h; sourceTree = "<group>"; };
-		C5BAAEC71CDA462800801205 /* SecurityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityController.m; sourceTree = "<group>"; };
+		C5BAAEC61CDA462800801205 /* SecurityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecurityController.h; path = OneginiDemoApp/Configuration/SecurityController.h; sourceTree = "<group>"; };
+		C5BAAEC71CDA462800801205 /* SecurityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecurityController.m; path = OneginiDemoApp/Configuration/SecurityController.m; sourceTree = "<group>"; };
 		C5FE9E901CD8C0D200142A20 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C5FE9E921CD8C0D800142A20 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C5FE9E941CD8C0DE00142A20 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		C5FE9E961CD8C0F300142A20 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		C5FE9E981CD8C10000142A20 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		C7E241857883E7C202DEA963 /* tokenserver-demo-test.onegini.com.pem */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "tokenserver-demo-test.onegini.com.pem"; path = "Configuration/tokenserver-demo-test.onegini.com.pem"; sourceTree = "<group>"; };
+		CB2E2640AC9BD8B06787756E /* tokenserver-demo-test.onegini.com.cer */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "tokenserver-demo-test.onegini.com.cer"; path = "Configuration/tokenserver-demo-test.onegini.com.cer"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,20 +174,6 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		C54139C11CD9F8CA0033DBA8 /* Configuration */ = {
-			isa = PBXGroup;
-			children = (
-				5CAE98C21CE09365009C1D1A /* OneginiClientBuilder.h */,
-				5CAE98C31CE09365009C1D1A /* OneginiClientBuilder.m */,
-				C54139C21CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.cer */,
-				C54139C31CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.pem */,
-				C54139C41CD9F8CA0033DBA8 /* OGConfiguration.plist */,
-				C5BAAEC61CDA462800801205 /* SecurityController.h */,
-				C5BAAEC71CDA462800801205 /* SecurityController.m */,
-			);
-			path = Configuration;
-			sourceTree = "<group>";
-		};
 		C572A2CE1CD893C400B137DC = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +181,7 @@
 				C572A2DA1CD893C400B137DC /* Supporting Files */,
 				C572A2D81CD893C400B137DC /* Products */,
 				C531DF7F1CD8FE5400C4BBF2 /* Frameworks */,
+				EB67C9E0317DB4510001471A /* Configuration */,
 			);
 			sourceTree = "<group>";
 		};
@@ -210,7 +196,6 @@
 		C572A2D91CD893C400B137DC /* OneginiDemoApp */ = {
 			isa = PBXGroup;
 			children = (
-				C54139C11CD9F8CA0033DBA8 /* Configuration */,
 				C5A29A751CDCE78F00E6B1D4 /* Models */,
 				C5A29A5F1CDCA55900E6B1D4 /* Controllers */,
 				C54139881CD9D3010033DBA8 /* ViewControllers */,
@@ -255,7 +240,31 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		EB67C9E0317DB4510001471A /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				C5BAAEC61CDA462800801205 /* SecurityController.h */,
+				C5BAAEC71CDA462800801205 /* SecurityController.m */,
+				CB2E2640AC9BD8B06787756E /* tokenserver-demo-test.onegini.com.cer */,
+				C7E241857883E7C202DEA963 /* tokenserver-demo-test.onegini.com.pem */,
+				AF975CF4D99994DAF5BD2E6B /* OneginiConfigModel.h */,
+				5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */,
+			);
+			name = Configuration;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		25C36A8CE08E549F4B6CA834 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4459662EEBC767C4F350A5A /* OneginiConfigModel.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		C572A2D61CD893C400B137DC /* OneginiDemoApp */ = {
@@ -265,6 +274,7 @@
 				C572A2D31CD893C400B137DC /* Sources */,
 				C572A2D51CD893C400B137DC /* Resources */,
 				C572A2D41CD893C400B137DC /* Frameworks */,
+				25C36A8CE08E549F4B6CA834 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -318,10 +328,9 @@
 				5CAE98B01CE0929C009C1D1A /* LaunchScreen.xib in Resources */,
 				5C8A03AD1CDE90AE007ADA14 /* WelcomeViewController.xib in Resources */,
 				5C8A03B41CDFA7C2007ADA14 /* WebBrowserViewController.xib in Resources */,
-				C54139C71CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.cer in Resources */,
 				5C8A03BF1CDFB36F007ADA14 /* PinViewController.xib in Resources */,
-				C54139C81CD9F8CA0033DBA8 /* COMODORSADomainValidationSecureServerCA.pem in Resources */,
-				C54139C91CD9F8CA0033DBA8 /* OGConfiguration.plist in Resources */,
+				FE4DA5D3D36E8E9BCF56FAFC /* tokenserver-demo-test.onegini.com.cer in Resources */,
+				48AFD40334F9EEA498D38656 /* tokenserver-demo-test.onegini.com.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,8 +346,8 @@
 				C5A29A741CDCE78A00E6B1D4 /* ResourceController.m in Sources */,
 				C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */,
 				5C8A03BE1CDFB36F007ADA14 /* PinViewController.m in Sources */,
+				5CAE98C61CE0DEF8009C1D1A /* OneginiConfigModel.m in Sources */,
 				5C8A03C61CDFEFE1007ADA14 /* LogoutController.m in Sources */,
-				5CAE98C41CE09365009C1D1A /* OneginiClientBuilder.m in Sources */,
 				C5A29A781CDCE78F00E6B1D4 /* Profile.m in Sources */,
 				5C8A03B31CDFA7C2007ADA14 /* WebBrowserViewController.m in Sources */,
 				C5A29A661CDCA55900E6B1D4 /* AuthorizationController.m in Sources */,

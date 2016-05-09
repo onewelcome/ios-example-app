@@ -26,13 +26,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.getProfileButton.hidden = YES;
     self.profileDataView.hidden = YES;
+    self.getProfileSpinner.hidden = YES;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self getProfile];
 }
 
 - (IBAction)logout:(id)sender {
@@ -44,10 +43,7 @@
 }
 
 - (IBAction)getProfile:(id)sender {
-    [self getProfile];
-}
-
-- (void)getProfile{
+    self.profileDataView.hidden = YES;
     self.getProfileSpinner.hidden = NO;
     [[ResourceController sharedInstance] getProfile:^(Profile *profile, NSError *error) {
         self.getProfileSpinner.hidden = YES;
@@ -56,10 +52,10 @@
             self.profileMailLabel.text = profile.email;
             self.profileNameLabel.text = [NSString stringWithFormat:@"%@ %@",profile.firstName, profile.lastName];
         } else {
-            self.getProfileButton.hidden = NO;
             [self showError:@"Downloading profile failed."];
         }
     }];
+
 }
 
 - (void)showError:(NSString*)error{

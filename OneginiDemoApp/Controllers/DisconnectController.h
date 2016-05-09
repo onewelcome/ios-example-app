@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OneginiSDK.h"
 
-@interface DisconnectController : NSObject
+@interface DisconnectController : NSObject <OGDisconnectDelegate>
 
 + (DisconnectController *)sharedInstance;
 - (void)disconnect;

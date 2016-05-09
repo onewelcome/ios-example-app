@@ -19,6 +19,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.loginButton.enabled = YES;
     if ([[AuthorizationController sharedInstance] isRegistered]){
         [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
     } else {
@@ -27,6 +28,7 @@
 }
 
 - (IBAction)login:(id)sender {
+    self.loginButton.enabled = NO;
     [[AuthorizationController sharedInstance] login];
 }
 

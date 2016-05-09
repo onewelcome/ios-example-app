@@ -135,7 +135,7 @@
 }
 
 - (void)authorizationErrorTooManyPinFailures {
-    [self handleAuthError:@"Too many Pin failures. User has benn disconnected."];
+    [self handleAuthError:@"Too many Pin failures. User has been disconnected."];
 }
 
 - (void)authorizationErrorInvalidGrant:(NSUInteger)remaining {
@@ -205,7 +205,7 @@
 }
 
 - (void)pinShouldNotUseSimilarDigits:(NSUInteger)count {
-    [self handlePinPolicyValidationError:@"Pin should not use similar digits!"];
+    [self handlePinPolicyValidationError:[NSString stringWithFormat:@"Maximum number of similar digits are: %ld",count]];
 }
 
 - (void)pinTooShort {

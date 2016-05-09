@@ -22,8 +22,8 @@
     Profile *profile = [Profile new];
     
     profile.email = json[@"email"];
-    profile.firstName = json[@"email"];
-    profile.lastName = json[@"email"];
+    profile.firstName = json[@"first_name"];
+    profile.lastName = json[@"last_name"];
     
     return profile;
 }

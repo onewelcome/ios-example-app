@@ -1,6 +1,5 @@
 package com.onegini.action;
 
-import static com.onegini.resource.ResourceRequest.PARAMETERS_WITH_HEADERS_LENGTH;
 import static com.onegini.resource.ResourceRequest.buildRequestFromArgs;
 import static com.onegini.resource.ResourceRequestCallback.sendCallbackResult;
 import static com.onegini.response.GeneralResponse.CONNECTIVITY_PROBLEM;
@@ -21,12 +20,6 @@ public class FetchResourceAction implements OneginiPluginAction {
 
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
-    if (args.length() != PARAMETERS_WITH_HEADERS_LENGTH) {
-      final String message = String.format("Invalid parameter, expected %d, got %d", PARAMETERS_WITH_HEADERS_LENGTH, args.length());
-      sendCallbackResult(callbackContext, new ResourcePluginResultBuilder(message).withError().build());
-      return;
-    }
-
     final Context context = client.getCordova().getActivity().getApplication();
 
     if (isConnected(context)) {

@@ -21,11 +21,6 @@ public class ValidatePinAction implements OneginiPluginAction {
 
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
-    if (args.length() != 1) {
-      callbackContext.error("Invalid parameter, expected 1, got " + args.length() + ".");
-      return;
-    }
-
     final OneginiClient oneginiClient = client.getOneginiClient();
     try {
       final String pin = (String) args.get(0);
@@ -36,7 +31,7 @@ public class ValidatePinAction implements OneginiPluginAction {
   }
 
   private void validatePin(final char[] pin, final CallbackContext callbackContext, final OneginiClient oneginiClient) {
-    boolean isPinValid = false;
+    boolean isPinValid;
     try {
       isPinValid = oneginiClient.isPinValid(pin, new OneginiPinValidationDialog() {
         @Override
@@ -81,8 +76,7 @@ public class ValidatePinAction implements OneginiPluginAction {
           callbackResultBuilder
               .withSuccess()
               .build());
-    }
-    else {
+    } else {
       callbackContext.sendPluginResult(
           callbackResultBuilder
               .withErrorMessage("Pin invalid.")

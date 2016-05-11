@@ -12,8 +12,6 @@ import com.onegini.scope.ScopeParser;
 
 public class ResourceRequest {
 
-  public static final int PARAMETERS_WITH_HEADERS_LENGTH = 4;
-
   private final String path;
   private final String requestMethodString;
   private final JSONObject params;

@@ -18,3 +18,6 @@ src/android/build
 
 .gradle/
 build/
+**/*.iml
+local.properties
+**/*--

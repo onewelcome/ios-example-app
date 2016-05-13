@@ -10,11 +10,6 @@ import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler
 public class PinProvidedAction implements OneginiPluginAction {
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
-    if (args.length() != 1) {
-      callbackContext.error("Invalid parameter, expected 1, got " + args.length() + ".");
-      return;
-    }
-
     handlePin(args, callbackContext, PinCallbackSession.getAwaitingPinProvidedHandler());
   }
 

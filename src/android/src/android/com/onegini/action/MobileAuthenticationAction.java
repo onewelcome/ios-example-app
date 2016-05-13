@@ -34,11 +34,6 @@ public class MobileAuthenticationAction implements OneginiPluginAction {
 
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
-    if (args.length() != 1) {
-      callbackContext.error("Invalid parameter, expected 1, got " + args.length() + ".");
-      return;
-    }
-
     final Context context = client.getCordova().getActivity().getApplication();
     if (isNotConnected(context)) {
       callbackContext.sendPluginResult(callbackResultBuilder.withErrorReason(CONNECTIVITY_PROBLEM.getName()).build()

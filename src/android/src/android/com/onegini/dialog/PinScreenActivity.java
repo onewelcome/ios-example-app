@@ -36,12 +36,12 @@ public class PinScreenActivity extends CordovaActivity {
   public static final String EXTRA_MESSAGE = "message";
 
   // available screen 'modes'
-  public static final int SCREEN_MODE_LOGIN                     = 0;
-  public static final int SCREEN_MODE_LOGIN_BEFORE_CHANGE_PIN   = 1;
-  public static final int SCREEN_MODE_REGISTRATION_CREATE_PIN   = 2;
-  public static final int SCREEN_MODE_REGISTRATION_CONFIRM_PIN  = 3;
-  public static final int SCREEN_MODE_CHANGE_PIN_CREATE_PIN     = 4;
-  public static final int SCREEN_MODE_CHANGE_PIN_CONFIRM_PIN    = 5;
+  public static final int SCREEN_MODE_LOGIN = 0;
+  public static final int SCREEN_MODE_LOGIN_BEFORE_CHANGE_PIN = 1;
+  public static final int SCREEN_MODE_REGISTRATION_CREATE_PIN = 2;
+  public static final int SCREEN_MODE_REGISTRATION_CONFIRM_PIN = 3;
+  public static final int SCREEN_MODE_CHANGE_PIN_CREATE_PIN = 4;
+  public static final int SCREEN_MODE_CHANGE_PIN_CONFIRM_PIN = 5;
 
   private final TextView[] pinInputs = new TextView[MAX_DIGITS];
   private Resources resources;
@@ -61,6 +61,7 @@ public class PinScreenActivity extends CordovaActivity {
   private PinProvidedListener pinProvidedListener;
 
   private static PinScreenActivity instance;
+  private View pinProgressBar;
 
   public static PinScreenActivity getInstance() {
     return instance;
@@ -110,8 +111,7 @@ public class PinScreenActivity extends CordovaActivity {
   private void lockScreenOrientation() {
     if (DeviceUtil.isTablet(this)) {
       setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-    }
-    else {
+    } else {
       setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
   }
@@ -120,6 +120,7 @@ public class PinScreenActivity extends CordovaActivity {
     setContentView(resources.getIdentifier("pin_screen", "layout", packageName));
     initTextViews();
     initPinInputs();
+    initProgressBar();
   }
 
   private void initKeyboard() {
@@ -156,6 +157,7 @@ public class PinScreenActivity extends CordovaActivity {
       @Override
       public void onPinProvided(final char[] pin) {
         errorTextView.setVisibility(View.INVISIBLE);
+        showProgressBar();
         // slightly delay the SDK call, so it won't make a lag during UI changes
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -218,8 +220,13 @@ public class PinScreenActivity extends CordovaActivity {
     }
   }
 
+  private void initProgressBar() {
+    pinProgressBar = findViewById(resources.getIdentifier("progress_bar_container", "id", packageName));
+  }
+
   private void resetView() {
     pinKeyboardHandler.reset();
+    hideProgressBar();
   }
 
   private boolean isLoginMode() {
@@ -254,6 +261,14 @@ public class PinScreenActivity extends CordovaActivity {
       }
     });
     prepareCancelButton(dialog);
+  }
+
+  private void showProgressBar() {
+    pinProgressBar.setVisibility(View.VISIBLE);
+  }
+
+  private void hideProgressBar() {
+    pinProgressBar.setVisibility(View.INVISIBLE);
   }
 
   private Dialog createStyledDialog(final String dialogLayoutName) {
@@ -291,4 +306,5 @@ public class PinScreenActivity extends CordovaActivity {
       }
     });
   }
+
 }

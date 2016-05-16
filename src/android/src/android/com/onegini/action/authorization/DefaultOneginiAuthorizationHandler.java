@@ -7,6 +7,7 @@ import static com.onegini.response.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.response.GeneralResponse.UNSUPPORTED_APP_VERSION;
 import static com.onegini.response.OneginiAuthorizationResponse.AUTHORIZATION_ERROR;
 import static com.onegini.response.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_CLIENT_REG_FAILED;
+import static com.onegini.response.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_GRANT;
 import static com.onegini.response.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_GRANT_TYPE;
 import static com.onegini.response.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_REQUEST;
 import static com.onegini.response.OneginiAuthorizationResponse.AUTHORIZATION_ERROR_INVALID_SCOPE;
@@ -22,6 +23,7 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 
 import android.content.Context;
+import com.onegini.OneginiCordovaPlugin;
 import com.onegini.dialog.PinScreenActivity;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiAuthorizationHandler;
 import com.onegini.util.CallbackResultBuilder;
@@ -31,11 +33,14 @@ public class DefaultOneginiAuthorizationHandler implements OneginiAuthorizationH
   private final CallbackResultBuilder callbackResultBuilder;
   private final CallbackContext callbackContext;
   private final Context context;
+  private final OneginiCordovaPlugin client;
 
-  public DefaultOneginiAuthorizationHandler(final CallbackResultBuilder callbackResultBuilder, final CallbackContext callbackContext, final Context context) {
+  public DefaultOneginiAuthorizationHandler(final CallbackResultBuilder callbackResultBuilder, final CallbackContext callbackContext, final Context context,
+                                            final OneginiCordovaPlugin client) {
     this.callbackResultBuilder = callbackResultBuilder;
     this.callbackContext = callbackContext;
     this.context = context;
+    this.client = client;
   }
 
   @Override
@@ -83,10 +88,17 @@ public class DefaultOneginiAuthorizationHandler implements OneginiAuthorizationH
   @Override
   public void authorizationErrorInvalidGrant(int remainingAttempts) {
     // that is the only notification which impacts the pin screen within DefaultOneginiAuthorizationHandler
-    final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
-    final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
+    if (client.shouldUseNativeScreens()) {
+      final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
+      final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
 
-    startLoginScreen(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
+      startLoginScreen(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
+    } else {
+      sendCallbackResult(callbackResultBuilder
+          .withErrorReason(AUTHORIZATION_ERROR_INVALID_GRANT.getName())
+          .withRemainingAttempts(remainingAttempts)
+          .build());
+    }
   }
 
   @Override

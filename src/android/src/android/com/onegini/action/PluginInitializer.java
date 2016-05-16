@@ -10,7 +10,9 @@ import com.onegini.OneginiCordovaPlugin;
 import com.onegini.dialog.AcceptWithPinDialog;
 import com.onegini.dialog.ConfirmationDialogSelectorHandler;
 import com.onegini.dialog.CreatePinNativeDialogHandler;
+import com.onegini.dialog.CreatePinNonNativeDialogHandler;
 import com.onegini.dialog.CurrentPinNativeDialogHandler;
+import com.onegini.dialog.CurrentPinNonNativeDialogHandler;
 import com.onegini.dialog.FingerprintActivity;
 import com.onegini.dialog.FingerprintDialog;
 import com.onegini.dialog.PushAuthenticateWithFingerprintDialog;
@@ -42,17 +44,28 @@ public class PluginInitializer {
     final OneginiClient oneginiClient = OneginiClient.setupInstance(applicationContext, configModel);
     client.setOneginiClient(oneginiClient);
 
-    setupDialogs(application.getApplicationContext());
+    final boolean shouldUseNativeScreens = configModel.useNativePinScreen();
+    client.setShouldUseNativeScreens(shouldUseNativeScreens);
+    setupDialogs(shouldUseNativeScreens, application.getApplicationContext());
+
+    setupDialogs(shouldUseNativeScreens, application.getApplicationContext());
     setupURLHandler(oneginiClient, configModel);
     MessageResourceReader.setupInstance(applicationContext);
 
     configured = true;
   }
 
-  private void setupDialogs(final Context context) {
+  private void setupDialogs(final boolean shouldUseNativeScreens, final Context context) {
     final OneginiClient client = OneginiClient.getInstance();
-    client.setCreatePinDialog(new CreatePinNativeDialogHandler(context));
-    client.setCurrentPinDialog(new CurrentPinNativeDialogHandler(context));
+
+    if (shouldUseNativeScreens) {
+      client.setCreatePinDialog(new CreatePinNativeDialogHandler(context));
+      client.setCurrentPinDialog(new CurrentPinNativeDialogHandler(context));
+    } else {
+      client.setCreatePinDialog(new CreatePinNonNativeDialogHandler());
+      client.setCurrentPinDialog(new CurrentPinNonNativeDialogHandler());
+    }
+
     client.setConfirmationWithPinDialog(new AcceptWithPinDialog(context));
     client.setConfirmationDialogSelector(new ConfirmationDialogSelectorHandler(context));
     FingerprintActivity.setFingerprintAuthorizationFallbackHandler(client.setFingerprintDialog(new FingerprintDialog(context)));

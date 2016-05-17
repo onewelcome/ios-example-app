@@ -75,9 +75,14 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
 
         if (self.configModel && self.oneginiClient) {
             self.initializationSuccessful = YES;
-            useNativePinView = [configModel objectForKey:@"kOGUseNativePinScreen"];
+            useNativePinView = [self useNativePinScreen];
         }
     }
+}
+
+- (BOOL)useNativePinScreen {
+    NSNumber *n = [configModel objectForKey:@"kOGUseNativePinScreen"];
+    return n == nil ? NO : n.boolValue;
 }
 
 -(BOOL)prepareConfiguration {

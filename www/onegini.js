@@ -231,9 +231,9 @@ module.exports = {
    *                                          - resourceCallError -> indicates general resource call error
    * @param {String} param1 (path)            Location on the resource server to return the resource. The base URI of the
    *                                          resource server is.
-   * @param {Array} param2 (scopes)           @deprecated not used anymore
+   * @param {Array} param2 (scopes)           Array of Strings with scopes to fetch the resource.
    * @param {String} param3 (requestMethod)   HTTP request method to retrieve the resource: 'GET', 'PUT', 'POST' or 'DELETE'
-   * @param {String} param4 (paramsEncoding)  @deprecated not used anymore
+   * @param {String} param4 (paramsEncoding)  Encoding of parameters, 'FORM', 'JSON' or 'PROPERTY'
    * @param {Object} param5 (params)          Parameters to send with the request.
    * @param {Object} param6 (headers)         Optional custom headers to send with the request.
    */
@@ -241,19 +241,38 @@ module.exports = {
     function isOldApi() {
       return typeof callback.resourceFetched === 'function';
     }
-    function fetchResource(router, path, requestMethod, params, headers) {
+    function fetchResource(router, path, scopes, requestMethod, paramsEncoding, params, headers) {
       oneginiCordovaPlugin.preserveCurrentLocation();
 
       var onSuccess = function (response) {
-        var body = window.atob(response.body);
-        router.resourceFetched(body);
+        router.resourceFetched(response);
       };
 
-      var onError = function (response) {
-        router.resourceCallError();
+      var onError = function (error) {
+        if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
+          router.errorConnectivityProblem();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_ERROR) {
+          router.resourceCallError();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_AUTH_FAILED) {
+          router.resourceCallAuthenticationFailed();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_SCOPE_ERROR) {
+          router.resourceCallScopeError();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_BAD_REQUEST) {
+          router.resourceCallBadRequest();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_UNAUTHORIZED) {
+          router.resourceCallUnauthorized();
+        }
+        else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_INVALID_GRANT) {
+          router.resourceCallInvalidGrant();
+        }
       };
 
-      var methodArgs = [path, requestMethod, params, headers];
+      var methodArgs = [path, scopes, requestMethod, paramsEncoding, params, headers];
 
       exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
     }
@@ -274,13 +293,15 @@ module.exports = {
       exec(responseCallback, responseCallback, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
     }
 
-    var _path, _requestMethod, _params, _headers;
+    var _path, _scopes, _requestMethod, _paramsEncoding, _params, _headers;
     if (isOldApi()) {
       _path = param1;
+      _scopes = param2;
       _requestMethod = param3;
+      _paramsEncoding = param4;
       _params = param5;
       _headers = param6;
-      fetchResource(callback, _path, _requestMethod, _params, _headers);
+      fetchResource(callback, _path, _scopes, _requestMethod, _paramsEncoding, _params, _headers);
     } else {
       _path = param1;
       _requestMethod = param2;

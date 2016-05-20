@@ -82,7 +82,7 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
 
 - (BOOL)useNativePinScreen {
     NSNumber *n = [configModel objectForKey:@"kOGUseNativePinScreen"];
-    return n == nil ? NO : n.boolValue;
+    return n.boolValue;
 }
 
 -(BOOL)prepareConfiguration {

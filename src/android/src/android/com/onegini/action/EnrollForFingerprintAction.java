@@ -6,6 +6,7 @@ import static com.onegini.model.MessageKey.REMAINING_ATTEMPTS;
 import static com.onegini.response.FingerprintResponse.FINGERPRINT_ENROLMENT_FAILURE;
 import static com.onegini.response.FingerprintResponse.FINGERPRINT_ENROLMENT_FAILURE_TOO_MANY_PIN_ATTEMPTS;
 import static com.onegini.response.FingerprintResponse.FINGERPRINT_ENROLMENT_SUCCESS;
+import static com.onegini.response.OneginiPinResponse.PIN_CURRENT_INVALID;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
 
 import org.apache.cordova.CallbackContext;
@@ -49,10 +50,17 @@ public class EnrollForFingerprintAction implements OneginiPluginAction {
 
       @Override
       public void enrollmentErrorInvalidPin(final int remainingAttempts) {
-        final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
-        final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
+        if (client.shouldUseNativeScreens()) {
+          final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
+          final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
 
-        startLoginScreen(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
+          startLoginScreen(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
+        } else {
+          callbackContext.sendPluginResult(callbackResultBuilder
+              .withErrorReason(PIN_CURRENT_INVALID.getName())
+              .withRemainingAttempts(remainingAttempts)
+              .build());
+        }
       }
 
       @Override

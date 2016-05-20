@@ -22,6 +22,8 @@ public class ConfigModel implements OneginiClientConfigModel {
     config.useEmbeddedWebview = preferences.getBoolean("kOGUseEmbeddedWebview", true);
     config.shouldGetIdToken = preferences.getBoolean("kOGShouldGetIdToken", false);
 
+    config.useNativePinScreen = preferences.getBoolean("kOGUseNativePinScreen", false);
+
     return config;
   }
 
@@ -44,6 +46,7 @@ public class ConfigModel implements OneginiClientConfigModel {
   private int maxPinFailures;
   private boolean shouldGetIdToken;
   private boolean useEmbeddedWebview;
+  private boolean useNativePinScreen;
 
   private int certificatePinningKeyStore;
   private String keyStoreHash;
@@ -127,5 +130,9 @@ public class ConfigModel implements OneginiClientConfigModel {
 
   public String getGcmSenderId() {
     return gcmSenderId;
+  }
+
+  public boolean useNativePinScreen() {
+    return useNativePinScreen;
   }
 }

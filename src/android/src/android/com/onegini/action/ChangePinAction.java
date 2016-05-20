@@ -7,6 +7,7 @@ import static com.onegini.response.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.response.OneginiPinResponse.PIN_CHANGED;
 import static com.onegini.response.OneginiPinResponse.PIN_CHANGE_ERROR;
 import static com.onegini.response.OneginiPinResponse.PIN_CHANGE_ERROR_TOO_MANY_ATTEMPTS;
+import static com.onegini.response.OneginiPinResponse.PIN_CURRENT_INVALID;
 import static com.onegini.response.OneginiPinResponse.PIN_VALIDATION_FAILED_INVALID_CLIENT;
 import static com.onegini.util.DeviceUtil.isNotConnected;
 import static com.onegini.util.MessageResourceReader.getMessageForKey;
@@ -70,10 +71,17 @@ public class ChangePinAction implements OneginiPluginAction {
 
       @Override
       public void invalidCurrentPin(final int remainingAttempts) {
-        final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
-        final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
+        if (client.shouldUseNativeScreens()) {
+          final String remainingAttemptsKey = getMessageForKey(REMAINING_ATTEMPTS.name());
+          final String message = getMessageForKey(AUTHORIZATION_ERROR_PIN_INVALID.name());
 
-        startLoginScreenBeforeChangePin(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
+          startLoginScreenBeforeChangePin(context, message.replace(remainingAttemptsKey, Integer.toString(remainingAttempts)));
+        } else {
+          sendCallbackResult(callbackResultBuilder
+              .withRemainingAttempts(remainingAttempts)
+              .withErrorReason(PIN_CURRENT_INVALID.getName())
+              .build());
+        }
       }
 
       @Override

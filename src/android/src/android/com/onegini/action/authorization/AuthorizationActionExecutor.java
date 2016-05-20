@@ -42,7 +42,7 @@ public class AuthorizationActionExecutor {
 
     if (isConnected(context)) {
       String[] scopes = getScopes(args);
-      OneginiAuthorizationHandler authorizationHandler = new DefaultOneginiAuthorizationHandler(callbackResultBuilder, callbackContext, context);
+      OneginiAuthorizationHandler authorizationHandler = new DefaultOneginiAuthorizationHandler(callbackResultBuilder, callbackContext, context, client);
       authorizationActionHandler.authorize(scopes, authorizationHandler);
     } else {
       sendCallbackResult(callbackResultBuilder

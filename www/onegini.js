@@ -440,6 +440,7 @@ module.exports = {
    *                          - enrollmentSuccess -> enrollment success
    *                          - error -> generic enrollment error handler
    *                          - errorTooManyPinAttempts -> method called once user exceeds allowed number of PIN attempts
+   *                          - errorInvalidCurrentPin(remainingAttempts) -> called if user entered incorrect pin
    */
   enrollForFingerprintAuthentication: function (router) {
     var onSuccess = function (response) {
@@ -447,13 +448,16 @@ module.exports = {
     };
 
     var onError = function (error) {
+      if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.PIN_INVALID) {
+        router.errorInvalidCurrentPin(error.remainingAttempts);
+      }
       if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.FINGERPRINT_ENROLMENT_FAILURE_TOO_MANY_PIN_ATTEMPTS) {
         router.errorTooManyPinAttempts();
       }
       else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.FINGERPRINT_ENROLMENT_FAILURE) {
         router.error();
       }
-    }
+    };
     exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FINGERPRINT_ENROLL_FOR_FINGERPRINT_AUTHENTICATION, []);
   },
 

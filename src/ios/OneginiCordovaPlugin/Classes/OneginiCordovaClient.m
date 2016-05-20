@@ -66,7 +66,6 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     NSLog(@"pluginInitialize");
     [CDVPluginResult setVerbose:YES];
 #endif
-    useNativePinView = YES;
     pinEntryMode = PINEntryModeUnknown;
 
     if ([self prepareConfiguration]) {
@@ -74,9 +73,16 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
 
         [oneginiClient setX509PEMCertificates:@[certificate]];
 
-        if (self.configModel && self.oneginiClient)
+        if (self.configModel && self.oneginiClient) {
             self.initializationSuccessful = YES;
+            useNativePinView = [self useNativePinScreen];
+        }
     }
+}
+
+- (BOOL)useNativePinScreen {
+    NSNumber *n = [configModel objectForKey:@"kOGUseNativePinScreen"];
+    return n.boolValue;
 }
 
 -(BOOL)prepareConfiguration {
@@ -294,6 +300,10 @@ NSString* const certificate         = @"MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yM
     if (command.arguments.count != 1) {
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        return;
+    }
+    if (self.fingerprintEnrollmentCommandTxId != nil && !useNativePinView) {
+        [oneginiClient confirmCurrentPinForFingerprintAuthorization:command.arguments.firstObject];
         return;
     }
 
@@ -988,7 +998,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         pinEntryMode = PINFingerprintCheckMode;
         [self showPinEntryViewInMode:PINFingerprintCheckMode];
     } else {
-        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askCurrentPinForFingerprint"}];
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForCurrentPin"}];
         result.keepCallback = @(1);
         [self.commandDelegate sendPluginResult:result callbackId:pinDialogCommandTxId];
     }

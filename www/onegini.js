@@ -721,22 +721,6 @@ module.exports = {
     oneginiCordovaPlugin.shouldRestoreSessionData = false;
   },
 
-  /**
-   * Preserves currently displayed page identifier in sessions storage.
-   */
-  preserveCurrentLocation: function () {
-    var activePage = $.mobile.activePage.attr("id");
-    oneginiCordovaPlugin.preserveLocation(activePage);
-  },
-
-  /**
-   * Preserves specified page identifier in sessions storage.
-   */
-  preserveLocation: function (pageId) {
-    sessionStorage.setItem(oneginiCordovaPlugin.OG_CONSTANTS.PAGE_OF_ORIGIN, pageId);
-    oneginiCordovaPlugin.shouldRestoreSessionData = true;
-  },
-
   inAppBrowser: {},
 
   /**
@@ -961,8 +945,6 @@ function FetchResource(oneginiCordovaPlugin) {
         return typeof callback.resourceFetched === 'function';
       }
       function fetchResource(router, path, scopes, requestMethod, paramsEncoding, params, headers) {
-        oneginiCordovaPlugin.preserveCurrentLocation();
-
         var onSuccess = function (response) {
           router.resourceFetched(response);
         };
@@ -996,8 +978,6 @@ function FetchResource(oneginiCordovaPlugin) {
         exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
       }
       function fetchResourceNewApi(onResponse, path, requestMethod, params, headers) {
-        oneginiCordovaPlugin.preserveCurrentLocation();
-
         var responseCallback = function(response) {
           var headers = JSON.stringify(response.headers);
           var status = JSON.stringify(response.status);

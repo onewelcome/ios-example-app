@@ -11,3 +11,4 @@
     * [1.1.0](Release-notes/1.1.md)
     * [1.2.0](Release-notes/1.2.md)
     * [1.3.0](Release-notes/1.3.md)
+    * [1.4.0](Release-notes/1.4.md)

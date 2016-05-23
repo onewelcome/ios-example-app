@@ -945,8 +945,6 @@ function FetchResource(oneginiCordovaPlugin) {
         return typeof callback.resourceFetched === 'function';
       }
       function fetchResource(router, path, scopes, requestMethod, paramsEncoding, params, headers) {
-        oneginiCordovaPlugin.preserveCurrentLocation();
-
         var onSuccess = function (response) {
           router.resourceFetched(response);
         };
@@ -980,8 +978,6 @@ function FetchResource(oneginiCordovaPlugin) {
         exec(onSuccess, onError, oneginiCordovaPlugin.OG_CONSTANTS.CORDOVA_CLIENT, oneginiCordovaPlugin.OG_CONSTANTS.FETCH_RESOURCE, methodArgs);
       }
       function fetchResourceNewApi(onResponse, path, requestMethod, params, headers) {
-        oneginiCordovaPlugin.preserveCurrentLocation();
-
         var responseCallback = function(response) {
           var headers = JSON.stringify(response.headers);
           var status = JSON.stringify(response.status);

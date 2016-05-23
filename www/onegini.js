@@ -47,19 +47,19 @@ module.exports = {
         XMLHttpRequest = function () {
           var proxied = new LocalProxiedXMLHttpRequest();
           var proxy = this;
-          var $path, $method, $status, $isRequestToResourceServer = true;
+          var path, method, isRequestToResourceServer = true;
 
           proxy.open = function() {
             var _arguments = arguments;
             var requestUrl = _arguments[1];
-            $isRequestToResourceServer = (function() {
+            isRequestToResourceServer = (function() {
               var start = requestUrl.indexOf(appBaseUrl);
               return start != -1;
             })();
 
-            if ($isRequestToResourceServer) {
-              $path = requestUrl.substring(appBaseUrl.length);
-              $method = _arguments[0];
+            if (isRequestToResourceServer) {
+              path = requestUrl.substring(appBaseUrl.length);
+              method = _arguments[0];
               return proxied.open.apply(proxied, _arguments);
             } else {
               ["status", "responseText", "readyState"].forEach(function (item) {
@@ -74,7 +74,7 @@ module.exports = {
           };
 
           proxy.send = function () {
-            if ($isRequestToResourceServer) {
+            if (isRequestToResourceServer) {
               var prepareBody = function () {
                 var requestBody = arguments[0];
                 if (requestBody === null || requestBody === undefined) {
@@ -90,7 +90,7 @@ module.exports = {
                 proxy.status = status;
                 proxied.onload.apply(proxied, arguments);
               };
-              oneginiCordovaPlugin.fetchResource(onResponse, $path, $method, prepareBody());
+              oneginiCordovaPlugin.fetchResource(onResponse, path, method, prepareBody());
             } else {
               return proxied.send.apply(proxied, arguments);
             }

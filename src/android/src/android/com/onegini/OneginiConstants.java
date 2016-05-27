@@ -28,6 +28,6 @@ public class OneginiConstants {
   public static final String READ_CONFIG_PROPERTY_ACTION = "readConfigProperty";
 
   // Values
-  public static final String KEYSTORE_HASH = "1eb7a88b2a72356d27176df6b3fc8804d78846913ad5a54d277a70f260e12af3";
+  public static final String KEYSTORE_HASH = "";
 
 }

@@ -59,8 +59,6 @@
 
     <source-file src="src/ios/OneginiSDKiOS/OneginiSDKiOS-4.08.04-Release-fat-binary.a" framework="true"/>
 
-    <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.cer"/>
-    <resource-file src="src/ios/OneginiCordovaPlugin/Resources/PositiveSSLCA2.pem"/>
     <resource-file src="src/generic/messages/messages.properties"/>
     <asset src="src/generic/messages/messages.properties" target="res/messages.properties"/>
 

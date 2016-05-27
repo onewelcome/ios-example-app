@@ -153,7 +153,12 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     final String appScheme = configModel.getAppScheme();
     if (callbackUri.getScheme().equals(appScheme)) {
       getOneginiClient().handleAuthorizationCallback(callbackUri);
+      closeInAppBrowser();
     }
+  }
+
+  private void closeInAppBrowser() {
+    InAppBrowserControlSession.closeInAppBrowser();
   }
 
   public void setOneginiClient(final OneginiClient oneginiClient) {

@@ -34,7 +34,6 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 @interface OneginiCordovaClient()
 
-@property (nonatomic) bool initializationSuccessful;
 @property (nonatomic) NSUInteger supportedOrientations;
 
 @end
@@ -79,11 +78,24 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
         [oneginiClient setX509PEMCertificates:certificates];
         
         if (self.configModel && self.oneginiClient) {
-            self.initializationSuccessful = YES;
             useNativePinView = [self useNativePinScreen];
         }
         self.fetchResourceCommandsTxId = [NSMutableDictionary new];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeInAppBrowser) name:OGCloseWebViewNotification object:nil];
     }
+}
+
+- (BOOL)initializationSuccessful{
+    return self.oneginiClient && self.pinDialogInitalized && self.inAppBrowserInitialized;
+}
+
+- (BOOL)pinDialogInitalized{
+    return useNativePinView || pinDialogCommandTxId;
+}
+
+- (BOOL)inAppBrowserInitialized{
+    return !configModel.useEmbeddedWebView || self.inAppBrowserCommandTxId;
 }
 
 - (BOOL)useNativePinScreen {
@@ -140,6 +152,14 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
     [[OGOneginiClient sharedInstance] handleAuthorizationCallback:notification.object];
 }
 
+- (void)closeInAppBrowser{
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{kMethod:@"closeInAppBrowser"}];
+    pluginResult.keepCallback = @(1);
+    if (self.inAppBrowserCommandTxId) {
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:self.inAppBrowserCommandTxId];
+    }
+}
+
 - (void)onAppTerminate {
     [oneginiClient logoutWithDelegate:self];
 }
@@ -191,51 +211,44 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
         [self.commandDelegate sendPluginResult:result callbackId:self.pluginInitializedCommandTxId];
     }
+    [self handleInitializationCallback];
 }
 
 - (void)initPinCallbackSession:(CDVInvokedUrlCommand *)command {
-    self.pinDialogCommandTxId = command.callbackId;
-    
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    pluginResult.keepCallback = @(1);
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:pinDialogCommandTxId];
-    
-    if (self.pluginInitializedCommandTxId)
-    {
-        if(self.initializationSuccessful)
-            [self sendSuccessCallback:pluginInitializedCommandTxId];
-        else
-            [self sendErrorCallback:pluginInitializedCommandTxId];
-    }
+	self.pinDialogCommandTxId = command.callbackId;
+
+	CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+	pluginResult.keepCallback = @(1);
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:pinDialogCommandTxId];
+
+    [self handleInitializationCallback];
 }
 
-- (void)inAppBrowserControlSession:(CDVInvokedUrlCommand *)command
-{
+- (void)inAppBrowserControlSession:(CDVInvokedUrlCommand *)command{
     self.inAppBrowserCommandTxId = command.callbackId;
     
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     pluginResult.keepCallback = @(1);
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.inAppBrowserCommandTxId];
-    
-    if (self.pluginInitializedCommandTxId)
-    {
-        if(self.initializationSuccessful)
-            [self sendSuccessCallback:self.inAppBrowserCommandTxId];
-        else
-            [self sendErrorCallback:self.inAppBrowserCommandTxId];
+
+    [self handleInitializationCallback];
+}
+
+- (void)handleInitializationCallback{
+    if (self.pluginInitializedCommandTxId && self.initializationSuccessful){
+        [self sendSuccessCallback:self.pluginInitializedCommandTxId];
+        self.pluginInitializedCommandTxId = nil;
     }
 }
 
-- (void)isRegistered:(CDVInvokedUrlCommand *)command
-{
+- (void)isRegistered:(CDVInvokedUrlCommand *)command{
     if (oneginiClient.isClientRegistered)
         [self sendSuccessCallback:command.callbackId];
     else
         [self sendErrorCallback:command.callbackId];
 }
 
-- (bool)isConnected
-{
+- (bool)isConnected{
     Reachability* currentReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [currentReachability currentReachabilityStatus];
     
@@ -701,19 +714,19 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 - (void)askForPushAuthenticationConfirmation:(NSString *)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm {
     PushConfirmationViewController* pushConfirmationViewController = [[PushConfirmationViewController alloc]initWithMessage:message confirmationBlock:confirm NibName:@"PushConfirmationViewController" bundle:nil];
-    [[self getTopViewController] presentViewController:pushConfirmationViewController animated:NO completion:^{}];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:pushConfirmationViewController animated:NO completion:^{}];
 }
 
 - (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message notificationType:(NSString *)notificationType
                                             pinSize:(NSUInteger)pinSize	maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt
                                             confirm:(PushAuthenticationWithPinConfirmation)confirm {
     PushWithPinConfirmationViewController* pushWithPinConfirmationViewController = [[PushWithPinConfirmationViewController alloc]initWithMessage:message retryAttempts:retryAttempt maxAttempts:maxAttempts confirmationBlock:confirm NibName:@"PushWithPinConfirmationViewController" bundle:nil];
-    [[self getTopViewController] presentViewController:pushWithPinConfirmationViewController animated:NO completion:^{}];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:pushWithPinConfirmationViewController animated:NO completion:^{}];
 }
 
 -(void)askForPushAuthenticationWithFingerprint:(NSString *)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm{
     PushWithFingerprintConfirmationViewController* pushConfirmationViewController = [[PushWithFingerprintConfirmationViewController alloc]initWithMessage:message confirmationBlock:confirm NibName:@"PushWithFingerprintConfirmationViewController" bundle:nil];
-    [[self getTopViewController] presentViewController:pushConfirmationViewController animated:NO completion:^{}];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:pushConfirmationViewController animated:NO completion:^{}];
 }
 
 - (void)authorizationErrorUnsupportedOS {
@@ -766,10 +779,10 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
     CDVPluginResult *result;
     
     NSMutableDictionary *responseJSON = [NSMutableDictionary new];
-    if(response.allHeaderFields) [responseJSON setObject:response.allHeaderFields forKey:kHeaders];
+    if(response.allHeaderFields)    [responseJSON setObject:response.allHeaderFields forKey:kHeaders];
+    if(response.URL.absoluteString) [responseJSON setObject:response.URL.absoluteString forKey:kURL];
+    if (body)                       [responseJSON setObject:[[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding] forKey:kBody];
     [responseJSON setObject:@(response.statusCode) forKey:kStatus];
-    [responseJSON setObject:response.URL.absoluteString forKey:kURL];
-    [responseJSON setObject:[[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding] forKey:kBody];
     
     result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:responseJSON];
     
@@ -1095,21 +1108,11 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 #pragma mark -
 #pragma mark Custom PIN entry
 
--(UIViewController*)getTopViewController{
-    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    while (topViewController.presentedViewController) {
-        topViewController = topViewController.presentedViewController;
-    }
-    return topViewController;
-}
 /**
  Load the custom configuration and overlay the current view with the custom PIN entry view
  */
 
 - (void)showPinEntryViewInMode:(PINEntryModes)mode {
-    if ([[self getTopViewController] isKindOfClass:[PinViewController class]]){
-        return;
-    }
     if ([[UIScreen mainScreen] bounds].size.height == 480){
         self.pinViewController = [[PinViewController alloc] initWithNibName:@"PINViewController" bundle:nil];
     } else {
@@ -1120,12 +1123,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
     self.pinViewController.delegate = self;
     self.pinViewController.supportedOrientations = self.supportedOrientations;
     self.pinViewController.mode = mode;
-    
-    
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{kMethod:@"closeInAppBrowser"}];
-    pluginResult.keepCallback = @(1);
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.inAppBrowserCommandTxId];
-    
+
     if (self.pluginInitializedCommandTxId)
     {
         if(self.initializationSuccessful)
@@ -1133,9 +1131,8 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
         else
             [self sendErrorCallback:self.inAppBrowserCommandTxId];
     }
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[self getTopViewController] presentViewController:self.pinViewController animated:YES completion:^{
+    dispatch_after(1.5, dispatch_get_main_queue(), ^{
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:self.pinViewController animated:YES completion:^{
             self.pinViewController.messages = [MessagesModel sharedInstance].messages;
         }];
     });

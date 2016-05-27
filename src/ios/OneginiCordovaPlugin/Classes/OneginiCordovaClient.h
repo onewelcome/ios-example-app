@@ -19,9 +19,9 @@
 
 @property (strong, nonatomic) PinViewController *pinViewController;
 
+@property (nonatomic) NSMutableDictionary<NSString*,NSString*> *fetchResourceCommandsTxId;
 @property (copy, nonatomic) NSString *pluginInitializedCommandTxId;
 @property (copy, nonatomic) NSString *authorizeCommandTxId;
-@property (copy, nonatomic) NSMutableDictionary<NSString*,NSString*> *fetchResourceCommandsTxId;
 @property (copy, nonatomic) NSString *pinDialogCommandTxId;
 @property (copy, nonatomic) NSString *inAppBrowserCommandTxId;
 @property (copy, nonatomic) NSString *pinValidateCommandTxId;

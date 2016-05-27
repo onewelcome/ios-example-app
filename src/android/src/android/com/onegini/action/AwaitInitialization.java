@@ -4,10 +4,12 @@ import static com.onegini.response.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.util.DeviceUtil.isNotConnected;
 
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.Config;
 import org.json.JSONArray;
 
 import android.content.Context;
 import com.onegini.OneginiCordovaPlugin;
+import com.onegini.model.ConfigModel;
 import com.onegini.util.CallbackResultBuilder;
 
 public class AwaitInitialization implements OneginiPluginAction {
@@ -19,9 +21,20 @@ public class AwaitInitialization implements OneginiPluginAction {
       return;
     }
 
-    if (PluginInitializer.isConfigured() &&
-        isPinCallbackSessionSet() &&
-        isInAppBrowserControlCallbackSessionSet()) {
+    ConfigModel configModel = ConfigModel.from(Config.getPreferences());
+
+    boolean isCallbackSessionSetOrNativeScreensAreUsed = false;
+    if (isPinCallbackSessionSet() || configModel.useNativePinScreen()) {
+      isCallbackSessionSetOrNativeScreensAreUsed = true;
+    }
+
+    boolean isInAppBrowserControlCallbackSessionSetOrNotNeeded = false;
+    boolean shouldUseExternalBrowser = !configModel.useEmbeddedWebview();
+    if (isInAppBrowserControlCallbackSessionSet() || shouldUseExternalBrowser) {
+      isInAppBrowserControlCallbackSessionSetOrNotNeeded = true;
+    }
+
+    if (PluginInitializer.isConfigured() && isCallbackSessionSetOrNativeScreensAreUsed && isInAppBrowserControlCallbackSessionSetOrNotNeeded) {
       pluginInitializedCallback.success();
     }
   }
@@ -43,8 +56,8 @@ public class AwaitInitialization implements OneginiPluginAction {
 
     if (isNotConnected(context)) {
       callbackContext.sendPluginResult(callbackResultBuilder
-              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
-              .build());
+          .withErrorReason(CONNECTIVITY_PROBLEM.getName())
+          .build());
       return;
     }
 

@@ -16,18 +16,19 @@ import static com.onegini.OneginiConstants.FETCH_ANONYMOUS_ACTION;
 import static com.onegini.OneginiConstants.FETCH_RESOURCE_ACTION;
 import static com.onegini.OneginiConstants.FINGERPRINT_AUTHENTICATION_STATE;
 import static com.onegini.OneginiConstants.INIT_PIN_CALLBACK_SESSION;
-import static com.onegini.OneginiConstants.IN_APP_BROWSER_CONTROL_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.LOGOUT_ACTION;
 import static com.onegini.OneginiConstants.MOBILE_AUTHENTICATION_ENROLL_ACTION;
 import static com.onegini.OneginiConstants.READ_CONFIG_PROPERTY_ACTION;
 import static com.onegini.OneginiConstants.REAUTHORIZE_ACTION;
 import static com.onegini.OneginiConstants.SETUP_SCREEN_ORIENTATION;
 import static com.onegini.OneginiConstants.VALIDATE_PIN_ACTION;
+import static com.onegini.OneginiConstants.IN_APP_BROWSER_CONTROL_CALLBACK_SESSION;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.Config;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
@@ -61,6 +62,7 @@ import com.onegini.action.SetupScreenOrientationAction;
 import com.onegini.action.ValidatePinAction;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
+import com.onegini.model.ConfigModel;
 
 public class OneginiCordovaPlugin extends CordovaPlugin {
 
@@ -101,8 +103,20 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 
   private void mapActions() {
     actions.put(AWAIT_INITIALIZATION, AwaitInitialization.class);
-    actions.put(INIT_PIN_CALLBACK_SESSION, PinCallbackSession.class);
-    actions.put(IN_APP_BROWSER_CONTROL_CALLBACK_SESSION, InAppBrowserControlSession.class);
+
+    ConfigModel configModel = ConfigModel.from(Config.getPreferences());
+    boolean useNativePinScreens = configModel.useNativePinScreen();
+    setShouldUseNativeScreens(useNativePinScreens);
+
+    boolean shouldUseHTMLPinScreens = !useNativePinScreens;
+    if (shouldUseHTMLPinScreens) {
+      actions.put(INIT_PIN_CALLBACK_SESSION, PinCallbackSession.class);
+    }
+
+    if (configModel.useEmbeddedWebview()) {
+      actions.put(IN_APP_BROWSER_CONTROL_CALLBACK_SESSION, InAppBrowserControlSession.class);
+    }
+
     actions.put(SETUP_SCREEN_ORIENTATION, SetupScreenOrientationAction.class);
 
     actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
@@ -166,7 +180,8 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     }
     return oneginiClient;
   }
-  public void setShouldUseNativeScreens(final boolean shouldUseNativeScreens) {
+
+  private void setShouldUseNativeScreens(final boolean shouldUseNativeScreens) {
     this.shouldUseNativeScreens = shouldUseNativeScreens;
   }
 

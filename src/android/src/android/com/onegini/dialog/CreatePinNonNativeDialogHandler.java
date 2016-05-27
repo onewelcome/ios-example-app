@@ -7,7 +7,7 @@ import static com.onegini.response.OneginiPinResponse.PIN_SHOULD_NOT_BE_A_SEQUEN
 import static com.onegini.response.OneginiPinResponse.PIN_SHOULD_NOT_USE_SIMILAR_DIGITS;
 import static com.onegini.response.OneginiPinResponse.PIN_TOO_SHORT;
 
-import com.onegini.action.AwaitingPinHandlerProvider;
+import com.onegini.action.PinHandlerProvider;
 import com.onegini.action.ChangePinAction;
 import com.onegini.action.PinCallbackSession;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
@@ -24,7 +24,7 @@ public class CreatePinNonNativeDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void createPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
-    AwaitingPinHandlerProvider.getInstance().setAwaitingPinProvidedHandler(oneginiPinProvidedHandler);
+    PinHandlerProvider.getInstance().setOneginiPinProvidedHandler(oneginiPinProvidedHandler);
 
     if (isChangePinFlow()) {
       handleNewPinInChangeFlow();

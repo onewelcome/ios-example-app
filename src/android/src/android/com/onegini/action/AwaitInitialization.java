@@ -21,22 +21,26 @@ public class AwaitInitialization implements OneginiPluginAction {
       return;
     }
 
-    ConfigModel configModel = ConfigModel.from(Config.getPreferences());
-
-    boolean isCallbackSessionSetOrNativeScreensAreUsed = false;
-    if (isPinCallbackSessionSet() || configModel.useNativePinScreen()) {
-      isCallbackSessionSetOrNativeScreensAreUsed = true;
-    }
-
-    boolean isInAppBrowserControlCallbackSessionSetOrNotNeeded = false;
-    boolean shouldUseExternalBrowser = !configModel.useEmbeddedWebview();
-    if (isInAppBrowserControlCallbackSessionSet() || shouldUseExternalBrowser) {
-      isInAppBrowserControlCallbackSessionSetOrNotNeeded = true;
-    }
-
-    if (PluginInitializer.isConfigured() && isCallbackSessionSetOrNativeScreensAreUsed && isInAppBrowserControlCallbackSessionSetOrNotNeeded) {
+    if (isPluginInitializedSuccessfully()) {
       pluginInitializedCallback.success();
     }
+  }
+
+  private static boolean isPluginInitializedSuccessfully() {
+    final ConfigModel configModel = ConfigModel.from(Config.getPreferences());
+
+    final boolean pinCallbackValid = shouldUseHTMLScreens(configModel) ? isPinCallbackSessionSet() : true;
+    final boolean browserControlCallbackValid = shouldUseEmbeddedWebview(configModel) ? isInAppBrowserControlCallbackSessionSet() : true;
+
+    return PluginInitializer.isConfigured() && pinCallbackValid && browserControlCallbackValid;
+  }
+
+  private static boolean shouldUseEmbeddedWebview(final ConfigModel configModel) {
+    return configModel.useEmbeddedWebview();
+  }
+
+  private static boolean shouldUseHTMLScreens(final ConfigModel configModel) {
+    return !configModel.useNativePinScreen();
   }
 
   public static void notifyPluginInitializationFailed() {

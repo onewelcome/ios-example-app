@@ -10,7 +10,7 @@ import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler
 public class PinProvidedAction implements OneginiPluginAction {
   @Override
   public void execute(final JSONArray args, final CallbackContext callbackContext, final OneginiCordovaPlugin client) {
-    handlePin(args, callbackContext, AwaitingPinHandlerProvider.getInstance().getAwaitingPinProvidedHandler());
+    handlePin(args, callbackContext, PinHandlerProvider.getInstance().getOneginiPinProvidedHandler());
   }
 
   private void handlePin(final JSONArray args, final CallbackContext callbackContext,

@@ -225,7 +225,7 @@
                  target-dir="src/com/onegini/action/"/>
     <source-file src="src/android/src/android/com/onegini/action/FingerprintAuthenticationStateAction.java"
                  target-dir="src/com/onegini/action/"/>
-    <source-file src="src/android/src/android/com/onegini/action/AwaitingPinHandlerProvider.java"
+    <source-file src="src/android/src/android/com/onegini/action/PinHandlerProvider.java"
                  target-dir="src/com/onegini/action/"/>
     <!-- dialog -->
     <source-file src="src/android/src/android/com/onegini/dialog/AcceptWithPinDialog.java"

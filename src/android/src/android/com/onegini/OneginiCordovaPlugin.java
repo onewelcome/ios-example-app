@@ -16,13 +16,13 @@ import static com.onegini.OneginiConstants.FETCH_ANONYMOUS_ACTION;
 import static com.onegini.OneginiConstants.FETCH_RESOURCE_ACTION;
 import static com.onegini.OneginiConstants.FINGERPRINT_AUTHENTICATION_STATE;
 import static com.onegini.OneginiConstants.INIT_PIN_CALLBACK_SESSION;
+import static com.onegini.OneginiConstants.IN_APP_BROWSER_CONTROL_CALLBACK_SESSION;
 import static com.onegini.OneginiConstants.LOGOUT_ACTION;
 import static com.onegini.OneginiConstants.MOBILE_AUTHENTICATION_ENROLL_ACTION;
 import static com.onegini.OneginiConstants.READ_CONFIG_PROPERTY_ACTION;
 import static com.onegini.OneginiConstants.REAUTHORIZE_ACTION;
 import static com.onegini.OneginiConstants.SETUP_SCREEN_ORIENTATION;
 import static com.onegini.OneginiConstants.VALIDATE_PIN_ACTION;
-import static com.onegini.OneginiConstants.IN_APP_BROWSER_CONTROL_CALLBACK_SESSION;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,10 +69,12 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
   private static Map<String, Class<? extends OneginiPluginAction>> actions = new HashMap<String, Class<? extends OneginiPluginAction>>();
   private OneginiClient oneginiClient;
   private boolean shouldUseNativeScreens;
+  private boolean useEmbeddedWebview;
 
 
   @Override
   protected void pluginInitialize() {
+    initConfigModelValues();
     mapActions();
 
     final PluginInitializer initializer = new PluginInitializer();
@@ -104,16 +106,11 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
   private void mapActions() {
     actions.put(AWAIT_INITIALIZATION, AwaitInitialization.class);
 
-    ConfigModel configModel = ConfigModel.from(Config.getPreferences());
-    boolean useNativePinScreens = configModel.useNativePinScreen();
-    setShouldUseNativeScreens(useNativePinScreens);
-
-    boolean shouldUseHTMLPinScreens = !useNativePinScreens;
-    if (shouldUseHTMLPinScreens) {
+    if (shouldUseHTMLPinScreens()) {
       actions.put(INIT_PIN_CALLBACK_SESSION, PinCallbackSession.class);
     }
 
-    if (configModel.useEmbeddedWebview()) {
+    if (shouldUseInAppBrowserControl()) {
       actions.put(IN_APP_BROWSER_CONTROL_CALLBACK_SESSION, InAppBrowserControlSession.class);
     }
 
@@ -179,6 +176,24 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
       throw new RuntimeException("client not initialized");
     }
     return oneginiClient;
+  }
+
+  private void initConfigModelValues() {
+    final ConfigModel configModel = ConfigModel.from(Config.getPreferences());
+    setShouldUseNativeScreens(configModel.useNativePinScreen());
+    setShouldUseInAppBrowserControl(configModel.useEmbeddedWebview());
+  }
+
+  private void setShouldUseInAppBrowserControl(final boolean useEmbeddedWebview) {
+    this.useEmbeddedWebview = useEmbeddedWebview;
+  }
+
+  private boolean shouldUseInAppBrowserControl() {
+    return useEmbeddedWebview;
+  }
+
+  private boolean shouldUseHTMLPinScreens() {
+    return !shouldUseNativeScreens;
   }
 
   private void setShouldUseNativeScreens(final boolean shouldUseNativeScreens) {

@@ -3,7 +3,7 @@ package com.onegini.dialog;
 import static com.onegini.response.OneginiPinResponse.ASK_FOR_CURRENT_PIN;
 import static com.onegini.response.OneginiPinResponse.PIN_CHANGE_ASK_FOR_CURRENT_PIN;
 
-import com.onegini.action.AwaitingPinHandlerProvider;
+import com.onegini.action.PinHandlerProvider;
 import com.onegini.action.ChangePinAction;
 import com.onegini.action.PinCallbackSession;
 import com.onegini.mobile.sdk.android.library.handlers.OneginiPinProvidedHandler;
@@ -20,7 +20,7 @@ public class CurrentPinNonNativeDialogHandler implements OneginiCurrentPinDialog
 
   @Override
   public void getCurrentPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
-    AwaitingPinHandlerProvider.getInstance().setAwaitingPinProvidedHandler(oneginiPinProvidedHandler);
+    PinHandlerProvider.getInstance().setOneginiPinProvidedHandler(oneginiPinProvidedHandler);
 
     if (isChangePinFlow()) {
       handleCurrentPinForChange();

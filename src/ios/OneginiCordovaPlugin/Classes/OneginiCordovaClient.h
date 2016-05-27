@@ -189,4 +189,9 @@
  */
 - (void)checkFingerpringAuthenticationState:(CDVInvokedUrlCommand *)command;
 
+/**
+ Returns base URL for OneginiClient configuration
+ */
+-(void)readConfigProperty:(CDVInvokedUrlCommand *)command;
+
 @end

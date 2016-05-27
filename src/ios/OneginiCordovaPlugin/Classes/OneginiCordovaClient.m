@@ -512,6 +512,11 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
         [self sendErrorCallback:command.callbackId];
 }
 
+-(void)readConfigProperty:(CDVInvokedUrlCommand *)command{
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:self.configModel.baseURL];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
 #pragma mark -
 #pragma mark OGAuthorizationDelegate
 
@@ -781,7 +786,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
     NSMutableDictionary *responseJSON = [NSMutableDictionary new];
     if(response.allHeaderFields)    [responseJSON setObject:response.allHeaderFields forKey:kHeaders];
     if(response.URL.absoluteString) [responseJSON setObject:response.URL.absoluteString forKey:kURL];
-    if (body)                       [responseJSON setObject:[[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding] forKey:kBody];
+    if (body)                       [responseJSON setObject:body.base64Encoding forKey:kBody];
     [responseJSON setObject:@(response.statusCode) forKey:kStatus];
     
     result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:responseJSON];

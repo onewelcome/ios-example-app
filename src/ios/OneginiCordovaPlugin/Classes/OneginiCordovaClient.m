@@ -15,11 +15,16 @@
 #import "PushWithPinConfirmationViewController.h"
 #import "PushWithFingerprintConfirmationViewController.h"
 
+NSString* const kHeaders			= @"headers";
+NSString* const kStatus             = @"status";
+NSString* const kURL                = @"url";
+NSString* const kBody               = @"body";
 NSString* const kReason				= @"reason";
 NSString* const kRemainingAttempts	= @"remainingAttempts";
 NSString* const kMethod				= @"method";
 NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
-#define certificates
+
+#define certificates @[@""]
 
 @interface MainViewController()
 
@@ -433,13 +438,10 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     }
     
     NSString *path = [command.arguments objectAtIndex:0];
-    NSArray *scopes = [command.arguments objectAtIndex:1];
-    NSString *requestMethodString = [command.arguments objectAtIndex:2];
-    NSString *paramsEncodingString = [command.arguments objectAtIndex:3];
-    NSDictionary *params = [command.arguments objectAtIndex:4];
-    NSDictionary *headers = [[command.arguments objectAtIndex:5] isKindOfClass: [NSNull class]] ? nil : [command.arguments objectAtIndex:5];
+    NSString *requestMethodString = [command.arguments objectAtIndex:1];
+    NSDictionary *params = [command.arguments objectAtIndex:2];
+    NSDictionary *headers = [[command.arguments objectAtIndex:3] isKindOfClass: [NSNull class]] ? nil : [command.arguments objectAtIndex:5];
 
-    OGHTTPClientParameterEncoding paramsEncoding = [self parameterEncodingForString:paramsEncodingString];
     NSDictionary *convertedHeaders = [self convertNumbersToStringsInDictionary:headers];
     
     NSString *requestId = nil;
@@ -447,7 +449,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         requestId = [oneginiClient fetchAnonymousResource:path
                                 requestMethod:requestMethodString
                                        params:params
-                               paramsEncoding:paramsEncoding
+                               paramsEncoding:OGJSONParameterEncoding
                                       headers:convertedHeaders
                                      delegate:self];
         
@@ -455,7 +457,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         requestId = [oneginiClient fetchResource:path
                        requestMethod:requestMethodString
                               params:params
-                      paramsEncoding:paramsEncoding
+                      paramsEncoding:OGJSONParameterEncoding
                              headers:convertedHeaders
                             delegate:self];
     }
@@ -772,8 +774,13 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     
     [self closePinView];
     
-    NSString *jsonString = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
-    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
+    NSMutableDictionary *responseJSON = [NSMutableDictionary new];
+    [responseJSON setObject:response.allHeaderFields forKey:kHeaders];
+    [responseJSON setObject:@(response.statusCode) forKey:kStatus];
+    [responseJSON setObject:response.URL.absoluteString forKey:kURL];
+    [responseJSON setObject:[[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding] forKey:kBody];
+    
+    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:responseJSON];
     
     NSString *callbackId = [self.fetchResourceCommandsTxId objectForKey:requestId];
     [self.fetchResourceCommandsTxId removeObjectForKey:requestId];

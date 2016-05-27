@@ -24,7 +24,7 @@ public class CreatePinNonNativeDialogHandler implements OneginiCreatePinDialog {
 
   @Override
   public void createPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
-    AwaitingPinHandlerProvider.getAwaitingPinHandlerProvider().setAwaitingPinProvidedHandler(oneginiPinProvidedHandler);
+    AwaitingPinHandlerProvider.getInstance().setAwaitingPinProvidedHandler(oneginiPinProvidedHandler);
 
     if (isChangePinFlow()) {
       handleNewPinInChangeFlow();

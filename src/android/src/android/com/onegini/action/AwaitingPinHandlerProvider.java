@@ -7,7 +7,7 @@ public class AwaitingPinHandlerProvider {
   private static AwaitingPinHandlerProvider awaitingPinHandlerProvider;
   private OneginiPinProvidedHandler awaitingPinProvidedHandler;
 
-  public static AwaitingPinHandlerProvider getAwaitingPinHandlerProvider() {
+  public static AwaitingPinHandlerProvider getInstance() {
     if (awaitingPinHandlerProvider == null) {
       awaitingPinHandlerProvider = new AwaitingPinHandlerProvider();
     }

@@ -20,7 +20,7 @@ public class CurrentPinNonNativeDialogHandler implements OneginiCurrentPinDialog
 
   @Override
   public void getCurrentPin(final OneginiPinProvidedHandler oneginiPinProvidedHandler) {
-    AwaitingPinHandlerProvider.getAwaitingPinHandlerProvider().setAwaitingPinProvidedHandler(oneginiPinProvidedHandler);
+    AwaitingPinHandlerProvider.getInstance().setAwaitingPinProvidedHandler(oneginiPinProvidedHandler);
 
     if (isChangePinFlow()) {
       handleCurrentPinForChange();

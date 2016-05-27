@@ -19,9 +19,9 @@
 
 @property (strong, nonatomic) PinViewController *pinViewController;
 
+@property (nonatomic) NSMutableDictionary<NSString*,NSString*> *fetchResourceCommandsTxId;
 @property (copy, nonatomic) NSString *pluginInitializedCommandTxId;
 @property (copy, nonatomic) NSString *authorizeCommandTxId;
-@property (copy, nonatomic) NSString *fetchResourceCommandTxId;
 @property (copy, nonatomic) NSString *pinDialogCommandTxId;
 @property (copy, nonatomic) NSString *inAppBrowserCommandTxId;
 @property (copy, nonatomic) NSString *pinValidateCommandTxId;
@@ -188,5 +188,10 @@
  Check finger print authentication state for currently connected device.
  */
 - (void)checkFingerpringAuthenticationState:(CDVInvokedUrlCommand *)command;
+
+/**
+ Returns base URL for OneginiClient configuration
+ */
+-(void)readConfigProperty:(CDVInvokedUrlCommand *)command;
 
 @end

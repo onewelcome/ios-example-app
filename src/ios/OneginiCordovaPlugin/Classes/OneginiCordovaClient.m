@@ -15,11 +15,16 @@
 #import "PushWithPinConfirmationViewController.h"
 #import "PushWithFingerprintConfirmationViewController.h"
 
+NSString* const kHeaders			= @"headers";
+NSString* const kStatus             = @"status";
+NSString* const kURL                = @"url";
+NSString* const kBody               = @"body";
 NSString* const kReason				= @"reason";
 NSString* const kRemainingAttempts	= @"remainingAttempts";
 NSString* const kMethod				= @"method";
 NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
-#define certificates
+
+#define certificates @[@"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",@"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"]
 
 @interface MainViewController()
 
@@ -29,7 +34,6 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 @interface OneginiCordovaClient()
 
-@property (nonatomic) bool initializationSuccessful;
 @property (nonatomic) NSUInteger supportedOrientations;
 
 @end
@@ -39,20 +43,20 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
      Identifies the current state of the PIN entry process.
      */
     PINEntryModes pinEntryMode;
-
+    
     /**
      This indicates if the native PIN entry view should be used.
      The value is set in the top level application config.xml
      */
     BOOL useNativePinView;
-
+    
     /** Temporary storage of the first PIN for verification with the second entry */
 #warning TODO apply memory protection
     NSString *verifyPin;
 }
 
 @synthesize oneginiClient, pluginInitializedCommandTxId, authorizeCommandTxId, configModel;
-@synthesize fetchResourceCommandTxId, pinDialogCommandTxId, pinValidateCommandTxId, pinChangeCommandTxId;
+@synthesize fetchResourceCommandsTxId, pinDialogCommandTxId, pinValidateCommandTxId, pinChangeCommandTxId;
 
 #pragma mark -
 #pragma mark overrides
@@ -67,17 +71,31 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
     [CDVPluginResult setVerbose:YES];
 #endif
     pinEntryMode = PINEntryModeUnknown;
-
+    
     if ([self prepareConfiguration]) {
         self.oneginiClient = [[OGOneginiClient alloc] initWithConfig:configModel delegate:self];
-
+        
         [oneginiClient setX509PEMCertificates:certificates];
-
+        
         if (self.configModel && self.oneginiClient) {
-            self.initializationSuccessful = YES;
             useNativePinView = [self useNativePinScreen];
         }
+        self.fetchResourceCommandsTxId = [NSMutableDictionary new];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeInAppBrowser) name:OGCloseWebViewNotification object:nil];
     }
+}
+
+- (BOOL)initializationSuccessful{
+    return self.oneginiClient && self.pinDialogInitalized && self.inAppBrowserInitialized;
+}
+
+- (BOOL)pinDialogInitalized{
+    return useNativePinView || pinDialogCommandTxId;
+}
+
+- (BOOL)inAppBrowserInitialized{
+    return !configModel.useEmbeddedWebView || self.inAppBrowserCommandTxId;
 }
 
 - (BOOL)useNativePinScreen {
@@ -96,7 +114,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
     if (preferences == nil) {
         return NO;
     }
-
+    
     NSMutableDictionary *preferencesDict = [NSMutableDictionary new];
     for (id pref in preferences) {
         if ([[pref valueForKey:@"name"] hasPrefix:@"kOG"]) {
@@ -105,7 +123,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
             [preferencesDict setValue:value forKey:key];
         }
     }
-
+    
     [preferencesDict setValue: @"ios" forKey: kOGAppPlatform];
     self.configModel = [[OGConfigModel alloc] initWithDictionary:preferencesDict];
     return YES;
@@ -115,7 +133,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 - (NSString *)loadFileToString:(NSString*)path {
     NSError *error;
     NSString *fileContent = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:path ofType:nil] encoding:NSUTF8StringEncoding error:&error];
-
+    
     if (error) {
         NSLog(@"Error reading %@ file", path);
         return @"";
@@ -130,8 +148,16 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 - (void)handleOpenURL:(NSNotification *)notification {
     [super handleOpenURL:notification];
-
+    
     [[OGOneginiClient sharedInstance] handleAuthorizationCallback:notification.object];
+}
+
+- (void)closeInAppBrowser{
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{kMethod:@"closeInAppBrowser"}];
+    pluginResult.keepCallback = @(1);
+    if (self.inAppBrowserCommandTxId) {
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:self.inAppBrowserCommandTxId];
+    }
 }
 
 - (void)onAppTerminate {
@@ -142,7 +168,6 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 - (void)resetAll {
     self.pluginInitializedCommandTxId = nil;
     self.authorizeCommandTxId = nil;
-    self.fetchResourceCommandTxId = nil;
     self.pinValidateCommandTxId = nil;
     self.pinChangeCommandTxId = nil;
     self.enrollmentCommandTxId = nil;
@@ -154,14 +179,14 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 }
 
 - (void)authorizationErrorCallbackWIthReason:(NSString *)reason error:(NSError *)error {
-	if (authorizeCommandTxId == nil) {
-		return;
-	}
-
-	NSDictionary *d = @{ kReason:reason };
-
-	CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:d];
-	[self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
+    if (authorizeCommandTxId == nil) {
+        return;
+    }
+    
+    NSDictionary *d = @{ kReason:reason };
+    
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:d];
+    [self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
     [self resetAll];
 }
 
@@ -186,6 +211,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
         [self.commandDelegate sendPluginResult:result callbackId:self.pluginInitializedCommandTxId];
     }
+    [self handleInitializationCallback];
 }
 
 - (void)initPinCallbackSession:(CDVInvokedUrlCommand *)command {
@@ -195,45 +221,37 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 	pluginResult.keepCallback = @(1);
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:pinDialogCommandTxId];
 
-    if (self.pluginInitializedCommandTxId)
-    {
-        if(self.initializationSuccessful)
-            [self sendSuccessCallback:pluginInitializedCommandTxId];
-        else
-            [self sendErrorCallback:pluginInitializedCommandTxId];
-    }
+    [self handleInitializationCallback];
 }
 
-- (void)inAppBrowserControlSession:(CDVInvokedUrlCommand *)command
-{
+- (void)inAppBrowserControlSession:(CDVInvokedUrlCommand *)command{
     self.inAppBrowserCommandTxId = command.callbackId;
-
+    
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     pluginResult.keepCallback = @(1);
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.inAppBrowserCommandTxId];
 
-    if (self.pluginInitializedCommandTxId)
-    {
-        if(self.initializationSuccessful)
-            [self sendSuccessCallback:self.inAppBrowserCommandTxId];
-        else
-            [self sendErrorCallback:self.inAppBrowserCommandTxId];
+    [self handleInitializationCallback];
+}
+
+- (void)handleInitializationCallback{
+    if (self.pluginInitializedCommandTxId && self.initializationSuccessful){
+        [self sendSuccessCallback:self.pluginInitializedCommandTxId];
+        self.pluginInitializedCommandTxId = nil;
     }
 }
 
-- (void)isRegistered:(CDVInvokedUrlCommand *)command
-{
+- (void)isRegistered:(CDVInvokedUrlCommand *)command{
     if (oneginiClient.isClientRegistered)
         [self sendSuccessCallback:command.callbackId];
     else
         [self sendErrorCallback:command.callbackId];
 }
 
-- (bool)isConnected
-{
+- (bool)isConnected{
     Reachability* currentReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [currentReachability currentReachabilityStatus];
-
+    
     if (networkStatus == ReachableViaWiFi||networkStatus == ReachableViaWWAN)
         return YES;
     else
@@ -243,7 +261,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 - (void)authorize:(CDVInvokedUrlCommand *)command {
     [self resetAll];
     self.authorizeCommandTxId = command.callbackId;
-
+    
     if (![self isConnected]) {
         [self authorizationErrorCallbackWIthReason:@"connectivityProblem"];
         return;
@@ -280,15 +298,15 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 - (void)confirmNewPin:(CDVInvokedUrlCommand *)command {
     self.pinValidateCommandTxId = nil;
     self.pinChangeCommandTxId = nil;
-	if (command.arguments.count != 1) {
-		CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-		return;
-	}
-
-	NSString *pin = command.arguments.firstObject;
-
-	[oneginiClient confirmNewPin:pin validation:self];
+    if (command.arguments.count != 1) {
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        return;
+    }
+    
+    NSString *pin = command.arguments.firstObject;
+    
+    [oneginiClient confirmNewPin:pin validation:self];
 }
 
 - (void)confirmCurrentPin:(CDVInvokedUrlCommand *)command {
@@ -296,7 +314,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{kReason:@"connectivityProblem"}];
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
     }
-
+    
     if (command.arguments.count != 1) {
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -306,9 +324,9 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
         [oneginiClient confirmCurrentPinForFingerprintAuthorization:command.arguments.firstObject];
         return;
     }
-
+    
     NSString *pin = command.arguments.firstObject;
-
+    
     [oneginiClient confirmCurrentPin:pin];
     [self sendSuccessCallback:command.callbackId];
 }
@@ -320,7 +338,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
     }
     self.pinChangeCommandTxId = command.callbackId;
     self.pinValidateCommandTxId = nil;
-
+    
     [oneginiClient changePinRequest:self];
 }
 
@@ -332,30 +350,30 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 
 - (void)confirmCurrentPinForChangeRequest:(CDVInvokedUrlCommand *)command {
     self.pinValidateCommandTxId = nil;
-
+    
     if (command.arguments.count != 1) {
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         return;
     }
-
+    
     NSString *pin = command.arguments.firstObject;
     [oneginiClient confirmCurrentPinForChangeRequest:pin];
 }
 
 - (void)confirmNewPinForChangeRequest:(CDVInvokedUrlCommand *)command {
     self.pinValidateCommandTxId = nil;
-
+    
     if (command.arguments.count != 1) {
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 1 argument but received %lu", (unsigned long)command.arguments.count]];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         return;
     }
-
+    
     // Register the transaction id for validation callbacks.
     self.pinValidateCommandTxId = command.callbackId;
     NSString *pin = command.arguments.firstObject;
-
+    
     [oneginiClient confirmNewPinForChangeRequest:pin validation:self];
 }
 
@@ -365,24 +383,24 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         return;
     }
-
+    
     NSString *pin = command.arguments.firstObject;
     NSError *error;
     BOOL result = [oneginiClient isPinValid:pin error:&error];
-
+    
     CDVPluginResult *pluginResult;
     if (result) {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:YES];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         return;
     }
-
+    
     if (![error.domain isEqualToString:@"com.onegini.PinValidation"]) {
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.localizedDescription];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         return;
     }
-
+    
     self.pinValidateCommandTxId = command.callbackId;
     // TODO move error codes into OGPublicCommons public API
     switch (error.code) {
@@ -410,8 +428,6 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
     }
 }
 
-static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
-
 - (void)fetchResource:(CDVInvokedUrlCommand *)command {
     [self performResourceCall:command isAnonymous:NO];
 }
@@ -427,39 +443,31 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         return;
     }
     
-    if (command.arguments.count != PARAMETERS_WITH_HEADERS_LENGTH) {
-        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"expected 6 arguments but received %lu", (unsigned long)command.arguments.count]];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-        return;
-    }
-    
     NSString *path = [command.arguments objectAtIndex:0];
-    NSArray *scopes = [command.arguments objectAtIndex:1];
-    NSString *requestMethodString = [command.arguments objectAtIndex:2];
-    NSString *paramsEncodingString = [command.arguments objectAtIndex:3];
-    NSDictionary *params = [command.arguments objectAtIndex:4];
-    NSDictionary *headers = [[command.arguments objectAtIndex:5] isKindOfClass: [NSNull class]] ? nil : [command.arguments objectAtIndex:5];
+    NSString *requestMethodString = [command.arguments objectAtIndex:1];
+    NSDictionary *params = [command.arguments objectAtIndex:2];
+    NSDictionary *headers = [[command.arguments objectAtIndex:3] isKindOfClass: [NSNull class]] ? nil : [command.arguments objectAtIndex:3];
     
-    self.fetchResourceCommandTxId = command.callbackId;
-
-    OGHTTPClientParameterEncoding paramsEncoding = [self parameterEncodingForString:paramsEncodingString];
     NSDictionary *convertedHeaders = [self convertNumbersToStringsInDictionary:headers];
     
+    NSString *requestId = nil;
     if (isAnonymous) {
-        [oneginiClient fetchAnonymousResource:path
-                                requestMethod:requestMethodString
-                                       params:params
-                               paramsEncoding:paramsEncoding
-                                      headers:convertedHeaders
-                                     delegate:self];
+        requestId = [oneginiClient fetchAnonymousResource:path
+                                            requestMethod:requestMethodString
+                                                   params:params
+                                           paramsEncoding:OGJSONParameterEncoding
+                                                  headers:convertedHeaders
+                                                 delegate:self];
+        
     } else {
-        [oneginiClient fetchResource:path
-                       requestMethod:requestMethodString
-                              params:params
-                      paramsEncoding:paramsEncoding
-                             headers:convertedHeaders
-                            delegate:self];
+        requestId = [oneginiClient fetchResource:path
+                                   requestMethod:requestMethodString
+                                          params:params
+                                  paramsEncoding:OGJSONParameterEncoding
+                                         headers:convertedHeaders
+                                        delegate:self];
     }
+    [self.fetchResourceCommandsTxId setObject:command.callbackId forKey:requestId];
 }
 
 - (void)logout:(CDVInvokedUrlCommand *)command {
@@ -469,7 +477,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 
 - (void)disconnect:(CDVInvokedUrlCommand *)command {
     self.disconnectCommandTxId = command.callbackId;
-    [self.oneginiClient disconnectWithDelegate:self]; 
+    [self.oneginiClient disconnectWithDelegate:self];
 }
 
 - (void)sendSuccessCallback:(NSString *)callbackId {
@@ -504,6 +512,11 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         [self sendErrorCallback:command.callbackId];
 }
 
+-(void)readConfigProperty:(CDVInvokedUrlCommand *)command{
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:self.configModel.baseURL];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
 #pragma mark -
 #pragma mark OGAuthorizationDelegate
 
@@ -511,7 +524,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     if (configModel.useEmbeddedWebView) {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"requestAuthorization", @"url":url.absoluteString}];
         result.keepCallback = @(1);
-
+        
         [self.commandDelegate sendPluginResult:result callbackId:authorizeCommandTxId];
     } else {
         [[UIApplication sharedApplication] openURL:url];
@@ -526,10 +539,10 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         [self resetAll];
         return;
     }
-
+    
     [self closePinView];
     pinEntryMode = PINEntryModeUnknown;
-
+    
     @try {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"authorizationSuccess"];
         result.keepCallback = @(0);
@@ -542,7 +555,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 
 - (void)authorizationError {
     [self closePinView];
-
+    
     [self authorizationErrorCallbackWIthReason:@"connectivityProblem"];
 }
 
@@ -557,7 +570,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 #endif
         return;
     }
-
+    
     if (useNativePinView) {
         pinEntryMode = PINCheckMode;
         [self showPinEntryViewInMode:PINCheckMode];
@@ -575,11 +588,11 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 #endif
         return;
     }
-
+    
     if (useNativePinView) {
         pinEntryMode = PINRegistrationMode;
         [self showPinEntryViewInMode:PINRegistrationMode];
-
+        
     } else {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{ kMethod:@"askForNewPin" }];
         result.keepCallback = @(1);
@@ -629,7 +642,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 #endif
         return;
     }
-
+    
     if (self.pinViewController == nil) {
         @try {
             CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{ kReason:@"authorizationErrorInvalidGrant", kRemainingAttempts:@(remaining)}];
@@ -646,79 +659,79 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 
 - (void)authorizationErrorTooManyPinFailures {
     [self closePinView];
-
+    
     [self authorizationErrorCallbackWIthReason:@"authorizationErrorTooManyPinFailures"];
 }
 
 - (void)authorizationErrorNotAuthenticated {
     [self closePinView];
-
+    
     [self authorizationErrorCallbackWIthReason:@"authorizationErrorNotAuthenticated"];
 }
 
 - (void)authorizationErrorInvalidScope {
     [self closePinView];
-
+    
     [self authorizationErrorCallbackWIthReason:@"authorizationErrorInvalidScope"];
 }
 
 - (void)authorizationErrorInvalidState {
     [self closePinView];
-
+    
     [self authorizationErrorCallbackWIthReason:@"authorizationErrorInvalidState"];
 }
 
 - (void)authorizationErrorNoAccessToken {
     [self closePinView];
-
+    
     [self authorizationErrorCallbackWIthReason:@"authorizationErrorNoAccessToken"];
 }
 
 - (void)authorizationErrorNotAuthorized {
     [self closePinView];
-
+    
     [self authorizationErrorCallbackWIthReason:@"authorizationErrorNotAuthorized"];
 }
 
 - (void)authorizationErrorInvalidRequest {
     [self closePinView];
-
+    
     [self authorizationErrorCallbackWIthReason:@"authorizationErrorInvalidRequest"];
 }
 
 - (void)authorizationErrorInvalidGrantType {
     [self closePinView];
-
+    
     [self authorizationErrorCallbackWIthReason:@"authorizationErrorInvalidGrantType"];
 }
 
 - (void)authorizationErrorNoAuthorizationGrant {
     [self closePinView];
-
+    
     [self authorizationErrorCallbackWIthReason:@"authorizationErrorNoAuthorizationGrant"];
 }
 
 -(void)authorizationErrorInvalidAppPlatformOrVersion {
     [self closePinView];
-
+    
     [self authorizationErrorCallbackWIthReason:@"unsupportedAppVersion"];
 }
 
 - (void)askForPushAuthenticationConfirmation:(NSString *)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm {
     PushConfirmationViewController* pushConfirmationViewController = [[PushConfirmationViewController alloc]initWithMessage:message confirmationBlock:confirm NibName:@"PushConfirmationViewController" bundle:nil];
-    [[self getTopViewController] presentViewController:pushConfirmationViewController animated:NO completion:^{}];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:pushConfirmationViewController animated:NO completion:^{}];
 }
 
 - (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message notificationType:(NSString *)notificationType
                                             pinSize:(NSUInteger)pinSize	maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt
                                             confirm:(PushAuthenticationWithPinConfirmation)confirm {
     PushWithPinConfirmationViewController* pushWithPinConfirmationViewController = [[PushWithPinConfirmationViewController alloc]initWithMessage:message retryAttempts:retryAttempt maxAttempts:maxAttempts confirmationBlock:confirm NibName:@"PushWithPinConfirmationViewController" bundle:nil];
-    [[self getTopViewController] presentViewController:pushWithPinConfirmationViewController animated:NO completion:^{}];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:pushWithPinConfirmationViewController animated:NO completion:^{}];
 }
 
 -(void)askForPushAuthenticationWithFingerprint:(NSString *)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm{
     PushWithFingerprintConfirmationViewController* pushConfirmationViewController = [[PushWithFingerprintConfirmationViewController alloc]initWithMessage:message confirmationBlock:confirm NibName:@"PushWithFingerprintConfirmationViewController" bundle:nil];
-    [[self getTopViewController] presentViewController:pushConfirmationViewController animated:NO completion:^{}];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:pushConfirmationViewController animated:NO completion:^{}];
 }
 
 - (void)authorizationErrorUnsupportedOS {
@@ -736,7 +749,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 // @optional
 - (void)authorizationError:(NSError *)error {
     [self closePinView];
-
+    
     [self authorizationErrorCallbackWIthReason:@"connectivityProblem"];
 }
 
@@ -770,16 +783,20 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 -(void)resourceResponse:(NSHTTPURLResponse *)response body:(NSData *)body requestId:(NSString *)requestId{
     CDVPluginResult *result;
     
-    [self closePinView];
+    NSMutableDictionary *responseJSON = [NSMutableDictionary new];
+    if(response.allHeaderFields)    [responseJSON setObject:response.allHeaderFields forKey:kHeaders];
+    if(response.URL.absoluteString) [responseJSON setObject:response.URL.absoluteString forKey:kURL];
+    if (body)                       [responseJSON setObject:body.base64Encoding forKey:kBody];
+    [responseJSON setObject:@(response.statusCode) forKey:kStatus];
     
-    NSString *jsonString = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
-    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
+    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:responseJSON];
     
-    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
+    NSString *callbackId = [self.fetchResourceCommandsTxId objectForKey:requestId];
+    [self.fetchResourceCommandsTxId removeObjectForKey:requestId];
+    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
 }
 
 -(void)resourceError:(NSError *)error requestId:(NSString *)requestId{
-    [self closePinView];
     NSString *errorReason = nil;
     switch (error.code) {
         case OGResourceErrorCode_InvalidRequestMethod:
@@ -790,9 +807,11 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
             errorReason = @"resourceCallError";
             break;
     }
+    NSString *callbackId = [self.fetchResourceCommandsTxId objectForKey:requestId];
+    [self.fetchResourceCommandsTxId removeObjectForKey:requestId];
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                             messageAsDictionary:@{ kReason:errorReason }];
-    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
+    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
 }
 
 #pragma mark -
@@ -810,7 +829,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     } else {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                 messageAsDictionary:@{ kReason:@"pinBlackListed" }];
-
+        
         [self.commandDelegate sendPluginResult:result callbackId:pinValidateCommandTxId];
     }
 }
@@ -927,10 +946,10 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 #endif
         return;
     }
-
+    
     [self closePinView];
     pinEntryMode = PINEntryModeUnknown;
-
+    
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK	messageAsString:@"pinChanged"];
     [self.commandDelegate sendPluginResult:result callbackId:pinChangeCommandTxId];
     pinChangeCommandTxId = nil;
@@ -1065,7 +1084,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 }
 
 - (void)setupScreenOrientation:(CDVInvokedUrlCommand *)command{
-
+    
     if([[UIDevice currentDevice].model rangeOfString:@"iPhone"].location == NSNotFound){
         ((MainViewController*)self.viewController).supportedOrientations = [NSArray arrayWithObjects:[NSNumber numberWithInteger:UIInterfaceOrientationLandscapeLeft], [NSNumber numberWithInteger:UIInterfaceOrientationLandscapeRight], nil];
         self.supportedOrientations = UIInterfaceOrientationMaskLandscapeLeft|UIInterfaceOrientationMaskLandscapeRight;
@@ -1094,36 +1113,21 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 #pragma mark -
 #pragma mark Custom PIN entry
 
--(UIViewController*)getTopViewController{
-    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    while (topViewController.presentedViewController) {
-        topViewController = topViewController.presentedViewController;
-    }
-    return topViewController;
-}
 /**
  Load the custom configuration and overlay the current view with the custom PIN entry view
  */
 
 - (void)showPinEntryViewInMode:(PINEntryModes)mode {
-    if ([[self getTopViewController] isKindOfClass:[PinViewController class]]){
-        return;
-    }
     if ([[UIScreen mainScreen] bounds].size.height == 480){
         self.pinViewController = [[PinViewController alloc] initWithNibName:@"PINViewController" bundle:nil];
     } else {
         self.pinViewController = [[PinViewController alloc] initWithNibName:@"PINViewController" bundle:nil];
     }
-
+    
     self.pinViewController.messages = [MessagesModel sharedInstance].messages;
     self.pinViewController.delegate = self;
     self.pinViewController.supportedOrientations = self.supportedOrientations;
     self.pinViewController.mode = mode;
-   
-
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:@{kMethod:@"closeInAppBrowser"}];
-    pluginResult.keepCallback = @(1);
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.inAppBrowserCommandTxId];
 
     if (self.pluginInitializedCommandTxId)
     {
@@ -1132,9 +1136,8 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         else
             [self sendErrorCallback:self.inAppBrowserCommandTxId];
     }
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[self getTopViewController] presentViewController:self.pinViewController animated:YES completion:^{
+    dispatch_after(1.5, dispatch_get_main_queue(), ^{
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:self.pinViewController animated:YES completion:^{
             self.pinViewController.messages = [MessagesModel sharedInstance].messages;
         }];
     });
@@ -1148,7 +1151,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         [self.viewController dismissViewControllerAnimated:YES completion:nil];
         self.pinViewController = nil;
     }
-
+    
     pinEntryMode = PINEntryModeUnknown;
 }
 
@@ -1194,13 +1197,13 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     }
     else
         return YES;
-
+    
 }
 
 #pragma mark -
 #pragma mark PinEntryContainerViewControllerDelegate
 - (void)pinEntered:(NSString *)pin {
-
+    
     [self.pinViewController reset];
     switch (pinEntryMode) {
         case PINCheckMode: {
@@ -1213,7 +1216,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
         }
         case PINRegistrationMode: {
             verifyPin = [pin copy];
-
+            
             if(![self isPinValid:verifyPin])
             {
                 [self.pinViewController reset];
@@ -1239,7 +1242,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
                 verifyPin = nil;
                 [oneginiClient confirmNewPin:pin validation:self];
             }
-
+            
             break;
         }
         case PINChangeCheckMode: {
@@ -1255,7 +1258,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
             else
             {
                 pinEntryMode = PINChangeNewPinVerifyMode;
-
+                
                 self.pinViewController.mode = PINChangeNewPinVerifyMode;
                 [self.pinViewController reset];
             }
@@ -1267,14 +1270,14 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
                 verifyPin = nil;
                 pinEntryMode = PINChangeNewPinMode;
                 self.pinViewController.mode = PINChangeNewPinMode;
-				[self.pinViewController reset];
+                [self.pinViewController reset];
                 [self.pinViewController invalidPinWithReason:[[MessagesModel sharedInstance].messages objectForKey:@"PIN_CODES_DIFFERS"]];
             } else {
                 // The user entered the second verification PIN, check if they are equal and confirm the PIN
                 verifyPin = nil;
                 [oneginiClient confirmNewPinForChangeRequest:pin validation:self];
             }
-
+            
         }		default: {
 #ifdef DEBUG
             NSLog(@"pinEntered: unknown state");
@@ -1285,7 +1288,7 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 
 -(void)pinForgotten{
     [self closePinView];
-
+    
     NSDictionary *d = @{ kReason:@"authorizationErrorPinForgotten" };
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:d];
     if (authorizeCommandTxId != nil) {

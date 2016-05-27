@@ -57,7 +57,7 @@
     <header-file src="src/ios/OneginiSDKiOS/Headers/OGCustomizationDelegate.h"/>
     <header-file src="src/ios/OneginiSDKiOS/Headers/OneginiSDK.h"/>
 
-    <source-file src="src/ios/OneginiSDKiOS/OneginiSDKiOS-4.08.04-Release-fat-binary.a" framework="true"/>
+    <source-file src="src/ios/OneginiSDKiOS/OneginiSDKiOS-4.09.00-Release-fat-binary.a" framework="true"/>
 
     <resource-file src="src/generic/messages/messages.properties"/>
     <asset src="src/generic/messages/messages.properties" target="res/messages.properties"/>

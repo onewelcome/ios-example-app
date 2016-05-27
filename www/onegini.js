@@ -835,12 +835,8 @@ module.exports = {
 
     FETCH_RESOURCE: "fetchResource",
     FETCH_ANONYMOUS_RESOURCE: "fetchAnonymousResource",
+    RESOURCE_CALL_ERROR_INVALID_REQUEST_METHOD: "resourceCallErrorInvalidRequestMethod",
     RESOURCE_CALL_ERROR: "resourceCallError",
-    RESOURCE_CALL_AUTH_FAILED: "resourceErrorAuthenticationFailed",
-    RESOURCE_CALL_SCOPE_ERROR: "scopeError",
-    RESOURCE_CALL_BAD_REQUEST: "resourceBadRequest",
-    RESOURCE_CALL_UNAUTHORIZED: "unauthorizedClient",
-    RESOURCE_CALL_INVALID_GRANT: "invalidGrant",
 
     SETUP_SCREEN_ORIENTATION: "setupScreenOrientation",
 
@@ -950,26 +946,11 @@ function FetchResource(oneginiCordovaPlugin) {
         };
 
         var onError = function (error) {
-          if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.CONNECTIVITY_PROBLEM) {
-            router.errorConnectivityProblem();
-          }
-          else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_ERROR) {
+          if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_ERROR) {
             router.resourceCallError();
           }
-          else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_AUTH_FAILED) {
-            router.resourceCallAuthenticationFailed();
-          }
-          else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_SCOPE_ERROR) {
-            router.resourceCallScopeError();
-          }
-          else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_BAD_REQUEST) {
-            router.resourceCallBadRequest();
-          }
-          else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_UNAUTHORIZED) {
-            router.resourceCallUnauthorized();
-          }
-          else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_INVALID_GRANT) {
-            router.resourceCallInvalidGrant();
+          else if (error.reason == oneginiCordovaPlugin.OG_CONSTANTS.RESOURCE_CALL_ERROR_INVALID_REQUEST_METHOD) {
+            router.resourceCallErrorInvalidRequestMethod();
           }
         };
 

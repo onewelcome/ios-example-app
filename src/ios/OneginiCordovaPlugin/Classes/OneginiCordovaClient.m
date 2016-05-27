@@ -440,23 +440,25 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     NSDictionary *params = [command.arguments objectAtIndex:4];
     NSDictionary *headers = [[command.arguments objectAtIndex:5] isKindOfClass: [NSNull class]] ? nil : [command.arguments objectAtIndex:5];
     
-    HTTPRequestMethod requestMethod = [self requestMethodForString:requestMethodString];
-    HTTPClientParameterEncoding parameterEncoding = [self parameterEncodingForString:paramsEncodingString];
-    
     self.fetchResourceCommandTxId = command.callbackId;
 
+    OGHTTPClientParameterEncoding paramsEncoding = [self parameterEncodingForString:paramsEncodingString];
+    NSDictionary *convertedHeaders = [self convertNumbersToStringsInDictionary:headers];
+    
     if (isAnonymous) {
-        if (headers != nil){
-            [oneginiClient fetchAnonymousResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding headers:[self convertNumbersToStringsInDictionary:headers] delegate:self];
-        } else {
-            [oneginiClient fetchAnonymousResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding delegate:self];
-        }
+        [oneginiClient fetchAnonymousResource:path
+                                requestMethod:requestMethodString
+                                       params:params
+                               paramsEncoding:paramsEncoding
+                                      headers:convertedHeaders
+                                     delegate:self];
     } else {
-        if (headers != nil){
-            [oneginiClient fetchResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding headers:[self convertNumbersToStringsInDictionary:headers] delegate:self];
-        } else {
-            [oneginiClient fetchResource:path scopes:scopes requestMethod:requestMethod params:params paramsEncoding:parameterEncoding delegate:self];
-        }
+        [oneginiClient fetchResource:path
+                       requestMethod:requestMethodString
+                              params:params
+                      paramsEncoding:paramsEncoding
+                             headers:convertedHeaders
+                            delegate:self];
     }
 }
 
@@ -765,65 +767,31 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 #pragma mark -
 #pragma mark OGResourceHandlerDelegate
 
-- (void)resourceSuccess:(id)response {
+-(void)resourceResponse:(NSHTTPURLResponse *)response body:(NSData *)body requestId:(NSString *)requestId{
     CDVPluginResult *result;
-
+    
     [self closePinView];
+    
+    NSString *jsonString = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
+    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
+    
+    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
+}
 
-    if ([response isKindOfClass:[NSData class]]) {
-        NSData *data = response;
-        NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-
-        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
-    } else {
-        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArrayBuffer:response];
+-(void)resourceError:(NSError *)error requestId:(NSString *)requestId{
+    [self closePinView];
+    NSString *errorReason = nil;
+    switch (error.code) {
+        case OGResourceErrorCode_InvalidRequestMethod:
+            errorReason = @"resourceErrorInvalidRequestMethod";
+            break;
+        case OGResourceErrorCode_Generic:
+        default:
+            errorReason = @"resourceCallError";
+            break;
     }
-
-    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
-
-}
-
-- (void)resourceError {
-
-    [self closePinView];
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                            messageAsDictionary:@{ kReason:@"resourceCallError" }];
-    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
-}
-
-- (void)resourceBadRequest {
-    [self closePinView];
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                            messageAsDictionary:@{ kReason:@"resourceBadRequest" }];
-    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
-}
-
-- (void)scopeError {
-    [self closePinView];
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                            messageAsDictionary:@{ kReason:@"scopeError" }];
-    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
-}
-
-- (void)unauthorizedClient {
-    [self closePinView];
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                            messageAsDictionary:@{ kReason:@"unauthorizedClient" }];
-    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
-}
-
-- (void)resourceErrorAuthenticationFailed {
-    [self closePinView];
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                            messageAsDictionary:@{ kReason:@"resourceErrorAuthenticationFailed" }];
-    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
-}
-
--(void)invalidGrantType
-{
-    [self closePinView];
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                            messageAsDictionary:@{ kReason:@"invalidGrant" }];
+                                            messageAsDictionary:@{ kReason:errorReason }];
     [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
 }
 
@@ -1083,29 +1051,16 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 
 #pragma mark -
 #pragma mark Util
-- (HTTPRequestMethod)requestMethodForString:(NSString *)requestMethodString {
-    if ([requestMethodString isEqualToString:@"GET"]) {
-        return GET;
-    } else	if ([requestMethodString isEqualToString:@"PUT"]) {
-        return PUT;
-    } else	if ([requestMethodString isEqualToString:@"DELETE"]) {
-        return DELETE;
-    } else	if ([requestMethodString isEqualToString:@"POST"]) {
-        return POST;
-    } else {
-        return GET;
-    }
-}
 
-- (HTTPClientParameterEncoding)parameterEncodingForString:(NSString *)paramsEncodingString {
+- (OGHTTPClientParameterEncoding)parameterEncodingForString:(NSString *)paramsEncodingString {
     if ([paramsEncodingString isEqualToString:@"FORM"]) {
-        return FormURLParameterEncoding;
+        return OGFormURLParameterEncoding;
     } else if ([paramsEncodingString isEqualToString:@"JSON"]) {
-        return JSONParameterEncoding;
+        return OGJSONParameterEncoding;
     } else if ([paramsEncodingString isEqualToString:@"PROPERTY"]) {
-        return PropertyListParameterEncoding;
+        return OGPropertyListParameterEncoding;
     } else {
-        return JSONParameterEncoding;
+        return OGJSONParameterEncoding;
     }
 }
 
@@ -1123,6 +1078,8 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
 
 
 -(NSDictionary*)convertNumbersToStringsInDictionary:(NSDictionary*)dictionary{
+    if (!dictionary)
+        return nil;
     NSMutableDictionary* convertedDictionary = [[NSMutableDictionary alloc]init];
     for (NSString* key in dictionary.allKeys) {
         id object = [dictionary objectForKey:key];

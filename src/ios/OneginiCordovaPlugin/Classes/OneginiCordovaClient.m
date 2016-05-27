@@ -52,7 +52,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 }
 
 @synthesize oneginiClient, pluginInitializedCommandTxId, authorizeCommandTxId, configModel;
-@synthesize fetchResourceCommandTxId, pinDialogCommandTxId, pinValidateCommandTxId, pinChangeCommandTxId;
+@synthesize fetchResourceCommandsTxId, pinDialogCommandTxId, pinValidateCommandTxId, pinChangeCommandTxId;
 
 #pragma mark -
 #pragma mark overrides
@@ -142,7 +142,6 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 - (void)resetAll {
     self.pluginInitializedCommandTxId = nil;
     self.authorizeCommandTxId = nil;
-    self.fetchResourceCommandTxId = nil;
     self.pinValidateCommandTxId = nil;
     self.pinChangeCommandTxId = nil;
     self.enrollmentCommandTxId = nil;
@@ -439,27 +438,28 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     NSString *paramsEncodingString = [command.arguments objectAtIndex:3];
     NSDictionary *params = [command.arguments objectAtIndex:4];
     NSDictionary *headers = [[command.arguments objectAtIndex:5] isKindOfClass: [NSNull class]] ? nil : [command.arguments objectAtIndex:5];
-    
-    self.fetchResourceCommandTxId = command.callbackId;
 
     OGHTTPClientParameterEncoding paramsEncoding = [self parameterEncodingForString:paramsEncodingString];
     NSDictionary *convertedHeaders = [self convertNumbersToStringsInDictionary:headers];
     
+    NSString *requestId = nil;
     if (isAnonymous) {
-        [oneginiClient fetchAnonymousResource:path
+        requestId = [oneginiClient fetchAnonymousResource:path
                                 requestMethod:requestMethodString
                                        params:params
                                paramsEncoding:paramsEncoding
                                       headers:convertedHeaders
                                      delegate:self];
+        
     } else {
-        [oneginiClient fetchResource:path
+        requestId = [oneginiClient fetchResource:path
                        requestMethod:requestMethodString
                               params:params
                       paramsEncoding:paramsEncoding
                              headers:convertedHeaders
                             delegate:self];
     }
+    [self.fetchResourceCommandsTxId setObject:command.callbackId forKey:requestId];
 }
 
 - (void)logout:(CDVInvokedUrlCommand *)command {
@@ -775,7 +775,9 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
     NSString *jsonString = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
     result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
     
-    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
+    NSString *callbackId = [self.fetchResourceCommandsTxId objectForKey:requestId];
+    [self.fetchResourceCommandsTxId removeObjectForKey:requestId];
+    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
 }
 
 -(void)resourceError:(NSError *)error requestId:(NSString *)requestId{
@@ -790,9 +792,11 @@ static int PARAMETERS_WITH_HEADERS_LENGTH = 6;
             errorReason = @"resourceCallError";
             break;
     }
+    NSString *callbackId = [self.fetchResourceCommandsTxId objectForKey:requestId];
+    [self.fetchResourceCommandsTxId removeObjectForKey:requestId];
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                             messageAsDictionary:@{ kReason:errorReason }];
-    [self.commandDelegate sendPluginResult:result callbackId:fetchResourceCommandTxId];
+    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
 }
 
 #pragma mark -

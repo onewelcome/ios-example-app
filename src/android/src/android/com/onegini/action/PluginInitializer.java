@@ -45,10 +45,8 @@ public class PluginInitializer {
     client.setOneginiClient(oneginiClient);
 
     final boolean shouldUseNativeScreens = configModel.useNativePinScreen();
-    client.setShouldUseNativeScreens(shouldUseNativeScreens);
     setupDialogs(shouldUseNativeScreens, application.getApplicationContext());
 
-    setupDialogs(shouldUseNativeScreens, application.getApplicationContext());
     setupURLHandler(oneginiClient, configModel);
     MessageResourceReader.setupInstance(applicationContext);
 
@@ -81,5 +79,4 @@ public class PluginInitializer {
       client.setOneginiURLHandler(new URLHandler());
     }
   }
-
 }

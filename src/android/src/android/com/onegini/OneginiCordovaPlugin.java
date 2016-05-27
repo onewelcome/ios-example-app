@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.Config;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
@@ -61,16 +62,19 @@ import com.onegini.action.SetupScreenOrientationAction;
 import com.onegini.action.ValidatePinAction;
 import com.onegini.mobile.sdk.android.library.OneginiClient;
 import com.onegini.mobile.sdk.android.library.model.OneginiClientConfigModel;
+import com.onegini.model.ConfigModel;
 
 public class OneginiCordovaPlugin extends CordovaPlugin {
 
   private static Map<String, Class<? extends OneginiPluginAction>> actions = new HashMap<String, Class<? extends OneginiPluginAction>>();
   private OneginiClient oneginiClient;
   private boolean shouldUseNativeScreens;
+  private boolean useEmbeddedWebview;
 
 
   @Override
   protected void pluginInitialize() {
+    initConfigModelValues();
     mapActions();
 
     final PluginInitializer initializer = new PluginInitializer();
@@ -101,8 +105,15 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
 
   private void mapActions() {
     actions.put(AWAIT_INITIALIZATION, AwaitInitialization.class);
-    actions.put(INIT_PIN_CALLBACK_SESSION, PinCallbackSession.class);
-    actions.put(IN_APP_BROWSER_CONTROL_CALLBACK_SESSION, InAppBrowserControlSession.class);
+
+    if (shouldUseHTMLPinScreens()) {
+      actions.put(INIT_PIN_CALLBACK_SESSION, PinCallbackSession.class);
+    }
+
+    if (shouldUseInAppBrowserControl()) {
+      actions.put(IN_APP_BROWSER_CONTROL_CALLBACK_SESSION, InAppBrowserControlSession.class);
+    }
+
     actions.put(SETUP_SCREEN_ORIENTATION, SetupScreenOrientationAction.class);
 
     actions.put(AUTHORIZE_ACTION, AuthorizeAction.class);
@@ -171,7 +182,26 @@ public class OneginiCordovaPlugin extends CordovaPlugin {
     }
     return oneginiClient;
   }
-  public void setShouldUseNativeScreens(final boolean shouldUseNativeScreens) {
+
+  private void initConfigModelValues() {
+    final ConfigModel configModel = ConfigModel.from(Config.getPreferences());
+    setShouldUseNativeScreens(configModel.useNativePinScreen());
+    setShouldUseInAppBrowserControl(configModel.useEmbeddedWebview());
+  }
+
+  private void setShouldUseInAppBrowserControl(final boolean useEmbeddedWebview) {
+    this.useEmbeddedWebview = useEmbeddedWebview;
+  }
+
+  private boolean shouldUseInAppBrowserControl() {
+    return useEmbeddedWebview;
+  }
+
+  private boolean shouldUseHTMLPinScreens() {
+    return !shouldUseNativeScreens;
+  }
+
+  private void setShouldUseNativeScreens(final boolean shouldUseNativeScreens) {
     this.shouldUseNativeScreens = shouldUseNativeScreens;
   }
 

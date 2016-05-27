@@ -4,10 +4,12 @@ import static com.onegini.response.GeneralResponse.CONNECTIVITY_PROBLEM;
 import static com.onegini.util.DeviceUtil.isNotConnected;
 
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.Config;
 import org.json.JSONArray;
 
 import android.content.Context;
 import com.onegini.OneginiCordovaPlugin;
+import com.onegini.model.ConfigModel;
 import com.onegini.util.CallbackResultBuilder;
 
 public class AwaitInitialization implements OneginiPluginAction {
@@ -19,11 +21,26 @@ public class AwaitInitialization implements OneginiPluginAction {
       return;
     }
 
-    if (PluginInitializer.isConfigured() &&
-        isPinCallbackSessionSet() &&
-        isInAppBrowserControlCallbackSessionSet()) {
+    if (isPluginInitializedSuccessfully()) {
       pluginInitializedCallback.success();
     }
+  }
+
+  private static boolean isPluginInitializedSuccessfully() {
+    final ConfigModel configModel = ConfigModel.from(Config.getPreferences());
+
+    final boolean pinCallbackValid = shouldUseHTMLScreens(configModel) ? isPinCallbackSessionSet() : true;
+    final boolean browserControlCallbackValid = shouldUseEmbeddedWebview(configModel) ? isInAppBrowserControlCallbackSessionSet() : true;
+
+    return PluginInitializer.isConfigured() && pinCallbackValid && browserControlCallbackValid;
+  }
+
+  private static boolean shouldUseEmbeddedWebview(final ConfigModel configModel) {
+    return configModel.useEmbeddedWebview();
+  }
+
+  private static boolean shouldUseHTMLScreens(final ConfigModel configModel) {
+    return !configModel.useNativePinScreen();
   }
 
   public static void notifyPluginInitializationFailed() {
@@ -43,8 +60,8 @@ public class AwaitInitialization implements OneginiPluginAction {
 
     if (isNotConnected(context)) {
       callbackContext.sendPluginResult(callbackResultBuilder
-              .withErrorReason(CONNECTIVITY_PROBLEM.getName())
-              .build());
+          .withErrorReason(CONNECTIVITY_PROBLEM.getName())
+          .build());
       return;
     }
 

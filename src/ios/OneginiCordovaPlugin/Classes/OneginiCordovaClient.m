@@ -513,7 +513,7 @@ NSString* const kMaxSimilarDigits	= @"maxSimilarDigits";
 }
 
 -(void)readConfigProperty:(CDVInvokedUrlCommand *)command{
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:self.configModel.baseURL];
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:self.configModel.resourceBaseURL];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 

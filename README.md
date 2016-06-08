@@ -6,7 +6,7 @@ iOS Example App is using Onegini iOS SDK to perform secure authentication and re
 
 ### Downloading Onegini iOS SDK
 1. Got to https://repo.onegini.com
-2. Login using: your credentials (provided by you by Onegini support).
+2. Login using: your credentials (provided to you by Onegini support).
 3. CLick the 'Artifacts' tab on the left size 
 4. Navigate to the `OneginiSDK` folder
 5. Download OneginiSDK.zip

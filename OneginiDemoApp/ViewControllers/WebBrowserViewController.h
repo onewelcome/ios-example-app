@@ -11,5 +11,6 @@
 @interface WebBrowserViewController : UIViewController
 
 @property (nonatomic) NSURL *url;
+@property (nonatomic) void (^completionBlock)(NSURL* url);
 
 @end

@@ -20,98 +20,71 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         singleton = [[self alloc] init];
-        [OGOneginiClient sharedInstance].authorizationDelegate = singleton;
-        [[NSNotificationCenter defaultCenter] addObserver:singleton selector:@selector(closeWebBrowser) name:OGCloseWebViewNotification object:nil];
+        
     });
     
     return singleton;
 }
 
-- (void)login {
-    [[OGOneginiClient sharedInstance] authorize:@[@"read"]];
+- (void)loginWithProfile:(NSString*)profile {
+    [[OGOneginiClient sharedInstance] authenticateUser:[OGUserProfile profileWithId:profile] delegate:self];;
+}
+
+- (void)registerNewProfile {
+    [[OGOneginiClient sharedInstance] registerUser:@[@"read"] delegate:self];
 }
 
 - (BOOL)isRegistered {
     return [[OGOneginiClient sharedInstance] isClientRegistered];
 }
 
-#pragma mark - OGAuthorizationDelegate
+#pragma mark - OGAuthenticationDelegete
 
-- (void)authorizationSuccess {
+- (void)authenticationSuccessForProfile:(NSString *)profile{
     ProfileViewController *viewController = [ProfileViewController new];
     [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }
 
-- (void)requestAuthorization:(NSURL *)url {
+- (void)requestAuthenticationCode:(NSURL *)url{
     WebBrowserViewController *webBrowserViewController = [WebBrowserViewController new];
     webBrowserViewController.url = url;
+    webBrowserViewController.completionBlock = ^(NSURL* completionURL){
+        if ([[AppDelegate sharedNavigationController].presentedViewController isKindOfClass:WebBrowserViewController.class]){
+            [[AppDelegate sharedNavigationController] dismissViewControllerAnimated:YES completion:nil];
+        }
+    };
     [[AppDelegate sharedNavigationController] presentViewController:webBrowserViewController animated:YES completion:nil];
 }
 
-- (void)closeWebBrowser{
-    if ([[AppDelegate sharedNavigationController].presentedViewController isKindOfClass:WebBrowserViewController.class]){
-        [[AppDelegate sharedNavigationController] dismissViewControllerAnimated:YES completion:nil];
-    }
-}
-
-- (void)askForNewPin:(NSUInteger)pinSize {
-    PinViewController *viewController = [PinViewController new];
-    viewController.pinLength = pinSize;
-    viewController.mode = PINRegistrationMode;
-    viewController.pinEntered = ^(NSString * pin) {
-        [[OGOneginiClient sharedInstance] confirmNewPin:pin validation:self];
-    };
-    [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
-}
-
-- (void)askForCurrentPin {
-    PinViewController *viewController = [PinViewController new];
-    viewController.pinLength = 5;
-    viewController.mode = PINCheckMode;
-    viewController.pinEntered = ^(NSString *pin) {
-        [[OGOneginiClient sharedInstance] confirmCurrentPin:pin];
-    };
-    [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
-}
-
-- (void)askCurrentPinForChangeRequest {
-    
-}
-
-- (void)askNewPinForChangeRequest:(NSUInteger)pinSize {
-    
-}
-
-- (void)askForPushAuthenticationConfirmation:(NSString *)message
-                            notificationType:(NSString *)notificationType
-                                     confirm:(PushAuthenticationConfirmation)confirm {
-    
-}
-
-- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message
-                                   notificationType:(NSString *)notificationType
-                                            pinSize:(NSUInteger)pinSize
-                                        maxAttempts:(NSUInteger)maxAttempts
-                                       retryAttempt:(NSUInteger)retryAttempt
-                                            confirm:(PushAuthenticationWithPinConfirmation)confirm {
-    
-}
-
-- (void)askForPushAuthenticationWithFingerprint:(NSString*)message
-                               notificationType:(NSString *)notificationType
-                                        confirm:(PushAuthenticationConfirmation)confirm {
-    
-}
-
-- (void)authorizationError {
+- (void)authenticationError{
     [self handleAuthError:nil];
 }
 
-- (void)authorizationErrorTooManyPinFailures {
-    [self handleAuthError:@"Too many Pin failures. User has been disconnected."];
+- (void)authenticationError:(NSError *)error{
+    [self handleAuthError:nil];
 }
 
-- (void)authorizationErrorInvalidGrant:(NSUInteger)remaining {
+- (void)authenticationErrorInvalidScope{
+    [self handleAuthError:nil];
+}
+
+- (void)authenticationErrorNotAuthenticated{
+    [self handleAuthError:nil];
+}
+
+- (void)authenticationErrorNotAuthorized{
+    [self handleAuthError:nil];
+}
+
+- (void)authenticationErrorInvalidProfile{
+    [self handleAuthError:nil];
+}
+
+- (void)authenticationErrorAuthenticationInProgress{
+    [self handleAuthError:nil];
+}
+
+- (void)authenticationErrorInvalidGrant:(NSUInteger)remaining{
     if ([[AppDelegate sharedNavigationController].topViewController isKindOfClass:PinViewController.class]){
         PinViewController *pinViewController = (PinViewController*)[AppDelegate sharedNavigationController].topViewController;
         [pinViewController reset];
@@ -119,52 +92,62 @@
     }
 }
 
-- (void)authorizationErrorNoAuthorizationGrant {
+- (void)authenticationErrorClientRegistrationFailed:(NSError *)error{
     [self handleAuthError:nil];
 }
 
-- (void)authorizationErrorNoAccessToken {
+- (void)authenticationErrorInvalidState{
     [self handleAuthError:nil];
 }
 
-- (void)authorizationErrorInvalidRequest {
+- (void)authenticationErrorNoAuthenticationGrant{
     [self handleAuthError:nil];
 }
 
-- (void)authorizationErrorClientRegistrationFailed:(NSError *)error {
+- (void)authenticationErrorInvalidRequest{
     [self handleAuthError:nil];
 }
 
-- (void)authorizationErrorInvalidState {
+- (void)authenticationErrorNoAccessToken{
     [self handleAuthError:nil];
 }
 
-- (void)authorizationErrorInvalidScope {
-    [self handleAuthError:nil];
-}
-
-- (void)authorizationErrorNotAuthenticated {
-    [self handleAuthError:nil];
-}
-
-- (void)authorizationErrorInvalidGrantType {
-    [self handleAuthError:nil];
-}
-
-- (void)authorizationErrorInvalidAppPlatformOrVersion {
+-(void)authenticationErrorInvalidAppPlatformOrVersion{
     [self handleAuthError:@"Unsupported App version, please upgrade."];
 }
 
-- (void)authorizationErrorUnsupportedOS {
+-(void)authenticationErrorInvalidGrantType{
+    [self handleAuthError:nil];
+}
+
+-(void)authenticationErrorTooManyPinFailures{
+    [self handleAuthError:@"Too many Pin failures. User has been disconnected."];
+}
+
+-(void)authenticationErrorUnsupportedOS{
     [self handleAuthError:@"Unsupported iOS version, please upgrade."];
 }
 
-- (void)authorizationErrorNotAuthorized {
-    [self handleAuthError:nil];
+-(void)askForNewPin:(NSUInteger)pinSize profile:(NSString *)profile confirmationDelegate:(id<OGNewPinConfirmationDelegate>)delegate{
+    PinViewController *viewController = [PinViewController new];
+    viewController.pinLength = pinSize;
+    viewController.mode = PINRegistrationMode;
+    viewController.profile = [OGUserProfile profileWithId:profile];
+    viewController.pinEntered = ^(NSString * pin) {
+        [delegate confirmNewPin:pin validation:self];
+    };
+    [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }
 
-- (void)authorizationError:(NSError *)error {
-    [self handleAuthError:nil];
+-(void)askForCurrentPinForProfile:(NSString *)profile pinConfirmationDelegate:(id<OGPinConfirmationDelegate>)delegate{
+    PinViewController *viewController = [PinViewController new];
+    viewController.pinLength = 5;
+    viewController.mode = PINCheckMode;
+    viewController.profile = [OGUserProfile profileWithId:profile];
+    viewController.pinEntered = ^(NSString *pin) {
+        [delegate confirmPin:pin];
+    };
+    [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }
 
 #pragma mark - OGPinValidationDelegate

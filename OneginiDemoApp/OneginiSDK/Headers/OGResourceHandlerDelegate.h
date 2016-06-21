@@ -8,63 +8,65 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum : NSInteger{
+    OGResourceErrorCode_InvalidRequestMethod,   //provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
+    OGResourceErrorCode_Generic                 //undefined error preventing from performing resource call
+} OGResourceErrorCode;
+
 /**
  *  Delegate protocol for use by resource handler classes.
  */
 @protocol OGResourceHandlerDelegate <NSObject>
 
-@required
-
-/**
- *  Method called when the resource call failed because of an unknown error.
- */
-- (void)resourceError;
-
-/**
- *  Method called when the resource call failed because of a bad request.
- */
-- (void)resourceBadRequest;
-
-/**
- *  Method called when the resource call could not be completed because the client was not able to authenticate to the
- *  token server and obtain an access token.
- */
-- (void)resourceErrorAuthenticationFailed;
-
-/**
- *  Method called when the scope linked to the provided access token is not the needed scope.
- */
-- (void)scopeError;
-
-/**
- *  Method called when the requested grant type is not allowed for this client.
- */
-- (void)unauthorizedClient;
+NS_ASSUME_NONNULL_BEGIN
 
 @optional
 
 /**
- *  Method called when the resource call was successfully made.
- *  Optional but either this one or the one with the headers should be implemented.
+ *  Method called when resource call was completed
  *
- *  @param response the response of the resource call
+ *  @param response  object containing status code and headers. 
+ *  @param body      bare data containing body which needs to be decoded.
+ *  @param requestId unique request identifier which matches the `requestId` returned by fetch resource call.
  */
-- (void)resourceSuccess:(id)response;
+- (void)resourceResponse:(NSHTTPURLResponse*)response body:(nullable NSData*)body requestId:(NSString*)requestId;
+
+/**
+ *  Method called when resource call was not performed due to en error
+ *
+ *  @param error    defines type of error which occured
+ *  @param requestId unique request identifier which matches the `requestId` returned by fetch resource call.
+ */
+- (void)resourceError:(NSError*)error requestId:(NSString*)requestId;
+
+#pragma mark - DEPRECATED
 
 /**
  *  Method called when the resource call was successfully made.
  *  Optional but either this one or the one with the headers should be implemented.
- *
+ */
+- (void)resourceSuccess:(id)response DEPRECATED_ATTRIBUTE;
+
+/**
+ *  Method called when the resource call was successfully made.
+ *  Optional but either this one or the one with the headers should be implemented.
  *  @param response the response of the resource call
  *  @param headers the headers returned on the resource call
  */
 - (void)resourceSuccess:(id)response
-				headers:(NSDictionary *)headers;
+                headers:(NSDictionary *)headers DEPRECATED_ATTRIBUTE;
 
 /**
- *  Method called when the grant type to get the client credentials is not enabled.
+ *  Method called when the resource call failed because of an unknown error.
  */
-- (void)invalidGrantType;
+- (void)resourceError DEPRECATED_ATTRIBUTE;
 
+/**
+ *  Method called when the requested grant type is not allowed for this client.
+ */
+- (void)unauthorizedClient DEPRECATED_ATTRIBUTE;
+- (void)resourceErrorNotAuthenticated;
+
+NS_ASSUME_NONNULL_END
 
 @end

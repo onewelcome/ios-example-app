@@ -9,12 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "OneginiSDK.h"
 
-@interface AuthorizationController : NSObject <OGAuthorizationDelegate, OGPinValidationDelegate>
+@interface AuthorizationController : NSObject <OGAuthenticationDelegate, OGPinValidationDelegate>
 
 + (AuthorizationController *)sharedInstance;
 
 @property (nonatomic, readonly) BOOL isRegistered;
+@property (nonatomic, readonly) OGUserProfile *authenticatedProfile;
 
-- (void)login;
+- (void)loginWithProfile:(NSString*)profile;
+
+- (void)registerNewProfile;
 
 @end

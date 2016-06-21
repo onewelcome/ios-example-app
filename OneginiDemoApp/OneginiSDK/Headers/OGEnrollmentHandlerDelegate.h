@@ -13,8 +13,6 @@
  */
 @protocol OGEnrollmentHandlerDelegate <NSObject>
 
-@required
-
 /**
  *  Enrollment success.
  */
@@ -58,7 +56,7 @@
 - (void)enrollmentDeviceAlreadyEnrolled;
 
 /**
- *  Device is already enrolled for mobile authentication.
+ *  The user already has a device enrolled for mobile authentication.
  */
 - (void)enrollmentUserAlreadyEnrolled;
 
@@ -66,7 +64,5 @@
  *  The transaction id used during enrollment is invalid, probably because the transaction validity period is expired.
  */
 - (void)enrollmentInvalidTransaction;
-
-@optional
 
 @end

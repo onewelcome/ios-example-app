@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OGPinConfirmationDelegate.h"
+#import "OGUserProfile.h"
 
 /**
  *  Delegate used for fingerprint authentication.
@@ -17,7 +19,9 @@
  *  Asks user for current pin for fingerprint authentication entrollment.
  *  Obtained should be passed as an argument of OGOneginiClient method - (void)confirmCurrentPinForFingerprintAuthorization:(NSString *)pin;
  */
-- (void) askCurrentPinForFingerprintAuthentication;
+- (void) askCurrentPinForFingerprintAuthentication DEPRECATED_MSG_ATTRIBUTE("Use askCurrentPinForFingerprintEnrollmentForProfile:confirmationDelegate:");
+
+- (void) askCurrentPinForFingerprintEnrollmentForProfile:(OGUserProfile *)userProfile confirmationDelegate:(id<OGPinConfirmationDelegate>)pinConfirmation;
 
 /**
  *  Fingerprint enrollment success callback.

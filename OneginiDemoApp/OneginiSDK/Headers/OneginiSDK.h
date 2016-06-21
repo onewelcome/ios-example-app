@@ -19,6 +19,11 @@
 #import "OGConfigModel.h"
 #import "OGOneginiClient.h"
 #import "OGPublicCommons.h"
+#import "OGNewPinConfirmationDelegate.h"
+#import "OGPinConfirmationDelegate.h"
+#import "OGPushMessageDelegate.h"
+#import "OGClientAuthenticationDelegate.h"
+#import "OGUserProfile.h"
 
 /**
  *  Public interface of the Onegini iOS SDK, should be imported by the SDK user.

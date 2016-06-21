@@ -19,7 +19,13 @@ typedef enum : NSInteger {
 	FormURLParameterEncoding,
 	JSONParameterEncoding,
 	PropertyListParameterEncoding,
-} HTTPClientParameterEncoding;
+} HTTPClientParameterEncoding DEPRECATED_ATTRIBUTE;
+
+typedef enum : NSInteger {
+    OGFormURLParameterEncoding,
+    OGJSONParameterEncoding,
+    OGPropertyListParameterEncoding,
+} OGHTTPClientParameterEncoding;
 
 /**
  The name of the notification send to listeners to inform them that the embedded web view has been closed.

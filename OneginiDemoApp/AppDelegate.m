@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
 #import "AuthorizationController.h"
-#import "RKLog.h"
 #import "MobileAuthenticationController.h"
 
 @implementation AppDelegate

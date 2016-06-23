@@ -67,8 +67,8 @@
 - (void)pinChangeError:(NSError *)error;
 
 /**
- *  Client validation failed
+ *  Client validation failed, client was disconnected.
  */
-- (void)pinChangeErrorNotAuthenticated;
+- (void)pinChangeErrorClientDisconnected;
 
 @end

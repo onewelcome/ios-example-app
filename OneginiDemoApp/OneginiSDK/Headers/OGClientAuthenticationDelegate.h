@@ -21,11 +21,6 @@
 - (void)authenticationError;
 
 /**
- *  No authentication grant token received.
- */
-- (void)authenticationErrorNoAuthenticationGrant;
-
-/**
  *  One or more required parameters were missing in the authentication request.
  */
 - (void)authenticationErrorInvalidRequest;
@@ -38,20 +33,9 @@
 - (void)authenticationErrorClientRegistrationFailed:(NSError *)error;
 
 /**
- *  The state parameter in the authentication request and the value in the callback have different values.
- *  This might indicate a possible man in the middle attack.
- */
-- (void)authenticationErrorInvalidState;
-
-/**
  *  At least one of the requested scopes is not valid.
  */
 - (void)authenticationErrorInvalidScope;
-
-/**
- *  Invalid client credentials are used to perform an authentication request.
- */
-- (void)authenticationErrorNotAuthenticated;
 
 /**
  *  The grant type used during authentication is not supported by the token server.
@@ -77,6 +61,12 @@
  *  Another authentication process is in progress.
  */
 - (void)authenticationErrorAuthenticationInProgress;
+
+/**
+ *  Error occurred during the authentication request, all client data including all profiles were removed. The user needs to register again.
+ *  This can happen when the client registration is removed server-side.
+ */
+- (void)authenticationErrorDeviceDeregistered;
 
 @optional
 

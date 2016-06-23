@@ -1,5 +1,5 @@
 //
-//  OGPushMessageDelegate.h
+//  OGMobileAuthenticationDelegate.h
 //  OneginiSDKiOS
 //
 //  Created by Stanisław Brzeski on 04/04/16.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OGUserProfile.h"
 
-@protocol OGPushMessageDelegate <NSObject>
+@protocol OGMobileAuthenticationDelegate <NSObject>
 
 /**
  *  Asks the user for confirmation on a push authentication request.

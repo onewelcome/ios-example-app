@@ -48,7 +48,7 @@
 /**
  *  The provided client credentials are invalid.
  */
-- (void)enrollmentInvalidClientCredentials;
+- (void)enrollmentInvalidClientCredentials DEPRECATED_MSG_ATTRIBUTE("Use enrollmentErrorDeviceDeregistered");
 
 /**
  *  The device is already enrolled.
@@ -64,5 +64,11 @@
  *  The transaction id used during enrollment is invalid, probably because the transaction validity period is expired.
  */
 - (void)enrollmentInvalidTransaction;
+
+/**
+ *  Mobile authentication enrollment failed. All device data including all profiles were removed. The user needs to register again.
+ *  This can happen when the device registration is removed server-side.
+ */
+- (void)enrollmentErrorDeviceDeregistered;
 
 @end

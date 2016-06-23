@@ -20,7 +20,7 @@
 #import "OGAuthenticationDelegate.h"
 #import "OGClientAuthenticationDelegate.h"
 #import "OGUserProfile.h"
-#import "OGPushMessageDelegate.h"
+#import "OGMobileAuthenticationDelegate.h"
 
 @class OGConfigModel, OGAuthorizationManager, OGResourceManager, OGEnrollmentManager;
 
@@ -264,7 +264,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param delegate delegate responsinble for handling push messages
  *  @return true, if the notification is processed by the client
  */
-- (BOOL)handlePushNotification:(NSDictionary *)userInfo delegate:(id<OGPushMessageDelegate>)delegate;
+- (BOOL)handlePushNotification:(NSDictionary *)userInfo delegate:(id<OGMobileAuthenticationDelegate>)delegate;
 
 /**
  *  List of enrolled profiles stored locally

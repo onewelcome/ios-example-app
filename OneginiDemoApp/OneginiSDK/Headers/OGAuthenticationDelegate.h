@@ -62,7 +62,7 @@
 /**
  *  authentication failed due to maximum number of attempts is exceeded.
  */
-- (void)authenticationErrorTooManyPinFailures;
+- (void)authenticationErrorTooManyPinFailures DEPRECATED_MSG_ATTRIBUTE("Use authenticationErrorProfileDeregistered");
 
 /**
  *  The access grant or refresh token provided by the client is invalid.
@@ -100,11 +100,6 @@
 - (void)authenticationErrorInvalidScope;
 
 /**
- *  Invalid client credentials are used to perform an authentication request.
- */
-- (void)authenticationErrorNotAuthenticated;
-
-/**
  *  The grant type used during authentication is not supported by the token server.
  */
 - (void)authenticationErrorInvalidGrantType;
@@ -130,9 +125,16 @@
 - (void)authenticationErrorInvalidProfile;
 
 /**
- *  Another authentication process is in progress.
+ *  Error occurred during the authentication request, all device data including all profiles were removed. The user needs to register again.
+ *  This can happen when the device registration is removed server-side.
  */
-- (void)authenticationErrorAuthenticationInProgress;
+- (void)authenticationErrorDeviceDeregistered;
+
+/**
+ *  Error occurred during the authentication request, all data for the current profile was removed. This user needs to register again.
+ *  This can happen when the profile is removed server-side or the user tried to enter the PIN too many times.
+ */
+- (void)authenticationErrorProfileDeregistered;
 
 @optional
 

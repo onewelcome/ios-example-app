@@ -21,7 +21,7 @@
 #import "OGPublicCommons.h"
 #import "OGNewPinConfirmationDelegate.h"
 #import "OGPinConfirmationDelegate.h"
-#import "OGPushMessageDelegate.h"
+#import "OGMobileAuthenticationDelegate.h"
 #import "OGClientAuthenticationDelegate.h"
 #import "OGUserProfile.h"
 

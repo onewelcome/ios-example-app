@@ -160,11 +160,6 @@ DEPRECATED_MSG_ATTRIBUTE("Use OGAuthenticationDelegate")
 - (void)authorizationErrorInvalidScope;
 
 /**
- *  Invalid client credentials are used to perform an authorization request.
- */
-- (void)authorizationErrorNotAuthenticated;
-
-/**
  *  The grant type used during authorization is not supported by the token server.
  */
 - (void)authorizationErrorInvalidGrantType;

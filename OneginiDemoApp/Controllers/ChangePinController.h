@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "OneginiSDK.h"
 
-@interface ChangePinController : NSObject <OGChangePinDelegate>
+@interface ChangePinController : NSObject<OGChangePinDelegate>
 
 + (instancetype)sharedInstance;
 
--(void)changePin;
+- (void)changePin;
 
 @end

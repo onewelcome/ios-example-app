@@ -12,80 +12,93 @@
 
 @interface ChangePinController ()
 
-@property (nonatomic) PinViewController* pinViewController;
+@property (nonatomic) PinViewController *pinViewController;
 
 @end
 
 @implementation ChangePinController
 
-+(instancetype)sharedInstance{
++ (instancetype)sharedInstance
+{
     static ChangePinController *singleton;
-    
+
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         singleton = [[self alloc] init];
     });
-    
+
     return singleton;
 }
 
--(void)changePin{
-    [[OGOneginiClient sharedInstance]changePinRequest:self];
+- (void)changePin
+{
+    [[OGOneginiClient sharedInstance] changePinRequest:self];
 }
 
-- (void)invalidCurrentPin:(NSUInteger)remaining{
+- (void)invalidCurrentPin:(NSUInteger)remaining
+{
     [self.pinViewController reset];
 }
 
-- (void)askCurrentPinForChangeRequestForProfile:(OGUserProfile*)profile confirmationDelegate:(id<OGPinConfirmationDelegate>)delegate{
+
+- (void)askCurrentPinForChangeRequestForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)delegate
+{
     self.pinViewController = [PinViewController new];
     self.pinViewController.mode = PINCheckMode;
-    self.pinViewController.profile = profile;
+    self.pinViewController.profile = userProfile;
     self.pinViewController.pinLength = 5;
-    self.pinViewController.pinEntered = ^(NSString * pin) {
+    self.pinViewController.pinEntered = ^(NSString *pin) {
         [delegate confirmPin:pin];
     };
     [[AppDelegate sharedNavigationController] pushViewController:self.pinViewController animated:YES];
 }
 
-- (void)askNewPinForChangeRequest:(NSUInteger)pinSize confirmationDelegate:(id<OGNewPinConfirmationDelegate>)delegate{
+- (void)askNewPinForChangeRequest:(NSUInteger)pinSize pinConfirmation:(id<OGNewPinConfirmation>)delegate
+{
     [self.pinViewController reset];
     self.pinViewController.mode = PINRegistrationMode;
-    self.pinViewController.pinEntered = ^(NSString *pin){
+    self.pinViewController.pinEntered = ^(NSString *pin) {
         [delegate confirmNewPin:pin validation:nil];
     };
 }
 
-- (void)pinChangeError{
+- (void)pinChangeError
+{
     [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
     [self handleAuthError:nil];
 }
 
--(void)pinChangeErrorTooManyPinFailures {
+- (void)pinChangeErrorTooManyPinFailures
+{
     [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
     [self handleAuthError:nil];
 }
 
--(void)pinChangeError:(NSError *)error{
+- (void)pinChangeError:(NSError *)error
+{
     [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
     [self handleAuthError:nil];
 }
 
--(void)pinChangeErrorNotAuthenticated{
+- (void)pinChangeErrorNotAuthenticated
+{
     [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
     [self handleAuthError:nil];
 }
 
--(void)pinChanged{
+- (void)pinChanged
+{
     [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
 }
 
-- (void)handleAuthError:(NSString *)error {
+- (void)handleAuthError:(NSString *)error
+{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change pin error" message:error preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* okButton = [UIAlertAction
-                               actionWithTitle:@"Ok"
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction * action){}];
+    UIAlertAction *okButton = [UIAlertAction
+        actionWithTitle:@"Ok"
+                  style:UIAlertActionStyleDefault
+                handler:^(UIAlertAction *action) {
+                }];
     [alert addAction:okButton];
     [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
 }

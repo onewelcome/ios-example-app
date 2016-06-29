@@ -28,7 +28,7 @@
 
 - (void)authenticateUser:(OGUserProfile *)user
 {
-	[[OGOneginiClient sharedInstance] authenticateUser:[OGUserProfile profileWithId:user] delegate:self];;
+	[[OGOneginiClient sharedInstance] authenticateUser:user delegate:self];;
 }
 
 - (void)registerNewUser

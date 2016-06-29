@@ -1,10 +1,4 @@
-//
-//  OneginiSDK.h
-//  OneginiSDK
-//
-//  Created by Eduard on 21-07-14.
-//  Copyright (c) 2014 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 #import "OGResourceHandlerDelegate.h"

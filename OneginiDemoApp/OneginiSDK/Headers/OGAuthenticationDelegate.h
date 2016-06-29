@@ -1,10 +1,4 @@
-//
-//  OGAuthenticationDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Stanisław Brzeski on 09/03/16.
-//  Copyright © 2016 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 #import "OGPinConfirmation.h"
@@ -15,7 +9,7 @@
  *  This delegate provides the interface from the OneginiClient to the App implementation.
  *  All invokations are performed asynchronous and on the main queue.
  */
-@protocol OGAuthenticationDelegate <NSObject>
+@protocol OGAuthenticationDelegate<NSObject>
 
 /**
  *  The user is successfully authenticated.

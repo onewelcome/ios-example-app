@@ -48,7 +48,7 @@
 #pragma mark - OGAuthenticationDelegete
 
 - (void)authenticationSuccessForUser:(OGUserProfile *)userProfile
-{
+{    
 	ProfileViewController *viewController = [ProfileViewController new];
 	[[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }

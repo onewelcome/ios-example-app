@@ -1,9 +1,4 @@
-//
-//  OGDeregistrationDelegate.h
-//  OneginiSDKiOS
-//
 //  Copyright (c) 2016 Onegini. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 

@@ -1,10 +1,4 @@
-//
-//  OGLogoutDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Stanisław Brzeski on 22/09/15.
-//  Copyright © 2015 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 

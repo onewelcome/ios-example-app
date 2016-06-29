@@ -1,14 +1,8 @@
-//
-//  OGClientAuthenticationDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Stanisław Brzeski on 18/06/16.
-//  Copyright © 2016 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 
-@protocol OGClientAuthenticationDelegate <NSObject>
+@protocol OGClientAuthenticationDelegate<NSObject>
 
 /**
  *  The client is successfully authenticated.

@@ -1,10 +1,4 @@
-//
-//  OGChangePinDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Eduard on 20-02-15.
-//  Copyright (c) 2015 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 #import "OGPinConfirmation.h"
@@ -15,7 +9,7 @@
  *  This protocol informs the client about the result of the PIN change request.
  *  Clients must also implement the OGPinValidationDelegate protocol.
  */
-@protocol OGChangePinDelegate <NSObject>
+@protocol OGChangePinDelegate<NSObject>
 
 /**
  *  Asks the user for the current PIN in the change PIN request flow.

@@ -1,10 +1,4 @@
-//
-//  OGAuthorizationDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Eduard on 01-08-14.
-//  Copyright (c) 2014 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 
@@ -17,7 +11,7 @@ typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm
  *  All invokations are performed asynchronous and on the main queue.
  */
 DEPRECATED_MSG_ATTRIBUTE("Use OGAuthenticationDelegate")
-@protocol OGAuthorizationDelegate <NSObject>
+@protocol OGAuthorizationDelegate<NSObject>
 
 @required
 
@@ -96,8 +90,8 @@ DEPRECATED_MSG_ATTRIBUTE("Use OGAuthenticationDelegate")
  *  @param confirm callback invoke with true if the user confirmed the request.
  */
 - (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message notificationType:(NSString *)notificationType
-											pinSize:(NSUInteger)pinSize	maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt
-											confirm:(PushAuthenticationWithPinConfirmation)confirm;
+                                            pinSize:(NSUInteger)pinSize maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt
+                                            confirm:(PushAuthenticationWithPinConfirmation)confirm;
 
 /**
  *  Asks the user for fingerprint confirmation on a push authentication request.
@@ -107,7 +101,7 @@ DEPRECATED_MSG_ATTRIBUTE("Use OGAuthenticationDelegate")
  *  @param notificationType notification type
  *  @param confirm callback invoke with true if the user confirmed the request.
  */
-- (void)askForPushAuthenticationWithFingerprint:(NSString*)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm;
+- (void)askForPushAuthenticationWithFingerprint:(NSString *)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm;
 
 /**
  *  A general error occurred during the authorization request.

@@ -1,15 +1,9 @@
-//
-//  OGMobileAuthenticationDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Stanisław Brzeski on 04/04/16.
-//  Copyright © 2016 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 #import "OGUserProfile.h"
 
-@protocol OGMobileAuthenticationDelegate <NSObject>
+@protocol OGMobileAuthenticationDelegate<NSObject>
 
 /**
  *  Asks the user for confirmation on a push authentication request.

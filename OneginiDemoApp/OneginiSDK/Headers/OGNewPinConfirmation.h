@@ -1,15 +1,9 @@
-//
-//  OGCreateNewPinConfirmation.h
-//  OneginiSDKiOS
-//
-//  Created by Stanisław Brzeski on 15/03/16.
-//  Copyright © 2016 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 #import "OGPinValidationDelegate.h"
 
-@protocol OGNewPinConfirmation <NSObject>
+@protocol OGNewPinConfirmation<NSObject>
 
 - (bool)confirmNewPin:(NSString *)aPin validation:(id<OGPinValidationDelegate>)delegate;
 

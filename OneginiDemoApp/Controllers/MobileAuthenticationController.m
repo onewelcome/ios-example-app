@@ -26,11 +26,12 @@
     return singleton;
 }
 
-- (void)askForPushAuthenticationConfirmation:(NSString *)message profile:(OGUserProfile *)profile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm
-{
+// MARK: - OGMobileAuthenticationDelegate
+
+- (void)askForPushAuthenticationConfirmation:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = message;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push - %@", profile.profileId];
+    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push - %@", userProfile.profileId];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
         confirm(confirmed);
@@ -38,24 +39,11 @@
     [[AppDelegate sharedNavigationController] pushViewController:pushVC animated:YES];
 }
 
-- (void)askForPushAuthenticationWithFingerprint:(NSString *)message profile:(OGUserProfile *)profile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm
-{
-    PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
-    pushVC.pushMessage.text = message;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint - %@", profile.profileId];
-    pushVC.pushConfirmed = ^(BOOL confirmed) {
-        [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
-        confirm(confirmed);
-    };
-    [[AppDelegate sharedNavigationController] pushViewController:pushVC animated:YES];
-}
-
-- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message profile:(OGUserProfile *)profile notificationType:(NSString *)notificationType pinSize:(NSUInteger)pinSize maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt confirm:(void (^)(NSString *, BOOL, BOOL))confirm
-{
+- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType pinSize:(NSUInteger)pinSize maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt confirm:(void (^)(NSString *, BOOL, BOOL))confirm {
     PinViewController *viewController = [PinViewController new];
     viewController.pinLength = pinSize;
     viewController.mode = PINCheckMode;
-    viewController.customTitle = [NSString stringWithFormat:@"Push with pin - %@", profile.profileId];
+    viewController.customTitle = [NSString stringWithFormat:@"Push with pin - %@", userProfile.profileId];
     viewController.pinEntered = ^(NSString *pin) {
         [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
         confirm(pin, YES, YES);
@@ -63,28 +51,34 @@
     [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }
 
+- (void)askForPushAuthenticationWithFingerprint:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm {
+    PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
+    pushVC.pushMessage.text = message;
+    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint - %@", userProfile.profileId];
+    pushVC.pushConfirmed = ^(BOOL confirmed) {
+        [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
+        confirm(confirmed);
+    };
+    [[AppDelegate sharedNavigationController] pushViewController:pushVC animated:YES];
+}
+
+
+// MARK: - OGEnrollmentHandlerDelegate
+
 - (void)enrollForMobileAuthentication
 {
-    [[OGOneginiClient sharedInstance] enrollForMobileAuthenticationWithDelegate:self];
+    [[OGOneginiClient sharedInstance] enrollUserForMobileAuthenticationWithDelegate:self];
 }
 
 - (void)enrollmentSuccess
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Enrollment successfull" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction
-        actionWithTitle:@"Ok"
-                  style:UIAlertActionStyleDefault
-                handler:^(UIAlertAction *action) {
-                }];
+    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okButton];
     [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)enrollmentDeviceAlreadyEnrolled
-{
-}
-
-- (void)enrollmentNotAuthenticated
 {
 }
 
@@ -113,6 +107,14 @@
 }
 
 - (void)enrollmentUserAlreadyEnrolled
+{
+}
+
+- (void)enrollmentAuthenticationError
+{
+}
+
+- (void)enrollmentErrorDeviceDeregistered
 {
 }
 

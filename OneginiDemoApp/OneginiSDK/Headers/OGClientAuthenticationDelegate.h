@@ -58,11 +58,6 @@
 - (void)authenticationErrorNotAuthorized;
 
 /**
- *  Another authentication process is in progress.
- */
-- (void)authenticationErrorAuthenticationInProgress;
-
-/**
  *  Error occurred during the authentication request, all client data including all profiles were removed. The user needs to register again.
  *  This can happen when the client registration is removed server-side.
  */

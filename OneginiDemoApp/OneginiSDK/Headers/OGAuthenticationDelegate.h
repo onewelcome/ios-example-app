@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OGPinConfirmationDelegate.h"
-#import "OGNewPinConfirmationDelegate.h"
+#import "OGPinConfirmation.h"
+#import "OGNewPinConfirmation.h"
 #import "OGUserProfile.h"
 
 /**
@@ -17,12 +17,10 @@
  */
 @protocol OGAuthenticationDelegate <NSObject>
 
-@required
-
 /**
  *  The user is successfully authenticated.
  */
-- (void)authenticationSuccessForProfile:(OGUserProfile*)profile;
+- (void)authenticationSuccessForUser:(OGUserProfile *)userProfile;
 
 /**
  *  Requests the authentication token.
@@ -44,7 +42,7 @@
  *
  *  @param pinSize the size of the PIN value
  */
-- (void)askForNewPin:(NSUInteger)pinSize profile:(OGUserProfile*)profile confirmationDelegate:(id<OGNewPinConfirmationDelegate>)delegate;
+- (void)askForNewPin:(NSUInteger)pinSize user:(OGUserProfile *)userProfile pinConfirmation:(id<OGNewPinConfirmation>)delegate;
 
 /**
  *  Asks the user to provide the PIN for confirmation of the authentication request.
@@ -52,7 +50,7 @@
  *  The implementor should present a PIN entry dialog and must forward the PIN directly to the client and not store the PIN by any means.
  *  Call the OGOneginiClient - (void)confirmCurrentPin:(NSString *)pin; with the user provided PIN.
  */
-- (void)askForCurrentPinForProfile:(OGUserProfile*)profile pinConfirmationDelegate:(id<OGPinConfirmationDelegate>)delegate;
+- (void)askForCurrentPinForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)delegate;
 
 /**
  *  A general error occurred during the authentication request.
@@ -60,21 +58,11 @@
 - (void)authenticationError;
 
 /**
- *  authentication failed due to maximum number of attempts is exceeded.
- */
-- (void)authenticationErrorTooManyPinFailures DEPRECATED_MSG_ATTRIBUTE("Use authenticationErrorProfileDeregistered");
-
-/**
  *  The access grant or refresh token provided by the client is invalid.
  *
  *  @param remaining the number of remaining attempts for the token becomes invalid
  */
 - (void)authenticationErrorInvalidGrant:(NSUInteger)remaining;
-
-/**
- *  No authentication grant token received.
- */
-- (void)authenticationErrorNoAuthenticationGrant;
 
 /**
  *  One or more required parameters were missing in the authentication request.
@@ -120,9 +108,9 @@
 - (void)authenticationErrorNotAuthorized;
 
 /**
- *  Authenticated profile is not valid.
+ *  Authenticated user is not valid.
  */
-- (void)authenticationErrorInvalidProfile;
+- (void)authenticationErrorInvalidUser;
 
 /**
  *  Error occurred during the authentication request, all device data including all profiles were removed. The user needs to register again.
@@ -131,10 +119,10 @@
 - (void)authenticationErrorDeviceDeregistered;
 
 /**
- *  Error occurred during the authentication request, all data for the current profile was removed. This user needs to register again.
- *  This can happen when the profile is removed server-side or the user tried to enter the PIN too many times.
+ *  Error occurred during the authentication request, all data for the current user was removed. This user needs to register again.
+ *  This can happen when the user is removed server-side or the user tried to enter the PIN too many times.
  */
-- (void)authenticationErrorProfileDeregistered;
+- (void)authenticationErrorUserDeregistered;
 
 @optional
 

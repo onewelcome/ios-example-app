@@ -1,5 +1,5 @@
 //
-//  OGPinConfirmationDelegate.h
+//  OGPinConfirmation.h
 //  OneginiSDKiOS
 //
 //  Created by Stanisław Brzeski on 08/03/16.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol OGPinConfirmationDelegate <NSObject>
+@protocol OGPinConfirmation <NSObject>
 
 - (void)confirmPin:(NSString *)pin;
 

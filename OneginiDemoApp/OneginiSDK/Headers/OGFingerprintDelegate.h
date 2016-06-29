@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OGPinConfirmationDelegate.h"
+#import "OGPinConfirmation.h"
 #import "OGUserProfile.h"
 
 /**
@@ -19,12 +19,12 @@
  *  Asks user for current pin for fingerprint authentication enrollment.
  *  Obtained should be passed as an argument of OGOneginiClient method - (void)confirmCurrentPinForFingerprintAuthorization:(NSString *)pin;
  */
-- (void) askCurrentPinForFingerprintAuthentication DEPRECATED_MSG_ATTRIBUTE("Use askCurrentPinForFingerprintEnrollmentForProfile:confirmationDelegate:");
+- (void) askCurrentPinForFingerprintAuthentication DEPRECATED_MSG_ATTRIBUTE("Use askCurrentPinForFingerprintEnrollmentForUser:confirmation:");
 
 /**
  *  Asks user for current pin for fingerprint authentication enrollment for a specific profile.
  */
-- (void) askCurrentPinForFingerprintEnrollmentForProfile:(OGUserProfile *)userProfile confirmationDelegate:(id<OGPinConfirmationDelegate>)pinConfirmation;
+- (void) askCurrentPinForFingerprintEnrollmentForUser:(OGUserProfile *)userProfile confirmationDelegate:(id<OGPinConfirmation>)pinConfirmation;
 
 /**
  *  Fingerprint enrollment success callback.
@@ -51,13 +51,13 @@
 /**
  *  Fingerprint enrollment failed due to too many pin failures.
  */
-- (void) fingerprintAuthenticationEnrollmentErrorTooManyPinFailures DEPRECATED_MSG_ATTRIBUTE("Use fingerprintAuthenticationEnrollmentErrorProfileDeregistered");
+- (void) fingerprintAuthenticationEnrollmentErrorTooManyPinFailures DEPRECATED_MSG_ATTRIBUTE("Use fingerprintAuthenticationEnrollmentErrorUserDeregistered");
 
 /**
  *  Error occurred during the fingerprint enrollment request, all data for the current profile was removed. This user needs to register again.
  *  This can happen when the profile is removed server-side or the user tried to enter the PIN too many times.
  */
-- (void) fingerprintAuthenticationEnrollmentErrorProfileDeregistered;
+- (void) fingerprintAuthenticationEnrollmentErrorUserDeregistered;
 
 /**
  *  Fingerprint enrollment failed. All device data including all profiles were removed. The user needs to register again.

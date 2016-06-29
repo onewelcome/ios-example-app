@@ -127,11 +127,6 @@ DEPRECATED_MSG_ATTRIBUTE("Use OGAuthenticationDelegate")
 - (void)authorizationErrorInvalidGrant:(NSUInteger)remaining;
 
 /**
- *  No authorization grant token received.
- */
-- (void)authorizationErrorNoAuthorizationGrant;
-
-/**
  *  No access token received in response to the authorization request
  */
 - (void)authorizationErrorNoAccessToken;

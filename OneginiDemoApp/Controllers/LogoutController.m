@@ -25,7 +25,7 @@
 
 - (void)logout
 {
-    [[OGOneginiClient sharedInstance] logoutWithDelegate:self];
+    [[OGOneginiClient sharedInstance] logoutUserWithDelegate:self];
 }
 
 - (void)logoutSuccessful

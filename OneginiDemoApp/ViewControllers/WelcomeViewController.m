@@ -31,12 +31,12 @@
 }
 
 - (IBAction)registerNewProfile:(id)sender {
-    [[AuthorizationController sharedInstance] registerNewProfile];
+    [[AuthorizationController sharedInstance] registerNewUser];
 }
 
 - (IBAction)login:(id)sender {
     NSString *selectedProfileId = [self.profiles objectAtIndex:[self.profilePicker selectedRowInComponent:0]].profileId;
-    [[AuthorizationController sharedInstance] loginWithProfile:selectedProfileId];
+    [[AuthorizationController sharedInstance] authenticateUser:selectedProfileId];
 }
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {

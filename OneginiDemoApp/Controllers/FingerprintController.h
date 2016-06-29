@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "OneginiSDK.h"
 
-@interface FingerprintController : NSObject <OGFingerprintDelegate>
+@interface FingerprintController : NSObject<OGFingerprintDelegate>
 
-+ (FingerprintController *)sharedInstance;
++ (instancetype)sharedInstance;
 - (BOOL)isFingerprintEnrolled;
 - (void)enrollForFingerprintAuthentication;
 - (void)disableFingerprintAuthentication;

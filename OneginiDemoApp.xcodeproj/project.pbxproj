@@ -22,7 +22,7 @@
 		5C8A03BE1CDFB36F007ADA14 /* PinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A03BC1CDFB36F007ADA14 /* PinViewController.m */; };
 		5C8A03BF1CDFB36F007ADA14 /* PinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A03BD1CDFB36F007ADA14 /* PinViewController.xib */; };
 		5C8A03C61CDFEFE1007ADA14 /* LogoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A03C51CDFEFE1007ADA14 /* LogoutController.m */; };
-		5C8A03C91CDFF178007ADA14 /* DisconnectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A03C81CDFF178007ADA14 /* DisconnectController.m */; };
+		5C8A03C91CDFF178007ADA14 /* DeregistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A03C81CDFF178007ADA14 /* DeregistrationController.m */; };
 		5CAE98B01CE0929C009C1D1A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */; };
 		5CAE98C11CE0933D009C1D1A /* OneginiSDKiOS-4.08.04-Release-fat-binary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CAE98C01CE0933D009C1D1A /* OneginiSDKiOS-4.08.04-Release-fat-binary.a */; };
 		5CAE98C61CE0DEF8009C1D1A /* OneginiConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */; };
@@ -86,8 +86,8 @@
 		5C8A03BD1CDFB36F007ADA14 /* PinViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinViewController.xib; sourceTree = "<group>"; };
 		5C8A03C41CDFEFE1007ADA14 /* LogoutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogoutController.h; sourceTree = "<group>"; };
 		5C8A03C51CDFEFE1007ADA14 /* LogoutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogoutController.m; sourceTree = "<group>"; };
-		5C8A03C71CDFF178007ADA14 /* DisconnectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisconnectController.h; sourceTree = "<group>"; };
-		5C8A03C81CDFF178007ADA14 /* DisconnectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisconnectController.m; sourceTree = "<group>"; };
+		5C8A03C71CDFF178007ADA14 /* DeregistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeregistrationController.h; sourceTree = "<group>"; };
+		5C8A03C81CDFF178007ADA14 /* DeregistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeregistrationController.m; sourceTree = "<group>"; };
 		5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		5CAE98C01CE0933D009C1D1A /* OneginiSDKiOS-4.08.04-Release-fat-binary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "OneginiSDKiOS-4.08.04-Release-fat-binary.a"; sourceTree = "<group>"; };
 		5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneginiConfigModel.m; path = Configuration/OneginiConfigModel.m; sourceTree = "<group>"; };
@@ -288,8 +288,8 @@
 				5C3CA15A1D13E56100F00C05 /* ChangePinController.m */,
 				5C8A03C41CDFEFE1007ADA14 /* LogoutController.h */,
 				5C8A03C51CDFEFE1007ADA14 /* LogoutController.m */,
-				5C8A03C71CDFF178007ADA14 /* DisconnectController.h */,
-				5C8A03C81CDFF178007ADA14 /* DisconnectController.m */,
+				5C8A03C71CDFF178007ADA14 /* DeregistrationController.h */,
+				5C8A03C81CDFF178007ADA14 /* DeregistrationController.m */,
 				5C3CA1461D11394000F00C05 /* FingerprintController.h */,
 				5C3CA1471D11394000F00C05 /* FingerprintController.m */,
 			);
@@ -432,7 +432,7 @@
 			files = (
 				C5BAAEC81CDA462800801205 /* SecurityController.m in Sources */,
 				5C3CA1491D11394000F00C05 /* FingerprintController.m in Sources */,
-				5C8A03C91CDFF178007ADA14 /* DisconnectController.m in Sources */,
+				5C8A03C91CDFF178007ADA14 /* DeregistrationController.m in Sources */,
 				C5A29A741CDCE78A00E6B1D4 /* ResourceController.m in Sources */,
 				C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */,
 				5C8A03BE1CDFB36F007ADA14 /* PinViewController.m in Sources */,

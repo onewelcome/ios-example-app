@@ -9,7 +9,7 @@
 #import "ProfileViewController.h"
 #import "ResourceController.h"
 #import "LogoutController.h"
-#import "DisconnectController.h"
+#import "DeregistrationController.h"
 #import "Profile.h"
 #import "OneginiSDK.h"
 #import "MobileAuthenticationController.h"
@@ -54,7 +54,7 @@
 }
 
 - (IBAction)disconnect:(id)sender {
-    [[DisconnectController sharedInstance]disconnect];
+    [[DeregistrationController sharedInstance] deregister];
 }
 
 - (IBAction)getProfile:(id)sender {

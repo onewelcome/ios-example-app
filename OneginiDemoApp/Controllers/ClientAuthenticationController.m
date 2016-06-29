@@ -11,7 +11,7 @@
 
 @implementation ClientAuthenticationController
 
-+ (ClientAuthenticationController *)sharedInstance
++ (instancetype)sharedInstance
 {
     static ClientAuthenticationController *singleton;
 
@@ -22,7 +22,6 @@
 
     return singleton;
 }
-
 
 - (void)authenticateClient
 {
@@ -52,11 +51,6 @@
     [self handleAuthError:nil];
 }
 
-- (void)authenticationErrorNoAuthenticationGrant
-{
-    [self handleAuthError:nil];
-}
-
 - (void)authenticationErrorInvalidGrantType
 {
     [self handleAuthError:nil];
@@ -67,22 +61,7 @@
     [self handleAuthError:nil];
 }
 
-- (void)authenticationErrorAuthenticationInProgress
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorInvalidState
-{
-    [self handleAuthError:nil];
-}
-
 - (void)authenticationErrorInvalidScope
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorNotAuthenticated
 {
     [self handleAuthError:nil];
 }
@@ -98,6 +77,11 @@
 }
 
 - (void)authenticationErrorInvalidAppPlatformOrVersion
+{
+    [self handleAuthError:nil];
+}
+
+- (void)authenticationErrorDeviceDeregistered
 {
     [self handleAuthError:nil];
 }

@@ -11,7 +11,7 @@
 
 @interface ClientAuthenticationController : NSObject<OGClientAuthenticationDelegate>
 
-+ (ClientAuthenticationController *)sharedInstance;
++ (instancetype)sharedInstance;
 
 - (void)authenticateClient;
 

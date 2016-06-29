@@ -80,7 +80,7 @@
     [self handleAuthError:nil];
 }
 
-- (void)pinChangeErrorNotAuthenticated
+- (void)pinChangeErrorDeviceDeregistered
 {
     [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
     [self handleAuthError:nil];
@@ -94,11 +94,7 @@
 - (void)handleAuthError:(NSString *)error
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change pin error" message:error preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction
-        actionWithTitle:@"Ok"
-                  style:UIAlertActionStyleDefault
-                handler:^(UIAlertAction *action) {
-                }];
+    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okButton];
     [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
 }

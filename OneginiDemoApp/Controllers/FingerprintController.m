@@ -31,7 +31,7 @@
 
 - (void)enrollForFingerprintAuthentication
 {
-    [[OGOneginiClient sharedInstance] enrollForFingerprintAuthentication:@[@"read"] delegate:self];
+    [[OGOneginiClient sharedInstance] enrollForFingerprintAuthenticationWithDelegate:self];
 }
 
 - (BOOL)isFingerprintEnrolled
@@ -64,7 +64,7 @@
 
 // MARK: - OGFingerprintDelegate
 
-- (void)askCurrentPinForFingerprintEnrollmentForUser:(OGUserProfile *)userProfile confirmationDelegate:(id<OGPinConfirmation>)pinConfirmation
+- (void)askCurrentPinForFingerprintEnrollmentForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)pinConfirmation
 {
     PinViewController *viewController = [PinViewController new];
     self.pinViewController = viewController;

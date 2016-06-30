@@ -10,15 +10,9 @@
 @protocol OGFingerprintDelegate<NSObject>
 
 /**
- *  Asks user for current pin for fingerprint authentication enrollment.
- *  Obtained should be passed as an argument of OGOneginiClient method - (void)confirmCurrentPinForFingerprintAuthorization:(NSString *)pin;
- */
-- (void)askCurrentPinForFingerprintAuthentication DEPRECATED_MSG_ATTRIBUTE("Use askCurrentPinForFingerprintEnrollmentForUser:confirmation:");
-
-/**
  *  Asks user for current pin for fingerprint authentication enrollment for a specific profile.
  */
-- (void)askCurrentPinForFingerprintEnrollmentForUser:(OGUserProfile *)userProfile confirmationDelegate:(id<OGPinConfirmation>)pinConfirmation;
+- (void)askCurrentPinForFingerprintEnrollmentForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)pinConfirmation;
 
 /**
  *  Fingerprint enrollment success callback.
@@ -43,11 +37,6 @@
 - (void)fingerprintAuthenticationEnrollmentErrorInvalidPin:(NSUInteger)attemptCount;
 
 /**
- *  Fingerprint enrollment failed due to too many pin failures.
- */
-- (void)fingerprintAuthenticationEnrollmentErrorTooManyPinFailures DEPRECATED_MSG_ATTRIBUTE("Use fingerprintAuthenticationEnrollmentErrorUserDeregistered");
-
-/**
  *  Error occurred during the fingerprint enrollment request, all data for the current profile was removed. This user needs to register again.
  *  This can happen when the profile is removed server-side or the user tried to enter the PIN too many times.
  */
@@ -58,5 +47,18 @@
  *  This can happen when the device registration is removed server-side.
  */
 - (void)fingerprintAuthenticationEnrollmentErrorDeviceDeregistered;
+
+@optional
+
+/**
+ *  Asks user for current pin for fingerprint authentication enrollment.
+ *  Obtained should be passed as an argument of OGOneginiClient method - (void)confirmCurrentPinForFingerprintAuthorization:(NSString *)pin;
+ */
+- (void)askCurrentPinForFingerprintAuthentication DEPRECATED_MSG_ATTRIBUTE("Use askCurrentPinForFingerprintEnrollmentForUser:pinConfirmation:");
+
+/**
+ *  Fingerprint enrollment failed due to too many pin failures.
+ */
+- (void)fingerprintAuthenticationEnrollmentErrorTooManyPinFailures DEPRECATED_MSG_ATTRIBUTE("Use fingerprintAuthenticationEnrollmentErrorUserDeregistered");
 
 @end

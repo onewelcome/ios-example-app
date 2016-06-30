@@ -175,13 +175,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)storeDevicePushTokenInSession:(nullable NSData *)deviceToken;
 
 /**
- *  Enrolls the currently connected device for fingerprint authentication. OGFingerprintDelegate askCurrentPinForFingerprintAuthentication method must be implemented. Pin provided by user must be passed by confirmCurrentPinForFingerprintAuthorization method to complete the flow. Fingerprint authentication must be available for current user and device 
+ *  Enrolls the currently connected device for fingerprint authentication. OGFingerprintDelegate askCurrentPinForFingerprintAuthentication method must be implemented. Pin provided by user must be passed by confirmCurrentPinForFingerprintAuthorization method to complete the flow. Fingerprint authentication must be available for current user and device
  *  @see -(bool)isFingerprintAuthenticationAvailable
  *
- *  @param scopes scopes used for fingerprint authentication
  *  @param delegate delegate handling fingerprint enrollment callbacks
  */
-- (void)enrollForFingerprintAuthentication:(nullable NSArray<NSString *> *)scopes delegate:(id<OGFingerprintDelegate>)delegate;
+- (void)enrollForFingerprintAuthenticationWithDelegate:(id<OGFingerprintDelegate>)delegate;
 
 /**
  *  Disables fingerprint authentication for currently connected device.
@@ -561,6 +560,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)enrollForMobileAuthentication:(nullable NSArray *)scopes delegate:(id<OGEnrollmentHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
+
+/**
+ *  Enrolls the currently connected device for fingerprint authentication. OGFingerprintDelegate askCurrentPinForFingerprintAuthentication method must be implemented. Pin provided by user must be passed by confirmCurrentPinForFingerprintAuthorization method to complete the flow. Fingerprint authentication must be available for current user and device
+ *  @see -(bool)isFingerprintAuthenticationAvailable
+ *
+ *  @param scopes scopes used for fingerprint authentication
+ *  @param delegate delegate handling fingerprint enrollment callbacks
+ */
+- (void)enrollForFingerprintAuthentication:(nullable NSArray<NSString *> *)scopes delegate:(id<OGFingerprintDelegate>)delegate DEPRECATED_MSG_ATTRIBUTE("Use enrollForFingerprintAuthenticationWithDelegate:");
 
 /**
  *  Unenrolls the currently connected device for fingerprint authentication.

@@ -65,7 +65,7 @@
 
 }
 - (IBAction)enableMobileEnrollment:(id)sender {
-    [[OGOneginiClient sharedInstance] enrollForMobileAuthentication:@[@"defailt"] delegate:self];
+    [[OGOneginiClient sharedInstance] enrollForMobileAuthentication:@[@"default"] delegate:self];
 }
 
 - (void)updateEnrollmentVisibleState {
@@ -106,7 +106,8 @@
     viewController.pinLength = 5;
     viewController.mode = PINCheckMode;
     viewController.pinEntered = ^(NSString *pin) {
-        [[OGOneginiClient sharedInstance] confirmCurrentPin:pin];
+        [[OGOneginiClient sharedInstance] confirmCurrentPinForFingerprintAuthorization:pin];
+        [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
     };
     [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }

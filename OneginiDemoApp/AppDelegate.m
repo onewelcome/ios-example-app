@@ -28,6 +28,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
+    [application registerForRemoteNotifications];
+    
     self.window.rootViewController = [AppDelegate sharedNavigationController];
     [self.window makeKeyAndVisible];
     
@@ -38,5 +40,14 @@
     [[OGOneginiClient sharedInstance] handleAuthorizationCallback:url];
     return YES;
 }
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [[OGOneginiClient sharedInstance] storeDevicePushTokenInSession:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    
+}
+
 
 @end

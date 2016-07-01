@@ -1,10 +1,4 @@
-//
-//  OGOneginiClient.h
-//  OneginiSDKiOS
-//
-//  Created by Eduard on 28-07-14.
-//  Copyright (c) 2014 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 #import "OGResourceHandlerDelegate.h"
@@ -14,6 +8,7 @@
 #import "OGChangePinDelegate.h"
 #import "OGPublicCommons.h"
 #import "OGDisconnectDelegate.h"
+#import "OGDeregistrationDelegate.h"
 #import "OGFingerprintDelegate.h"
 #import "OGLogoutDelegate.h"
 #import "OGCustomizationDelegate.h"
@@ -24,14 +19,14 @@
 
 @class OGConfigModel, OGAuthorizationManager, OGResourceManager, OGEnrollmentManager;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *  This is the main entry point into the SDK.
  *  The public API of the SDK consists of this client and an authorization delegate.
  *  The client must be instantiated early in the App lifecycle and thereafter only referred to by it's shared instance.
  */
 @interface OGOneginiClient : NSObject
-
-NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic, nullable) id<OGAuthorizationDelegate> authorizationDelegate DEPRECATED_ATTRIBUTE;
 @property (weak, nonatomic, nullable) id<OGPinValidationDelegate> pinValidationDelegate DEPRECATED_ATTRIBUTE;
@@ -81,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param profile profile to authenticate
  *  @param delegate authentication delegate
  */
-- (void)authenticateUser:(OGUserProfile*)profile delegate:(id<OGAuthenticationDelegate>)delegate;
+- (void)authenticateUser:(OGUserProfile *)profile delegate:(id<OGAuthenticationDelegate>)delegate;
 
 /**
  *  Main entry point into the enrollment process.
@@ -89,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param scopes array of scopes
  *  @param delegate authentication delegate
  */
-- (void)registerUser:(NSArray<NSString*>*)scopes delegate:(id<OGAuthenticationDelegate>)delegate;
+- (void)registerUser:(nullable NSArray<NSString *> *)scopes delegate:(id<OGAuthenticationDelegate>)delegate;
 
 /**
  *  Forces profiles's reauthorization.
@@ -97,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param profile profile to authenticate
  *  @param delegate authentication delegate
  */
-- (void)reauthenticateUser:(OGUserProfile*)profile delegate:(id<OGAuthenticationDelegate>)delegate;
+- (void)reauthenticateUser:(OGUserProfile *)profile delegate:(id<OGAuthenticationDelegate>)delegate;
 
 /**
  *  Performs client's authentication. Uses client's credentials to request an accessToken object, which can be used for performing anonymous resource calls.
@@ -105,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param scopes array of scopes
  *  @param delegate authentication delegate
  */
-- (void)authenticateClient:(NSArray<NSString*>*)scopes delegate:(id<OGClientAuthenticationDelegate>)delegate;
+- (void)authenticateClient:(nullable NSArray<NSString *> *)scopes delegate:(id<OGClientAuthenticationDelegate>)delegate;
 
 /**
  *  Initiates the PIN change sequence.
@@ -124,11 +119,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isAuthorized;
 
 /**
- *  Return currently authenticated profile.
+ *  Return currently authenticated user.
  *
- *  @return authenticated profile
+ *  @return authenticated user
  */
-- (OGUserProfile*)authenticatedProfile;
+- (nullable OGUserProfile *)authenticatedUserProfile;
 
 /**
  *  Checks if the pin satisfies all pin policy constraints.
@@ -137,7 +132,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param error pin policy validation error
  *  @return true if all pin policy constraints are satisfied
  */
-- (BOOL)isPinValid:(NSString *)pin error:(NSError **)error;
+- (BOOL)isPinValid:(NSString *)pin error:(NSError *_Nullable *_Nullable)error;
 
 /**
  *  Handles the response of the authentication request from the browser redirect.
@@ -153,7 +148,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param delegate logout delegate
  */
-- (void)logoutWithDelegate:(id<OGLogoutDelegate>)delegate;
+- (void)logoutUserWithDelegate:(id<OGLogoutDelegate>)delegate;
 
 /**
  *  Clears the client credentials.
@@ -177,16 +172,15 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param deviceToken device token to store
  */
-- (void)storeDevicePushTokenInSession:(NSData *)deviceToken;
+- (void)storeDevicePushTokenInSession:(nullable NSData *)deviceToken;
 
 /**
- *  Enrolls the currently connected device for fingerprint authentication. OGFingerprintDelegate askCurrentPinForFingerprintAuthentication method must be implemented. Pin provided by user must be passed by confirmCurrentPinForFingerprintAuthorization method to complete the flow. Fingerprint authentication must be available for current user and device 
+ *  Enrolls the currently connected device for fingerprint authentication. OGFingerprintDelegate askCurrentPinForFingerprintAuthentication method must be implemented. Pin provided by user must be passed by confirmCurrentPinForFingerprintAuthorization method to complete the flow. Fingerprint authentication must be available for current user and device
  *  @see -(bool)isFingerprintAuthenticationAvailable
  *
- *  @param scopes scopes used for fingerprint authentication
  *  @param delegate delegate handling fingerprint enrollment callbacks
  */
-- (void)enrollForFingerprintAuthentication:(NSArray<NSString*>*)scopes delegate:(id <OGFingerprintDelegate>)delegate;
+- (void)enrollForFingerprintAuthenticationWithDelegate:(id<OGFingerprintDelegate>)delegate;
 
 /**
  *  Disables fingerprint authentication for currently connected device.
@@ -218,10 +212,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSString *)fetchResource:(NSString *)path
               requestMethod:(NSString *)requestMethod
-                     params:(nullable NSDictionary<NSString*,NSString*>*)params
+                     params:(nullable NSDictionary<NSString *, NSString *> *)params
              paramsEncoding:(OGHTTPClientParameterEncoding)paramsEncoding
-                    headers:(nullable NSDictionary<NSString*,NSString*>*)headers
-                   delegate:(id <OGResourceHandlerDelegate>)delegate;
+                    headers:(nullable NSDictionary<NSString *, NSString *> *)headers
+                   delegate:(id<OGResourceHandlerDelegate>)delegate;
 
 /**
  *  Enrolls the currently connected device for mobile push authentication.
@@ -231,7 +225,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param delegate delegate handling mobile enrollment callbacks
  */
-- (void)enrollForMobileAuthenticationWithDelegate:(id<OGEnrollmentHandlerDelegate>)delegate;
+- (void)enrollUserForMobileAuthenticationWithDelegate:(id<OGEnrollmentHandlerDelegate>)delegate;
 
 /**
  *  Fetches a resource anonymously using a client access token.
@@ -246,10 +240,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSString *)fetchAnonymousResource:(NSString *)path
                        requestMethod:(NSString *)requestMethod
-                              params:(nullable NSDictionary<NSString*,NSString*>*)params
+                              params:(nullable NSDictionary<NSString *, NSString *> *)params
                       paramsEncoding:(OGHTTPClientParameterEncoding)paramsEncoding
-                             headers:(nullable NSDictionary<NSString*,NSString*>*)headers
-                            delegate:(id <OGResourceHandlerDelegate>)delegate;
+                             headers:(nullable NSDictionary<NSString *, NSString *> *)headers
+                            delegate:(id<OGResourceHandlerDelegate>)delegate;
 
 /**
  *  When a push notification is received by the application, the notificaton must be forwarded to the client.
@@ -267,22 +261,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)handlePushNotification:(NSDictionary *)userInfo delegate:(id<OGMobileAuthenticationDelegate>)delegate;
 
 /**
- *  List of enrolled profiles stored locally
+ *  List of enrolled users stored locally
  *
- *  @return Enrolled profiles
+ *  @return Enrolled users
  */
-- (NSSet<OGUserProfile*>*)enrolledProfiles;
+- (NSSet<OGUserProfile *> *)userProfiles;
 
 /**
- *  Delete profile locally and revoke it from token server
+ *  Delete user locally and revoke it from token server
  *
- *  @param profile profile to disconnect
+ *  @param userProfile user to disconnect
  *  @param delegate delegate
  */
-- (void)disconnectProfile:(OGUserProfile*)profile delegate:(id<OGDisconnectDelegate>)delegate;
+- (void)deregisterUser:(OGUserProfile *)userProfile delegate:(id<OGDeregistrationDelegate>)delegate;
 
+@end
 
-#pragma mark - DEPRECATED
+@interface OGOneginiClient (Deprecated)
 
 /**
  *  Initializes 'OGOneginiClient' with a delegate. This initializer uses configuration and certificates through "Onegini SDK Configurator". Since certificate pinning is done within this initialization, call to setX509PEMCertificates is not necceassary.
@@ -326,13 +321,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)authorizeClient:(nullable NSArray *)scopes DEPRECATED_ATTRIBUTE;
 
-/**
- *  Unenrolls the currently connected device for fingerprint authentication.
- *  This method is deprecated, please use disableFingerprintAuthentication.
- *
- *  @param delegate delegate handling fingerprint unenrollment callbacks
- */
-- (void)unenrollForFingerprintAuthenticationWithDelegate:(id <OGFingerprintDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
 /**
  *  When a push notification is received by the application, the notificaton must be forwarded to the client.
@@ -417,7 +405,7 @@ NS_ASSUME_NONNULL_BEGIN
                      scopes:(nullable NSArray *)scopes
               requestMethod:(HTTPRequestMethod)requestMethod
                      params:(nullable NSDictionary *)params
-                   delegate:(id <OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
+                   delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
 
 /**
@@ -437,7 +425,7 @@ NS_ASSUME_NONNULL_BEGIN
               requestMethod:(HTTPRequestMethod)requestMethod
                      params:(nullable NSDictionary *)params
                     headers:(nullable NSDictionary *)headers
-                   delegate:(id <OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
+                   delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
 
 /**
@@ -456,7 +444,7 @@ NS_ASSUME_NONNULL_BEGIN
               requestMethod:(HTTPRequestMethod)requestMethod
                      params:(nullable NSDictionary *)params
              paramsEncoding:(HTTPClientParameterEncoding)paramsEncoding
-                   delegate:(id <OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
+                   delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
 /**
  *  Fetches a specific resource.
@@ -476,7 +464,7 @@ NS_ASSUME_NONNULL_BEGIN
                      params:(nullable NSDictionary *)params
              paramsEncoding:(HTTPClientParameterEncoding)paramsEncoding
                     headers:(nullable NSDictionary *)headers
-                   delegate:(id <OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
+                   delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
 
 /**
@@ -493,7 +481,7 @@ NS_ASSUME_NONNULL_BEGIN
                               scopes:(nullable NSArray *)scopes
                        requestMethod:(HTTPRequestMethod)requestMethod
                               params:(nullable NSDictionary *)params
-                            delegate:(id <OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
+                            delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
 /**
  *  Fetches a specific resource anonymously using a client access token.
@@ -511,7 +499,7 @@ NS_ASSUME_NONNULL_BEGIN
                        requestMethod:(HTTPRequestMethod)requestMethod
                               params:(nullable NSDictionary *)params
                              headers:(nullable NSDictionary *)headers
-                            delegate:(id <OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
+                            delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
 
 /**
@@ -530,7 +518,7 @@ NS_ASSUME_NONNULL_BEGIN
                        requestMethod:(HTTPRequestMethod)requestMethod
                               params:(nullable NSDictionary *)params
                       paramsEncoding:(HTTPClientParameterEncoding)paramsEncoding
-                            delegate:(id <OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
+                            delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
 /**
  *  Fetches a specific resource anonymously using a client access token.
@@ -550,7 +538,16 @@ NS_ASSUME_NONNULL_BEGIN
                               params:(nullable NSDictionary *)params
                       paramsEncoding:(HTTPClientParameterEncoding)paramsEncoding
                              headers:(nullable NSDictionary *)headers
-                            delegate:(id <OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
+                            delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
+
+/**
+ *  Performs a user logout, by invalidating the access token.
+ *  The refresh token and client credentials remain untouched.
+ *
+ *  @param delegate logout delegate
+ */
+- (void)logoutWithDelegate:(id<OGLogoutDelegate>)delegate DEPRECATED_MSG_ATTRIBUTE("Use logoutUserWithDelegate:");
+
 
 /**
  *  Enrolls the currently connected device for mobile push authentication.
@@ -561,8 +558,17 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param scopes scopes used for mobile authentication
  *  @param delegate delegate handling mobile enrollment callbacks
  */
-- (void)enrollForMobileAuthentication:(NSArray *)scopes delegate:(id <OGEnrollmentHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
+- (void)enrollForMobileAuthentication:(nullable NSArray *)scopes delegate:(id<OGEnrollmentHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
+
+/**
+ *  Enrolls the currently connected device for fingerprint authentication. OGFingerprintDelegate askCurrentPinForFingerprintAuthentication method must be implemented. Pin provided by user must be passed by confirmCurrentPinForFingerprintAuthorization method to complete the flow. Fingerprint authentication must be available for current user and device
+ *  @see -(bool)isFingerprintAuthenticationAvailable
+ *
+ *  @param scopes scopes used for fingerprint authentication
+ *  @param delegate delegate handling fingerprint enrollment callbacks
+ */
+- (void)enrollForFingerprintAuthentication:(nullable NSArray<NSString *> *)scopes delegate:(id<OGFingerprintDelegate>)delegate DEPRECATED_MSG_ATTRIBUTE("Use enrollForFingerprintAuthenticationWithDelegate:");
 
 /**
  *  Unenrolls the currently connected device for fingerprint authentication.
@@ -570,8 +576,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param delegate delegate handling fingerprint unenrollment callbacks
  */
-- (void)unenrollForFingerprintAuthenticationWithDelegate:(id <OGFingerprintDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
+- (void)unenrollForFingerprintAuthenticationWithDelegate:(id<OGFingerprintDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
 /**
  *  Disconnects from the service, this will clear the refresh token and access token.
@@ -582,25 +587,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)disconnectWithDelegate:(id<OGDisconnectDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
 /**
- *  When a push notification is received by the application, the notificaton must be forwarded to the client.
- *  The client will then fetch the actual encrypted payload and invoke the delegate with the embedded message.
- *
- *  This should be invoked from the UIApplicationDelegate
- *  - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
- *
- *  @see UIApplication
- *
- *  @param userInfo userInfo of received push notification
- *  @return true, if the notification is processed by the client
- */
-- (BOOL)handlePushNotification:(NSDictionary *)userInfo DEPRECATED_ATTRIBUTE;
-
-/**
  *  Determines if the user is registered.
  *
  *  @return true, if a refresh token is available
  */
-- (BOOL)isClientRegistered;
+- (BOOL)isClientRegistered DEPRECATED_ATTRIBUTE;
+
+@end
 
 NS_ASSUME_NONNULL_END
-@end

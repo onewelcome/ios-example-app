@@ -1,14 +1,8 @@
-//
-//  OGClientAuthenticationDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Stanisław Brzeski on 18/06/16.
-//  Copyright © 2016 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 
-@protocol OGClientAuthenticationDelegate <NSObject>
+@protocol OGClientAuthenticationDelegate<NSObject>
 
 /**
  *  The client is successfully authenticated.
@@ -56,11 +50,6 @@
  *  Authentication failed because client is not authorized to perform the requested action.
  */
 - (void)authenticationErrorNotAuthorized;
-
-/**
- *  Another authentication process is in progress.
- */
-- (void)authenticationErrorAuthenticationInProgress;
 
 /**
  *  Error occurred during the authentication request, all client data including all profiles were removed. The user needs to register again.

@@ -26,17 +26,17 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.profiles = [[[OGOneginiClient sharedInstance] enrolledProfiles] allObjects];
+    self.profiles = [[OGOneginiClient sharedInstance] userProfiles].allObjects;
     [self.profilePicker reloadAllComponents];
 }
 
 - (IBAction)registerNewProfile:(id)sender {
-    [[AuthorizationController sharedInstance] registerNewProfile];
+    [[AuthorizationController sharedInstance] registerNewUser];
 }
 
 - (IBAction)login:(id)sender {
-    NSString *selectedProfileId = [self.profiles objectAtIndex:[self.profilePicker selectedRowInComponent:0]].profileId;
-    [[AuthorizationController sharedInstance] loginWithProfile:selectedProfileId];
+    OGUserProfile *userProfile = self.profiles[[self.profilePicker selectedRowInComponent:0]];
+    [[AuthorizationController sharedInstance] authenticateUser:userProfile];
 }
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {

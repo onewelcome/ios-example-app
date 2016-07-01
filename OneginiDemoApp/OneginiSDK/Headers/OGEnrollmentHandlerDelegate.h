@@ -1,17 +1,11 @@
-//
-//  OGEnrollmentHandlerDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Eduard on 20-08-14.
-//  Copyright (c) 2014 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 
 /**
  *  Enrollment delegate used for mobile authentication.
  */
-@protocol OGEnrollmentHandlerDelegate <NSObject>
+@protocol OGEnrollmentHandlerDelegate<NSObject>
 
 /**
  *  Enrollment success.

@@ -1,23 +1,19 @@
-//
-//  OGLogoutDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Stanisław Brzeski on 22/09/15.
-//  Copyright © 2015 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
+
+@class OGUserProfile;
 
 /**
  *  Logout delegate
  */
-@protocol OGLogoutDelegate <NSObject>
+@protocol OGLogoutDelegate<NSObject>
 
 /**
- *  Logout sucessful callback
+ *  Logout successful callback
  *  Access token removed from device and revoked from token server
  */
--(void)logoutSuccessful;
+- (void)logoutSuccessful;
 
 /**
  *  Logout failure callback
@@ -25,6 +21,6 @@
  *
  *  @param error error encountered during communication with token server
  */
--(void)logoutFailureWithError:(NSError*)error;
+- (void)logoutFailureWithError:(NSError *)error;
 
 @end

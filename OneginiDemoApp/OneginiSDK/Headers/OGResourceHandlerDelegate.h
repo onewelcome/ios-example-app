@@ -1,14 +1,8 @@
-//
-//  OGResourceHandlerDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Eduard on 11-08-14.
-//  Copyright (c) 2014 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 
-typedef enum : NSInteger{
+typedef enum : NSInteger {
     OGResourceErrorCode_InvalidRequestMethod,   //provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
     OGResourceErrorCode_Generic                 //undefined error preventing from performing resource call
 } OGResourceErrorCode;
@@ -16,7 +10,7 @@ typedef enum : NSInteger{
 /**
  *  Delegate protocol for use by resource handler classes.
  */
-@protocol OGResourceHandlerDelegate <NSObject>
+@protocol OGResourceHandlerDelegate<NSObject>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param body      bare data containing body which needs to be decoded.
  *  @param requestId unique request identifier which matches the `requestId` returned by fetch resource call.
  */
-- (void)resourceResponse:(NSHTTPURLResponse*)response body:(nullable NSData*)body requestId:(NSString*)requestId;
+- (void)resourceResponse:(NSHTTPURLResponse *)response body:(nullable NSData *)body requestId:(NSString *)requestId;
 
 /**
  *  Method called when resource call was not performed due to en error
@@ -37,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param error    defines type of error which occured
  *  @param requestId unique request identifier which matches the `requestId` returned by fetch resource call.
  */
-- (void)resourceError:(NSError*)error requestId:(NSString*)requestId;
+- (void)resourceError:(NSError *)error requestId:(NSString *)requestId;
 
 #pragma mark - DEPRECATED
 

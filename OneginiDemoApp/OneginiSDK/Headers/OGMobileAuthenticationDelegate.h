@@ -1,15 +1,9 @@
-//
-//  OGMobileAuthenticationDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Stanisław Brzeski on 04/04/16.
-//  Copyright © 2016 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 #import "OGUserProfile.h"
 
-@protocol OGMobileAuthenticationDelegate <NSObject>
+@protocol OGMobileAuthenticationDelegate<NSObject>
 
 /**
  *  Asks the user for confirmation on a push authentication request.
@@ -19,7 +13,7 @@
  *  @param notificationType notification type
  *  @param confirm callback invoke with true if the user confirmed the request.
  */
-- (void)askForPushAuthenticationConfirmation:(NSString *)message profile:(OGUserProfile*)profile notificationType:(NSString *)notificationType confirm:(void (^)(bool confirm))confirm;
+- (void)askForPushAuthenticationConfirmation:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool confirm))confirm;
 
 /**
  *  Asks the user for confirmation on a push authentication request.
@@ -32,8 +26,8 @@
  *  @param retryAttempt Number of previous attempts
  *  @param confirm callback invoke with true if the user confirmed the request.
  */
-- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message profile:(OGUserProfile*)profile notificationType:(NSString *)notificationType
-                                            pinSize:(NSUInteger)pinSize	maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt
+- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType
+                                            pinSize:(NSUInteger)pinSize maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt
                                             confirm:(void (^)(NSString *pin, BOOL confirm, BOOL retry))confirm;
 
 /**
@@ -44,6 +38,6 @@
  *  @param notificationType notification type
  *  @param confirm callback invoke with true if the user confirmed the request.
  */
-- (void)askForPushAuthenticationWithFingerprint:(NSString*)message profile:(OGUserProfile*)profile notificationType:(NSString *)notificationType confirm:(void (^)(bool confirm))confirm;
+- (void)askForPushAuthenticationWithFingerprint:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool confirm))confirm;
 
 @end

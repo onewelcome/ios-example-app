@@ -1,5 +1,5 @@
 //
-//  DisconnectController.h
+//  DeregistrationController.h
 //  OneginiDemoApp
 //
 //  Created by Stanisław Brzeski on 09/05/16.
@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "OneginiSDK.h"
 
-@interface DisconnectController : NSObject <OGDisconnectDelegate>
+@interface DeregistrationController : NSObject <OGDeregistrationDelegate>
 
-+ (DisconnectController *)sharedInstance;
-- (void)disconnect;
++ (instancetype)sharedInstance;
+- (void)deregister;
 
 @end

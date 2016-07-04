@@ -1,17 +1,11 @@
-//
-//  OGCustomizationDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Stanisław Brzeski on 08/01/16.
-//  Copyright © 2016 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 
 /**
  *  Delegate responsible for providing customizable values used within the SDK.
  */
-@protocol OGCustomizationDelegate <NSObject>
+@protocol OGCustomizationDelegate<NSObject>
 
 @optional
 
@@ -20,21 +14,21 @@
  *
  *  @return Prompt to be displayed in fingerprint dialog.
  */
-- (NSString*)defaultFingerprintPrompt;
+- (NSString *)defaultFingerprintPrompt;
 
 /**
  *  Specific fingerprint prompt used in authorization flow.
  *
  *  @return Prompt to be displayed in fingerprint dialog.
  */
-- (NSString*)fingerprintAuthorizePrompt;
+- (NSString *)fingerprintAuthorizePrompt;
 
 /**
  *  Specific fingerprint prompt used in reauthorization flow.
  *
  *  @return Prompt to be displayed in fingerprint dialog.
  */
-- (NSString*)fingerprintReauthorizePrompt;
+- (NSString *)fingerprintReauthorizePrompt;
 
 /**
  *  Specific fingerprint prompt used in push message flow.
@@ -44,6 +38,6 @@
  *
  *  @return Prompt to be displayed in fingerprint dialog.
  */
-- (NSString*)fingerprintPromptForPushWithMessage:(NSString*)message notificationType:(NSString*)notificationType;
+- (NSString *)fingerprintPromptForPushWithMessage:(NSString *)message notificationType:(NSString *)notificationType;
 
 @end

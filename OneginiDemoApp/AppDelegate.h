@@ -11,8 +11,9 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
++ (AppDelegate*)sharedInstance;
 + (UINavigationController *)sharedNavigationController;
+
 @property (nonatomic) UIWindow *window;
-@property (nonatomic) OGOneginiClient *client;
 
 @end

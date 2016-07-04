@@ -105,6 +105,7 @@
             self.errorLabel.text = @"";
             break;
     }
+    if (self.customTitle) self.titleLabel.text = self.customTitle;
 }
 
 - (IBAction)keyPressed:(UIButton *)key {

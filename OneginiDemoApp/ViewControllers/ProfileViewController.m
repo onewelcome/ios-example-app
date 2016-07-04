@@ -9,8 +9,12 @@
 #import "ProfileViewController.h"
 #import "ResourceController.h"
 #import "LogoutController.h"
-#import "DisconnectController.h"
+#import "DeregistrationController.h"
 #import "Profile.h"
+#import "OneginiSDK.h"
+#import "MobileAuthenticationController.h"
+#import "FingerprintController.h"
+#import "ChangePinController.h"
 
 @interface ProfileViewController()
 
@@ -19,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *profileNameLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getProfileSpinner;
 @property (weak, nonatomic) IBOutlet UIButton *getProfileButton;
+@property (weak, nonatomic) IBOutlet UIButton *fingerprintButton;
 
 @end
 
@@ -28,10 +33,20 @@
     [super viewDidLoad];
     self.profileDataView.hidden = YES;
     self.getProfileSpinner.hidden = YES;
+    [self update];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    [self update];
+}
+
+- (void)update{
+    if ([[FingerprintController sharedInstance] isFingerprintEnrolled]){
+        [self.fingerprintButton setTitle:@"Disable fingerprint authentication" forState:UIControlStateNormal];
+    } else {
+        [self.fingerprintButton setTitle:@"Enroll for fingerprint authentication" forState:UIControlStateNormal];
+    }
 }
 
 - (IBAction)logout:(id)sender {
@@ -39,7 +54,7 @@
 }
 
 - (IBAction)disconnect:(id)sender {
-    [[DisconnectController sharedInstance]disconnect];
+    [[DeregistrationController sharedInstance] deregister];
 }
 
 - (IBAction)getProfile:(id)sender {
@@ -67,6 +82,23 @@
                                                handler:^(UIAlertAction * action){}];
     [alert addAction:ok];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (IBAction)enrollForMobileAuthentication:(id)sender {
+    [[MobileAuthenticationController sharedInstance] enrollForMobileAuthentication];
+}
+
+- (IBAction)enrollForFingerprintAuthentication:(id)sender {
+    if ([[FingerprintController sharedInstance] isFingerprintEnrolled]){
+        [[FingerprintController sharedInstance] disableFingerprintAuthentication];
+        [self update];
+    } else {
+        [[FingerprintController sharedInstance] enrollForFingerprintAuthentication];
+    }
+}
+
+- (IBAction)changePin:(id)sender {
+    [[ChangePinController sharedInstance] changePin];
 }
 
 @end

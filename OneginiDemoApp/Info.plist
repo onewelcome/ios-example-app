@@ -24,7 +24,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.onegini.oneginidemoapp</string>
+			<string>com.onegini.ExampleApp</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>oneginiexample</string>

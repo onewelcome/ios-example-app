@@ -1,10 +1,4 @@
-//
-//  OGAuthorizationDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Eduard on 01-08-14.
-//  Copyright (c) 2014 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 
@@ -16,7 +10,8 @@ typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm
  *  This delegate provides the interface from the OneginiClient to the App implementation.
  *  All invokations are performed asynchronous and on the main queue.
  */
-@protocol OGAuthorizationDelegate <NSObject>
+DEPRECATED_MSG_ATTRIBUTE("Use OGAuthenticationDelegate")
+@protocol OGAuthorizationDelegate<NSObject>
 
 @required
 
@@ -95,8 +90,8 @@ typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm
  *  @param confirm callback invoke with true if the user confirmed the request.
  */
 - (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message notificationType:(NSString *)notificationType
-											pinSize:(NSUInteger)pinSize	maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt
-											confirm:(PushAuthenticationWithPinConfirmation)confirm;
+                                            pinSize:(NSUInteger)pinSize maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt
+                                            confirm:(PushAuthenticationWithPinConfirmation)confirm;
 
 /**
  *  Asks the user for fingerprint confirmation on a push authentication request.
@@ -106,7 +101,7 @@ typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm
  *  @param notificationType notification type
  *  @param confirm callback invoke with true if the user confirmed the request.
  */
-- (void)askForPushAuthenticationWithFingerprint:(NSString*)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm;
+- (void)askForPushAuthenticationWithFingerprint:(NSString *)message notificationType:(NSString *)notificationType confirm:(PushAuthenticationConfirmation)confirm;
 
 /**
  *  A general error occurred during the authorization request.
@@ -124,11 +119,6 @@ typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm
  *  @param remaining the number of remaining attempts for the token becomes invalid
  */
 - (void)authorizationErrorInvalidGrant:(NSUInteger)remaining;
-
-/**
- *  No authorization grant token received.
- */
-- (void)authorizationErrorNoAuthorizationGrant;
 
 /**
  *  No access token received in response to the authorization request
@@ -157,11 +147,6 @@ typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm
  *  At least one of the requested scopes is not valid.
  */
 - (void)authorizationErrorInvalidScope;
-
-/**
- *  Invalid client credentials are used to perform an authorization request.
- */
-- (void)authorizationErrorNotAuthenticated;
 
 /**
  *  The grant type used during authorization is not supported by the token server.

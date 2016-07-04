@@ -30,7 +30,7 @@
 
 - (void)getProfile:(void(^)(Profile *profile, NSError *error))completion {
     self.callback = completion;
-    [[OGOneginiClient sharedInstance] fetchResource:@"/api/persons" scopes:nil requestMethod:GET params:nil delegate:self];
+    [[OGOneginiClient sharedInstance] fetchResource:@"/api/persons" requestMethod:@"GET" params:nil paramsEncoding:OGJSONParameterEncoding headers:nil delegate:self];
 }
 
 - (void)handleResponse:(NSData *)response {
@@ -51,6 +51,14 @@
 }
 
 #pragma mark - OGResourceHandlerDelegate
+
+-(void)resourceResponse:(NSHTTPURLResponse *)response body:(NSData *)body requestId:(NSString *)requestId{
+    [self handleResponse:body];
+}
+
+-(void)resourceError:(NSError *)error requestId:(NSString *)requestId{
+    [self handleError:error];
+}
 
 - (void)resourceError {
     [self handleError:nil];

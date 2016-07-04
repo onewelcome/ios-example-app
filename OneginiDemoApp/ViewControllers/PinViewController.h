@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "OneginiSDK.h"
 
 typedef enum : NSUInteger {
     PINCheckMode,
@@ -17,7 +18,9 @@ typedef enum : NSUInteger {
 
 @interface PinViewController : UIViewController
 
+@property (nonatomic) NSString* customTitle;
 @property (nonatomic) PINEntryMode mode;
+@property (nonatomic) OGUserProfile* profile;
 @property (nonatomic, copy) void (^pinEntered)(NSString* pin);
 @property (nonatomic) NSInteger pinLength;
 

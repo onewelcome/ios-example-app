@@ -1,22 +1,16 @@
-//
-//  OGConfigModel.h
-//  OneginiSDKiOS
-//
-//  Created by Eduard on 24-07-14.
-//  Copyright (c) 2014 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 
-#define kOGAppIdentifier					@"kOGAppIdentifier"
-#define kOGAppPlatform						@"kOGAppPlatform"
-#define kOGAppScheme						@"kOGAppScheme"
-#define kOGAppVersion						@"kOGAppVersion"
-#define kOGAppBaseURL						@"kOGAppBaseURL"
-#define kOGMaxPinFailures					@"kOGMaxPinFailures"
-#define kOGResourceBaseURL					@"kOGResourceBaseURL"
-#define kOGRedirectURL						@"kOGRedirectURL"
-#define kOGUseEmbeddedWebview				@"kOGUseEmbeddedWebview"
+#define kOGAppIdentifier                    @"kOGAppIdentifier"
+#define kOGAppPlatform                      @"kOGAppPlatform"
+#define kOGAppScheme                        @"kOGAppScheme"
+#define kOGAppVersion                       @"kOGAppVersion"
+#define kOGAppBaseURL                       @"kOGAppBaseURL"
+#define kOGMaxPinFailures                   @"kOGMaxPinFailures"
+#define kOGResourceBaseURL                  @"kOGResourceBaseURL"
+#define kOGRedirectURL                      @"kOGRedirectURL"
+#define kOGUseEmbeddedWebview               @"kOGUseEmbeddedWebview"
 #define kOGStoreCookies                     @"kOGStoreCookies"
 
 @class OGCommons;
@@ -25,7 +19,7 @@
  *  This dictionary class provides a means of supplying App specific configuration properties used by the OneginiClient.
  */
 @interface OGConfigModel : NSObject {
-	NSDictionary *dictionary;
+    NSDictionary *dictionary;
 }
 
 @property (readonly, nonatomic) NSDictionary *dictionary;

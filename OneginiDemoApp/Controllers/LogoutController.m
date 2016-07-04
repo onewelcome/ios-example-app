@@ -11,26 +11,30 @@
 
 @implementation LogoutController
 
-+ (LogoutController *)sharedInstance {
++ (instancetype)sharedInstance
+{
     static LogoutController *singleton;
-    
+
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         singleton = [[self alloc] init];
     });
-    
+
     return singleton;
 }
 
-- (void)logout {
-    [[OGOneginiClient sharedInstance] logoutWithDelegate:self];
+- (void)logout
+{
+    [[OGOneginiClient sharedInstance] logoutUserWithDelegate:self];
 }
 
-- (void)logoutSuccessful {
+- (void)logoutSuccessful
+{
     [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
 }
 
-- (void)logoutFailureWithError:(NSError *)error {
+- (void)logoutFailureWithError:(NSError *)error
+{
     [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
 }
 

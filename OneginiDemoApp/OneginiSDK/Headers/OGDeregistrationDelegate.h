@@ -5,20 +5,21 @@
 @class OGUserProfile;
 
 /**
- *  Disconnection delegate.
+ *  Deregistration delegate.
  */
-@protocol OGDisconnectDelegate<NSObject>
+@protocol OGDeregistrationDelegate<NSObject>
 
 /**
  *  Credentials has been removed sucessfully both from device and token server.
+ *  @param user user that has been deregistered
  */
-- (void)disconnectSuccessful;
+- (void)deregistrationSuccessful:(OGUserProfile *)userProfile;
 
 /**
  *  Credentials has been removed from device but error was encountered during communication with token server.
  *
  *  @param error error encountered during communication with token server
  */
-- (void)disconnectFailureWithError:(NSError *)error;
+- (void)deregistrationFailureWithError:(NSError *)error;
 
 @end

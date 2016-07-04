@@ -1,19 +1,11 @@
-//
-//  OGEnrollmentHandlerDelegate.h
-//  OneginiSDKiOS
-//
-//  Created by Eduard on 20-08-14.
-//  Copyright (c) 2014 Onegini. All rights reserved.
-//
+//  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
 
 /**
  *  Enrollment delegate used for mobile authentication.
  */
-@protocol OGEnrollmentHandlerDelegate <NSObject>
-
-@required
+@protocol OGEnrollmentHandlerDelegate<NSObject>
 
 /**
  *  Enrollment success.
@@ -50,7 +42,7 @@
 /**
  *  The provided client credentials are invalid.
  */
-- (void)enrollmentInvalidClientCredentials;
+- (void)enrollmentInvalidClientCredentials DEPRECATED_MSG_ATTRIBUTE("Use enrollmentErrorDeviceDeregistered");
 
 /**
  *  The device is already enrolled.
@@ -58,7 +50,7 @@
 - (void)enrollmentDeviceAlreadyEnrolled;
 
 /**
- *  Device is already enrolled for mobile authentication.
+ *  The user already has a device enrolled for mobile authentication.
  */
 - (void)enrollmentUserAlreadyEnrolled;
 
@@ -67,6 +59,10 @@
  */
 - (void)enrollmentInvalidTransaction;
 
-@optional
+/**
+ *  Mobile authentication enrollment failed. All device data including all profiles were removed. The user needs to register again.
+ *  This can happen when the device registration is removed server-side.
+ */
+- (void)enrollmentErrorDeviceDeregistered;
 
 @end

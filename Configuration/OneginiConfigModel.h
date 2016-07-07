@@ -2,7 +2,7 @@
 
 @interface OneginiConfigModel : NSObject
 
-+(NSArray*)certificates;
-+(NSDictionary*)configuration;
++ (NSArray *)certificates;
++ (NSDictionary *)configuration;
 
 @end

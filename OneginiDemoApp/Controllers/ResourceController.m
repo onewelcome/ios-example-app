@@ -1,10 +1,4 @@
-//
-//  APIClient.m
-//  OneginiDemoApp
-//
-//  Created by Sergey Butenko on 5/5/16.
 //  Copyright © 2016 Onegini. All rights reserved.
-//
 
 #import "ResourceController.h"
 #import "Profile.h"
@@ -17,25 +11,28 @@
 
 @implementation ResourceController
 
-+(instancetype)sharedInstance{
++ (instancetype)sharedInstance
+{
     static ResourceController *singleton;
-    
+
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         singleton = [[self alloc] init];
     });
-    
+
     return singleton;
 }
 
-- (void)getProfile:(void(^)(Profile *profile, NSError *error))completion {
+- (void)getProfile:(void (^)(Profile *profile, NSError *error))completion
+{
     self.callback = completion;
     [[OGOneginiClient sharedInstance] fetchResource:@"/api/persons" requestMethod:@"GET" params:nil paramsEncoding:OGJSONParameterEncoding headers:nil delegate:self];
 }
 
-- (void)handleResponse:(NSData *)response {
+- (void)handleResponse:(NSData *)response
+{
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:response options:0 error:NULL];
-    
+
     Profile *profile = [Profile profileFromJSON:json];
     if (self.callback) {
         self.callback(profile, nil);
@@ -43,7 +40,8 @@
     }
 }
 
-- (void)handleError:(NSError *)error {
+- (void)handleError:(NSError *)error
+{
     if (self.callback) {
         self.callback(nil, error);
         self.callback = nil;
@@ -52,44 +50,54 @@
 
 #pragma mark - OGResourceHandlerDelegate
 
--(void)resourceResponse:(NSHTTPURLResponse *)response body:(NSData *)body requestId:(NSString *)requestId{
+- (void)resourceResponse:(NSHTTPURLResponse *)response body:(NSData *)body requestId:(NSString *)requestId
+{
     [self handleResponse:body];
 }
 
--(void)resourceError:(NSError *)error requestId:(NSString *)requestId{
+- (void)resourceError:(NSError *)error requestId:(NSString *)requestId
+{
     [self handleError:error];
 }
 
-- (void)resourceError {
+- (void)resourceError
+{
     [self handleError:nil];
 }
 
-- (void)resourceBadRequest {
+- (void)resourceBadRequest
+{
     [self handleError:nil];
 }
 
-- (void)resourceErrorAuthenticationFailed {
+- (void)resourceErrorAuthenticationFailed
+{
     [self handleError:nil];
 }
 
-- (void)scopeError {
+- (void)scopeError
+{
     [self handleError:nil];
 }
 
-- (void)unauthorizedClient {
+- (void)unauthorizedClient
+{
     [self handleError:nil];
 }
 
-- (void)resourceSuccess:(id)response {
+- (void)resourceSuccess:(id)response
+{
     [self handleResponse:response];
 }
 
 - (void)resourceSuccess:(id)response
-                headers:(NSDictionary *)headers {
+                headers:(NSDictionary *)headers
+{
     [self handleResponse:response];
 }
 
-- (void)invalidGrantType {
+- (void)invalidGrantType
+{
     [self handleError:nil];
 }
 

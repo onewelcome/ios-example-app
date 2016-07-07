@@ -1,13 +1,6 @@
-//
-//  EnrollmentController.m
-//  OneginiDemoApp
-//
-//  Created by Stanisław Brzeski on 19/05/16.
 //  Copyright © 2016 Onegini. All rights reserved.
-//
 
 #import "MobileAuthenticationController.h"
-#import "OneginiSDK.h"
 #import "AppDelegate.h"
 #import "PinViewController.h"
 #import "PushConfirmationViewController.h"
@@ -28,7 +21,8 @@
 
 // MARK: - OGMobileAuthenticationDelegate
 
-- (void)askForPushAuthenticationConfirmation:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm {
+- (void)askForPushAuthenticationConfirmation:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm
+{
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = message;
     pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push - %@", userProfile.profileId];
@@ -39,7 +33,8 @@
     [[AppDelegate sharedNavigationController] pushViewController:pushVC animated:YES];
 }
 
-- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType pinSize:(NSUInteger)pinSize maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt confirm:(void (^)(NSString *, BOOL, BOOL))confirm {
+- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType pinSize:(NSUInteger)pinSize maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt confirm:(void (^)(NSString *, BOOL, BOOL))confirm
+{
     PinViewController *viewController = [PinViewController new];
     viewController.pinLength = pinSize;
     viewController.mode = PINCheckMode;
@@ -51,7 +46,8 @@
     [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }
 
-- (void)askForPushAuthenticationWithFingerprint:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm {
+- (void)askForPushAuthenticationWithFingerprint:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm
+{
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = message;
     pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint - %@", userProfile.profileId];

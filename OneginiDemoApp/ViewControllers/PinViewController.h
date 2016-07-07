@@ -1,10 +1,4 @@
-//
-//  PinViewController.h
-//  Onegini
-//
-//  Created by Stanisław Brzeski on 19/01/16.
 //  Copyright © 2016 Onegini. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -18,14 +12,14 @@ typedef enum : NSUInteger {
 
 @interface PinViewController : UIViewController
 
-@property (nonatomic) NSString* customTitle;
+@property (nonatomic) NSString *customTitle;
 @property (nonatomic) PINEntryMode mode;
-@property (nonatomic) OGUserProfile* profile;
-@property (nonatomic, copy) void (^pinEntered)(NSString* pin);
+@property (nonatomic) OGUserProfile *profile;
+@property (nonatomic, copy) void (^pinEntered)(NSString *pin);
 @property (nonatomic) NSInteger pinLength;
 
 - (void)invalidPinWithReason:(NSString *)message;
-- (void)showError:(NSString*)error;
+- (void)showError:(NSString *)error;
 - (void)reset;
 
 @end

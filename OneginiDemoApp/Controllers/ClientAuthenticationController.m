@@ -1,10 +1,4 @@
-//
-//  OGClientAuthenticationController.m
-//  OneginiDemoApp
-//
-//  Created by Stanisław Brzeski on 19/06/16.
 //  Copyright © 2016 Onegini. All rights reserved.
-//
 
 #import "ClientAuthenticationController.h"
 #import "AppDelegate.h"

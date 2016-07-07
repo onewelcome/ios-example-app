@@ -1,10 +1,4 @@
-//
-//  LogoutController.m
-//  OneginiDemoApp
-//
-//  Created by Stanisław Brzeski on 09/05/16.
 //  Copyright © 2016 Onegini. All rights reserved.
-//
 
 #import "LogoutController.h"
 #import "AppDelegate.h"

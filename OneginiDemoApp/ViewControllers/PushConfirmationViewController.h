@@ -1,10 +1,4 @@
-//
-//  PushConfirmationViewController.h
-//  OneginiDemoApp
-//
-//  Created by Stanisław Brzeski on 15/06/16.
 //  Copyright © 2016 Onegini. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 

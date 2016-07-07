@@ -1,14 +1,8 @@
-//
-//  PinViewController.m
-//  Onegini
-//
-//  Created by Stanisław Brzeski on 19/01/16.
 //  Copyright © 2016 Onegini. All rights reserved.
-//
 
 #import "PinViewController.h"
 
-@interface PinViewController()
+@interface PinViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *pinSlotsView;
 @property (nonatomic) NSArray *pinSlots;
@@ -34,21 +28,23 @@
 
 @implementation PinViewController
 
-- (void)viewDidLoad{
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.pinEntry = [NSMutableArray new];
     self.pinEntryToVerify = [NSMutableArray new];
-    
+
     [self buildPinSlots];
 }
 
-- (void)buildPinSlots{
+- (void)buildPinSlots
+{
     float pinSlotMargin = 10;
-    float pinSlotWidth = (self.pinSlotsView.frame.size.width-(pinSlotMargin*(self.pinLength-1)))/self.pinLength;
-    
+    float pinSlotWidth = (self.pinSlotsView.frame.size.width - (pinSlotMargin * (self.pinLength - 1))) / self.pinLength;
+
     NSMutableArray *pinSlotsArray = [NSMutableArray new];
-    for (int i=0; i<self.pinLength; i++) {
-        CGRect pinSlotFrame = CGRectMake(i*(pinSlotWidth+pinSlotMargin), 0, pinSlotWidth, self.pinSlotsView.frame.size.height);
+    for (int i = 0; i < self.pinLength; i++) {
+        CGRect pinSlotFrame = CGRectMake(i * (pinSlotWidth + pinSlotMargin), 0, pinSlotWidth, self.pinSlotsView.frame.size.height);
         UIView *pinSlotView = [self pinSlotWithFrame:pinSlotFrame];
         [pinSlotsArray addObject:pinSlotView];
         [self.pinSlotsView addSubview:pinSlotView];
@@ -57,8 +53,9 @@
     [self selectSlotAtIndex:0];
 }
 
-- (UIView*)pinSlotWithFrame:(CGRect)frame{
-    UIView *pinSlotView = [[UIView alloc]initWithFrame:frame];
+- (UIView *)pinSlotWithFrame:(CGRect)frame
+{
+    UIView *pinSlotView = [[UIView alloc] initWithFrame:frame];
     pinSlotView.layer.cornerRadius = 5;
     pinSlotView.layer.borderColor = [UIColor blackColor].CGColor;
     pinSlotView.layer.borderWidth = 1;
@@ -67,28 +64,34 @@
     return pinSlotView;
 }
 
-- (void)selectSlotAtIndex:(NSInteger)index{
-    ((UIView*)[self.pinSlots objectAtIndex:index]).layer.borderWidth = 2;
+- (void)selectSlotAtIndex:(NSInteger)index
+{
+    ((UIView *)[self.pinSlots objectAtIndex:index]).layer.borderWidth = 2;
 }
 
-- (void)deselectSlotAtIndex:(NSInteger)index{
-    ((UIView*)[self.pinSlots objectAtIndex:index]).layer.borderWidth = 1;
+- (void)deselectSlotAtIndex:(NSInteger)index
+{
+    ((UIView *)[self.pinSlots objectAtIndex:index]).layer.borderWidth = 1;
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewDidAppear:animated];
     self.mode = self.mode;
 }
 
--(void)showError:(NSString *)error{
+- (void)showError:(NSString *)error
+{
     self.errorLabel.text = error;
 }
 
--(void)invalidPinWithReason:(NSString *)message {
+- (void)invalidPinWithReason:(NSString *)message
+{
     self.errorLabel.text = message;
 }
 
--(void)setMode:(PINEntryMode)mode {
+- (void)setMode:(PINEntryMode)mode
+{
     _mode = mode;
     switch (mode) {
         case PINRegistrationMode:
@@ -105,50 +108,54 @@
             self.errorLabel.text = @"";
             break;
     }
-    if (self.customTitle) self.titleLabel.text = self.customTitle;
+    if (self.customTitle)
+        self.titleLabel.text = self.customTitle;
 }
 
-- (IBAction)keyPressed:(UIButton *)key {
+- (IBAction)keyPressed:(UIButton *)key
+{
     if (self.pinEntry == nil) {
         self.pinEntry = [NSMutableArray new];
     }
-    
+
     if (self.pinEntry.count >= self.pinSlots.count) {
         return;
     }
-    
-    [self.pinEntry addObject:[NSString stringWithFormat:@"%ld",(long)key.tag]];
-    
+
+    [self.pinEntry addObject:[NSString stringWithFormat:@"%ld", (long)key.tag]];
+
     [self evaluatePinState];
 }
 
-- (IBAction)backKeyPressed:(id)sender {
+- (IBAction)backKeyPressed:(id)sender
+{
     [self.pinEntry removeLastObject];
-    
+
     [self updatePinStateRepresentation];
 }
 
-- (void)evaluatePinState {
+- (void)evaluatePinState
+{
     [self updatePinStateRepresentation];
-    
+
     if (self.pinEntry.count == self.pinSlots.count) {
         NSString *pincode = [self.pinEntry componentsJoinedByString:@""];
         switch (self.mode) {
             default:
-            case PINCheckMode:{
+            case PINCheckMode: {
                 self.pinEntered(pincode);
                 break;
             }
-            case PINRegistrationMode:{
+            case PINRegistrationMode: {
                 self.pinEntryToVerify = self.pinEntry.copy;
                 self.mode = PINRegistrationVerifyMode;
                 [self reset];
                 break;
             }
-            case PINRegistrationVerifyMode:{
+            case PINRegistrationVerifyMode: {
                 NSString *pincodeToVerify = [self.pinEntryToVerify componentsJoinedByString:@""];
                 NSString *pincode = [self.pinEntry componentsJoinedByString:@""];
-                if ([pincode isEqualToString:pincodeToVerify]){
+                if ([pincode isEqualToString:pincodeToVerify]) {
                     self.pinEntered(pincode);
                 } else {
                     self.mode = PINRegistrationMode;
@@ -161,39 +168,41 @@
     }
 }
 
--(void)reset{
+- (void)reset
+{
     for (int i = 0; i < self.pinEntry.count; i++) {
         self.pinEntry[i] = @"#";
     }
     self.pinEntry = [NSMutableArray new];
-   	[self updatePinStateRepresentation];
+    [self updatePinStateRepresentation];
 }
 
--(void)updatePinStateRepresentation {
-    for (UIView* pinSlot in self.pinSlots) {
+- (void)updatePinStateRepresentation
+{
+    for (UIView *pinSlot in self.pinSlots) {
         [pinSlot.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
-    for (int i=0; i<self.pinEntry.count; i++) {
+    for (int i = 0; i < self.pinEntry.count; i++) {
         UIView *slot = self.pinSlots[i];
         UIImage *pinIndicatorImage = [UIImage imageNamed:@"pin-occupied-ic"];
-        UIImageView *pinIndicator = [[UIImageView alloc]initWithImage:pinIndicatorImage];
-        pinIndicator.frame = CGRectMake(slot.frame.size.width/2-pinIndicatorImage.size.width/2, slot.frame.size.height/2-pinIndicatorImage.size.height/2, pinIndicatorImage.size.width, pinIndicatorImage.size.height);
+        UIImageView *pinIndicator = [[UIImageView alloc] initWithImage:pinIndicatorImage];
+        pinIndicator.frame = CGRectMake(slot.frame.size.width / 2 - pinIndicatorImage.size.width / 2, slot.frame.size.height / 2 - pinIndicatorImage.size.height / 2, pinIndicatorImage.size.width, pinIndicatorImage.size.height);
         [slot addSubview:pinIndicator];
     }
-    
-    for (int i=0; i<self.pinSlots.count; i++) {
+
+    for (int i = 0; i < self.pinSlots.count; i++) {
         [self deselectSlotAtIndex:i];
     }
-    
-    if (self.pinEntry.count<self.pinSlots.count){
+
+    if (self.pinEntry.count < self.pinSlots.count) {
         [self selectSlotAtIndex:self.pinEntry.count];
     }
-    
-    if (self.pinEntry.count == 0){
+
+    if (self.pinEntry.count == 0) {
         self.backKey.alpha = 0;
         self.backKey.enabled = NO;
     }
-    else{
+    else {
         self.backKey.alpha = 1;
         self.backKey.enabled = YES;
     }

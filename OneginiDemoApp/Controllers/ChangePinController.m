@@ -1,10 +1,4 @@
-//
-//  ChangePinController.m
-//  OneginiDemoApp
-//
-//  Created by Stanisław Brzeski on 17/06/16.
 //  Copyright © 2016 Onegini. All rights reserved.
-//
 
 #import "ChangePinController.h"
 #import "PinViewController.h"

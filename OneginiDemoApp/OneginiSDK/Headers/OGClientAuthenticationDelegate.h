@@ -20,7 +20,7 @@
 - (void)authenticationErrorInvalidRequest;
 
 /**
- *  The client was not able to perform a successful dynamic client registration during the authentication flow.
+ *  The client was not able to perform dynamic client registration during the authentication flow.
  *
  *  @param error error
  */
@@ -42,7 +42,7 @@
 - (void)authenticationErrorInvalidAppPlatformOrVersion;
 
 /**
- *  Application runs on unsupported OS.
+ *  The application runs on an unsupported OS.
  */
 - (void)authenticationErrorUnsupportedOS;
 

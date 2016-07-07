@@ -8,7 +8,9 @@ typedef void(^PushAuthenticationWithPinConfirmation)(NSString *pin, BOOL confirm
 
 /**
  *  This delegate provides the interface from the OneginiClient to the App implementation.
- *  All invokations are performed asynchronous and on the main queue.
+ *  All invocations are performed asynchronous and on the main queue.
+ *
+ *  <strong>Warning</strong>: Deprecated, use OGAuthenticationDelegate
  */
 DEPRECATED_MSG_ATTRIBUTE("Use OGAuthenticationDelegate")
 @protocol OGAuthorizationDelegate<NSObject>

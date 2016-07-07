@@ -38,12 +38,17 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Method called when the resource call was successfully made.
  *  Optional but either this one or the one with the headers should be implemented.
+ *
+ *  <strong>Warning</strong>: Deprecated
  */
 - (void)resourceSuccess:(id)response DEPRECATED_ATTRIBUTE;
 
 /**
  *  Method called when the resource call was successfully made.
  *  Optional but either this one or the one with the headers should be implemented.
+ *
+ *  <strong>Warning</strong>: Deprecated
+ *
  *  @param response the response of the resource call
  *  @param headers the headers returned on the resource call
  */
@@ -52,11 +57,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Method called when the resource call failed because of an unknown error.
+ *
+ *  <strong>Warning</strong>: Deprecated
  */
 - (void)resourceError DEPRECATED_ATTRIBUTE;
 
 /**
  *  Method called when the requested grant type is not allowed for this client.
+ *
+ *  <strong>Warning</strong>: Deprecated
  */
 - (void)unauthorizedClient DEPRECATED_ATTRIBUTE;
 - (void)resourceErrorNotAuthenticated;

@@ -11,15 +11,15 @@
 
 /**
  *  Logout successful callback
- *  Access token removed from device and revoked from token server
+ *  Access token removed from device and revoked from the token server
  */
 - (void)logoutSuccessful;
 
 /**
  *  Logout failure callback
- *  Access token removed from device but not revoked from token server
+ *  Access token removed from device but not revoked from the token server
  *
- *  @param error error encountered during communication with token server
+ *  @param error error encountered during communication with the token server
  */
 - (void)logoutFailureWithError:(NSError *)error;
 

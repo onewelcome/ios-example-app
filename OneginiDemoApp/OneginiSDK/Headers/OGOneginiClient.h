@@ -175,7 +175,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)storeDevicePushTokenInSession:(nullable NSData *)deviceToken;
 
 /**
- *  Enrolls the currently connected device for fingerprint authentication. OGFingerprintDelegate askCurrentPinForFingerprintAuthentication method must be implemented. Pin provided by user must be passed by confirmCurrentPinForFingerprintAuthorization method to complete the flow. Fingerprint authentication must be available for current user and device
+ *  Enrolls the currently authenticated user for fingerprint authentication. The OGFingerprintDelegate
+ *  askCurrentPinForFingerprintAuthentication method must be implemented. The PIN provided by the user must be passed to
+ *  the confirmCurrentPinForFingerprintAuthorization method to complete the flow.
+ *
+ *  Fingerprint authentication must be available for current user and device.
  *  @see -(bool)isFingerprintAuthenticationAvailable
  *
  *  @param delegate delegate handling fingerprint enrollment callbacks
@@ -183,7 +187,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)enrollForFingerprintAuthenticationWithDelegate:(id<OGFingerprintDelegate>)delegate;
 
 /**
- *  Disables fingerprint authentication for currently connected device.
+ *  Disables fingerprint authentication for the currently authenticated user.
  */
 - (void)disableFingerprintAuthentication;
 
@@ -275,12 +279,25 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)deregisterUser:(OGUserProfile *)userProfile delegate:(id<OGDeregistrationDelegate>)delegate;
 
+/**
+ * Returns a string with access token for the currently authenticated user, or nil if no user is currently
+ * authenticated.
+ *
+ * <strong>Warning</strong>: Do not use this method if you want to fetch resources from your resource gateway: use the resource methods
+ * instead.
+ *
+ * @return String with access token or nil
+ */
+- (nullable NSString *)accessToken;
+
 @end
 
 @interface OGOneginiClient (Deprecated)
 
 /**
  *  Initializes 'OGOneginiClient' with a delegate. This initializer uses configuration and certificates through "Onegini SDK Configurator". Since certificate pinning is done within this initialization, call to setX509PEMCertificates is not necceassary.
+ *
+ *  <strong>Warning</strong>: Deprecated
  *
  *  @param delegate Object conforming to OGAuthorizationDelegate protocol. Delegate is not retained by OGOneginiClient.
  *
@@ -291,6 +308,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Initializes this 'OGOneginiClient' with a valid config model and delegate.
  *  This is the preferred way of creating a new instance of this class.
+ *
+ *  <strong>Warning</strong>: Deprecated, use askCurrentPinForFingerprintEnrollmentForUser:pinConfirmation:
  *
  *  @param config   Configuration object used for initialization.
  *  @param delegate Object conforming to OGAuthorizationDelegate protocol. Delegate is not retained by OGOneginiClient.
@@ -303,6 +322,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Main entry point into the authorization process.
  *
+ *  <strong>Warning</strong>: Deprecated, use authenticateUser:userProfile
+ *
  *  @param scopes NSString* array of scopes used for authorization
  */
 - (void)authorize:(nullable NSArray *)scopes DEPRECATED_ATTRIBUTE;
@@ -310,12 +331,16 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Forces user's reauthorization.
  *
+ *  <strong>Warning</strong>: Deprecated, use reauthenticateUser:userProfile
+ *
  *  @param scopes NSString* array of scopes used for reauthorization
  */
 - (void)reauthorize:(nullable NSArray *)scopes DEPRECATED_ATTRIBUTE;
 
 /**
  *  Performs client's authentication. Uses client's credentials to request an accessToken object, which can be used for performing anonymous resource calls.
+ *
+ *  <strong>Warning</strong>: Deprecated, use authenticateClient:scopes:delegate
  *
  *  @param scopes NSString* array of scopes used for authorization
  */
@@ -331,6 +356,8 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @see UIApplication
  *
+ *  <strong>Warning</strong>: Deprecated
+ *
  *  @param userInfo userInfo of received push notification
  *  @return true, if the notification is processed by the client
  */
@@ -342,6 +369,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  This is the callback entry after the delegate is requested to ask the user for the current pin.
  *  @see OGAuthorizationDelegate -(void)askForPin:(NSUInteger)pinSize;
  *
+ *  <strong>Warning</strong>: Deprecated
+ *
  *  @param pin pin to confirm
  */
 - (void)confirmCurrentPin:(NSString *)pin DEPRECATED_ATTRIBUTE;
@@ -350,6 +379,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  Confirms the new PIN.
  *  This is the callback entry after the delegate is requested to ask the user for a new pin.
  *  @see OGAuthorizationDelegate -(void)askForNewPin:(NSUInteger)pinSize;
+ *
+ *  <strong>Warning</strong>: Deprecated
  *
  *  @param pin pin
  *  @param delegate delegate
@@ -360,6 +391,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  Confirms the current PIN as part of the change PIN request flow.
  *  This method should be called after a call to OGAuthorizationDelegate - (void)askCurrentPinForChangeRequest;
  *
+ *  <strong>Warning</strong>: Deprecated
+ *
  *  @param pin pin
  */
 - (void)confirmCurrentPinForChangeRequest:(NSString *)pin DEPRECATED_ATTRIBUTE;
@@ -367,6 +400,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Confirms the new PIN for the change request.
  *  Call this method in reponse to OGAuthorizationDelegate - (void)askNewPinForChangeRequest:(NSUInteger)pinSize;
+ *
+ *  <strong>Warning</strong>: Deprecated
  *
  *  @param pin pin
  *  @param delegate validation delegate
@@ -377,6 +412,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  Confirms the current PIN as part of the Fingerprint Authorization enrollment.
  *  This method should be called after a call - (void)enrollForFingerprintAuthentication:(NSArray *)scopes delegate:(id <OGEnrollmentHandlerDelegate>)delegate;
  *
+ *  <strong>Warning</strong>: Deprecated
+ *
  *  @param pin pin
  */
 - (void)confirmCurrentPinForFingerprintAuthorization:(NSString *)pin DEPRECATED_ATTRIBUTE;
@@ -384,6 +421,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Handles the response of the authorization request from the browser redirect.
  *  The URL scheme and host must match the config model redirect URL.
+ *
+ *  <strong>Warning</strong>: Deprecated, use handleAuthenticationCallback:url
  *
  *  @param url callback url
  *  @return true, if the URL is handled by the client
@@ -393,6 +432,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a specific resource.
  *  Params are encoded using JSON notation.
+ *
+ *  <strong>Warning</strong>: Deprecated
  *
  *  @param path relative path to the resource end point
  *  @param scopes scopes
@@ -411,6 +452,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a specific resource.
  *  Params are encoded using JSON notation.
+ *
+ *  <strong>Warning</strong>: Deprecated
  *
  *  @param path relative path to the resource end point
  *  @param scopes scopes
@@ -431,6 +474,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a specific resource.
  *
+ *  <strong>Warning</strong>: Deprecated
+ *
  *  @param path relative path to the resource end point
  *  @param scopes scopes
  *  @param requestMethod request method
@@ -448,6 +493,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Fetches a specific resource.
+ *
+ *  <strong>Warning</strong>: Deprecated
  *
  *  @param path relative path to the resource end point
  *  @param scopes scopes
@@ -469,6 +516,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Fetches a specific resource anonymously using a client access token.
+ *
+ *  <strong>Warning</strong>: Deprecated
  *
  *  @param path relative path to the resource end point
  *  @param scopes scopes
@@ -485,6 +534,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Fetches a specific resource anonymously using a client access token.
+ *
+ *  <strong>Warning</strong>: Deprecated
  *
  *  @param path relative path to the resource end point
  *  @param scopes scopes
@@ -505,6 +556,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Fetches a specific resource anonymously using a client access token.
  *
+ *  <strong>Warning</strong>: Deprecated
+ *
  *  @param path relative path to the resource end point
  *  @param scopes scopes
  *  @param requestMethod request method
@@ -522,6 +575,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Fetches a specific resource anonymously using a client access token.
+ *
+ *  <strong>Warning</strong>: Deprecated
  *
  *  @param path relative path to the resource end point
  *  @param scopes scopes
@@ -544,6 +599,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  Performs a user logout, by invalidating the access token.
  *  The refresh token and client credentials remain untouched.
  *
+ *  <strong>Warning</strong>: Deprecated, use logoutUserWithDelegate:
+ *
  *  @param delegate logout delegate
  */
 - (void)logoutWithDelegate:(id<OGLogoutDelegate>)delegate DEPRECATED_MSG_ATTRIBUTE("Use logoutUserWithDelegate:");
@@ -555,6 +612,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  The device push token must be stored in the session before invoking this method.
  *  @see storeDevicePushTokenInSession:
  *
+ *  <strong>Warning</strong>: Deprecated
+ *
  *  @param scopes scopes used for mobile authentication
  *  @param delegate delegate handling mobile enrollment callbacks
  */
@@ -565,6 +624,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  Enrolls the currently connected device for fingerprint authentication. OGFingerprintDelegate askCurrentPinForFingerprintAuthentication method must be implemented. Pin provided by user must be passed by confirmCurrentPinForFingerprintAuthorization method to complete the flow. Fingerprint authentication must be available for current user and device
  *  @see -(bool)isFingerprintAuthenticationAvailable
  *
+ *  <strong>Warning</strong>: Deprecated, use enrollForFingerprintAuthenticationWithDelegate:
+ *
  *  @param scopes scopes used for fingerprint authentication
  *  @param delegate delegate handling fingerprint enrollment callbacks
  */
@@ -574,6 +635,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  Unenrolls the currently connected device for fingerprint authentication.
  *  This method is deprecated, please use disableFingerprintAuthentication.
  *
+ *  <strong>Warning</strong>: Deprecated
+ *
  *  @param delegate delegate handling fingerprint unenrollment callbacks
  */
 - (void)unenrollForFingerprintAuthenticationWithDelegate:(id<OGFingerprintDelegate>)delegate DEPRECATED_ATTRIBUTE;
@@ -582,12 +645,16 @@ NS_ASSUME_NONNULL_BEGIN
  *  Disconnects from the service, this will clear the refresh token and access token.
  *  Client credentials remain untouched.
  *
+ *  <strong>Warning</strong>: Deprecated
+ *
  *  @param delegate disconnection delegate
  */
 - (void)disconnectWithDelegate:(id<OGDisconnectDelegate>)delegate DEPRECATED_ATTRIBUTE;
 
 /**
- *  Determines if the user is registered.
+ *  Checks if there is a refresh token available for a user.
+ *
+ *  <strong>Warning</strong>: Deprecated, don't use this method in case you use the new API's (registerUser & authenticateUser).
  *
  *  @return true, if a refresh token is available
  */

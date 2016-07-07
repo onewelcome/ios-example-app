@@ -14,7 +14,7 @@
 /**
  *  Asks the user for the current PIN in the change PIN request flow.
  *  The PIN must be forwarded directly to the client and not be stored by any means.
- *  Call the OGOneginiClient - (void)confirmCurrentPinForChangeRequest:(NSString *)pin; with the user provided PIN.
+ *  Call the OGPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
  */
 - (void)askCurrentPinForChangeRequestForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)delegate;
 
@@ -22,7 +22,7 @@
  *  Asks the user for a new PIN.
  *  The implementor should present a PIN entry dialog with a second verification entry.
  *  The PIN must be forwarded directly to the client and not be stored by any means.
- *  Call the OGOneginiClient - (void)confirmNewPinForChangeRequest:(NSString *)pin validation:(id<OGPinValidationDelegate>)delegate;
+ *  Call the OGNewPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
  *  The new PIN must satisfy any PIN policy constraints.
  *
  *  @param pinSize the size of the PIN value
@@ -42,24 +42,24 @@
 - (void)pinChangeErrorTooManyPinFailures;
 
 /**
- *  Pin changed sucessfully callback
+ *  Pin changed successfully callback
  */
 - (void)pinChanged;
 
 /**
- *  Pin change failed
+ *  PIN change failed
  */
 - (void)pinChangeError;
 
 /**
- *  Pin change failed
+ *  PIN change failed
  *
- *  @param error error encountered during pic change
+ *  @param error error encountered during PIN change
  */
 - (void)pinChangeError:(NSError *)error;
 
 /**
- *  Client validation failed, client was disconnected.
+ *  Client validation failed, client was disconnected on the server-side.
  */
 - (void)pinChangeErrorDeviceDeregistered;
 

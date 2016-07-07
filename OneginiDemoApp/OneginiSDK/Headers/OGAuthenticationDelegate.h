@@ -6,8 +6,8 @@
 #import "OGUserProfile.h"
 
 /**
- *  This delegate provides the interface from the OneginiClient to the App implementation.
- *  All invokations are performed asynchronous and on the main queue.
+ *  This delegate provides the interface from the OGOneginiClient to the App implementation.
+ *  All invocations are performed asynchronous and on the main queue.
  */
 @protocol OGAuthenticationDelegate<NSObject>
 
@@ -31,7 +31,7 @@
  *  Asks the user for a new PIN.
  *  The implementor should present a PIN entry dialog with a second verification entry.
  *  The PIN must be forwarded directly to the client and not be stored by any means.
- *  Call the OGOneginiClient - (void)confirmNewPin:(NSString *)pin; with the new PIN.
+ *  Call the OGNewPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
  *  The new PIN must satisfy any PIN policy constraints.
  *
  *  @param pinSize the size of the PIN value
@@ -42,7 +42,7 @@
  *  Asks the user to provide the PIN for confirmation of the authentication request.
  *
  *  The implementor should present a PIN entry dialog and must forward the PIN directly to the client and not store the PIN by any means.
- *  Call the OGOneginiClient - (void)confirmCurrentPin:(NSString *)pin; with the user provided PIN.
+ *  Call the OGPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
  */
 - (void)askForCurrentPinForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)delegate;
 

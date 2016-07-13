@@ -49,21 +49,4 @@
  */
 - (void)fingerprintAuthenticationEnrollmentErrorDeviceDeregistered;
 
-@optional
-
-/**
- *  Asks user for current pin for fingerprint authentication enrollment.
- *  Obtained should be passed as an argument of OGOneginiClient method - (void)confirmCurrentPinForFingerprintAuthorization:(NSString *)pin;
- *
- *  <strong>Warning</strong>: Deprecated, use askCurrentPinForFingerprintEnrollmentForUser:pinConfirmation:
- */
-- (void)askCurrentPinForFingerprintAuthentication DEPRECATED_MSG_ATTRIBUTE("Use askCurrentPinForFingerprintEnrollmentForUser:pinConfirmation:");
-
-/**
- *  Fingerprint enrollment failed due to too many pin failures.
- *
- *  <strong>Warning</strong>: Deprecated, use fingerprintAuthenticationEnrollmentErrorUserDeregistered
- */
-- (void)fingerprintAuthenticationEnrollmentErrorTooManyPinFailures DEPRECATED_MSG_ATTRIBUTE("Use fingerprintAuthenticationEnrollmentErrorUserDeregistered");
-
 @end

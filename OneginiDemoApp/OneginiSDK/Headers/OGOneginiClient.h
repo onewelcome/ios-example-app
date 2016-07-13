@@ -2,7 +2,6 @@
 
 #import <Foundation/Foundation.h>
 #import "OGResourceHandlerDelegate.h"
-#import "OGAuthorizationDelegate.h"
 #import "OGEnrollmentHandlerDelegate.h"
 #import "OGPinValidationDelegate.h"
 #import "OGChangePinDelegate.h"
@@ -16,8 +15,12 @@
 #import "OGClientAuthenticationDelegate.h"
 #import "OGUserProfile.h"
 #import "OGMobileAuthenticationDelegate.h"
+#import "OGConfigModel.h"
 
-@class OGConfigModel, OGAuthorizationManager, OGResourceManager, OGEnrollmentManager;
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedMethodInspection"
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedPropertyInspection"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,47 +31,31 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface OGOneginiClient : NSObject
 
-@property (weak, nonatomic, nullable) id<OGAuthorizationDelegate> authorizationDelegate DEPRECATED_ATTRIBUTE;
-@property (weak, nonatomic, nullable) id<OGPinValidationDelegate> pinValidationDelegate DEPRECATED_ATTRIBUTE;
 /**
  *  Registers delegate handling customizable properties within the SDK.
  */
 @property (weak, nonatomic, nullable) id<OGCustomizationDelegate> customizationDelegate;
 
 /**
- *  For verification of the bundled DER encoded CA X509 certificates,
- *  the App must provide a list of matching PEM base64 encoded certificates for each bundled DER encoded CA X509 certificate to this client.
- *  The PEM base64 encoded certificates must be stripped from their armor (remove ---BEGIN CERTIFICATE--- & ---END CERTIFICATE---)
- *
- *  This method must be called before any service request is made, preferably after initialization.
- *  If certificate verification fails prior to making a service request, an Exception is thrown.
- *
- *  To convert a DER encoded certificate to PEM, use the following openssl command:
- *  openssl x509 -in <filename>.cer -inform der -out <filename>.pem -outform pem
- *  Do not include the PEM files themselved in App bundle!
- *
- *  @param certificates array of PEM base64 encoded certificates without armor
- */
-- (void)setX509PEMCertificates:(NSArray *)certificates;
-
-/**
- *  Accesses the shared instance.
- *  If the instance is nil it must be initialized with a valid config model.
- *
- *  @see - (id)initWithConfig:(OGConfigModel *)config delegate:(id<OGAuthorizationDelegate>)delegate;
- *  @return shared instance
- */
+* Access to the initialized and configured instance of the `OGOneginiClient`. Before calling this method You have to initialize
+* SDK by calling `-[ONGClientBuilder build]`.
+*
+* @return instance of the configured `OGOneginiClient`.
+*
+* @see `ONGClientBuilder`, `-[ONGClient userClient]`
+*
+* @warning If the SDK is not initialized via `-[ONGClientBuilder build]` this method throws an exception.
+*/
 + (OGOneginiClient *)sharedInstance;
 
 /**
- *  Initializes this 'OGOneginiClient' with a valid config model and delegate.
- *  This is the preferred way of creating a new instance of this class.
+ * Developers should not try to instantiate SDK on their own. The only valid way to get `OGOneginiClient` instance is by
+ * calling `-[OGOneginiClient sharedInstance]`.
  *
- *  @param config   Configuration object used for initialization.
- *
- *  @return Initialized OGOneginiClient instance
+ * @see -sharedInstance
  */
-- (id)initWithConfig:(OGConfigModel *)config;
+- (instancetype)init ONG_UNAVAILABLE;
++ (instancetype)new ONG_UNAVAILABLE;
 
 /**
  *  Main entry point into the authentication process.
@@ -292,374 +279,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface OGOneginiClient (Deprecated)
-
-/**
- *  Initializes 'OGOneginiClient' with a delegate. This initializer uses configuration and certificates through "Onegini SDK Configurator". Since certificate pinning is done within this initialization, call to setX509PEMCertificates is not necceassary.
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param delegate Object conforming to OGAuthorizationDelegate protocol. Delegate is not retained by OGOneginiClient.
- *
- *  @return Initialized OGOneginiClient instance
- */
-- (id)initWithDelegate:(id<OGAuthorizationDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-/**
- *  Initializes this 'OGOneginiClient' with a valid config model and delegate.
- *  This is the preferred way of creating a new instance of this class.
- *
- *  <strong>Warning</strong>: Deprecated, use askCurrentPinForFingerprintEnrollmentForUser:pinConfirmation:
- *
- *  @param config   Configuration object used for initialization.
- *  @param delegate Object conforming to OGAuthorizationDelegate protocol. Delegate is not retained by OGOneginiClient.
- *
- *  @return Initialized OGOneginiClient instance
- */
-- (id)initWithConfig:(OGConfigModel *)config delegate:(id<OGAuthorizationDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-
-/**
- *  Main entry point into the authorization process.
- *
- *  <strong>Warning</strong>: Deprecated, use authenticateUser:userProfile
- *
- *  @param scopes NSString* array of scopes used for authorization
- */
-- (void)authorize:(nullable NSArray *)scopes DEPRECATED_ATTRIBUTE;
-
-/**
- *  Forces user's reauthorization.
- *
- *  <strong>Warning</strong>: Deprecated, use reauthenticateUser:userProfile
- *
- *  @param scopes NSString* array of scopes used for reauthorization
- */
-- (void)reauthorize:(nullable NSArray *)scopes DEPRECATED_ATTRIBUTE;
-
-/**
- *  Performs client's authentication. Uses client's credentials to request an accessToken object, which can be used for performing anonymous resource calls.
- *
- *  <strong>Warning</strong>: Deprecated, use authenticateClient:scopes:delegate
- *
- *  @param scopes NSString* array of scopes used for authorization
- */
-- (void)authorizeClient:(nullable NSArray *)scopes DEPRECATED_ATTRIBUTE;
-
-
-/**
- *  When a push notification is received by the application, the notificaton must be forwarded to the client.
- *  The client will then fetch the actual encrypted payload and invoke the delegate with the embedded message.
- *
- *  This should be invoked from the UIApplicationDelegate
- *  - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
- *
- *  @see UIApplication
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param userInfo userInfo of received push notification
- *  @return true, if the notification is processed by the client
- */
-- (BOOL)handlePushNotification:(NSDictionary *)userInfo DEPRECATED_ATTRIBUTE;
-
-
-/**
- *  Confirms the PIN entry
- *  This is the callback entry after the delegate is requested to ask the user for the current pin.
- *  @see OGAuthorizationDelegate -(void)askForPin:(NSUInteger)pinSize;
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param pin pin to confirm
- */
-- (void)confirmCurrentPin:(NSString *)pin DEPRECATED_ATTRIBUTE;
-
-/**
- *  Confirms the new PIN.
- *  This is the callback entry after the delegate is requested to ask the user for a new pin.
- *  @see OGAuthorizationDelegate -(void)askForNewPin:(NSUInteger)pinSize;
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param pin pin
- *  @param delegate delegate
- */
-- (void)confirmNewPin:(NSString *)pin validation:(nullable id<OGPinValidationDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-/**
- *  Confirms the current PIN as part of the change PIN request flow.
- *  This method should be called after a call to OGAuthorizationDelegate - (void)askCurrentPinForChangeRequest;
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param pin pin
- */
-- (void)confirmCurrentPinForChangeRequest:(NSString *)pin DEPRECATED_ATTRIBUTE;
-
-/**
- *  Confirms the new PIN for the change request.
- *  Call this method in reponse to OGAuthorizationDelegate - (void)askNewPinForChangeRequest:(NSUInteger)pinSize;
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param pin pin
- *  @param delegate validation delegate
- */
-- (void)confirmNewPinForChangeRequest:(NSString *)pin validation:(nullable id<OGPinValidationDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-/**
- *  Confirms the current PIN as part of the Fingerprint Authorization enrollment.
- *  This method should be called after a call - (void)enrollForFingerprintAuthentication:(NSArray *)scopes delegate:(id <OGEnrollmentHandlerDelegate>)delegate;
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param pin pin
- */
-- (void)confirmCurrentPinForFingerprintAuthorization:(NSString *)pin DEPRECATED_ATTRIBUTE;
-
-/**
- *  Handles the response of the authorization request from the browser redirect.
- *  The URL scheme and host must match the config model redirect URL.
- *
- *  <strong>Warning</strong>: Deprecated, use handleAuthenticationCallback:url
- *
- *  @param url callback url
- *  @return true, if the URL is handled by the client
- */
-- (BOOL)handleAuthorizationCallback:(NSURL *)url DEPRECATED_ATTRIBUTE;
-
-/**
- *  Fetches a specific resource.
- *  Params are encoded using JSON notation.
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param path relative path to the resource end point
- *  @param scopes scopes
- *  @param requestMethod request method
- *  @param params additional request parameters
- *  @param delegate delegate
- *  @return transactionId
- */
-- (NSString *)fetchResource:(NSString *)path
-                     scopes:(nullable NSArray *)scopes
-              requestMethod:(HTTPRequestMethod)requestMethod
-                     params:(nullable NSDictionary *)params
-                   delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-
-/**
- *  Fetches a specific resource.
- *  Params are encoded using JSON notation.
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param path relative path to the resource end point
- *  @param scopes scopes
- *  @param requestMethod request method
- *  @param params additional request parameters
- *  @param headers additional headers
- *  @param delegate delegate
- *  @return transactionId
- */
-- (NSString *)fetchResource:(NSString *)path
-                     scopes:(nullable NSArray *)scopes
-              requestMethod:(HTTPRequestMethod)requestMethod
-                     params:(nullable NSDictionary *)params
-                    headers:(nullable NSDictionary *)headers
-                   delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-
-/**
- *  Fetches a specific resource.
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param path relative path to the resource end point
- *  @param scopes scopes
- *  @param requestMethod request method
- *  @param params additional request parameters
- *  @param paramsEncoding encoding
- *  @param delegate delegate
- *  @return transactionId
- */
-- (NSString *)fetchResource:(NSString *)path
-                     scopes:(nullable NSArray *)scopes
-              requestMethod:(HTTPRequestMethod)requestMethod
-                     params:(nullable NSDictionary *)params
-             paramsEncoding:(HTTPClientParameterEncoding)paramsEncoding
-                   delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-/**
- *  Fetches a specific resource.
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param path relative path to the resource end point
- *  @param scopes scopes
- *  @param requestMethod request method
- *  @param params additional request parameters
- *  @param paramsEncoding encoding
- *  @param headers additional headers
- *  @param delegate delegate
- *  @return transactionId
- */
-- (NSString *)fetchResource:(NSString *)path
-                     scopes:(nullable NSArray *)scopes
-              requestMethod:(HTTPRequestMethod)requestMethod
-                     params:(nullable NSDictionary *)params
-             paramsEncoding:(HTTPClientParameterEncoding)paramsEncoding
-                    headers:(nullable NSDictionary *)headers
-                   delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-
-/**
- *  Fetches a specific resource anonymously using a client access token.
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param path relative path to the resource end point
- *  @param scopes scopes
- *  @param requestMethod request method
- *  @param params additional request parameters
- *  @param delegate delegate
- *  @return transactionId
- */
-- (NSString *)fetchAnonymousResource:(NSString *)path
-                              scopes:(nullable NSArray *)scopes
-                       requestMethod:(HTTPRequestMethod)requestMethod
-                              params:(nullable NSDictionary *)params
-                            delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-/**
- *  Fetches a specific resource anonymously using a client access token.
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param path relative path to the resource end point
- *  @param scopes scopes
- *  @param requestMethod request method
- *  @param params additional request parameters
- *  @param headers additional headers
- *  @param delegate delegate
- *  @return transactionId
- */
-- (NSString *)fetchAnonymousResource:(NSString *)path
-                              scopes:(nullable NSArray *)scopes
-                       requestMethod:(HTTPRequestMethod)requestMethod
-                              params:(nullable NSDictionary *)params
-                             headers:(nullable NSDictionary *)headers
-                            delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-
-/**
- *  Fetches a specific resource anonymously using a client access token.
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param path relative path to the resource end point
- *  @param scopes scopes
- *  @param requestMethod request method
- *  @param params additional request parameters
- *  @param paramsEncoding encoding
- *  @param delegate delegate
- *  @return transactionId
- */
-- (NSString *)fetchAnonymousResource:(NSString *)path
-                              scopes:(nullable NSArray *)scopes
-                       requestMethod:(HTTPRequestMethod)requestMethod
-                              params:(nullable NSDictionary *)params
-                      paramsEncoding:(HTTPClientParameterEncoding)paramsEncoding
-                            delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-/**
- *  Fetches a specific resource anonymously using a client access token.
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param path relative path to the resource end point
- *  @param scopes scopes
- *  @param requestMethod request method
- *  @param params additional request parameters
- *  @param paramsEncoding encoding
- *  @param headers additional headers
- *  @param delegate delegate
- *  @return transactionId
- */
-- (NSString *)fetchAnonymousResource:(NSString *)path
-                              scopes:(nullable NSArray *)scopes
-                       requestMethod:(HTTPRequestMethod)requestMethod
-                              params:(nullable NSDictionary *)params
-                      paramsEncoding:(HTTPClientParameterEncoding)paramsEncoding
-                             headers:(nullable NSDictionary *)headers
-                            delegate:(id<OGResourceHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-/**
- *  Performs a user logout, by invalidating the access token.
- *  The refresh token and client credentials remain untouched.
- *
- *  <strong>Warning</strong>: Deprecated, use logoutUserWithDelegate:
- *
- *  @param delegate logout delegate
- */
-- (void)logoutWithDelegate:(id<OGLogoutDelegate>)delegate DEPRECATED_MSG_ATTRIBUTE("Use logoutUserWithDelegate:");
-
-
-/**
- *  Enrolls the currently connected device for mobile push authentication.
- *
- *  The device push token must be stored in the session before invoking this method.
- *  @see storeDevicePushTokenInSession:
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param scopes scopes used for mobile authentication
- *  @param delegate delegate handling mobile enrollment callbacks
- */
-- (void)enrollForMobileAuthentication:(nullable NSArray *)scopes delegate:(id<OGEnrollmentHandlerDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-
-/**
- *  Enrolls the currently connected device for fingerprint authentication. OGFingerprintDelegate askCurrentPinForFingerprintAuthentication method must be implemented. Pin provided by user must be passed by confirmCurrentPinForFingerprintAuthorization method to complete the flow. Fingerprint authentication must be available for current user and device
- *  @see -(bool)isFingerprintAuthenticationAvailable
- *
- *  <strong>Warning</strong>: Deprecated, use enrollForFingerprintAuthenticationWithDelegate:
- *
- *  @param scopes scopes used for fingerprint authentication
- *  @param delegate delegate handling fingerprint enrollment callbacks
- */
-- (void)enrollForFingerprintAuthentication:(nullable NSArray<NSString *> *)scopes delegate:(id<OGFingerprintDelegate>)delegate DEPRECATED_MSG_ATTRIBUTE("Use enrollForFingerprintAuthenticationWithDelegate:");
-
-/**
- *  Unenrolls the currently connected device for fingerprint authentication.
- *  This method is deprecated, please use disableFingerprintAuthentication.
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param delegate delegate handling fingerprint unenrollment callbacks
- */
-- (void)unenrollForFingerprintAuthenticationWithDelegate:(id<OGFingerprintDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-/**
- *  Disconnects from the service, this will clear the refresh token and access token.
- *  Client credentials remain untouched.
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param delegate disconnection delegate
- */
-- (void)disconnectWithDelegate:(id<OGDisconnectDelegate>)delegate DEPRECATED_ATTRIBUTE;
-
-/**
- *  Checks if there is a refresh token available for a user.
- *
- *  <strong>Warning</strong>: Deprecated, don't use this method in case you use the new API's (registerUser & authenticateUser).
- *
- *  @return true, if a refresh token is available
- */
-- (BOOL)isClientRegistered DEPRECATED_ATTRIBUTE;
-
-@end
-
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop

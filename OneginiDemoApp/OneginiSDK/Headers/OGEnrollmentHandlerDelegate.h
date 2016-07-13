@@ -40,13 +40,6 @@
 - (void)enrollmentInvalidRequest;
 
 /**
- *  The provided client credentials are invalid.
- *
- *  <strong>Warning</strong>: Deprecated, use enrollmentErrorDeviceDeregistered
- */
-- (void)enrollmentInvalidClientCredentials DEPRECATED_MSG_ATTRIBUTE("Use enrollmentErrorDeviceDeregistered");
-
-/**
  *  The device is already enrolled.
  */
 - (void)enrollmentDeviceAlreadyEnrolled;
@@ -66,14 +59,5 @@
  *  This can happen when the device registration is removed server-side.
  */
 - (void)enrollmentErrorDeviceDeregistered;
-
-@optional
-
-/**
- *  The provided client credentials are invalid.
- *
- *  <strong>Warning</strong>: Deprecated, use enrollmentErrorDeviceDeregistered
- */
-- (void)enrollmentInvalidClientCredentials DEPRECATED_MSG_ATTRIBUTE("Use enrollmentErrorDeviceDeregistered");
 
 @end

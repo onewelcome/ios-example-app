@@ -14,8 +14,6 @@ typedef enum : NSInteger {
 
 NS_ASSUME_NONNULL_BEGIN
 
-@optional
-
 /**
  *  Method called when resource call was completed
  *
@@ -28,47 +26,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Method called when resource call was not performed due to en error
  *
- *  @param error    defines type of error which occured
+ *  @param error    defines type of error which occurred
  *  @param requestId unique request identifier which matches the `requestId` returned by fetch resource call.
  */
 - (void)resourceError:(NSError *)error requestId:(NSString *)requestId;
 
-#pragma mark - DEPRECATED
-
-/**
- *  Method called when the resource call was successfully made.
- *  Optional but either this one or the one with the headers should be implemented.
- *
- *  <strong>Warning</strong>: Deprecated
- */
-- (void)resourceSuccess:(id)response DEPRECATED_ATTRIBUTE;
-
-/**
- *  Method called when the resource call was successfully made.
- *  Optional but either this one or the one with the headers should be implemented.
- *
- *  <strong>Warning</strong>: Deprecated
- *
- *  @param response the response of the resource call
- *  @param headers the headers returned on the resource call
- */
-- (void)resourceSuccess:(id)response
-                headers:(NSDictionary *)headers DEPRECATED_ATTRIBUTE;
-
-/**
- *  Method called when the resource call failed because of an unknown error.
- *
- *  <strong>Warning</strong>: Deprecated
- */
-- (void)resourceError DEPRECATED_ATTRIBUTE;
-
-/**
- *  Method called when the requested grant type is not allowed for this client.
- *
- *  <strong>Warning</strong>: Deprecated
- */
-- (void)unauthorizedClient DEPRECATED_ATTRIBUTE;
-- (void)resourceErrorNotAuthenticated;
 
 NS_ASSUME_NONNULL_END
 

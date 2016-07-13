@@ -1,21 +1,22 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "OGResourceHandlerDelegate.h"
-#import "OGEnrollmentHandlerDelegate.h"
-#import "OGPinValidationDelegate.h"
-#import "OGChangePinDelegate.h"
-#import "OGPublicCommons.h"
-#import "OGDisconnectDelegate.h"
-#import "OGDeregistrationDelegate.h"
-#import "OGFingerprintDelegate.h"
-#import "OGLogoutDelegate.h"
-#import "OGCustomizationDelegate.h"
-#import "OGAuthenticationDelegate.h"
-#import "OGClientAuthenticationDelegate.h"
-#import "OGUserProfile.h"
-#import "OGMobileAuthenticationDelegate.h"
-#import "OGConfigModel.h"
+
+#import "ONGResourceHandlerDelegate.h"
+#import "ONGEnrollmentHandlerDelegate.h"
+#import "ONGPinValidationDelegate.h"
+#import "ONGChangePinDelegate.h"
+#import "ONGPublicCommons.h"
+#import "ONGDisconnectDelegate.h"
+#import "ONGDeregistrationDelegate.h"
+#import "ONGFingerprintDelegate.h"
+#import "ONGLogoutDelegate.h"
+#import "ONGCustomizationDelegate.h"
+#import "ONGAuthenticationDelegate.h"
+#import "ONGClientAuthenticationDelegate.h"
+#import "ONGUserProfile.h"
+#import "ONGMobileAuthenticationDelegate.h"
+#import "ONGConfigModel.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMethodInspection"
@@ -29,28 +30,28 @@ NS_ASSUME_NONNULL_BEGIN
  *  The public API of the SDK consists of this client and an authorization delegate.
  *  The client must be instantiated early in the App lifecycle and thereafter only referred to by it's shared instance.
  */
-@interface OGOneginiClient : NSObject
+@interface ONGOneginiClient : NSObject
 
 /**
  *  Registers delegate handling customizable properties within the SDK.
  */
-@property (weak, nonatomic, nullable) id<OGCustomizationDelegate> customizationDelegate;
+@property (weak, nonatomic, nullable) id<ONGCustomizationDelegate> customizationDelegate;
 
 /**
-* Access to the initialized and configured instance of the `OGOneginiClient`. Before calling this method You have to initialize
+* Access to the initialized and configured instance of the `ONGOneginiClient`. Before calling this method You have to initialize
 * SDK by calling `-[ONGClientBuilder build]`.
 *
-* @return instance of the configured `OGOneginiClient`.
+* @return instance of the configured `ONGOneginiClient`.
 *
 * @see `ONGClientBuilder`, `-[ONGClient userClient]`
 *
 * @warning If the SDK is not initialized via `-[ONGClientBuilder build]` this method throws an exception.
 */
-+ (OGOneginiClient *)sharedInstance;
++ (ONGOneginiClient *)sharedInstance;
 
 /**
- * Developers should not try to instantiate SDK on their own. The only valid way to get `OGOneginiClient` instance is by
- * calling `-[OGOneginiClient sharedInstance]`.
+ * Developers should not try to instantiate SDK on their own. The only valid way to get `ONGOneginiClient` instance is by
+ * calling `-[ONGOneginiClient sharedInstance]`.
  *
  * @see -sharedInstance
  */
@@ -63,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param profile profile to authenticate
  *  @param delegate authentication delegate
  */
-- (void)authenticateUser:(OGUserProfile *)profile delegate:(id<OGAuthenticationDelegate>)delegate;
+- (void)authenticateUser:(ONGUserProfile *)profile delegate:(id<ONGAuthenticationDelegate>)delegate;
 
 /**
  *  Main entry point into the enrollment process.
@@ -71,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param scopes array of scopes
  *  @param delegate authentication delegate
  */
-- (void)registerUser:(nullable NSArray<NSString *> *)scopes delegate:(id<OGAuthenticationDelegate>)delegate;
+- (void)registerUser:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGAuthenticationDelegate>)delegate;
 
 /**
  *  Forces profiles's reauthorization.
@@ -79,7 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param profile profile to authenticate
  *  @param delegate authentication delegate
  */
-- (void)reauthenticateUser:(OGUserProfile *)profile delegate:(id<OGAuthenticationDelegate>)delegate;
+- (void)reauthenticateUser:(ONGUserProfile *)profile delegate:(id<ONGAuthenticationDelegate>)delegate;
 
 /**
  *  Performs client's authentication. Uses client's credentials to request an accessToken object, which can be used for performing anonymous resource calls.
@@ -87,16 +88,16 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param scopes array of scopes
  *  @param delegate authentication delegate
  */
-- (void)authenticateClient:(nullable NSArray<NSString *> *)scopes delegate:(id<OGClientAuthenticationDelegate>)delegate;
+- (void)authenticateClient:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGClientAuthenticationDelegate>)delegate;
 
 /**
  *  Initiates the PIN change sequence.
  *  If no refresh token is registered then the sequence is cancelled.
- *  This will invoke a call to the OGAuthorizationDelegate - (void)askForPinChange:(NSUInteger)pinSize;
+ *  This will invoke a call to the ONGAuthorizationDelegate - (void)askForPinChange:(NSUInteger)pinSize;
  *
  *  @param delegate Object handling change pin callbacks
  */
-- (void)changePinRequest:(id<OGChangePinDelegate>)delegate;
+- (void)changePinRequest:(id<ONGChangePinDelegate>)delegate;
 
 /**
  *  Determines if the user is authorized.
@@ -110,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return authenticated user
  */
-- (nullable OGUserProfile *)authenticatedUserProfile;
+- (nullable ONGUserProfile *)authenticatedUserProfile;
 
 /**
  *  Checks if the pin satisfies all pin policy constraints.
@@ -135,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param delegate logout delegate
  */
-- (void)logoutUserWithDelegate:(id<OGLogoutDelegate>)delegate;
+- (void)logoutUserWithDelegate:(id<ONGLogoutDelegate>)delegate;
 
 /**
  *  Clears the client credentials.
@@ -162,7 +163,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)storeDevicePushTokenInSession:(nullable NSData *)deviceToken;
 
 /**
- *  Enrolls the currently authenticated user for fingerprint authentication. The OGFingerprintDelegate
+ *  Enrolls the currently authenticated user for fingerprint authentication. The ONGFingerprintDelegate
  *  askCurrentPinForFingerprintAuthentication method must be implemented. The PIN provided by the user must be passed to
  *  the confirmCurrentPinForFingerprintAuthorization method to complete the flow.
  *
@@ -171,7 +172,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param delegate delegate handling fingerprint enrollment callbacks
  */
-- (void)enrollForFingerprintAuthenticationWithDelegate:(id<OGFingerprintDelegate>)delegate;
+- (void)enrollForFingerprintAuthenticationWithDelegate:(id<ONGFingerprintDelegate>)delegate;
 
 /**
  *  Disables fingerprint authentication for the currently authenticated user.
@@ -196,7 +197,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param path part of URL appended to base URL provided in Onegini client configuration.
  *  @param requestMethod HTTP request method, can be one of @"GET", @"POST", @"PUT" and @"DELETE".
  *  @param params additional request parameters. Parameters are appended to URL or provided within a body depending on the request method.
- *  @param paramsEncoding encoding used for params, possible values are OGJSONParameterEncoding, OGFormURLParameterEncoding or OGPropertyListParameterEncoding
+ *  @param paramsEncoding encoding used for params, possible values are ONGJSONParameterEncoding, ONGFormURLParameterEncoding or ONGPropertyListParameterEncoding
  *  @param headers additional headers added to HTTP request. Onegini SDK takes responsibility of managing `Authorization`and `User-Agent` headers.
  *  @param delegate object responsible for handling resource callbacks. Onegini client invokes the delegate callback with the response payload.
  *  @return requestId unique request ID.
@@ -204,9 +205,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)fetchResource:(NSString *)path
               requestMethod:(NSString *)requestMethod
                      params:(nullable NSDictionary<NSString *, NSString *> *)params
-             paramsEncoding:(OGHTTPClientParameterEncoding)paramsEncoding
+             paramsEncoding:(ONGHTTPClientParameterEncoding)paramsEncoding
                     headers:(nullable NSDictionary<NSString *, NSString *> *)headers
-                   delegate:(id<OGResourceHandlerDelegate>)delegate;
+                   delegate:(id<ONGResourceHandlerDelegate>)delegate;
 
 /**
  *  Enrolls the currently connected device for mobile push authentication.
@@ -216,7 +217,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param delegate delegate handling mobile enrollment callbacks
  */
-- (void)enrollUserForMobileAuthenticationWithDelegate:(id<OGEnrollmentHandlerDelegate>)delegate;
+- (void)enrollUserForMobileAuthenticationWithDelegate:(id<ONGEnrollmentHandlerDelegate>)delegate;
 
 /**
  *  Fetches a resource anonymously using a client access token.
@@ -224,7 +225,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param path part of URL appended to base URL provided in Onegini client configuration.
  *  @param requestMethod HTTP request method, can be one of @"GET", @"POST", @"PUT" and @"DELETE".
  *  @param params additional request parameters. Parameters are appended to URL or provided within a body depending on the request method.
- *  @param paramsEncoding encoding used for params, possible values are OGJSONParameterEncoding, OGFormURLParameterEncoding or OGPropertyListParameterEncoding
+ *  @param paramsEncoding encoding used for params, possible values are ONGJSONParameterEncoding, ONGFormURLParameterEncoding or ONGPropertyListParameterEncoding
  *  @param headers additional headers added to HTTP request. Onegini SDK takes responsibility of managing `Authorization`and `User-Agent` headers.
  *  @param delegate object responsible for handling resource callbacks. Onegini client invokes the delegate callback with the response payload.
  *  @return requestId unique request ID.
@@ -232,9 +233,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)fetchAnonymousResource:(NSString *)path
                        requestMethod:(NSString *)requestMethod
                               params:(nullable NSDictionary<NSString *, NSString *> *)params
-                      paramsEncoding:(OGHTTPClientParameterEncoding)paramsEncoding
+                      paramsEncoding:(ONGHTTPClientParameterEncoding)paramsEncoding
                              headers:(nullable NSDictionary<NSString *, NSString *> *)headers
-                            delegate:(id<OGResourceHandlerDelegate>)delegate;
+                            delegate:(id<ONGResourceHandlerDelegate>)delegate;
 
 /**
  *  When a push notification is received by the application, the notificaton must be forwarded to the client.
@@ -249,14 +250,14 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param delegate delegate responsinble for handling push messages
  *  @return true, if the notification is processed by the client
  */
-- (BOOL)handlePushNotification:(NSDictionary *)userInfo delegate:(id<OGMobileAuthenticationDelegate>)delegate;
+- (BOOL)handlePushNotification:(NSDictionary *)userInfo delegate:(id<ONGMobileAuthenticationDelegate>)delegate;
 
 /**
  *  List of enrolled users stored locally
  *
  *  @return Enrolled users
  */
-- (NSSet<OGUserProfile *> *)userProfiles;
+- (NSSet<ONGUserProfile *> *)userProfiles;
 
 /**
  *  Delete user locally and revoke it from token server
@@ -264,7 +265,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param userProfile user to disconnect
  *  @param delegate delegate
  */
-- (void)deregisterUser:(OGUserProfile *)userProfile delegate:(id<OGDeregistrationDelegate>)delegate;
+- (void)deregisterUser:(ONGUserProfile *)userProfile delegate:(id<ONGDeregistrationDelegate>)delegate;
 
 /**
  * Returns a string with access token for the currently authenticated user, or nil if no user is currently

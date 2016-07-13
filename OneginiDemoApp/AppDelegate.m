@@ -43,19 +43,19 @@
     return YES;
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    [[OGOneginiClient sharedInstance] storeDevicePushTokenInSession:deviceToken];
+    [[ONGOneginiClient sharedInstance] storeDevicePushTokenInSession:deviceToken];
 }
 
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    [[OGOneginiClient sharedInstance] storeDevicePushTokenInSession:nil];
+    [[ONGOneginiClient sharedInstance] storeDevicePushTokenInSession:nil];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [[OGOneginiClient sharedInstance] handlePushNotification:userInfo delegate:[MobileAuthenticationController sharedInstance]];
+    [[ONGOneginiClient sharedInstance] handlePushNotification:userInfo delegate:[MobileAuthenticationController sharedInstance]];
 }
 
 @end

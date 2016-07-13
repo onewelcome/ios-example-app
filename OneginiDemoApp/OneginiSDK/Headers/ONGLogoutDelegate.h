@@ -2,12 +2,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class OGUserProfile;
+@class ONGUserProfile;
 
 /**
  *  Logout delegate
  */
-@protocol OGLogoutDelegate<NSObject>
+@protocol ONGLogoutDelegate<NSObject>
 
 /**
  *  Logout successful callback

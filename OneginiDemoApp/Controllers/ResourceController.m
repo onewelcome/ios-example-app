@@ -26,7 +26,7 @@
 - (void)getProfile:(void (^)(Profile *profile, NSError *error))completion
 {
     self.callback = completion;
-    [[OGOneginiClient sharedInstance] fetchResource:@"/api/persons" requestMethod:@"GET" params:nil paramsEncoding:OGJSONParameterEncoding headers:nil delegate:self];
+    [[ONGOneginiClient sharedInstance] fetchResource:@"/api/persons" requestMethod:@"GET" params:nil paramsEncoding:ONGJSONParameterEncoding headers:nil delegate:self];
 }
 
 - (void)handleResponse:(NSData *)response

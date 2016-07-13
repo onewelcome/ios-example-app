@@ -26,32 +26,32 @@
     return singleton;
 }
 
-- (void)authenticateUser:(OGUserProfile *)user
+- (void)authenticateUser:(ONGUserProfile *)user
 {
-    [[OGOneginiClient sharedInstance] authenticateUser:user delegate:self];;
+	[[ONGOneginiClient sharedInstance] authenticateUser:user delegate:self];
 }
 
 - (void)registerNewUser
 {
-    [[OGOneginiClient sharedInstance] registerUser:@[@"read"] delegate:self];
+	[[ONGOneginiClient sharedInstance] registerUser:@[@"read"] delegate:self];
 }
 
 - (BOOL)isAuthenticated
 {
-    return [[OGOneginiClient sharedInstance] isAuthorized];
+	return [[ONGOneginiClient sharedInstance] isAuthorized];
 }
 
-- (OGUserProfile *)authenticatedUserProfile
+- (ONGUserProfile *)authenticatedUserProfile 
 {
-    return [[OGOneginiClient sharedInstance] authenticatedUserProfile];
+	return [[ONGOneginiClient sharedInstance] authenticatedUserProfile];
 }
 
 #pragma mark - OGAuthenticationDelegete
 
-- (void)authenticationSuccessForUser:(OGUserProfile *)userProfile
+- (void)authenticationSuccessForUser:(ONGUserProfile *)userProfile
 {
-    ProfileViewController *viewController = [ProfileViewController new];
-    [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
+	ProfileViewController *viewController = [ProfileViewController new];
+	[[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }
 
 - (void)requestAuthenticationCode:(NSURL *)url
@@ -140,7 +140,7 @@
     [self handleAuthError:@"Unsupported iOS version, please upgrade."];
 }
 
-- (void)askForNewPin:(NSUInteger)pinSize user:(OGUserProfile *)userProfile pinConfirmation:(id<OGNewPinConfirmation>)delegate
+- (void)askForNewPin:(NSUInteger)pinSize user:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGNewPinConfirmation>)delegate
 {
     PinViewController *viewController = [PinViewController new];
     viewController.pinLength = pinSize;
@@ -152,7 +152,7 @@
     [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }
 
-- (void)askForCurrentPinForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)delegate
+- (void)askForCurrentPinForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinConfirmation>)delegate
 {
     PinViewController *viewController = [PinViewController new];
     viewController.pinLength = 5;

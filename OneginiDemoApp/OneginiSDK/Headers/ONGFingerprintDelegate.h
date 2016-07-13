@@ -1,19 +1,19 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "OGPinConfirmation.h"
-#import "OGUserProfile.h"
+#import "ONGPinConfirmation.h"
+#import "ONGUserProfile.h"
 
 /**
  *  Delegate used for fingerprint authentication.
  */
-@protocol OGFingerprintDelegate<NSObject>
+@protocol ONGFingerprintDelegate<NSObject>
 
 /**
  *  Asks user for current pin for fingerprint authentication enrollment for a specific profile.
- *  Call the OGPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
+ *  Call the ONGPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
  */
-- (void)askCurrentPinForFingerprintEnrollmentForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)pinConfirmation;
+- (void)askCurrentPinForFingerprintEnrollmentForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinConfirmation>)pinConfirmation;
 
 /**
  *  Fingerprint enrollment success callback.

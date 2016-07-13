@@ -2,13 +2,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import "OGOneginiClient.h"
-#import "OGConfigModel.h"
+#import "ONGOneginiClient.h"
+#import "ONGConfigModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * Main entry point for the Onegini SDK. This class owns SDK's configuration and such clients as `OGOneginiClient` and
+ * Main entry point for the Onegini SDK. This class owns SDK's configuration and such clients as `ONGOneginiClient` and
  * `ONGNetworkClient`. In order to use any feature of the OneginiSDK `-[ONGClientBuilder build]` needs to be called first.
  *
  * @see `ONGClientBuilder`
@@ -39,15 +39,15 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * The ConfigModel used to configure OneginiSDK.
  */
-@property (nonatomic, readonly) OGConfigModel *configModel;
+@property (nonatomic, readonly) ONGConfigModel *configModel;
 
 /**
- * Instance of `OGOneginiClient` used for user-related features access. Once SDK has been configured, `OGOneginiClient`
- * can be access either by calling this property or by `-[OGOneginiClient sharedInstance]`.
+ * Instance of `ONGOneginiClient` used for user-related features access. Once SDK has been configured, `ONGOneginiClient`
+ * can be access either by calling this property or by `-[ONGOneginiClient sharedInstance]`.
  *
- * @see `-[OGOneginiClient sharedInstance]`
+ * @see `-[ONGOneginiClient sharedInstance]`
  */
-@property (nonatomic, readonly) OGOneginiClient *userClient;
+@property (nonatomic, readonly) ONGOneginiClient *userClient;
 
 @end
 

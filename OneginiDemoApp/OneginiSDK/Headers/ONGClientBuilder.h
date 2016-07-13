@@ -2,7 +2,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class ONGClient, OGConfigModel;
+@class ONGClient, ONGConfigModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,11 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ONGClientBuilder : NSObject
 
 /**
- * Set instance of `OGConfigModel` used for SDK configuration. This value can not be `nil`.
+ * Set instance of `ONGConfigModel` used for SDK configuration. This value can not be `nil`.
  *
- * @param configModel Instance of `OGConfigModel` used for SDK configuration.
+ * @param configModel Instance of `ONGConfigModel` used for SDK configuration.
  */
-- (instancetype)setConfigModel:(OGConfigModel *)configModel;
+- (instancetype)setConfigModel:(ONGConfigModel *)configModel;
 
 /**
  * Flag instructing SDK to store cookies between requests. `YES` by default.

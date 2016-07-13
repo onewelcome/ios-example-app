@@ -3,7 +3,7 @@
 #import <Foundation/Foundation.h>
 #import "OneginiSDK.h"
 
-@interface DeregistrationController : NSObject<OGDeregistrationDelegate>
+@interface DeregistrationController : NSObject <ONGDeregistrationDelegate>
 
 + (instancetype)sharedInstance;
 - (void)deregister;

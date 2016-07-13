@@ -3,14 +3,14 @@
 #import <Foundation/Foundation.h>
 
 typedef enum : NSInteger {
-    OGResourceErrorCode_InvalidRequestMethod,   //provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
-    OGResourceErrorCode_Generic                 //undefined error preventing from performing resource call
-} OGResourceErrorCode;
+    ONGResourceErrorCodeInvalidRequestMethod,   //provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
+    ONGResourceErrorCodeGeneric                 //undefined error preventing from performing resource call
+} ONGResourceErrorCode;
 
 /**
  *  Delegate protocol for use by resource handler classes.
  */
-@protocol OGResourceHandlerDelegate<NSObject>
+@protocol ONGResourceHandlerDelegate<NSObject>
 
 NS_ASSUME_NONNULL_BEGIN
 

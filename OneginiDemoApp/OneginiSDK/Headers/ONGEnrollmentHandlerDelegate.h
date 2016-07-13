@@ -5,7 +5,7 @@
 /**
  *  Enrollment delegate used for mobile authentication.
  */
-@protocol OGEnrollmentHandlerDelegate<NSObject>
+@protocol ONGEnrollmentHandlerDelegate<NSObject>
 
 /**
  *  Enrollment success.

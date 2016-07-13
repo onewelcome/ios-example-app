@@ -13,12 +13,12 @@
 #define kOGUseEmbeddedWebview               @"kOGUseEmbeddedWebview"
 #define kOGStoreCookies                     @"kOGStoreCookies"
 
-@class OGCommons;
+@class ONGCommons;
 
 /**
  *  This dictionary class provides a means of supplying App specific configuration properties used by the OneginiClient.
  */
-@interface OGConfigModel : NSObject {
+@interface ONGConfigModel : NSObject {
     NSDictionary *dictionary;
 }
 

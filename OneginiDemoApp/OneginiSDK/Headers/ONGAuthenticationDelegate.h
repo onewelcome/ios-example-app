@@ -1,20 +1,20 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "OGPinConfirmation.h"
-#import "OGNewPinConfirmation.h"
-#import "OGUserProfile.h"
+#import "ONGPinConfirmation.h"
+#import "ONGNewPinConfirmation.h"
+#import "ONGUserProfile.h"
 
 /**
- *  This delegate provides the interface from the OGOneginiClient to the App implementation.
+ *  This delegate provides the interface from the ONGOneginiClient to the App implementation.
  *  All invocations are performed asynchronous and on the main queue.
  */
-@protocol OGAuthenticationDelegate<NSObject>
+@protocol ONGAuthenticationDelegate<NSObject>
 
 /**
  *  The user is successfully authenticated.
  */
-- (void)authenticationSuccessForUser:(OGUserProfile *)userProfile;
+- (void)authenticationSuccessForUser:(ONGUserProfile *)userProfile;
 
 /**
  *  Requests the authentication token.
@@ -31,20 +31,20 @@
  *  Asks the user for a new PIN.
  *  The implementor should present a PIN entry dialog with a second verification entry.
  *  The PIN must be forwarded directly to the client and not be stored by any means.
- *  Call the OGNewPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
+ *  Call the ONGNewPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
  *  The new PIN must satisfy any PIN policy constraints.
  *
  *  @param pinSize the size of the PIN value
  */
-- (void)askForNewPin:(NSUInteger)pinSize user:(OGUserProfile *)userProfile pinConfirmation:(id<OGNewPinConfirmation>)delegate;
+- (void)askForNewPin:(NSUInteger)pinSize user:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGNewPinConfirmation>)delegate;
 
 /**
  *  Asks the user to provide the PIN for confirmation of the authentication request.
  *
  *  The implementor should present a PIN entry dialog and must forward the PIN directly to the client and not store the PIN by any means.
- *  Call the OGPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
+ *  Call the ONGPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
  */
-- (void)askForCurrentPinForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)delegate;
+- (void)askForCurrentPinForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinConfirmation>)delegate;
 
 /**
  *  A general error occurred during the authentication request.

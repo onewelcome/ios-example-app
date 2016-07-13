@@ -21,7 +21,7 @@
 
 // MARK: - OGMobileAuthenticationDelegate
 
-- (void)askForPushAuthenticationConfirmation:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm
+- (void)askForPushAuthenticationConfirmation:(NSString *)message user:(ONGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = message;
@@ -33,7 +33,7 @@
     [[AppDelegate sharedNavigationController] pushViewController:pushVC animated:YES];
 }
 
-- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType pinSize:(NSUInteger)pinSize maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt confirm:(void (^)(NSString *, BOOL, BOOL))confirm
+- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message user:(ONGUserProfile *)userProfile notificationType:(NSString *)notificationType pinSize:(NSUInteger)pinSize maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt confirm:(void (^)(NSString *, BOOL, BOOL))confirm
 {
     PinViewController *viewController = [PinViewController new];
     viewController.pinLength = pinSize;
@@ -46,7 +46,7 @@
     [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }
 
-- (void)askForPushAuthenticationWithFingerprint:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm
+- (void)askForPushAuthenticationWithFingerprint:(NSString *)message user:(ONGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = message;
@@ -63,7 +63,7 @@
 
 - (void)enrollForMobileAuthentication
 {
-    [[OGOneginiClient sharedInstance] enrollUserForMobileAuthenticationWithDelegate:self];
+    [[ONGOneginiClient sharedInstance] enrollUserForMobileAuthenticationWithDelegate:self];
 }
 
 - (void)enrollmentSuccess

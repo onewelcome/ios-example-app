@@ -14,7 +14,7 @@ typedef enum : NSUInteger {
 
 @property (nonatomic) NSString *customTitle;
 @property (nonatomic) PINEntryMode mode;
-@property (nonatomic) OGUserProfile *profile;
+@property (nonatomic) ONGUserProfile *profile;
 @property (nonatomic, copy) void (^pinEntered)(NSString *pin);
 @property (nonatomic) NSInteger pinLength;
 

@@ -26,7 +26,7 @@
 
 - (void)changePin
 {
-    [[OGOneginiClient sharedInstance] changePinRequest:self];
+    [[ONGOneginiClient sharedInstance] changePinRequest:self];
 }
 
 - (void)invalidCurrentPin:(NSUInteger)remaining
@@ -35,7 +35,7 @@
 }
 
 
-- (void)askCurrentPinForChangeRequestForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)delegate
+- (void)askCurrentPinForChangeRequestForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinConfirmation>)delegate
 {
     self.pinViewController = [PinViewController new];
     self.pinViewController.mode = PINCheckMode;
@@ -47,7 +47,7 @@
     [[AppDelegate sharedNavigationController] pushViewController:self.pinViewController animated:YES];
 }
 
-- (void)askNewPinForChangeRequest:(NSUInteger)pinSize pinConfirmation:(id<OGNewPinConfirmation>)delegate
+- (void)askNewPinForChangeRequest:(NSUInteger)pinSize pinConfirmation:(id<ONGNewPinConfirmation>)delegate
 {
     [self.pinViewController reset];
     self.pinViewController.mode = PINRegistrationMode;

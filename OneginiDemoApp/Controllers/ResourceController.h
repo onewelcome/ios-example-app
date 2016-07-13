@@ -5,7 +5,7 @@
 
 @class Profile;
 
-@interface ResourceController : NSObject<OGResourceHandlerDelegate>
+@interface ResourceController : NSObject <ONGResourceHandlerDelegate>
 
 + (instancetype)sharedInstance;
 

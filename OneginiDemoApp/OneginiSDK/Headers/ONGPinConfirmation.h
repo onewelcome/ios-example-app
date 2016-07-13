@@ -7,7 +7,7 @@
  *
  * An object conforming to this protocol must be used when asking the user for his/her PIN.
  */
-@protocol OGPinConfirmation<NSObject>
+@protocol ONGPinConfirmation<NSObject>
 
 /**
  * Method to provide the PIN to the SDK.

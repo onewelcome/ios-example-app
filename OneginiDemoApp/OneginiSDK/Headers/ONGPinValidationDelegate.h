@@ -6,7 +6,7 @@
  A PIN policy contains all constraints a PIN must satisfy.
  This protocol informs the client of validation failures.
  */
-@protocol OGPinValidationDelegate<NSObject>
+@protocol ONGPinValidationDelegate<NSObject>
 
 @required
 

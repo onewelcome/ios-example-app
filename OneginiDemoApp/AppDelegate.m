@@ -3,6 +3,7 @@
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
 #import "MobileAuthenticationController.h"
+#import "ONGClientBuilder.h"
 
 @implementation AppDelegate
 
@@ -30,6 +31,8 @@
 
     self.window.rootViewController = [AppDelegate sharedNavigationController];
     [self.window makeKeyAndVisible];
+    
+    [[ONGClientBuilder new] build];
 
     UIUserNotificationType supportedTypes = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:supportedTypes categories:nil];

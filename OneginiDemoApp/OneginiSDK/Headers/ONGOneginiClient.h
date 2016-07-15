@@ -1,6 +1,7 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
+
 #import "ONGResourceHandlerDelegate.h"
 #import "ONGEnrollmentHandlerDelegate.h"
 #import "ONGPinValidationDelegate.h"
@@ -37,39 +38,25 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic, nullable) id<ONGCustomizationDelegate> customizationDelegate;
 
 /**
- *  For verification of the bundled DER encoded CA X509 certificates,
- *  the App must provide a list of matching PEM base64 encoded certificates for each bundled DER encoded CA X509 certificate to this client.
- *  The PEM base64 encoded certificates must be stripped from their armor (remove ---BEGIN CERTIFICATE--- & ---END CERTIFICATE---)
- *
- *  This method must be called before any service request is made, preferably after initialization.
- *  If certificate verification fails prior to making a service request, an Exception is thrown.
- *
- *  To convert a DER encoded certificate to PEM, use the following openssl command:
- *  openssl x509 -in <filename>.cer -inform der -out <filename>.pem -outform pem
- *  Do not include the PEM files themselved in App bundle!
- *
- *  @param certificates array of PEM base64 encoded certificates without armor
- */
-- (void)setX509PEMCertificates:(NSArray *)certificates;
-
-/**
- *  Accesses the shared instance.
- *  If the instance is nil it must be initialized with a valid config model.
- *
- *  @see - (id)initWithConfig:(ONGConfigModel *)config delegate:(id<OGAuthorizationDelegate>)delegate;
- *  @return shared instance
- */
+* Access to the initialized and configured instance of the `ONGOneginiClient`. Before calling this method You have to initialize
+* SDK by calling `-[ONGClientBuilder build]`.
+*
+* @return instance of the configured `ONGOneginiClient`.
+*
+* @see `ONGClientBuilder`, `-[ONGClient userClient]`
+*
+* @warning If the SDK is not initialized via `-[ONGClientBuilder build]` this method throws an exception.
+*/
 + (ONGOneginiClient *)sharedInstance;
 
 /**
- *  Initializes this 'ONGOneginiClient' with a valid config model and delegate.
- *  This is the preferred way of creating a new instance of this class.
+ * Developers should not try to instantiate SDK on their own. The only valid way to get `ONGOneginiClient` instance is by
+ * calling `-[ONGOneginiClient sharedInstance]`.
  *
- *  @param config   Configuration object used for initialization.
- *
- *  @return Initialized ONGOneginiClient instance
+ * @see -sharedInstance
  */
-- (id)initWithConfig:(ONGConfigModel *)config;
+- (instancetype)init ONG_UNAVAILABLE;
++ (instancetype)new ONG_UNAVAILABLE;
 
 /**
  *  Main entry point into the authentication process.
@@ -106,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Initiates the PIN change sequence.
  *  If no refresh token is registered then the sequence is cancelled.
- *  This will invoke a call to the OGAuthorizationDelegate - (void)askForPinChange:(NSUInteger)pinSize;
+ *  This will invoke a call to the ONGAuthorizationDelegate - (void)askForPinChange:(NSUInteger)pinSize;
  *
  *  @param delegate Object handling change pin callbacks
  */

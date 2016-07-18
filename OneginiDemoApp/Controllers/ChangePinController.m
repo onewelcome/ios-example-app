@@ -26,7 +26,7 @@
 
 - (void)changePin
 {
-    [[ONGOneginiClient sharedInstance] changePinRequest:self];
+    [[ONGUserClient sharedInstance] changePinRequest:self];
 }
 
 - (void)invalidCurrentPin:(NSUInteger)remaining

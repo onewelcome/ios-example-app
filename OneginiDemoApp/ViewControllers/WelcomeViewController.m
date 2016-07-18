@@ -2,7 +2,6 @@
 
 #import "WelcomeViewController.h"
 #import "AuthorizationController.h"
-#import "ONGOneginiClient.h"
 #import "OneginiSDK.h"
 #import "ClientAuthenticationController.h"
 
@@ -21,7 +20,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.profiles = [[ONGOneginiClient sharedInstance] userProfiles].allObjects;
+    self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
     [self.profilePicker reloadAllComponents];
 }
 

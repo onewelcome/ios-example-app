@@ -14,7 +14,7 @@
 #import "ONGFingerprintDelegate.h"
 #import "ONGCustomizationDelegate.h"
 #import "ONGConfigModel.h"
-#import "ONGOneginiClient.h"
+#import "ONGUserClient.h"
 #import "ONGNewPinConfirmation.h"
 #import "ONGPinConfirmation.h"
 #import "ONGMobileAuthenticationDelegate.h"
@@ -22,3 +22,4 @@
 #import "ONGUserProfile.h"
 #import "ONGClient.h"
 #import "ONGClientBuilder.h"
+#import "ONGNetworkClient.h"

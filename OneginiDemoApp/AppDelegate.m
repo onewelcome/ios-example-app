@@ -32,7 +32,7 @@
     self.window.rootViewController = [AppDelegate sharedNavigationController];
     [self.window makeKeyAndVisible];
     
-    [[ONGClientBuilder new] build];
+    [[[ONGClientBuilder new] setUseEmbeddedWebView:YES] build];
 
     UIUserNotificationType supportedTypes = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:supportedTypes categories:nil];
@@ -45,17 +45,17 @@
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    [[ONGOneginiClient sharedInstance] storeDevicePushTokenInSession:deviceToken];
+    [[ONGUserClient sharedInstance] storeDevicePushTokenInSession:deviceToken];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    [[ONGOneginiClient sharedInstance] storeDevicePushTokenInSession:nil];
+    [[ONGUserClient sharedInstance] storeDevicePushTokenInSession:nil];
 }
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [[ONGOneginiClient sharedInstance] handlePushNotification:userInfo delegate:[MobileAuthenticationController sharedInstance]];
+    [[ONGUserClient sharedInstance] handlePushNotification:userInfo delegate:[MobileAuthenticationController sharedInstance]];
 }
 
 @end

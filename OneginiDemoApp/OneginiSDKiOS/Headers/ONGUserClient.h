@@ -2,7 +2,6 @@
 
 #import <Foundation/Foundation.h>
 #import "ONGResourceHandlerDelegate.h"
-#import "ONGEnrollmentHandlerDelegate.h"
 #import "ONGPinValidationDelegate.h"
 #import "ONGChangePinDelegate.h"
 #import "ONGPublicCommons.h"
@@ -19,7 +18,6 @@
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMethodInspection"
-#pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedPropertyInspection"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -196,9 +194,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  The device push token must be stored in the session before invoking this method.
  *  @see storeDevicePushTokenInSession:
  *
- *  @param delegate delegate handling mobile enrollment callbacks
+ *  This error will be either within the ONGGenericErrorDomain or the ONGMobileAuthenticationEnrollmentErrorDomain
+ *
+ *  @param completion delegate handling mobile enrollment callbacks
  */
-- (void)enrollUserForMobileAuthenticationWithDelegate:(id<ONGEnrollmentHandlerDelegate>)delegate;
+- (void)enrollForMobileAuthentication:(void (^)(BOOL enrolled, NSError *_Nullable error))completion;
 
 /**
  *  When a push notification is received by the application, the notificaton must be forwarded to the client.
@@ -234,5 +234,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#pragma clang diagnostic pop
 #pragma clang diagnostic pop

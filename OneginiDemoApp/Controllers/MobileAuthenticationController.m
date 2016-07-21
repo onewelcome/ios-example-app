@@ -63,55 +63,20 @@
 
 - (void)enrollForMobileAuthentication
 {
-    [[ONGUserClient sharedInstance] enrollUserForMobileAuthenticationWithDelegate:self];
-}
-
-- (void)enrollmentSuccess
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Enrollment successfull" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:okButton];
-    [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)enrollmentDeviceAlreadyEnrolled
-{
-}
-
-- (void)enrollmentNotAvailable
-{
-}
-
-- (void)enrollmentInvalidRequest
-{
-}
-
-- (void)enrollmentInvalidClientCredentials
-{
-}
-
-- (void)enrollmentError
-{
-}
-
-- (void)enrollmentError:(NSError *)error
-{
-}
-
-- (void)enrollmentInvalidTransaction
-{
-}
-
-- (void)enrollmentUserAlreadyEnrolled
-{
-}
-
-- (void)enrollmentAuthenticationError
-{
-}
-
-- (void)enrollmentErrorDeviceDeregistered
-{
+    [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError * _Nullable error) {
+        NSString *title = nil;
+        
+        if (enrolled) {
+            title = @"Enrolled successfully";
+        } else {
+            title = @"Enrollent failure";
+        }
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:okButton];
+        [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
+    }];
 }
 
 @end

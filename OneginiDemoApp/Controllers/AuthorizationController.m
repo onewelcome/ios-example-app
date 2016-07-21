@@ -28,22 +28,22 @@
 
 - (void)authenticateUser:(ONGUserProfile *)user
 {
-	[[ONGOneginiClient sharedInstance] authenticateUser:user delegate:self];
+	[[ONGUserClient sharedInstance] authenticateUser:user delegate:self];
 }
 
 - (void)registerNewUser
 {
-	[[ONGOneginiClient sharedInstance] registerUser:@[@"read"] delegate:self];
+	[[ONGUserClient sharedInstance] registerUser:@[@"read"] delegate:self];
 }
 
 - (BOOL)isAuthenticated
 {
-	return [[ONGOneginiClient sharedInstance] isAuthorized];
+	return [[ONGUserClient sharedInstance] isAuthorized];
 }
 
 - (ONGUserProfile *)authenticatedUserProfile 
 {
-	return [[ONGOneginiClient sharedInstance] authenticatedUserProfile];
+	return [[ONGUserClient sharedInstance] authenticatedUserProfile];
 }
 
 #pragma mark - OGAuthenticationDelegete

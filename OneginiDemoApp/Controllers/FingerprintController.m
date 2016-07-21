@@ -25,17 +25,17 @@
 
 - (void)enrollForFingerprintAuthentication
 {
-    [[ONGOneginiClient sharedInstance] enrollForFingerprintAuthenticationWithDelegate:self];
+    [[ONGUserClient sharedInstance] enrollForFingerprintAuthenticationWithDelegate:self];
 }
 
 - (BOOL)isFingerprintEnrolled
 {
-    return [[ONGOneginiClient sharedInstance] isEnrolledForFingerprintAuthentication];
+    return [[ONGUserClient sharedInstance] isEnrolledForFingerprintAuthentication];
 }
 
 - (void)disableFingerprintAuthentication
 {
-    [[ONGOneginiClient sharedInstance] disableFingerprintAuthentication];
+    [[ONGUserClient sharedInstance] disableFingerprintAuthentication];
 }
 
 - (void)unwindNavigationStack

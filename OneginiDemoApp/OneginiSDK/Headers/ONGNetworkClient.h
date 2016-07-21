@@ -7,7 +7,6 @@
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMethodInspection"
-#pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedPropertyInspection"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -86,5 +85,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#pragma clang diagnostic pop
 #pragma clang diagnostic pop

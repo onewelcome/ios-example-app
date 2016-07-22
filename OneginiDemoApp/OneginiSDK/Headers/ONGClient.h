@@ -1,14 +1,20 @@
 // Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-
-#import "ONGOneginiClient.h"
+#import "ONGUserClient.h"
 #import "ONGConfigModel.h"
+
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedMethodInspection"
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedPropertyInspection"
+
+@class ONGNetworkClient;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * Main entry point for the Onegini SDK. This class owns SDK's configuration and such clients as `ONGOneginiClient` and
+ * Main entry point for the Onegini SDK. This class owns SDK's configuration and such clients as `ONGUserClient` and
  * `ONGNetworkClient`. In order to use any feature of the OneginiSDK `-[ONGClientBuilder build]` needs to be called first.
  *
  * @see `ONGClientBuilder`
@@ -42,13 +48,24 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) ONGConfigModel *configModel;
 
 /**
- * Instance of `ONGOneginiClient` used for user-related features access. Once SDK has been configured, `ONGOneginiClient`
- * can be access either by calling this property or by `-[ONGOneginiClient sharedInstance]`.
+ * Instance of `ONGUserClient` used for user-related features access. Once SDK has been configured, `ONGUserClient`
+ * can be access either by calling this property or by `-[ONGUserClient sharedInstance]`.
  *
- * @see `-[ONGOneginiClient sharedInstance]`
+ * @see `-[ONGUserClient sharedInstance]`
  */
-@property (nonatomic, readonly) ONGOneginiClient *userClient;
+@property (nonatomic, readonly) ONGUserClient *userClient;
+
+/**
+ * Instance of `ONGNetworkClient` used for network-related features. Once SDK has been configured, `ONGNetworkClient`
+ * can be access either by calling this property or by `-[ONGNetworkClient sharedInstance]`.
+ *
+ * @see `-[ONGNetworkClient sharedInstance]`
+ */
+@property (nonatomic, readonly) ONGNetworkClient *networkClient;
 
 @end
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop
+#pragma clang diagnostic pop

@@ -63,7 +63,7 @@
 
 - (void)enrollForMobileAuthentication
 {
-    [[ONGOneginiClient sharedInstance] enrollUserForMobileAuthenticationWithDelegate:self];
+    [[ONGUserClient sharedInstance] enrollUserForMobileAuthenticationWithDelegate:self];
 }
 
 - (void)enrollmentSuccess

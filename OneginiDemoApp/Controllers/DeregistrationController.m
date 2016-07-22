@@ -19,7 +19,7 @@
 
 - (void)deregister
 {
-    ONGOneginiClient *client = [ONGOneginiClient sharedInstance];
+    ONGUserClient *client = [ONGUserClient sharedInstance];
     ONGUserProfile *user = [client authenticatedUserProfile];
     if (user != nil) {
         [client deregisterUser:user delegate:self];

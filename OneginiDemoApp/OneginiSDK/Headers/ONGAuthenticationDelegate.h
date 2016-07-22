@@ -6,7 +6,7 @@
 #import "ONGUserProfile.h"
 
 /**
- *  This delegate provides the interface from the ONGOneginiClient to the App implementation.
+ *  This delegate provides the interface from the ONGUserClient to the App implementation.
  *  All invocations are performed asynchronous and on the main queue.
  */
 @protocol ONGAuthenticationDelegate<NSObject>

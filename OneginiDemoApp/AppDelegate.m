@@ -45,17 +45,17 @@
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    [[ONGOneginiClient sharedInstance] storeDevicePushTokenInSession:deviceToken];
+    [[ONGUserClient sharedInstance] storeDevicePushTokenInSession:deviceToken];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    [[ONGOneginiClient sharedInstance] storeDevicePushTokenInSession:nil];
+    [[ONGUserClient sharedInstance] storeDevicePushTokenInSession:nil];
 }
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [[ONGOneginiClient sharedInstance] handlePushNotification:userInfo delegate:[MobileAuthenticationController sharedInstance]];
+    [[ONGUserClient sharedInstance] handlePushNotification:userInfo delegate:[MobileAuthenticationController sharedInstance]];
 }
 
 @end

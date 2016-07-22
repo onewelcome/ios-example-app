@@ -32,7 +32,7 @@
     self.window.rootViewController = [AppDelegate sharedNavigationController];
     [self.window makeKeyAndVisible];
     
-    [[[ONGClientBuilder new] setUseEmbeddedWebView:YES] build];
+    [[[[ONGClientBuilder new] setUseEmbeddedWebView:YES] setStoreCookies:YES] build];
 
     UIUserNotificationType supportedTypes = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:supportedTypes categories:nil];

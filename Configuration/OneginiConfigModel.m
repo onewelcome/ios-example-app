@@ -10,17 +10,13 @@
 + (NSDictionary *)configuration
 {
     return @{
-        @"kOGAppIdentifier" : @"ExampleApp",
-        @"kOGAppScheme" : @"oneginiexample",
-        @"kOGAppPlatform" : @"ios",
-        @"kOGAppVersion" : @"1.0.0",
-        @"kOGAppBaseURL" : @"https://tokenserver-demo-test.onegini.com",
-        @"kOGMaxPinFailures" : @"3",
-        @"kOGResourceBaseURL" : @"https://resourcegateway-demo-test.onegini.com",
-        @"kOGRedirectURL" : @"oneginiexample://loginsuccess",
-        @"kOGStoreCookies" : @(YES),
-        @"kOGUseEmbeddedWebview" : @(YES),
-        @"kOGDeviceName" : @"",
+        @"ONGAppIdentifier" : @"ExampleApp",
+        @"ONGAppScheme" : @"oneginiexample",
+        @"ONGAppPlatform" : @"ios",
+        @"ONGAppVersion" : @"1.0.0",
+        @"ONGAppBaseURL" : @"https://onegini-msp-snapshot.test.onegini.io",
+        @"ONGResourceBaseURL" : @"https://resourcegateway-demo-test.onegini.com",
+        @"ONGRedirectURL" : @"oneginiexample://loginsuccess",
     };
 }
 

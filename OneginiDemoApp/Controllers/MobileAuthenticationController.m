@@ -74,43 +74,7 @@
     [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)enrollmentDeviceAlreadyEnrolled
-{
-}
-
-- (void)enrollmentNotAvailable
-{
-}
-
-- (void)enrollmentInvalidRequest
-{
-}
-
-- (void)enrollmentInvalidClientCredentials
-{
-}
-
-- (void)enrollmentError
-{
-}
-
 - (void)enrollmentError:(NSError *)error
-{
-}
-
-- (void)enrollmentInvalidTransaction
-{
-}
-
-- (void)enrollmentUserAlreadyEnrolled
-{
-}
-
-- (void)enrollmentAuthenticationError
-{
-}
-
-- (void)enrollmentErrorDeviceDeregistered
 {
 }
 

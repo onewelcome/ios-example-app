@@ -19,6 +19,8 @@
 /**
  *  Credentials has been removed from device but error was encountered during communication with the token server.
  *
+ *  This error will be either within the ONGGenericErrorDomain or the ONGDeregistrationErrorDomain
+ *
  *  @param error error encountered during communication with the token server
  */
 - (void)deregistrationFailureWithError:(NSError *)error;

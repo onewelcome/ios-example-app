@@ -13,51 +13,12 @@
 - (void)enrollmentSuccess;
 
 /**
- *  Generic enrollment error handler.
- */
-- (void)enrollmentError;
-
-/**
- *  Failed to authenticate the user for enrollment.
- */
-- (void)enrollmentAuthenticationError;
-
-/**
  *  Enrollment failed with error
+ *
+ *  This error will be either within the ONGGenericErrorDomain or the ONGMobileAuthenticationEnrollmentErrorDomain
  *
  *  @param error error
  */
 - (void)enrollmentError:(NSError *)error;
-
-/**
- *  Enrollment for mobile authentication is currently disabled.
- */
-- (void)enrollmentNotAvailable;
-
-/**
- *  One or more request parameters missing.
- */
-- (void)enrollmentInvalidRequest;
-
-/**
- *  The device is already enrolled.
- */
-- (void)enrollmentDeviceAlreadyEnrolled;
-
-/**
- *  The user already has a device enrolled for mobile authentication.
- */
-- (void)enrollmentUserAlreadyEnrolled;
-
-/**
- *  The transaction id used during enrollment is invalid, probably because the transaction validity period is expired.
- */
-- (void)enrollmentInvalidTransaction;
-
-/**
- *  Mobile authentication enrollment failed. All device data including all profiles were removed. The user needs to register again.
- *  This can happen when the device registration is removed server-side.
- */
-- (void)enrollmentErrorDeviceDeregistered;
 
 @end

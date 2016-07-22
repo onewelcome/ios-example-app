@@ -1,13 +1,14 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
+#import "ONGPublicDefines.h"
 
-extern NSString *const ONGAppIdentifier;
-extern NSString *const ONGAppPlatform;
-extern NSString *const ONGAppVersion;
-extern NSString *const ONGAppBaseURL;
-extern NSString *const ONGResourceBaseURL;
-extern NSString *const ONGRedirectURL;
+ONG_EXTERN NSString *const ONGAppIdentifier;
+ONG_EXTERN NSString *const ONGAppPlatform;
+ONG_EXTERN NSString *const ONGAppVersion;
+ONG_EXTERN NSString *const ONGAppBaseURL;
+ONG_EXTERN NSString *const ONGResourceBaseURL;
+ONG_EXTERN NSString *const ONGRedirectURL;
 
 @class ONGCommons;
 
@@ -16,7 +17,7 @@ extern NSString *const ONGRedirectURL;
  */
 @interface ONGConfigModel : NSObject
 
-@property (readonly, nonatomic) NSDictionary *dictionary;
+@property (readonly, nonatomic, copy) NSDictionary<NSString *, NSString *> *dictionary;
 
 /**
  *  Creates a new instance and populate it with the contents of a .plist configuration file.

@@ -2,25 +2,19 @@
 
 #import <Foundation/Foundation.h>
 
-#define kOGAppIdentifier                    @"kOGAppIdentifier"
-#define kOGAppPlatform                      @"kOGAppPlatform"
-#define kOGAppScheme                        @"kOGAppScheme"
-#define kOGAppVersion                       @"kOGAppVersion"
-#define kOGAppBaseURL                       @"kOGAppBaseURL"
-#define kOGMaxPinFailures                   @"kOGMaxPinFailures"
-#define kOGResourceBaseURL                  @"kOGResourceBaseURL"
-#define kOGRedirectURL                      @"kOGRedirectURL"
-#define kOGUseEmbeddedWebview               @"kOGUseEmbeddedWebview"
-#define kOGStoreCookies                     @"kOGStoreCookies"
+extern NSString *const ONGAppIdentifier;
+extern NSString *const ONGAppPlatform;
+extern NSString *const ONGAppVersion;
+extern NSString *const ONGAppBaseURL;
+extern NSString *const ONGResourceBaseURL;
+extern NSString *const ONGRedirectURL;
 
 @class ONGCommons;
 
 /**
  *  This dictionary class provides a means of supplying App specific configuration properties used by the OneginiClient.
  */
-@interface ONGConfigModel : NSObject {
-    NSDictionary *dictionary;
-}
+@interface ONGConfigModel : NSObject
 
 @property (readonly, nonatomic) NSDictionary *dictionary;
 
@@ -40,78 +34,33 @@
 
 /**
  *  Application identifier used in dynamic client registration.
- *
- *  @return the current app identifier
  */
-- (NSString *)appIdentifier;
+@property (nonatomic, readonly) NSString *appIdentifier;
 
 /**
  *  Application platform used in dynamic client registration.
- *
- *  @return the current app platform
  */
-- (NSString *)appPlatform;
-
-/**
- *  Application scheme used in the callback from the authentication process to the client.
- *
- *  @return the application scheme used in the callback
- */
-- (NSString *)appScheme;
-
-/**
- *  Application secret used in dynamic client registration.
- *
- *  @return the current app secret
- */
-- (NSString *)appSecret;
+@property (nonatomic, readonly) NSString *appPlatform;
 
 /**
  *  Application version used in dynamic client registration.
- *
- *  @return the current app version
  */
-- (NSString *)appVersion;
+@property (nonatomic, readonly) NSString *appVersion;
 
 /**
- *  Base url of the Oauth Server installation.
- *
- *  @return the current base URL
+ *  Base url of the OAuth Server installation.
  */
-- (NSString *)baseURL;
-
-/**
- *  The number of authentication attempts allowed before removing the stored refresh token.
- *
- *  @return the maximum number of pin failures allowed
- */
-- (NSNumber *)maxPinFailures;
+@property (nonatomic, readonly) NSString *baseURL;
 
 /**
  *  Base url of the resource server.
- *
- *  @return the base URL for the resource server
  */
-- (NSString *)resourceBaseURL;
+@property (nonatomic, readonly) NSString *resourceBaseURL;
 
 /**
- *  @return redirect URL
+ *  Redirect url used to complete registration process.
  */
-- (NSString *)redirectURL;
-
-/**
- *  If the App wants to use an embedded UIWebView instead of the external Safari browser then this parameter must be set to true.
- *
- *  @return true if client uses an embedded UIWebView
- */
-- (BOOL)useEmbeddedWebView;
-
-/**
- *  If the App wants to store cookies between requests then this parameter must be set to true.
- *
- *  @return true if the app requires storing cookies between requests
- */
-- (BOOL)storeCookies;
+@property (nonatomic, readonly) NSString *redirectURL;
 
 /**
  *  Returns the value associated with a given key.

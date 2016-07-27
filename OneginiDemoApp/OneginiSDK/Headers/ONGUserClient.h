@@ -9,7 +9,6 @@
 #import "ONGDisconnectDelegate.h"
 #import "ONGDeregistrationDelegate.h"
 #import "ONGFingerprintDelegate.h"
-#import "ONGLogoutDelegate.h"
 #import "ONGCustomizationDelegate.h"
 #import "ONGAuthenticationDelegate.h"
 #import "ONGClientAuthenticationDelegate.h"
@@ -132,9 +131,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  Performs a user logout, by invalidating the access token.
  *  The refresh token and client credentials remain untouched.
  *
- *  @param delegate logout delegate
+ *  This error will be either within the ONGGenericErrorDomain or the ONGLogoutErrorDomain
+ *
+ *  @param completion completion block that is going to be invoked upon logout completion
  */
-- (void)logoutUserWithDelegate:(id<ONGLogoutDelegate>)delegate;
+- (void)logoutUser:(nullable void (^)(ONGUserProfile *userProfile, NSError *_Nullable error))completion;
 
 /**
  *  Clears the client credentials.

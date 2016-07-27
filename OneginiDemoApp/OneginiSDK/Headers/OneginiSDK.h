@@ -8,7 +8,6 @@
 #import "ONGEnrollmentHandlerDelegate.h"
 #import "ONGChangePinDelegate.h"
 #import "ONGPinValidationDelegate.h"
-#import "ONGLogoutDelegate.h"
 #import "ONGDisconnectDelegate.h"
 #import "ONGDeregistrationDelegate.h"
 #import "ONGFingerprintDelegate.h"

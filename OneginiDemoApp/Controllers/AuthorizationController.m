@@ -66,24 +66,9 @@
     [[AppDelegate sharedNavigationController] presentViewController:webBrowserViewController animated:YES completion:nil];
 }
 
-- (void)authenticationError
-{
-    [self handleAuthError:nil];
-}
-
 - (void)authenticationError:(NSError *)error
 {
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorInvalidScope
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorNotAuthorized
-{
-    [self handleAuthError:nil];
+    [self handleAuthError:error];
 }
 
 - (void)authenticationErrorInvalidGrant:(NSUInteger)remaining
@@ -93,51 +78,6 @@
         [pinViewController reset];
         [pinViewController showError:[NSString stringWithFormat:@"Wrong Pin. Remaining attempts: %ld", remaining]];
     }
-}
-
-- (void)authenticationErrorClientRegistrationFailed:(NSError *)error
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorInvalidState
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorInvalidRequest
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorInvalidUser
-{
-    [self handleAuthError:@"Invalid user."];
-}
-
-- (void)authenticationErrorInvalidAppPlatformOrVersion
-{
-    [self handleAuthError:@"Unsupported App version, please upgrade."];
-}
-
-- (void)authenticationErrorInvalidGrantType
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorDeviceDeregistered
-{
-    [self handleAuthError:@"Device has been deregistered."];
-}
-
-- (void)authenticationErrorUserDeregistered
-{
-    [self handleAuthError:@"User has been deregistered."];
-}
-
-- (void)authenticationErrorUnsupportedOS
-{
-    [self handleAuthError:@"Unsupported iOS version, please upgrade."];
 }
 
 - (void)askForNewPin:(NSUInteger)pinSize user:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGNewPinConfirmation>)delegate
@@ -166,37 +106,17 @@
 
 #pragma mark - OGPinValidationDelegate
 
-- (void)pinBlackListed
-{
-    [self handlePinPolicyValidationError:@"Pin is blacklisted!"];
-}
-
-- (void)pinShouldNotBeASequence
-{
-    [self handlePinPolicyValidationError:@"Pin should not be a sequence!"];
-}
-
-- (void)pinShouldNotUseSimilarDigits:(NSUInteger)count
-{
-    [self handlePinPolicyValidationError:[NSString stringWithFormat:@"Maximum number of similar digits are: %ld", count]];
-}
-
-- (void)pinTooShort
-{
-    [self handlePinPolicyValidationError:@"Pin is too short!"];
-}
-
 - (void)pinEntryError:(NSError *)error
 {
-    [self handlePinPolicyValidationError:@"Pin is not valid!"];
+    [self handlePinPolicyValidationError:error];
 }
 
 #pragma mark - 
 
-- (void)handleAuthError:(NSString *)error
+- (void)handleAuthError:(NSError *)error
 {
     [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Authorization Error" message:error preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Authorization Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okButton = [UIAlertAction
         actionWithTitle:@"Ok"
                   style:UIAlertActionStyleDefault
@@ -206,13 +126,13 @@
     [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)handlePinPolicyValidationError:(NSString *)error
+- (void)handlePinPolicyValidationError:(NSError *)error
 {
     if ([[AppDelegate sharedNavigationController].topViewController isKindOfClass:PinViewController.class]) {
         PinViewController *pinViewController = (PinViewController *)[AppDelegate sharedNavigationController].topViewController;
         pinViewController.mode = PINRegistrationMode;
         [pinViewController reset];
-        [pinViewController showError:error];
+        [pinViewController showError:error.localizedDescription];
     }
 }
 

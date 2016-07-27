@@ -27,32 +27,32 @@
 		5CAE98C61CE0DEF8009C1D1A /* OneginiConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */; };
 		5CD187431CEDA5B8001FD062 /* MobileAuthenticationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */; };
 		5CD187441CEDA5B8001FD062 /* MobileAuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD187421CEDA5B8001FD062 /* MobileAuthenticationController.m */; };
-		ADAC903D1D412DF100313869 /* OneginiSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90231D412DF100313869 /* OneginiSDK.h */; };
-		ADAC903E1D412DF100313869 /* ONGAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90241D412DF100313869 /* ONGAuthenticationDelegate.h */; };
-		ADAC903F1D412DF100313869 /* ONGChangePinDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90251D412DF100313869 /* ONGChangePinDelegate.h */; };
-		ADAC90401D412DF100313869 /* ONGClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90261D412DF100313869 /* ONGClient.h */; };
-		ADAC90411D412DF100313869 /* ONGClientAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90271D412DF100313869 /* ONGClientAuthenticationDelegate.h */; };
-		ADAC90421D412DF100313869 /* ONGClientBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90281D412DF100313869 /* ONGClientBuilder.h */; };
-		ADAC90431D412DF100313869 /* ONGConfigModel.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90291D412DF100313869 /* ONGConfigModel.h */; };
-		ADAC90441D412DF100313869 /* ONGCustomizationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC902A1D412DF100313869 /* ONGCustomizationDelegate.h */; };
-		ADAC90451D412DF100313869 /* ONGDeregistrationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC902B1D412DF100313869 /* ONGDeregistrationDelegate.h */; };
-		ADAC90461D412DF100313869 /* ONGDisconnectDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC902C1D412DF100313869 /* ONGDisconnectDelegate.h */; };
-		ADAC90471D412DF100313869 /* ONGEnrollmentHandlerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC902D1D412DF100313869 /* ONGEnrollmentHandlerDelegate.h */; };
-		ADAC90481D412DF100313869 /* ONGErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC902E1D412DF100313869 /* ONGErrors.h */; };
-		ADAC90491D412DF100313869 /* ONGFingerprintDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC902F1D412DF100313869 /* ONGFingerprintDelegate.h */; };
-		ADAC904A1D412DF100313869 /* ONGLogoutDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90301D412DF100313869 /* ONGLogoutDelegate.h */; };
-		ADAC904B1D412DF100313869 /* ONGMobileAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90311D412DF100313869 /* ONGMobileAuthenticationDelegate.h */; };
-		ADAC904C1D412DF100313869 /* ONGNetworkClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90321D412DF100313869 /* ONGNetworkClient.h */; };
-		ADAC904D1D412DF100313869 /* ONGNewPinConfirmation.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90331D412DF100313869 /* ONGNewPinConfirmation.h */; };
-		ADAC904E1D412DF100313869 /* ONGOneginiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90341D412DF100313869 /* ONGOneginiClient.h */; };
-		ADAC904F1D412DF100313869 /* ONGPinConfirmation.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90351D412DF100313869 /* ONGPinConfirmation.h */; };
-		ADAC90501D412DF100313869 /* ONGPinValidationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90361D412DF100313869 /* ONGPinValidationDelegate.h */; };
-		ADAC90511D412DF100313869 /* ONGPublicCommons.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90371D412DF100313869 /* ONGPublicCommons.h */; };
-		ADAC90521D412DF100313869 /* ONGPublicDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90381D412DF100313869 /* ONGPublicDefines.h */; };
-		ADAC90531D412DF100313869 /* ONGResourceHandlerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC90391D412DF100313869 /* ONGResourceHandlerDelegate.h */; };
-		ADAC90541D412DF100313869 /* ONGUserClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC903A1D412DF100313869 /* ONGUserClient.h */; };
-		ADAC90551D412DF100313869 /* ONGUserProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC903B1D412DF100313869 /* ONGUserProfile.h */; };
-		ADAC90561D412DF100313869 /* libOneginiSDKiOS-4.10.00-SNAPSHOT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAC903C1D412DF100313869 /* libOneginiSDKiOS-4.10.00-SNAPSHOT.a */; };
+		ADCBB8DE1D48AEA800B3674C /* OneginiSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8C41D48AEA800B3674C /* OneginiSDK.h */; };
+		ADCBB8DF1D48AEA800B3674C /* ONGAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8C51D48AEA800B3674C /* ONGAuthenticationDelegate.h */; };
+		ADCBB8E01D48AEA800B3674C /* ONGChangePinDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8C61D48AEA800B3674C /* ONGChangePinDelegate.h */; };
+		ADCBB8E11D48AEA800B3674C /* ONGClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8C71D48AEA800B3674C /* ONGClient.h */; };
+		ADCBB8E21D48AEA800B3674C /* ONGClientAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8C81D48AEA800B3674C /* ONGClientAuthenticationDelegate.h */; };
+		ADCBB8E31D48AEA800B3674C /* ONGClientBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8C91D48AEA800B3674C /* ONGClientBuilder.h */; };
+		ADCBB8E41D48AEA800B3674C /* ONGConfigModel.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8CA1D48AEA800B3674C /* ONGConfigModel.h */; };
+		ADCBB8E51D48AEA800B3674C /* ONGCustomizationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8CB1D48AEA800B3674C /* ONGCustomizationDelegate.h */; };
+		ADCBB8E61D48AEA800B3674C /* ONGDeregistrationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8CC1D48AEA800B3674C /* ONGDeregistrationDelegate.h */; };
+		ADCBB8E71D48AEA800B3674C /* ONGDisconnectDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8CD1D48AEA800B3674C /* ONGDisconnectDelegate.h */; };
+		ADCBB8E81D48AEA800B3674C /* ONGEnrollmentHandlerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8CE1D48AEA800B3674C /* ONGEnrollmentHandlerDelegate.h */; };
+		ADCBB8E91D48AEA800B3674C /* ONGErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8CF1D48AEA800B3674C /* ONGErrors.h */; };
+		ADCBB8EA1D48AEA800B3674C /* ONGFingerprintDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8D01D48AEA800B3674C /* ONGFingerprintDelegate.h */; };
+		ADCBB8EB1D48AEA800B3674C /* ONGLogoutDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8D11D48AEA800B3674C /* ONGLogoutDelegate.h */; };
+		ADCBB8EC1D48AEA800B3674C /* ONGMobileAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8D21D48AEA800B3674C /* ONGMobileAuthenticationDelegate.h */; };
+		ADCBB8ED1D48AEA800B3674C /* ONGNetworkClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8D31D48AEA800B3674C /* ONGNetworkClient.h */; };
+		ADCBB8EE1D48AEA800B3674C /* ONGNewPinConfirmation.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8D41D48AEA800B3674C /* ONGNewPinConfirmation.h */; };
+		ADCBB8EF1D48AEA800B3674C /* ONGOneginiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8D51D48AEA800B3674C /* ONGOneginiClient.h */; };
+		ADCBB8F01D48AEA800B3674C /* ONGPinConfirmation.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8D61D48AEA800B3674C /* ONGPinConfirmation.h */; };
+		ADCBB8F11D48AEA800B3674C /* ONGPinValidationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8D71D48AEA800B3674C /* ONGPinValidationDelegate.h */; };
+		ADCBB8F21D48AEA800B3674C /* ONGPublicCommons.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8D81D48AEA800B3674C /* ONGPublicCommons.h */; };
+		ADCBB8F31D48AEA800B3674C /* ONGPublicDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8D91D48AEA800B3674C /* ONGPublicDefines.h */; };
+		ADCBB8F41D48AEA800B3674C /* ONGResourceHandlerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8DA1D48AEA800B3674C /* ONGResourceHandlerDelegate.h */; };
+		ADCBB8F51D48AEA800B3674C /* ONGUserClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8DB1D48AEA800B3674C /* ONGUserClient.h */; };
+		ADCBB8F61D48AEA800B3674C /* ONGUserProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCBB8DC1D48AEA800B3674C /* ONGUserProfile.h */; };
+		ADCBB8F71D48AEA800B3674C /* libOneginiSDKiOS-4.10.00.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADCBB8DD1D48AEA800B3674C /* libOneginiSDKiOS-4.10.00.a */; };
 		C502CAA91CDB62B600FB18E7 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C502CAA71CDB62B600FB18E7 /* ProfileViewController.m */; };
 		C502CAAA1CDB62B600FB18E7 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C502CAA81CDB62B600FB18E7 /* ProfileViewController.xib */; };
 		C541398B1CD9D3010033DBA8 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C541398A1CD9D3010033DBA8 /* WelcomeViewController.m */; };
@@ -97,32 +97,32 @@
 		5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneginiConfigModel.m; path = Configuration/OneginiConfigModel.m; sourceTree = "<group>"; };
 		5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileAuthenticationController.h; sourceTree = "<group>"; };
 		5CD187421CEDA5B8001FD062 /* MobileAuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileAuthenticationController.m; sourceTree = "<group>"; };
-		ADAC90231D412DF100313869 /* OneginiSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiSDK.h; sourceTree = "<group>"; };
-		ADAC90241D412DF100313869 /* ONGAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGAuthenticationDelegate.h; sourceTree = "<group>"; };
-		ADAC90251D412DF100313869 /* ONGChangePinDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGChangePinDelegate.h; sourceTree = "<group>"; };
-		ADAC90261D412DF100313869 /* ONGClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGClient.h; sourceTree = "<group>"; };
-		ADAC90271D412DF100313869 /* ONGClientAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGClientAuthenticationDelegate.h; sourceTree = "<group>"; };
-		ADAC90281D412DF100313869 /* ONGClientBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGClientBuilder.h; sourceTree = "<group>"; };
-		ADAC90291D412DF100313869 /* ONGConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGConfigModel.h; sourceTree = "<group>"; };
-		ADAC902A1D412DF100313869 /* ONGCustomizationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGCustomizationDelegate.h; sourceTree = "<group>"; };
-		ADAC902B1D412DF100313869 /* ONGDeregistrationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGDeregistrationDelegate.h; sourceTree = "<group>"; };
-		ADAC902C1D412DF100313869 /* ONGDisconnectDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGDisconnectDelegate.h; sourceTree = "<group>"; };
-		ADAC902D1D412DF100313869 /* ONGEnrollmentHandlerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGEnrollmentHandlerDelegate.h; sourceTree = "<group>"; };
-		ADAC902E1D412DF100313869 /* ONGErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGErrors.h; sourceTree = "<group>"; };
-		ADAC902F1D412DF100313869 /* ONGFingerprintDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGFingerprintDelegate.h; sourceTree = "<group>"; };
-		ADAC90301D412DF100313869 /* ONGLogoutDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGLogoutDelegate.h; sourceTree = "<group>"; };
-		ADAC90311D412DF100313869 /* ONGMobileAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGMobileAuthenticationDelegate.h; sourceTree = "<group>"; };
-		ADAC90321D412DF100313869 /* ONGNetworkClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGNetworkClient.h; sourceTree = "<group>"; };
-		ADAC90331D412DF100313869 /* ONGNewPinConfirmation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGNewPinConfirmation.h; sourceTree = "<group>"; };
-		ADAC90341D412DF100313869 /* ONGOneginiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGOneginiClient.h; sourceTree = "<group>"; };
-		ADAC90351D412DF100313869 /* ONGPinConfirmation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGPinConfirmation.h; sourceTree = "<group>"; };
-		ADAC90361D412DF100313869 /* ONGPinValidationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGPinValidationDelegate.h; sourceTree = "<group>"; };
-		ADAC90371D412DF100313869 /* ONGPublicCommons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGPublicCommons.h; sourceTree = "<group>"; };
-		ADAC90381D412DF100313869 /* ONGPublicDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGPublicDefines.h; sourceTree = "<group>"; };
-		ADAC90391D412DF100313869 /* ONGResourceHandlerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGResourceHandlerDelegate.h; sourceTree = "<group>"; };
-		ADAC903A1D412DF100313869 /* ONGUserClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGUserClient.h; sourceTree = "<group>"; };
-		ADAC903B1D412DF100313869 /* ONGUserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGUserProfile.h; sourceTree = "<group>"; };
-		ADAC903C1D412DF100313869 /* libOneginiSDKiOS-4.10.00-SNAPSHOT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libOneginiSDKiOS-4.10.00-SNAPSHOT.a"; sourceTree = "<group>"; };
+		ADCBB8C41D48AEA800B3674C /* OneginiSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiSDK.h; sourceTree = "<group>"; };
+		ADCBB8C51D48AEA800B3674C /* ONGAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGAuthenticationDelegate.h; sourceTree = "<group>"; };
+		ADCBB8C61D48AEA800B3674C /* ONGChangePinDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGChangePinDelegate.h; sourceTree = "<group>"; };
+		ADCBB8C71D48AEA800B3674C /* ONGClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGClient.h; sourceTree = "<group>"; };
+		ADCBB8C81D48AEA800B3674C /* ONGClientAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGClientAuthenticationDelegate.h; sourceTree = "<group>"; };
+		ADCBB8C91D48AEA800B3674C /* ONGClientBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGClientBuilder.h; sourceTree = "<group>"; };
+		ADCBB8CA1D48AEA800B3674C /* ONGConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGConfigModel.h; sourceTree = "<group>"; };
+		ADCBB8CB1D48AEA800B3674C /* ONGCustomizationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGCustomizationDelegate.h; sourceTree = "<group>"; };
+		ADCBB8CC1D48AEA800B3674C /* ONGDeregistrationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGDeregistrationDelegate.h; sourceTree = "<group>"; };
+		ADCBB8CD1D48AEA800B3674C /* ONGDisconnectDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGDisconnectDelegate.h; sourceTree = "<group>"; };
+		ADCBB8CE1D48AEA800B3674C /* ONGEnrollmentHandlerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGEnrollmentHandlerDelegate.h; sourceTree = "<group>"; };
+		ADCBB8CF1D48AEA800B3674C /* ONGErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGErrors.h; sourceTree = "<group>"; };
+		ADCBB8D01D48AEA800B3674C /* ONGFingerprintDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGFingerprintDelegate.h; sourceTree = "<group>"; };
+		ADCBB8D11D48AEA800B3674C /* ONGLogoutDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGLogoutDelegate.h; sourceTree = "<group>"; };
+		ADCBB8D21D48AEA800B3674C /* ONGMobileAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGMobileAuthenticationDelegate.h; sourceTree = "<group>"; };
+		ADCBB8D31D48AEA800B3674C /* ONGNetworkClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGNetworkClient.h; sourceTree = "<group>"; };
+		ADCBB8D41D48AEA800B3674C /* ONGNewPinConfirmation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGNewPinConfirmation.h; sourceTree = "<group>"; };
+		ADCBB8D51D48AEA800B3674C /* ONGOneginiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGOneginiClient.h; sourceTree = "<group>"; };
+		ADCBB8D61D48AEA800B3674C /* ONGPinConfirmation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGPinConfirmation.h; sourceTree = "<group>"; };
+		ADCBB8D71D48AEA800B3674C /* ONGPinValidationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGPinValidationDelegate.h; sourceTree = "<group>"; };
+		ADCBB8D81D48AEA800B3674C /* ONGPublicCommons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGPublicCommons.h; sourceTree = "<group>"; };
+		ADCBB8D91D48AEA800B3674C /* ONGPublicDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGPublicDefines.h; sourceTree = "<group>"; };
+		ADCBB8DA1D48AEA800B3674C /* ONGResourceHandlerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGResourceHandlerDelegate.h; sourceTree = "<group>"; };
+		ADCBB8DB1D48AEA800B3674C /* ONGUserClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGUserClient.h; sourceTree = "<group>"; };
+		ADCBB8DC1D48AEA800B3674C /* ONGUserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGUserProfile.h; sourceTree = "<group>"; };
+		ADCBB8DD1D48AEA800B3674C /* libOneginiSDKiOS-4.10.00.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libOneginiSDKiOS-4.10.00.a"; sourceTree = "<group>"; };
 		AF975CF4D99994DAF5BD2E6B /* OneginiConfigModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OneginiConfigModel.h; path = Configuration/OneginiConfigModel.h; sourceTree = "<group>"; };
 		C502CAA61CDB62B600FB18E7 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		C502CAA71CDB62B600FB18E7 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 				C5FE9E971CD8C0F300142A20 /* libiconv.tbd in Frameworks */,
 				C5FE9E951CD8C0DE00142A20 /* MobileCoreServices.framework in Frameworks */,
 				C5FE9E931CD8C0D800142A20 /* SystemConfiguration.framework in Frameworks */,
-				ADAC90561D412DF100313869 /* libOneginiSDKiOS-4.10.00-SNAPSHOT.a in Frameworks */,
+				ADCBB8F71D48AEA800B3674C /* libOneginiSDKiOS-4.10.00.a in Frameworks */,
 				C5FE9E911CD8C0D200142A20 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -168,44 +168,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		ADAC90211D412DF100313869 /* OneginiSDKiOS */ = {
+		ADCBB8C21D48AEA800B3674C /* OneginiSDK */ = {
 			isa = PBXGroup;
 			children = (
-				ADAC90221D412DF100313869 /* Headers */,
-				ADAC903C1D412DF100313869 /* libOneginiSDKiOS-4.10.00-SNAPSHOT.a */,
+				ADCBB8C31D48AEA800B3674C /* Headers */,
+				ADCBB8DD1D48AEA800B3674C /* libOneginiSDKiOS-4.10.00.a */,
 			);
-			name = OneginiSDKiOS;
-			path = OneginiDemoApp/OneginiSDKiOS;
+			name = OneginiSDK;
+			path = OneginiDemoApp/OneginiSDK;
 			sourceTree = "<group>";
 		};
-		ADAC90221D412DF100313869 /* Headers */ = {
+		ADCBB8C31D48AEA800B3674C /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				ADAC90231D412DF100313869 /* OneginiSDK.h */,
-				ADAC90241D412DF100313869 /* ONGAuthenticationDelegate.h */,
-				ADAC90251D412DF100313869 /* ONGChangePinDelegate.h */,
-				ADAC90261D412DF100313869 /* ONGClient.h */,
-				ADAC90271D412DF100313869 /* ONGClientAuthenticationDelegate.h */,
-				ADAC90281D412DF100313869 /* ONGClientBuilder.h */,
-				ADAC90291D412DF100313869 /* ONGConfigModel.h */,
-				ADAC902A1D412DF100313869 /* ONGCustomizationDelegate.h */,
-				ADAC902B1D412DF100313869 /* ONGDeregistrationDelegate.h */,
-				ADAC902C1D412DF100313869 /* ONGDisconnectDelegate.h */,
-				ADAC902D1D412DF100313869 /* ONGEnrollmentHandlerDelegate.h */,
-				ADAC902E1D412DF100313869 /* ONGErrors.h */,
-				ADAC902F1D412DF100313869 /* ONGFingerprintDelegate.h */,
-				ADAC90301D412DF100313869 /* ONGLogoutDelegate.h */,
-				ADAC90311D412DF100313869 /* ONGMobileAuthenticationDelegate.h */,
-				ADAC90321D412DF100313869 /* ONGNetworkClient.h */,
-				ADAC90331D412DF100313869 /* ONGNewPinConfirmation.h */,
-				ADAC90341D412DF100313869 /* ONGOneginiClient.h */,
-				ADAC90351D412DF100313869 /* ONGPinConfirmation.h */,
-				ADAC90361D412DF100313869 /* ONGPinValidationDelegate.h */,
-				ADAC90371D412DF100313869 /* ONGPublicCommons.h */,
-				ADAC90381D412DF100313869 /* ONGPublicDefines.h */,
-				ADAC90391D412DF100313869 /* ONGResourceHandlerDelegate.h */,
-				ADAC903A1D412DF100313869 /* ONGUserClient.h */,
-				ADAC903B1D412DF100313869 /* ONGUserProfile.h */,
+				ADCBB8C41D48AEA800B3674C /* OneginiSDK.h */,
+				ADCBB8C51D48AEA800B3674C /* ONGAuthenticationDelegate.h */,
+				ADCBB8C61D48AEA800B3674C /* ONGChangePinDelegate.h */,
+				ADCBB8C71D48AEA800B3674C /* ONGClient.h */,
+				ADCBB8C81D48AEA800B3674C /* ONGClientAuthenticationDelegate.h */,
+				ADCBB8C91D48AEA800B3674C /* ONGClientBuilder.h */,
+				ADCBB8CA1D48AEA800B3674C /* ONGConfigModel.h */,
+				ADCBB8CB1D48AEA800B3674C /* ONGCustomizationDelegate.h */,
+				ADCBB8CC1D48AEA800B3674C /* ONGDeregistrationDelegate.h */,
+				ADCBB8CD1D48AEA800B3674C /* ONGDisconnectDelegate.h */,
+				ADCBB8CE1D48AEA800B3674C /* ONGEnrollmentHandlerDelegate.h */,
+				ADCBB8CF1D48AEA800B3674C /* ONGErrors.h */,
+				ADCBB8D01D48AEA800B3674C /* ONGFingerprintDelegate.h */,
+				ADCBB8D11D48AEA800B3674C /* ONGLogoutDelegate.h */,
+				ADCBB8D21D48AEA800B3674C /* ONGMobileAuthenticationDelegate.h */,
+				ADCBB8D31D48AEA800B3674C /* ONGNetworkClient.h */,
+				ADCBB8D41D48AEA800B3674C /* ONGNewPinConfirmation.h */,
+				ADCBB8D51D48AEA800B3674C /* ONGOneginiClient.h */,
+				ADCBB8D61D48AEA800B3674C /* ONGPinConfirmation.h */,
+				ADCBB8D71D48AEA800B3674C /* ONGPinValidationDelegate.h */,
+				ADCBB8D81D48AEA800B3674C /* ONGPublicCommons.h */,
+				ADCBB8D91D48AEA800B3674C /* ONGPublicDefines.h */,
+				ADCBB8DA1D48AEA800B3674C /* ONGResourceHandlerDelegate.h */,
+				ADCBB8DB1D48AEA800B3674C /* ONGUserClient.h */,
+				ADCBB8DC1D48AEA800B3674C /* ONGUserProfile.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -213,7 +213,7 @@
 		C531DF7F1CD8FE5400C4BBF2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				ADAC90211D412DF100313869 /* OneginiSDKiOS */,
+				ADCBB8C21D48AEA800B3674C /* OneginiSDK */,
 				C5FE9E981CD8C10000142A20 /* libc++.tbd */,
 				C5FE9E961CD8C0F300142A20 /* libiconv.tbd */,
 				C5FE9E941CD8C0DE00142A20 /* MobileCoreServices.framework */,
@@ -339,37 +339,37 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADAC90491D412DF100313869 /* ONGFingerprintDelegate.h in Headers */,
-				ADAC903E1D412DF100313869 /* ONGAuthenticationDelegate.h in Headers */,
-				ADAC90511D412DF100313869 /* ONGPublicCommons.h in Headers */,
+				ADCBB8EA1D48AEA800B3674C /* ONGFingerprintDelegate.h in Headers */,
+				ADCBB8DF1D48AEA800B3674C /* ONGAuthenticationDelegate.h in Headers */,
+				ADCBB8F21D48AEA800B3674C /* ONGPublicCommons.h in Headers */,
 				5CD187431CEDA5B8001FD062 /* MobileAuthenticationController.h in Headers */,
 				5C2A94A61D172379000FF63D /* ClientAuthenticationController.h in Headers */,
-				ADAC904E1D412DF100313869 /* ONGOneginiClient.h in Headers */,
-				ADAC90471D412DF100313869 /* ONGEnrollmentHandlerDelegate.h in Headers */,
-				ADAC904F1D412DF100313869 /* ONGPinConfirmation.h in Headers */,
-				ADAC903D1D412DF100313869 /* OneginiSDK.h in Headers */,
-				ADAC90541D412DF100313869 /* ONGUserClient.h in Headers */,
+				ADCBB8EF1D48AEA800B3674C /* ONGOneginiClient.h in Headers */,
+				ADCBB8E81D48AEA800B3674C /* ONGEnrollmentHandlerDelegate.h in Headers */,
+				ADCBB8F01D48AEA800B3674C /* ONGPinConfirmation.h in Headers */,
+				ADCBB8DE1D48AEA800B3674C /* OneginiSDK.h in Headers */,
+				ADCBB8F51D48AEA800B3674C /* ONGUserClient.h in Headers */,
 				5C3CA14F1D11E29A00F00C05 /* PushConfirmationViewController.h in Headers */,
-				ADAC90411D412DF100313869 /* ONGClientAuthenticationDelegate.h in Headers */,
-				ADAC90531D412DF100313869 /* ONGResourceHandlerDelegate.h in Headers */,
-				ADAC90461D412DF100313869 /* ONGDisconnectDelegate.h in Headers */,
-				ADAC904C1D412DF100313869 /* ONGNetworkClient.h in Headers */,
+				ADCBB8E21D48AEA800B3674C /* ONGClientAuthenticationDelegate.h in Headers */,
+				ADCBB8F41D48AEA800B3674C /* ONGResourceHandlerDelegate.h in Headers */,
+				ADCBB8E71D48AEA800B3674C /* ONGDisconnectDelegate.h in Headers */,
+				ADCBB8ED1D48AEA800B3674C /* ONGNetworkClient.h in Headers */,
 				5C3CA15B1D13E56100F00C05 /* ChangePinController.h in Headers */,
-				ADAC904A1D412DF100313869 /* ONGLogoutDelegate.h in Headers */,
+				ADCBB8EB1D48AEA800B3674C /* ONGLogoutDelegate.h in Headers */,
 				E4459662EEBC767C4F350A5A /* OneginiConfigModel.h in Headers */,
-				ADAC90551D412DF100313869 /* ONGUserProfile.h in Headers */,
+				ADCBB8F61D48AEA800B3674C /* ONGUserProfile.h in Headers */,
 				5C3CA1481D11394000F00C05 /* FingerprintController.h in Headers */,
-				ADAC90401D412DF100313869 /* ONGClient.h in Headers */,
-				ADAC90441D412DF100313869 /* ONGCustomizationDelegate.h in Headers */,
-				ADAC904D1D412DF100313869 /* ONGNewPinConfirmation.h in Headers */,
-				ADAC90431D412DF100313869 /* ONGConfigModel.h in Headers */,
-				ADAC90521D412DF100313869 /* ONGPublicDefines.h in Headers */,
-				ADAC90481D412DF100313869 /* ONGErrors.h in Headers */,
-				ADAC904B1D412DF100313869 /* ONGMobileAuthenticationDelegate.h in Headers */,
-				ADAC90421D412DF100313869 /* ONGClientBuilder.h in Headers */,
-				ADAC903F1D412DF100313869 /* ONGChangePinDelegate.h in Headers */,
-				ADAC90451D412DF100313869 /* ONGDeregistrationDelegate.h in Headers */,
-				ADAC90501D412DF100313869 /* ONGPinValidationDelegate.h in Headers */,
+				ADCBB8E11D48AEA800B3674C /* ONGClient.h in Headers */,
+				ADCBB8E51D48AEA800B3674C /* ONGCustomizationDelegate.h in Headers */,
+				ADCBB8EE1D48AEA800B3674C /* ONGNewPinConfirmation.h in Headers */,
+				ADCBB8E41D48AEA800B3674C /* ONGConfigModel.h in Headers */,
+				ADCBB8F31D48AEA800B3674C /* ONGPublicDefines.h in Headers */,
+				ADCBB8E91D48AEA800B3674C /* ONGErrors.h in Headers */,
+				ADCBB8EC1D48AEA800B3674C /* ONGMobileAuthenticationDelegate.h in Headers */,
+				ADCBB8E31D48AEA800B3674C /* ONGClientBuilder.h in Headers */,
+				ADCBB8E01D48AEA800B3674C /* ONGChangePinDelegate.h in Headers */,
+				ADCBB8E61D48AEA800B3674C /* ONGDeregistrationDelegate.h in Headers */,
+				ADCBB8F11D48AEA800B3674C /* ONGPinValidationDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,7 +572,7 @@
 					"$(PROJECT_DIR)/target/libs/Release-iphonesimulator/com.onegini.mobile.sdk.ios/OneginiSDKiOS",
 					"$(PROJECT_DIR)/target/xcode-deps/libs/Release/com.onegini.mobile.sdk.ios/OneginiSDKiOS",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/OneginiDemoApp/OneginiSDKiOS",
+					"$(PROJECT_DIR)/OneginiDemoApp/OneginiSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.onegini.ExampleApp;
@@ -596,7 +596,7 @@
 					"$(PROJECT_DIR)/target/libs/Release-iphonesimulator/com.onegini.mobile.sdk.ios/OneginiSDKiOS",
 					"$(PROJECT_DIR)/target/xcode-deps/libs/Release/com.onegini.mobile.sdk.ios/OneginiSDKiOS",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/OneginiDemoApp/OneginiSDKiOS",
+					"$(PROJECT_DIR)/OneginiDemoApp/OneginiSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.onegini.ExampleApp;

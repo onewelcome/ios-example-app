@@ -131,7 +131,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Performs a user logout, by invalidating the access token.
  *  The refresh token and client credentials remain untouched.
  *
- *  @param completion logout delegate
+ *  This error will be either within the ONGGenericErrorDomain or the ONGLogoutErrorDomain
+ *
+ *  @param completion completion block that is going to be invoked upon logout completion
  */
 - (void)logoutUser:(nullable void (^)(ONGUserProfile *userProfile, NSError *_Nullable error))completion;
 

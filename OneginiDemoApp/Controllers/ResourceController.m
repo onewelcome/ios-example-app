@@ -60,45 +60,4 @@
     [self handleError:error];
 }
 
-- (void)resourceError
-{
-    [self handleError:nil];
-}
-
-- (void)resourceBadRequest
-{
-    [self handleError:nil];
-}
-
-- (void)resourceErrorAuthenticationFailed
-{
-    [self handleError:nil];
-}
-
-- (void)scopeError
-{
-    [self handleError:nil];
-}
-
-- (void)unauthorizedClient
-{
-    [self handleError:nil];
-}
-
-- (void)resourceSuccess:(id)response
-{
-    [self handleResponse:response];
-}
-
-- (void)resourceSuccess:(id)response
-                headers:(NSDictionary *)headers
-{
-    [self handleResponse:response];
-}
-
-- (void)invalidGrantType
-{
-    [self handleError:nil];
-}
-
 @end

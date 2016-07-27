@@ -37,30 +37,17 @@
 - (void)invalidCurrentPin:(NSUInteger)remaining;
 
 /**
- *  PIN change failed due to maximum number of retry attempts exceeded allowed maximum.
- */
-- (void)pinChangeErrorTooManyPinFailures;
-
-/**
- *  Pin changed successfully callback
- */
-- (void)pinChanged;
-
-/**
  *  PIN change failed
- */
-- (void)pinChangeError;
-
-/**
- *  PIN change failed
+ *
+ *  This error will be either within the ONGGenericErrorDomain, ONGChangePinErrorDomain or the ONGPinValidationErrorDomain.
  *
  *  @param error error encountered during PIN change
  */
 - (void)pinChangeError:(NSError *)error;
 
 /**
- *  Client validation failed, client was disconnected on the server-side.
+ *  Pin changed successfully callback
  */
-- (void)pinChangeErrorDeviceDeregistered;
+- (void)pinChanged;
 
 @end

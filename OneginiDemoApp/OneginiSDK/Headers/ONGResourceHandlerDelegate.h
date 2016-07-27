@@ -2,11 +2,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum : NSInteger {
-    ONGResourceErrorCodeInvalidRequestMethod,   //provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
-    ONGResourceErrorCodeGeneric                 //undefined error preventing from performing resource call
-} ONGResourceErrorCode;
-
 /**
  *  Delegate protocol for use by resource handler classes.
  */
@@ -26,7 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Method called when resource call was not performed due to en error
  *
- *  @param error    defines type of error which occurred
+ *  @param error    defines type of error which occurred.
+ *  This error will be either within the ONGGenericErrorDomain or one of ONGFetchResourceErrorDomain and ONGFetchAnonymousResourceErrorDomain
+ *  depending on request type (Anonymous vs. User)
  *  @param requestId unique request identifier which matches the `requestId` returned by fetch resource call.
  */
 - (void)resourceError:(NSError *)error requestId:(NSString *)requestId;

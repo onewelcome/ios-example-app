@@ -2,6 +2,7 @@
 
 #import "ResourceController.h"
 #import "Profile.h"
+#import "OneginiSDK.h"
 
 @interface ResourceController ()
 
@@ -26,7 +27,27 @@
 - (void)getProfile:(void (^)(Profile *profile, NSError *error))completion
 {
     self.callback = completion;
-    [[ONGNetworkClient sharedInstance] fetchResource:@"/api/persons" requestMethod:@"GET" params:nil paramsEncoding:ONGJSONParameterEncoding headers:nil delegate:self];
+    
+    ONGResourceRequest *request = [[[[[ONGRequestBuilder new] setMethod:@"GET"] setPath:@"/api/persons"] setParametersEncoding:ONGParametersEncodingJSON] build];
+
+    [[ONGUserClient sharedInstance] fetchResource:request completion:^(NSData * _Nullable data, NSError * _Nullable error) {
+        if (data) {
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+            Profile *profile = [Profile profileFromJSON:json];
+            completion(profile, nil);
+        } else {
+            completion(nil, error);
+        }
+        
+        
+        
+//        if (self.callback) {
+//            self.callback(profile, nil);
+//            self.callback = nil;
+//        }
+    }];
+    
+//    [[ONGNetworkClient sharedInstance] fetchResource:@"/api/persons" requestMethod:@"GET" params:nil paramsEncoding:ONGJSONParameterEncoding headers:nil delegate:self];
 }
 
 - (void)handleResponse:(NSData *)response

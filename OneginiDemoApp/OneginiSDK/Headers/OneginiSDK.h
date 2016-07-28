@@ -5,6 +5,7 @@
 #import "ONGPublicDefines.h"
 #import "ONGPublicCommons.h"
 #import "ONGResourceHandlerDelegate.h"
+#import "ONGEnrollmentHandlerDelegate.h"
 #import "ONGChangePinDelegate.h"
 #import "ONGPinValidationDelegate.h"
 #import "ONGDisconnectDelegate.h"
@@ -22,3 +23,5 @@
 #import "ONGClientBuilder.h"
 #import "ONGErrors.h"
 #import "ONGNetworkClient.h"
+#import "ONGResourceRequest.h"
+#import "ONGRequestBuilder.h"

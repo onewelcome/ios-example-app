@@ -15,8 +15,7 @@ ONG_EXTERN NSString *const ONGGenericErrorDomain;
  */
 typedef NS_ENUM(ONGErrorCode, ONGGenericError) {
     ONGGenericErrorUnknown = 9000,
-    ONGGenericErrorActionCancelled = 9001, // Requested action was cancelled.
-    ONGGenericErrorActionAlreadInProgress = 9002, // Requested action already in progress and can not be performed concurrently.
+    ONGGenericErrorCancelled = 9001, // Requested action was cancelled.
 
     ONGGenericErrorNetworkConnectivityFailure = 9010, // Due to a problem with the device internet connection it was not possible to initiate the requested action.
     ONGGenericErrorServerNotReachable = 9011, // Check the Onegini SDK configuration for the correct server URL.

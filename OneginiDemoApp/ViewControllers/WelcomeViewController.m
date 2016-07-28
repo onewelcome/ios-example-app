@@ -2,6 +2,7 @@
 
 #import "WelcomeViewController.h"
 #import "AuthorizationController.h"
+#import "RegistrationController.h"
 #import "OneginiSDK.h"
 #import "ClientAuthenticationController.h"
 
@@ -26,7 +27,7 @@
 
 - (IBAction)registerNewProfile:(id)sender
 {
-    [[AuthorizationController sharedInstance] registerNewUser];
+    [[RegistrationController sharedInstance] registerNewUser];
 }
 
 - (IBAction)login:(id)sender

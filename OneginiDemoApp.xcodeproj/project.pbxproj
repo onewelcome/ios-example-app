@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C1F1CD31D46403B00D4D5C0 /* ONGFingerprintChallenge.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C1F1CD11D46403B00D4D5C0 /* ONGFingerprintChallenge.h */; };
+		5C1F1CD41D46403B00D4D5C0 /* ONGPinChallenge.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C1F1CD21D46403B00D4D5C0 /* ONGPinChallenge.h */; };
+		5C1F1CD81D464DB700D4D5C0 /* ONGCreatePinChallenge.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C1F1CD71D464DB700D4D5C0 /* ONGCreatePinChallenge.h */; };
+		5C1F1CDB1D464DE100D4D5C0 /* RegistrationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C1F1CD91D464DE100D4D5C0 /* RegistrationController.h */; };
+		5C1F1CDC1D464DE100D4D5C0 /* RegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1F1CDA1D464DE100D4D5C0 /* RegistrationController.m */; };
 		5C2A94A61D172379000FF63D /* ClientAuthenticationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C2A94A41D172379000FF63D /* ClientAuthenticationController.h */; };
 		5C2A94A71D172379000FF63D /* ClientAuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A94A51D172379000FF63D /* ClientAuthenticationController.m */; };
 		5C3CA1481D11394000F00C05 /* FingerprintController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C3CA1461D11394000F00C05 /* FingerprintController.h */; };
@@ -74,6 +79,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C1F1CD11D46403B00D4D5C0 /* ONGFingerprintChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGFingerprintChallenge.h; sourceTree = "<group>"; };
+		5C1F1CD21D46403B00D4D5C0 /* ONGPinChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGPinChallenge.h; sourceTree = "<group>"; };
+		5C1F1CD71D464DB700D4D5C0 /* ONGCreatePinChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGCreatePinChallenge.h; sourceTree = "<group>"; };
+		5C1F1CD91D464DE100D4D5C0 /* RegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationController.h; sourceTree = "<group>"; };
+		5C1F1CDA1D464DE100D4D5C0 /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
 		5C2A94A41D172379000FF63D /* ClientAuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientAuthenticationController.h; sourceTree = "<group>"; };
 		5C2A94A51D172379000FF63D /* ClientAuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientAuthenticationController.m; sourceTree = "<group>"; };
 		5C3CA1461D11394000F00C05 /* FingerprintController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FingerprintController.h; sourceTree = "<group>"; };
@@ -184,6 +194,9 @@
 		ADAC8F7D1D40FB6700313869 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				5C1F1CD71D464DB700D4D5C0 /* ONGCreatePinChallenge.h */,
+				5C1F1CD11D46403B00D4D5C0 /* ONGFingerprintChallenge.h */,
+				5C1F1CD21D46403B00D4D5C0 /* ONGPinChallenge.h */,
 				ADAC8F7E1D40FB6700313869 /* OneginiSDK.h */,
 				ADAC8F7F1D40FB6700313869 /* ONGAuthenticationDelegate.h */,
 				ADAC8F801D40FB6700313869 /* ONGChangePinDelegate.h */,
@@ -296,6 +309,8 @@
 			children = (
 				C5A29A601CDCA55900E6B1D4 /* AuthorizationController.h */,
 				C5A29A611CDCA55900E6B1D4 /* AuthorizationController.m */,
+				5C1F1CD91D464DE100D4D5C0 /* RegistrationController.h */,
+				5C1F1CDA1D464DE100D4D5C0 /* RegistrationController.m */,
 				5C2A94A41D172379000FF63D /* ClientAuthenticationController.h */,
 				5C2A94A51D172379000FF63D /* ClientAuthenticationController.m */,
 				5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */,
@@ -351,6 +366,7 @@
 				ADAC8FA21D40FB6700313869 /* ONGEnrollmentHandlerDelegate.h in Headers */,
 				ADAC8FAA1D40FB6700313869 /* ONGPinConfirmation.h in Headers */,
 				ADAC8F981D40FB6700313869 /* OneginiSDK.h in Headers */,
+				5C1F1CD41D46403B00D4D5C0 /* ONGPinChallenge.h in Headers */,
 				ADAC8FAF1D40FB6700313869 /* ONGUserClient.h in Headers */,
 				5C3CA14F1D11E29A00F00C05 /* PushConfirmationViewController.h in Headers */,
 				ADAC8F9C1D40FB6700313869 /* ONGClientAuthenticationDelegate.h in Headers */,
@@ -365,13 +381,16 @@
 				ADAC8F9B1D40FB6700313869 /* ONGClient.h in Headers */,
 				ADAC8F9F1D40FB6700313869 /* ONGCustomizationDelegate.h in Headers */,
 				ADAC8FA81D40FB6700313869 /* ONGNewPinConfirmation.h in Headers */,
+				5C1F1CDB1D464DE100D4D5C0 /* RegistrationController.h in Headers */,
 				ADAC8F9E1D40FB6700313869 /* ONGConfigModel.h in Headers */,
+				5C1F1CD81D464DB700D4D5C0 /* ONGCreatePinChallenge.h in Headers */,
 				ADAC8FAD1D40FB6700313869 /* ONGPublicDefines.h in Headers */,
 				ADAC8FA31D40FB6700313869 /* ONGErrors.h in Headers */,
 				ADAC8FA61D40FB6700313869 /* ONGMobileAuthenticationDelegate.h in Headers */,
 				ADAC8F9D1D40FB6700313869 /* ONGClientBuilder.h in Headers */,
 				ADAC8F9A1D40FB6700313869 /* ONGChangePinDelegate.h in Headers */,
 				ADAC8FA01D40FB6700313869 /* ONGDeregistrationDelegate.h in Headers */,
+				5C1F1CD31D46403B00D4D5C0 /* ONGFingerprintChallenge.h in Headers */,
 				ADAC8FAB1D40FB6700313869 /* ONGPinValidationDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -468,6 +487,7 @@
 				C5A29A661CDCA55900E6B1D4 /* AuthorizationController.m in Sources */,
 				C502CAA91CDB62B600FB18E7 /* ProfileViewController.m in Sources */,
 				C572A2DC1CD893C400B137DC /* main.m in Sources */,
+				5C1F1CDC1D464DE100D4D5C0 /* RegistrationController.m in Sources */,
 				C541398B1CD9D3010033DBA8 /* WelcomeViewController.m in Sources */,
 				5C2A94A71D172379000FF63D /* ClientAuthenticationController.m in Sources */,
 				5CD187441CEDA5B8001FD062 /* MobileAuthenticationController.m in Sources */,

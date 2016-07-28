@@ -34,24 +34,24 @@
     [self.pinViewController reset];
 }
 
-- (void)askCurrentPinForChangeRequestForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinConfirmation>)delegate
+- (void)askCurrentPinForChangeRequestForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinChallengeSender>)delegate
 {
     self.pinViewController = [PinViewController new];
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.profile = userProfile;
     self.pinViewController.pinLength = 5;
     self.pinViewController.pinEntered = ^(NSString *pin) {
-        [delegate confirmPin:pin];
+        [delegate continueChallengeWithPin:pin];
     };
     [[AppDelegate sharedNavigationController] pushViewController:self.pinViewController animated:YES];
 }
 
-- (void)askNewPinForChangeRequest:(NSUInteger)pinSize pinConfirmation:(id<ONGNewPinConfirmation>)delegate
+- (void)askNewPinForChangeRequest:(NSUInteger)pinSize pinConfirmation:(id<ONGCreatePinChallengeSender>)delegate
 {
     [self.pinViewController reset];
     self.pinViewController.mode = PINRegistrationMode;
     self.pinViewController.pinEntered = ^(NSString *pin) {
-        [delegate confirmNewPin:pin validation:nil];
+        [delegate continueChallengeWithPin:pin];
     };
 }
 

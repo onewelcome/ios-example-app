@@ -17,6 +17,8 @@
 #import "ONGMobileAuthenticationDelegate.h"
 #import "ONGConfigModel.h"
 
+@protocol ONGRegistrationDelegate;
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMethodInspection"
 #pragma ide diagnostic ignored "OCUnusedPropertyInspection"
@@ -70,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param scopes array of scopes
  *  @param delegate authentication delegate
  */
-- (void)registerUser:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGAuthenticationDelegate>)delegate;
+- (void)registerUser:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGRegistrationDelegate>)delegate;
 
 /**
  *  Forces profiles's reauthorization.

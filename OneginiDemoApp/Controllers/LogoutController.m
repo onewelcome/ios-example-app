@@ -19,7 +19,7 @@
 
 - (void)logout
 {
-    [[OGOneginiClient sharedInstance] logoutUserWithDelegate:self];
+    [[ONGOneginiClient sharedInstance] logoutUserWithDelegate:self];
 }
 
 - (void)logoutSuccessful

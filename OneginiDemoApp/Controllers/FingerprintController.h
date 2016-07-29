@@ -3,7 +3,7 @@
 #import <Foundation/Foundation.h>
 #import "OneginiSDK.h"
 
-@interface FingerprintController : NSObject<OGFingerprintDelegate>
+@interface FingerprintController : NSObject<ONGFingerprintDelegate>
 
 + (instancetype)sharedInstance;
 - (BOOL)isFingerprintEnrolled;

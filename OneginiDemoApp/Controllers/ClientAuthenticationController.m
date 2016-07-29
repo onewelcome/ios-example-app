@@ -19,7 +19,7 @@
 
 - (void)authenticateClient
 {
-    [[OGOneginiClient sharedInstance] authenticateClient:@[@"read"] delegate:self];
+    [[ONGOneginiClient sharedInstance] authenticateClient:@[@"read"] delegate:self];
 }
 
 - (void)authenticationSuccess

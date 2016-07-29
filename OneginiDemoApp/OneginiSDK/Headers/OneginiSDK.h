@@ -1,27 +1,24 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "OGResourceHandlerDelegate.h"
-#import "OGAuthorizationDelegate.h"
-#import "OGEnrollmentHandlerDelegate.h"
-#import "OGChangePinDelegate.h"
-#import "OGPinValidationDelegate.h"
-#import "OGLogoutDelegate.h"
-#import "OGDisconnectDelegate.h"
-#import "OGDeregistrationDelegate.h"
-#import "OGFingerprintDelegate.h"
-#import "OGCustomizationDelegate.h"
-#import "OGConfigModel.h"
-#import "OGOneginiClient.h"
-#import "OGPublicCommons.h"
-#import "OGNewPinConfirmation.h"
-#import "OGPinConfirmation.h"
-#import "OGMobileAuthenticationDelegate.h"
-#import "OGClientAuthenticationDelegate.h"
-#import "OGUserProfile.h"
 
-/**
- *  Public interface of the Onegini iOS SDK, should be imported by the SDK user.
- */
-@interface OneginiSDK : NSObject
-@end
+#import "ONGPublicDefines.h"
+#import "ONGPublicCommons.h"
+#import "ONGResourceHandlerDelegate.h"
+#import "ONGEnrollmentHandlerDelegate.h"
+#import "ONGChangePinDelegate.h"
+#import "ONGPinValidationDelegate.h"
+#import "ONGLogoutDelegate.h"
+#import "ONGDisconnectDelegate.h"
+#import "ONGDeregistrationDelegate.h"
+#import "ONGFingerprintDelegate.h"
+#import "ONGCustomizationDelegate.h"
+#import "ONGConfigModel.h"
+#import "ONGOneginiClient.h"
+#import "ONGNewPinConfirmation.h"
+#import "ONGPinConfirmation.h"
+#import "ONGMobileAuthenticationDelegate.h"
+#import "ONGClientAuthenticationDelegate.h"
+#import "ONGUserProfile.h"
+#import "ONGClient.h"
+#import "ONGClientBuilder.h"

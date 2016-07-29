@@ -19,16 +19,16 @@
 
 - (void)deregister
 {
-    OGOneginiClient *client = [OGOneginiClient sharedInstance];
-    OGUserProfile *user = [client authenticatedUserProfile];
+    ONGOneginiClient *client = [ONGOneginiClient sharedInstance];
+    ONGUserProfile *user = [client authenticatedUserProfile];
     if (user != nil) {
         [client deregisterUser:user delegate:self];
     }
 }
 
-- (void)deregistrationSuccessful:(OGUserProfile *)userProfile
+- (void)deregistrationSuccessful:(ONGUserProfile *)userProfile
 {
-    [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
+    [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES ];
 }
 
 - (void)deregistrationFailureWithError:(NSError *)error

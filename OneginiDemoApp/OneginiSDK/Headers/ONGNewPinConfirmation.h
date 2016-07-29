@@ -1,14 +1,14 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "OGPinValidationDelegate.h"
+#import "ONGPinValidationDelegate.h"
 
 /**
  * Protocol to delegate control back to the SDK after the user entered the PIN.
  *
  * An object conforming to this protocol must be used when letting the user choose a PIN.
  */
-@protocol OGNewPinConfirmation<NSObject>
+@protocol ONGNewPinConfirmation<NSObject>
 
 /**
  * Method to provide the PIN to the SDK.
@@ -18,6 +18,6 @@
  *
  * @return bool value indicating if the PIN is complying to the pin policy
  */
-- (bool)confirmNewPin:(NSString *)pin validation:(id<OGPinValidationDelegate>)delegate;
+- (bool)confirmNewPin:(NSString *)pin validation:(id<ONGPinValidationDelegate>)delegate;
 
 @end

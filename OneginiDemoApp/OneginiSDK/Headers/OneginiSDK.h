@@ -17,6 +17,7 @@
 #import "ONGUserClient.h"
 #import "ONGCreatePinChallenge.h"
 #import "ONGPinChallenge.h"
+#import "ONGFingerprintChallenge.h"
 #import "ONGMobileAuthenticationDelegate.h"
 #import "ONGClientAuthenticationDelegate.h"
 #import "ONGUserProfile.h"

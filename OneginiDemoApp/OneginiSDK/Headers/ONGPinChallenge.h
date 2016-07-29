@@ -1,13 +1,13 @@
 // Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "ONGPinChallenge.h"
-#import "ONGUserProfile.h"
+
+@class ONGUserProfile;
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
- * Protocol to delegate control back to the SDK after the user entered the PIN.
- *
- * An object conforming to this protocol must be used when asking the user for his/her PIN.
+ * Protocol describing SDK object waiting for response to authentication with PIN challenge.
  */
 @protocol ONGPinChallengeSender<NSObject>
 
@@ -20,19 +20,37 @@
 
 @end
 
-
+/**
+ * Represents authentication with PIN challenge. It provides all information about the challenge and a sender awaiting for a response.
+ */
 @interface ONGPinChallenge : NSObject
 
+/**
+ * User profile for which authenticate with PIN challenge was sent.
+ */
 @property (nonatomic, readonly) ONGUserProfile *userProfile;
-@property (nonatomic, readonly) NSUInteger maxPinAttempts;
-@property (nonatomic, readonly) NSUInteger usedPinAttempts;
-@property (nonatomic, strong, readonly, nullable) NSError *error;
-@property (nonatomic, strong, readonly) id<ONGPinChallengeSender> sender;
 
-+(instancetype)pinChallengeWithUser:(ONGUserProfile *)userProfile
-                     maxPinAttempts:(NSUInteger)maxPinAttempts
-                    usedPinAttempts:(NSUInteger)usedPinAttempts
-                              error:(NSError *)error
-                             sender:(id<ONGPinChallengeSender>)sender;
+/**
+ * Maximum allowed pin attempts for the user.
+ */
+@property (nonatomic, readonly) NSUInteger maxPinAttempts;
+
+/**
+ * Pin attempts used by the user on this device.
+ */
+@property (nonatomic, readonly) NSUInteger usedPinAttempts;
+
+/**
+ * Error describing cause of failure of previous challenge response.
+ * Possible error domains: ONGPinAuthenticationErrorDomain, ONGGenericErrorDomain
+ */
+@property (nonatomic, readonly, nullable) NSError *error;
+
+/**
+ * Sender awaiting for response to the authenticate with PIN challenge.
+ */
+@property (nonatomic, readonly) id<ONGPinChallengeSender> sender;
 
 @end
+
+NS_ASSUME_NONNULL_END

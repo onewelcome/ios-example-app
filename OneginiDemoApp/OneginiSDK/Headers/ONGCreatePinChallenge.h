@@ -3,35 +3,49 @@
 #import <Foundation/Foundation.h>
 
 @class ONGUserProfile;
-@protocol ONGPinValidationDelegate;
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
- * Protocol to delegate control back to the SDK after the user entered the PIN.
- *
- * An object conforming to this protocol must be used when letting the user choose a PIN.
+ * Protocol describing SDK object waiting for response to create PIN challenge.
  */
 @protocol ONGCreatePinChallengeSender<NSObject>
 
 /**
- * Method to provide the PIN to the SDK.
+ * Method providing the PIN to the SDK.
  *
  * @param pin PIN provided by the user
- * @param delegate object responsible for handling error on pin validation against pin policy
  */
 - (void)continueChallengeWithPin:(NSString *)pin;
 
 @end
 
+/**
+ * Represents create PIN challenge. It provides all information about the challenge and a sender awaiting for a response.
+ */
 @interface ONGCreatePinChallenge : NSObject
 
+/**
+ * User profile for which create PIN challenge was sent.
+ */
 @property (nonatomic, readonly) ONGUserProfile *userProfile;
-@property (nonatomic, readonly) NSUInteger pinLength;
-@property (nonatomic, strong, readonly, nullable) NSError *error;
-@property (nonatomic, strong, readonly) id<ONGCreatePinChallengeSender> sender;
 
-+(instancetype)createPinChallengeWithUser:(ONGUserProfile *)userProfile
-                                pinLength:(NSUInteger)pinLength
-                                    error:(NSError *)error
-                                     sender:(id<ONGCreatePinChallengeSender>)sender;
+/**
+ * Required length for a new PIN.
+ */
+@property (nonatomic, readonly) NSUInteger pinLength;
+
+/**
+ * Error describing cause of failure of previous challenge response.
+ * Possible error domains: ONGPinValidationErrorDomain, ONGGenericErrorDomain
+ */
+@property (nonatomic, readonly, nullable) NSError *error;
+
+/**
+ * Sender awaiting for response to the create PIN challenge.
+ */
+@property (nonatomic, readonly) id<ONGCreatePinChallengeSender> sender;
 
 @end
+
+NS_ASSUME_NONNULL_END

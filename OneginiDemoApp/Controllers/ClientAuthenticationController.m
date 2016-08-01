@@ -19,7 +19,7 @@
 
 - (void)authenticateClient
 {
-    [[ONGUserClient sharedInstance] authenticateClient:@[@"read"] delegate:self];
+    [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"read"] delegate:self];
 }
 
 - (void)authenticationSuccess

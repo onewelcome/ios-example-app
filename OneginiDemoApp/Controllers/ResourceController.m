@@ -26,7 +26,7 @@
 - (void)getProfile:(void (^)(Profile *profile, NSError *error))completion
 {
     self.callback = completion;
-    [[ONGNetworkClient sharedInstance] fetchResource:@"/api/persons" requestMethod:@"GET" params:nil paramsEncoding:ONGJSONParameterEncoding headers:nil delegate:self];
+    [[ONGUserClient sharedInstance] fetchResource:@"/api/persons" requestMethod:@"GET" params:nil paramsEncoding:ONGJSONParameterEncoding headers:nil delegate:self];
 }
 
 - (void)handleResponse:(NSData *)response

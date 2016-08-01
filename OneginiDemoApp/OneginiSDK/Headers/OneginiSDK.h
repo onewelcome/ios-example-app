@@ -22,4 +22,4 @@
 #import "ONGClient.h"
 #import "ONGClientBuilder.h"
 #import "ONGErrors.h"
-#import "ONGNetworkClient.h"
+#import "ONGDeviceClient.h"

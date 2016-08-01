@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 
 @class ONGUserProfile;
+@class ONGPinChallenge;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,8 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
  * Method to provide the PIN to the SDK.
  *
  * @param pin the PIN provided by the user
+ * @param challenge pin challenge for which the response is made
  */
-- (void)continueChallengeWithPin:(NSString *)pin;
+- (void)respondWithPin:(NSString *)pin challenge:(ONGPinChallenge *)challenge;
 
 @end
 
@@ -33,12 +35,17 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Maximum allowed pin attempts for the user.
  */
-@property (nonatomic, readonly) NSUInteger maxPinAttempts;
+@property (nonatomic, readonly) NSUInteger maxFailureCount;
 
 /**
  * Pin attempts used by the user on this device.
  */
-@property (nonatomic, readonly) NSUInteger usedPinAttempts;
+@property (nonatomic, readonly) NSUInteger previousFailureCount;
+
+/**
+ * Available pin attempts left for the user on this device.
+ */
+@property (nonatomic, readonly) NSUInteger remainingFailureCount;
 
 /**
  * Error describing cause of failure of previous challenge response.

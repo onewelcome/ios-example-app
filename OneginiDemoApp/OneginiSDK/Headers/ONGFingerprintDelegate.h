@@ -11,7 +11,7 @@
 
 /**
  *  Asks user for current pin for fingerprint authentication enrollment for a specific profile.
- *  Call the ONGPinChallengeSender - (void)continueChallengeWithPin:(NSString *)pin method; with the user provided PIN.
+ *  Call the ONGPinChallengeSender - (void)respondWithPin:challenge: method; with the user provided PIN.
  */
 - (void)askCurrentPinForFingerprintEnrollmentForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinChallengeSender>)pinConfirmation;
 

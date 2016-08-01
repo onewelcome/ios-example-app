@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 
 @class ONGUserProfile;
+@class ONGCreatePinChallenge;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,8 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
  * Method providing the PIN to the SDK.
  *
  * @param pin PIN provided by the user
+ * @param challenge create pin challenge for which the response is made
  */
-- (void)continueChallengeWithPin:(NSString *)pin;
+- (void)respondWithPin:(NSString *)pin challenge:(ONGCreatePinChallenge *)challenge;
 
 @end
 

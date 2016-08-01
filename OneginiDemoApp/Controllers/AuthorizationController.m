@@ -56,12 +56,11 @@
 
 -(void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
 {
-    if (challenge.usedPinAttempts) {
-        NSUInteger remainingAttempts = challenge.maxPinAttempts - challenge.usedPinAttempts;
+    if (challenge.previousFailureCount) {
         if ([[AppDelegate sharedNavigationController].topViewController isKindOfClass:PinViewController.class]) {
             PinViewController *pinViewController = (PinViewController *)[AppDelegate sharedNavigationController].topViewController;
             [pinViewController reset];
-            [pinViewController showError:[NSString stringWithFormat:@"Wrong Pin. Remaining attempts: %ld", remainingAttempts]];
+            [pinViewController showError:[NSString stringWithFormat:@"Wrong Pin. Remaining attempts: %ld", challenge.remainingFailureCount]];
         }
     } else {
         PinViewController *viewController = [PinViewController new];
@@ -69,7 +68,7 @@
         viewController.mode = PINCheckMode;
         viewController.profile = challenge.userProfile;
         viewController.pinEntered = ^(NSString *pin) {
-            [challenge.sender continueChallengeWithPin:pin];
+            [challenge.sender respondWithPin:pin challenge:challenge];
         };
         [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
     }

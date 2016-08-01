@@ -66,7 +66,7 @@
     viewController.mode = PINCheckMode;
     viewController.profile = userProfile;
     viewController.pinEntered = ^(NSString *pin) {
-        [pinConfirmation continueChallengeWithPin:pin];
+        [pinConfirmation respondWithPin:pin challenge:pinConfirmation];
     };
     [[AppDelegate sharedNavigationController] presentViewController:viewController animated:YES completion:nil];
 }

@@ -41,7 +41,7 @@
     self.pinViewController.profile = userProfile;
     self.pinViewController.pinLength = 5;
     self.pinViewController.pinEntered = ^(NSString *pin) {
-        [delegate continueChallengeWithPin:pin];
+        [delegate respondWithPin:pin challenge:delegate];
     };
     [[AppDelegate sharedNavigationController] pushViewController:self.pinViewController animated:YES];
 }
@@ -51,7 +51,7 @@
     [self.pinViewController reset];
     self.pinViewController.mode = PINRegistrationMode;
     self.pinViewController.pinEntered = ^(NSString *pin) {
-        [delegate continueChallengeWithPin:pin];
+        [delegate respondWithPin:pin challenge:delegate];
     };
 }
 

@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 
 @class ONGUserProfile;
+@class ONGFingerprintChallenge;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -12,23 +13,27 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ONGFingerprintChallengeSender<NSObject>
 
 /**
- * Method providing confirmation response to the SDK.
+ * Method providing confirmation response with default prompt to the SDK.
+ *
+ * @param challenge fingerprint challenge for which the response is made
  */
-- (void)continueChallenge;
+- (void)respondWithDefaultPromptForChallenge:(ONGFingerprintChallenge *)challenge;
 
 /**
  * Method providing confirmation response with prompt to the SDK.
  *
- * @prompt Message to be displayed in the TouchID popup
+ * @param prompt Message to be displayed in the TouchID popup
+ * @param challenge fingerprint challenge for which the response is made
  */
-- (void)continueChallengeWithPrompt:(NSString *)prompt;
+- (void)respondWithPrompt:(NSString *)prompt challenge:(ONGFingerprintChallenge *)challenge;
 
 /**
  * Method providing pin fallback response to the SDK.
  *
- * @prompt Message to be displayed in the TouchID popup
+ * @param prompt Message to be displayed in the TouchID popup
+ * @param challenge fingerprint challenge for which the response is made
  */
-- (void)fallbackToPinChallenge;
+- (void)respondWithPinFallbackForChallenge:(ONGFingerprintChallenge *)challenge;
 
 @end
 

@@ -14,7 +14,7 @@
 /**
  *  Asks the user for the current PIN in the change PIN request flow.
  *  The PIN must be forwarded directly to the client and not be stored by any means.
- *  Call the ONGPinChallengeSender - (void)continueChallengeWithPin:(NSString *)pin method; with the user provided PIN.
+ *  Call the ONGPinChallengeSender - (void)respondWithPin:challenge: method; with the user provided PIN.
  */
 - (void)askCurrentPinForChangeRequestForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinChallengeSender>)delegate;
 
@@ -22,7 +22,7 @@
  *  Asks the user for a new PIN.
  *  The implementor should present a PIN entry dialog with a second verification entry.
  *  The PIN must be forwarded directly to the client and not be stored by any means.
- *  Call the ONGCreatePinChallengeSender - (void)continueChallengeWithPin:(NSString *)pin method; with the user provided PIN.
+ *  Call the ONGCreatePinChallengeSender - (void)respondWithPin:challenge: method; with the user provided PIN.
  *  The new PIN must satisfy any PIN policy constraints.
  *
  *  @param pinSize the size of the PIN value

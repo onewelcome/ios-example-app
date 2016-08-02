@@ -69,7 +69,7 @@
         if (enrolled) {
             title = @"Enrolled successfully";
         } else {
-            title = @"Enrollent failure";
+            title = @"Enrollment failure";
         }
 
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];

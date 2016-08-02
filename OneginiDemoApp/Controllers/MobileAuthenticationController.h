@@ -3,7 +3,7 @@
 #import <Foundation/Foundation.h>
 #import "OneginiSDK.h"
 
-@interface MobileAuthenticationController : NSObject<ONGEnrollmentHandlerDelegate, ONGMobileAuthenticationDelegate>
+@interface MobileAuthenticationController : NSObject <ONGMobileAuthenticationDelegate>
 
 + (instancetype)sharedInstance;
 

@@ -63,19 +63,20 @@
 
 - (void)enrollForMobileAuthentication
 {
-    [[ONGUserClient sharedInstance] enrollUserForMobileAuthenticationWithDelegate:self];
-}
+    [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError * _Nullable error) {
+        NSString *title = nil;
 
-- (void)enrollmentSuccess
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Enrollment successfull" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:okButton];
-    [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
-}
+        if (enrolled) {
+            title = @"Enrolled successfully";
+        } else {
+            title = @"Enrollment failure";
+        }
 
-- (void)enrollmentError:(NSError *)error
-{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:okButton];
+        [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
+    }];
 }
 
 @end

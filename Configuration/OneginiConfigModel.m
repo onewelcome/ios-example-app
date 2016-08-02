@@ -14,7 +14,7 @@
         @"ONGAppPlatform" : @"ios",
         @"ONGAppVersion" : @"1.0.0",
         @"ONGAppBaseURL" : @"https://onegini-msp-snapshot.test.onegini.io",
-        @"ONGResourceBaseURL" : @"https://resourcegateway-demo-test.onegini.com",
+        @"ONGResourceBaseURL" : @"https://onegini-msp-snapshot.test.onegini.io",
         @"ONGRedirectURL" : @"oneginiexample://loginsuccess",
     };
 }

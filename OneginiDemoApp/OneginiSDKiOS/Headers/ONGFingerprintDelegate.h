@@ -1,7 +1,7 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "ONGPinChallenge.h"
+#import "ONGPinConfirmation.h"
 #import "ONGUserProfile.h"
 
 /**
@@ -11,9 +11,9 @@
 
 /**
  *  Asks user for current pin for fingerprint authentication enrollment for a specific profile.
- *  Call the ONGPinChallengeSender - (void)respondWithPin:challenge:(NSString *)pin method; with the user provided PIN.
+ *  Call the ONGPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
  */
-- (void)askCurrentPinForFingerprintEnrollmentForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinChallengeSender>)pinConfirmation;
+- (void)askCurrentPinForFingerprintEnrollmentForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinConfirmation>)pinConfirmation;
 
 /**
  *  Fingerprint enrollment success callback.

@@ -5,8 +5,6 @@
 #import "MobileAuthenticationController.h"
 #import "ONGClientBuilder.h"
 
-#import "RKLog.h"
-
 @implementation AppDelegate
 
 + (AppDelegate *)sharedInstance
@@ -33,9 +31,6 @@
 
     self.window.rootViewController = [AppDelegate sharedNavigationController];
     [self.window makeKeyAndVisible];
-    
-    RKLogConfigureByName("RestKit", RKLogLevelTrace);
-    RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
 
     [[[[ONGClientBuilder new] setUseEmbeddedWebView:YES] setStoreCookies:YES] build];
 

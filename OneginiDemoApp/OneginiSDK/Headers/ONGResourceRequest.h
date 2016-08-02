@@ -13,11 +13,11 @@ typedef NS_ENUM(NSInteger, ONGParametersEncoding) {
 
 @interface ONGResourceRequest : NSObject <NSCopying, NSMutableCopying>
 
-@property (nonatomic, copy, readonly) NSString *path;
-@property (nonatomic, copy, readonly) NSString *method;
-@property (nonatomic, copy, readonly, nullable) NSDictionary *headers;
-@property (nonatomic, copy, readonly, nullable) NSDictionary *parameters;
-@property (nonatomic, readonly) ONGParametersEncoding parametersEncoding;
+@property (copy, readonly) NSString *path;
+@property (copy, readonly) NSString *method;
+@property (copy, readonly, nullable) NSDictionary *headers;
+@property (copy, readonly, nullable) NSDictionary *parameters;
+@property (readonly) ONGParametersEncoding parametersEncoding;
 
 - (instancetype)initWithPath:(NSString *)path method:(NSString *)method;
 - (instancetype)initWithPath:(NSString *)path method:(NSString *)method parameters:(nullable NSDictionary *)parameters;
@@ -27,11 +27,11 @@ typedef NS_ENUM(NSInteger, ONGParametersEncoding) {
 
 @interface ONGMutableResourceRequest : ONGResourceRequest
 
-@property (nonatomic, copy) NSString *path;
-@property (nonatomic, copy) NSString *method;
-@property (nonatomic, copy) NSDictionary *headers;
-@property (nonatomic, copy) NSDictionary *parameters;
-@property (nonatomic) ONGParametersEncoding parametersEncoding;
+@property (copy) NSString *path;
+@property (copy) NSString *method;
+@property (copy) NSDictionary *headers;
+@property (copy) NSDictionary *parameters;
+@property ONGParametersEncoding parametersEncoding;
 
 @end
 

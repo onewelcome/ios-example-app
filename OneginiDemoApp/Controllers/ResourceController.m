@@ -25,7 +25,7 @@
 {
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"/client/resource/token" method:@"GET"];
     [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
-        if (response.statusCode < 300) {
+        if (response && response.statusCode < 300) {
             if (completion) {
                 completion(YES, nil);
             }

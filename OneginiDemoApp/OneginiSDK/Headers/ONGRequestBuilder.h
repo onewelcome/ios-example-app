@@ -11,6 +11,11 @@
 @interface ONGRequestBuilder : NSObject
 
 /**
+ * Return new instance of a builder
+ */
++ (instancetype)builder;
+
+/**
  * Set HTTP Method for target `ONGResourceRequest`. Supported values are: `GET`, `POST`, `PUT`, `DELETE`.
  */
 - (instancetype)setMethod:(NSString *)method;

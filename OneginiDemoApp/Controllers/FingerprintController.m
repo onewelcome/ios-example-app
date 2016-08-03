@@ -58,7 +58,7 @@
 
 // MARK: - OGFingerprintDelegate
 
-- (void)askCurrentPinForFingerprintEnrollmentForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinConfirmation>)pinConfirmation
+- (void)askCurrentPinForFingerprintEnrollmentForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinChallengeSender>)pinConfirmation
 {
     PinViewController *viewController = [PinViewController new];
     self.pinViewController = viewController;
@@ -66,7 +66,7 @@
     viewController.mode = PINCheckMode;
     viewController.profile = userProfile;
     viewController.pinEntered = ^(NSString *pin) {
-        [pinConfirmation confirmPin:pin];
+        [pinConfirmation respondWithPin:pin challenge:pinConfirmation];
     };
     [[AppDelegate sharedNavigationController] presentViewController:viewController animated:YES completion:nil];
 }

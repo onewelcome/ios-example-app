@@ -23,4 +23,8 @@
 #import "ONGClientBuilder.h"
 #import "ONGErrors.h"
 #import "ONGNetworkClient.h"
+#import "ONGResourceRequest.h"
+#import "ONGRequestBuilder.h"
+#import "ONGNetworkTask.h"
+#import "ONGResourceResponse.h"
 #import "ONGRegistrationDelegate.h"

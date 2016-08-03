@@ -21,19 +21,16 @@
     return singleton;
 }
 
-- (void)getProfile:(void (^)(Profile *profile, NSError *error))completion
+- (void)getToken:(void (^)(BOOL received, NSError *error))completion
 {
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"/client/resource/token" method:@"GET"];
     [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
-        if (response.data != nil) {
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:response.data options:0 error:NULL];
-            Profile *profile = [Profile profileFromJSON:json];
-            
+        if (response.statusCode < 300) {
             if (completion) {
-                completion(profile, nil);
+                completion(YES, nil);
             }
         } else if (completion) {
-            completion(nil, error);
+            completion(NO, error);
         }
     }];
 }

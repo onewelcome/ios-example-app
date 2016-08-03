@@ -9,6 +9,6 @@
 
 + (instancetype)sharedInstance;
 
-- (void)getProfile:(void (^)(Profile *profile, NSError *error))completion;
+- (void)getToken:(void (^)(BOOL received, NSError *error))completion;
 
 @end

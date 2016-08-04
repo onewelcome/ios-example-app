@@ -31,11 +31,6 @@
 	[[ONGUserClient sharedInstance] authenticateUser:user delegate:self];
 }
 
-- (void)registerNewUser
-{
-	[[ONGUserClient sharedInstance] registerUser:@[@"read"] delegate:self];
-}
-
 - (BOOL)isAuthenticated
 {
 	return [[ONGUserClient sharedInstance] isAuthorized];
@@ -48,67 +43,35 @@
 
 #pragma mark - OGAuthenticationDelegete
 
-- (void)authenticationSuccessForUser:(ONGUserProfile *)userProfile
+-(void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile
 {
-	ProfileViewController *viewController = [ProfileViewController new];
-	[[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
+    ProfileViewController *viewController = [ProfileViewController new];
+    [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }
 
-- (void)requestAuthenticationCode:(NSURL *)url
-{
-    WebBrowserViewController *webBrowserViewController = [WebBrowserViewController new];
-    webBrowserViewController.url = url;
-    webBrowserViewController.completionBlock = ^(NSURL *completionURL) {
-        if ([[AppDelegate sharedNavigationController].presentedViewController isKindOfClass:WebBrowserViewController.class]) {
-            [[AppDelegate sharedNavigationController] dismissViewControllerAnimated:YES completion:nil];
-        }
-    };
-    [[AppDelegate sharedNavigationController] presentViewController:webBrowserViewController animated:YES completion:nil];
-}
-
-- (void)authenticationError:(NSError *)error
+-(void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
     [self handleAuthError:error];
 }
 
-- (void)authenticationErrorInvalidGrant:(NSUInteger)remaining
+-(void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
 {
-    if ([[AppDelegate sharedNavigationController].topViewController isKindOfClass:PinViewController.class]) {
-        PinViewController *pinViewController = (PinViewController *)[AppDelegate sharedNavigationController].topViewController;
-        [pinViewController reset];
-        [pinViewController showError:[NSString stringWithFormat:@"Wrong Pin. Remaining attempts: %ld", remaining]];
+    if (challenge.previousFailureCount) {
+        if ([[AppDelegate sharedNavigationController].topViewController isKindOfClass:PinViewController.class]) {
+            PinViewController *pinViewController = (PinViewController *)[AppDelegate sharedNavigationController].topViewController;
+            [pinViewController reset];
+            [pinViewController showError:[NSString stringWithFormat:@"Wrong Pin. Remaining attempts: %ld", challenge.remainingFailureCount]];
+        }
+    } else {
+        PinViewController *viewController = [PinViewController new];
+        viewController.pinLength = 5;
+        viewController.mode = PINCheckMode;
+        viewController.profile = challenge.userProfile;
+        viewController.pinEntered = ^(NSString *pin) {
+            [challenge.sender respondWithPin:pin challenge:challenge];
+        };
+        [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
     }
-}
-
-- (void)askForNewPin:(NSUInteger)pinSize user:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGNewPinConfirmation>)delegate
-{
-    PinViewController *viewController = [PinViewController new];
-    viewController.pinLength = pinSize;
-    viewController.mode = PINRegistrationMode;
-    viewController.profile = userProfile;
-    viewController.pinEntered = ^(NSString *pin) {
-        [delegate confirmNewPin:pin validation:self];
-    };
-    [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
-}
-
-- (void)askForCurrentPinForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinConfirmation>)delegate
-{
-    PinViewController *viewController = [PinViewController new];
-    viewController.pinLength = 5;
-    viewController.mode = PINCheckMode;
-    viewController.profile = userProfile;
-    viewController.pinEntered = ^(NSString *pin) {
-        [delegate confirmPin:pin];
-    };
-    [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
-}
-
-#pragma mark - OGPinValidationDelegate
-
-- (void)pinEntryError:(NSError *)error
-{
-    [self handlePinPolicyValidationError:error];
 }
 
 #pragma mark - 
@@ -125,16 +88,5 @@
     [alert addAction:okButton];
     [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
 }
-
-- (void)handlePinPolicyValidationError:(NSError *)error
-{
-    if ([[AppDelegate sharedNavigationController].topViewController isKindOfClass:PinViewController.class]) {
-        PinViewController *pinViewController = (PinViewController *)[AppDelegate sharedNavigationController].topViewController;
-        pinViewController.mode = PINRegistrationMode;
-        [pinViewController reset];
-        [pinViewController showError:error.localizedDescription];
-    }
-}
-
 
 @end

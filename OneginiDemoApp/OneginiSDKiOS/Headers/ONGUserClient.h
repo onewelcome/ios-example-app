@@ -1,26 +1,24 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-
 #import "ONGResourceHandlerDelegate.h"
-#import "ONGEnrollmentHandlerDelegate.h"
 #import "ONGPinValidationDelegate.h"
 #import "ONGChangePinDelegate.h"
 #import "ONGPublicCommons.h"
 #import "ONGDisconnectDelegate.h"
 #import "ONGDeregistrationDelegate.h"
 #import "ONGFingerprintDelegate.h"
-#import "ONGLogoutDelegate.h"
 #import "ONGCustomizationDelegate.h"
 #import "ONGAuthenticationDelegate.h"
-#import "ONGClientAuthenticationDelegate.h"
+#import "ONGDeviceAuthenticationDelegate.h"
 #import "ONGUserProfile.h"
 #import "ONGMobileAuthenticationDelegate.h"
 #import "ONGConfigModel.h"
 
+@protocol ONGRegistrationDelegate;
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMethodInspection"
-#pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedPropertyInspection"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -30,7 +28,18 @@ NS_ASSUME_NONNULL_BEGIN
  *  The public API of the SDK consists of this client and an authorization delegate.
  *  The client must be instantiated early in the App lifecycle and thereafter only referred to by it's shared instance.
  */
-@interface ONGOneginiClient : NSObject
+@interface ONGUserClient : NSObject
+
+/**
+ * Returns a string with access token for the currently authenticated user, or nil if no user is currently
+ * authenticated.
+ *
+ * <strong>Warning</strong>: Do not use this method if you want to fetch resources from your resource gateway: use the resource methods
+ * instead.
+ *
+ * @return String with access token or nil
+ */
+@property (nonatomic, readonly, nullable) NSString *accessToken;
 
 /**
  *  Registers delegate handling customizable properties within the SDK.
@@ -38,20 +47,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic, nullable) id<ONGCustomizationDelegate> customizationDelegate;
 
 /**
-* Access to the initialized and configured instance of the `ONGOneginiClient`. Before calling this method You have to initialize
+* Access to the initialized and configured instance of the `ONGUserClient`. Before calling this method You have to initialize
 * SDK by calling `-[ONGClientBuilder build]`.
 *
-* @return instance of the configured `ONGOneginiClient`.
+* @return instance of the configured `ONGUserClient`.
 *
 * @see `ONGClientBuilder`, `-[ONGClient userClient]`
 *
 * @warning If the SDK is not initialized via `-[ONGClientBuilder build]` this method throws an exception.
 */
-+ (ONGOneginiClient *)sharedInstance;
++ (ONGUserClient *)sharedInstance;
 
 /**
- * Developers should not try to instantiate SDK on their own. The only valid way to get `ONGOneginiClient` instance is by
- * calling `-[ONGOneginiClient sharedInstance]`.
+ * Developers should not try to instantiate SDK on their own. The only valid way to get `ONGUserClient` instance is by
+ * calling `-[ONGUserClient sharedInstance]`.
  *
  * @see -sharedInstance
  */
@@ -61,34 +70,26 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Main entry point into the authentication process.
  *
- *  @param profile profile to authenticate
- *  @param delegate authentication delegate
+ *  @param userProfile profile to authenticate
+ *  @param delegate authentication delegate, ONGUserClient keeps weak reference on delegate to avoid retain cycles
  */
-- (void)authenticateUser:(ONGUserProfile *)profile delegate:(id<ONGAuthenticationDelegate>)delegate;
+- (void)authenticateUser:(ONGUserProfile *)userProfile delegate:(id<ONGAuthenticationDelegate>)delegate;
 
 /**
- *  Main entry point into the enrollment process.
+ *  Main entry point into the registration process.
  *
  *  @param scopes array of scopes
- *  @param delegate authentication delegate
+ *  @param delegate registration delegate, ONGUserClient keeps weak reference on delegate to avoid retain cycles
  */
-- (void)registerUser:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGAuthenticationDelegate>)delegate;
+- (void)registerUser:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGRegistrationDelegate>)delegate;
 
 /**
- *  Forces profiles's reauthorization.
+ *  Forces profiles reauthentication.
  *
- *  @param profile profile to authenticate
- *  @param delegate authentication delegate
+ *  @param userProfile profile to reauthenticate
+ *  @param delegate authentication delegate, ONGUserClient keeps weak reference on delegate to avoid retain cycles
  */
-- (void)reauthenticateUser:(ONGUserProfile *)profile delegate:(id<ONGAuthenticationDelegate>)delegate;
-
-/**
- *  Performs client's authentication. Uses client's credentials to request an accessToken object, which can be used for performing anonymous resource calls.
- *
- *  @param scopes array of scopes
- *  @param delegate authentication delegate
- */
-- (void)authenticateClient:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGClientAuthenticationDelegate>)delegate;
+- (void)reauthenticateUser:(ONGUserProfile *)userProfile delegate:(id<ONGAuthenticationDelegate>)delegate;
 
 /**
  *  Initiates the PIN change sequence.
@@ -134,9 +135,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  Performs a user logout, by invalidating the access token.
  *  The refresh token and client credentials remain untouched.
  *
- *  @param delegate logout delegate
+ *  This error will be either within the ONGGenericErrorDomain or the ONGLogoutErrorDomain
+ *
+ *  @param completion completion block that is going to be invoked upon logout completion
  */
-- (void)logoutUserWithDelegate:(id<ONGLogoutDelegate>)delegate;
+- (void)logoutUser:(nullable void (^)(ONGUserProfile *userProfile, NSError *_Nullable error))completion;
 
 /**
  *  Clears the client credentials.
@@ -192,50 +195,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isFingerprintAuthenticationAvailable;
 
 /**
- *  Fetches a user specific resource.
- *
- *  @param path part of URL appended to base URL provided in Onegini client configuration.
- *  @param requestMethod HTTP request method, can be one of @"GET", @"POST", @"PUT" and @"DELETE".
- *  @param params additional request parameters. Parameters are appended to URL or provided within a body depending on the request method.
- *  @param paramsEncoding encoding used for params, possible values are ONGJSONParameterEncoding, ONGFormURLParameterEncoding or ONGPropertyListParameterEncoding
- *  @param headers additional headers added to HTTP request. Onegini SDK takes responsibility of managing `Authorization`and `User-Agent` headers.
- *  @param delegate object responsible for handling resource callbacks. Onegini client invokes the delegate callback with the response payload.
- *  @return requestId unique request ID.
- */
-- (NSString *)fetchResource:(NSString *)path
-              requestMethod:(NSString *)requestMethod
-                     params:(nullable NSDictionary<NSString *, NSString *> *)params
-             paramsEncoding:(ONGHTTPClientParameterEncoding)paramsEncoding
-                    headers:(nullable NSDictionary<NSString *, NSString *> *)headers
-                   delegate:(id<ONGResourceHandlerDelegate>)delegate;
-
-/**
  *  Enrolls the currently connected device for mobile push authentication.
  *
  *  The device push token must be stored in the session before invoking this method.
  *  @see storeDevicePushTokenInSession:
  *
- *  @param delegate delegate handling mobile enrollment callbacks
- */
-- (void)enrollUserForMobileAuthenticationWithDelegate:(id<ONGEnrollmentHandlerDelegate>)delegate;
-
-/**
- *  Fetches a resource anonymously using a client access token.
+ *  This error will be either within the ONGGenericErrorDomain or the ONGMobileAuthenticationEnrollmentErrorDomain
  *
- *  @param path part of URL appended to base URL provided in Onegini client configuration.
- *  @param requestMethod HTTP request method, can be one of @"GET", @"POST", @"PUT" and @"DELETE".
- *  @param params additional request parameters. Parameters are appended to URL or provided within a body depending on the request method.
- *  @param paramsEncoding encoding used for params, possible values are ONGJSONParameterEncoding, ONGFormURLParameterEncoding or ONGPropertyListParameterEncoding
- *  @param headers additional headers added to HTTP request. Onegini SDK takes responsibility of managing `Authorization`and `User-Agent` headers.
- *  @param delegate object responsible for handling resource callbacks. Onegini client invokes the delegate callback with the response payload.
- *  @return requestId unique request ID.
+ *  @param completion delegate handling mobile enrollment callbacks
  */
-- (NSString *)fetchAnonymousResource:(NSString *)path
-                       requestMethod:(NSString *)requestMethod
-                              params:(nullable NSDictionary<NSString *, NSString *> *)params
-                      paramsEncoding:(ONGHTTPClientParameterEncoding)paramsEncoding
-                             headers:(nullable NSDictionary<NSString *, NSString *> *)headers
-                            delegate:(id<ONGResourceHandlerDelegate>)delegate;
+- (void)enrollForMobileAuthentication:(void (^)(BOOL enrolled, NSError *_Nullable error))completion;
 
 /**
  *  When a push notification is received by the application, the notificaton must be forwarded to the client.
@@ -268,19 +237,25 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deregisterUser:(ONGUserProfile *)userProfile delegate:(id<ONGDeregistrationDelegate>)delegate;
 
 /**
- * Returns a string with access token for the currently authenticated user, or nil if no user is currently
- * authenticated.
+ *  Fetches a user specific resource.
  *
- * <strong>Warning</strong>: Do not use this method if you want to fetch resources from your resource gateway: use the resource methods
- * instead.
- *
- * @return String with access token or nil
+ *  @param path part of URL appended to base URL provided in Onegini client configuration.
+ *  @param requestMethod HTTP request method, can be one of @"GET", @"POST", @"PUT" and @"DELETE".
+ *  @param params additional request parameters. Parameters are appended to URL or provided within a body depending on the request method.
+ *  @param paramsEncoding encoding used for params, possible values are ONGJSONParameterEncoding, ONGFormURLParameterEncoding or ONGPropertyListParameterEncoding
+ *  @param headers additional headers added to HTTP request. Onegini SDK takes responsibility of managing `Authorization`and `User-Agent` headers.
+ *  @param delegate object responsible for handling resource callbacks. Onegini client invokes the delegate callback with the response payload.
+ *  @return requestId unique request ID.
  */
-- (nullable NSString *)accessToken;
+- (NSString *)fetchResource:(NSString *)path
+              requestMethod:(NSString *)requestMethod
+                     params:(nullable NSDictionary<NSString *, NSString *> *)params
+             paramsEncoding:(ONGHTTPClientParameterEncoding)paramsEncoding
+                    headers:(nullable NSDictionary<NSString *, NSString *> *)headers
+                   delegate:(id<ONGResourceHandlerDelegate>)delegate;
 
 @end
 
 NS_ASSUME_NONNULL_END
 
-#pragma clang diagnostic pop
 #pragma clang diagnostic pop

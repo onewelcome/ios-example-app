@@ -2,6 +2,7 @@
 
 #import "ResourceController.h"
 #import "Profile.h"
+#import "OneginiSDK.h"
 
 @interface ResourceController ()
 
@@ -26,7 +27,8 @@
 - (void)getProfile:(void (^)(Profile *profile, NSError *error))completion
 {
     self.callback = completion;
-    [[ONGUserClient sharedInstance] fetchResource:@"/api/persons" requestMethod:@"GET" params:nil paramsEncoding:ONGJSONParameterEncoding headers:nil delegate:self];
+    
+    [[ONGUserClient sharedInstance] fetchResource:@"/client/resource/token" requestMethod:@"GET" params:nil paramsEncoding:ONGJSONParameterEncoding headers:nil delegate:self];
 }
 
 - (void)handleResponse:(NSData *)response

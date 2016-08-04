@@ -3,7 +3,7 @@
 #import <Foundation/Foundation.h>
 #import "OneginiSDK.h"
 
-@interface ClientAuthenticationController : NSObject<ONGClientAuthenticationDelegate>
+@interface ClientAuthenticationController : NSObject<ONGDeviceAuthenticationDelegate>
 
 + (instancetype)sharedInstance;
 

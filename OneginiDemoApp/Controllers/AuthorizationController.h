@@ -3,7 +3,7 @@
 #import <Foundation/Foundation.h>
 #import "OneginiSDK.h"
 
-@interface AuthorizationController : NSObject<ONGAuthenticationDelegate, ONGPinValidationDelegate>
+@interface AuthorizationController : NSObject<ONGAuthenticationDelegate>
 
 + (AuthorizationController *)sharedInstance;
 
@@ -11,7 +11,5 @@
 @property (nonatomic, readonly) ONGUserProfile *authenticatedUserProfile;
 
 - (void)authenticateUser:(ONGUserProfile *)user;
-
-- (void)registerNewUser;
 
 @end

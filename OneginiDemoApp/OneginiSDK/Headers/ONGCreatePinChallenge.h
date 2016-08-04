@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param pin PIN provided by the user
  * @param challenge create pin challenge for which the response is made
  */
-- (void)respondWithPin:(NSString *)pin challenge:(ONGCreatePinChallenge *)challenge;
+- (void)respondWithCreatedPin:(NSString *)pin challenge:(ONGCreatePinChallenge *)challenge;
 
 @end
 

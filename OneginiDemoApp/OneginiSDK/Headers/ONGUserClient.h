@@ -95,7 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param delegate Object handling change pin callbacks
  */
-- (void)changePinRequest:(id<ONGChangePinDelegate>)delegate;
+- (void)changePin:(id<ONGChangePinDelegate>)delegate;
 
 /**
  *  Determines if the user is authorized.

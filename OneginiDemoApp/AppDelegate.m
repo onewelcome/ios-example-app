@@ -31,7 +31,7 @@
 
     self.window.rootViewController = [AppDelegate sharedNavigationController];
     [self.window makeKeyAndVisible];
-    
+
     [[[[ONGClientBuilder new] setUseEmbeddedWebView:YES] setStoreCookies:YES] build];
     
     [[ONGClientBuilder new] build];

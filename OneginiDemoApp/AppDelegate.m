@@ -35,7 +35,7 @@
     [[[[ONGClientBuilder new] setUseEmbeddedWebView:YES] setStoreCookies:YES] build];
     
     [[ONGClientBuilder new] build];
-    [[ONGClient sharedInstance] takeOff:nil];
+    [[ONGClient sharedInstance] start:nil];
 
     UIUserNotificationType supportedTypes = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:supportedTypes categories:nil];

@@ -33,6 +33,19 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedInstance;
 
 /**
+ * Is a mandatory first call on ONGClient which is returned by `-[ONGClientBuilder build]`.
+ *
+ * @param completion is called after the method processing has finished. If the SDK is successfully started, other further work is allowed.
+ *
+ *  @param error in one of the steps of the authentication process. This error will be either within the ONGGenericErrorDomain or the ONGSDKInitializationErrorDomain
+ *
+ * @see `ONGClientBuilder`
+ *
+ */
+
+- (void)start:(void (^)(BOOL success, NSError * _Nullable error))completion;
+
+/**
  * Developers should not try to instantiate SDK on their own. The only valid way to get `ONGClient` instance is by
  * calling `-[ONGClient sharedInstance]`.
  *

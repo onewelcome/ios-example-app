@@ -205,5 +205,13 @@ ONG_EXTERN NSString *const ONGFetchAnonymousResourceErrorDomain;
 typedef NS_ENUM(ONGErrorCode, ONGFetchAnonymousResourceError) {
     ONGFetchAnonymousResourceErrorInvalidMethod = 10100, // provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
     ONGFetchAnonymousResourceErrorDeviceNotAuthenticated = 10101, // A device access token could not be retrieved. Check your Application configuration in the Token Server
-    ONGFetchAnonymousResourceErrorDeviceRegistrationFailure = 10102, // The device could not be registered with the Token Server, verify that the SDK configuration, Token Server configuration and security features are correctly configured
+};
+
+/**
+ * Error codes in ONGSDKInitializationErrorDomain
+ */
+ONG_EXTERN NSString *const ONGSDKInitializationErrorDomain;
+
+typedef NS_ENUM(ONGErrorCode, ONGSDKInitializationError) {
+    ONGSDKInitialisationErrorDeviceRegistrationFailed = 10200, // The device could not be registered with the Token Server, verify that the SDK configuration, Token Server configuration and security features are correctly configured
 };

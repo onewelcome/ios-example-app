@@ -15,6 +15,8 @@
 #import "ONGMobileAuthenticationDelegate.h"
 #import "ONGConfigModel.h"
 
+@protocol ONGRegistrationDelegate;
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMethodInspection"
 #pragma ide diagnostic ignored "OCUnusedPropertyInspection"
@@ -57,26 +59,26 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Main entry point into the authentication process.
  *
- *  @param profile profile to authenticate
- *  @param delegate authentication delegate
+ *  @param userProfile profile to authenticate
+ *  @param delegate authentication delegate, ONGUserClient keeps weak reference on delegate to avoid retain cycles
  */
-- (void)authenticateUser:(ONGUserProfile *)profile delegate:(id<ONGAuthenticationDelegate>)delegate;
+- (void)authenticateUser:(ONGUserProfile *)userProfile delegate:(id<ONGAuthenticationDelegate>)delegate;
 
 /**
- *  Main entry point into the enrollment process.
+ *  Main entry point into the registration process.
  *
  *  @param scopes array of scopes
- *  @param delegate authentication delegate
+ *  @param delegate registration delegate, ONGUserClient keeps weak reference on delegate to avoid retain cycles
  */
-- (void)registerUser:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGAuthenticationDelegate>)delegate;
+- (void)registerUser:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGRegistrationDelegate>)delegate;
 
 /**
- *  Forces profiles's reauthorization.
+ *  Forces profiles reauthentication.
  *
- *  @param profile profile to authenticate
- *  @param delegate authentication delegate
+ *  @param userProfile profile to reauthenticate
+ *  @param delegate authentication delegate, ONGUserClient keeps weak reference on delegate to avoid retain cycles
  */
-- (void)reauthenticateUser:(ONGUserProfile *)profile delegate:(id<ONGAuthenticationDelegate>)delegate;
+- (void)reauthenticateUser:(ONGUserProfile *)userProfile delegate:(id<ONGAuthenticationDelegate>)delegate;
 
 /**
  *  Performs client's authentication. Uses client's credentials to request an accessToken object, which can be used for performing anonymous resource calls.

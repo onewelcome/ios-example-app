@@ -1,65 +1,64 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "ONGPinConfirmation.h"
-#import "ONGNewPinConfirmation.h"
-#import "ONGUserProfile.h"
+
+@class ONGUserClient;
+@class ONGUserProfile;
+@class ONGPinChallenge;
+@class ONGFingerprintChallenge;
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
- *  This delegate provides the interface from the ONGUserClient to the App implementation.
- *  All invocations are performed asynchronous and on the main queue.
+ *  Protocol describing interface for objects implementing methods required to complete authentication.
+ *  All invocations are performed on the main queue.
  */
 @protocol ONGAuthenticationDelegate<NSObject>
 
 /**
- *  The user is successfully authenticated.
+ *  Method called when authentication action requires PIN code to continue.
+ *
+ *  @param userClient user client performing authentication
+ *  @param challenge pin challenge used to complete authentication
  */
-- (void)authenticationSuccessForUser:(ONGUserProfile *)userProfile;
+- (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge;
+
+@optional
 
 /**
- *  Requests the authentication token.
- *  The SDK can't handle the redirect itself it is therefore the responsibility
- *  of the delegate implementation to open the URL by means of the default application
- *  [[UIApplication sharedApplication] openURL:url] or by using a custom component.
+ *  Method called when authentication action requires TouchID to continue. Its called before asking user for fingerprint.
+ *  If its not implemented SDK will continue automatically.
  *
- *  @see UIApplication
- *  @param url url
+ *  @param userClient user client performing authentication
+ *  @param challenge fingerprint challenge used to complete authentication
  */
-- (void)requestAuthenticationCode:(NSURL *)url;
+- (void)userClient:(ONGUserClient *)userClient didReceiveFingerprintChallenge:(ONGFingerprintChallenge *)challenge;
 
 /**
- *  Asks the user for a new PIN.
- *  The implementor should present a PIN entry dialog with a second verification entry.
- *  The PIN must be forwarded directly to the client and not be stored by any means.
- *  Call the ONGNewPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
- *  The new PIN must satisfy any PIN policy constraints.
+ *  Method called when authentication action is started.
  *
- *  @param pinSize the size of the PIN value
+ *  @param userClient user client performing authentication
+ *  @param userProfile currently authenticated user profile
  */
-- (void)askForNewPin:(NSUInteger)pinSize user:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGNewPinConfirmation>)delegate;
+- (void)userClient:(ONGUserClient *)userClient didStartAuthenticationForUser:(ONGUserProfile *)userProfile;
 
 /**
- *  Asks the user to provide the PIN for confirmation of the authentication request.
+ *  Method called when authentication action is completed with success.
  *
- *  The implementor should present a PIN entry dialog and must forward the PIN directly to the client and not store the PIN by any means.
- *  Call the ONGPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
+ *  @param userClient user client performing authentication
+ *  @param userProfile successfully authenticated user profile
  */
-- (void)askForCurrentPinForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinConfirmation>)delegate;
+- (void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile;
 
 /**
- *  The access grant or refresh token provided by the client is invalid.
+ *  Method called when authentication action failed with error.
  *
- *  @param remaining the number of remaining attempts for the token becomes invalid
+ *  @param userClient user client performing authentication
+ *  @param userProfile user profile for which authentication failed
+ *  @param error error describing cause of an error
  */
-- (void)authenticationErrorInvalidGrant:(NSUInteger)remaining;
-
-/**
- *  An error occured during the authentication request.
- *
- *  This error will be either within the ONGGenericErrorDomain or the ONGRegistrationErrorDomain
- *
- *  @param error in one of the steps of the authentication process
- */
-- (void)authenticationError:(NSError *)error;
+- (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

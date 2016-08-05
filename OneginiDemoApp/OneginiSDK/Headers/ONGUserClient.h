@@ -31,17 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ONGUserClient : NSObject
 
 /**
- * Returns a string with access token for the currently authenticated user, or nil if no user is currently
- * authenticated.
- *
- * <strong>Warning</strong>: Do not use this method if you want to fetch resources from your resource gateway: use the resource methods
- * instead.
- *
- * @return String with access token or nil
- */
-@property (nonatomic, readonly, nullable) NSString *accessToken;
-
-/**
  *  Registers delegate handling customizable properties within the SDK.
  */
 @property (weak, nonatomic, nullable) id<ONGCustomizationDelegate> customizationDelegate;
@@ -253,6 +242,18 @@ NS_ASSUME_NONNULL_BEGIN
              paramsEncoding:(ONGHTTPClientParameterEncoding)paramsEncoding
                     headers:(nullable NSDictionary<NSString *, NSString *> *)headers
                    delegate:(id<ONGResourceHandlerDelegate>)delegate;
+
+
+/**
+ * Returns a access token for the currently authenticated user, or nil if no user is currently
+ * authenticated.
+ *
+ * <strong>Warning</strong>: Do not use this method if you want to fetch resources from your resource gateway: use the resource methods
+ * instead.
+ *
+ * @return String with access token or nil
+ */
+@property (nonatomic, readonly, nullable) NSString *accessToken;
 
 @end
 

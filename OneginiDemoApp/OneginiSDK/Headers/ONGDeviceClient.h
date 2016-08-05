@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- *  Performs client's authentication. Uses client's credentials to request an accessToken object, which can be used for performing anonymous resource calls.
+ *  Performs device authentication.
  *
  *  @param scopes array of scopes
  *  @param delegate authentication delegate
@@ -46,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Fetches a resource anonymously using a client access token.
+ *  Requires deviece to be authenticated.
  *
  *  @param path part of URL appended to base URL provided in Onegini client configuration.
  *  @param requestMethod HTTP request method, can be one of @"GET", @"POST", @"PUT" and @"DELETE".

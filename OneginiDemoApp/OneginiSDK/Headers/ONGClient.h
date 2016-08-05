@@ -8,13 +8,13 @@
 #pragma ide diagnostic ignored "OCUnusedMethodInspection"
 #pragma ide diagnostic ignored "OCUnusedPropertyInspection"
 
-@class ONGNetworkClient;
+@class ONGDeviceClient;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Main entry point for the Onegini SDK. This class owns SDK's configuration and such clients as `ONGUserClient` and
- * `ONGNetworkClient`. In order to use any feature of the OneginiSDK `-[ONGClientBuilder build]` needs to be called first.
+ * `ONGDeviceClient`. In order to use any feature of the OneginiSDK `-[ONGClientBuilder build]` needs to be called first.
  *
  * @see `ONGClientBuilder`
  */
@@ -55,12 +55,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) ONGUserClient *userClient;
 
 /**
- * Instance of `ONGNetworkClient` used for network-related features. Once SDK has been configured, `ONGNetworkClient`
- * can be access either by calling this property or by `-[ONGNetworkClient sharedInstance]`.
+ * Instance of `ONGDeviceClient` used for device and network-related features. Once SDK has been configured, `ONGDeviceClient`
+ * can be access either by calling this property or by `-[ONGDeviceClient sharedInstance]`.
  *
- * @see `-[ONGNetworkClient sharedInstance]`
+ * @see `-[ONGDeviceClient sharedInstance]`
  */
-@property (nonatomic, readonly) ONGNetworkClient *networkClient;
+@property (nonatomic, readonly) ONGDeviceClient *deviceClient;
 
 @end
 

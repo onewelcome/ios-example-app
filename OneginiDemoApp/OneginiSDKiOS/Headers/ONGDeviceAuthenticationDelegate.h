@@ -2,7 +2,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol ONGClientAuthenticationDelegate<NSObject>
+@protocol ONGDeviceAuthenticationDelegate<NSObject>
 
 /**
  *  The client is successfully authenticated.

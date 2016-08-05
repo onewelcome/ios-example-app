@@ -28,7 +28,7 @@
 {
     self.callback = completion;
     
-    [[ONGNetworkClient sharedInstance] fetchResource:@"/client/resource/token" requestMethod:@"GET" params:nil paramsEncoding:ONGJSONParameterEncoding headers:nil delegate:self];
+    [[ONGUserClient sharedInstance] fetchResource:@"/client/resource/token" requestMethod:@"GET" params:nil paramsEncoding:ONGJSONParameterEncoding headers:nil delegate:self];
 }
 
 - (void)handleResponse:(NSData *)response

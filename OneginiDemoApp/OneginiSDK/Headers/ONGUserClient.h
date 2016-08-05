@@ -10,7 +10,7 @@
 #import "ONGFingerprintDelegate.h"
 #import "ONGCustomizationDelegate.h"
 #import "ONGAuthenticationDelegate.h"
-#import "ONGClientAuthenticationDelegate.h"
+#import "ONGDeviceAuthenticationDelegate.h"
 #import "ONGUserProfile.h"
 #import "ONGMobileAuthenticationDelegate.h"
 #import "ONGConfigModel.h"
@@ -29,6 +29,17 @@ NS_ASSUME_NONNULL_BEGIN
  *  The client must be instantiated early in the App lifecycle and thereafter only referred to by it's shared instance.
  */
 @interface ONGUserClient : NSObject
+
+/**
+ * Returns a string with access token for the currently authenticated user, or nil if no user is currently
+ * authenticated.
+ *
+ * <strong>Warning</strong>: Do not use this method if you want to fetch resources from your resource gateway: use the resource methods
+ * instead.
+ *
+ * @return String with access token or nil
+ */
+@property (nonatomic, readonly, nullable) NSString *accessToken;
 
 /**
  *  Registers delegate handling customizable properties within the SDK.
@@ -79,14 +90,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param delegate authentication delegate, ONGUserClient keeps weak reference on delegate to avoid retain cycles
  */
 - (void)reauthenticateUser:(ONGUserProfile *)userProfile delegate:(id<ONGAuthenticationDelegate>)delegate;
-
-/**
- *  Performs client's authentication. Uses client's credentials to request an accessToken object, which can be used for performing anonymous resource calls.
- *
- *  @param scopes array of scopes
- *  @param delegate authentication delegate
- */
-- (void)authenticateClient:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGClientAuthenticationDelegate>)delegate;
 
 /**
  *  Initiates the PIN change sequence.
@@ -232,6 +235,24 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param delegate delegate
  */
 - (void)deregisterUser:(ONGUserProfile *)userProfile delegate:(id<ONGDeregistrationDelegate>)delegate;
+
+/**
+ *  Fetches a user specific resource.
+ *
+ *  @param path part of URL appended to base URL provided in Onegini client configuration.
+ *  @param requestMethod HTTP request method, can be one of @"GET", @"POST", @"PUT" and @"DELETE".
+ *  @param params additional request parameters. Parameters are appended to URL or provided within a body depending on the request method.
+ *  @param paramsEncoding encoding used for params, possible values are ONGJSONParameterEncoding, ONGFormURLParameterEncoding or ONGPropertyListParameterEncoding
+ *  @param headers additional headers added to HTTP request. Onegini SDK takes responsibility of managing `Authorization`and `User-Agent` headers.
+ *  @param delegate object responsible for handling resource callbacks. Onegini client invokes the delegate callback with the response payload.
+ *  @return requestId unique request ID.
+ */
+- (NSString *)fetchResource:(NSString *)path
+              requestMethod:(NSString *)requestMethod
+                     params:(nullable NSDictionary<NSString *, NSString *> *)params
+             paramsEncoding:(ONGHTTPClientParameterEncoding)paramsEncoding
+                    headers:(nullable NSDictionary<NSString *, NSString *> *)headers
+                   delegate:(id<ONGResourceHandlerDelegate>)delegate;
 
 @end
 

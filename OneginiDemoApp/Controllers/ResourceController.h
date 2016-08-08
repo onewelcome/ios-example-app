@@ -5,10 +5,10 @@
 
 @class Profile;
 
-@interface ResourceController : NSObject <ONGResourceHandlerDelegate>
+@interface ResourceController : NSObject
 
 + (instancetype)sharedInstance;
 
-- (void)getProfile:(void (^)(Profile *profile, NSError *error))completion;
+- (void)getToken:(void (^)(BOOL received, NSError *error))completion;
 
 @end

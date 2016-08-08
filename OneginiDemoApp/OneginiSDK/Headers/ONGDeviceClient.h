@@ -2,9 +2,12 @@
 
 #import <Foundation/Foundation.h>
 #import "ONGPublicCommons.h"
-#import "ONGDeviceAuthenticationDelegate.h"
 
+@protocol ONGDeviceAuthenticationDelegate;
 @protocol ONGResourceHandlerDelegate;
+@class ONGNetworkTask;
+@class ONGResourceRequest;
+@class ONGResourceResponse;
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMethodInspection"
@@ -45,23 +48,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)authenticateDevice:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGDeviceAuthenticationDelegate>)delegate;
 
 /**
- *  Fetches a resource anonymously using a client access token.
- *  Requires deviece to be authenticated.
+ * Perform an authenticated network request. It requires passing an instance of the `ONGResourceRequest` as parameter.
+ * In case of a malformed request no task will be returned and the completion block is called immediatelly (sychronously).
+ * The device needs to be authenticated, otherwise SDK will return the `ONGFetchAnonymousResourceErrorDeviceNotAuthenticated` error.
  *
- *  @param path part of URL appended to base URL provided in Onegini client configuration.
- *  @param requestMethod HTTP request method, can be one of @"GET", @"POST", @"PUT" and @"DELETE".
- *  @param params additional request parameters. Parameters are appended to URL or provided within a body depending on the request method.
- *  @param paramsEncoding encoding used for params, possible values are ONGJSONParameterEncoding, ONGFormURLParameterEncoding or ONGPropertyListParameterEncoding
- *  @param headers additional headers added to HTTP request. Onegini SDK takes responsibility of managing `Authorization`and `User-Agent` headers.
- *  @param delegate object responsible for handling resource callbacks. Onegini client invokes the delegate callback with the response payload.
- *  @return requestId unique request ID.
+ * The returned errors will be within the ONGGenericErrorDomain, ONGFetchAnonymousResourceErrorDomain or NSURLErrorDomain.
+ *
+ * @param request instance of `ONGResourceRequest` instantiated manually or by using `ONGRequestBuilder`
+ * @param completion block that will be called either upon request completion or immediatelly in case if validation error.
+ * @return instance of `ONGNetworkTask` or nil. By utilizing `ONGNetworkTask` developer may observe and control execution of the request.
  */
-- (NSString *)fetchAnonymousResource:(NSString *)path
-                       requestMethod:(NSString *)requestMethod
-                              params:(nullable NSDictionary<NSString *, NSString *> *)params
-                      paramsEncoding:(ONGHTTPClientParameterEncoding)paramsEncoding
-                             headers:(nullable NSDictionary<NSString *, NSString *> *)headers
-                            delegate:(id<ONGResourceHandlerDelegate>)delegate;
+- (nullable ONGNetworkTask *)fetchResource:(ONGResourceRequest *)request completion:(nullable void (^)(ONGResourceResponse * _Nullable response, NSError * _Nullable error))completion;
 
 @end
 

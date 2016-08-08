@@ -1,11 +1,9 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "ONGResourceHandlerDelegate.h"
 #import "ONGPinValidationDelegate.h"
 #import "ONGChangePinDelegate.h"
 #import "ONGPublicCommons.h"
-#import "ONGDisconnectDelegate.h"
 #import "ONGDeregistrationDelegate.h"
 #import "ONGFingerprintDelegate.h"
 #import "ONGCustomizationDelegate.h"
@@ -14,6 +12,8 @@
 #import "ONGUserProfile.h"
 #import "ONGMobileAuthenticationDelegate.h"
 #import "ONGConfigModel.h"
+#import "ONGResourceRequest.h"
+#import "ONGNetworkTask.h"
 
 @protocol ONGRegistrationDelegate;
 
@@ -226,23 +226,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deregisterUser:(ONGUserProfile *)userProfile delegate:(id<ONGDeregistrationDelegate>)delegate;
 
 /**
- *  Fetches a user specific resource.
+ * Perform an authenticated network request. It requires passing an instance of the `ONGResourceRequest` as parameter.
+ * In case of a malformed request no task will be returned and the completion block is called immediatelly (sychronously).
+ * The User needs to be authenticated, otherwise SDK will return the `ONGFetchResourceErrorUserNotAuthenticated` error.
  *
- *  @param path part of URL appended to base URL provided in Onegini client configuration.
- *  @param requestMethod HTTP request method, can be one of @"GET", @"POST", @"PUT" and @"DELETE".
- *  @param params additional request parameters. Parameters are appended to URL or provided within a body depending on the request method.
- *  @param paramsEncoding encoding used for params, possible values are ONGJSONParameterEncoding, ONGFormURLParameterEncoding or ONGPropertyListParameterEncoding
- *  @param headers additional headers added to HTTP request. Onegini SDK takes responsibility of managing `Authorization`and `User-Agent` headers.
- *  @param delegate object responsible for handling resource callbacks. Onegini client invokes the delegate callback with the response payload.
- *  @return requestId unique request ID.
+ * The returned errors will be within the ONGGenericErrorDomain, ONGFetchResourceErrorDomain or NSURLErrorDomain.
+ *
+ * @param request instance of `ONGResourceRequest` instantiated manually or by using `ONGRequestBuilder`
+ * @param completion block that will be called either upon request completion or immediatelly in case if validation error.
+ * @return instance of `ONGNetworkTask` or nil. By utilizing `ONGNetworkTask` developer may observe and control execution of the request.
  */
-- (NSString *)fetchResource:(NSString *)path
-              requestMethod:(NSString *)requestMethod
-                     params:(nullable NSDictionary<NSString *, NSString *> *)params
-             paramsEncoding:(ONGHTTPClientParameterEncoding)paramsEncoding
-                    headers:(nullable NSDictionary<NSString *, NSString *> *)headers
-                   delegate:(id<ONGResourceHandlerDelegate>)delegate;
-
+- (nullable ONGNetworkTask *)fetchResource:(ONGResourceRequest *)request completion:(nullable void (^)(ONGResourceResponse * _Nullable response, NSError * _Nullable error))completion;
 
 /**
  * Returns a access token for the currently authenticated user, or nil if no user is currently

@@ -18,8 +18,8 @@ typedef NS_ENUM(NSInteger, ONGNetworkTaskState) {
 };
 
 /**
- * `ONGNetworkTask` is a cancelable object, representing actual network request.
- * If offers cancellation, taking request onto pause and resuming it.
+ * `ONGNetworkTask` is a cancelable object, representing the actual network request.
+ * It offers cancelling, pausing and resuming requests.
  * Produced by `-[ONGUserClient fetchResource:completion:]` and `-[ONGDeviceClient fetchResource:completion:]`.
  *
  * @see ONGUserClient, ONGDeviceClient
@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger, ONGNetworkTaskState) {
 @property (copy, readonly) NSString *identifier;
 
 /**
- * Value representing actual state of the task. Initial is `ONGNetworkTaskStateRunning`.
+ * Value representing the actual state of the task. the initial state is: `ONGNetworkTaskStateRunning`.
  * You may want to observer it through KVO.
  *
  * @see ONGNetworkTaskState
@@ -40,52 +40,53 @@ typedef NS_ENUM(NSInteger, ONGNetworkTaskState) {
 @property (readonly) ONGNetworkTaskState state;
 
 /**
- * Request, provided to the `-[ONGUserClient fetchResource:completion:]` and `-[ONGDeviceClient fetchResource:completion:]`.
+ * The request, provided to the `-[ONGUserClient fetchResource:completion:]` and `-[ONGDeviceClient fetchResource:completion:]`.
  */
 @property (readonly) ONGResourceRequest *request;
 
 /**
- * Response value fulfilled upon completion. It may be nil if network task hasn't received any response from the server.
+ * The response value fulfilled upon completion. It may be nil if the network task hasn't received any response from the server yet.
  *
  * @see ONGResourceResponse
  */
 @property (readonly, nullable) ONGResourceResponse *response;
 
 /**
- * Error value fulfilled upon completion. It may be nil in case of successful response.
+ * The Error value fulfilled upon completion. It may be nil in case of a successful response.
  *
- * This error will be either within the ONGGenericErrorDomain, ONGFetchResourceErrorDomain (when instantiated via `-[ONGUserClient fetchResource:completion:]` or the ONGFetchAnonymousResourceErrorDomain (when instantiated via `-[ONGDeviceClient fetchResource:completion:]`).
+ * This error will be either within the NSURLErrorDomain or ONGGenericErrorDomain.
  */
 @property (readonly, nullable) NSError *error;
 
 /**
- * Developers should not try to instantiate task on their own. The only valid way to get valid task instance is by
+ * You should not try to instantiate a task on your own. The only valid way to get a valid task instance is by
  * calling `-[ONGUserClient fetchResource:completion:]` or `-[ONGDeviceClient fetchResource:completion:]`.
  */
 - (instancetype)init ONG_UNAVAILABLE;
 + (instancetype)new ONG_UNAVAILABLE;
 
 /**
- * Resume suspended task. This moves task from the `ONGNetworkTaskStateSuspended` state to the `ONGNetworkTaskStateRunning`.
- * If task already completed (`ONGNetworkTaskStateCompleted`) or cancelled (`ONGNetworkTaskStateCancelled`) - this won't have any effect.
+ * Resume a suspended task. This moves a task from the `ONGNetworkTaskStateSuspended` state to the `ONGNetworkTaskStateRunning` state.
+ * If a task is already completed (`ONGNetworkTaskStateCompleted`) or cancelled (`ONGNetworkTaskStateCancelled`) - this won't have any effect.
  *
- * By default you don't have to call `resume` - SDK starts task automatically.
+ * By default you don't have to call `resume` - the  SDK starts a task automatically.
  *
- * Attempt to resume already running task doesn't have any effect.
+ * Any attempt to resume an already running task doesn't have any effect.
  */
 - (void)resume;
 
 /**
- * Suspend running task. This moves task from the `ONGNetworkTaskStateRunning` state to the `ONGNetworkTaskStateSuspended`.
+ * Suspend running task. This moves a task from the `ONGNetworkTaskStateRunning` state to the `ONGNetworkTaskStateSuspended` state.
  *
- * Attempt to suspend already suspended, cancelled (`ONGNetworkTaskStateCancelled`) or completed (`ONGNetworkTaskStateCompleted`) task doesn't have any effect.
+ * Any attempt to suspend an already suspended, cancelled (`ONGNetworkTaskStateCancelled`) or completed (`ONGNetworkTaskStateCompleted`) task doesn't have
+ * any effect.
  */
 - (void)suspend;
 
 /**
- * Cancel running or suspended task. This moves task to the `ONGNetworkTaskStateCancelled`.
+ * Cancel a running or suspended task. This moves the task to the `ONGNetworkTaskStateCancelled` state.
  *
- * Attempt to cancle already cancelled or completed (`ONGNetworkTaskStateCompleted`) task doesn't have any effect.
+ * Any attempt to cancel an already cancelled or completed (`ONGNetworkTaskStateCompleted`) task doesn't have any effect.
  */
 - (void)cancel;
 

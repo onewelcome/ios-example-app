@@ -11,47 +11,48 @@
 @interface ONGRequestBuilder : NSObject
 
 /**
- * Return new instance of a builder
+ * Return a new instance of a builder
  */
 + (instancetype)builder;
 
 /**
- * Set HTTP Method for target `ONGResourceRequest`. Supported values are: `GET`, `POST`, `PUT`, `DELETE`.
+ * Set the HTTP Method for the target `ONGResourceRequest`. The supported values are: `GET`, `POST`, `PUT`, `DELETE`.
  */
 - (instancetype)setMethod:(NSString *)method;
 
 /**
- * Set path for target `ONGResourceRequest`.
+ * Set the path for the target `ONGResourceRequest`.
  *
- * @warning path should be relative to the resource base URL from config model (`ONGResourceBaseURL`).
+ * @warning the path must be relative to the resource base URL from the config model (`ONGResourceBaseURL`).
  */
 - (instancetype)setPath:(NSString *)path;
 
 /**
- * Set parameters for target `ONGResourceRequest`.
+ * Set the parameters for the target `ONGResourceRequest`.
  *
- * For more information see `ONGResourceRequest.parameters`
+ * For more information see the `ONGResourceRequest.parameters`
  */
 - (instancetype)setParameters:(NSDictionary<NSString *, id> *)parameters;
 
 /**
- * Set parametersEncoding for target `ONGResourceRequest`.
+ * Set the parametersEncoding for the target `ONGResourceRequest`.
  *
- * Default value is ONGParametersEncodingJSON.
+ * The default value is `ONGParametersEncodingJSON`.
  */
 - (instancetype)setParametersEncoding:(ONGParametersEncoding)parametersEncoding;
 
 /**
- * Set HTTP Headers for target `ONGResourceRequest`.
+ * Set the HTTP Headers for the target `ONGResourceRequest`.
  *
- * @warning next reserved fields take precedence over custom: `Authorization`, `User-Agent`.
+ * @warning The following reserved headers take precedence over any custom values inserted by you: `Authorization`, `User-Agent`.
  */
 - (instancetype)setHeaders:(NSDictionary<NSString *, NSString *> *)headers;
 
 /**
- * Build instance of `ONGResourceRequest` from current parameters. Further parameters changing doesn't affect on already build instances.
+ * The build instance of the `ONGResourceRequest` from the current parameters. Since the returned object is immutable any further parameter changes doesn't
+ * have an effect on already build instances.
  *
- * @return new instance of `ONGResourceRequest`
+ * @return new a instance of the `ONGResourceRequest`
  */
 - (ONGResourceRequest *)build;
 

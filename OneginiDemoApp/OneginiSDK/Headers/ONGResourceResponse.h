@@ -2,28 +2,39 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
- * Object that encapsulates response values.
+ * The object that encapsulates response values.
  *
  * @see ONGNetworkTask.
  */
 @interface ONGResourceResponse: NSObject
 
 /**
- * Received response HTTP headers.
+ * The raw response object
  */
-@property (nonatomic, copy, readonly, nullable) NSDictionary *headers;
+@property (nonatomic, readonly) NSHTTPURLResponse *rawResponse;
 
 /**
- * Response HTTP Status Code.
+ * The received HTTP response headers. A shortcut for rawResponse.allHeaderFields
+ */
+@property (nonatomic, copy, readonly) NSDictionary *allHeaderFields;
+
+/**
+ * The HTTP response status code. A shortcut for rawResponse.statusCode
  */
 @property (nonatomic, readonly) NSInteger statusCode;
 
 /**
- * Response body data.
+ * The response body data.
  *
- * SDK doesn't perform any data mapping and leave this up to the developer. You may want to process this data as JSON, for example.
+ * The SDK doesn't perform any data mapping and leaves this up to you. You may want to process this data as JSON, for example.
  */
 @property (nonatomic, readonly, nullable) NSData *data;
 
+- (instancetype)initWithResponse:(NSHTTPURLResponse *)response data:(nullable NSData *)data;
+
 @end
+
+NS_ASSUME_NONNULL_END

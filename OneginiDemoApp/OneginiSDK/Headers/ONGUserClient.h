@@ -1,16 +1,14 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "ONGResourceHandlerDelegate.h"
 #import "ONGPinValidationDelegate.h"
 #import "ONGChangePinDelegate.h"
 #import "ONGPublicCommons.h"
-#import "ONGDisconnectDelegate.h"
 #import "ONGDeregistrationDelegate.h"
 #import "ONGFingerprintDelegate.h"
 #import "ONGCustomizationDelegate.h"
 #import "ONGAuthenticationDelegate.h"
-#import "ONGClientAuthenticationDelegate.h"
+#import "ONGDeviceAuthenticationDelegate.h"
 #import "ONGUserProfile.h"
 #import "ONGMobileAuthenticationDelegate.h"
 #import "ONGConfigModel.h"
@@ -81,14 +79,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param delegate authentication delegate, ONGUserClient keeps weak reference on delegate to avoid retain cycles
  */
 - (void)reauthenticateUser:(ONGUserProfile *)userProfile delegate:(id<ONGAuthenticationDelegate>)delegate;
-
-/**
- *  Performs client's authentication. Uses client's credentials to request an accessToken object, which can be used for performing anonymous resource calls.
- *
- *  @param scopes array of scopes
- *  @param delegate authentication delegate
- */
-- (void)authenticateClient:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGClientAuthenticationDelegate>)delegate;
 
 /**
  *  Initiates the PIN change sequence.
@@ -236,15 +226,28 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deregisterUser:(ONGUserProfile *)userProfile delegate:(id<ONGDeregistrationDelegate>)delegate;
 
 /**
- * Perform authenticated network request. It requires passing an instance of `ONGResourceRequest`.
- * In case of mailformed request no task will be returned and a completion block called immediatelly (sychroniously).
- * User needs to be authenticated, otherwise SDK will report an error.
+ * Perform an authenticated network request. It requires passing an instance of the `ONGResourceRequest` as parameter.
+ * In case of a malformed request no task will be returned and the completion block is called immediatelly (sychronously).
+ * The User needs to be authenticated, otherwise SDK will return the `ONGFetchResourceErrorUserNotAuthenticated` error.
+ *
+ * The returned errors will be within the ONGGenericErrorDomain, ONGFetchResourceErrorDomain or NSURLErrorDomain.
  *
  * @param request instance of `ONGResourceRequest` instantiated manually or by using `ONGRequestBuilder`
  * @param completion block that will be called either upon request completion or immediatelly in case if validation error.
  * @return instance of `ONGNetworkTask` or nil. By utilizing `ONGNetworkTask` developer may observe and control execution of the request.
  */
 - (nullable ONGNetworkTask *)fetchResource:(ONGResourceRequest *)request completion:(nullable void (^)(ONGResourceResponse * _Nullable response, NSError * _Nullable error))completion;
+
+/**
+ * Returns a access token for the currently authenticated user, or nil if no user is currently
+ * authenticated.
+ *
+ * <strong>Warning</strong>: Do not use this method if you want to fetch resources from your resource gateway: use the resource methods
+ * instead.
+ *
+ * @return String with access token or nil
+ */
+@property (nonatomic, readonly, nullable) NSString *accessToken;
 
 @end
 

@@ -52,7 +52,7 @@
     viewController.mode = PINRegistrationMode;
     viewController.profile = challenge.userProfile;
     viewController.pinEntered = ^(NSString *pin) {
-        [challenge.sender respondWithPin:pin challenge:challenge];
+        [challenge.sender respondWithCreatedPin:pin challenge:challenge];
     };
     [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }

@@ -26,44 +26,46 @@
 
 - (void)changePin
 {
-    [[ONGUserClient sharedInstance] changePinRequest:self];
+    [[ONGUserClient sharedInstance] changePin:self];
 }
 
-- (void)invalidCurrentPin:(NSUInteger)remaining
-{
-    [self.pinViewController reset];
-}
+#pragma mark - ONGPinChangeDelegate
 
-- (void)askCurrentPinForChangeRequestForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinChallengeSender>)delegate
+- (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
 {
     self.pinViewController = [PinViewController new];
     self.pinViewController.mode = PINCheckMode;
-    self.pinViewController.profile = userProfile;
+    self.pinViewController.profile = challenge.userProfile;
     self.pinViewController.pinLength = 5;
     self.pinViewController.pinEntered = ^(NSString *pin) {
-        [delegate respondWithPin:pin challenge:delegate];
+        [challenge.sender respondWithPin:pin challenge:challenge];
     };
     [[AppDelegate sharedNavigationController] pushViewController:self.pinViewController animated:YES];
 }
 
-- (void)askNewPinForChangeRequest:(NSUInteger)pinSize pinConfirmation:(id<ONGCreatePinChallengeSender>)delegate
+-( void)userClient:(ONGUserClient *)userClient didReceiveCreatePinChallenge:(ONGCreatePinChallenge *)challenge
 {
     [self.pinViewController reset];
     self.pinViewController.mode = PINRegistrationMode;
     self.pinViewController.pinEntered = ^(NSString *pin) {
-        [delegate respondWithPin:pin challenge:delegate];
+        [challenge.sender respondWithCreatedPin:pin challenge:challenge];
     };
+}
+
+- (void)userClient:(ONGUserClient *)userClient didChangePinForUser:(ONGUserProfile *)userProfile
+{
+    [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
+}
+
+- (void)userClient:(ONGUserClient *)userClient didFailToChangePinForUser:(ONGUserProfile *)userProfile error:(NSError *)error
+{
+    [self pinChangeError:error];
 }
 
 - (void)pinChangeError:(NSError *)error
 {
     [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
     [self handleAuthError:error];
-}
-
-- (void)pinChanged
-{
-    [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
 }
 
 - (void)handleAuthError:(NSError *)error

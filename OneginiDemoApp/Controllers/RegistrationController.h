@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OneginiSDK.h"
 
-@interface RegistrationController : NSObject <ONGRegistrationDelegate, ONGPinValidationDelegate>
+@interface RegistrationController : NSObject <ONGRegistrationDelegate>
 
 + (RegistrationController *)sharedInstance;
 

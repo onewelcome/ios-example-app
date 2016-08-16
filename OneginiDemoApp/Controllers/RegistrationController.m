@@ -71,11 +71,6 @@
 
 #pragma mark - OGPinValidationDelegate
 
-- (void)pinEntryError:(NSError *)error
-{
-    [self handlePinPolicyValidationError:error];
-}
-
 - (void)handleAuthError:(NSError *)error
 {
     [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];

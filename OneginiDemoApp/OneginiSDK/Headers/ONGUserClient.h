@@ -1,7 +1,6 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "ONGPinValidationDelegate.h"
 #import "ONGChangePinDelegate.h"
 #import "ONGPublicCommons.h"
 #import "ONGDeregistrationDelegate.h"
@@ -10,7 +9,7 @@
 #import "ONGAuthenticationDelegate.h"
 #import "ONGDeviceAuthenticationDelegate.h"
 #import "ONGUserProfile.h"
-#import "ONGMobileAuthenticationDelegate.h"
+#import "ONGMobileAuthenticationRequestDelegate.h"
 #import "ONGConfigModel.h"
 #import "ONGResourceRequest.h"
 #import "ONGNetworkTask.h"
@@ -110,7 +109,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param error pin policy validation error
  *  @return true if all pin policy constraints are satisfied
  */
-- (BOOL)isPinValid:(NSString *)pin error:(NSError *_Nullable *_Nullable)error;
+
+- (void)validatePinWithPolicy:(NSString *)pin completion:(void (^)(BOOL valid, NSError * _Nullable error))completion;
 
 /**
  *  Handles the response of the authentication request from the browser redirect.
@@ -129,12 +129,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param completion completion block that is going to be invoked upon logout completion
  */
 - (void)logoutUser:(nullable void (^)(ONGUserProfile *userProfile, NSError *_Nullable error))completion;
-
-/**
- *  Clears the client credentials.
- *  A new dynamic client registration has to be performed on the next authorization request.
- */
-- (void)clearCredentials;
 
 /**
  *  Clears all tokens and reset the pin attempt count.
@@ -200,7 +194,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  The client will then fetch the actual encrypted payload and invoke the delegate with the embedded message.
  *
  *  This should be invoked from the UIApplicationDelegate
- *  - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
+ *  - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
  *
  *  @see UIApplication
  *
@@ -208,7 +202,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param delegate delegate responsinble for handling push messages
  *  @return true, if the notification is processed by the client
  */
-- (BOOL)handlePushNotification:(NSDictionary *)userInfo delegate:(id<ONGMobileAuthenticationDelegate>)delegate;
+- (BOOL)handleMobileAuthenticationRequest:(NSDictionary *)userInfo delegate:(id<ONGMobileAuthenticationRequestDelegate>)delegate;
 
 /**
  *  List of enrolled users stored locally

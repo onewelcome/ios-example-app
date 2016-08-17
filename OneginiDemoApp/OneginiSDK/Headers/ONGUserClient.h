@@ -16,6 +16,7 @@
 #import "ONGNetworkTask.h"
 
 @protocol ONGRegistrationDelegate;
+@class ONGAuthenticator;
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMethodInspection"
@@ -155,35 +156,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)storeDevicePushTokenInSession:(nullable NSData *)deviceToken;
 
 /**
- *  Enrolls the currently authenticated user for fingerprint authentication. The ONGFingerprintDelegate
- *  askCurrentPinForFingerprintAuthentication method must be implemented. The PIN provided by the user must be passed to
- *  the confirmCurrentPinForFingerprintAuthorization method to complete the flow.
- *
- *  Fingerprint authentication must be available for current user and device.
- *  @see -(bool)isFingerprintAuthenticationAvailable
- *
- *  @param delegate delegate handling fingerprint enrollment callbacks
- */
-- (void)enrollForFingerprintAuthenticationWithDelegate:(id<ONGFingerprintDelegate>)delegate;
-
-/**
- *  Disables fingerprint authentication for the currently authenticated user.
- */
-- (void)disableFingerprintAuthentication;
-
-/**
- *  Determines if device is enrolled for fingerprint authentication.
- *
- *  @param delegate
- */
-- (BOOL)isEnrolledForFingerprintAuthentication;
-
-/**
- *  Determines if fingerprint authentication is possible by checking if device possess Touch ID sensor, at least one fingerprint is registered and if fingerprint is enabled for client configuration provided by token server. Device cannot be jailbroken and have to be running iOS 9 or greater.
- */
-- (BOOL)isFingerprintAuthenticationAvailable;
-
-/**
  *  Enrolls the currently connected device for mobile push authentication.
  *
  *  The device push token must be stored in the session before invoking this method.
@@ -248,6 +220,16 @@ NS_ASSUME_NONNULL_BEGIN
  * @return String with access token or nil
  */
 @property (nonatomic, readonly, nullable) NSString *accessToken;
+
+- (void)fetchNonRegisteredAuthenticators:(void (^)(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error))completion;
+
+- (void)registerAuthenticator:(ONGAuthenticator *)authenticator delegate:(id<ONGAuthenticationDelegate>)delegate;
+
+@property (nonatomic, readonly) NSSet<ONGAuthenticator *> *registeredAuthenticators;
+
+@property (nonatomic) ONGAuthenticator *preferredAuthenticator;
+
+- (void)deregisterAuthenticator:(ONGAuthenticator *)authenticator completion:(nullable void (^)(BOOL deregistered, NSError * _Nullable error))completion;
 
 @end
 

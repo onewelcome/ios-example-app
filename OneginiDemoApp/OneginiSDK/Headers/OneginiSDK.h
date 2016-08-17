@@ -26,3 +26,4 @@
 #import "ONGNetworkTask.h"
 #import "ONGResourceResponse.h"
 #import "ONGRegistrationDelegate.h"
+#import "ONGAuthenticator.h"

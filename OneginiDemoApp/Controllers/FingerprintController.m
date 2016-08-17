@@ -25,17 +25,32 @@
 
 - (void)enrollForFingerprintAuthentication
 {
-    [[ONGUserClient sharedInstance] enrollForFingerprintAuthenticationWithDelegate:self];
+    [[ONGUserClient sharedInstance] fetchNonRegisteredAuthenticators:^(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", @"Fingerprint"];
+        ONGAuthenticator *fingerprintAuthenticator = [authenticators filteredSetUsingPredicate:predicate].anyObject;
+        
+        [[ONGUserClient sharedInstance] registerAuthenticator:fingerprintAuthenticator delegate:self];
+        [ONGUserClient sharedInstance].preferredAuthenticator = fingerprintAuthenticator;
+    }];
 }
 
 - (BOOL)isFingerprintEnrolled
 {
-    return [[ONGUserClient sharedInstance] isEnrolledForFingerprintAuthentication];
+    for (ONGAuthenticator *authenticator in [[ONGUserClient sharedInstance] registeredAuthenticators]) {
+        if ([authenticator.identifier isEqualToString:@"Fingerprint"]){
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (void)disableFingerprintAuthentication
 {
-    [[ONGUserClient sharedInstance] disableFingerprintAuthentication];
+    for (ONGAuthenticator *authenticator in [[ONGUserClient sharedInstance] registeredAuthenticators]) {
+        if ([authenticator.identifier isEqualToString:@"Fingerprint"]){
+            [[ONGUserClient sharedInstance] deregisterAuthenticator:authenticator completion:nil];
+        }
+    }
 }
 
 - (void)unwindNavigationStack
@@ -58,51 +73,44 @@
 
 // MARK: - OGFingerprintDelegate
 
-- (void)askCurrentPinForFingerprintEnrollmentForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinChallengeSender>)pinConfirmation
-{
-    PinViewController *viewController = [PinViewController new];
-    self.pinViewController = viewController;
-    viewController.pinLength = 5;
-    viewController.mode = PINCheckMode;
-    viewController.profile = userProfile;
-    viewController.pinEntered = ^(NSString *pin) {
-        [pinConfirmation respondWithPin:pin challenge:pinConfirmation];
-    };
-    [[AppDelegate sharedNavigationController] presentViewController:viewController animated:YES completion:nil];
-}
-
-- (void)fingerprintAuthenticationEnrollmentSuccessful
+- (void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile
 {
     [self dismissNavigationPresentedViewController:nil];
 }
 
-- (void)fingerprintAuthenticationEnrollmentFailure
+- (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
-    [self dismissNavigationPresentedViewController:nil];
-    [self handleError:nil];
+    switch(error.code){
+        case ONGGenericErrorUserDeregistered:
+        case ONGGenericErrorDeviceDeregistered:
+            [self unwindNavigationStack];
+            [self handleError:error.description];
+            break;
+        default:
+            [self dismissNavigationPresentedViewController:nil];
+            [self handleError:error.description];
+            break;
+    }
 }
 
-- (void)fingerprintAuthenticationEnrollmentFailureNotAuthenticated
+- (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
 {
-    [self dismissNavigationPresentedViewController:nil];
-}
-
-- (void)fingerprintAuthenticationEnrollmentErrorInvalidPin:(NSUInteger)attemptCount
-{
-    [self dismissNavigationPresentedViewController:^{
-        [self.pinViewController reset];
-        [[AppDelegate sharedNavigationController] presentViewController:self.pinViewController animated:YES completion:nil];
-    }];
-}
-
-- (void)fingerprintAuthenticationEnrollmentErrorUserDeregistered
-{
-    [self unwindNavigationStack];
-}
-
-- (void)fingerprintAuthenticationEnrollmentErrorDeviceDeregistered
-{
-    [self unwindNavigationStack];
+    if (challenge.error) {
+        [self dismissNavigationPresentedViewController:^{
+            [self.pinViewController reset];
+            [[AppDelegate sharedNavigationController] presentViewController:self.pinViewController animated:YES completion:nil];
+        }];
+    } else {
+        PinViewController *viewController = [PinViewController new];
+        self.pinViewController = viewController;
+        viewController.pinLength = 5;
+        viewController.mode = PINCheckMode;
+        viewController.profile = challenge.userProfile;
+        viewController.pinEntered = ^(NSString *pin) {
+            [challenge.sender respondWithPin:pin challenge:challenge];
+        };
+        [[AppDelegate sharedNavigationController] presentViewController:viewController animated:YES completion:nil];
+    }
 }
 
 - (void)handleError:(NSString *)error

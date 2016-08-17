@@ -55,6 +55,8 @@
 		5CAE98C61CE0DEF8009C1D1A /* OneginiConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */; };
 		5CD187431CEDA5B8001FD062 /* MobileAuthenticationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */; };
 		5CD187441CEDA5B8001FD062 /* MobileAuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD187421CEDA5B8001FD062 /* MobileAuthenticationController.m */; };
+		B47ADC3E1D644F24006DA9D1 /* SecurityController.h in Headers */ = {isa = PBXBuildFile; fileRef = B47ADC3C1D644F24006DA9D1 /* SecurityController.h */; };
+		B47ADC3F1D644F24006DA9D1 /* SecurityController.m in Sources */ = {isa = PBXBuildFile; fileRef = B47ADC3D1D644F24006DA9D1 /* SecurityController.m */; };
 		C502CAA91CDB62B600FB18E7 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C502CAA71CDB62B600FB18E7 /* ProfileViewController.m */; };
 		C502CAAA1CDB62B600FB18E7 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C502CAA81CDB62B600FB18E7 /* ProfileViewController.xib */; };
 		C541398B1CD9D3010033DBA8 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C541398A1CD9D3010033DBA8 /* WelcomeViewController.m */; };
@@ -64,7 +66,6 @@
 		C5A29A661CDCA55900E6B1D4 /* AuthorizationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A29A611CDCA55900E6B1D4 /* AuthorizationController.m */; };
 		C5A29A741CDCE78A00E6B1D4 /* ResourceController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A29A731CDCE78A00E6B1D4 /* ResourceController.m */; };
 		C5A29A781CDCE78F00E6B1D4 /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A29A771CDCE78F00E6B1D4 /* Profile.m */; };
-		C5BAAEC81CDA462800801205 /* SecurityController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BAAEC71CDA462800801205 /* SecurityController.m */; };
 		C5FE9E911CD8C0D200142A20 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E901CD8C0D200142A20 /* Security.framework */; };
 		C5FE9E931CD8C0D800142A20 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E921CD8C0D800142A20 /* SystemConfiguration.framework */; };
 		C5FE9E951CD8C0DE00142A20 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E941CD8C0DE00142A20 /* MobileCoreServices.framework */; };
@@ -129,6 +130,8 @@
 		5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileAuthenticationController.h; sourceTree = "<group>"; };
 		5CD187421CEDA5B8001FD062 /* MobileAuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileAuthenticationController.m; sourceTree = "<group>"; };
 		AF975CF4D99994DAF5BD2E6B /* OneginiConfigModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OneginiConfigModel.h; path = Configuration/OneginiConfigModel.h; sourceTree = "<group>"; };
+		B47ADC3C1D644F24006DA9D1 /* SecurityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecurityController.h; path = Configuration/SecurityController.h; sourceTree = "<group>"; };
+		B47ADC3D1D644F24006DA9D1 /* SecurityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecurityController.m; path = Configuration/SecurityController.m; sourceTree = "<group>"; };
 		C502CAA61CDB62B600FB18E7 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		C502CAA71CDB62B600FB18E7 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		C502CAA81CDB62B600FB18E7 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
@@ -146,8 +149,6 @@
 		C5A29A731CDCE78A00E6B1D4 /* ResourceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceController.m; sourceTree = "<group>"; };
 		C5A29A761CDCE78F00E6B1D4 /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
 		C5A29A771CDCE78F00E6B1D4 /* Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Profile.m; sourceTree = "<group>"; };
-		C5BAAEC61CDA462800801205 /* SecurityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecurityController.h; path = OneginiDemoApp/Configuration/SecurityController.h; sourceTree = "<group>"; };
-		C5BAAEC71CDA462800801205 /* SecurityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecurityController.m; path = OneginiDemoApp/Configuration/SecurityController.m; sourceTree = "<group>"; };
 		C5FE9E901CD8C0D200142A20 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C5FE9E921CD8C0D800142A20 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C5FE9E941CD8C0DE00142A20 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -331,8 +332,8 @@
 		EB67C9E0317DB4510001471A /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				C5BAAEC61CDA462800801205 /* SecurityController.h */,
-				C5BAAEC71CDA462800801205 /* SecurityController.m */,
+				B47ADC3C1D644F24006DA9D1 /* SecurityController.h */,
+				B47ADC3D1D644F24006DA9D1 /* SecurityController.m */,
 				CB2E2640AC9BD8B06787756E /* tokenserver-demo-test.onegini.com.cer */,
 				AF975CF4D99994DAF5BD2E6B /* OneginiConfigModel.h */,
 				5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */,
@@ -358,6 +359,7 @@
 				5C2A94A61D172379000FF63D /* ClientAuthenticationController.h in Headers */,
 				5C68BFA41D58870500A9B725 /* ONGPublicDefines.h in Headers */,
 				5C68BF9A1D58870500A9B725 /* ONGFingerprintDelegate.h in Headers */,
+				B47ADC3E1D644F24006DA9D1 /* SecurityController.h in Headers */,
 				5C68BFA81D58870500A9B725 /* ONGResourceRequest.h in Headers */,
 				5C68BFA01D58870500A9B725 /* ONGPinChallenge.h in Headers */,
 				5C68BF8A1D58870500A9B725 /* OneginiSDK.h in Headers */,
@@ -459,7 +461,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5BAAEC81CDA462800801205 /* SecurityController.m in Sources */,
 				5C3CA1491D11394000F00C05 /* FingerprintController.m in Sources */,
 				5C8A03C91CDFF178007ADA14 /* DeregistrationController.m in Sources */,
 				C5A29A741CDCE78A00E6B1D4 /* ResourceController.m in Sources */,
@@ -470,6 +471,7 @@
 				5CAE98C61CE0DEF8009C1D1A /* OneginiConfigModel.m in Sources */,
 				5C8A03C61CDFEFE1007ADA14 /* LogoutController.m in Sources */,
 				C5A29A781CDCE78F00E6B1D4 /* Profile.m in Sources */,
+				B47ADC3F1D644F24006DA9D1 /* SecurityController.m in Sources */,
 				5C8A03B31CDFA7C2007ADA14 /* WebBrowserViewController.m in Sources */,
 				C5A29A661CDCA55900E6B1D4 /* AuthorizationController.m in Sources */,
 				C502CAA91CDB62B600FB18E7 /* ProfileViewController.m in Sources */,

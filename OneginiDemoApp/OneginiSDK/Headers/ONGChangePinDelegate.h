@@ -1,53 +1,64 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "ONGPinChallenge.h"
-#import "ONGUserProfile.h"
-#import "ONGCreatePinChallenge.h"
+
+@class ONGUserProfile;
+@class ONGUserClient;
+@class ONGPinChallenge;
+@class ONGCreatePinChallenge;
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
- *  This protocol informs the client about the result of the PIN change request.
- *  Clients must also implement the ONGPinValidationDelegate protocol.
+ * Protocol describing interface for objects implementing methods required to complete change PIN action.
+ * All invocations are performed on the main queue.
  */
 @protocol ONGChangePinDelegate<NSObject>
 
 /**
- *  Asks the user for the current PIN in the change PIN request flow.
- *  The PIN must be forwarded directly to the client and not be stored by any means.
- *  Call the ONGPinChallengeSender - (void)respondWithPin:challenge:(NSString *)pin method; with the user provided PIN.
+ * Method called when change PIN action requires authentication with PIN code to continue.
+ *
+ * @param userClient user client performing authentication for change PIN action
+ * @param challenge pin challenge used to complete authentication for change PIN action
  */
-- (void)askCurrentPinForChangeRequestForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinChallengeSender>)delegate;
+- (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge;
 
 /**
- *  Asks the user for a new PIN.
- *  The implementor should present a PIN entry dialog with a second verification entry.
- *  The PIN must be forwarded directly to the client and not be stored by any means.
- *  Call the ONGCreatePinChallengeSender - (void)respondWithPin:challenge:(NSString *)pin method; with the user provided PIN.
- *  The new PIN must satisfy any PIN policy constraints.
+ * Method called when change PIN action requires new PIN code to continue.
+ * New PIN must be compliant with PIN policy defined by the token server.
  *
- *  @param pinSize the size of the PIN value
+ * @param userClient user client performing change PIN action
+ * @param challenge pin challenge used to complete change PIN action
  */
-- (void)askNewPinForChangeRequest:(NSUInteger)pinSize pinConfirmation:(id<ONGCreatePinChallengeSender>)delegate;
+- (void)userClient:(ONGUserClient *)userClient didReceiveCreatePinChallenge:(ONGCreatePinChallenge *)challenge;
+
+@optional
 
 /**
- *  The access grant or refresh token provided by the client is invalid.
+ * Method called when change PIN action is started.
  *
- *  @param remaining the number of remaining attempts before the token becomes invalid
+ * @param userClient user client performing change PIN action
+ * @param userProfile user profile for which change PIN action is performed
  */
-- (void)invalidCurrentPin:(NSUInteger)remaining;
+- (void)userClient:(ONGUserClient *)userClient didStartPinChangeForUser:(ONGUserProfile *)userProfile;
 
 /**
- *  PIN change failed
+ * Method called when change PIN action is completed with success.
  *
- *  This error will be either within the ONGGenericErrorDomain, ONGChangePinErrorDomain or the ONGPinValidationErrorDomain.
- *
- *  @param error error encountered during PIN change
+ * @param userClient user client performing change PIN action
+ * @param userProfile user profile for which change PIN action succeeded
  */
-- (void)pinChangeError:(NSError *)error;
+- (void)userClient:(ONGUserClient *)userClient didChangePinForUser:(ONGUserProfile *)userProfile;
 
 /**
- *  Pin changed successfully callback
+ * Method called when change PIN action failed with an error.
+ *
+ * @param userClient user client performing change PIN action
+ * @param userProfile user profile for which change PIN action failed
+ * @param error error describing cause of an error
  */
-- (void)pinChanged;
+- (void)userClient:(ONGUserClient *)userClient didFailToChangePinForUser:(ONGUserProfile *)userProfile error:(NSError *)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

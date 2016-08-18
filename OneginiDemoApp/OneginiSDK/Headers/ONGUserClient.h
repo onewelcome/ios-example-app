@@ -88,7 +88,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param delegate Object handling change pin callbacks
  */
-- (void)changePinRequest:(id<ONGChangePinDelegate>)delegate;
+- (void)changePin:(id<ONGChangePinDelegate>)delegate;
 
 /**
  *  Determines if the user is authorized.
@@ -111,7 +111,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param error pin policy validation error
  *  @return true if all pin policy constraints are satisfied
  */
-- (BOOL)isPinValid:(NSString *)pin error:(NSError *_Nullable *_Nullable)error;
+
+- (void)validatePinWithPolicy:(NSString *)pin completion:(void (^)(BOOL valid, NSError * _Nullable error))completion;
 
 /**
  *  Handles the response of the authentication request from the browser redirect.
@@ -130,12 +131,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param completion completion block that is going to be invoked upon logout completion
  */
 - (void)logoutUser:(nullable void (^)(ONGUserProfile *userProfile, NSError *_Nullable error))completion;
-
-/**
- *  Clears the client credentials.
- *  A new dynamic client registration has to be performed on the next authorization request.
- */
-- (void)clearCredentials;
 
 /**
  *  Clears all tokens and reset the pin attempt count.
@@ -221,15 +216,45 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly, nullable) NSString *accessToken;
 
+/**
+ * Discovers and returns a set of authenticators which are supported both, client and server side, and are not yet registered.
+ *
+ * The returned errors will be within the ONGGenericErrorDomain.
+ *
+ * @param completion block returning non registered authenticators or any encountered error
+ */
 - (void)fetchNonRegisteredAuthenticators:(void (^)(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error))completion;
 
-- (void)registerAuthenticator:(ONGAuthenticator *)authenticator delegate:(id<ONGAuthenticationDelegate>)delegate;
-
+/**
+ * Set of registered authenticators.
+ */
 @property (nonatomic, readonly) NSSet<ONGAuthenticator *> *registeredAuthenticators;
 
-@property (nonatomic) ONGAuthenticator *preferredAuthenticator;
+/**
+ * Registers an authenticator. Use one of the non registeres authenticators returned by `fetchNonRegisteredAuthenticators` method.
+ * Registering an authenticator requires user authentication which is handled by the delegate.
+ *
+ * The returned errors will be within the ONGGenericErrorDomain or ONGAuthenticatorRegistrationErrorDomain.
+ *
+ * @param authenticator to be registered authenticator
+ * @param delegate delegate authenticating user
+ */
+- (void)registerAuthenticator:(ONGAuthenticator *)authenticator delegate:(id<ONGAuthenticationDelegate>)delegate;
 
+/**
+ * Deregisters an authenticator. Use one of the registered authenticators returned by `registeredAuthenticators` method.
+ *
+ * The returned errors will be within the ONGGenericErrorDomain or ONGAuthenticatorDeregistrationErrorDomain.
+ *
+ * @param authenticator to be deregistered authenticator
+ * @param completion block returning result of deregistration action or any encountered error
+ */
 - (void)deregisterAuthenticator:(ONGAuthenticator *)authenticator completion:(nullable void (^)(BOOL deregistered, NSError * _Nullable error))completion;
+
+/**
+ * Represents preferred authenticator. By default SDK uses PIN as preferred authenticator.
+ */
+@property (nonatomic) ONGAuthenticator *preferredAuthenticator;
 
 @end
 

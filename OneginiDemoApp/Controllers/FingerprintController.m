@@ -23,34 +23,31 @@
     return singleton;
 }
 
+- (ONGAuthenticator *)fingerprintAuthenticatorFromSet:(NSSet<ONGAuthenticator *> *)authenticators{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type == %d", ONGAuthenticatorTouchID];
+    return [authenticators filteredSetUsingPredicate:predicate].anyObject;
+}
+
 - (void)enrollForFingerprintAuthentication
 {
     [[ONGUserClient sharedInstance] fetchNonRegisteredAuthenticators:^(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", @"Fingerprint"];
-        ONGAuthenticator *fingerprintAuthenticator = [authenticators filteredSetUsingPredicate:predicate].anyObject;
-        
+        ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:authenticators];
         [[ONGUserClient sharedInstance] registerAuthenticator:fingerprintAuthenticator delegate:self];
-        [ONGUserClient sharedInstance].preferredAuthenticator = fingerprintAuthenticator;
     }];
 }
 
 - (BOOL)isFingerprintEnrolled
 {
-    for (ONGAuthenticator *authenticator in [[ONGUserClient sharedInstance] registeredAuthenticators]) {
-        if ([authenticator.identifier isEqualToString:@"Fingerprint"]){
-            return YES;
-        }
-    }
-    return NO;
+    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticators];
+    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
+    return fingerprintAuthenticator != nil;
 }
 
 - (void)disableFingerprintAuthentication
 {
-    for (ONGAuthenticator *authenticator in [[ONGUserClient sharedInstance] registeredAuthenticators]) {
-        if ([authenticator.identifier isEqualToString:@"Fingerprint"]){
-            [[ONGUserClient sharedInstance] deregisterAuthenticator:authenticator completion:nil];
-        }
-    }
+    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticators];
+    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
+    [[ONGUserClient sharedInstance] deregisterAuthenticator:fingerprintAuthenticator completion:nil];
 }
 
 - (void)unwindNavigationStack
@@ -75,6 +72,9 @@
 
 - (void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile
 {
+    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticators];
+    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
+    [ONGUserClient sharedInstance].preferredAuthenticator = fingerprintAuthenticator;
     [self dismissNavigationPresentedViewController:nil];
 }
 

@@ -2,6 +2,8 @@
 
 #import "WelcomeViewController.h"
 #import "AuthorizationController.h"
+#import "RegistrationController.h"
+#import "OneginiSDK.h"
 #import "ClientAuthenticationController.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
@@ -10,7 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 
 @property (weak, nonatomic) IBOutlet UIPickerView *profilePicker;
-@property (nonatomic) NSArray<OGUserProfile *> *profiles;
+@property (nonatomic) NSArray<ONGUserProfile *> *profiles;
 
 @end
 
@@ -19,18 +21,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.profiles = [[OGOneginiClient sharedInstance] userProfiles].allObjects;
+    self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
     [self.profilePicker reloadAllComponents];
 }
 
 - (IBAction)registerNewProfile:(id)sender
 {
-    [[AuthorizationController sharedInstance] registerNewUser];
+    [[RegistrationController sharedInstance] registerNewUser];
 }
 
 - (IBAction)login:(id)sender
 {
-    OGUserProfile *userProfile = self.profiles[[self.profilePicker selectedRowInComponent:0]];
+    ONGUserProfile *userProfile = self.profiles[[self.profilePicker selectedRowInComponent:0]];
     [[AuthorizationController sharedInstance] authenticateUser:userProfile];
 }
 
@@ -44,9 +46,9 @@
     return 1;
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return ((OGUserProfile *)self.profiles[row]).profileId;
+    return ((ONGUserProfile*)self.profiles[row]).profileId;
 }
 
 - (IBAction)authenticateClient:(id)sender

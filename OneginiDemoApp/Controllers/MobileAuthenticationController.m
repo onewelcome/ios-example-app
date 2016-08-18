@@ -21,7 +21,7 @@
 
 // MARK: - OGMobileAuthenticationDelegate
 
-- (void)askForPushAuthenticationConfirmation:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm
+- (void)askForPushAuthenticationConfirmation:(NSString *)message user:(ONGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = message;
@@ -33,7 +33,7 @@
     [[AppDelegate sharedNavigationController] pushViewController:pushVC animated:YES];
 }
 
-- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType pinSize:(NSUInteger)pinSize maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt confirm:(void (^)(NSString *, BOOL, BOOL))confirm
+- (void)askForPushAuthenticationWithPinConfirmation:(NSString *)message user:(ONGUserProfile *)userProfile notificationType:(NSString *)notificationType pinSize:(NSUInteger)pinSize maxAttempts:(NSUInteger)maxAttempts retryAttempt:(NSUInteger)retryAttempt confirm:(void (^)(NSString *, BOOL, BOOL))confirm
 {
     PinViewController *viewController = [PinViewController new];
     viewController.pinLength = pinSize;
@@ -46,7 +46,7 @@
     [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }
 
-- (void)askForPushAuthenticationWithFingerprint:(NSString *)message user:(OGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm
+- (void)askForPushAuthenticationWithFingerprint:(NSString *)message user:(ONGUserProfile *)userProfile notificationType:(NSString *)notificationType confirm:(void (^)(bool))confirm
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = message;
@@ -63,55 +63,20 @@
 
 - (void)enrollForMobileAuthentication
 {
-    [[OGOneginiClient sharedInstance] enrollUserForMobileAuthenticationWithDelegate:self];
-}
+    [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError * _Nullable error) {
+        NSString *title = nil;
 
-- (void)enrollmentSuccess
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Enrollment successfull" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:okButton];
-    [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
-}
+        if (enrolled) {
+            title = @"Enrolled successfully";
+        } else {
+            title = @"Enrollment failure";
+        }
 
-- (void)enrollmentDeviceAlreadyEnrolled
-{
-}
-
-- (void)enrollmentNotAvailable
-{
-}
-
-- (void)enrollmentInvalidRequest
-{
-}
-
-- (void)enrollmentInvalidClientCredentials
-{
-}
-
-- (void)enrollmentError
-{
-}
-
-- (void)enrollmentError:(NSError *)error
-{
-}
-
-- (void)enrollmentInvalidTransaction
-{
-}
-
-- (void)enrollmentUserAlreadyEnrolled
-{
-}
-
-- (void)enrollmentAuthenticationError
-{
-}
-
-- (void)enrollmentErrorDeviceDeregistered
-{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:okButton];
+        [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
+    }];
 }
 
 @end

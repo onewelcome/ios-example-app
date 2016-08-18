@@ -19,7 +19,7 @@
 
 - (void)authenticateClient
 {
-    [[OGOneginiClient sharedInstance] authenticateClient:@[@"read"] delegate:self];
+    [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"read"] delegate:self];
 }
 
 - (void)authenticationSuccess
@@ -35,55 +35,15 @@
     [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)authenticationErrorUnsupportedOS
+- (void)authenticationError:(NSError *)error
 {
-    [self handleAuthError:nil];
+    [self handleAuthError:error];
 }
 
-- (void)authenticationError
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorInvalidGrantType
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorNotAuthorized
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorInvalidScope
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorClientRegistrationFailed:(NSError *)error
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorInvalidRequest
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorInvalidAppPlatformOrVersion
-{
-    [self handleAuthError:nil];
-}
-
-- (void)authenticationErrorDeviceDeregistered
-{
-    [self handleAuthError:nil];
-}
-
-- (void)handleAuthError:(NSString *)error
+- (void)handleAuthError:(NSError *)error
 {
     [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Client authentication error" message:error preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Client authentication error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okButton = [UIAlertAction
         actionWithTitle:@"Ok"
                   style:UIAlertActionStyleDefault

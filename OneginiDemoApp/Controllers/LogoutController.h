@@ -3,7 +3,7 @@
 #import <Foundation/Foundation.h>
 #import "OneginiSDK.h"
 
-@interface LogoutController : NSObject
+@interface LogoutController : NSObject<OGLogoutDelegate>
 
 + (instancetype)sharedInstance;
 - (void)logout;

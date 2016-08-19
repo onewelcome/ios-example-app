@@ -5,7 +5,7 @@
 /**
  * Object representing the user profile.
  */
-@interface ONGUserProfile : NSObject<NSCoding>
+@interface OGUserProfile : NSObject<NSCoding>
 
 /**
  * Unique user profile identifier.
@@ -13,8 +13,8 @@
 @property (nonatomic, strong) NSString *profileId;
 
 /**
- * Convenience initializer for ONGUserProfile.
+ * Convenience initializer for OGUserProfile.
  */
-+ (ONGUserProfile *)profileWithId:(NSString *)profileId;
++ (OGUserProfile *)profileWithId:(NSString *)profileId;
 
 @end

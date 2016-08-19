@@ -19,9 +19,17 @@
 
 - (void)logout
 {
-    [[ONGUserClient sharedInstance] logoutUser:^(ONGUserProfile * _Nonnull userProfile, NSError * _Nullable error) {
-        [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
-    }];
+    [[OGOneginiClient sharedInstance] logoutUserWithDelegate:self];
+}
+
+- (void)logoutSuccessful
+{
+    [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
+}
+
+- (void)logoutFailureWithError:(NSError *)error
+{
+    [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
 }
 
 @end

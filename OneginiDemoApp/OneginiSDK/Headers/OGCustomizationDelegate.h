@@ -5,7 +5,7 @@
 /**
  *  Delegate responsible for providing customizable values used within the SDK.
  */
-@protocol ONGCustomizationDelegate<NSObject>
+@protocol OGCustomizationDelegate<NSObject>
 
 @optional
 

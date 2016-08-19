@@ -3,7 +3,7 @@
 #import <Foundation/Foundation.h>
 #import "OneginiSDK.h"
 
-@interface ChangePinController : NSObject<ONGChangePinDelegate>
+@interface ChangePinController : NSObject<OGChangePinDelegate>
 
 + (instancetype)sharedInstance;
 

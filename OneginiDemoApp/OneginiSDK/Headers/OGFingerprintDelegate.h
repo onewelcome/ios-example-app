@@ -1,19 +1,19 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "ONGPinChallenge.h"
-#import "ONGUserProfile.h"
+#import "OGPinConfirmation.h"
+#import "OGUserProfile.h"
 
 /**
  *  Delegate used for fingerprint authentication.
  */
-@protocol ONGFingerprintDelegate<NSObject>
+@protocol OGFingerprintDelegate<NSObject>
 
 /**
  *  Asks user for current pin for fingerprint authentication enrollment for a specific profile.
- *  Call the ONGPinChallengeSender - (void)respondWithPin:challenge:(NSString *)pin method; with the user provided PIN.
+ *  Call the OGPinConfirmation - (void)confirmPin:(NSString *)pin method; with the user provided PIN.
  */
-- (void)askCurrentPinForFingerprintEnrollmentForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinChallengeSender>)pinConfirmation;
+- (void)askCurrentPinForFingerprintEnrollmentForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)pinConfirmation;
 
 /**
  *  Fingerprint enrollment success callback.
@@ -48,5 +48,22 @@
  *  This can happen when the device registration is removed server-side.
  */
 - (void)fingerprintAuthenticationEnrollmentErrorDeviceDeregistered;
+
+@optional
+
+/**
+ *  Asks user for current pin for fingerprint authentication enrollment.
+ *  Obtained should be passed as an argument of OGOneginiClient method - (void)confirmCurrentPinForFingerprintAuthorization:(NSString *)pin;
+ *
+ *  <strong>Warning</strong>: Deprecated, use askCurrentPinForFingerprintEnrollmentForUser:pinConfirmation:
+ */
+- (void)askCurrentPinForFingerprintAuthentication DEPRECATED_MSG_ATTRIBUTE("Use askCurrentPinForFingerprintEnrollmentForUser:pinConfirmation:");
+
+/**
+ *  Fingerprint enrollment failed due to too many pin failures.
+ *
+ *  <strong>Warning</strong>: Deprecated, use fingerprintAuthenticationEnrollmentErrorUserDeregistered
+ */
+- (void)fingerprintAuthenticationEnrollmentErrorTooManyPinFailures DEPRECATED_MSG_ATTRIBUTE("Use fingerprintAuthenticationEnrollmentErrorUserDeregistered");
 
 @end

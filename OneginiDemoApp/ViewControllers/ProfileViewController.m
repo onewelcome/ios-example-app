@@ -11,8 +11,11 @@
 
 @interface ProfileViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *tokenStatusLabel;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getTokenSpinner;
+@property (weak, nonatomic) IBOutlet UIView *profileDataView;
+@property (weak, nonatomic) IBOutlet UILabel *profileMailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *profileNameLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getProfileSpinner;
+@property (weak, nonatomic) IBOutlet UIButton *getProfileButton;
 @property (weak, nonatomic) IBOutlet UIButton *fingerprintButton;
 
 @end
@@ -22,10 +25,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.tokenStatusLabel.hidden = YES;
-    self.getTokenSpinner.hidden = YES;
-    
+    self.profileDataView.hidden = YES;
+    self.getProfileSpinner.hidden = YES;
     [self update];
 }
 
@@ -54,18 +55,18 @@
     [[DeregistrationController sharedInstance] deregister];
 }
 
-- (IBAction)getToken:(id)sender
+- (IBAction)getProfile:(id)sender
 {
-    self.tokenStatusLabel.hidden = YES;
-    self.getTokenSpinner.hidden = NO;
-
-    [[ResourceController sharedInstance] getToken:^(BOOL received, NSError *error) {
-        self.getTokenSpinner.hidden = YES;
-        
-        if (received) {
-            self.tokenStatusLabel.hidden = NO;
+    self.profileDataView.hidden = YES;
+    self.getProfileSpinner.hidden = NO;
+    [[ResourceController sharedInstance] getProfile:^(Profile *profile, NSError *error) {
+        self.getProfileSpinner.hidden = YES;
+        if (profile) {
+            self.profileDataView.hidden = NO;
+            self.profileMailLabel.text = profile.email;
+            self.profileNameLabel.text = [NSString stringWithFormat:@"%@ %@", profile.firstName, profile.lastName];
         } else {
-            [self showError:@"Token retrieval failed"];
+            [self showError:@"Downloading profile failed."];
         }
     }];
 }

@@ -26,7 +26,7 @@
 
 - (void)changePin
 {
-    [[ONGUserClient sharedInstance] changePinRequest:self];
+    [[OGOneginiClient sharedInstance] changePinRequest:self];
 }
 
 - (void)invalidCurrentPin:(NSUInteger)remaining
@@ -34,31 +34,50 @@
     [self.pinViewController reset];
 }
 
-- (void)askCurrentPinForChangeRequestForUser:(ONGUserProfile *)userProfile pinConfirmation:(id<ONGPinChallengeSender>)delegate
+
+- (void)askCurrentPinForChangeRequestForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)delegate
 {
     self.pinViewController = [PinViewController new];
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.profile = userProfile;
     self.pinViewController.pinLength = 5;
     self.pinViewController.pinEntered = ^(NSString *pin) {
-        [delegate respondWithPin:pin challenge:delegate];
+        [delegate confirmPin:pin];
     };
     [[AppDelegate sharedNavigationController] pushViewController:self.pinViewController animated:YES];
 }
 
-- (void)askNewPinForChangeRequest:(NSUInteger)pinSize pinConfirmation:(id<ONGCreatePinChallengeSender>)delegate
+- (void)askNewPinForChangeRequest:(NSUInteger)pinSize pinConfirmation:(id<OGNewPinConfirmation>)delegate
 {
     [self.pinViewController reset];
     self.pinViewController.mode = PINRegistrationMode;
     self.pinViewController.pinEntered = ^(NSString *pin) {
-        [delegate respondWithPin:pin challenge:delegate];
+        [delegate confirmNewPin:pin validation:nil];
     };
+}
+
+- (void)pinChangeError
+{
+    [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
+    [self handleAuthError:nil];
+}
+
+- (void)pinChangeErrorTooManyPinFailures
+{
+    [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
+    [self handleAuthError:nil];
 }
 
 - (void)pinChangeError:(NSError *)error
 {
     [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
-    [self handleAuthError:error];
+    [self handleAuthError:nil];
+}
+
+- (void)pinChangeErrorDeviceDeregistered
+{
+    [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
+    [self handleAuthError:nil];
 }
 
 - (void)pinChanged
@@ -66,9 +85,9 @@
     [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
 }
 
-- (void)handleAuthError:(NSError *)error
+- (void)handleAuthError:(NSString *)error
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change pin error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change pin error" message:error preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okButton];
     [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];

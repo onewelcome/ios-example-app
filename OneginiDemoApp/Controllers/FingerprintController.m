@@ -23,31 +23,19 @@
     return singleton;
 }
 
-- (ONGAuthenticator *)fingerprintAuthenticatorFromSet:(NSSet<ONGAuthenticator *> *)authenticators{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type == %d", ONGAuthenticatorTouchID];
-    return [authenticators filteredSetUsingPredicate:predicate].anyObject;
-}
-
 - (void)enrollForFingerprintAuthentication
 {
-    [[ONGUserClient sharedInstance] fetchNonRegisteredAuthenticators:^(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error) {
-        ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:authenticators];
-        [[ONGUserClient sharedInstance] registerAuthenticator:fingerprintAuthenticator delegate:self];
-    }];
+    [[OGOneginiClient sharedInstance] enrollForFingerprintAuthenticationWithDelegate:self];
 }
 
 - (BOOL)isFingerprintEnrolled
 {
-    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticators];
-    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
-    return fingerprintAuthenticator != nil;
+    return [[OGOneginiClient sharedInstance] isEnrolledForFingerprintAuthentication];
 }
 
 - (void)disableFingerprintAuthentication
 {
-    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticators];
-    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
-    [[ONGUserClient sharedInstance] deregisterAuthenticator:fingerprintAuthenticator completion:nil];
+    [[OGOneginiClient sharedInstance] disableFingerprintAuthentication];
 }
 
 - (void)unwindNavigationStack
@@ -70,47 +58,51 @@
 
 // MARK: - OGFingerprintDelegate
 
-- (void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile
+- (void)askCurrentPinForFingerprintEnrollmentForUser:(OGUserProfile *)userProfile pinConfirmation:(id<OGPinConfirmation>)pinConfirmation
 {
-    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticators];
-    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
-    [ONGUserClient sharedInstance].preferredAuthenticator = fingerprintAuthenticator;
+    PinViewController *viewController = [PinViewController new];
+    self.pinViewController = viewController;
+    viewController.pinLength = 5;
+    viewController.mode = PINCheckMode;
+    viewController.profile = userProfile;
+    viewController.pinEntered = ^(NSString *pin) {
+        [pinConfirmation confirmPin:pin];
+    };
+    [[AppDelegate sharedNavigationController] presentViewController:viewController animated:YES completion:nil];
+}
+
+- (void)fingerprintAuthenticationEnrollmentSuccessful
+{
     [self dismissNavigationPresentedViewController:nil];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
+- (void)fingerprintAuthenticationEnrollmentFailure
 {
-    switch(error.code){
-        case ONGGenericErrorUserDeregistered:
-        case ONGGenericErrorDeviceDeregistered:
-            [self unwindNavigationStack];
-            [self handleError:error.description];
-            break;
-        default:
-            [self dismissNavigationPresentedViewController:nil];
-            [self handleError:error.description];
-            break;
-    }
+    [self dismissNavigationPresentedViewController:nil];
+    [self handleError:nil];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
+- (void)fingerprintAuthenticationEnrollmentFailureNotAuthenticated
 {
-    if (challenge.error) {
-        [self dismissNavigationPresentedViewController:^{
-            [self.pinViewController reset];
-            [[AppDelegate sharedNavigationController] presentViewController:self.pinViewController animated:YES completion:nil];
-        }];
-    } else {
-        PinViewController *viewController = [PinViewController new];
-        self.pinViewController = viewController;
-        viewController.pinLength = 5;
-        viewController.mode = PINCheckMode;
-        viewController.profile = challenge.userProfile;
-        viewController.pinEntered = ^(NSString *pin) {
-            [challenge.sender respondWithPin:pin challenge:challenge];
-        };
-        [[AppDelegate sharedNavigationController] presentViewController:viewController animated:YES completion:nil];
-    }
+    [self dismissNavigationPresentedViewController:nil];
+}
+
+- (void)fingerprintAuthenticationEnrollmentErrorInvalidPin:(NSUInteger)attemptCount
+{
+    [self dismissNavigationPresentedViewController:^{
+        [self.pinViewController reset];
+        [[AppDelegate sharedNavigationController] presentViewController:self.pinViewController animated:YES completion:nil];
+    }];
+}
+
+- (void)fingerprintAuthenticationEnrollmentErrorUserDeregistered
+{
+    [self unwindNavigationStack];
+}
+
+- (void)fingerprintAuthenticationEnrollmentErrorDeviceDeregistered
+{
+    [self unwindNavigationStack];
 }
 
 - (void)handleError:(NSString *)error

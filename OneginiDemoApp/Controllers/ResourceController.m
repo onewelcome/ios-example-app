@@ -2,9 +2,11 @@
 
 #import "ResourceController.h"
 #import "Profile.h"
-#import "OneginiSDK.h"
 
 @interface ResourceController ()
+
+@property (nonatomic, copy) void(^callback)(Profile *profile, NSError *error);
+
 @end
 
 @implementation ResourceController
@@ -21,18 +23,82 @@
     return singleton;
 }
 
-- (void)getToken:(void (^)(BOOL received, NSError *error))completion
+- (void)getProfile:(void (^)(Profile *profile, NSError *error))completion
 {
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"/client/resource/token" method:@"GET"];
-    [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
-        if (response && response.statusCode < 300) {
-            if (completion) {
-                completion(YES, nil);
-            }
-        } else if (completion) {
-            completion(NO, error);
-        }
-    }];
+    self.callback = completion;
+    [[OGOneginiClient sharedInstance] fetchResource:@"/api/persons" requestMethod:@"GET" params:nil paramsEncoding:OGJSONParameterEncoding headers:nil delegate:self];
+}
+
+- (void)handleResponse:(NSData *)response
+{
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:response options:0 error:NULL];
+
+    Profile *profile = [Profile profileFromJSON:json];
+    if (self.callback) {
+        self.callback(profile, nil);
+        self.callback = nil;
+    }
+}
+
+- (void)handleError:(NSError *)error
+{
+    if (self.callback) {
+        self.callback(nil, error);
+        self.callback = nil;
+    }
+}
+
+#pragma mark - OGResourceHandlerDelegate
+
+- (void)resourceResponse:(NSHTTPURLResponse *)response body:(NSData *)body requestId:(NSString *)requestId
+{
+    [self handleResponse:body];
+}
+
+- (void)resourceError:(NSError *)error requestId:(NSString *)requestId
+{
+    [self handleError:error];
+}
+
+- (void)resourceError
+{
+    [self handleError:nil];
+}
+
+- (void)resourceBadRequest
+{
+    [self handleError:nil];
+}
+
+- (void)resourceErrorAuthenticationFailed
+{
+    [self handleError:nil];
+}
+
+- (void)scopeError
+{
+    [self handleError:nil];
+}
+
+- (void)unauthorizedClient
+{
+    [self handleError:nil];
+}
+
+- (void)resourceSuccess:(id)response
+{
+    [self handleResponse:response];
+}
+
+- (void)resourceSuccess:(id)response
+                headers:(NSDictionary *)headers
+{
+    [self handleResponse:response];
+}
+
+- (void)invalidGrantType
+{
+    [self handleError:nil];
 }
 
 @end

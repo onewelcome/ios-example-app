@@ -16,6 +16,7 @@
 #import "ONGNetworkTask.h"
 
 @protocol ONGRegistrationDelegate;
+@class ONGAuthenticator;
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMethodInspection"
@@ -110,7 +111,8 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param error pin policy validation error
  *  @return true if all pin policy constraints are satisfied
  */
-- (BOOL)isPinValid:(NSString *)pin error:(NSError *_Nullable *_Nullable)error;
+
+- (void)validatePinWithPolicy:(NSString *)pin completion:(void (^)(BOOL valid, NSError * _Nullable error))completion;
 
 /**
  *  Handles the response of the authentication request from the browser redirect.
@@ -131,12 +133,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)logoutUser:(nullable void (^)(ONGUserProfile *userProfile, NSError *_Nullable error))completion;
 
 /**
- *  Clears the client credentials.
- *  A new dynamic client registration has to be performed on the next authorization request.
- */
-- (void)clearCredentials;
-
-/**
  *  Clears all tokens and reset the pin attempt count.
  *
  *  @param error not nil when deleting the refresh token from the keychain fails.
@@ -153,35 +149,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param deviceToken device token to store
  */
 - (void)storeDevicePushTokenInSession:(nullable NSData *)deviceToken;
-
-/**
- *  Enrolls the currently authenticated user for fingerprint authentication. The ONGFingerprintDelegate
- *  askCurrentPinForFingerprintAuthentication method must be implemented. The PIN provided by the user must be passed to
- *  the confirmCurrentPinForFingerprintAuthorization method to complete the flow.
- *
- *  Fingerprint authentication must be available for current user and device.
- *  @see -(bool)isFingerprintAuthenticationAvailable
- *
- *  @param delegate delegate handling fingerprint enrollment callbacks
- */
-- (void)enrollForFingerprintAuthenticationWithDelegate:(id<ONGFingerprintDelegate>)delegate;
-
-/**
- *  Disables fingerprint authentication for the currently authenticated user.
- */
-- (void)disableFingerprintAuthentication;
-
-/**
- *  Determines if device is enrolled for fingerprint authentication.
- *
- *  @param delegate
- */
-- (BOOL)isEnrolledForFingerprintAuthentication;
-
-/**
- *  Determines if fingerprint authentication is possible by checking if device possess Touch ID sensor, at least one fingerprint is registered and if fingerprint is enabled for client configuration provided by token server. Device cannot be jailbroken and have to be running iOS 9 or greater.
- */
-- (BOOL)isFingerprintAuthenticationAvailable;
 
 /**
  *  Enrolls the currently connected device for mobile push authentication.
@@ -248,6 +215,46 @@ NS_ASSUME_NONNULL_BEGIN
  * @return String with access token or nil
  */
 @property (nonatomic, readonly, nullable) NSString *accessToken;
+
+/**
+ * Discovers and returns a set of authenticators which are supported both, client and server side, and are not yet registered.
+ *
+ * The returned errors will be within the ONGGenericErrorDomain.
+ *
+ * @param completion block returning non registered authenticators or any encountered error
+ */
+- (void)fetchNonRegisteredAuthenticators:(void (^)(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error))completion;
+
+/**
+ * Set of registered authenticators.
+ */
+@property (nonatomic, readonly) NSSet<ONGAuthenticator *> *registeredAuthenticators;
+
+/**
+ * Registers an authenticator. Use one of the non registeres authenticators returned by `fetchNonRegisteredAuthenticators` method.
+ * Registering an authenticator requires user authentication which is handled by the delegate.
+ *
+ * The returned errors will be within the ONGGenericErrorDomain or ONGAuthenticatorRegistrationErrorDomain.
+ *
+ * @param authenticator to be registered authenticator
+ * @param delegate delegate authenticating user
+ */
+- (void)registerAuthenticator:(ONGAuthenticator *)authenticator delegate:(id<ONGAuthenticationDelegate>)delegate;
+
+/**
+ * Deregisters an authenticator. Use one of the registered authenticators returned by `registeredAuthenticators` method.
+ *
+ * The returned errors will be within the ONGGenericErrorDomain or ONGAuthenticatorDeregistrationErrorDomain.
+ *
+ * @param authenticator to be deregistered authenticator
+ * @param completion block returning result of deregistration action or any encountered error
+ */
+- (void)deregisterAuthenticator:(ONGAuthenticator *)authenticator completion:(nullable void (^)(BOOL deregistered, NSError * _Nullable error))completion;
+
+/**
+ * Represents preferred authenticator. By default SDK uses PIN as preferred authenticator.
+ */
+@property (nonatomic) ONGAuthenticator *preferredAuthenticator;
 
 @end
 

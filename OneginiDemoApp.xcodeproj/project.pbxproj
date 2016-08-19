@@ -17,6 +17,7 @@
 		5C3CA1521D11E2B900F00C05 /* PushConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C3CA1511D11E2B900F00C05 /* PushConfirmationViewController.xib */; };
 		5C3CA15B1D13E56100F00C05 /* ChangePinController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C3CA1591D13E56100F00C05 /* ChangePinController.h */; };
 		5C3CA15C1D13E56100F00C05 /* ChangePinController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3CA15A1D13E56100F00C05 /* ChangePinController.m */; };
+		5C5EFDE31D6602280066865A /* ONGAuthenticator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C5EFDE21D6602280066865A /* ONGAuthenticator.h */; };
 		5C68BF8A1D58870500A9B725 /* OneginiSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C68BF661D58870500A9B725 /* OneginiSDK.h */; };
 		5C68BF8C1D58870500A9B725 /* ONGAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C68BF681D58870500A9B725 /* ONGAuthenticationDelegate.h */; };
 		5C68BF8D1D58870500A9B725 /* ONGChangePinDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C68BF691D58870500A9B725 /* ONGChangePinDelegate.h */; };
@@ -87,6 +88,7 @@
 		5C3CA1511D11E2B900F00C05 /* PushConfirmationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PushConfirmationViewController.xib; sourceTree = "<group>"; };
 		5C3CA1591D13E56100F00C05 /* ChangePinController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePinController.h; sourceTree = "<group>"; };
 		5C3CA15A1D13E56100F00C05 /* ChangePinController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePinController.m; sourceTree = "<group>"; };
+		5C5EFDE21D6602280066865A /* ONGAuthenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGAuthenticator.h; sourceTree = "<group>"; };
 		5C68BF661D58870500A9B725 /* OneginiSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiSDK.h; sourceTree = "<group>"; };
 		5C68BF681D58870500A9B725 /* ONGAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGAuthenticationDelegate.h; sourceTree = "<group>"; };
 		5C68BF691D58870500A9B725 /* ONGChangePinDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGChangePinDelegate.h; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 		5C68BF651D58870500A9B725 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				5C5EFDE21D6602280066865A /* ONGAuthenticator.h */,
 				5C68BF661D58870500A9B725 /* OneginiSDK.h */,
 				5C68BF681D58870500A9B725 /* ONGAuthenticationDelegate.h */,
 				5C68BF691D58870500A9B725 /* ONGChangePinDelegate.h */,
@@ -349,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C68BF8C1D58870500A9B725 /* ONGAuthenticationDelegate.h in Headers */,
+				5C5EFDE31D6602280066865A /* ONGAuthenticator.h in Headers */,
 				5C68BF911D58870500A9B725 /* ONGCreatePinChallenge.h in Headers */,
 				5C68BF9C1D58870500A9B725 /* ONGMobileAuthenticationDelegate.h in Headers */,
 				5C68BF941D58870500A9B725 /* ONGDeviceAuthenticationDelegate.h in Headers */,

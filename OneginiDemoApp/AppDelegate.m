@@ -6,21 +6,9 @@
 
 @implementation AppDelegate
 
-+ (AppDelegate *)sharedInstance
-{
-    return [UIApplication sharedApplication].delegate;
-}
-
 + (UINavigationController *)sharedNavigationController
 {
-    static UINavigationController *sharedNavigationController;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedNavigationController = [[UINavigationController alloc] initWithRootViewController:[WelcomeViewController new]];
-        sharedNavigationController.navigationBarHidden = YES;
-    });
-    return sharedNavigationController;
+    return (UINavigationController *)[UIApplication sharedApplication].delegate.window.rootViewController;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -28,7 +16,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
 
-    self.window.rootViewController = [AppDelegate sharedNavigationController];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[WelcomeViewController new]];
+    navigationController.navigationBarHidden = YES;
+    self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
 
     [[[[ONGClientBuilder new] setUseEmbeddedWebView:YES] setStoreCookies:YES] build];

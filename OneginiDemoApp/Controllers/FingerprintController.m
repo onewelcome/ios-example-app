@@ -2,25 +2,21 @@
 
 #import "FingerprintController.h"
 #import "PinViewController.h"
-#import "AppDelegate.h"
 
 @interface FingerprintController ()
 
+@property (nonatomic) UINavigationController *navigationController;
 @property (nonatomic) PinViewController *pinViewController;
 
 @end
 
 @implementation FingerprintController
 
-+ (instancetype)sharedInstance
++ (instancetype)fingerprintControllerWithNavigationController:(UINavigationController *)navigationController
 {
-    static FingerprintController *singleton;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        singleton = [[self alloc] init];
-    });
-    return singleton;
+    FingerprintController *fingerprintController = [FingerprintController new];
+    fingerprintController.navigationController = navigationController;
+    return fingerprintController;
 }
 
 - (ONGAuthenticator *)fingerprintAuthenticatorFromSet:(NSSet<ONGAuthenticator *> *)authenticators{
@@ -28,47 +24,25 @@
     return [authenticators filteredSetUsingPredicate:predicate].anyObject;
 }
 
-- (void)enrollForFingerprintAuthentication
-{
-    [[ONGUserClient sharedInstance] fetchNonRegisteredAuthenticators:^(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error) {
-        ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:authenticators];
-        [[ONGUserClient sharedInstance] registerAuthenticator:fingerprintAuthenticator delegate:self];
-    }];
-}
-
-- (BOOL)isFingerprintEnrolled
-{
-    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticators];
-    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
-    return fingerprintAuthenticator != nil;
-}
-
-- (void)disableFingerprintAuthentication
-{
-    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticators];
-    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
-    [[ONGUserClient sharedInstance] deregisterAuthenticator:fingerprintAuthenticator completion:nil];
-}
-
 - (void)unwindNavigationStack
 {
-    if ([AppDelegate sharedNavigationController].presentedViewController) {
-        [[AppDelegate sharedNavigationController] dismissViewControllerAnimated:YES completion:^{
-            [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
+    if (self.navigationController.presentedViewController) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }];
     }
 }
 
 - (void)dismissNavigationPresentedViewController:(void (^)(void))completion
 {
-    if ([AppDelegate sharedNavigationController].presentedViewController) {
-        [[AppDelegate sharedNavigationController] dismissViewControllerAnimated:YES completion:completion];
+    if (self.navigationController.presentedViewController) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:completion];
     } else if (completion != nil) {
         completion();
     }
 }
 
-// MARK: - OGFingerprintDelegate
+#pragma mark - OGFingerprintDelegate
 
 - (void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile
 {
@@ -98,7 +72,7 @@
     if (challenge.error) {
         [self dismissNavigationPresentedViewController:^{
             [self.pinViewController reset];
-            [[AppDelegate sharedNavigationController] presentViewController:self.pinViewController animated:YES completion:nil];
+            [self.navigationController presentViewController:self.pinViewController animated:YES completion:nil];
         }];
     } else {
         PinViewController *viewController = [PinViewController new];
@@ -109,7 +83,7 @@
         viewController.pinEntered = ^(NSString *pin) {
             [challenge.sender respondWithPin:pin challenge:challenge];
         };
-        [[AppDelegate sharedNavigationController] presentViewController:viewController animated:YES completion:nil];
+        [self.navigationController presentViewController:viewController animated:YES completion:nil];
     }
 }
 
@@ -118,7 +92,7 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Fingerprint enrollment error" message:error preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okButton];
-    [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
 @end

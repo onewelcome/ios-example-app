@@ -1,18 +1,11 @@
-//
-//  RegistrationController.h
-//  OneginiDemoApp
-//
-//  Created by Stanisław Brzeski on 25/07/16.
 //  Copyright © 2016 Onegini. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "OneginiSDK.h"
 
 @interface RegistrationController : NSObject <ONGRegistrationDelegate, ONGPinValidationDelegate>
 
-+ (RegistrationController *)sharedInstance;
-
-- (void)registerNewUser;
++(instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController;
 
 @end

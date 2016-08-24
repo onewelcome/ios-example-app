@@ -66,12 +66,12 @@
 
 - (void)selectSlotAtIndex:(NSInteger)index
 {
-    ((UIView *)[self.pinSlots objectAtIndex:index]).layer.borderWidth = 2;
+    ((UIView *)self.pinSlots[(NSUInteger)index]).layer.borderWidth = 2;
 }
 
 - (void)deselectSlotAtIndex:(NSInteger)index
 {
-    ((UIView *)[self.pinSlots objectAtIndex:index]).layer.borderWidth = 1;
+    ((UIView *)self.pinSlots[(NSUInteger)index]).layer.borderWidth = 1;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -83,11 +83,6 @@
 - (void)showError:(NSString *)error
 {
     self.errorLabel.text = error;
-}
-
-- (void)invalidPinWithReason:(NSString *)message
-{
-    self.errorLabel.text = message;
 }
 
 - (void)setMode:(PINEntryMode)mode
@@ -170,7 +165,7 @@
 
 - (void)reset
 {
-    for (int i = 0; i < self.pinEntry.count; i++) {
+    for (NSUInteger i = 0; i < self.pinEntry.count; i++) {
         self.pinEntry[i] = @"#";
     }
     self.pinEntry = [NSMutableArray new];
@@ -182,7 +177,7 @@
     for (UIView *pinSlot in self.pinSlots) {
         [pinSlot.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
-    for (int i = 0; i < self.pinEntry.count; i++) {
+    for (NSUInteger i = 0; i < self.pinEntry.count; i++) {
         UIView *slot = self.pinSlots[i];
         UIImage *pinIndicatorImage = [UIImage imageNamed:@"pin-occupied-ic"];
         UIImageView *pinIndicator = [[UIImageView alloc] initWithImage:pinIndicatorImage];

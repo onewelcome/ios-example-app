@@ -1,15 +1,14 @@
 //  Copyright © 2016 Onegini. All rights reserved.
 
 #import "ProfileViewController.h"
-#import "ResourceController.h"
-#import "LogoutController.h"
 #import "DeregistrationController.h"
-#import "Profile.h"
-#import "MobileAuthenticationController.h"
 #import "FingerprintController.h"
 #import "ChangePinController.h"
 
 @interface ProfileViewController ()
+
+@property (nonatomic) ChangePinController *changePinController;
+@property (nonatomic) FingerprintController *fingerprintController;
 
 @property (weak, nonatomic) IBOutlet UILabel *tokenStatusLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getTokenSpinner;
@@ -25,19 +24,19 @@
     
     self.tokenStatusLabel.hidden = YES;
     self.getTokenSpinner.hidden = YES;
-    
-    [self update];
+
+    [self updateViews];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self update];
+    [self updateViews];
 }
 
-- (void)update
+- (void)updateViews
 {
-    if ([[FingerprintController sharedInstance] isFingerprintEnrolled]) {
+    if ([self isFingerprintEnrolled]) {
         [self.fingerprintButton setTitle:@"Disable fingerprint authentication" forState:UIControlStateNormal];
     } else {
         [self.fingerprintButton setTitle:@"Enroll for fingerprint authentication" forState:UIControlStateNormal];
@@ -46,7 +45,9 @@
 
 - (IBAction)logout:(id)sender
 {
-    [[LogoutController sharedInstance] logout];
+    [[ONGUserClient sharedInstance] logoutUser:^(ONGUserProfile * _Nonnull userProfile, NSError * _Nullable error) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }];
 }
 
 - (IBAction)disconnect:(id)sender
@@ -59,15 +60,75 @@
     self.tokenStatusLabel.hidden = YES;
     self.getTokenSpinner.hidden = NO;
 
-    [[ResourceController sharedInstance] getToken:^(BOOL received, NSError *error) {
+    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"/client/resource/token" method:@"GET"];
+    [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
         self.getTokenSpinner.hidden = YES;
-        
-        if (received) {
+        if (response && response.statusCode < 300) {
             self.tokenStatusLabel.hidden = NO;
         } else {
             [self showError:@"Token retrieval failed"];
         }
     }];
+}
+
+- (IBAction)enrollForMobileAuthentication:(id)sender
+{
+    [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError * _Nullable error) {
+        NSString *alertTitle = nil;
+        if (enrolled) {
+            alertTitle = @"Enrolled successfully";
+        } else {
+            alertTitle = @"Enrollment failure";
+        }
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:okButton];
+        [self.navigationController presentViewController:alert animated:YES completion:nil];
+    }];
+}
+
+- (IBAction)changePin:(id)sender
+{
+    self.changePinController = [ChangePinController changePinControllerWithNavigationController:self.navigationController];
+    [[ONGUserClient sharedInstance] changePin:self.changePinController];
+}
+
+- (IBAction)enrollForFingerprintAuthentication:(id)sender
+{
+    if ([self isFingerprintEnrolled]) {
+        [self deregisterFingerprint];
+    } else {
+        [self registerFingerprint];
+    }
+    [self updateViews];
+}
+
+- (void)registerFingerprint
+{
+    [[ONGUserClient sharedInstance] fetchNonRegisteredAuthenticators:^(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error) {
+        ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:authenticators];
+        self.fingerprintController = [FingerprintController fingerprintControllerWithNavigationController:self.navigationController];
+        [[ONGUserClient sharedInstance] registerAuthenticator:fingerprintAuthenticator delegate:self.fingerprintController];
+    }];
+}
+
+-(void)deregisterFingerprint
+{
+    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticators];
+    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
+    [[ONGUserClient sharedInstance] deregisterAuthenticator:fingerprintAuthenticator completion:nil];
+}
+
+- (BOOL)isFingerprintEnrolled
+{
+    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticators];
+    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
+    return fingerprintAuthenticator != nil;
+}
+
+- (ONGAuthenticator *)fingerprintAuthenticatorFromSet:(NSSet<ONGAuthenticator *> *)authenticators{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type == %d", ONGAuthenticatorTouchID];
+    return [authenticators filteredSetUsingPredicate:predicate].anyObject;
 }
 
 - (void)showError:(NSString *)error
@@ -81,26 +142,6 @@
                                                }];
     [alert addAction:ok];
     [self presentViewController:alert animated:YES completion:nil];
-}
-
-- (IBAction)enrollForMobileAuthentication:(id)sender
-{
-    [[MobileAuthenticationController sharedInstance] enrollForMobileAuthentication];
-}
-
-- (IBAction)enrollForFingerprintAuthentication:(id)sender
-{
-    if ([[FingerprintController sharedInstance] isFingerprintEnrolled]) {
-        [[FingerprintController sharedInstance] disableFingerprintAuthentication];
-        [self update];
-    } else {
-        [[FingerprintController sharedInstance] enrollForFingerprintAuthentication];
-    }
-}
-
-- (IBAction)changePin:(id)sender
-{
-    [[ChangePinController sharedInstance] changePin];
 }
 
 @end

@@ -1,42 +1,38 @@
-//
-//  RegistrationController.m
-//  OneginiDemoApp
-//
-//  Created by Stanisław Brzeski on 25/07/16.
 //  Copyright © 2016 Onegini. All rights reserved.
-//
 
 #import "RegistrationController.h"
-#import "ONGUserClient.h"
-#import "AppDelegate.h"
 #import "PinViewController.h"
 #import "WebBrowserViewController.h"
-#import "OneginiSDK.h"
 #import "ProfileViewController.h"
+
+@interface RegistrationController ()
+
+@property (nonatomic) PinViewController *pinViewController;
+@property (nonatomic) UINavigationController *navigationController;
+
+@end
 
 @implementation RegistrationController
 
-+ (RegistrationController *)sharedInstance
+- (PinViewController *)pinViewController
 {
-    static RegistrationController *singleton;
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        singleton = [[self alloc] init];
-    });
-    
-    return singleton;
+    if (!_pinViewController){
+        _pinViewController = [PinViewController new];
+        return _pinViewController;
+    }
+    return _pinViewController;
 }
-
-- (void)registerNewUser
++ (instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController
 {
-    [[ONGUserClient sharedInstance] registerUser:@[@"read"] delegate:self];
+    RegistrationController *registrationController = [RegistrationController new];
+    registrationController.navigationController = navigationController;
+    return registrationController;
 }
 
 - (void)userClient:(ONGUserClient *)userClient didRegisterUser:(ONGUserProfile *)userProfile
 {
     ProfileViewController *viewController = [ProfileViewController new];
-    [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToRegisterWithError:(NSError *)error
@@ -46,15 +42,18 @@
 
 - (void)userClient:(ONGUserClient *)userClient didReceivePinRegistrationChallenge:(ONGCreatePinChallenge *)challenge
 {
-    NSLog(@"%@",challenge.error);
-    PinViewController *viewController = [PinViewController new];
-    viewController.pinLength = challenge.pinLength;
-    viewController.mode = PINRegistrationMode;
-    viewController.profile = challenge.userProfile;
-    viewController.pinEntered = ^(NSString *pin) {
+    self.pinViewController.pinLength = challenge.pinLength;
+    self.pinViewController.mode = PINRegistrationMode;
+    self.pinViewController.profile = challenge.userProfile;
+    self.pinViewController.pinEntered = ^(NSString *pin) {
         [challenge.sender respondWithCreatedPin:pin challenge:challenge];
     };
-    [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
+    if (challenge.error) {
+        [self.pinViewController showError:challenge.error.localizedDescription];
+        [self.pinViewController reset];
+    } else {
+        [self.navigationController pushViewController:self.pinViewController animated:YES];
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveAuthenticationCodeRequestWithUrl:(NSURL *)url
@@ -62,11 +61,11 @@
     WebBrowserViewController *webBrowserViewController = [WebBrowserViewController new];
     webBrowserViewController.url = url;
     webBrowserViewController.completionBlock = ^(NSURL *completionURL) {
-        if ([[AppDelegate sharedNavigationController].presentedViewController isKindOfClass:WebBrowserViewController.class]) {
-            [[AppDelegate sharedNavigationController] dismissViewControllerAnimated:YES completion:nil];
+        if ([self.navigationController.presentedViewController isKindOfClass:WebBrowserViewController.class]) {
+            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
         }
     };
-    [[AppDelegate sharedNavigationController] presentViewController:webBrowserViewController animated:YES completion:nil];
+    [self.navigationController presentViewController:webBrowserViewController animated:YES completion:nil];
 }
 
 #pragma mark - OGPinValidationDelegate
@@ -78,21 +77,21 @@
 
 - (void)handleAuthError:(NSError *)error
 {
-    [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Authorization Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Registration Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okButton = [UIAlertAction
                                actionWithTitle:@"Ok"
                                style:UIAlertActionStyleDefault
                                handler:^(UIAlertAction *action) {
                                }];
     [alert addAction:okButton];
-    [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)handlePinPolicyValidationError:(NSError *)error
 {
-    if ([[AppDelegate sharedNavigationController].topViewController isKindOfClass:PinViewController.class]) {
-        PinViewController *pinViewController = (PinViewController *)[AppDelegate sharedNavigationController].topViewController;
+    if ([self.navigationController.topViewController isKindOfClass:PinViewController.class]) {
+        PinViewController *pinViewController = (PinViewController *)self.navigationController.topViewController;
         pinViewController.mode = PINRegistrationMode;
         [pinViewController reset];
         [pinViewController showError:error.localizedDescription];

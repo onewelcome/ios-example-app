@@ -2,31 +2,21 @@
 
 #import "ChangePinController.h"
 #import "PinViewController.h"
-#import "AppDelegate.h"
 
 @interface ChangePinController ()
 
 @property (nonatomic) PinViewController *pinViewController;
+@property (nonatomic) UINavigationController *navigationController;
 
 @end
 
 @implementation ChangePinController
 
-+ (instancetype)sharedInstance
++ (instancetype)changePinControllerWithNavigationController:(UINavigationController *)navigationController
 {
-    static ChangePinController *singleton;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        singleton = [[self alloc] init];
-    });
-
-    return singleton;
-}
-
-- (void)changePin
-{
-    [[ONGUserClient sharedInstance] changePin:self];
+    ChangePinController *changePinController = [ChangePinController new];
+    changePinController.navigationController = navigationController;
+    return changePinController;
 }
 
 #pragma mark - ONGPinChangeDelegate
@@ -40,7 +30,7 @@
     self.pinViewController.pinEntered = ^(NSString *pin) {
         [challenge.sender respondWithPin:pin challenge:challenge];
     };
-    [[AppDelegate sharedNavigationController] pushViewController:self.pinViewController animated:YES];
+    [self.navigationController pushViewController:self.pinViewController animated:YES];
 }
 
 -( void)userClient:(ONGUserClient *)userClient didReceiveCreatePinChallenge:(ONGCreatePinChallenge *)challenge
@@ -50,11 +40,14 @@
     self.pinViewController.pinEntered = ^(NSString *pin) {
         [challenge.sender respondWithCreatedPin:pin challenge:challenge];
     };
+    if (challenge.error) {
+        [self.pinViewController showError:challenge.error.localizedDescription];
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didChangePinForUser:(ONGUserProfile *)userProfile
 {
-    [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToChangePinForUser:(ONGUserProfile *)userProfile error:(NSError *)error
@@ -64,7 +57,7 @@
 
 - (void)pinChangeError:(NSError *)error
 {
-    [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     [self handleAuthError:error];
 }
 
@@ -73,7 +66,7 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change pin error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okButton];
-    [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
 @end

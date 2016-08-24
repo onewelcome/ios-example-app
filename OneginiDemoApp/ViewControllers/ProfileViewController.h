@@ -6,6 +6,6 @@
 
 @interface ProfileViewController : UIViewController
 
-- (void)update;
+- (void)updateViews;
 
 @end

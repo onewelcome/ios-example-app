@@ -1,7 +1,6 @@
 //  Copyright © 2016 Onegini. All rights reserved.
 
 #import "ProfileViewController.h"
-#import "DeregistrationController.h"
 #import "FingerprintController.h"
 #import "ChangePinController.h"
 
@@ -52,7 +51,13 @@
 
 - (IBAction)disconnect:(id)sender
 {
-    [[DeregistrationController sharedInstance] deregister];
+    ONGUserClient *client = [ONGUserClient sharedInstance];
+    ONGUserProfile *user = [client authenticatedUserProfile];
+    if (user != nil) {
+        [client deregisterUser:user completion:^(BOOL deregistered, NSError * _Nullable error) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }];
+    }
 }
 
 - (IBAction)getToken:(id)sender
@@ -89,7 +94,14 @@
 
 - (IBAction)changePin:(id)sender
 {
-    self.changePinController = [ChangePinController changePinControllerWithNavigationController:self.navigationController];
+    if (self.changePinController)
+        return;
+
+    self.changePinController = [ChangePinController
+        changePinControllerWithNavigationController:self.navigationController
+                                         completion:^{
+                                             self.changePinController = nil;
+                                         }];
     [[ONGUserClient sharedInstance] changePin:self.changePinController];
 }
 
@@ -105,9 +117,16 @@
 
 - (void)registerFingerprint
 {
+    if (self.fingerprintController)
+        return;
+
     [[ONGUserClient sharedInstance] fetchNonRegisteredAuthenticators:^(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error) {
         ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:authenticators];
-        self.fingerprintController = [FingerprintController fingerprintControllerWithNavigationController:self.navigationController];
+        self.fingerprintController = [FingerprintController
+            fingerprintControllerWithNavigationController:self.navigationController
+                                               completion:^{
+                                                   self.fingerprintController = nil;
+                                               }];
         [[ONGUserClient sharedInstance] registerAuthenticator:fingerprintAuthenticator delegate:self.fingerprintController];
     }];
 }

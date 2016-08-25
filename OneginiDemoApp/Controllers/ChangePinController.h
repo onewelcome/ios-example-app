@@ -6,6 +6,7 @@
 
 @interface ChangePinController : NSObject<ONGChangePinDelegate>
 
-+(instancetype)changePinControllerWithNavigationController:(UINavigationController *)navigationController;
++(instancetype)changePinControllerWithNavigationController:(UINavigationController *)navigationController
+                                                completion:(void(^)())completion;
 
 @end

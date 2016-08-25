@@ -6,6 +6,7 @@
 
 @interface FingerprintController : NSObject<ONGAuthenticationDelegate>
 
-+ (instancetype)fingerprintControllerWithNavigationController:(UINavigationController *)navigationController;
++ (instancetype)fingerprintControllerWithNavigationController:(UINavigationController *)navigationController
+                                                   completion:(void(^)())completion;
 
 @end

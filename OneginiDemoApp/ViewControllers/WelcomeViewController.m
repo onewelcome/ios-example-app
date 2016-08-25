@@ -3,7 +3,6 @@
 #import "WelcomeViewController.h"
 #import "AuthenticationController.h"
 #import "RegistrationController.h"
-#import "ClientAuthenticationController.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -29,21 +28,50 @@
 
 - (IBAction)registerNewProfile:(id)sender
 {
-    self.registrationController = [RegistrationController registrationControllerWithNavigationController:self.navigationController];
+    if (self.authenticationController || self.registrationController)
+        return;
+    
+    self.registrationController = [RegistrationController
+                                   registrationControllerWithNavigationController:self.navigationController
+                                   completion:^{
+                                       self.registrationController = nil;
+                                   }];
     [[ONGUserClient sharedInstance] registerUser:@[@"read"] delegate:self.registrationController];
 }
 
 - (IBAction)login:(id)sender
 {
-    ONGUserProfile *selectedUserProfile = [self selectedProfile];
-    self.authenticationController = [AuthenticationController authenticationControllerWithNavigationController:self.navigationController];
+    if (self.authenticationController || self.registrationController)
+        return;
 
+    ONGUserProfile *selectedUserProfile = [self selectedProfile];
+    self.authenticationController = [AuthenticationController
+        authenticationControllerWithNavigationController:self.navigationController
+                                              completion:^{
+                                                  self.authenticationController = nil;
+                                              }];
     [[ONGUserClient sharedInstance] authenticateUser:selectedUserProfile delegate:self.authenticationController];
 }
 
 - (IBAction)authenticateClient:(id)sender
 {
-    [[ClientAuthenticationController sharedInstance] authenticateClient];
+    [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"read"] completion:^(BOOL success, NSError * _Nullable error) {
+        NSString *message;
+        if (success) {
+            message = @"Device authentication successful";
+        } else {
+            message = @"Device authentication failed";
+        }
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:message
+                                                                       message:error.localizedDescription
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
+        [alert addAction:okButton];
+        [self.navigationController presentViewController:alert animated:YES completion:nil];
+    }];
 }
 
 - (ONGUserProfile *)selectedProfile

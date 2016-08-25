@@ -1,25 +1,30 @@
 //  Copyright © 2016 Onegini. All rights reserved.
 
 #import "MobileAuthenticationController.h"
-#import "AppDelegate.h"
 #import "PinViewController.h"
 #import "PushConfirmationViewController.h"
 
+@interface MobileAuthenticationController ()
+
+@property (nonatomic) PinViewController *pinViewController;
+@property (nonatomic) UINavigationController *navigationController;
+@property (nonatomic) void (^completion)();
+
+@end
+
 @implementation MobileAuthenticationController
 
-+ (instancetype)sharedInstance
++ (instancetype)mobileAuthentiactionControllerWithNaviationController:(UINavigationController *)navigationController
+                                                           completion:(void(^)())completion
 {
-    static MobileAuthenticationController *singleton;
-
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        singleton = [[self alloc] init];
-    });
-
-    return singleton;
+    MobileAuthenticationController *mobileAuthenticationController = [MobileAuthenticationController new];
+    mobileAuthenticationController.navigationController = navigationController;
+    mobileAuthenticationController.completion = completion;
+    mobileAuthenticationController.pinViewController = [PinViewController new];
+    return mobileAuthenticationController;
 }
 
-// MARK: - OGMobileAuthenticationDelegate
+#pragma mark - OGMobileAuthenticationDelegate
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveConfirmationChallenge:(void (^)(BOOL confirmRequest))confirmation forRequest:(ONGMobileAuthenticationRequest *)request
 {
@@ -27,22 +32,29 @@
     pushVC.pushMessage.text = request.title;
     pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push - %@", request.userProfile.profileId];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
-        [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
         confirmation(confirmed);
     };
-    [[AppDelegate sharedNavigationController] pushViewController:pushVC animated:YES];
+    [self.navigationController pushViewController:pushVC animated:YES];
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge forRequest:(ONGMobileAuthenticationRequest *)request
 {
-    PinViewController *viewController = [PinViewController new];
-    viewController.mode = PINCheckMode;
-    viewController.customTitle = [NSString stringWithFormat:@"Push with pin - %@", challenge.userProfile.profileId];
-    viewController.pinEntered = ^(NSString *pin) {
-        [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
+    [self.pinViewController reset];
+    self.pinViewController.mode = PINCheckMode;
+    self.pinViewController.pinLength = 5;
+    self.pinViewController.customTitle = [NSString stringWithFormat:@"Push with pin - %@", challenge.userProfile.profileId];
+    __weak MobileAuthenticationController *weakSelf = self;
+    self.pinViewController.pinEntered = ^(NSString *pin) {
+        [weakSelf.navigationController popViewControllerAnimated:YES];
         [challenge.sender respondWithPin:pin challenge:challenge];
     };
-    [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
+    if (challenge.previousFailureCount) {
+        NSString *errorMessage = [NSString stringWithFormat:@"Invalid pin. You have still %@ attempts left.", @(challenge.remainingFailureCount)];
+        [self.pinViewController showError:errorMessage];
+    } else {
+        [self.navigationController pushViewController:self.pinViewController animated:YES];
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveFingerprintChallenge:(ONGFingerprintChallenge *)challenge forRequest:(ONGMobileAuthenticationRequest *)request
@@ -51,10 +63,20 @@
     pushVC.pushMessage.text = request.title;
     pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint - %@", request.userProfile.profileId];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
-        [[AppDelegate sharedNavigationController] popViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
         [challenge.sender respondWithDefaultPromptForChallenge:challenge];
     };
-    [[AppDelegate sharedNavigationController] pushViewController:pushVC animated:YES];
+    [self.navigationController pushViewController:pushVC animated:YES];
+}
+
+- (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request
+{
+    self.completion();
+}
+
+- (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request error:(NSError *)error
+{
+    self.completion();
 }
 
 // MARK: - OGEnrollmentHandlerDelegate
@@ -73,7 +95,7 @@
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:okButton];
-        [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
+        [self.navigationController presentViewController:alert animated:YES completion:nil];
     }];
 }
 

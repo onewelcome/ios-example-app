@@ -6,16 +6,20 @@
 
 @interface AuthenticationController ()
 
+@property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic) UINavigationController *navigationController;
-
+@property (nonatomic) void (^completion)();
 @end
 
 @implementation AuthenticationController
 
 + (instancetype)authenticationControllerWithNavigationController:(UINavigationController *)navigationController
+                                                      completion:(void (^)())completion
 {
     AuthenticationController *authorizationController = [AuthenticationController new];
     authorizationController.navigationController = navigationController;
+    authorizationController.completion = completion;
+    authorizationController.pinViewController = [PinViewController new];
     return authorizationController;
 }
 
@@ -25,30 +29,29 @@
 {
     ProfileViewController *viewController = [ProfileViewController new];
     [self.navigationController pushViewController:viewController animated:YES];
+    self.completion();
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
     [self handleAuthError:error];
+    self.completion();
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
 {
+    [self.pinViewController reset];
+
+    self.pinViewController.pinLength = 5;
+    self.pinViewController.mode = PINCheckMode;
+    self.pinViewController.profile = challenge.userProfile;
+    self.pinViewController.pinEntered = ^(NSString *pin) {
+        [challenge.sender respondWithPin:pin challenge:challenge];
+    };
     if (challenge.previousFailureCount) {
-        if ([self.navigationController.topViewController isKindOfClass:PinViewController.class]) {
-            PinViewController *pinViewController = (PinViewController *)self.navigationController.topViewController;
-            [pinViewController reset];
-            [pinViewController showError:[NSString stringWithFormat:@"Wrong Pin. Remaining attempts: %@", @(challenge.remainingFailureCount)]];
-        }
+        [self.pinViewController showError:[NSString stringWithFormat:@"Wrong Pin. Remaining attempts: %@", @(challenge.remainingFailureCount)]];
     } else {
-        PinViewController *viewController = [PinViewController new];
-        viewController.pinLength = 5;
-        viewController.mode = PINCheckMode;
-        viewController.profile = challenge.userProfile;
-        viewController.pinEntered = ^(NSString *pin) {
-            [challenge.sender respondWithPin:pin challenge:challenge];
-        };
-        [self.navigationController pushViewController:viewController animated:YES];
+        [self.navigationController pushViewController:self.pinViewController animated:YES];
     }
 }
 

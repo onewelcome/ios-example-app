@@ -7,15 +7,19 @@
 
 @property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic) UINavigationController *navigationController;
+@property (nonatomic) void(^completion)();
 
 @end
 
 @implementation ChangePinController
 
 + (instancetype)changePinControllerWithNavigationController:(UINavigationController *)navigationController
+                                                 completion:(void(^)())completion
 {
     ChangePinController *changePinController = [ChangePinController new];
     changePinController.navigationController = navigationController;
+    changePinController.pinViewController = [PinViewController new];
+    changePinController.completion = completion;
     return changePinController;
 }
 
@@ -23,14 +27,18 @@
 
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
 {
-    self.pinViewController = [PinViewController new];
+    [self.pinViewController reset];
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.profile = challenge.userProfile;
     self.pinViewController.pinLength = 5;
     self.pinViewController.pinEntered = ^(NSString *pin) {
         [challenge.sender respondWithPin:pin challenge:challenge];
     };
-    [self.navigationController pushViewController:self.pinViewController animated:YES];
+    if ([self.navigationController.topViewController isKindOfClass:PinViewController.class]){
+        [self.pinViewController showError:[NSString stringWithFormat:@"Invalid pin. You have still %@ attempts left.",@(challenge.remainingFailureCount)]];
+    } else {
+        [self.navigationController pushViewController:self.pinViewController animated:YES];
+    }
 }
 
 -( void)userClient:(ONGUserClient *)userClient didReceiveCreatePinChallenge:(ONGCreatePinChallenge *)challenge
@@ -48,11 +56,13 @@
 - (void)userClient:(ONGUserClient *)userClient didChangePinForUser:(ONGUserProfile *)userProfile
 {
     [self.navigationController popViewControllerAnimated:YES];
+    self.completion();
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToChangePinForUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
     [self pinChangeError:error];
+    self.completion();
 }
 
 - (void)pinChangeError:(NSError *)error

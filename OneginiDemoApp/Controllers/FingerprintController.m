@@ -7,15 +7,17 @@
 
 @property (nonatomic) UINavigationController *navigationController;
 @property (nonatomic) PinViewController *pinViewController;
-
+@property (nonatomic) void(^completion)();
 @end
 
 @implementation FingerprintController
 
 + (instancetype)fingerprintControllerWithNavigationController:(UINavigationController *)navigationController
+                                                   completion:(void(^)())completion
 {
     FingerprintController *fingerprintController = [FingerprintController new];
     fingerprintController.navigationController = navigationController;
+    fingerprintController.completion = completion;
     return fingerprintController;
 }
 
@@ -50,6 +52,7 @@
     ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
     [ONGUserClient sharedInstance].preferredAuthenticator = fingerprintAuthenticator;
     [self dismissNavigationPresentedViewController:nil];
+    self.completion();
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
@@ -58,13 +61,14 @@
         case ONGGenericErrorUserDeregistered:
         case ONGGenericErrorDeviceDeregistered:
             [self unwindNavigationStack];
-            [self handleError:error.description];
+            [self handleError:error.localizedDescription];
             break;
         default:
             [self dismissNavigationPresentedViewController:nil];
-            [self handleError:error.description];
+            [self handleError:error.localizedDescription];
             break;
     }
+    self.completion();
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge

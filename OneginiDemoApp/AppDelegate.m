@@ -4,12 +4,13 @@
 #import "WelcomeViewController.h"
 #import "MobileAuthenticationController.h"
 
-@implementation AppDelegate
+@interface AppDelegate ()
 
-+ (UINavigationController *)sharedNavigationController
-{
-    return (UINavigationController *)[UIApplication sharedApplication].delegate.window.rootViewController;
-}
+@property (nonatomic) MobileAuthenticationController *mobileAuthenticationController;
+
+@end
+
+@implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -56,7 +57,7 @@
                 handler:^(UIAlertAction *action) {
                 }];
     [alert addAction:okButton];
-    [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
+    [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -71,7 +72,15 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [[ONGUserClient sharedInstance] handleMobileAuthenticationRequest:userInfo delegate:[MobileAuthenticationController sharedInstance]];
+    if (self.mobileAuthenticationController)
+        return;
+
+    self.mobileAuthenticationController = [MobileAuthenticationController
+        mobileAuthentiactionControllerWithNaviationController:(UINavigationController *)self.window.rootViewController
+                                                   completion:^{
+                                                       self.mobileAuthenticationController = nil;
+                                                   }];
+    [[ONGUserClient sharedInstance] handleMobileAuthenticationRequest:userInfo delegate:self.mobileAuthenticationController];
 }
 
 @end

@@ -9,6 +9,7 @@
 
 @property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic) UINavigationController *navigationController;
+@property (nonatomic) void (^completion)();
 
 @end
 
@@ -22,10 +23,13 @@
     }
     return _pinViewController;
 }
-+ (instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController
+
++(instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController
+                                                   completion:(void(^)())completion
 {
     RegistrationController *registrationController = [RegistrationController new];
     registrationController.navigationController = navigationController;
+    registrationController.completion = completion;
     return registrationController;
 }
 
@@ -33,11 +37,13 @@
 {
     ProfileViewController *viewController = [ProfileViewController new];
     [self.navigationController pushViewController:viewController animated:YES];
+    self.completion();
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToRegisterWithError:(NSError *)error
 {
     [self handleAuthError:error];
+    self.completion();
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceivePinRegistrationChallenge:(ONGCreatePinChallenge *)challenge

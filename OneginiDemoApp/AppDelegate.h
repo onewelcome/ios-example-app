@@ -5,8 +5,6 @@
 
 @interface AppDelegate : UIResponder<UIApplicationDelegate>
 
-+ (UINavigationController *)sharedNavigationController;
-
 @property (nonatomic) UIWindow *window;
 
 @end

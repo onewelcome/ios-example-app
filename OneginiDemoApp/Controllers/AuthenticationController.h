@@ -6,6 +6,7 @@
 
 @interface AuthenticationController : NSObject<ONGAuthenticationDelegate>
 
-+ (instancetype)authenticationControllerWithNavigationController:(UINavigationController *)navigationController;
++ (instancetype)authenticationControllerWithNavigationController:(UINavigationController *)navigationController
+                                                      completion:(void(^)())completion;
 
 @end

@@ -2,6 +2,7 @@
 
 #import "ClientAuthenticationController.h"
 #import "AppDelegate.h"
+#import "UIKit/UIKit.h"
 
 @implementation ClientAuthenticationController
 
@@ -19,7 +20,13 @@
 
 - (void)authenticateClient
 {
-    [[ONGDeviceClient sharedInstance] authenticateDevice:self completion:nil];
+    [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"read"] completion:^(BOOL success, NSError * _Nullable error) {
+        if (success) {
+            [self authenticationSuccess];
+        } else {
+            [self handleAuthError: error];
+        }
+    }];
 }
 
 - (void)authenticationSuccess
@@ -33,11 +40,6 @@
                 }];
     [alert addAction:okButton];
     [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)authenticationError:(NSError *)error
-{
-    [self handleAuthError:error];
 }
 
 - (void)handleAuthError:(NSError *)error

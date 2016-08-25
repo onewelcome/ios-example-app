@@ -3,8 +3,6 @@
 #import <Foundation/Foundation.h>
 #import "ONGPublicCommons.h"
 
-@protocol ONGDeviceAuthenticationDelegate;
-@protocol ONGResourceHandlerDelegate;
 @class ONGNetworkTask;
 @class ONGResourceRequest;
 @class ONGResourceResponse;
@@ -38,14 +36,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init ONG_UNAVAILABLE;
 + (instancetype)new ONG_UNAVAILABLE;
 
-
 /**
  *  Performs device authentication.
  *
- *  @param scopes array of scopes
- *  @param delegate authentication delegate
+ *  @param scopes array of scopes.
+ *  @param completion block that will be called on authentication completion.
  */
-- (void)authenticateDevice:(nullable NSArray<NSString *> *)scopes delegate:(id<ONGDeviceAuthenticationDelegate>)delegate;
+- (void)authenticateDevice:(NSArray<NSString *> *)scopes completion:(void (^)(BOOL success, NSError * _Nullable))completion;
 
 /**
  * Perform an authenticated network request. It requires passing an instance of the `ONGResourceRequest` as parameter.

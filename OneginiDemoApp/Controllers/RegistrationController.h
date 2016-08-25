@@ -4,7 +4,7 @@
 #import <UIKit/UIKit.h>
 #import "OneginiSDK.h"
 
-@interface RegistrationController : NSObject <ONGRegistrationDelegate, ONGPinValidationDelegate>
+@interface RegistrationController : NSObject <ONGRegistrationDelegate>
 
 +(instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController;
 

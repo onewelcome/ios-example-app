@@ -39,6 +39,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)respondWithPinFallbackForChallenge:(ONGFingerprintChallenge *)challenge;
 
+/**
+ * Method to cancel challenge
+ *
+ * @param challenge pin challenge that needs to be cancelled
+ */
+- (void)cancelChallenge:(ONGFingerprintChallenge *)challenge;
+
 @end
 
 /**

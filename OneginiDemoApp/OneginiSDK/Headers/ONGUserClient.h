@@ -106,12 +106,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)validatePinWithPolicy:(NSString *)pin completion:(void (^)(BOOL valid, NSError * _Nullable error))completion;
 
 /**
- *  Handles the response of the authentication request from the browser redirect.
+ *  Handles the response of the registration request from the browser redirect.
  *  The URL scheme and host must match the config model redirect URL.
  *
  *  @param url callback url
  */
-- (void)handleAuthenticationCallback:(NSURL *)url;
+- (void)handleRegistrationCallback:(NSURL *)url;
 
 /**
  *  Performs a user logout, by invalidating the access token.

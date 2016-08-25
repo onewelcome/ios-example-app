@@ -6,8 +6,6 @@
 #import "ONGPublicCommons.h"
 #import "ONGChangePinDelegate.h"
 #import "ONGDeregistrationDelegate.h"
-#import "ONGFingerprintDelegate.h"
-#import "ONGCustomizationDelegate.h"
 #import "ONGConfigModel.h"
 #import "ONGUserClient.h"
 #import "ONGCreatePinChallenge.h"
@@ -26,3 +24,4 @@
 #import "ONGNetworkTask.h"
 #import "ONGResourceResponse.h"
 #import "ONGRegistrationDelegate.h"
+#import "ONGAuthenticator.h"

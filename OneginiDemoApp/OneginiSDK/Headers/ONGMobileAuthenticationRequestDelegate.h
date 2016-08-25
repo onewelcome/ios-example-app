@@ -8,19 +8,23 @@
 @class ONGMobileAuthenticationRequest;
 @class ONGUserProfile;
 
+NS_ASSUME_NONNULL_BEGIN
+
+/**
+ *  Protocol describing interface for objects implementing methods required to complete mobile authentication request.
+ */
 @protocol ONGMobileAuthenticationRequestDelegate<NSObject>
 
 /**
- *  Asks the user for confirmation on a mobile authentication request.
- *  The implementor should present a confirmation dialog with the message specified in `request` instance.
+ *  Method called when mobile authentication request requires only confirmation to be completed.
  *
  *  @param userClient user client that received mobile authentication request
- *  @param confirmation confirmation block that needs to be invoked upon confirmation flag.
+ *  @param confirmation confirmation block that needs to be invoked with confirmation value
  *  @param request mobile authentication request received by the SDK
  *
  *  @see ONGMobileAuthenticationRequest
  */
-- (void)userClient:(ONGUserClient *)userClient awaitsConfirmation:(void (^)(BOOL confirmRequest))confirmation forRequest:(ONGMobileAuthenticationRequest *)request;
+- (void)userClient:(ONGUserClient *)userClient didReceiveConfirmationChallenge:(void (^)(BOOL confirmRequest))confirmation forRequest:(ONGMobileAuthenticationRequest *)request;
 
 /**
  *  Method called when mobile authentication request requires PIN code for confirmation.
@@ -56,7 +60,7 @@
  *
  *  @see ONGMobileAuthenticationRequest
  */
-- (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request error:(NSError *)error;
+- (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthenticationRequest:(nullable ONGMobileAuthenticationRequest *)request error:(NSError *)error;
 
 /**
  *  Method called when mobile authentication request handled successfully.
@@ -69,3 +73,5 @@
 - (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request;
 
 @end
+
+NS_ASSUME_NONNULL_END

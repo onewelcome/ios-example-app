@@ -46,6 +46,7 @@ typedef NS_ENUM(ONGErrorCode, ONGAuthenticatorRegistrationError) {
     ONGAuthenticatorRegistrationErrorAuthenticatorInvalid = 9110, // The authenticator that you tried to register is invalid. It may not exist, please verify whether you have supplied the correct authenticator for registration.
     ONGAuthenticatorRegistrationErrorAuthenticatorAlreadyRegistered = 9111, // The given authenticator is already registered and can therefore not be registered again
     ONGAuthenticatorRegistrationErrorFidoAuthenticationDisabled = 9112, // The Token Server configuration does not allow you to register FIDO authenticators. Enable FIDO authentication for the current application in the Token Server configuration to allow FIDO authenticator registration
+    ONGAuthenticatorRegistrationErrorAuthenticatorNotSupported = 9113, //The given authenticator is not supported.
 };
 
 /**
@@ -140,10 +141,10 @@ ONG_EXTERN NSString *const ONGPinValidationErrorMaxSimilarDigitsKey;
  * Error codes in ONGPinValidationErrorDomain
  */
 typedef NS_ENUM(ONGErrorCode, ONGPinValidationError) {
-    ONGPinValidationErrorPinBlackListed = 9700, // Provided PIN was marked as blacklisted on the Token Server.
-    ONGPinValidationErrorPinShouldNotBeASequence = 9701, // Provided PIN contains a not allowed sequence
-    ONGPinValidationErrorPinTooShort = 9702, // Provided PIN is too short
-    ONGPinValidationErrorPinShouldNotUseSimilarDigits = 9703 // Provided PIN contains too many similar digits
+    ONGPinValidationErrorPinBlackListed = 9700, // The provided PIN was marked as blacklisted on the Token Server.
+    ONGPinValidationErrorPinShouldNotBeASequence = 9701, // The provided PIN contains a not allowed sequence
+    ONGPinValidationErrorWrongPinLength = 9702, // The provided PIN length is wrong
+    ONGPinValidationErrorPinShouldNotUseSimilarDigits = 9703 // The provided PIN contains too many similar digits
 };
 
 /**

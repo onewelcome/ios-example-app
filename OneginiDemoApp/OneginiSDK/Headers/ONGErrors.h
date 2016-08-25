@@ -153,6 +153,7 @@ typedef NS_ENUM(ONGErrorCode, ONGPinValidationError) {
  * See -[ONGUserClient enrollForMobileAuthentication:]
  */
 ONG_EXTERN NSString *const ONGMobileAuthenticationEnrollmentErrorDomain;
+
 /**
  * Error codes in ONGMobileAuthenticationEnrollmentErrorDomain
  */
@@ -162,6 +163,20 @@ typedef NS_ENUM(ONGErrorCode, ONGMobileAuthenticationEnrollmentError) {
     ONGMobileAuthenticationEnrollmentErrorEnrollmentNotAvailable = 9811, // The Mobile authentication feature is disabled in the Token Server configuration.
     ONGMobileAuthenticationEnrollmentErrorUserAlreadyEnrolled = 9812, // The user is already enrolled for mobile authentication on another device.
     ONGMobileAuthenticationEnrollmentErrorMissingDevicePushToken = 9820 // The device Push Token is not set.
+};
+
+/**
+ * ONGMobileAuthenticationEnrollmentErrorDomain contains errors that happen during handling of the Mobile Authentication Request.
+ *
+ * See -[ONGUserClient handleMobileAuthenticationRequest:delegate:]
+ */
+ONG_EXTERN NSString *const ONGMobileAuthenticationRequestErrorDomain;
+
+/**
+ * Error codes in ONGMobileAuthenticationRequestErrorDomain
+ */
+typedef NS_ENUM(ONGErrorCode, ONGMobileAuthenticationRequestError) {
+    ONGMobileAuthenticationRequestErrorNotFound = 9900,
 };
 
 /**
@@ -175,7 +190,7 @@ ONG_EXTERN NSString *const ONGLogoutErrorDomain;
  * Error codes in ONGLogoutErrorDomain
  */
 typedef NS_ENUM(ONGErrorCode, ONGLogoutError) {
-    ONGLogoutErrorLocalLogout = 9901 // The user was only logged out on the device. The access token has not been invalidated on the server-side. This does not pose a problem but you might want to inform the end-user as he might be able to see that he/she is still logged in through a web portal.
+    ONGLogoutErrorLocalLogout = 10000 // The user was only logged out on the device. The access token has not been invalidated on the server-side. This does not pose a problem but you might want to inform the end-user as he might be able to see that he/she is still logged in through a web portal.
 };
 
 /**
@@ -189,8 +204,8 @@ ONG_EXTERN NSString *const ONGFetchResourceErrorDomain;
  * Error codes in ONGFetchResourceErrorDomain
  */
 typedef NS_ENUM(ONGErrorCode, ONGFetchResourceError) {
-    ONGFetchResourceErrorInvalidMethod = 10000, // provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
-    ONGFetchResourceErrorUserNotAuthenticated = 10001 // No user is currently authenticated, possibly due to the fact that the access token has expired. A user must be authenticated in order to fetch resources.
+    ONGFetchResourceErrorInvalidMethod = 10100, // provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
+    ONGFetchResourceErrorUserNotAuthenticated = 10101 // No user is currently authenticated, possibly due to the fact that the access token has expired. A user must be authenticated in order to fetch resources.
 };
 
 /**
@@ -204,8 +219,8 @@ ONG_EXTERN NSString *const ONGFetchAnonymousResourceErrorDomain;
  * Error codes in ONGFetchAnonymousResourceErrorDomain
  */
 typedef NS_ENUM(ONGErrorCode, ONGFetchAnonymousResourceError) {
-    ONGFetchAnonymousResourceErrorInvalidMethod = 10100, // provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
-    ONGFetchAnonymousResourceErrorDeviceNotAuthenticated = 10101, // A device access token could not be retrieved. Check your Application configuration in the Token Server
+    ONGFetchAnonymousResourceErrorInvalidMethod = 10200, // provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
+    ONGFetchAnonymousResourceErrorDeviceNotAuthenticated = 10201, // A device access token could not be retrieved. Check your Application configuration in the Token Server
 };
 
 /**
@@ -214,5 +229,5 @@ typedef NS_ENUM(ONGErrorCode, ONGFetchAnonymousResourceError) {
 ONG_EXTERN NSString *const ONGSDKInitializationErrorDomain;
 
 typedef NS_ENUM(ONGErrorCode, ONGSDKInitializationError) {
-    ONGSDKInitialisationErrorDeviceRegistrationFailed = 10200, // The device could not be registered with the Token Server, verify that the SDK configuration, Token Server configuration and security features are correctly configured
+    ONGSDKInitialisationErrorDeviceRegistrationFailed = 10300, // The device could not be registered with the Token Server, verify that the SDK configuration, Token Server configuration and security features are correctly configured
 };

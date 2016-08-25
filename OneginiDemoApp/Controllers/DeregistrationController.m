@@ -22,18 +22,10 @@
     ONGUserClient *client = [ONGUserClient sharedInstance];
     ONGUserProfile *user = [client authenticatedUserProfile];
     if (user != nil) {
-        [client deregisterUser:user delegate:self];
+        [client deregisterUser:user completion:^(BOOL deregistered, NSError * _Nullable error) {
+            [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
+        }];
     }
-}
-
-- (void)deregistrationSuccessful:(ONGUserProfile *)userProfile
-{
-    [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES ];
-}
-
-- (void)deregistrationFailureWithError:(NSError *)error
-{
-    [[AppDelegate sharedNavigationController] popToRootViewControllerAnimated:YES];
 }
 
 @end

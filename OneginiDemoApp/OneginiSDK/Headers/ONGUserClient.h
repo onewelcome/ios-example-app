@@ -3,7 +3,6 @@
 #import <Foundation/Foundation.h>
 #import "ONGChangePinDelegate.h"
 #import "ONGPublicCommons.h"
-#import "ONGDeregistrationDelegate.h"
 #import "ONGAuthenticationDelegate.h"
 #import "ONGUserProfile.h"
 #import "ONGMobileAuthenticationRequestDelegate.h"
@@ -98,6 +97,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Checks if the pin satisfies all pin policy constraints.
  *
+ *  The returned error will be either within the ONGGenericErrorDomain or the ONGPinValidationErrorDomain.
+ *
  *  @param pin pincode to validate against pin policy constraints
  *  @param error pin policy validation error
  *  @return true if all pin policy constraints are satisfied
@@ -117,9 +118,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  Performs a user logout, by invalidating the access token.
  *  The refresh token and client credentials remain untouched.
  *
- *  This error will be either within the ONGGenericErrorDomain or the ONGLogoutErrorDomain
+ *  The returned error will be either within the ONGGenericErrorDomain or the ONGLogoutErrorDomain.
  *
- *  @param completion completion block that is going to be invoked upon logout completion
+ *  @param completion completion block that is going to be invoked upon logout completion.
  */
 - (void)logoutUser:(nullable void (^)(ONGUserProfile *userProfile, NSError *_Nullable error))completion;
 
@@ -147,7 +148,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  The device push token must be stored in the session before invoking this method.
  *  @see storeDevicePushTokenInSession:
  *
- *  This error will be either within the ONGGenericErrorDomain or the ONGMobileAuthenticationEnrollmentErrorDomain
+ *  The returned error will be either within the ONGGenericErrorDomain or the ONGMobileAuthenticationEnrollmentErrorDomain
  *
  *  @param completion delegate handling mobile enrollment callbacks
  */
@@ -178,10 +179,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Delete user locally and revoke it from token server
  *
- *  @param userProfile user to disconnect
- *  @param delegate delegate
+ *  The returned error will be either within the ONGGenericErrorDomain or the ONGDeregistrationErrorDomain.
+ *
+ *  @param userProfile user to disconnect.
+ *  @param completion completion block that will be invoke upon deregistration completion.
  */
-- (void)deregisterUser:(ONGUserProfile *)userProfile delegate:(id<ONGDeregistrationDelegate>)delegate;
+- (void)deregisterUser:(ONGUserProfile *)userProfile completion:(nullable void (^)(BOOL deregistered, NSError *_Nullable error))completion;
 
 /**
  * Perform an authenticated network request. It requires passing an instance of the `ONGResourceRequest` as parameter.

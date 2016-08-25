@@ -19,7 +19,13 @@
 
 - (void)authenticateClient
 {
-    [[ONGDeviceClient sharedInstance] authenticateDevice:self completion:nil];
+    [[ONGDeviceClient sharedInstance] authenticateDevice:@[] completion:^(BOOL success, NSError * _Nullable error) {
+        if (success) {
+            [self authenticationSuccess];
+        } else {
+            [self authenticationError:error];
+        }
+    }];
 }
 
 - (void)authenticationSuccess

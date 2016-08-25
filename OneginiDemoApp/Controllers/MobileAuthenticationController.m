@@ -79,24 +79,4 @@
     self.completion();
 }
 
-// MARK: - OGEnrollmentHandlerDelegate
-
-- (void)enrollForMobileAuthentication
-{
-    [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError * _Nullable error) {
-        NSString *title = nil;
-
-        if (enrolled) {
-            title = @"Enrolled successfully";
-        } else {
-            title = @"Enrollment failure";
-        }
-
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-        [alert addAction:okButton];
-        [self.navigationController presentViewController:alert animated:YES completion:nil];
-    }];
-}
-
 @end

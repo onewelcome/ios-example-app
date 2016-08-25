@@ -141,10 +141,10 @@ ONG_EXTERN NSString *const ONGPinValidationErrorMaxSimilarDigitsKey;
  * Error codes in ONGPinValidationErrorDomain
  */
 typedef NS_ENUM(ONGErrorCode, ONGPinValidationError) {
-    ONGPinValidationErrorPinBlackListed = 9700, // Provided PIN was marked as blacklisted on the Token Server.
-    ONGPinValidationErrorPinShouldNotBeASequence = 9701, // Provided PIN contains a not allowed sequence
-    ONGPinValidationErrorPinTooShort = 9702, // Provided PIN is too short
-    ONGPinValidationErrorPinShouldNotUseSimilarDigits = 9703 // Provided PIN contains too many similar digits
+    ONGPinValidationErrorPinBlackListed = 9700, // The provided PIN was marked as blacklisted on the Token Server.
+    ONGPinValidationErrorPinShouldNotBeASequence = 9701, // The provided PIN contains a not allowed sequence
+    ONGPinValidationErrorWrongPinLength = 9702, // The provided PIN length is wrong
+    ONGPinValidationErrorPinShouldNotUseSimilarDigits = 9703 // The provided PIN contains too many similar digits
 };
 
 /**

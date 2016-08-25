@@ -1,16 +1,12 @@
 //  Copyright (c) 2016 Onegini. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "ONGPinValidationDelegate.h"
 #import "ONGChangePinDelegate.h"
 #import "ONGPublicCommons.h"
 #import "ONGDeregistrationDelegate.h"
-#import "ONGFingerprintDelegate.h"
-#import "ONGCustomizationDelegate.h"
 #import "ONGAuthenticationDelegate.h"
-#import "ONGDeviceAuthenticationDelegate.h"
 #import "ONGUserProfile.h"
-#import "ONGMobileAuthenticationDelegate.h"
+#import "ONGMobileAuthenticationRequestDelegate.h"
 #import "ONGConfigModel.h"
 #import "ONGResourceRequest.h"
 #import "ONGNetworkTask.h"
@@ -30,11 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  The client must be instantiated early in the App lifecycle and thereafter only referred to by it's shared instance.
  */
 @interface ONGUserClient : NSObject
-
-/**
- *  Registers delegate handling customizable properties within the SDK.
- */
-@property (weak, nonatomic, nullable) id<ONGCustomizationDelegate> customizationDelegate;
 
 /**
 * Access to the initialized and configured instance of the `ONGUserClient`. Before calling this method You have to initialize
@@ -167,7 +158,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  The client will then fetch the actual encrypted payload and invoke the delegate with the embedded message.
  *
  *  This should be invoked from the UIApplicationDelegate
- *  - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
+ *  - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
  *
  *  @see UIApplication
  *
@@ -175,7 +166,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param delegate delegate responsinble for handling push messages
  *  @return true, if the notification is processed by the client
  */
-- (BOOL)handlePushNotification:(NSDictionary *)userInfo delegate:(id<ONGMobileAuthenticationDelegate>)delegate;
+- (BOOL)handleMobileAuthenticationRequest:(NSDictionary *)userInfo delegate:(id<ONGMobileAuthenticationRequestDelegate>)delegate;
 
 /**
  *  List of enrolled users stored locally

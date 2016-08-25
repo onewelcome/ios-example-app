@@ -81,7 +81,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [[ONGUserClient sharedInstance] handlePushNotification:userInfo delegate:[MobileAuthenticationController sharedInstance]];
+    [[ONGUserClient sharedInstance] handleMobileAuthenticationRequest:userInfo delegate:[MobileAuthenticationController sharedInstance]];
 }
 
 @end

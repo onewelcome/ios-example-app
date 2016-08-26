@@ -64,7 +64,7 @@
     }
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveAuthenticationCodeRequestWithUrl:(NSURL *)url
+- (void)userClient:(ONGUserClient *)userClient didReceiveRegistrationRequestWithUrl:(NSURL *)url
 {
     WebBrowserViewController *webBrowserViewController = [WebBrowserViewController new];
     webBrowserViewController.url = url;

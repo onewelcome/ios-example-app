@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ONGRegistrationDelegate<NSObject>
 
 /**
- *  Method called when registration action requires creation of PIN code to continue.
+ *  Method called when registration action requires creation of a PIN to continue.
  *
  *  @param userClient user client performing registration
  *  @param challenge create pin challenge used to complete registration
@@ -23,19 +23,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)userClient:(ONGUserClient *)userClient didReceivePinRegistrationChallenge:(ONGCreatePinChallenge *)challenge;
 
 /**
- *  Method called when registration action requires authentication code request to be completed.
- *  After authentication code request is performed successfully, redirection call will be performed using url specified
- *  in ONGRedirectURL. If request is performed by embedded web browser SDK will handle redirection on its own. Otherwise
- *  redirection must be handled using handleAuthenticationCallback: method of ONGUserClient instance.
+ *  Method called when the registration action requires you to open a browser with the given URL. When the browser is finished processing it will use a
+ *  custom URL scheme to hand over control to your application. You now need to call the handleRegistrationCallback: method of ONGUserClient instance in
+ *  order to hand over control to the SDK and continue the registration action. If the HTTP request is performed by the embedded web browser the SDK will
+ *  pick up the redirect back to the app on its own and you don't need to do anything.
  *
- *  @discussion Example: if authentication code request is performed by external web browser, it will call
- *  application:openURL:options: method on the AppDelegate. In the implementation of this method redirect can be handled
- *  by calling [[ONGUserClient sharedInstance] handleAuthenticationCallback:url].
+ *  @discussion Example: if the HTTP request is performed by an external web browser, it will call
+ *  application:openURL:options: method on the AppDelegate. In the implementation of this method the redirect can be handled
+ *  by calling [[ONGUserClient sharedInstance] handleRegistrationCallback:url].
  *
  *  @param userClient user client performing registration
- *  @param url used to perform a authentication code request
+ *  @param url used to perform a registration code request
  */
-- (void)userClient:(ONGUserClient *)userClient didReceiveAuthenticationCodeRequestWithUrl:(NSURL *)url;
+- (void)userClient:(ONGUserClient *)userClient didReceiveRegistrationRequestWithUrl:(NSURL *)url;
 
 @optional
 

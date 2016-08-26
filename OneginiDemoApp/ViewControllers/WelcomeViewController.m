@@ -51,7 +51,7 @@
                                    handler:^(UIAlertAction *action) {
                                    }];
         [alert addAction:okButton];
-        [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
+        [self.navigationController presentViewController:alert animated:YES completion:nil];
         
         return;
     }

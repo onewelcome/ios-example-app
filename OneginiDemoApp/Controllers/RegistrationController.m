@@ -7,11 +7,9 @@
 //
 
 #import "RegistrationController.h"
-#import "ONGUserClient.h"
 #import "AppDelegate.h"
 #import "PinViewController.h"
 #import "WebBrowserViewController.h"
-#import "OneginiSDK.h"
 #import "ProfileViewController.h"
 
 @implementation RegistrationController
@@ -57,7 +55,7 @@
     [[AppDelegate sharedNavigationController] pushViewController:viewController animated:YES];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveAuthenticationCodeRequestWithUrl:(NSURL *)url
+- (void)userClient:(ONGUserClient *)userClient didReceiveRegistrationRequestWithUrl:(NSURL *)url
 {
     WebBrowserViewController *webBrowserViewController = [WebBrowserViewController new];
     webBrowserViewController.url = url;

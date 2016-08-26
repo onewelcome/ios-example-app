@@ -10,7 +10,6 @@
 #import "AppDelegate.h"
 #import "PinViewController.h"
 #import "ProfileViewController.h"
-#import "WebBrowserViewController.h"
 
 @implementation AuthorizationController
 
@@ -41,7 +40,7 @@
 	return [[ONGUserClient sharedInstance] authenticatedUserProfile];
 }
 
-#pragma mark - OGAuthenticationDelegete
+#pragma mark - OGAuthenticationDelegate
 
 -(void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile
 {

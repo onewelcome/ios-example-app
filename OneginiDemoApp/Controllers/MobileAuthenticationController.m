@@ -21,7 +21,7 @@
 
 // MARK: - OGMobileAuthenticationDelegate
 
-- (void)userClient:(ONGUserClient *)userClient awaitsConfirmation:(void (^)(BOOL confirmRequest))confirmation forRequest:(ONGMobileAuthenticationRequest *)request
+- (void)userClient:(ONGUserClient *)userClient didReceiveConfirmationChallenge:(void (^)(BOOL confirmRequest))confirmation forRequest:(ONGMobileAuthenticationRequest *)request
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = request.title;

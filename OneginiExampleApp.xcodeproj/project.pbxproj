@@ -10,7 +10,6 @@
 		5B964DC31D6F1ABF002215E3 /* ONGMobileAuthenticationRequestDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B964DAA1D6F1ABF002215E3 /* ONGMobileAuthenticationRequestDelegate.h */; };
 		5B964DC41D6F1ABF002215E3 /* ONGNetworkTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B964DAB1D6F1ABF002215E3 /* ONGNetworkTask.h */; };
 		5B964DC71D6F1ABF002215E3 /* ONGPublicDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B964DAE1D6F1ABF002215E3 /* ONGPublicDefines.h */; };
-		5B964DCE1D6F1ABF002215E3 /* libOneginiSDKiOS-5.00.00-SNAPSHOT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B964DB51D6F1ABF002215E3 /* libOneginiSDKiOS-5.00.00-SNAPSHOT.a */; };
 		5C1F1CDC1D464DE100D4D5C0 /* RegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1F1CDA1D464DE100D4D5C0 /* RegistrationController.m */; };
 		5C3CA1481D11394000F00C05 /* FingerprintController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C3CA1461D11394000F00C05 /* FingerprintController.h */; };
 		5C3CA1491D11394000F00C05 /* FingerprintController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3CA1471D11394000F00C05 /* FingerprintController.m */; };
@@ -24,6 +23,7 @@
 		5C8A03B41CDFA7C2007ADA14 /* WebBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A03B21CDFA7C2007ADA14 /* WebBrowserViewController.xib */; };
 		5C8A03BE1CDFB36F007ADA14 /* PinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A03BC1CDFB36F007ADA14 /* PinViewController.m */; };
 		5C8A03BF1CDFB36F007ADA14 /* PinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A03BD1CDFB36F007ADA14 /* PinViewController.xib */; };
+		5CA30F361D70AAA6003DCAE3 /* libOneginiSDKiOS-5.00.00-BETA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CA30F351D70AAA6003DCAE3 /* libOneginiSDKiOS-5.00.00-BETA.a */; };
 		5CAE98B01CE0929C009C1D1A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */; };
 		5CAE98C61CE0DEF8009C1D1A /* OneginiConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */; };
 		5CD187431CEDA5B8001FD062 /* MobileAuthenticationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */; };
@@ -102,7 +102,6 @@
 		5B964DB21D6F1ABF002215E3 /* ONGResourceResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGResourceResponse.h; sourceTree = "<group>"; };
 		5B964DB31D6F1ABF002215E3 /* ONGUserClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGUserClient.h; sourceTree = "<group>"; };
 		5B964DB41D6F1ABF002215E3 /* ONGUserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGUserProfile.h; sourceTree = "<group>"; };
-		5B964DB51D6F1ABF002215E3 /* libOneginiSDKiOS-5.00.00-SNAPSHOT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libOneginiSDKiOS-5.00.00-SNAPSHOT.a"; sourceTree = "<group>"; };
 		5C1F1CD91D464DE100D4D5C0 /* RegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationController.h; sourceTree = "<group>"; };
 		5C1F1CDA1D464DE100D4D5C0 /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
 		5C3CA1461D11394000F00C05 /* FingerprintController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FingerprintController.h; sourceTree = "<group>"; };
@@ -119,6 +118,7 @@
 		5C8A03BB1CDFB36F007ADA14 /* PinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinViewController.h; sourceTree = "<group>"; };
 		5C8A03BC1CDFB36F007ADA14 /* PinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinViewController.m; sourceTree = "<group>"; };
 		5C8A03BD1CDFB36F007ADA14 /* PinViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinViewController.xib; sourceTree = "<group>"; };
+		5CA30F351D70AAA6003DCAE3 /* libOneginiSDKiOS-5.00.00-BETA.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libOneginiSDKiOS-5.00.00-BETA.a"; sourceTree = "<group>"; };
 		5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneginiConfigModel.m; path = Configuration/OneginiConfigModel.m; sourceTree = "<group>"; };
 		5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileAuthenticationController.h; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 		C502CAA81CDB62B600FB18E7 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		C54139891CD9D3010033DBA8 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		C541398A1CD9D3010033DBA8 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
-		C572A2D71CD893C400B137DC /* OneginiDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneginiDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C572A2D71CD893C400B137DC /* OneginiExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneginiExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C572A2DB1CD893C400B137DC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C572A2DD1CD893C400B137DC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C572A2DE1CD893C400B137DC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -187,9 +187,9 @@
 			files = (
 				C5FE9E991CD8C10000142A20 /* libc++.tbd in Frameworks */,
 				C5FE9E971CD8C0F300142A20 /* libiconv.tbd in Frameworks */,
+				5CA30F361D70AAA6003DCAE3 /* libOneginiSDKiOS-5.00.00-BETA.a in Frameworks */,
 				C5FE9E951CD8C0DE00142A20 /* MobileCoreServices.framework in Frameworks */,
 				C5FE9E931CD8C0D800142A20 /* SystemConfiguration.framework in Frameworks */,
-				5B964DCE1D6F1ABF002215E3 /* libOneginiSDKiOS-5.00.00-SNAPSHOT.a in Frameworks */,
 				C5FE9E911CD8C0D200142A20 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -230,11 +230,10 @@
 		5C68BF641D58870500A9B725 /* OneginiSDK */ = {
 			isa = PBXGroup;
 			children = (
+				5CA30F351D70AAA6003DCAE3 /* libOneginiSDKiOS-5.00.00-BETA.a */,
 				5B964D9C1D6F1ABF002215E3 /* Headers */,
-				5B964DB51D6F1ABF002215E3 /* libOneginiSDKiOS-5.00.00-SNAPSHOT.a */,
 			);
-			name = OneginiSDK;
-			path = OneginiDemoApp/OneginiSDK;
+			path = OneginiSDK;
 			sourceTree = "<group>";
 		};
 		C531DF7F1CD8FE5400C4BBF2 /* Frameworks */ = {
@@ -248,6 +247,7 @@
 				C5FE9E901CD8C0D200142A20 /* Security.framework */,
 			);
 			name = Frameworks;
+			path = OneginiExampleApp;
 			sourceTree = "<group>";
 		};
 		C54139881CD9D3010033DBA8 /* ViewControllers */ = {
@@ -276,7 +276,7 @@
 		C572A2CE1CD893C400B137DC = {
 			isa = PBXGroup;
 			children = (
-				C572A2D91CD893C400B137DC /* OneginiDemoApp */,
+				C572A2D91CD893C400B137DC /* OneginiExampleApp */,
 				C572A2DA1CD893C400B137DC /* Supporting Files */,
 				C572A2D81CD893C400B137DC /* Products */,
 				C531DF7F1CD8FE5400C4BBF2 /* Frameworks */,
@@ -287,12 +287,13 @@
 		C572A2D81CD893C400B137DC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C572A2D71CD893C400B137DC /* OneginiDemoApp.app */,
+				C572A2D71CD893C400B137DC /* OneginiExampleApp.app */,
 			);
 			name = Products;
+			path = OneginiExampleApp;
 			sourceTree = "<group>";
 		};
-		C572A2D91CD893C400B137DC /* OneginiDemoApp */ = {
+		C572A2D91CD893C400B137DC /* OneginiExampleApp */ = {
 			isa = PBXGroup;
 			children = (
 				C5A29A751CDCE78F00E6B1D4 /* Models */,
@@ -302,7 +303,7 @@
 				C572A2DE1CD893C400B137DC /* AppDelegate.m */,
 				C572A2E61CD893C400B137DC /* Assets.xcassets */,
 			);
-			path = OneginiDemoApp;
+			path = OneginiExampleApp;
 			sourceTree = "<group>";
 		};
 		C572A2DA1CD893C400B137DC /* Supporting Files */ = {
@@ -312,7 +313,7 @@
 				C572A2DB1CD893C400B137DC /* main.m */,
 			);
 			name = "Supporting Files";
-			path = OneginiDemoApp;
+			path = OneginiExampleApp;
 			sourceTree = "<group>";
 		};
 		C5A29A5F1CDCA55900E6B1D4 /* Controllers */ = {
@@ -406,9 +407,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C572A2D61CD893C400B137DC /* OneginiDemoApp */ = {
+		C572A2D61CD893C400B137DC /* OneginiExampleApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C572A2EE1CD893C400B137DC /* Build configuration list for PBXNativeTarget "OneginiDemoApp" */;
+			buildConfigurationList = C572A2EE1CD893C400B137DC /* Build configuration list for PBXNativeTarget "OneginiExampleApp" */;
 			buildPhases = (
 				C572A2D31CD893C400B137DC /* Sources */,
 				C572A2D51CD893C400B137DC /* Resources */,
@@ -419,9 +420,9 @@
 			);
 			dependencies = (
 			);
-			name = OneginiDemoApp;
+			name = OneginiExampleApp;
 			productName = OneginiDemoApp;
-			productReference = C572A2D71CD893C400B137DC /* OneginiDemoApp.app */;
+			productReference = C572A2D71CD893C400B137DC /* OneginiExampleApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -439,7 +440,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C572A2D21CD893C400B137DC /* Build configuration list for PBXProject "OneginiDemoApp" */;
+			buildConfigurationList = C572A2D21CD893C400B137DC /* Build configuration list for PBXProject "OneginiExampleApp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -452,7 +453,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C572A2D61CD893C400B137DC /* OneginiDemoApp */,
+				C572A2D61CD893C400B137DC /* OneginiExampleApp */,
 			);
 		};
 /* End PBXProject section */
@@ -588,13 +589,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = OneginiDemoApp/Info.plist;
+				INFOPLIST_FILE = OneginiExampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/OneginiDemoApp/OneginiSDK",
+					"$(PROJECT_DIR)/OneginiExampleApp/OneginiSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.onegini.ExampleApp;
@@ -607,13 +608,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = OneginiDemoApp/Info.plist;
+				INFOPLIST_FILE = OneginiExampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/OneginiDemoApp/OneginiSDK",
+					"$(PROJECT_DIR)/OneginiExampleApp/OneginiSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.onegini.ExampleApp;
@@ -624,7 +625,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C572A2D21CD893C400B137DC /* Build configuration list for PBXProject "OneginiDemoApp" */ = {
+		C572A2D21CD893C400B137DC /* Build configuration list for PBXProject "OneginiExampleApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C572A2EC1CD893C400B137DC /* Debug */,
@@ -633,7 +634,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C572A2EE1CD893C400B137DC /* Build configuration list for PBXNativeTarget "OneginiDemoApp" */ = {
+		C572A2EE1CD893C400B137DC /* Build configuration list for PBXNativeTarget "OneginiExampleApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C572A2EF1CD893C400B137DC /* Debug */,

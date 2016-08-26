@@ -5,7 +5,6 @@
 #import "ONGPublicDefines.h"
 #import "ONGPublicCommons.h"
 #import "ONGChangePinDelegate.h"
-#import "ONGDeregistrationDelegate.h"
 #import "ONGConfigModel.h"
 #import "ONGUserClient.h"
 #import "ONGCreatePinChallenge.h"

@@ -31,7 +31,6 @@
 {
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
-        NSLog(@"cookie domain: %@", cookie.domain);
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
 }

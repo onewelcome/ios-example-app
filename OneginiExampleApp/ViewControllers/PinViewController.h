@@ -18,7 +18,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, copy) void (^pinEntered)(NSString *pin);
 @property (nonatomic) NSInteger pinLength;
 
-- (void)invalidPinWithReason:(NSString *)message;
 - (void)showError:(NSString *)error;
 - (void)reset;
 

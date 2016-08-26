@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param completion is called after the method processing has finished. If the SDK is successfully started, other further work is allowed.
  *
- *  @param error in one of the steps of the authentication process. This error will be either within the ONGGenericErrorDomain or the ONGSDKInitializationErrorDomain
+ * @param error in one of the steps of the authentication process. This error will be either within the ONGGenericErrorDomain or the ONGSDKInitializationErrorDomain
  *
  * @see `ONGClientBuilder`
  *

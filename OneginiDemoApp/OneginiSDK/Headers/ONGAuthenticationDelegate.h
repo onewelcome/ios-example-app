@@ -53,6 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Method called when authentication action failed with error.
  *
+ *  The returned error will be either within the ONGGenericErrorDomain, ONGAuthenticatorRegistrationErrorDomain.
+ *
  *  @param userClient user client performing authentication
  *  @param userProfile user profile for which authentication failed
  *  @param error error describing cause of an error

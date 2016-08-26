@@ -53,6 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Method called when change PIN action failed with an error.
  *
+ * The returned error will be either within the ONGGenericErrorDomain, ONGChangePinErrorDomain.
+ *
  * @param userClient user client performing change PIN action
  * @param userProfile user profile for which change PIN action failed
  * @param error error describing cause of an error

@@ -72,7 +72,7 @@
     [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"read"] completion:^(BOOL success, NSError *_Nullable error) {
         NSString *message;
         if (success) {
-            message = @"Device authentication successful";
+            message = @"Device authentication succeeded";
         } else {
             message = @"Device authentication failed";
         }

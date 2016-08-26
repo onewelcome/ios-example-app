@@ -14,6 +14,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self setupWindow];
+
+    [self startOneginiClient];
+
+    [self registerForPushMessages];
+
+    return YES;
+}
+
+- (void)setupWindow
+{
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
 
@@ -21,9 +32,11 @@
     navigationController.navigationBarHidden = YES;
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
+}
 
+- (void)startOneginiClient
+{
     [[[[ONGClientBuilder new] setUseEmbeddedWebView:YES] setStoreCookies:YES] build];
-
     [[ONGClientBuilder new] build];
     [[ONGClient sharedInstance] start:^(BOOL result, NSError *error) {
         if (error != nil) {
@@ -36,14 +49,15 @@
             }
         }
     }];
+}
 
+- (void)registerForPushMessages
+{
     UIUserNotificationType supportedTypes = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:supportedTypes categories:nil];
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 
     [[UIApplication sharedApplication] registerForRemoteNotifications];
-
-    return YES;
 }
 
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
@@ -51,11 +65,7 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction
-        actionWithTitle:@"Ok"
-                  style:UIAlertActionStyleDefault
-                handler:^(UIAlertAction *action) {
-                }];
+    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okButton];
     [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
 }

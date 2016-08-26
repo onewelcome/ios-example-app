@@ -4,9 +4,9 @@
 #import <UIKit/UIKit.h>
 #import "OneginiSDK.h"
 
-@interface RegistrationController : NSObject <ONGRegistrationDelegate>
+@interface RegistrationController : NSObject<ONGRegistrationDelegate>
 
-+(instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController
-                                                   completion:(void(^)())completion;
++ (instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController
+                                                    completion:(void (^)())completion;
 
 @end

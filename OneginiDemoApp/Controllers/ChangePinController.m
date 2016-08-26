@@ -7,14 +7,14 @@
 
 @property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic) UINavigationController *navigationController;
-@property (nonatomic) void(^completion)();
+@property (nonatomic) void (^completion)();
 
 @end
 
 @implementation ChangePinController
 
 + (instancetype)changePinControllerWithNavigationController:(UINavigationController *)navigationController
-                                                 completion:(void(^)())completion
+                                                 completion:(void (^)())completion
 {
     ChangePinController *changePinController = [ChangePinController new];
     changePinController.navigationController = navigationController;
@@ -22,8 +22,6 @@
     changePinController.completion = completion;
     return changePinController;
 }
-
-#pragma mark - ONGPinChangeDelegate
 
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
 {
@@ -34,14 +32,14 @@
     self.pinViewController.pinEntered = ^(NSString *pin) {
         [challenge.sender respondWithPin:pin challenge:challenge];
     };
-    if ([self.navigationController.topViewController isKindOfClass:PinViewController.class]){
-        [self.pinViewController showError:[NSString stringWithFormat:@"Invalid pin. You have still %@ attempts left.",@(challenge.remainingFailureCount)]];
+    if ([self.navigationController.topViewController isKindOfClass:PinViewController.class]) {
+        [self.pinViewController showError:[NSString stringWithFormat:@"Invalid pin. You have still %@ attempts left.", @(challenge.remainingFailureCount)]];
     } else {
         [self.navigationController pushViewController:self.pinViewController animated:YES];
     }
 }
 
--( void)userClient:(ONGUserClient *)userClient didReceiveCreatePinChallenge:(ONGCreatePinChallenge *)challenge
+- (void)userClient:(ONGUserClient *)userClient didReceiveCreatePinChallenge:(ONGCreatePinChallenge *)challenge
 {
     [self.pinViewController reset];
     self.pinViewController.mode = PINRegistrationMode;
@@ -68,12 +66,14 @@
 - (void)pinChangeError:(NSError *)error
 {
     [self.navigationController popViewControllerAnimated:YES];
-    [self handleAuthError:error];
+    [self showError:error];
 }
 
-- (void)handleAuthError:(NSError *)error
+- (void)showError:(NSError *)error
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change pin error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change pin error"
+                                                                   message:error.localizedDescription
+                                                            preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okButton];
     [self.navigationController presentViewController:alert animated:YES completion:nil];

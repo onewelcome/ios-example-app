@@ -30,12 +30,12 @@
 {
     if (self.authenticationController || self.registrationController)
         return;
-    
+
     self.registrationController = [RegistrationController
-                                   registrationControllerWithNavigationController:self.navigationController
-                                   completion:^{
-                                       self.registrationController = nil;
-                                   }];
+        registrationControllerWithNavigationController:self.navigationController
+                                            completion:^{
+                                                self.registrationController = nil;
+                                            }];
     [[ONGUserClient sharedInstance] registerUser:@[@"read"] delegate:self.registrationController];
 }
 
@@ -55,7 +55,7 @@
 
 - (IBAction)authenticateClient:(id)sender
 {
-    [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"read"] completion:^(BOOL success, NSError * _Nullable error) {
+    [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"read"] completion:^(BOOL success, NSError *_Nullable error) {
         NSString *message;
         if (success) {
             message = @"Device authentication successful";

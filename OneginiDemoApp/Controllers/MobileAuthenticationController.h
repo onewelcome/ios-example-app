@@ -4,9 +4,9 @@
 #import <UIKit/UIKit.h>
 #import "OneginiSDK.h"
 
-@interface MobileAuthenticationController : NSObject <ONGMobileAuthenticationRequestDelegate>
+@interface MobileAuthenticationController : NSObject<ONGMobileAuthenticationRequestDelegate>
 
 + (instancetype)mobileAuthentiactionControllerWithNaviationController:(UINavigationController *)navigationController
-                                                           completion:(void(^)())completion;
+                                                           completion:(void (^)())completion;
 
 @end

@@ -15,7 +15,7 @@
 @implementation MobileAuthenticationController
 
 + (instancetype)mobileAuthentiactionControllerWithNaviationController:(UINavigationController *)navigationController
-                                                           completion:(void(^)())completion
+                                                           completion:(void (^)())completion
 {
     MobileAuthenticationController *mobileAuthenticationController = [MobileAuthenticationController new];
     mobileAuthenticationController.navigationController = navigationController;
@@ -23,8 +23,6 @@
     mobileAuthenticationController.pinViewController = [PinViewController new];
     return mobileAuthenticationController;
 }
-
-#pragma mark - OGMobileAuthenticationDelegate
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveConfirmationChallenge:(void (^)(BOOL confirmRequest))confirmation forRequest:(ONGMobileAuthenticationRequest *)request
 {
@@ -45,10 +43,12 @@
     self.pinViewController.pinLength = 5;
     self.pinViewController.customTitle = [NSString stringWithFormat:@"Push with pin - %@", challenge.userProfile.profileId];
     __weak MobileAuthenticationController *weakSelf = self;
+
     self.pinViewController.pinEntered = ^(NSString *pin) {
         [weakSelf.navigationController popViewControllerAnimated:YES];
         [challenge.sender respondWithPin:pin challenge:challenge];
     };
+
     if (challenge.previousFailureCount) {
         NSString *errorMessage = [NSString stringWithFormat:@"Invalid pin. You have still %@ attempts left.", @(challenge.remainingFailureCount)];
         [self.pinViewController showError:errorMessage];

@@ -17,15 +17,15 @@
 
 - (PinViewController *)pinViewController
 {
-    if (!_pinViewController){
+    if (!_pinViewController) {
         _pinViewController = [PinViewController new];
         return _pinViewController;
     }
     return _pinViewController;
 }
 
-+(instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController
-                                                   completion:(void(^)())completion
++ (instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController
+                                                    completion:(void (^)())completion
 {
     RegistrationController *registrationController = [RegistrationController new];
     registrationController.navigationController = navigationController;
@@ -42,7 +42,7 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToRegisterWithError:(NSError *)error
 {
-    [self handleAuthError:error];
+    [self showError:error];
     self.completion();
 }
 
@@ -51,9 +51,11 @@
     self.pinViewController.pinLength = challenge.pinLength;
     self.pinViewController.mode = PINRegistrationMode;
     self.pinViewController.profile = challenge.userProfile;
+
     self.pinViewController.pinEntered = ^(NSString *pin) {
         [challenge.sender respondWithCreatedPin:pin challenge:challenge];
     };
+
     if (challenge.error) {
         [self.pinViewController showError:challenge.error.localizedDescription];
         [self.pinViewController reset];
@@ -74,29 +76,17 @@
     [self.navigationController presentViewController:webBrowserViewController animated:YES completion:nil];
 }
 
-#pragma mark - OGPinValidationDelegate
-
-- (void)handleAuthError:(NSError *)error
+- (void)showError:(NSError *)error
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Registration Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction
-                               actionWithTitle:@"Ok"
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction *action) {
-                               }];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Registration Error"
+                                                                   message:error.localizedDescription
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
     [alert addAction:okButton];
     [self.navigationController presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)handlePinPolicyValidationError:(NSError *)error
-{
-    if ([self.navigationController.topViewController isKindOfClass:PinViewController.class]) {
-        PinViewController *pinViewController = (PinViewController *)self.navigationController.topViewController;
-        pinViewController.mode = PINRegistrationMode;
-        [pinViewController reset];
-        [pinViewController showError:error.localizedDescription];
-    }
 }
 
 @end

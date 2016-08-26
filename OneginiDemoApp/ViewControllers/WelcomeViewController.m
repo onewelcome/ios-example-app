@@ -5,6 +5,7 @@
 #import "RegistrationController.h"
 #import "OneginiSDK.h"
 #import "ClientAuthenticationController.h"
+#import "AppDelegate.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -32,6 +33,21 @@
 
 - (IBAction)login:(id)sender
 {
+    if ([self.profiles count] == 0) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                       message:@"No registered profiles"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okButton = [UIAlertAction
+                                   actionWithTitle:@"Ok"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction *action) {
+                                   }];
+        [alert addAction:okButton];
+        [[AppDelegate sharedNavigationController] presentViewController:alert animated:YES completion:nil];
+        
+        return;
+    }
+    
     ONGUserProfile *userProfile = self.profiles[[self.profilePicker selectedRowInComponent:0]];
     [[AuthorizationController sharedInstance] authenticateUser:userProfile];
 }

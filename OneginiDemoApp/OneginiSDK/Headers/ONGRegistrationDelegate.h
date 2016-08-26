@@ -57,6 +57,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Method called when registration action failed with error.
  *
+ *  The returned error will be either within the ONGGenericErrorDomain or the ONGRegistrationErrorDomain.
+ *
  *  @param userClient user client performing registration
  *  @param error error describing cause of an error
  */

@@ -54,13 +54,15 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Method called when mobile authentication request handling did fail.
  *
+ *  The returned error will be either within the ONGGenericErrorDomain, ONGPinValidationErrorDomain.
+ *
  *  @param userClient user client performing authentication
  *  @param request mobile authentication request received by the SDK
- *  @param error error describing failure reason. Possible error domains are: ONGPinValidationErrorDomain, ONGGenericErrorDomain.
+ *  @param error error describing failure reason
  *
  *  @see ONGMobileAuthenticationRequest
  */
-- (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthenticationRequest:(nullable ONGMobileAuthenticationRequest *)request error:(NSError *)error;
+- (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request error:(NSError *)error;
 
 /**
  *  Method called when mobile authentication request handled successfully.

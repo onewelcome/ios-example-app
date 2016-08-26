@@ -37,12 +37,14 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)new ONG_UNAVAILABLE;
 
 /**
- *  Performs device authentication.
+ * Performs device authentication.
  *
- *  @param scopes array of scopes.
- *  @param completion block that will be called on authentication completion.
+ * The returned error will be of the ONGGenericErrorDomain.
+ *
+ * @param scopes array of scopes.
+ * @param completion block that will be called on authentication completion.
  */
-- (void)authenticateDevice:(NSArray<NSString *> *)scopes completion:(void (^)(BOOL success, NSError * _Nullable))completion;
+- (void)authenticateDevice:(NSArray<NSString *> *)scopes completion:(void (^)(BOOL success, NSError * _Nullable error))completion;
 
 /**
  * Perform an authenticated network request. It requires passing an instance of the `ONGResourceRequest` as parameter.

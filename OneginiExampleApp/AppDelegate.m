@@ -36,7 +36,6 @@
 
 - (void)startOneginiClient
 {
-    [[[[ONGClientBuilder new] setUseEmbeddedWebView:YES] setStoreCookies:YES] build];
     [[ONGClientBuilder new] build];
     [[ONGClient sharedInstance] start:^(BOOL result, NSError *error) {
         if (error != nil) {

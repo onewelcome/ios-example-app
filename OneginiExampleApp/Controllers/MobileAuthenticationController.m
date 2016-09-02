@@ -76,6 +76,10 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request error:(NSError *)error
 {
+    if (error.code == ONGGenericErrorUserDeregistered || error.code == ONGGenericErrorDeviceDeregistered) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+
     self.completion();
 }
 

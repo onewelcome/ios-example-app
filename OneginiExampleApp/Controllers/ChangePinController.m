@@ -59,14 +59,15 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToChangePinForUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
-    [self pinChangeError:error];
-    self.completion();
-}
+    if (error.code == ONGGenericErrorDeviceDeregistered || error.code == ONGGenericErrorUserDeregistered) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 
-- (void)pinChangeError:(NSError *)error
-{
-    [self.navigationController popViewControllerAnimated:YES];
     [self showError:error];
+
+    self.completion();
 }
 
 - (void)showError:(NSError *)error

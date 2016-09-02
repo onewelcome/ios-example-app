@@ -33,7 +33,10 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+
     [self showError:error];
+
     self.completion();
 }
 
@@ -57,7 +60,6 @@
 
 - (void)showError:(NSError *)error
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Authentication Error"
                                                                    message:error.localizedDescription
                                                             preferredStyle:UIAlertControllerStyleAlert];

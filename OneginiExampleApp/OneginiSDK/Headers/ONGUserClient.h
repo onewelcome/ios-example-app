@@ -215,9 +215,12 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * The returned errors will be within the ONGGenericErrorDomain.
  *
+ * @param profile user profile to fetch authenticators
+ *
  * @param completion block returning non registered authenticators or any encountered error
  */
-- (void)fetchNonRegisteredAuthenticators:(void (^)(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error))completion;
+
+- (void)fetchNonRegisteredAuthenticatorsForProfile:(ONGUserProfile *)profile completion:(void (^)(NSSet<ONGAuthenticator *> *_Nullable authenticators, NSError *_Nullable error))completion;
 
 /**
  * Set of registered authenticators.

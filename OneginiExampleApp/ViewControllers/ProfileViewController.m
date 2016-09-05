@@ -120,7 +120,7 @@
     if (self.fingerprintController)
         return;
 
-    [[ONGUserClient sharedInstance] fetchNonRegisteredAuthenticators:^(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error) {
+    [[ONGUserClient sharedInstance] fetchNonRegisteredAuthenticatorsForProfile:[[ONGUserClient sharedInstance] authenticatedUserProfile] completion:^(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error) {
         ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:authenticators];
         self.fingerprintController = [FingerprintController
             fingerprintControllerWithNavigationController:self.navigationController

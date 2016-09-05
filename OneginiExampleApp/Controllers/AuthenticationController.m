@@ -44,8 +44,12 @@
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.profile = challenge.userProfile;
 
-    self.pinViewController.pinEntered = ^(NSString *pin) {
-        [challenge.sender respondWithPin:pin challenge:challenge];
+    self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
+        if (pin) {
+            [challenge.sender respondWithPin:pin challenge:challenge];
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge];
+        }
     };
 
     if (challenge.previousFailureCount) {

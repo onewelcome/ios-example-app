@@ -44,9 +44,14 @@
     self.pinViewController.customTitle = [NSString stringWithFormat:@"Push with pin - %@", challenge.userProfile.profileId];
     __weak MobileAuthenticationController *weakSelf = self;
 
-    self.pinViewController.pinEntered = ^(NSString *pin) {
-        [weakSelf.navigationController popViewControllerAnimated:YES];
-        [challenge.sender respondWithPin:pin challenge:challenge];
+    self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
+        if (pin) {
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+            [challenge.sender respondWithPin:pin challenge:challenge];
+        } else if (cancelled) {
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+            [challenge.sender cancelChallenge:challenge];
+        }
     };
 
     if (challenge.previousFailureCount) {

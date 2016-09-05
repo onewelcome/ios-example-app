@@ -52,8 +52,12 @@
     self.pinViewController.mode = PINRegistrationMode;
     self.pinViewController.profile = challenge.userProfile;
 
-    self.pinViewController.pinEntered = ^(NSString *pin) {
-        [challenge.sender respondWithCreatedPin:pin challenge:challenge];
+    self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
+        if (pin) {
+            [challenge.sender respondWithCreatedPin:pin challenge:challenge];
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge];
+        }
     };
 
     if (challenge.error) {

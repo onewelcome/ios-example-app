@@ -138,7 +138,7 @@
         switch (self.mode) {
             default:
             case PINCheckMode: {
-                self.pinEntered(pincode);
+                self.pinEntered(pincode, NO);
                 break;
             }
             case PINRegistrationMode: {
@@ -151,7 +151,7 @@
                 NSString *pincodeToVerify = [self.pinEntryToVerify componentsJoinedByString:@""];
                 NSString *pincode = [self.pinEntry componentsJoinedByString:@""];
                 if ([pincode isEqualToString:pincodeToVerify]) {
-                    self.pinEntered(pincode);
+                    self.pinEntered(pincode, NO);
                 } else {
                     self.mode = PINRegistrationMode;
                     [self reset];
@@ -202,5 +202,10 @@
         self.backKey.enabled = YES;
     }
 }
+
+- (IBAction)cancel:(id)sender {
+    self.pinEntered(nil, YES);
+}
+
 
 @end

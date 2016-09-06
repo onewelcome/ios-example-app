@@ -1,0 +1,6 @@
+framework module SensoryBiometricsManager {
+  umbrella header "SensoryBiometricsManager.h"
+
+  export *
+  module * { export * }
+}

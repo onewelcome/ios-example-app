@@ -1,0 +1,25 @@
+conversions:
+  - types: [face-lr_nn, voice-tssv-fp_hbg]
+    conversion:
+        scale: 0.3251
+        shift: -8.0901
+    security_levels: [0.0020000000, 0.0006000000, 0.0000300000, 0.0000100000, 0.0000010000]
+
+  - types: [face-lr_nn, voice-tssv-udp_enUS]
+    conversion:
+        scale: 0.3010
+        shift: -7.8347
+    security_levels: [0.0020000000, 0.0006000000, 0.0000300000, 0.0000100000, 0.0000010000]
+
+  - types: [face-lr, voice-tssv-fp_hbg]
+    conversion:
+        scale: 0.2364
+        shift: -5.6980
+    security_levels: [0.0020000000, 0.0006000000, 0.0000300000, 0.0000100000, 0.0000010000]
+
+  - types: [face-lr, voice-tssv-udp_enUS]
+    conversion:
+        scale: 0.3016
+        shift: -4.8331
+    security_levels: [0.0020000000, 0.0006000000, 0.0000300000, 0.0000100000, 0.0000010000]
+

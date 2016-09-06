@@ -1,0 +1,7 @@
+authentic:
+    mean: 0.2883
+    std:  0.4779
+imposter:
+    mean: 3.5097
+    std:  0.6384
+

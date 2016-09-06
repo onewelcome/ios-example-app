@@ -1,0 +1,4 @@
+version: 1.1.6
+type: voice-tssv-udp_enUS
+mode: VOICE
+imposter: text-dependent-1.2.1.ubm

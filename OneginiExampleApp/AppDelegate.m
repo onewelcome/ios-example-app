@@ -36,15 +36,24 @@
 
 - (void)startOneginiClient
 {
+    // Before we can use SDK it needs to be build first
     [[ONGClientBuilder new] build];
+
+    // After being build it also needs to be initialized. This includes contacts TS in order to get latest configurations.
+    // This step is crucial since it may report critical errors such as: Application is outdated, OS is outdated.
+    // In case of such errors User can not use the app anymore and has to update the app / OS.
+    // SDK in turn won't be able to provide any functionality to prevent User's data leakage / corruption.
     [[ONGClient sharedInstance] start:^(BOOL result, NSError *error) {
         if (error != nil) {
-            if (ONGGenericErrorOutdatedApplication == error.code) {
+            // Catching two important errors that might happen during SDK initialization.
+            // User can not use this version of the App / OS anymore and has to update it.
+            // To provide nice UX develop may want to limit application functionality and not to force User to update App / OS immediately.
+            if (error.code == ONGGenericErrorOutdatedApplication) {
                 [self showAlertWithTitle:@"Application disabled" message:@"The application version is no longer valid, please visit the app store to update your application"];
-            }
-
-            if (ONGGenericErrorOutdatedOS == error.code) {
+            } else if (error.code == ONGGenericErrorOutdatedOS) {
                 [self showAlertWithTitle:@"OS outdated" message:@"The operating system that you use is no longer valid, please update your OS."];
+            } else {
+                // Do nothing. Here we most likely will face with network-related errors that can be ignored.
             }
         }
     }];

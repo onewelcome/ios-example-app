@@ -158,6 +158,12 @@ ONG_EXTERN NSString *const ONGPinValidationErrorDomain;
 ONG_EXTERN NSString *const ONGPinValidationErrorMaxSimilarDigitsKey;
 
 /**
+ * The key for recommended pin length returned within userInfo. The value is defined by the received pin policy.
+ * It is returned when Pin Validation fails with error ONGPinValidationErrorWrongPinLength.
+ */
+ONG_EXTERN NSString *const ONGPinValidationErrorRequiredLengthKey;
+
+/**
  * Error codes in ONGPinValidationErrorDomain
  */
 typedef NS_ENUM(ONGErrorCode, ONGPinValidationError) {

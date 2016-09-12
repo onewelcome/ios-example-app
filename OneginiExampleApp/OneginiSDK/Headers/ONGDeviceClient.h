@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param scopes array of scopes.
  * @param completion block that will be called on authentication completion.
  */
-- (void)authenticateDevice:(NSArray<NSString *> *)scopes completion:(void (^)(BOOL success, NSError * _Nullable error))completion;
+- (void)authenticateDevice:(nullable NSArray<NSString *> *)scopes completion:(nullable void (^)(BOOL success, NSError * _Nullable error))completion;
 
 /**
  * Perform an authenticated network request. It requires passing an instance of the `ONGResourceRequest` as parameter.

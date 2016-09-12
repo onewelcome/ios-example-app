@@ -24,9 +24,10 @@
 
 - (void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile
 {
-    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticators];
+    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticatorsForUser:userProfile];
     ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
     [ONGUserClient sharedInstance].preferredAuthenticator = fingerprintAuthenticator;
+    
     [self dismissNavigationPresentedViewController:nil];
     self.completion();
 }

@@ -51,7 +51,7 @@
         [challenge.sender respondWithPin:pin challenge:challenge];
     };
 
-    if (challenge.previousFailureCount) {
+    if (challenge.previousFailureCount > 0) {
         [self.pinViewController showError:[NSString stringWithFormat:@"Wrong Pin. Remaining attempts: %@", @(challenge.remainingFailureCount)]];
     } else {
         [self.navigationController pushViewController:self.pinViewController animated:YES];

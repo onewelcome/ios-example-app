@@ -94,13 +94,13 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request error:(NSError *)error
 {
-    // In case User has enter invalid PIN too many times (configured on the Token Server), SDK automatically deregisters User.
-    // Developer at this point has to "logout" UI, shutdown user-related services and display Authorization.
     if (error.code == ONGGenericErrorUserDeregistered || error.code == ONGGenericErrorDeviceDeregistered) {
+        // In case User has enter invalid PIN too many times (configured on the Token Server), SDK automatically deregisters User.
+        // Developer at this point has to "logout" UI, shutdown user-related services and display Authorization.
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else if (error.code == ONGMobileAuthenticationRequestErrorNotFound) {
-        // For some reason mobile request can not be found on the Token Server anymore. This can happen if push notication
-        // was delivered with a huge delay and a request removed from the Token Server for some reason.
+        // For some reason mobile request can not be found on the Token Server anymore. This can happen if push notification
+        // was delivered with a huge delay and a mobile authentication request removed from the Token Server for some reason.
         // Develop may want to notify user about this.
     } else if (error.code == ONGGenericErrorActionCancelled) {
         // If challenge has been cancelled than ONGGenericErrorActionCancelled is reported. This error can be ignored.

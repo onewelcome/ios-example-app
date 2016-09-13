@@ -35,11 +35,14 @@
 - (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
     switch (error.code) {
+        // In case User has enter invalid PIN too many times (configured on the Token Server), SDK automatically deregisters User.
+        // Developer at this point has to "logout" UI, shutdown user-related services and display Authorization.
         case ONGGenericErrorUserDeregistered:
         case ONGGenericErrorDeviceDeregistered:
             [self unwindNavigationStack];
             [self showError:error.localizedDescription];
             break;
+
         default:
             [self dismissNavigationPresentedViewController:nil];
             [self showError:error.localizedDescription];

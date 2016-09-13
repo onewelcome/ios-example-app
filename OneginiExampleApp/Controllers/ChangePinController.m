@@ -43,7 +43,9 @@
     };
 
     // It is up to the developer to decide when and how to show PIN entry view controller.
-    // For simplicity of the example app we're checking top-most view controller.
+    // For simplicity of the example app we're checking the top-most view controller.
+    // Also good place to do this is the -userClient:didStartPinChangeForUser: but you need to be aware that there is a
+    // delay between pin change start and receiving of the pin challenge.
     if (![self.navigationController.topViewController isEqual:self.pinViewController]) {
         [self.navigationController pushViewController:self.pinViewController animated:YES];
     }

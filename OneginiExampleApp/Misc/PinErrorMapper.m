@@ -7,48 +7,6 @@
 
 @implementation PinErrorMapper
 
-+ (PinErrorReaction)reactionForError:(NSError *)error
-{
-    switch (error.code) {
-        // In case User has cancelled PIN challenge, cancellation error will be reported. This error can be ignored.
-        case ONGGenericErrorActionCancelled:
-            return PinErrorReactionIgnore;
-
-        // User has entered invalid PIN.
-        case ONGPinAuthenticationErrorInvalidPin:
-            return PinErrorReactionDefault;
-
-        // Undefined error occurred
-        case ONGGenericErrorUnknown:
-
-        // Typical network errors
-        case ONGGenericErrorNetworkConnectivityFailure:
-        case ONGGenericErrorServerNotReachable:
-
-        // This error should not happen in the Production because it means that the configuration is invalid and / or server has proxy.
-        // Developer will most likely face with such errors during development itself.
-        case ONGGenericErrorRequestInvalid:
-
-        // User trying to change a PIN, but previous PIN change is not finished yet.
-        case ONGGenericErrorActionAlreadyInProgress:
-
-        // Developer typical won't face with ONGGenericErrorOutdatedApplication and ONGGenericErrorOutdatedOS during PIN change.
-        // However it is potentially possible, so we need to handle then as well.
-        case ONGGenericErrorOutdatedApplication:
-        case ONGGenericErrorOutdatedOS:
-
-        // Deregistration errors happens during PIN attempts count exceeding.
-        case ONGGenericErrorDeviceDeregistered:
-        case ONGGenericErrorUserDeregistered:
-            return PinErrorReactionLogout;
-
-        default:
-            // Other errors such as
-            return PinErrorReactionIgnore;
-
-    }
-}
-
 + (NSString *)descriptionForError:(NSError *)error ofPinChallenge:(ONGPinChallenge *)challenge
 {
     // Error is going to be either within ONGPinAuthenticationErrorDomain or ONGGenericErrorDomain.
@@ -56,7 +14,7 @@
     // Moreover not all of the errors can happen during PIN challenge, therefore we're not handling all of them
     // (e.g. ONGGenericErrorActionCancelled or ONGGenericErrorDeviceDeregistered and similar).
     NSString *reason = nil;
-    switch (challenge.error.code) {
+    switch (error.code) {
         // Typical error for invalid PIN
         case ONGPinChangeErrorUserNotAuthenticated:
             reason = @"Invalid pin";
@@ -88,8 +46,7 @@
 
 + (NSString *)descriptionForError:(NSError *)error ofCreatePinChallenge:(ONGCreatePinChallenge *)challenge
 {
-    NSString *description = nil;
-    switch (challenge.error.code) {
+    switch (error.code) {
         // For security reasons some PINs can be blacklisted on the Token Server.
         case ONGPinValidationErrorPinBlackListed:
             return @"PIN you've entered is blacklisted. Try a different one";

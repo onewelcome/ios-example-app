@@ -3,6 +3,7 @@
 #import <Foundation/Foundation.h>
 
 @class ONGPinChallenge;
+@class ONGCreatePinChallenge;
 
 /**
  * Assume that for each PIN error (i.e. authentication) there might be several handling scenarious:
@@ -31,9 +32,11 @@ typedef NS_ENUM(NSInteger, PinErrorReaction) {
 @interface PinErrorMapper : NSObject
 
 /// Find out how we should react on a specific PIN error: ignore, perform default handling or logout user.
-+ (PinErrorReaction)reactionForError:(NSError *)error;
++ (PinErrorReaction)reactionForPinError:(NSError *)error;
 
 /// Give mapper ability to construct description for the given `error` that happend for the passed `challenge`.
-+ (NSString *)descriptionForError:(NSError *)error ofChallenge:(ONGPinChallenge *)challenge;
++ (NSString *)descriptionForError:(NSError *)error ofPinChallenge:(ONGPinChallenge *)challenge;
+
++ (NSString *)descriptionForError:(NSError *)error ofCreatePinChallenge:(ONGCreatePinChallenge *)challenge;
 
 @end

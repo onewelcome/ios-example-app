@@ -24,6 +24,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)respondWithCreatedPin:(NSString *)pin challenge:(ONGCreatePinChallenge *)challenge;
 
+/**
+ * Method to cancel challenge
+ *
+ * @param challenge create pin challenge that needs to be cancelled
+ */
+- (void)cancelChallenge:(ONGCreatePinChallenge *)challenge;
+
 @end
 
 /**

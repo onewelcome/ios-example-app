@@ -1,8 +1,12 @@
 //  Copyright © 2016 Onegini. All rights reserved.
 
 #import "ProfileViewController.h"
+
 #import "FingerprintController.h"
 #import "ChangePinController.h"
+#import "TextViewController.h"
+
+#import "ONGResourceResponse+JSONResponse.h"
 
 @interface ProfileViewController ()
 
@@ -68,8 +72,10 @@
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/devices" method:@"GET"];
     [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
         self.getTokenSpinner.hidden = YES;
+        
         if (response && response.statusCode < 300) {
             self.tokenStatusLabel.hidden = NO;
+            [self displayJSONResponse:[response JSONResponse]];
         } else {
             [self showError:@"Token retrieval failed"];
         }
@@ -163,6 +169,16 @@
                                                handler:nil];
     [alert addAction:ok];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - Misc
+
+- (void)displayJSONResponse:(id)JSONResponse
+{
+    TextViewController *controller = [TextViewController new];
+    controller.text = [JSONResponse description];
+    
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 @end

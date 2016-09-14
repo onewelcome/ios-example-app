@@ -6,6 +6,8 @@
 
 @interface ChangePinController : NSObject<ONGChangePinDelegate>
 
+@property (nonatomic, copy) void (^progressStateDidChange)(BOOL);
+
 + (instancetype)changePinControllerWithNavigationController:(UINavigationController *)navigationController
                                                  completion:(void (^)())completion;
 

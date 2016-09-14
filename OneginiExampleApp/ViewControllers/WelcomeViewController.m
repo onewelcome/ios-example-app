@@ -3,6 +3,7 @@
 #import "WelcomeViewController.h"
 #import "AuthenticationController.h"
 #import "RegistrationController.h"
+#import "MBProgressHUD.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -31,9 +32,11 @@
     if (self.authenticationController || self.registrationController)
         return;
 
+//    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.registrationController = [RegistrationController
         registrationControllerWithNavigationController:self.navigationController
                                             completion:^{
+//                                                [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                                 self.registrationController = nil;
                                             }];
     [[ONGUserClient sharedInstance] registerUser:@[@"read"] delegate:self.registrationController];
@@ -58,17 +61,29 @@
     if (self.authenticationController || self.registrationController)
         return;
 
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     ONGUserProfile *selectedUserProfile = [self selectedProfile];
     self.authenticationController = [AuthenticationController
         authenticationControllerWithNavigationController:self.navigationController
                                               completion:^{
+                                                  [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                                   self.authenticationController = nil;
                                               }];
+    __weak typeof(self) weakSelf = self;
+    self.authenticationController.progressStateDidChange = ^(BOOL isInProgress) {
+        if (isInProgress) {
+            [MBProgressHUD showHUDAddedTo:weakSelf.navigationController.view animated:YES];
+        } else {
+            [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+        }
+    };
+    
     [[ONGUserClient sharedInstance] authenticateUser:selectedUserProfile delegate:self.authenticationController];
 }
 
 - (IBAction)authenticateClient:(id)sender
 {
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"read"] completion:^(BOOL success, NSError *_Nullable error) {
         NSString *message;
         if (success) {
@@ -85,6 +100,7 @@
                                                          handler:nil];
         [alert addAction:okButton];
         [self.navigationController presentViewController:alert animated:YES completion:nil];
+        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     }];
 }
 

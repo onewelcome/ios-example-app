@@ -3,6 +3,7 @@
 #import "ProfileViewController.h"
 #import "FingerprintController.h"
 #import "ChangePinController.h"
+#import "MBProgressHUD.h"
 
 @interface ProfileViewController ()
 
@@ -96,12 +97,22 @@
 {
     if (self.changePinController)
         return;
-
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.changePinController = [ChangePinController
         changePinControllerWithNavigationController:self.navigationController
                                          completion:^{
+                                             [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                              self.changePinController = nil;
                                          }];
+    
+    __weak typeof(self) weakSelf = self;
+    self.changePinController.progressStateDidChange = ^(BOOL isInProgress) {
+        if (isInProgress) {
+            [MBProgressHUD showHUDAddedTo:weakSelf.navigationController.view animated:YES];
+        } else {
+            [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+        }
+    };
     [[ONGUserClient sharedInstance] changePin:self.changePinController];
 }
 

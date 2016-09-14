@@ -10,6 +10,8 @@
 		5B964DC31D6F1ABF002215E3 /* ONGMobileAuthenticationRequestDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B964DAA1D6F1ABF002215E3 /* ONGMobileAuthenticationRequestDelegate.h */; };
 		5B964DC41D6F1ABF002215E3 /* ONGNetworkTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B964DAB1D6F1ABF002215E3 /* ONGNetworkTask.h */; };
 		5B964DC71D6F1ABF002215E3 /* ONGPublicDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B964DAE1D6F1ABF002215E3 /* ONGPublicDefines.h */; };
+		5BE88F1B1D89880800D350CE /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BE88F191D89880800D350CE /* MBProgressHUD.h */; };
+		5BE88F1C1D89880800D350CE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE88F1A1D89880800D350CE /* MBProgressHUD.m */; };
 		5C1F1CDC1D464DE100D4D5C0 /* RegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1F1CDA1D464DE100D4D5C0 /* RegistrationController.m */; };
 		5C3CA1481D11394000F00C05 /* FingerprintController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C3CA1461D11394000F00C05 /* FingerprintController.h */; };
 		5C3CA1491D11394000F00C05 /* FingerprintController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3CA1471D11394000F00C05 /* FingerprintController.m */; };
@@ -102,6 +104,8 @@
 		5B964DB21D6F1ABF002215E3 /* ONGResourceResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGResourceResponse.h; sourceTree = "<group>"; };
 		5B964DB31D6F1ABF002215E3 /* ONGUserClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGUserClient.h; sourceTree = "<group>"; };
 		5B964DB41D6F1ABF002215E3 /* ONGUserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGUserProfile.h; sourceTree = "<group>"; };
+		5BE88F191D89880800D350CE /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		5BE88F1A1D89880800D350CE /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		5C1F1CD91D464DE100D4D5C0 /* RegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationController.h; sourceTree = "<group>"; };
 		5C1F1CDA1D464DE100D4D5C0 /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
 		5C3CA1461D11394000F00C05 /* FingerprintController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FingerprintController.h; sourceTree = "<group>"; };
@@ -227,6 +231,23 @@
 			path = Headers;
 			sourceTree = "<group>";
 		};
+		5BE88F171D89880800D350CE /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				5BE88F181D89880800D350CE /* MBProgressHUD */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		5BE88F181D89880800D350CE /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				5BE88F191D89880800D350CE /* MBProgressHUD.h */,
+				5BE88F1A1D89880800D350CE /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		5C68BF641D58870500A9B725 /* OneginiSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +317,7 @@
 		C572A2D91CD893C400B137DC /* OneginiExampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				5BE88F171D89880800D350CE /* Dependencies */,
 				C5A29A751CDCE78F00E6B1D4 /* Models */,
 				C5A29A5F1CDCA55900E6B1D4 /* Controllers */,
 				C54139881CD9D3010033DBA8 /* ViewControllers */,
@@ -388,6 +410,7 @@
 				68AD2F0AFC3A00620A3D62E7 /* ONGUserClient.h in Headers */,
 				68AD2892AB845EA546B653D8 /* ONGAuthenticator.h in Headers */,
 				68AD2242042FA5217B4CB573 /* ONGChangePinDelegate.h in Headers */,
+				5BE88F1B1D89880800D350CE /* MBProgressHUD.h in Headers */,
 				68AD297CAF12C8CDAD228527 /* ONGClientBuilder.h in Headers */,
 				68AD2D7C7E5ED93F7FB4C82E /* ONGDeviceAuthenticationDelegate.h in Headers */,
 				68AD254D91FE742FF286D10B /* ONGClient.h in Headers */,
@@ -496,6 +519,7 @@
 				5C1F1CDC1D464DE100D4D5C0 /* RegistrationController.m in Sources */,
 				C541398B1CD9D3010033DBA8 /* WelcomeViewController.m in Sources */,
 				5CD187441CEDA5B8001FD062 /* MobileAuthenticationController.m in Sources */,
+				5BE88F1C1D89880800D350CE /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

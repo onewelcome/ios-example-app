@@ -29,12 +29,20 @@
     ProfileViewController *viewController = [ProfileViewController new];
     [self.navigationController pushViewController:viewController animated:YES];
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
     [self showError:error];
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
@@ -44,7 +52,11 @@
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.profile = challenge.userProfile;
 
+    __weak typeof(self) weakSelf = self;
     self.pinViewController.pinEntered = ^(NSString *pin) {
+        if (self.progressStateDidChange != nil) {
+            weakSelf.progressStateDidChange(YES);
+        }
         [challenge.sender respondWithPin:pin challenge:challenge];
     };
 
@@ -52,6 +64,9 @@
         [self.pinViewController showError:[NSString stringWithFormat:@"Wrong Pin. Remaining attempts: %@", @(challenge.remainingFailureCount)]];
     } else {
         [self.navigationController pushViewController:self.pinViewController animated:YES];
+    }
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
     }
 }
 

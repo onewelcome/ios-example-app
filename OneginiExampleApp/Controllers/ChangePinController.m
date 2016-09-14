@@ -37,6 +37,9 @@
     } else {
         [self.navigationController pushViewController:self.pinViewController animated:YES];
     }
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveCreatePinChallenge:(ONGCreatePinChallenge *)challenge
@@ -49,18 +52,27 @@
     if (challenge.error) {
         [self.pinViewController showError:challenge.error.localizedDescription];
     }
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didChangePinForUser:(ONGUserProfile *)userProfile
 {
     [self.navigationController popViewControllerAnimated:YES];
     self.completion();
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToChangePinForUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
     [self pinChangeError:error];
     self.completion();
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)pinChangeError:(NSError *)error

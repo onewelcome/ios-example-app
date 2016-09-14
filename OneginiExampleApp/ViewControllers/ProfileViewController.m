@@ -20,7 +20,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     self.tokenStatusLabel.hidden = YES;
     self.getTokenSpinner.hidden = YES;
 
@@ -44,7 +44,7 @@
 
 - (IBAction)logout:(id)sender
 {
-    [[ONGUserClient sharedInstance] logoutUser:^(ONGUserProfile * _Nonnull userProfile, NSError * _Nullable error) {
+    [[ONGUserClient sharedInstance] logoutUser:^(ONGUserProfile *_Nonnull userProfile, NSError *_Nullable error) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }];
 }
@@ -54,7 +54,7 @@
     ONGUserClient *client = [ONGUserClient sharedInstance];
     ONGUserProfile *user = [client authenticatedUserProfile];
     if (user != nil) {
-        [client deregisterUser:user completion:^(BOOL deregistered, NSError * _Nullable error) {
+        [client deregisterUser:user completion:^(BOOL deregistered, NSError *_Nullable error) {
             [self.navigationController popToRootViewControllerAnimated:YES];
         }];
     }
@@ -66,7 +66,7 @@
     self.getTokenSpinner.hidden = NO;
 
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"/client/resource/token" method:@"GET"];
-    [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
+    [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         self.getTokenSpinner.hidden = YES;
         if (response && response.statusCode < 300) {
             self.tokenStatusLabel.hidden = NO;
@@ -78,7 +78,7 @@
 
 - (IBAction)enrollForMobileAuthentication:(id)sender
 {
-    [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError * _Nullable error) {
+    [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError *_Nullable error) {
         NSString *alertTitle = nil;
         if (enrolled) {
             alertTitle = @"Enrolled successfully";
@@ -128,11 +128,18 @@
                                            completion:^{
                                                self.fingerprintController = nil;
                                            }];
-    [[ONGUserClient sharedInstance] registerAuthenticator:fingerprintAuthenticator delegate:self.fingerprintController];
+    if (fingerprintAuthenticator == nil) {
+        // If fingerprint authentication is not possible we will not receive the fingerprint authenticator in the list of not registered authenticators.
+        // There could be a number of reasons why fingerprint authentication is not possible. e.g. due to the fact that it is not enabled in the Token Server
+        // configuration or the device might not be capable of performing TouchID authentication.
+        [self showError:@"Fingerprint authentication is not possible."];
+        return;
+    }
 
+    [[ONGUserClient sharedInstance] registerAuthenticator:fingerprintAuthenticator delegate:self.fingerprintController];
 }
 
--(void)deregisterFingerprint
+- (void)deregisterFingerprint
 {
     ONGUserProfile *userProfile = [ONGUserClient sharedInstance].authenticatedUserProfile;
     NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticatorsForUser:userProfile];
@@ -148,14 +155,15 @@
     return fingerprintAuthenticator != nil;
 }
 
-- (ONGAuthenticator *)fingerprintAuthenticatorFromSet:(NSSet<ONGAuthenticator *> *)authenticators{
+- (ONGAuthenticator *)fingerprintAuthenticatorFromSet:(NSSet<ONGAuthenticator *> *)authenticators
+{
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type == %d", ONGAuthenticatorTouchID];
     return [authenticators filteredSetUsingPredicate:predicate].anyObject;
 }
 
 - (void)showError:(NSString *)error
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Resource error"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                    message:error
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"

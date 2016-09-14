@@ -64,7 +64,11 @@
     pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint - %@", request.userProfile.profileId];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [self.navigationController popViewControllerAnimated:YES];
-        [challenge.sender respondWithDefaultPromptForChallenge:challenge];
+        if (confirmed){
+            [challenge.sender respondWithDefaultPromptForChallenge:challenge];
+        } else {
+            [challenge.sender cancelChallenge:challenge];
+        }
     };
     [self.navigationController pushViewController:pushVC animated:YES];
 }

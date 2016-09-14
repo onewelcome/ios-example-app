@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D6A3512499A1433115A382D /* UIAlertController+Shortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3D3023D96D2645797915 /* UIAlertController+Shortcut.m */; };
+		1D6A370A308FE89704C3198C /* UIAlertController+Shortcut.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A3F17A5FD85B52B51CBFB /* UIAlertController+Shortcut.h */; };
 		1D6A3790481B45EC7F9ADAB4 /* ONGResourceResponse+JSONResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A37EEF488F40336008921 /* ONGResourceResponse+JSONResponse.h */; };
 		1D6A3BB7068B5D6A6CF579D7 /* ONGResourceResponse+JSONResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3EC9D950AE2FC0E556EE /* ONGResourceResponse+JSONResponse.m */; };
 		5C1F1CDC1D464DE100D4D5C0 /* RegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1F1CDA1D464DE100D4D5C0 /* RegistrationController.m */; };
@@ -107,7 +109,9 @@
 /* Begin PBXFileReference section */
 		0F8C250D7FB81F5D5ACD924D /* libPods-OneginiExampleApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneginiExampleApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D6A37EEF488F40336008921 /* ONGResourceResponse+JSONResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ONGResourceResponse+JSONResponse.h"; sourceTree = "<group>"; };
+		1D6A3D3023D96D2645797915 /* UIAlertController+Shortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Shortcut.m"; sourceTree = "<group>"; };
 		1D6A3EC9D950AE2FC0E556EE /* ONGResourceResponse+JSONResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ONGResourceResponse+JSONResponse.m"; sourceTree = "<group>"; };
+		1D6A3F17A5FD85B52B51CBFB /* UIAlertController+Shortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Shortcut.h"; sourceTree = "<group>"; };
 		3ACFD9054DC70E31931FBE1A /* Pods-OneginiExampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneginiExampleApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneginiExampleApp/Pods-OneginiExampleApp.release.xcconfig"; sourceTree = "<group>"; };
 		5C1F1CD91D464DE100D4D5C0 /* RegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationController.h; sourceTree = "<group>"; };
 		5C1F1CDA1D464DE100D4D5C0 /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
@@ -237,6 +241,8 @@
 			children = (
 				1D6A3EC9D950AE2FC0E556EE /* ONGResourceResponse+JSONResponse.m */,
 				1D6A37EEF488F40336008921 /* ONGResourceResponse+JSONResponse.h */,
+				1D6A3D3023D96D2645797915 /* UIAlertController+Shortcut.m */,
+				1D6A3F17A5FD85B52B51CBFB /* UIAlertController+Shortcut.h */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -490,6 +496,7 @@
 				ADEC3B041D884D7E0009234A /* ONGUserProfile.h in Headers */,
 				ADEC3B011D884D7E0009234A /* ONGResourceRequest.h in Headers */,
 				1D6A3790481B45EC7F9ADAB4 /* ONGResourceResponse+JSONResponse.h in Headers */,
+				1D6A370A308FE89704C3198C /* UIAlertController+Shortcut.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,6 +646,7 @@
 				C541398B1CD9D3010033DBA8 /* WelcomeViewController.m in Sources */,
 				5CD187441CEDA5B8001FD062 /* MobileAuthenticationController.m in Sources */,
 				1D6A3BB7068B5D6A6CF579D7 /* ONGResourceResponse+JSONResponse.m in Sources */,
+				1D6A3512499A1433115A382D /* UIAlertController+Shortcut.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

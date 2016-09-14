@@ -717,7 +717,10 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/OneginiExampleApp/OneginiSDK",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.onegini.ExampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -737,7 +740,10 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/OneginiExampleApp/OneginiSDK",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.onegini.ExampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

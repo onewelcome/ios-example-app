@@ -34,13 +34,17 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
-    // In case User has enter invalid PIN too many times (configured on the Token Server), SDK automatically deregisters User.
-    // Developer at this point has to "logout" UI, shutdown user-related services and display Authorization.
+    // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
+    // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
+    // deregistered user.
+    // In case the entire device registration has been removed from the Token Server the SDK will return the ONGGenericErrorDeviceDeregistered error. In this
+    // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
+    // the user is starting up the app for the first time.
     if (error.code == ONGGenericErrorUserDeregistered || error.code == ONGGenericErrorDeviceDeregistered) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else if (error.code == ONGGenericErrorActionCancelled) {
-        // If challenge has been cancelled than ONGGenericErrorActionCancelled is reported.
-        // In the example app authorization is done in the root of the application navigation stack, thats why we're simply popping pin view controller
+        // If the challenge has been cancelled than the ONGGenericErrorActionCancelled error is returned.
+        // In the example app login is done in the root of the application navigation stack, that's why we're simply popping the pin view controller
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 
@@ -60,14 +64,14 @@
         [challenge.sender respondWithPin:pin challenge:challenge];
     };
 
-    // It is up to the developer to decide when and how to show PIN entry view controller.
+    // It is up to you to decide when and how to show the PIN entry view controller.
     // For simplicity of the example app we're checking the top-most view controller.
     if (![self.navigationController.topViewController isEqual:self.pinViewController]) {
         [self.navigationController pushViewController:self.pinViewController animated:YES];
     }
 
     if (challenge.error) {
-        // Please read comments for the PinErrorMapper to understand intent of this class and how errors can be handled.
+        // Please read the comments written in the PinErrorMapper class to understand the intent of this class and how errors can be handled.
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
         [self.pinViewController showError:description];
     }

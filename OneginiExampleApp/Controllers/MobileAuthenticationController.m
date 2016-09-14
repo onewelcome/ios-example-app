@@ -95,15 +95,19 @@
 - (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request error:(NSError *)error
 {
     if (error.code == ONGGenericErrorUserDeregistered || error.code == ONGGenericErrorDeviceDeregistered) {
-        // In case User has enter invalid PIN too many times (configured on the Token Server), SDK automatically deregisters User.
-        // Developer at this point has to "logout" UI, shutdown user-related services and display Authorization.
+        // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
+        // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
+        // deregistered user.
+        // In case the entire device registration has been removed from the Token Server the SDK will return the ONGGenericErrorDeviceDeregistered error. In this
+        // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
+        // the user is starting up the app for the first time.
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else if (error.code == ONGMobileAuthenticationRequestErrorNotFound) {
-        // For some reason mobile request can not be found on the Token Server anymore. This can happen if push notification
-        // was delivered with a huge delay and a mobile authentication request removed from the Token Server for some reason.
-        // Develop may want to notify user about this.
+        // For some reason the mobile authentication request cannot be found on the Token Server anymore. This can happen if a push notification
+        // was delivered with a huge delay and a mobile authentication request was already removed from the Token Server because it expired.
     } else if (error.code == ONGGenericErrorActionCancelled) {
-        // If challenge has been cancelled than ONGGenericErrorActionCancelled is reported. This error can be ignored.
+        // If a challenge has been cancelled then the ONGGenericErrorActionCancelled error is returned. You can use this error to determine whether a mobile
+        // authentication request was cancelled. You can also ignore it if you are not interested in this.
     }
 
     self.completion();

@@ -9,14 +9,14 @@
 
 + (NSString *)descriptionForError:(NSError *)error ofPinChallenge:(ONGPinChallenge *)challenge
 {
-    // Error is going to be either within ONGPinAuthenticationErrorDomain or ONGGenericErrorDomain.
-    // However since error codes from different domains are not intersects we can skip domains check (optional)
-    // Moreover not all of the errors can happen during PIN challenge, therefore we're not handling all of them
+    // The error is going to be either within the ONGPinAuthenticationErrorDomain or ONGGenericErrorDomain.
+    // However, since error codes from different domains are not intersects we can skip the domain checks (optional)
+    // Moreover not all of the errors can happen in the PIN challenge, therefore we're not handling all of them
     // (e.g. ONGGenericErrorActionCancelled or ONGGenericErrorDeviceDeregistered and similar).
     NSString *reason = nil;
     switch (error.code) {
         // Typical error for invalid PIN
-        case ONGPinChangeErrorUserNotAuthenticated:
+        case ONGPinAuthenticationErrorInvalidPin:
             reason = @"Invalid pin";
             break;
 
@@ -26,11 +26,6 @@
             reason = @"Failed to connect to the server. Please try again";
             break;
 
-            // Such errors breaks pin change and leads to its finishing.
-            // They will be propagated to the -userClient:didFailToChangePinForUser:error: instead
-            // case ONGGenericErrorDeviceDeregistered:
-            // case ONGGenericErrorUserDeregistered:
-
             // Some undefined error occurred. This not a typical situation but worth to display at least something.
         case ONGGenericErrorUnknown:
         default:
@@ -38,7 +33,7 @@
             break;
     }
 
-    // As mentioned above attempts counter may remain untouched for non-ONGPinChangeErrorUserNotAuthenticated,
+    // As mentioned above the attempts counter will remain untouched for non-ONGPinAuthenticationErrorInvalidPin,
     // however we still want to give a hint to the User.
     NSString *description = [NSString stringWithFormat:@"%@. You have still %@ attempts left", reason, @(challenge.remainingFailureCount)];
     return description;
@@ -71,8 +66,8 @@
 
         // Rest of the errors most are most likely about network connectivity issues.
         default:
-            // Onegini provides reach description for every error. It may not be the case for Production use,
-            // however useful during development.
+            // Onegini provides a rich description for every error. However, it may not be suitable for Production use,
+            // but it is useful during development.
             return challenge.error.localizedDescription;
     }
 }

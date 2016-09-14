@@ -25,12 +25,12 @@
 }
 
 /**
- * SDK sends challenge in order to authenticated User. In case User has entered invalid pin or SDK wasn't able to
- * connect to the server this method will be invoked again. Developer may want to inspect `challenge.error` property to understand reason of error.
- * In addition to error property `challenge` also maintains `previousFailureCount`, `maxFailureCount` and `remainingFailureCount` that
- * reflects number of attemps left. User gets deregistered once number of attempts exceeded.
+ * The SDK sends a challenge in order to authenticate a user. In case the user has entered an invalid pin or the SDK wasn't able to
+ * connect to the server this method will be invoked again. Developer may want to inspect the `challenge.error` property to understand reason of the error.
+ * In addition to the error property the `challenge` also maintains `previousFailureCount`, `maxFailureCount` and `remainingFailureCount` that
+ * reflects number of PIN attemps left. The user gets deregistered once number of attempts exceeds the maximum amount.
  *
- * Note: during errors that are not related to the PIN validation such as network errors attempts counter remains untouched.
+ * Note: during errors that are not related to PIN validation such as network errors the attempts counter remains untouched.
  */
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
 {
@@ -51,7 +51,7 @@
     }
 
     if (challenge.error) {
-        // Please read comments for the PinErrorMapper to understand intent of this class and how errors can be handled.
+        // Please read comments for the PinErrorMapper to understand the intent of this class and how errors can be handled.
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
         [self.pinViewController showError:description];
     }
@@ -74,7 +74,7 @@
     };
 
     if (challenge.error) {
-        // Please read comments for the PinErrorMapper to understand intent of this class and how errors can be handled.
+        // Please read the comments written in the PinErrorMapper class to understand the intent of this class and how errors can be handled.
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofCreatePinChallenge:challenge];
         [self.pinViewController showError:description];
     }
@@ -88,8 +88,12 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToChangePinForUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
-    // In case User has enter invalid PIN too many times (configured on the Token Server), SDK automatically deregisters User.
-    // Developer at this point has to "logout" UI, shutdown user-related services and display Authorization.
+    // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
+    // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
+    // deregistered user.
+    // In case the entire device registration has been removed from the Token Server the SDK will return the ONGGenericErrorDeviceDeregistered error. In this
+    // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
+    // the user is starting up the app for the first time.
     if (error.code == ONGGenericErrorDeviceDeregistered || error.code == ONGGenericErrorUserDeregistered) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else {

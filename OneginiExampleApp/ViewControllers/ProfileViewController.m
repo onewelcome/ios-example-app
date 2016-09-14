@@ -13,7 +13,6 @@
 @property (nonatomic) ChangePinController *changePinController;
 @property (nonatomic) FingerprintController *fingerprintController;
 
-@property (weak, nonatomic) IBOutlet UILabel *tokenStatusLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getTokenSpinner;
 @property (weak, nonatomic) IBOutlet UIButton *fingerprintButton;
 
@@ -25,7 +24,6 @@
 {
     [super viewDidLoad];
     
-    self.tokenStatusLabel.hidden = YES;
     self.getTokenSpinner.hidden = YES;
 
     [self updateViews];
@@ -64,9 +62,8 @@
     }
 }
 
-- (IBAction)getToken:(id)sender
+- (IBAction)getDevicesList:(id)sender
 {
-    self.tokenStatusLabel.hidden = YES;
     self.getTokenSpinner.hidden = NO;
 
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/devices" method:@"GET"];
@@ -74,10 +71,9 @@
         self.getTokenSpinner.hidden = YES;
         
         if (response && response.statusCode < 300) {
-            self.tokenStatusLabel.hidden = NO;
             [self displayJSONResponse:[response JSONResponse]];
         } else {
-            [self showError:@"Token retrieval failed"];
+            [self showError:error.localizedDescription];
         }
     }];
 }

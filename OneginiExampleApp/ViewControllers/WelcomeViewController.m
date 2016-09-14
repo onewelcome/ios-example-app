@@ -4,8 +4,7 @@
 #import "AuthenticationController.h"
 #import "RegistrationController.h"
 #import "TextViewController.h"
-
-#import <ZFDragableModalTransition/ZFModalTransitionAnimator.h>
+#import "ONGResourceResponse+JSONResponse.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -17,8 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIPickerView *profilePicker;
-
-@property (nonatomic) ZFModalTransitionAnimator *animator;
 
 @end
 
@@ -97,25 +94,11 @@
 {
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-details" method:@"GET"];
     [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
-        TextViewController *controller = [TextViewController new];
-
-        self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:controller];
-        self.animator.dragable = YES;
-        self.animator.direction = ZFModalTransitonDirectionBottom;
-        self.animator.bounces = NO;
-
-        controller.transitioningDelegate = self.animator;
-        controller.modalPresentationStyle = UIModalPresentationCustom;
-
-        controller.text = [[NSJSONSerialization JSONObjectWithData:response.data options:NSJSONReadingAllowFragments error:nil] description];
-        
-        [self presentViewController:controller animated:YES completion:NULL];
-
-        controller.completion = ^(TextViewController *_) {
-            [self dismissViewControllerAnimated:YES completion:^{
-                self.animator = nil;
-            }];
-        };
+        if (error) {
+//            [self show]
+        } else {
+            [self displayJSONResponse:[response JSONResponse]];
+        }
     }];
 }
 
@@ -140,6 +123,16 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     return (self.profiles[(NSUInteger)row]).profileId;
+}
+
+#pragma mark - Misc
+
+- (void)displayJSONResponse:(id)JSONResponse
+{
+    TextViewController *controller = [TextViewController new];
+    controller.text = [JSONResponse description];
+
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 @end

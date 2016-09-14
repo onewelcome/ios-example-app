@@ -12,6 +12,7 @@
 
 @property (nonatomic, copy) NSString *text;
 
+// Invoked on controller's completion. If NULL and is presented - invoking "dismissViewController" automatically
 @property (nonatomic) void (^completion)(TextViewController *sender);
 
 @end

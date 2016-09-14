@@ -29,10 +29,10 @@
     if (self) {
         // ZF has a weak reference to the modal view controller. Therefore it is not a retain cycle.
         self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:self];
-        self.animator.dragable = YES;
         self.animator.direction = ZFModalTransitonDirectionBottom;
-        self.animator.bounces = NO;
-
+        self.animator.dragable = YES;
+        [self.animator setContentScrollView:self.textView];
+        
         self.transitioningDelegate = self.animator;
         self.modalPresentationStyle = UIModalPresentationCustom;
     }
@@ -71,6 +71,9 @@
 {
     self.visibleNavigationItem.title = self.title;
     self.textView.text = self.text;
+    
+    [self.textView scrollRectToVisible:CGRectZero animated:NO];
+    [self.textView flashScrollIndicators];
 }
 
 #pragma mark - IBActions

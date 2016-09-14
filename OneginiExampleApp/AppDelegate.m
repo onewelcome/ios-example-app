@@ -54,7 +54,12 @@
                 [self showAlertWithTitle:@"Application disabled" message:@"The application version is no longer valid, please visit the app store to update your application"];
             } else if (error.code == ONGGenericErrorOutdatedOS) {
                 [self showAlertWithTitle:@"OS outdated" message:@"The operating system that you use is no longer valid, please update your OS."];
+            } else if (error.code == ONGGenericErrorDeviceDeregistered) {
+                [self showAlertWithTitle:@"Device deregistered" message:@"Your device has been deregistered on the server side. Please register your account again."];
+            } else if (error.code == ONGGenericErrorUserDeregistered) {
+                [self showAlertWithTitle:@"User deregistered" message:@"Your account has been deregistered on the server side. Please register again."];
             } else {
+                NSLog(@"Error code: %d", error.code);
                 // Do nothing. Here we most likely will face with network-related errors that can be ignored. Hence, you can start an app in offline mode and
                 // later on connect to the internet when the user wants to login or register for example.
             }

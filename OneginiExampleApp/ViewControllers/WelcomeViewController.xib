@@ -79,7 +79,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                     <inset key="contentEdgeInsets" minX="50" minY="10" maxX="50" maxY="10"/>
-                    <state key="normal" title="Authenticate Client">
+                    <state key="normal" title="Authenticate Device">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>

@@ -81,13 +81,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)changePin:(id<ONGChangePinDelegate>)delegate;
 
 /**
- *  Determines if the user is authorized.
- *
- *  @return true, if a valid access token is available
- */
-- (BOOL)isAuthorized;
-
-/**
  *  Return currently authenticated user.
  *
  *  @return authenticated user
@@ -123,14 +116,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param completion completion block that is going to be invoked upon logout completion.
  */
 - (void)logoutUser:(nullable void (^)(ONGUserProfile *userProfile, NSError *_Nullable error))completion;
-
-/**
- *  Clears all tokens and reset the pin attempt count.
- *
- *  @param error not nil when deleting the refresh token from the keychain fails.
- *  @return true, if the token deletion is successful.
- */
-- (BOOL)clearTokens:(NSError **)error;
 
 /**
  *  Stores the device token for the current session.

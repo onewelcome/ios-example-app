@@ -3,6 +3,7 @@
 #import "WelcomeViewController.h"
 #import "AuthenticationController.h"
 #import "RegistrationController.h"
+#import "TextViewController.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -69,7 +70,7 @@
 
 - (IBAction)authenticateClient:(id)sender
 {
-    [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"read"] completion:^(BOOL success, NSError *_Nullable error) {
+    [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"application-details"] completion:^(BOOL success, NSError *_Nullable error) {
         NSString *message;
         if (success) {
             message = @"Device authentication succeeded";
@@ -85,6 +86,24 @@
                                                          handler:nil];
         [alert addAction:okButton];
         [self.navigationController presentViewController:alert animated:YES completion:nil];
+    }];
+}
+
+- (IBAction)performAnonymousRequest:(id)sender
+{
+    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-details" method:@"GET"];
+    [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
+
+        TextViewController *controller = [TextViewController new];
+        controller.text = [[NSJSONSerialization JSONObjectWithData:response.data options:NSJSONReadingAllowFragments error:nil] description];
+        
+        [self presentViewController:controller animated:YES completion:NULL];
+
+        controller.completion = ^(TextViewController *_) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        };
+
+        NSLog(@"%@", error);
     }];
 }
 

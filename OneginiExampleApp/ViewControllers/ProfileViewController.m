@@ -65,7 +65,7 @@
     self.tokenStatusLabel.hidden = YES;
     self.getTokenSpinner.hidden = NO;
 
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"/client/resource/token" method:@"GET"];
+    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/devices" method:@"GET"];
     [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
         self.getTokenSpinner.hidden = YES;
         if (response && response.statusCode < 300) {

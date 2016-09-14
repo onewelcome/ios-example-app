@@ -1,9 +1,11 @@
 //  Copyright © 2016 Onegini. All rights reserved.
 
 #import "WelcomeViewController.h"
+
 #import "AuthenticationController.h"
 #import "RegistrationController.h"
 #import "TextViewController.h"
+#import "UIAlertController+Shortcut.h"
 #import "ONGResourceResponse+JSONResponse.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
@@ -95,7 +97,11 @@
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-details" method:@"GET"];
     [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
         if (error) {
-//            [self show]
+            BOOL deviceNotAuthenticated = error.code == ONGFetchAnonymousResourceErrorDeviceNotAuthenticated;
+            NSString *message = deviceNotAuthenticated? @"You need to authenticate client first" : error.localizedDescription;
+
+            UIAlertController *controller = [UIAlertController controllerWithTitle:@"Error" message:message completion:nil];
+            [self presentViewController:controller animated:YES completion:nil];
         } else {
             [self displayJSONResponse:[response JSONResponse]];
         }

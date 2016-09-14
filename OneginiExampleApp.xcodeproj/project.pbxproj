@@ -56,6 +56,9 @@
 		68AD2F4DFBE0D382CB8AE76E /* ONGCustomizationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 68AD2A1955C02FE1F9DCFC35 /* ONGCustomizationDelegate.h */; };
 		68AD2F5C4714AE6A206795F3 /* ONGRequestBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 68AD28C4ACBD007907292E34 /* ONGRequestBuilder.h */; };
 		68AD2FC364F96B07A14D9B42 /* ONGPinChallenge.h in Headers */ = {isa = PBXBuildFile; fileRef = 68AD2D13C2DCBA4F4D854322 /* ONGPinChallenge.h */; };
+		ADADD40E1D895D8900A52736 /* TextViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = ADADD40B1D895D8900A52736 /* TextViewController.h */; };
+		ADADD40F1D895D8900A52736 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADADD40C1D895D8900A52736 /* TextViewController.m */; };
+		ADADD4101D895D8900A52736 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADADD40D1D895D8900A52736 /* TextViewController.xib */; };
 		ADEC3AEE1D884D7E0009234A /* OneginiSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = ADEC3AD71D884D7E0009234A /* OneginiSDK.h */; };
 		ADEC3AEF1D884D7E0009234A /* ONGAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = ADEC3AD81D884D7E0009234A /* ONGAuthenticationDelegate.h */; };
 		ADEC3AF01D884D7E0009234A /* ONGAuthenticator.h in Headers */ = {isa = PBXBuildFile; fileRef = ADEC3AD91D884D7E0009234A /* ONGAuthenticator.h */; };
@@ -94,11 +97,14 @@
 		C5FE9E951CD8C0DE00142A20 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E941CD8C0DE00142A20 /* MobileCoreServices.framework */; };
 		C5FE9E971CD8C0F300142A20 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E961CD8C0F300142A20 /* libiconv.tbd */; };
 		C5FE9E991CD8C10000142A20 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FE9E981CD8C10000142A20 /* libc++.tbd */; };
+		CFC7BE61EF0643B492D7E269 /* libPods-OneginiExampleApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8C250D7FB81F5D5ACD924D /* libPods-OneginiExampleApp.a */; };
 		E4459662EEBC767C4F350A5A /* OneginiConfigModel.h in Headers */ = {isa = PBXBuildFile; fileRef = AF975CF4D99994DAF5BD2E6B /* OneginiConfigModel.h */; };
 		FE4DA5D3D36E8E9BCF56FAFC /* tokenserver-demo-test.onegini.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = CB2E2640AC9BD8B06787756E /* tokenserver-demo-test.onegini.com.cer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F8C250D7FB81F5D5ACD924D /* libPods-OneginiExampleApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneginiExampleApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3ACFD9054DC70E31931FBE1A /* Pods-OneginiExampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneginiExampleApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneginiExampleApp/Pods-OneginiExampleApp.release.xcconfig"; sourceTree = "<group>"; };
 		5C1F1CD91D464DE100D4D5C0 /* RegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationController.h; sourceTree = "<group>"; };
 		5C1F1CDA1D464DE100D4D5C0 /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
 		5C3CA1461D11394000F00C05 /* FingerprintController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FingerprintController.h; sourceTree = "<group>"; };
@@ -151,6 +157,10 @@
 		68AD2EC8E3F0DF4610547D15 /* ONGCreatePinChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGCreatePinChallenge.h; sourceTree = "<group>"; };
 		68AD2EDC1105E24CB191680D /* ONGRegistrationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGRegistrationDelegate.h; sourceTree = "<group>"; };
 		68AD2F9A3E5B8D3E0D1F90A8 /* ONGDeregistrationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGDeregistrationDelegate.h; sourceTree = "<group>"; };
+		8F110FB687139430D79AEAD0 /* Pods-OneginiExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneginiExampleApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneginiExampleApp/Pods-OneginiExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
+		ADADD40B1D895D8900A52736 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
+		ADADD40C1D895D8900A52736 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
+		ADADD40D1D895D8900A52736 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
 		ADEC3AD71D884D7E0009234A /* OneginiSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiSDK.h; sourceTree = "<group>"; };
 		ADEC3AD81D884D7E0009234A /* ONGAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGAuthenticationDelegate.h; sourceTree = "<group>"; };
 		ADEC3AD91D884D7E0009234A /* ONGAuthenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGAuthenticator.h; sourceTree = "<group>"; };
@@ -211,6 +221,7 @@
 				C5FE9E951CD8C0DE00142A20 /* MobileCoreServices.framework in Frameworks */,
 				C5FE9E931CD8C0D800142A20 /* SystemConfiguration.framework in Frameworks */,
 				C5FE9E911CD8C0D200142A20 /* Security.framework in Frameworks */,
+				CFC7BE61EF0643B492D7E269 /* libPods-OneginiExampleApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +235,15 @@
 				5CA30F351D70AAA6003DCAE3 /* libOneginiSDKiOS-5.00.00-BETA.a */,
 			);
 			path = OneginiSDK;
+			sourceTree = "<group>";
+		};
+		85C98E12477B3DE5E53674FE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8F110FB687139430D79AEAD0 /* Pods-OneginiExampleApp.debug.xcconfig */,
+				3ACFD9054DC70E31931FBE1A /* Pods-OneginiExampleApp.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		ADEC3AD61D884D7E0009234A /* Headers */ = {
@@ -265,6 +285,7 @@
 				C5FE9E941CD8C0DE00142A20 /* MobileCoreServices.framework */,
 				C5FE9E921CD8C0D800142A20 /* SystemConfiguration.framework */,
 				C5FE9E901CD8C0D200142A20 /* Security.framework */,
+				0F8C250D7FB81F5D5ACD924D /* libPods-OneginiExampleApp.a */,
 			);
 			name = Frameworks;
 			path = OneginiExampleApp;
@@ -287,6 +308,9 @@
 				5C8A03B11CDFA7C2007ADA14 /* WebBrowserViewController.m */,
 				5C8A03B21CDFA7C2007ADA14 /* WebBrowserViewController.xib */,
 				5C3CA14D1D11E29A00F00C05 /* PushConfirmationViewController.h */,
+				ADADD40B1D895D8900A52736 /* TextViewController.h */,
+				ADADD40C1D895D8900A52736 /* TextViewController.m */,
+				ADADD40D1D895D8900A52736 /* TextViewController.xib */,
 				5C3CA14E1D11E29A00F00C05 /* PushConfirmationViewController.m */,
 				5C3CA1511D11E2B900F00C05 /* PushConfirmationViewController.xib */,
 			);
@@ -301,6 +325,7 @@
 				C572A2D81CD893C400B137DC /* Products */,
 				C531DF7F1CD8FE5400C4BBF2 /* Frameworks */,
 				EB67C9E0317DB4510001471A /* Configuration */,
+				85C98E12477B3DE5E53674FE /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -424,6 +449,7 @@
 				ADEC3AFC1D884D7E0009234A /* ONGPinChallenge.h in Headers */,
 				ADEC3AEE1D884D7E0009234A /* OneginiSDK.h in Headers */,
 				68AD2246D3C0A792C9A55781 /* ONGDeviceClient.h in Headers */,
+				ADADD40E1D895D8900A52736 /* TextViewController.h in Headers */,
 				68AD27FC1B75E00FCBF12031 /* ONGAuthenticationDelegate.h in Headers */,
 				68AD24B27F8A60FBD653E3FE /* ONGMobileAuthenticationRequestDelegate.h in Headers */,
 				68AD2F4DFBE0D382CB8AE76E /* ONGCustomizationDelegate.h in Headers */,
@@ -451,10 +477,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C572A2EE1CD893C400B137DC /* Build configuration list for PBXNativeTarget "OneginiExampleApp" */;
 			buildPhases = (
+				7A4C9608C094AE17CC2752BA /* [CP] Check Pods Manifest.lock */,
 				C572A2D31CD893C400B137DC /* Sources */,
 				C572A2D51CD893C400B137DC /* Resources */,
 				C572A2D41CD893C400B137DC /* Frameworks */,
 				25C36A8CE08E549F4B6CA834 /* Headers */,
+				3E9C3312CE531C7668E5AF51 /* [CP] Embed Pods Frameworks */,
+				2FA46BFAD3CF50EB39E63E1E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -503,6 +532,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADADD4101D895D8900A52736 /* TextViewController.xib in Resources */,
 				C572A2E71CD893C400B137DC /* Assets.xcassets in Resources */,
 				C502CAAA1CDB62B600FB18E7 /* ProfileViewController.xib in Resources */,
 				5CAE98B01CE0929C009C1D1A /* LaunchScreen.xib in Resources */,
@@ -516,6 +546,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2FA46BFAD3CF50EB39E63E1E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OneginiExampleApp/Pods-OneginiExampleApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3E9C3312CE531C7668E5AF51 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OneginiExampleApp/Pods-OneginiExampleApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7A4C9608C094AE17CC2752BA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C572A2D31CD893C400B137DC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -524,6 +602,7 @@
 				5C3CA1491D11394000F00C05 /* FingerprintController.m in Sources */,
 				C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */,
 				5C8A03BE1CDFB36F007ADA14 /* PinViewController.m in Sources */,
+				ADADD40F1D895D8900A52736 /* TextViewController.m in Sources */,
 				5C3CA15C1D13E56100F00C05 /* ChangePinController.m in Sources */,
 				5C3CA1501D11E29A00F00C05 /* PushConfirmationViewController.m in Sources */,
 				5CAE98C61CE0DEF8009C1D1A /* OneginiConfigModel.m in Sources */,
@@ -626,6 +705,7 @@
 		};
 		C572A2EF1CD893C400B137DC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F110FB687139430D79AEAD0 /* Pods-OneginiExampleApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_BITCODE = NO;
@@ -645,6 +725,7 @@
 		};
 		C572A2F01CD893C400B137DC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3ACFD9054DC70E31931FBE1A /* Pods-OneginiExampleApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_BITCODE = NO;

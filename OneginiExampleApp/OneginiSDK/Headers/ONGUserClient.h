@@ -100,17 +100,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)validatePinWithPolicy:(NSString *)pin completion:(void (^)(BOOL valid, NSError * _Nullable error))completion;
 
 /**
- *  Method responsible for handling URLs opened by the application that are directed to Onegini SDK.
- *  If URL not directed to the SDK is passed to this method, ONGUserClient will ignore the URL and return `NO`.
- *  ONGUserClient is capable of distinguishing between URL directed to SDK and those that arent.
+ *  Handles the response of the registration request from the browser redirect.
+ *  The URL scheme and host must match the config model redirect URL.
  *
- *  This methods should be called from application:openURL:options:, application:handleOpenURL: OR
- *  application:openURL:sourceApplication:annotation: method of your UIApplicationDelegate delegate.
- *
- *  @param url application url
- *  @return value indicating if URL was directed to the SDK or not
+ *  @param url callback url
  */
-- (BOOL)handleApplicationURL:(NSURL *)url;
+- (void)handleRegistrationCallback:(NSURL *)url;
 
 /**
  *  Performs a user logout, by invalidating the access token.
@@ -201,21 +196,23 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) NSString *accessToken;
 
 /**
- * Discovers and returns a set of authenticators which are supported both, client and server side, and are not yet registered.
+ * Returns a set of authenticators which are supported both, client and server side, and are not yet registered.
  *
- * The returned errors will be within the ONGGenericErrorDomain.
- *
- * @param completion block returning non registered authenticators or any encountered error
+ * @param userProfile user profile for which authenticators are fetched
+ * @return set of non registered authenticators
  */
-- (void)fetchNonRegisteredAuthenticators:(void (^)(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error))completion;
+- (NSSet<ONGAuthenticator *> *)nonRegisteredAuthenticatorsForUser:(ONGUserProfile *)userProfile;
 
 /**
- * Set of registered authenticators.
+ * Returns a set of registered authenticators.
+ *
+ * @param userProfile user profile for which authenticators are fetched
+ * @return set of registered authenticators
  */
-@property (nonatomic, readonly) NSSet<ONGAuthenticator *> *registeredAuthenticators;
+- (NSSet<ONGAuthenticator *> *)registeredAuthenticatorsForUser:(ONGUserProfile *)userProfile;
 
 /**
- * Registers an authenticator. Use one of the non registeres authenticators returned by `fetchNonRegisteredAuthenticators` method.
+ * Registers an authenticator. Use one of the non registered authenticators returned by `nonRegisteredAuthenticatorsForUser:` method.
  * Registering an authenticator requires user authentication which is handled by the delegate.
  *
  * The returned errors will be within the ONGGenericErrorDomain or ONGAuthenticatorRegistrationErrorDomain.
@@ -226,7 +223,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)registerAuthenticator:(ONGAuthenticator *)authenticator delegate:(id<ONGAuthenticationDelegate>)delegate;
 
 /**
- * Deregisters an authenticator. Use one of the registered authenticators returned by `registeredAuthenticators` method.
+ * Deregisters an authenticator. Use one of the registered authenticators returned by `registeredAuthenticatorsForUser:` method.
  *
  * The returned errors will be within the ONGGenericErrorDomain or ONGAuthenticatorDeregistrationErrorDomain.
  *

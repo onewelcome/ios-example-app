@@ -81,16 +81,15 @@
     if (![self.navigationController.topViewController isEqual:self.pinViewController]) {
         [self.navigationController pushViewController:self.pinViewController animated:YES];
     }
-<<<<<<< HEAD
-    if (self.progressStateDidChange != nil) {
-        self.progressStateDidChange(NO);
-=======
 
     if (challenge.error) {
         // Please read the comments written in the PinErrorMapper class to understand the intent of this class and how errors can be handled.
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
         [self.pinViewController showError:description];
->>>>>>> new-api
+    }
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
     }
 }
 

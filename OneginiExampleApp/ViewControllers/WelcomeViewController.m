@@ -32,11 +32,11 @@
     if (self.authenticationController || self.registrationController)
         return;
 
-//    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.registrationController = [RegistrationController
         registrationControllerWithNavigationController:self.navigationController
                                             completion:^{
-//                                                [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+                                                [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                                 self.registrationController = nil;
                                             }];
     [[ONGUserClient sharedInstance] registerUser:@[@"read"] delegate:self.registrationController];

@@ -15,8 +15,5 @@
 
 #import <UIKit/UIKit.h>
 
-@class WelcomeViewController;
-
 @interface WelcomeViewController : UIViewController
-
 @end

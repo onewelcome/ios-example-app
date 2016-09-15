@@ -11,8 +11,8 @@ typedef NS_ENUM(NSInteger, ONGAuthenticatorType) {
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * Represents an authenticator. Authenticator objects can be obtained using `ONGUserClient` `nonRegisteredAuthenticatorsForUser:` or
- * `registeredAuthenticatorsForUser:`.
+ * Represents an authenticator. Authenticator objects can be obtains using `ONGUserClient` `registeredAuthenticators` or
+ * `fetchNonRegisteredAuthenticators`.
  */
 @interface ONGAuthenticator : NSObject <NSSecureCoding>
 

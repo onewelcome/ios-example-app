@@ -81,6 +81,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)changePin:(id<ONGChangePinDelegate>)delegate;
 
 /**
+ *  Determines if the user is authorized.
+ *
+ *  @return true, if a valid access token is available
+ */
+- (BOOL)isAuthorized;
+
+/**
  *  Return currently authenticated user.
  *
  *  @return authenticated user
@@ -100,12 +107,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)validatePinWithPolicy:(NSString *)pin completion:(void (^)(BOOL valid, NSError * _Nullable error))completion;
 
 /**
- *  Handles the response of the registration request from the browser redirect.
- *  The URL scheme and host must match the config model redirect URL.
+ *  Method responsible for handling URLs opened by the application that are directed to Onegini SDK.
+ *  If URL not directed to the SDK is passed to this method, ONGUserClient will ignore the URL and return `NO`.
+ *  ONGUserClient is capable of distinguishing between URL directed to SDK and those that arent.
  *
- *  @param url callback url
+ *  This methods should be called from application:openURL:options:, application:handleOpenURL: OR
+ *  application:openURL:sourceApplication:annotation: method of your UIApplicationDelegate delegate.
+ *
+ *  @param url application url
+ *  @return value indicating if URL was directed to the SDK or not
  */
-- (void)handleRegistrationCallback:(NSURL *)url;
+- (BOOL)handleApplicationURL:(NSURL *)url;
 
 /**
  *  Performs a user logout, by invalidating the access token.
@@ -116,6 +128,14 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param completion completion block that is going to be invoked upon logout completion.
  */
 - (void)logoutUser:(nullable void (^)(ONGUserProfile *userProfile, NSError *_Nullable error))completion;
+
+/**
+ *  Clears all tokens and reset the pin attempt count.
+ *
+ *  @param error not nil when deleting the refresh token from the keychain fails.
+ *  @return true, if the token deletion is successful.
+ */
+- (BOOL)clearTokens:(NSError **)error;
 
 /**
  *  Stores the device token for the current session.
@@ -196,23 +216,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) NSString *accessToken;
 
 /**
- * Returns a set of authenticators which are supported both, client and server side, and are not yet registered.
+ * Discovers and returns a set of authenticators which are supported both, client and server side, and are not yet registered.
  *
- * @param userProfile user profile for which authenticators are fetched
- * @return set of non registered authenticators
+ * The returned errors will be within the ONGGenericErrorDomain.
+ *
+ * @param completion block returning non registered authenticators or any encountered error
  */
-- (NSSet<ONGAuthenticator *> *)nonRegisteredAuthenticatorsForUser:(ONGUserProfile *)userProfile;
+- (void)fetchNonRegisteredAuthenticators:(void (^)(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error))completion;
 
 /**
- * Returns a set of registered authenticators.
- *
- * @param userProfile user profile for which authenticators are fetched
- * @return set of registered authenticators
+ * Set of registered authenticators.
  */
-- (NSSet<ONGAuthenticator *> *)registeredAuthenticatorsForUser:(ONGUserProfile *)userProfile;
+@property (nonatomic, readonly) NSSet<ONGAuthenticator *> *registeredAuthenticators;
 
 /**
- * Registers an authenticator. Use one of the non registered authenticators returned by `nonRegisteredAuthenticatorsForUser:` method.
+ * Registers an authenticator. Use one of the non registeres authenticators returned by `fetchNonRegisteredAuthenticators` method.
  * Registering an authenticator requires user authentication which is handled by the delegate.
  *
  * The returned errors will be within the ONGGenericErrorDomain or ONGAuthenticatorRegistrationErrorDomain.
@@ -223,7 +241,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)registerAuthenticator:(ONGAuthenticator *)authenticator delegate:(id<ONGAuthenticationDelegate>)delegate;
 
 /**
- * Deregisters an authenticator. Use one of the registered authenticators returned by `registeredAuthenticatorsForUser:` method.
+ * Deregisters an authenticator. Use one of the registered authenticators returned by `registeredAuthenticators` method.
  *
  * The returned errors will be within the ONGGenericErrorDomain or ONGAuthenticatorDeregistrationErrorDomain.
  *

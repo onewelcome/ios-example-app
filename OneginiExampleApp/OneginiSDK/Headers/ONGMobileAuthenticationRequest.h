@@ -28,9 +28,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSDictionary *userInfo;
 
 /**
- * Message of the request passed by the TS.
+ * Title of the request. Corresponding to the [userInfo valueForKeyPath:@"alert.body"]
  */
-@property (nonatomic, readonly, nullable) NSString *message;
+@property (nonatomic, readonly, nullable) NSString *title;
+
+/**
+ * Body of the request. Corresponding to the [userInfo valueForKeyPath:@"alert.title"]
+ */
+@property (nonatomic, readonly, nullable) NSString *body;
 
 @end
 

@@ -30,9 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIPickerView *profilePicker;
-@property (weak, nonatomic) IBOutlet UILabel *appIdentifier;
-@property (weak, nonatomic) IBOutlet UILabel *appPlatform;
-@property (weak, nonatomic) IBOutlet UILabel *appVersion;
+@property (weak, nonatomic) IBOutlet UILabel *appInfoLabel;
 
 @end
 
@@ -48,6 +46,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.appInfoLabel.hidden = YES;
 
     [self authenticateDeviceAndFetchResource];
 }
@@ -96,19 +96,14 @@
 - (void)authenticateDeviceAndFetchResource
 {
     [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"application-details"] completion:^(BOOL success, NSError *_Nullable error) {
-        NSString *message;
         if (success) {
             [self fetchApplicationDetails];
         } else {
-            message = @"Device authentication failed";
+            // unwind stack in case we've opened registration
             [self.navigationController popToRootViewControllerAnimated:YES];
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:message
-                                                                           message:error.localizedDescription
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok"
-                                                               style:UIAlertActionStyleDefault
-                                                             handler:nil];
-            [alert addAction:okButton];
+
+            NSString *title = @"Device authentication failed";
+            UIAlertController *alert = [UIAlertController controllerWithTitle:title message:error.localizedDescription completion:nil];
             [self.navigationController presentViewController:alert animated:YES completion:nil];
         }
     }];
@@ -123,14 +118,15 @@
             [self presentViewController:controller animated:YES completion:nil];
         } else {
             id jsonResponse = [response JSONResponse];
-
             if (jsonResponse != nil) {
-                [self appIdentifier].text = [jsonResponse objectForKey:@"application_identifier"];
-                [self appIdentifier].hidden = NO;
-                [self appPlatform].text = [jsonResponse objectForKey:@"application_platform"];
-                [self appPlatform].hidden = NO;
-                [self appVersion].text = [jsonResponse objectForKey:@"application_version"];
-                [self appVersion].hidden = NO;
+                self.appInfoLabel.text = [NSString stringWithFormat:
+                    @"%@\n%@\n%@",
+                    [jsonResponse objectForKey:@"application_identifier"],
+                    [jsonResponse objectForKey:@"application_platform"],
+                    [jsonResponse objectForKey:@"application_version"]
+                ];
+
+                self.appInfoLabel.hidden = NO;
             }
         }
     }];

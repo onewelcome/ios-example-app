@@ -49,16 +49,15 @@
     if (![self.navigationController.topViewController isEqual:self.pinViewController]) {
         [self.navigationController pushViewController:self.pinViewController animated:YES];
     }
-<<<<<<< HEAD
-    if (self.progressStateDidChange != nil) {
-        self.progressStateDidChange(NO);
-=======
 
     if (challenge.error) {
         // Please read comments for the PinErrorMapper to understand the intent of this class and how errors can be handled.
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
         [self.pinViewController showError:description];
->>>>>>> new-api
+    }
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
     }
 }
 
@@ -99,14 +98,6 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToChangePinForUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
-<<<<<<< HEAD
-    [self pinChangeError:error];
-    self.completion();
-    if (self.progressStateDidChange != nil) {
-        self.progressStateDidChange(NO);
-    }
-}
-=======
     // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
     // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
     // deregistered user.
@@ -118,11 +109,14 @@
     } else {
         [self.navigationController popViewControllerAnimated:YES];
     }
->>>>>>> new-api
 
     [self showError:error];
 
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)showError:(NSError *)error

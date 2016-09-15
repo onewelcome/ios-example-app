@@ -17,7 +17,6 @@
 
 #import "AuthenticationController.h"
 #import "RegistrationController.h"
-#import "TextViewController.h"
 #import "UIAlertController+Shortcut.h"
 #import "ONGResourceResponse+JSONResponse.h"
 
@@ -31,6 +30,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIPickerView *profilePicker;
+@property (weak, nonatomic) IBOutlet UILabel *appIdentifier;
+@property (weak, nonatomic) IBOutlet UILabel *appPlatform;
+@property (weak, nonatomic) IBOutlet UILabel *appVersion;
 
 @end
 
@@ -41,6 +43,13 @@
     [super viewWillAppear:animated];
     self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
     [self.profilePicker reloadAllComponents];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    [self authenticateDeviceAndFetchResource];
 }
 
 - (IBAction)registerNewProfile:(id)sender
@@ -58,18 +67,18 @@
 
 - (IBAction)login:(id)sender
 {
-	if ([self.profiles count] == 0) {
+    if ([self.profiles count] == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                        message:@"No registered profiles"
                                                                 preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okButton = [UIAlertAction
-                                   actionWithTitle:@"Ok"
-                                   style:UIAlertActionStyleDefault
-                                   handler:^(UIAlertAction *action) {
-                                   }];
+            actionWithTitle:@"Ok"
+                      style:UIAlertActionStyleDefault
+                    handler:^(UIAlertAction *action) {
+                    }];
         [alert addAction:okButton];
         [self.navigationController presentViewController:alert animated:YES completion:nil];
-        
+
         return;
     }
     if (self.authenticationController || self.registrationController)
@@ -84,39 +93,45 @@
     [[ONGUserClient sharedInstance] authenticateUser:selectedUserProfile delegate:self.authenticationController];
 }
 
-- (IBAction)authenticateClient:(id)sender
+- (void)authenticateDeviceAndFetchResource
 {
     [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"application-details"] completion:^(BOOL success, NSError *_Nullable error) {
         NSString *message;
         if (success) {
-            message = @"Device authentication succeeded";
+            [self fetchApplicationDetails];
         } else {
             message = @"Device authentication failed";
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:message
+                                                                           message:error.localizedDescription
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alert addAction:okButton];
+            [self.navigationController presentViewController:alert animated:YES completion:nil];
         }
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:message
-                                                                       message:error.localizedDescription
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok"
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:nil];
-        [alert addAction:okButton];
-        [self.navigationController presentViewController:alert animated:YES completion:nil];
     }];
 }
 
-- (IBAction)performAnonymousRequest:(id)sender
+- (void)fetchApplicationDetails
 {
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-details" method:@"GET"];
-    [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
+    [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         if (error) {
-            BOOL deviceNotAuthenticated = error.code == ONGFetchAnonymousResourceErrorDeviceNotAuthenticated;
-            NSString *message = deviceNotAuthenticated? @"You need to authenticate client first" : error.localizedDescription;
-
-            UIAlertController *controller = [UIAlertController controllerWithTitle:@"Error" message:message completion:nil];
+            UIAlertController *controller = [UIAlertController controllerWithTitle:@"Error" message:error.localizedDescription completion:nil];
             [self presentViewController:controller animated:YES completion:nil];
         } else {
-            [self displayJSONResponse:[response JSONResponse]];
+            id jsonResponse = [response JSONResponse];
+
+            if (jsonResponse != nil) {
+                [self appIdentifier].text = [jsonResponse objectForKey:@"application_identifier"];
+                [self appIdentifier].hidden = NO;
+                [self appPlatform].text = [jsonResponse objectForKey:@"application_platform"];
+                [self appPlatform].hidden = NO;
+                [self appVersion].text = [jsonResponse objectForKey:@"application_version"];
+                [self appVersion].hidden = NO;
+            }
         }
     }];
 }
@@ -142,16 +157,6 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     return (self.profiles[(NSUInteger)row]).profileId;
-}
-
-#pragma mark - Misc
-
-- (void)displayJSONResponse:(id)JSONResponse
-{
-    TextViewController *controller = [TextViewController new];
-    controller.text = [JSONResponse description];
-
-    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 @end

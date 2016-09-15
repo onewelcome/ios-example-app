@@ -520,7 +520,7 @@
 			dependencies = (
 			);
 			name = OneginiExampleApp;
-			productName = OneginiDemoApp;
+			productName = OneginiExampleApp;
 			productReference = C572A2D71CD893C400B137DC /* OneginiExampleApp.app */;
 			productType = "com.apple.product-type.application";
 		};

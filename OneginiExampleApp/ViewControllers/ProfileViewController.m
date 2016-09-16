@@ -1,8 +1,25 @@
-//  Copyright © 2016 Onegini. All rights reserved.
+//
+// Copyright (c) 2016 Onegini. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "ProfileViewController.h"
+
 #import "FingerprintController.h"
 #import "ChangePinController.h"
+#import "TextViewController.h"
+
+#import "ONGResourceResponse+JSONResponse.h"
 #import "MBProgressHUD.h"
 
 @interface ProfileViewController ()
@@ -10,7 +27,6 @@
 @property (nonatomic) ChangePinController *changePinController;
 @property (nonatomic) FingerprintController *fingerprintController;
 
-@property (weak, nonatomic) IBOutlet UILabel *tokenStatusLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getTokenSpinner;
 @property (weak, nonatomic) IBOutlet UIButton *fingerprintButton;
 
@@ -22,15 +38,13 @@
 {
     [super viewDidLoad];
 
-    self.tokenStatusLabel.hidden = YES;
     self.getTokenSpinner.hidden = YES;
-
-    [self updateViews];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
     [self updateViews];
 }
 
@@ -61,18 +75,18 @@
     }
 }
 
-- (IBAction)getToken:(id)sender
+- (IBAction)getDevicesList:(id)sender
 {
-    self.tokenStatusLabel.hidden = YES;
     self.getTokenSpinner.hidden = NO;
 
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"/client/resource/token" method:@"GET"];
-    [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
+    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/devices" method:@"GET"];
+    [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
         self.getTokenSpinner.hidden = YES;
+
         if (response && response.statusCode < 300) {
-            self.tokenStatusLabel.hidden = NO;
+            [self displayJSONResponse:[response JSONResponse]];
         } else {
-            [self showError:@"Token retrieval failed"];
+            [self showError:error.localizedDescription];
         }
     }];
 }
@@ -104,7 +118,7 @@
                                              [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                              self.changePinController = nil;
                                          }];
-    
+
     __weak typeof(self) weakSelf = self;
     self.changePinController.progressStateDidChange = ^(BOOL isInProgress) {
         if (isInProgress) {
@@ -182,6 +196,16 @@
                                                handler:nil];
     [alert addAction:ok];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - Misc
+
+- (void)displayJSONResponse:(id)JSONResponse
+{
+    TextViewController *controller = [TextViewController new];
+    controller.text = [JSONResponse description];
+
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 @end

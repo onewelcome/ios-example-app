@@ -1,4 +1,17 @@
-//  Copyright © 2016 Onegini. All rights reserved.
+//
+// Copyright (c) 2016 Onegini. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
@@ -26,7 +39,7 @@
 - (void)setupWindow
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor lightGrayColor];
 
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[WelcomeViewController new]];
     navigationController.navigationBarHidden = YES;
@@ -59,7 +72,7 @@
             } else if (error.code == ONGGenericErrorUserDeregistered) {
                 [self showAlertWithTitle:@"User deregistered" message:@"Your account has been deregistered on the server side. Please register again."];
             } else {
-                NSLog(@"Error code: %d", error.code);
+                NSLog(@"Error code: %zd", error.code);
                 // Do nothing. Here we most likely will face with network-related errors that can be ignored. Hence, you can start an app in offline mode and
                 // later on connect to the internet when the user wants to login or register for example.
             }

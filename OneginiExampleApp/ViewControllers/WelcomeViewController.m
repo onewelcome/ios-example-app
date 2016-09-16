@@ -17,7 +17,6 @@
 
 #import "AuthenticationController.h"
 #import "RegistrationController.h"
-#import "AppDelegate.h"
 #import "UIAlertController+Shortcut.h"
 #import "ONGResourceResponse+JSONResponse.h"
 #import "MBProgressHUD.h"

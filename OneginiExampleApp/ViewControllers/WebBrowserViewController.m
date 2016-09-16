@@ -42,6 +42,13 @@
 
 - (void)clearWebViewCache
 {
+    // In order to prevent interference of the previous registration we have to drop cookies.
+    // Since UIWebView doesn't expose its internal dependencies we're using `sharedURLCache` and `sharedHTTPCookieStorage` for
+    // cleaning up network cache and cookies correspondingly.
+    
+    // In case you'll disable cookies on the registration request itself (`[NSURLRequest requestWithURL:self.url]`) the Token Server
+    // won't be able to process registration correctly, because it relies on cookies to maintain state.
+    
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];

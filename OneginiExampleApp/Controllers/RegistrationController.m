@@ -18,6 +18,7 @@
 #import "WebBrowserViewController.h"
 #import "ProfileViewController.h"
 #import "PinErrorMapper.h"
+#import "MBProgressHUD.h"
 
 @interface RegistrationController ()
 
@@ -63,32 +64,32 @@
 
         // The device could not be registered with the Token Server, verify that the SDK configuration, Token Server configuration and security features are correctly configured
         case ONGRegistrationErrorDeviceRegistrationFailure:
-        // A possible security issue was detected during User Registration.
+            // A possible security issue was detected during User Registration.
         case ONGRegistrationErrorInvalidState:
             // display an error to the user, hide registration UI, etc
             break;
 
-        // Generic errors
-        // In case User has cancelled PIN challenge, cancellation error will be reported. This error can be ignored.
+            // Generic errors
+            // In case the user has cancelled the PIN challenge, the cancellation error will be reported. This error can be ignored.
         case ONGGenericErrorActionCancelled:
             break;
 
-        // Undefined error occurred
+            // Undefined error occurred
         case ONGGenericErrorUnknown:
 
-        // Typical network errors
+            // Typical network errors
         case ONGGenericErrorNetworkConnectivityFailure:
         case ONGGenericErrorServerNotReachable:
 
-        // This error should not happen in the Production because it means that the configuration is invalid and / or server has proxy.
-        // Developer will most likely face with such errors during development itself.
+            // This error should not happen in the Production because it means that the configuration is invalid and / or server has proxy.
+            // Developer will most likely face with such errors during development itself.
         case ONGGenericErrorRequestInvalid:
 
-        // User trying to perform a registration, but previous registration is not finished yet.
+            // The user trying to perform registration, but previous registration is not finished yet.
         case ONGGenericErrorActionAlreadyInProgress:
 
-        // Developer typical won't face with ONGGenericErrorOutdatedApplication and ONGGenericErrorOutdatedOS during PIN change.
-        // However it is potentially possible, so we need to handle then as well.
+            // You typical won't face the ONGGenericErrorOutdatedApplication and ONGGenericErrorOutdatedOS during PIN change.
+            // However it is potentially possible, so we need to handle them as well.
         case ONGGenericErrorOutdatedApplication:
         case ONGGenericErrorOutdatedOS:
 
@@ -103,7 +104,7 @@
 }
 
 /**
- * In contrast with ONGPinChallenge that can be found during pin change, mobile authentication and other flows
+ * In contrast with the ONGPinChallenge that can be found during pin change, mobile authentication and other flows
  * ONGCreatePinChallenge doesn't have `challenge.previousFailureCount`. In other words enter of invalid pin
  * do not lead to any attempts counter incrementing. Therefore User is able to enter a pin as many times as needed.
  *
@@ -111,6 +112,8 @@
  */
 - (void)userClient:(ONGUserClient *)userClient didReceivePinRegistrationChallenge:(ONGCreatePinChallenge *)challenge
 {
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+
     self.pinViewController.pinLength = challenge.pinLength;
     self.pinViewController.mode = PINRegistrationMode;
     self.pinViewController.profile = challenge.userProfile;
@@ -119,7 +122,7 @@
         [challenge.sender respondWithCreatedPin:pin challenge:challenge];
     };
 
-    // It is up to the developer to decide when and how to show PIN entry view controller.
+    // It is up to the you to decide when and how to show the PIN entry view controller.
     // For simplicity of the example app we're checking the top-most view controller.
     if (![self.navigationController.topViewController isEqual:self.pinViewController]) {
         [self.navigationController pushViewController:self.pinViewController animated:YES];

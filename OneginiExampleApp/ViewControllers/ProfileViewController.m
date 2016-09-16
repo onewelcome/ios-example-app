@@ -20,6 +20,7 @@
 #import "TextViewController.h"
 
 #import "ONGResourceResponse+JSONResponse.h"
+#import "MBProgressHUD.h"
 
 @interface ProfileViewController ()
 
@@ -43,7 +44,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+
     [self updateViews];
 }
 
@@ -81,7 +82,7 @@
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/devices" method:@"GET"];
     [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
         self.getTokenSpinner.hidden = YES;
-        
+
         if (response && response.statusCode < 300) {
             [self displayJSONResponse:[response JSONResponse]];
         } else {
@@ -110,12 +111,22 @@
 {
     if (self.changePinController)
         return;
-
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.changePinController = [ChangePinController
         changePinControllerWithNavigationController:self.navigationController
                                          completion:^{
+                                             [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                              self.changePinController = nil;
                                          }];
+
+    __weak typeof(self) weakSelf = self;
+    self.changePinController.progressStateDidChange = ^(BOOL isInProgress) {
+        if (isInProgress) {
+            [MBProgressHUD showHUDAddedTo:weakSelf.navigationController.view animated:YES];
+        } else {
+            [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+        }
+    };
     [[ONGUserClient sharedInstance] changePin:self.changePinController];
 }
 
@@ -193,7 +204,7 @@
 {
     TextViewController *controller = [TextViewController new];
     controller.text = [JSONResponse description];
-    
+
     [self presentViewController:controller animated:YES completion:NULL];
 }
 

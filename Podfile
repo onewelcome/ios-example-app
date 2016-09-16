@@ -3,4 +3,5 @@
 
 target 'OneginiExampleApp' do
   pod 'ZFDragableModalTransition', '~> 0.6'
+  pod 'MBProgressHUD', '~> 1.0.0'
 end

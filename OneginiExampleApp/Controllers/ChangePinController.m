@@ -68,6 +68,10 @@
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
         [self.pinViewController showError:description];
     }
+
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 /**
@@ -91,12 +95,18 @@
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofCreatePinChallenge:challenge];
         [self.pinViewController showError:description];
     }
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didChangePinForUser:(ONGUserProfile *)userProfile
 {
     [self.navigationController popViewControllerAnimated:YES];
     self.completion();
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToChangePinForUser:(ONGUserProfile *)userProfile error:(NSError *)error
@@ -116,6 +126,10 @@
     [self showError:error];
 
     self.completion();
+
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)showError:(NSError *)error

@@ -43,6 +43,10 @@
     ProfileViewController *viewController = [ProfileViewController new];
     [self.navigationController pushViewController:viewController animated:YES];
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
@@ -64,6 +68,10 @@
     [self showError:error];
 
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
@@ -73,7 +81,11 @@
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.profile = challenge.userProfile;
 
+    __weak typeof(self) weakSelf = self;
     self.pinViewController.pinEntered = ^(NSString *pin) {
+        if (self.progressStateDidChange != nil) {
+            weakSelf.progressStateDidChange(YES);
+        }
         [challenge.sender respondWithPin:pin challenge:challenge];
     };
 
@@ -87,6 +99,10 @@
         // Please read the comments written in the PinErrorMapper class to understand the intent of this class and how errors can be handled.
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
         [self.pinViewController showError:description];
+    }
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
     }
 }
 

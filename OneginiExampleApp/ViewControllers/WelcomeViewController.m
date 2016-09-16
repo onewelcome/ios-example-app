@@ -19,6 +19,7 @@
 #import "RegistrationController.h"
 #import "UIAlertController+Shortcut.h"
 #import "ONGResourceResponse+JSONResponse.h"
+#import "MBProgressHUD.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -57,6 +58,7 @@
     if (self.authenticationController || self.registrationController)
         return;
 
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.registrationController = [RegistrationController
         registrationControllerWithNavigationController:self.navigationController
                                             completion:^{
@@ -84,12 +86,23 @@
     if (self.authenticationController || self.registrationController)
         return;
 
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     ONGUserProfile *selectedUserProfile = [self selectedProfile];
     self.authenticationController = [AuthenticationController
         authenticationControllerWithNavigationController:self.navigationController
                                               completion:^{
+                                                  [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                                   self.authenticationController = nil;
                                               }];
+    __weak typeof(self) weakSelf = self;
+    self.authenticationController.progressStateDidChange = ^(BOOL isInProgress) {
+        if (isInProgress) {
+            [MBProgressHUD showHUDAddedTo:weakSelf.navigationController.view animated:YES];
+        } else {
+            [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+        }
+    };
+
     [[ONGUserClient sharedInstance] authenticateUser:selectedUserProfile delegate:self.authenticationController];
 }
 

@@ -19,6 +19,8 @@
 
 @interface AuthenticationController : NSObject<ONGAuthenticationDelegate>
 
+@property (nonatomic, copy) void (^progressStateDidChange)(BOOL);
+
 + (instancetype)authenticationControllerWithNavigationController:(UINavigationController *)navigationController
                                                       completion:(void (^)())completion;
 

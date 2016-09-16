@@ -6,7 +6,9 @@
 
 @interface MobileAuthenticationController : NSObject<ONGMobileAuthenticationRequestDelegate>
 
-+ (instancetype)mobileAuthentiactionControllerWithNaviationController:(UINavigationController *)navigationController
+@property (nonatomic) void (^didDismiss)(void);
+
++ (instancetype)mobileAuthenticationControllerWithNaviationController:(UINavigationController *)navigationController
                                                            completion:(void (^)())completion;
 
 @end

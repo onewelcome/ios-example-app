@@ -15,7 +15,7 @@
 
 @implementation MobileAuthenticationController
 
-+ (instancetype)mobileAuthentiactionControllerWithNaviationController:(UINavigationController *)navigationController
++ (instancetype)mobileAuthenticationControllerWithNaviationController:(UINavigationController *)navigationController
                                                            completion:(void (^)())completion
 {
     MobileAuthenticationController *mobileAuthenticationController = [MobileAuthenticationController new];
@@ -32,6 +32,9 @@
     pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push - %@", request.userProfile.profileId];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [self.navigationController popViewControllerAnimated:YES];
+        if (self.didDismiss != nil) {
+            self.didDismiss();
+        }
         confirmation(confirmed);
     };
     [self.navigationController pushViewController:pushVC animated:YES];
@@ -106,6 +109,11 @@
         // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
         // the user is starting up the app for the first time.
         [self.navigationController popToRootViewControllerAnimated:YES];
+        
+        if (self.didDismiss != nil) {
+            self.didDismiss();
+        }
+        
     } else if (error.code == ONGMobileAuthenticationRequestErrorNotFound) {
         // For some reason the mobile authentication request cannot be found on the Token Server anymore. This can happen if a push notification
         // was delivered with a huge delay and a mobile authentication request was already removed from the Token Server because it expired.

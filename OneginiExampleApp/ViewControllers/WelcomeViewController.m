@@ -3,6 +3,7 @@
 #import "WelcomeViewController.h"
 #import "AuthenticationController.h"
 #import "RegistrationController.h"
+#import "AppDelegate.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
 

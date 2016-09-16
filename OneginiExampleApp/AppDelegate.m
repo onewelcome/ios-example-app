@@ -3,6 +3,7 @@
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
 #import "MobileAuthenticationController.h"
+#import "AuthenticationOperation.h"
 
 @interface AppDelegate ()
 
@@ -98,21 +99,10 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    if (self.mobileAuthenticationController)
-        return;
-
-    self.mobileAuthenticationController = [MobileAuthenticationController
-        mobileAuthentiactionControllerWithNaviationController:(UINavigationController *)self.window.rootViewController
-                                                   completion:^{
-                                                       self.mobileAuthenticationController = nil;
-                                                   }];
-
-    // todo: anyway code above will be rewritten. Do not delete comment below :)
-
-    // Developer needs to be aware that push notifications sometime can be delivered nearly simultaneously.
-    // Therefore it is not recommended to share single delegate for all of the incoming mobile authentication requests,
-    // since previous request may be in the middle of authentication process (i.e. not finished).
-    [[ONGUserClient sharedInstance] handleMobileAuthenticationRequest:userInfo delegate:self.mobileAuthenticationController];
+    AuthenticationOperation *operation = [[AuthenticationOperation alloc] initWithNavigationController:(UINavigationController *)self.window.rootViewController
+                                                                                          notification:userInfo];
+    
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 @end

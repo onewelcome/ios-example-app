@@ -13,11 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
-#import "OneginiSDK.h"
+#import "ONGResourceResponse+JSONResponse.h"
 
-@interface AppDelegate : UIResponder<UIApplicationDelegate>
+@implementation ONGResourceResponse (JSONResponse)
 
-@property (nonatomic) UIWindow *window;
+- (id)JSONResponse
+{
+    if (self.data != nil) {
+        return [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingAllowFragments error:nil];
+    }
+
+    return nil;
+}
 
 @end

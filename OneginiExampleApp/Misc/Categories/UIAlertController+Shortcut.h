@@ -14,10 +14,9 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "OneginiSDK.h"
 
-@interface AppDelegate : UIResponder<UIApplicationDelegate>
+@interface UIAlertController (Shortcut)
 
-@property (nonatomic) UIWindow *window;
++ (instancetype)controllerWithTitle:(NSString *)title message:(NSString *)message completion:(void (^)(void))completion;
 
 @end

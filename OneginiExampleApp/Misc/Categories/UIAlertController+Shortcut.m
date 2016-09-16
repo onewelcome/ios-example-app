@@ -13,11 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
-#import "OneginiSDK.h"
+#import "UIAlertController+Shortcut.h"
 
-@interface AppDelegate : UIResponder<UIApplicationDelegate>
+@implementation UIAlertController (Shortcut)
 
-@property (nonatomic) UIWindow *window;
++ (instancetype)controllerWithTitle:(NSString *)title message:(NSString *)message completion:(void (^)(void))completion
+{
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+
+    [controller addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_) {
+        if (completion) {
+            completion();
+        }
+    }]];
+
+    return controller;
+}
 
 @end

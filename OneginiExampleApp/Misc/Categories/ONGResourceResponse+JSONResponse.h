@@ -13,11 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <UIKit/UIKit.h>
-#import "OneginiSDK.h"
+#import <Foundation/Foundation.h>
 
-@interface AppDelegate : UIResponder<UIApplicationDelegate>
+#import "ONGResourceResponse.h"
 
-@property (nonatomic) UIWindow *window;
+@interface ONGResourceResponse (JSONResponse)
+
+/// Return JSON decoded response (if any). This property is not stored and therefore not recommended to call in cycles.
+- (id)JSONResponse;
 
 @end

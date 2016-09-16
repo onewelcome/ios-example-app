@@ -12,7 +12,7 @@ The iOS Example App is using the Onegini iOS SDK to perform secure authenticatio
 5. download the latest 5.x version of the OneginiSDK, e.g.: `libOneginiSDKiOS-5.00.00.a` + headers file. They should be bundled as well in a zip file. 
 
 ### Adding Onegini iOS SDK to Example App
-1. Copy libOneginiSDKiOS-5.xx.xx.a binary and Headers folder to ./OneginiDemoApp/OneginiSDK folder. This path is relative to the project file.
+1. Copy libOneginiSDKiOS-5.xx.xx.a binary and Headers folder to ./OneginiExampleApp/OneginiSDK folder. This path is relative to the project file.
 2. In Xcode, make sure the binary and headers are added to the `Framework/OneginiSDK` group. If not, add them.
 
 ## Providing token server configuration

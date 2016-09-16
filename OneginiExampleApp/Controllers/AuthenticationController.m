@@ -1,4 +1,17 @@
-//  Copyright © 2016 Onegini. All rights reserved.
+//
+// Copyright (c) 2016 Onegini. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import "AuthenticationController.h"
 #import "PinViewController.h"
@@ -30,6 +43,10 @@
     ProfileViewController *viewController = [ProfileViewController new];
     [self.navigationController pushViewController:viewController animated:YES];
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
@@ -51,6 +68,10 @@
     [self showError:error];
 
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
@@ -60,7 +81,11 @@
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.profile = challenge.userProfile;
 
+    __weak typeof(self) weakSelf = self;
     self.pinViewController.pinEntered = ^(NSString *pin) {
+        if (self.progressStateDidChange != nil) {
+            weakSelf.progressStateDidChange(YES);
+        }
         [challenge.sender respondWithPin:pin challenge:challenge];
     };
 
@@ -74,6 +99,10 @@
         // Please read the comments written in the PinErrorMapper class to understand the intent of this class and how errors can be handled.
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
         [self.pinViewController showError:description];
+    }
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
     }
 }
 

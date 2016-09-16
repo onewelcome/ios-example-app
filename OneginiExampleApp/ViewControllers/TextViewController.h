@@ -14,10 +14,12 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-#import "OneginiSDK.h"
 
-@interface AppDelegate : UIResponder<UIApplicationDelegate>
+@interface TextViewController : UIViewController
 
-@property (nonatomic) UIWindow *window;
+@property (nonatomic, copy) NSString *text;
+
+// Invoked on controller's completion. If NULL and is presented - invoking "dismissViewController" automatically
+@property (nonatomic) void (^completion)(TextViewController *sender);
 
 @end

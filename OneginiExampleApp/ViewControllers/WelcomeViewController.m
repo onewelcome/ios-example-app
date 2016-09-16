@@ -62,7 +62,6 @@
     self.registrationController = [RegistrationController
         registrationControllerWithNavigationController:self.navigationController
                                             completion:^{
-                                                [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                                 self.registrationController = nil;
                                             }];
     [[ONGUserClient sharedInstance] registerUser:@[@"read"] delegate:self.registrationController];

@@ -119,7 +119,6 @@
     self.pinViewController.profile = challenge.userProfile;
 
     self.pinViewController.pinEntered = ^(NSString *pin) {
-        [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         [challenge.sender respondWithCreatedPin:pin challenge:challenge];
     };
 
@@ -130,8 +129,6 @@
     }
 
     if (challenge.error) {
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-
         // Please read comments for the PinErrorMapper to understand intent of this class and how errors can be handled.
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofCreatePinChallenge:challenge];
         [self.pinViewController showError:description];

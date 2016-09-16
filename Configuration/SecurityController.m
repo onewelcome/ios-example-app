@@ -1,5 +1,3 @@
-//  Copyright (c) 2016 Onegini. All rights reserved.
-
 #import "SecurityController.h"
 
 @implementation SecurityController

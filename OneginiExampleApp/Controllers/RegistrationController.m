@@ -64,32 +64,32 @@
 
         // The device could not be registered with the Token Server, verify that the SDK configuration, Token Server configuration and security features are correctly configured
         case ONGRegistrationErrorDeviceRegistrationFailure:
-        // A possible security issue was detected during User Registration.
+            // A possible security issue was detected during User Registration.
         case ONGRegistrationErrorInvalidState:
             // display an error to the user, hide registration UI, etc
             break;
 
-        // Generic errors
-        // In case the user has cancelled the PIN challenge, the cancellation error will be reported. This error can be ignored.
+            // Generic errors
+            // In case the user has cancelled the PIN challenge, the cancellation error will be reported. This error can be ignored.
         case ONGGenericErrorActionCancelled:
             break;
 
-        // Undefined error occurred
+            // Undefined error occurred
         case ONGGenericErrorUnknown:
 
-        // Typical network errors
+            // Typical network errors
         case ONGGenericErrorNetworkConnectivityFailure:
         case ONGGenericErrorServerNotReachable:
 
-        // This error should not happen in the Production because it means that the configuration is invalid and / or server has proxy.
-        // Developer will most likely face with such errors during development itself.
+            // This error should not happen in the Production because it means that the configuration is invalid and / or server has proxy.
+            // Developer will most likely face with such errors during development itself.
         case ONGGenericErrorRequestInvalid:
 
-        // The user trying to perform registration, but previous registration is not finished yet.
+            // The user trying to perform registration, but previous registration is not finished yet.
         case ONGGenericErrorActionAlreadyInProgress:
 
-        // You typical won't face the ONGGenericErrorOutdatedApplication and ONGGenericErrorOutdatedOS during PIN change.
-        // However it is potentially possible, so we need to handle them as well.
+            // You typical won't face the ONGGenericErrorOutdatedApplication and ONGGenericErrorOutdatedOS during PIN change.
+            // However it is potentially possible, so we need to handle them as well.
         case ONGGenericErrorOutdatedApplication:
         case ONGGenericErrorOutdatedOS:
 

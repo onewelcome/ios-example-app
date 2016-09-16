@@ -68,7 +68,7 @@
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
         [self.pinViewController showError:description];
     }
-    
+
     if (self.progressStateDidChange != nil) {
         self.progressStateDidChange(NO);
     }
@@ -126,7 +126,7 @@
     [self showError:error];
 
     self.completion();
-    
+
     if (self.progressStateDidChange != nil) {
         self.progressStateDidChange(NO);
     }

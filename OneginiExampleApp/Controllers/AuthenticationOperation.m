@@ -21,13 +21,15 @@
 
 @implementation AuthenticationOperation: NSOperation
 
-- (void)setCompleted:(BOOL)completed {
+- (void)setCompleted:(BOOL)completed
+{
     [self willChangeValueForKey:@"finished"];
     _completed = completed;
     [self didChangeValueForKey:@"finished"];
 }
 
-- (BOOL)isFinished {
+- (BOOL)isFinished
+{
     return _completed;
 }
 

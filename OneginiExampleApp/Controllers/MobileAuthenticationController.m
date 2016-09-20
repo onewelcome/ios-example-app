@@ -4,13 +4,25 @@
 #import "ONGUserClient.h"
 #import "MobileAuthenticationOperation.h"
 
+@interface MobileAuthenticationController ()
+
+@property (nonatomic) NSOperationQueue *executionQueue;
+
+@end
+
 @implementation MobileAuthenticationController {
 }
-- (instancetype)initWithNavigationController:(UINavigationController *)navigationController
+- (instancetype)initWithUserClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController
 {
     self = [super init];
     if (self) {
         _navigationController = navigationController;
+        _userClient = userClient;
+
+        _executionQueue = [[NSOperationQueue alloc] init];
+        // We want to execute our mobile authentication requests as soon as possible
+        self.executionQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+        self.executionQueue.maxConcurrentOperationCount = 1;
     }
 
     return self;
@@ -18,28 +30,16 @@
 
 - (BOOL)handleMobileAuthenticationRequest:(NSDictionary *)userInfo
 {
-
-
-
-
-//    AuthenticationOperation *operation = [[AuthenticationOperation alloc] initWithNavigationController:(UINavigationController *)self.window.rootViewController
-//                                                                                          notification:userInfo];
-//
-//    [[NSOperationQueue mainQueue] addOperation:operation];
-
-
-
-    MobileAuthenticationOperation *delegate = [MobileAuthenticationOperation mobileAuthenticationControllerWithNaviationController:self.navigationController completion:^{
-        // throwing away delegate from the storage
-    }];
-
-    BOOL handled =  [[ONGUserClient sharedInstance] handleMobileAuthenticationRequest:userInfo delegate:delegate];
-
-    if (handled) {
-        // store delegate
+    if (![self.userClient canHandleMobileAuthenticationRequest:userInfo]) {
+        return NO;
     }
 
-    return handled;
+    MobileAuthenticationOperation *operation = [[MobileAuthenticationOperation alloc] initWithUserInfo:userInfo
+                                                                                            userClient:self.userClient
+                                                                                  navigationController:self.navigationController];
+    [self.executionQueue addOperation:operation];
+
+    return YES;
 }
 
 @end

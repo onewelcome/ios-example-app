@@ -17,11 +17,12 @@
 #import <UIKit/UIKit.h>
 #import "OneginiSDK.h"
 
-@interface MobileAuthenticationOperation : NSObject<ONGMobileAuthenticationRequestDelegate>
+@interface MobileAuthenticationOperation : NSOperation <ONGMobileAuthenticationRequestDelegate>
 
-@property (nonatomic) void (^didDismiss)(void);
+@property (nonatomic, readonly) ONGUserClient *userClient;
+@property (nonatomic, readonly) UINavigationController *navigationController;
+@property (nonatomic, readonly) NSDictionary *userInfo;
 
-+ (instancetype)mobileAuthenticationControllerWithNaviationController:(UINavigationController *)navigationController
-                                                           completion:(void (^)())completion;
+- (instancetype)initWithUserInfo:(NSDictionary *)userInfo userClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController;
 
 @end

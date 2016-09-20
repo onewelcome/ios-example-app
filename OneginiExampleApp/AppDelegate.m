@@ -54,8 +54,6 @@
 
 - (void)startOneginiClient
 {
-    self.mobileAuthenticationController = [[MobileAuthenticationController alloc] initWithNavigationController:self.rootNavigationController];
-
     // Before we can use SDK it needs to be build first
     [[ONGClientBuilder new] build];
 
@@ -85,6 +83,9 @@
             }
         }
     }];
+
+    ONGUserClient *userClient = [ONGUserClient sharedInstance];
+    self.mobileAuthenticationController = [[MobileAuthenticationController alloc] initWithUserClient:userClient navigationController:self.rootNavigationController];
 }
 
 - (void)registerForPushMessages

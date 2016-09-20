@@ -18,45 +18,9 @@
 #import "PushConfirmationViewController.h"
 #import "PinErrorMapper.h"
 
-typedef NS_ENUM(NSInteger, MobileAuthenticationOperationState) {
-    MobileAuthenticationOperationStateReady,
-    MobileAuthenticationOperationStateExecuting,
-    MobileAuthenticationOperationStateFinished
-};
-
-NSString * MobileAuthenticationOperationStateToKeyPath(MobileAuthenticationOperationState state)
-{
-    switch (state) {
-        case MobileAuthenticationOperationStateReady: return @"ready";
-        case MobileAuthenticationOperationStateExecuting: return @"executing";
-        case MobileAuthenticationOperationStateFinished: return @"finished";
-
-        default:
-            return nil;
-    }
-};
-
-BOOL MobileAuthenticationOperationStateTransitionValid(MobileAuthenticationOperationState from, MobileAuthenticationOperationState to)
-{
-    // we're ignoring ability to be cancelled in this example
-    switch (from) {
-        case MobileAuthenticationOperationStateReady:
-            return to == MobileAuthenticationOperationStateExecuting;
-
-        case MobileAuthenticationOperationStateExecuting:
-            return to == MobileAuthenticationOperationStateFinished;
-
-        default:
-            return NO;
-    }
-}
-
 @interface MobileAuthenticationOperation ()
 
 @property (nonatomic) PinViewController *pinViewController;
-@property (nonatomic) MobileAuthenticationOperationState state;
-@property (nonatomic) NSLock *stateLock;
-
 @end
 
 @implementation MobileAuthenticationOperation
@@ -71,12 +35,19 @@ BOOL MobileAuthenticationOperationStateTransitionValid(MobileAuthenticationOpera
         _userInfo = userInfo;
         _userClient = userClient;
         _navigationController = navigationController;
-
-        _state = MobileAuthenticationOperationStateReady;
-        self.stateLock = [NSLock new];
     }
 
     return self;
+}
+
+#pragma mark - Execution
+
+- (void)executionStarted
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.pinViewController = [[PinViewController alloc] init];
+        [self.userClient handleMobileAuthenticationRequest:self.userInfo delegate:self];
+    });
 }
 
 #pragma mark - ONGMobileAuthenticationRequestDelegate
@@ -173,65 +144,6 @@ BOOL MobileAuthenticationOperationStateTransitionValid(MobileAuthenticationOpera
     }
 
     [self finish];
-}
-
-#pragma mark - NSOperation Machinery
-
-- (BOOL)isAsynchronous
-{
-    return YES;
-}
-
-- (BOOL)isReady
-{
-    return self.state == MobileAuthenticationOperationStateReady && [super isReady];
-}
-
-- (BOOL)isExecuting
-{
-    return self.state == MobileAuthenticationOperationStateExecuting;
-}
-
-- (BOOL)isFinished
-{
-    return self.state == MobileAuthenticationOperationStateFinished;
-}
-
-- (void)start
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.state = MobileAuthenticationOperationStateExecuting;
-        self.pinViewController = [[PinViewController alloc] init];
-
-        [self.userClient handleMobileAuthenticationRequest:self.userInfo delegate:self];
-    });
-}
-
-- (void)finish
-{
-    self.state = MobileAuthenticationOperationStateFinished;
-}
-
-#pragma mark - State Handling
-
-- (void)setState:(MobileAuthenticationOperationState)state
-{
-    [self.stateLock lock];
-
-    if (MobileAuthenticationOperationStateTransitionValid(_state, state)) {
-        NSString *fromStateKeyPath = MobileAuthenticationOperationStateToKeyPath(_state);
-        NSString *toStateKeyPath = MobileAuthenticationOperationStateToKeyPath(state);
-
-        [self willChangeValueForKey:fromStateKeyPath];
-        [self willChangeValueForKey:toStateKeyPath];
-
-        _state = state;
-
-        [self didChangeValueForKey:fromStateKeyPath];
-        [self didChangeValueForKey:toStateKeyPath];
-    }
-
-    [self.stateLock unlock];
 }
 
 @end

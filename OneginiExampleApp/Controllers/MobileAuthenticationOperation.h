@@ -13,11 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "OneginiSDK.h"
+#import "StateOperation.h"
 
-@interface MobileAuthenticationOperation : NSOperation <ONGMobileAuthenticationRequestDelegate>
+@interface MobileAuthenticationOperation : StateOperation <ONGMobileAuthenticationRequestDelegate>
 
 @property (nonatomic, readonly) ONGUserClient *userClient;
 @property (nonatomic, readonly) UINavigationController *navigationController;

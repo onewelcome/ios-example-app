@@ -11,7 +11,9 @@
 		1D6A3512499A1433115A382D /* UIAlertController+Shortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3D3023D96D2645797915 /* UIAlertController+Shortcut.m */; };
 		1D6A370A308FE89704C3198C /* UIAlertController+Shortcut.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A3F17A5FD85B52B51CBFB /* UIAlertController+Shortcut.h */; };
 		1D6A3790481B45EC7F9ADAB4 /* ONGResourceResponse+JSONResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A37EEF488F40336008921 /* ONGResourceResponse+JSONResponse.h */; };
+		1D6A3A242F9FB92F594D2ABB /* StateOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A325C250ECD6166818ACA /* StateOperation.h */; };
 		1D6A3BB7068B5D6A6CF579D7 /* ONGResourceResponse+JSONResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3EC9D950AE2FC0E556EE /* ONGResourceResponse+JSONResponse.m */; };
+		1D6A3C1B408210BA5A90DF0B /* StateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A390EC2572C6F5C316B72 /* StateOperation.m */; };
 		1D6A3DC90D7E0D5F2C95C863 /* PinErrorMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A328D53DDF3417A35EF62 /* PinErrorMapper.h */; };
 		1D6A3E01431EBCBEEEC9A661 /* MobileAuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3A01FC6B36F977ED0550 /* MobileAuthenticationController.m */; };
 		1D6A3E32BC3EB7E9A7DAE958 /* PinErrorMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3C9CCA5F6762E3538711 /* PinErrorMapper.m */; };
@@ -124,8 +126,10 @@
 /* Begin PBXFileReference section */
 		0F8C250D7FB81F5D5ACD924D /* libPods-OneginiExampleApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneginiExampleApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D6A30141D26397C275BF3F6 /* MobileAuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileAuthenticationController.h; sourceTree = "<group>"; };
+		1D6A325C250ECD6166818ACA /* StateOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateOperation.h; sourceTree = "<group>"; };
 		1D6A328D53DDF3417A35EF62 /* PinErrorMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinErrorMapper.h; sourceTree = "<group>"; };
 		1D6A37EEF488F40336008921 /* ONGResourceResponse+JSONResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ONGResourceResponse+JSONResponse.h"; sourceTree = "<group>"; };
+		1D6A390EC2572C6F5C316B72 /* StateOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateOperation.m; sourceTree = "<group>"; };
 		1D6A3A01FC6B36F977ED0550 /* MobileAuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileAuthenticationController.m; sourceTree = "<group>"; };
 		1D6A3C9CCA5F6762E3538711 /* PinErrorMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinErrorMapper.m; sourceTree = "<group>"; };
 		1D6A3D3023D96D2645797915 /* UIAlertController+Shortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Shortcut.m"; sourceTree = "<group>"; };
@@ -283,6 +287,8 @@
 				1D6A33CE3DD0EDE4540C5B39 /* Categories */,
 				1D6A328D53DDF3417A35EF62 /* PinErrorMapper.h */,
 				1D6A3C9CCA5F6762E3538711 /* PinErrorMapper.m */,
+				1D6A390EC2572C6F5C316B72 /* StateOperation.m */,
+				1D6A325C250ECD6166818ACA /* StateOperation.h */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -545,6 +551,7 @@
 				68AD2FD987BE5EC75B668D4B /* ONGDeregistrationDelegate.h in Headers */,
 				1D6A3DC90D7E0D5F2C95C863 /* PinErrorMapper.h in Headers */,
 				1D6A34737F8550A2964B249B /* MobileAuthenticationController.h in Headers */,
+				1D6A3A242F9FB92F594D2ABB /* StateOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -697,6 +704,7 @@
 				1D6A3512499A1433115A382D /* UIAlertController+Shortcut.m in Sources */,
 				1D6A3E32BC3EB7E9A7DAE958 /* PinErrorMapper.m in Sources */,
 				1D6A3E01431EBCBEEEC9A661 /* MobileAuthenticationController.m in Sources */,
+				1D6A3C1B408210BA5A90DF0B /* StateOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

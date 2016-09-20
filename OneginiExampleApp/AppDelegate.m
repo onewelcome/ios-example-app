@@ -16,8 +16,6 @@
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
 
-#import "AuthenticationOperation.h"
-#import "MobileAuthenticationOperation.h"
 #import "MobileAuthenticationController.h"
 
 @interface AppDelegate ()

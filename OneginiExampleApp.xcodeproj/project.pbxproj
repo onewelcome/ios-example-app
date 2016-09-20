@@ -196,6 +196,7 @@
 		ADADD40B1D895D8900A52736 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
 		ADADD40C1D895D8900A52736 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
 		ADADD40D1D895D8900A52736 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
+		ADB7FCAA1D9171C500D128A8 /* OneginiExampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneginiExampleApp.entitlements; sourceTree = "<group>"; };
 		ADEC3AD71D884D7E0009234A /* OneginiSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiSDK.h; sourceTree = "<group>"; };
 		ADEC3AD81D884D7E0009234A /* ONGAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGAuthenticationDelegate.h; sourceTree = "<group>"; };
 		ADEC3AD91D884D7E0009234A /* ONGAuthenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGAuthenticator.h; sourceTree = "<group>"; };
@@ -406,6 +407,7 @@
 		C572A2D91CD893C400B137DC /* OneginiExampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				ADB7FCAA1D9171C500D128A8 /* OneginiExampleApp.entitlements */,
 				C5A29A751CDCE78F00E6B1D4 /* Models */,
 				C5A29A5F1CDCA55900E6B1D4 /* Controllers */,
 				C54139881CD9D3010033DBA8 /* ViewControllers */,
@@ -591,6 +593,12 @@
 				TargetAttributes = {
 					C572A2D61CD893C400B137DC = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 47G5S528XM;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -798,6 +806,8 @@
 			baseConfigurationReference = 8F110FB687139430D79AEAD0 /* Pods-OneginiExampleApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OneginiExampleApp/OneginiExampleApp.entitlements;
+				DEVELOPMENT_TEAM = 47G5S528XM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = OneginiExampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -821,6 +831,8 @@
 			baseConfigurationReference = 3ACFD9054DC70E31931FBE1A /* Pods-OneginiExampleApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OneginiExampleApp/OneginiExampleApp.entitlements;
+				DEVELOPMENT_TEAM = 47G5S528XM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = OneginiExampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

@@ -11,9 +11,9 @@ typedef NS_ENUM(NSInteger, OperationState) {
 NSString * OperationStateToKeyPath(OperationState state)
 {
     switch (state) {
-        case OperationStateReady: return @"ready";
-        case OperationStateExecuting: return @"executing";
-        case OperationStateFinished: return @"finished";
+        case OperationStateReady: return @"isReady";
+        case OperationStateExecuting: return @"isExecuting";
+        case OperationStateFinished: return @"isFinished";
 
         default:
             return nil;

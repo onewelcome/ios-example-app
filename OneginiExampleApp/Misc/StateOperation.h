@@ -2,6 +2,8 @@
 
 #import <Foundation/Foundation.h>
 
+// Simple successor of NSOperation that handles state-related KVO notications as well as providing handy methods and
+// operation's lifetime notifications such as `executionStarted`. 
 @interface StateOperation : NSOperation
 
 - (void)finish;

@@ -19,9 +19,16 @@
         _navigationController = navigationController;
         _userClient = userClient;
 
+        // SDK can not be called from any background queue, however it is generally a bad idea to reuse shared [NSOperationQueue mainQueue]
+        // because we have no control over it and therefore can not guarantee that every mobile request will be handled.
         _executionQueue = [[NSOperationQueue alloc] init];
+        self.executionQueue.name = [NSString stringWithFormat:@"%@.%@.executionQueue", [NSBundle mainBundle].bundleIdentifier, NSStringFromClass([self class])];
+        
         // We want to execute our mobile authentication requests as soon as possible
         self.executionQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+        
+        // There shouldn't be more than one mobile authentication request handled at a time.
+        // Otherwise two requests may start modifying UI stack leading to a quite unexpected behaviour for the User.
         self.executionQueue.maxConcurrentOperationCount = 1;
     }
 
@@ -30,6 +37,9 @@
 
 - (BOOL)handleMobileAuthenticationRequest:(NSDictionary *)userInfo
 {
+    // It is easier to implement queue of delayed `-[ONGUserClient handleMobileAuthenticationRequest:delegate:]` invocations
+    // rather than handling UI elements queuing. Because of this we're ensuring that the given `userInfo` is a valid Onegini's
+    // mobile authentication request and delaying actual handling by wrapping it into a NSOperation-based class.
     if (![self.userClient canHandleMobileAuthenticationRequest:userInfo]) {
         return NO;
     }

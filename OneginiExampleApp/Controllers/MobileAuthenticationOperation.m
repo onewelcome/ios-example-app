@@ -44,6 +44,8 @@
 
 - (void)executionStarted
 {
+    // This method is going to be invoked from the background queue, so we need move execution to the main.
+    // Result of calling the SDK from the background thread is undefined.
     dispatch_async(dispatch_get_main_queue(), ^{
         self.pinViewController = [[PinViewController alloc] init];
         [self.userClient handleMobileAuthenticationRequest:self.userInfo delegate:self];
@@ -122,6 +124,7 @@
 
 - (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request
 {
+    // Once SDK reported that the `request` has been handled we need to finish our operation and free-up queue.
     [self finish];
 }
 
@@ -143,6 +146,7 @@
         // authentication request was cancelled. You can also ignore it if you are not interested in this.
     }
 
+    // Once SDK reported that the `request` has been handled we need to finish our operation and free-up queue.
     [self finish];
 }
 

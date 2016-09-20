@@ -7,12 +7,12 @@
 //
 
 #import "AuthenticationOperation.h"
-#import "MobileAuthenticationController.h"
+#import "MobileAuthenticationOperation.h"
 #import "OneginiSDK.h"
 
 @interface AuthenticationOperation ()
 
-@property (nonatomic) MobileAuthenticationController *mobileAuthenticationController;
+@property (nonatomic) MobileAuthenticationOperation *mobileAuthenticationController;
 @property (nonatomic) UINavigationController *navigationController;
 @property (nonatomic, copy) NSDictionary *userInfo;
 @property (nonatomic, getter = isCompleted) BOOL completed;
@@ -46,7 +46,7 @@
 
 - (void)main
 {
-    self.mobileAuthenticationController = [MobileAuthenticationController mobileAuthenticationControllerWithNaviationController:self.navigationController
+    self.mobileAuthenticationController = [MobileAuthenticationOperation mobileAuthenticationControllerWithNaviationController:self.navigationController
                                            completion:^{
                                                [self setCompleted:YES];
                                                self.mobileAuthenticationController = nil;

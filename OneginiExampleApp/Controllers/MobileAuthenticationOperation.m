@@ -13,12 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MobileAuthenticationController.h"
+#import "MobileAuthenticationOperation.h"
 #import "PinViewController.h"
 #import "PushConfirmationViewController.h"
 #import "PinErrorMapper.h"
 
-@interface MobileAuthenticationController ()
+@interface MobileAuthenticationOperation ()
 
 @property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic) UINavigationController *navigationController;
@@ -26,12 +26,12 @@
 
 @end
 
-@implementation MobileAuthenticationController
+@implementation MobileAuthenticationOperation
 
 + (instancetype)mobileAuthenticationControllerWithNaviationController:(UINavigationController *)navigationController
                                                            completion:(void (^)())completion
 {
-    MobileAuthenticationController *mobileAuthenticationController = [MobileAuthenticationController new];
+    MobileAuthenticationOperation *mobileAuthenticationController = [MobileAuthenticationOperation new];
     mobileAuthenticationController.navigationController = navigationController;
     mobileAuthenticationController.completion = completion;
     mobileAuthenticationController.pinViewController = [PinViewController new];
@@ -67,7 +67,7 @@
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.pinLength = 5;
     self.pinViewController.customTitle = [NSString stringWithFormat:@"Push with pin - %@", challenge.userProfile.profileId];
-    __weak MobileAuthenticationController *weakSelf = self;
+    __weak MobileAuthenticationOperation *weakSelf = self;
 
     self.pinViewController.pinEntered = ^(NSString *pin) {
         [weakSelf.navigationController popViewControllerAnimated:YES];

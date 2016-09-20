@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 #import "OneginiSDK.h"
 
-@interface MobileAuthenticationController : NSObject<ONGMobileAuthenticationRequestDelegate>
+@interface MobileAuthenticationOperation : NSObject<ONGMobileAuthenticationRequestDelegate>
 
 @property (nonatomic) void (^didDismiss)(void);
 

@@ -15,11 +15,14 @@
 
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
-#import "MobileAuthenticationController.h"
+
 #import "AuthenticationOperation.h"
+#import "MobileAuthenticationOperation.h"
+#import "MobileAuthenticationController.h"
 
 @interface AppDelegate ()
 
+@property (nonatomic) UINavigationController *rootNavigationController;
 @property (nonatomic) MobileAuthenticationController *mobileAuthenticationController;
 
 @end
@@ -42,14 +45,17 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor lightGrayColor];
 
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[WelcomeViewController new]];
-    navigationController.navigationBarHidden = YES;
-    self.window.rootViewController = navigationController;
+    self.rootNavigationController = [[UINavigationController alloc] initWithRootViewController:[WelcomeViewController new]];
+    self.rootNavigationController.navigationBarHidden = YES;
+
+    self.window.rootViewController = self.rootNavigationController;
     [self.window makeKeyAndVisible];
 }
 
 - (void)startOneginiClient
 {
+    self.mobileAuthenticationController = [[MobileAuthenticationController alloc] initWithNavigationController:self.rootNavigationController];
+
     // Before we can use SDK it needs to be build first
     [[ONGClientBuilder new] build];
 
@@ -112,10 +118,10 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    AuthenticationOperation *operation = [[AuthenticationOperation alloc] initWithNavigationController:(UINavigationController *)self.window.rootViewController
-                                                                                          notification:userInfo];
-    
-    [[NSOperationQueue mainQueue] addOperation:operation];
+    BOOL handled = [self.mobileAuthenticationController handleMobileAuthenticationRequest:userInfo];
+    if (!handled) {
+        // pass it to the next service (FireBase, Facebook, etc).
+    }
 }
 
 @end

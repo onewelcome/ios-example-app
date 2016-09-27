@@ -18,7 +18,7 @@
 #import "FingerprintController.h"
 #import "ChangePinController.h"
 #import "TextViewController.h"
-#import "Setting/SettingsViewController.h"
+#import "SettingsViewController.h"
 
 #import "ONGResourceResponse+JSONResponse.h"
 #import "MBProgressHUD.h"
@@ -147,7 +147,8 @@
 
 - (IBAction)presentSettings:(id)sender
 {
-    SettingsViewController *settings = [[SettingsViewController alloc] init];
+    NSString *identifier = NSStringFromClass([SettingsViewController class]);
+    SettingsViewController *settings = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:identifier];
     [self.navigationController pushViewController:settings animated:YES];
 }
 

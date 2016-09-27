@@ -18,6 +18,7 @@
 #import "FingerprintController.h"
 #import "ChangePinController.h"
 #import "TextViewController.h"
+#import "SettingsViewController.h"
 
 #import "ONGResourceResponse+JSONResponse.h"
 #import "MBProgressHUD.h"
@@ -33,6 +34,8 @@
 @end
 
 @implementation ProfileViewController
+
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
@@ -56,6 +59,8 @@
         [self.fingerprintButton setTitle:@"Enroll for fingerprint authentication" forState:UIControlStateNormal];
     }
 }
+
+#pragma mark - IBAction
 
 - (IBAction)logout:(id)sender
 {
@@ -139,6 +144,14 @@
     }
     [self updateViews];
 }
+
+- (IBAction)presentSettings:(id)sender
+{
+    SettingsViewController *settings = [[SettingsViewController alloc] init];
+    [self.navigationController pushViewController:settings animated:YES];
+}
+
+#pragma mark - Logic
 
 - (void)registerFingerprint
 {

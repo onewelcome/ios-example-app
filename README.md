@@ -15,6 +15,10 @@ The iOS Example App is using the Onegini iOS SDK to perform secure authenticatio
 1. Copy libOneginiSDKiOS-5.xx.xx.a binary and Headers folder to ./OneginiExampleApp/OneginiSDK folder. This path is relative to the project file.
 2. In Xcode, make sure the binary and headers are added to the `Framework/OneginiSDK` group. If not, add them.
 
+### Setup the Cocoapods dependencies
+1. Run `pod install` to correctly setup the Cocoapods dependencies
+2. Make sure that you open the project referring to `OneginiExampleApp.xcworkspace` in Xcode or AppCode.
+
 ## Providing token server configuration
 The example app is already configured with the token server out of the box. 
 

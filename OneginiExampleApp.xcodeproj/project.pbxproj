@@ -31,6 +31,9 @@
 		5CAE98C61CE0DEF8009C1D1A /* OneginiConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */; };
 		5CD187431CEDA5B8001FD062 /* MobileAuthenticationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */; };
 		5CD187441CEDA5B8001FD062 /* MobileAuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD187421CEDA5B8001FD062 /* MobileAuthenticationController.m */; };
+		AD2EB3D71D9A7BA900C7DC0F /* SettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2EB3D41D9A7BA900C7DC0F /* SettingsViewController.h */; };
+		AD2EB3D81D9A7BA900C7DC0F /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD2EB3D51D9A7BA900C7DC0F /* SettingsViewController.m */; };
+		AD2EB3D91D9A7BA900C7DC0F /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2EB3D61D9A7BA900C7DC0F /* SettingsViewController.xib */; };
 		ADADD40E1D895D8900A52736 /* TextViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = ADADD40B1D895D8900A52736 /* TextViewController.h */; };
 		ADADD40F1D895D8900A52736 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADADD40C1D895D8900A52736 /* TextViewController.m */; };
 		ADADD4101D895D8900A52736 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADADD40D1D895D8900A52736 /* TextViewController.xib */; };
@@ -108,6 +111,9 @@
 		5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileAuthenticationController.h; sourceTree = "<group>"; };
 		5CD187421CEDA5B8001FD062 /* MobileAuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileAuthenticationController.m; sourceTree = "<group>"; };
 		8F110FB687139430D79AEAD0 /* Pods-OneginiExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneginiExampleApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneginiExampleApp/Pods-OneginiExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
+		AD2EB3D41D9A7BA900C7DC0F /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		AD2EB3D51D9A7BA900C7DC0F /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		AD2EB3D61D9A7BA900C7DC0F /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		ADADD40B1D895D8900A52736 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
 		ADADD40C1D895D8900A52736 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
 		ADADD40D1D895D8900A52736 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
@@ -279,6 +285,9 @@
 				5C8A03B11CDFA7C2007ADA14 /* WebBrowserViewController.m */,
 				5C8A03B21CDFA7C2007ADA14 /* WebBrowserViewController.xib */,
 				5C3CA14D1D11E29A00F00C05 /* PushConfirmationViewController.h */,
+				AD2EB3D41D9A7BA900C7DC0F /* SettingsViewController.h */,
+				AD2EB3D51D9A7BA900C7DC0F /* SettingsViewController.m */,
+				AD2EB3D61D9A7BA900C7DC0F /* SettingsViewController.xib */,
 				ADADD40B1D895D8900A52736 /* TextViewController.h */,
 				ADADD40C1D895D8900A52736 /* TextViewController.m */,
 				ADADD40D1D895D8900A52736 /* TextViewController.xib */,
@@ -394,6 +403,7 @@
 				ADEC3AF01D884D7E0009234A /* ONGAuthenticator.h in Headers */,
 				ADEC3AF81D884D7E0009234A /* ONGFingerprintChallenge.h in Headers */,
 				ADEC3AF51D884D7E0009234A /* ONGCreatePinChallenge.h in Headers */,
+				AD2EB3D71D9A7BA900C7DC0F /* SettingsViewController.h in Headers */,
 				ADEC3AFE1D884D7E0009234A /* ONGPublicDefines.h in Headers */,
 				ADEC3AEF1D884D7E0009234A /* ONGAuthenticationDelegate.h in Headers */,
 				ADEC3AF41D884D7E0009234A /* ONGConfigModel.h in Headers */,
@@ -485,6 +495,7 @@
 				5C8A03BF1CDFB36F007ADA14 /* PinViewController.xib in Resources */,
 				FE4DA5D3D36E8E9BCF56FAFC /* tokenserver-demo-test.onegini.com.cer in Resources */,
 				5C3CA1521D11E2B900F00C05 /* PushConfirmationViewController.xib in Resources */,
+				AD2EB3D91D9A7BA900C7DC0F /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,6 +561,7 @@
 				5C3CA15C1D13E56100F00C05 /* ChangePinController.m in Sources */,
 				5C3CA1501D11E29A00F00C05 /* PushConfirmationViewController.m in Sources */,
 				5CAE98C61CE0DEF8009C1D1A /* OneginiConfigModel.m in Sources */,
+				AD2EB3D81D9A7BA900C7DC0F /* SettingsViewController.m in Sources */,
 				C5A29A781CDCE78F00E6B1D4 /* Profile.m in Sources */,
 				B47ADC3F1D644F24006DA9D1 /* SecurityController.m in Sources */,
 				5C8A03B31CDFA7C2007ADA14 /* WebBrowserViewController.m in Sources */,

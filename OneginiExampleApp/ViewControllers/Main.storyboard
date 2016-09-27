@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Settings-->
+        <scene sceneID="2xr-KU-NMI">
+            <objects>
+                <tableViewController storyboardIdentifier="Settings" id="fxE-ti-bV6" customClass="SettingsViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="28" sectionFooterHeight="28" id="2Cu-sH-xRR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="70" id="kQq-Mc-djp" customClass="AuthenticatorCellTableViewCell">
+                                <rect key="frame" x="0.0" y="92" width="375" height="70"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kQq-Mc-djp" id="ddq-9j-HSE">
+                                    <frame key="frameInset" width="375" height="69"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sKJ-08-g3J" userLabel="Name Label">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="preferred" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qhz-i8-EK6" userLabel="Preferred Label">
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lno-Jc-5wr">
+                                            <connections>
+                                                <action selector="switchAuthenticatorRegistration:" destination="kQq-Mc-djp" eventType="valueChanged" id="daK-ly-2kn"/>
+                                            </connections>
+                                        </switch>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="Qhz-i8-EK6" secondAttribute="bottom" constant="4" id="1Pe-eU-eLx"/>
+                                        <constraint firstItem="sKJ-08-g3J" firstAttribute="centerY" secondItem="ddq-9j-HSE" secondAttribute="centerY" id="3hZ-p4-550"/>
+                                        <constraint firstItem="Lno-Jc-5wr" firstAttribute="centerY" secondItem="ddq-9j-HSE" secondAttribute="centerY" id="fhb-Hv-IaI"/>
+                                        <constraint firstItem="Qhz-i8-EK6" firstAttribute="leading" secondItem="ddq-9j-HSE" secondAttribute="leadingMargin" id="jcp-T6-Vfr"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Lno-Jc-5wr" secondAttribute="trailing" id="n8N-L0-r71"/>
+                                        <constraint firstItem="sKJ-08-g3J" firstAttribute="leading" secondItem="ddq-9j-HSE" secondAttribute="leadingMargin" id="vnl-W2-Ekr"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="sKJ-08-g3J" id="sMr-qf-087"/>
+                                    <outlet property="preferredLabel" destination="Qhz-i8-EK6" id="DFq-od-Xq7"/>
+                                    <outlet property="stateSwitch" destination="Lno-Jc-5wr" id="GUQ-vm-SLK"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="fxE-ti-bV6" id="v1b-Nk-z1B"/>
+                            <outlet property="delegate" destination="fxE-ti-bV6" id="lGW-Fk-Sfu"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Select Preferred" id="gWS-4h-2No">
+                            <connections>
+                                <action selector="selectPreferredAuthenticator:" destination="fxE-ti-bV6" id="5YB-nJ-qvm"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Settings" id="o7e-68-8Pb"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SrZ-Kv-mnG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="100" y="172.26386806596702"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="qhp-1T-id5">
+            <objects>
+                <navigationController id="Ki4-bs-HYN" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FP7-ZL-yw1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="fxE-ti-bV6" kind="relationship" relationship="rootViewController" id="8UA-si-RNa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qCO-Ge-vtt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-852" y="173"/>
+        </scene>
+    </scenes>
+</document>

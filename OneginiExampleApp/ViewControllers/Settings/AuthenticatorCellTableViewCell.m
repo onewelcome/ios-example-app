@@ -13,6 +13,13 @@
 
 @implementation AuthenticatorCellTableViewCell
 
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+
+    self.didChangeAuthenticatorSelectionState = nil;
+}
+
 - (void)apply:(ONGAuthenticator *)authenticator
 {
     self.nameLabel.text = authenticator.name;

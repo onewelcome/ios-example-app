@@ -15,10 +15,117 @@
 
 #import "SettingsViewController.h"
 
+#import "OneginiSDK.h"
+#import <MBProgressHUD/MBProgressHUD.h>
+
+#import "AuthenticationController.h"
+#import "AuthenticatorCellTableViewCell.h"
+#import "UIAlertController+Shortcut.h"
+
 @interface SettingsViewController ()
+
+@property (nonatomic) ONGUserClient *userClient;
+@property (nonatomic) ONGUserProfile *userProfile;
+@property (nonatomic, copy) NSArray<ONGAuthenticator *> *authenticators;
+
+@property (nonatomic) AuthenticationController *authenticationController;
 
 @end
 
 @implementation SettingsViewController
+
+#pragma mark - View Lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.userClient = [ONGUserClient sharedInstance];
+    self.userProfile = [self.userClient authenticatedUserProfile];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(invokeDataReload:) forControlEvents:UIControlEventValueChanged];
+}
+
+#pragma mark - Logic
+
+- (void)reloadData
+{
+    NSArray *sortDescriptors = @[
+        [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(type)) ascending:YES],
+        [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(name)) ascending:YES]
+    ];
+    
+    self.authenticators = [[self.userClient allAuthenticatorsForUser:self.userProfile] sortedArrayUsingDescriptors:sortDescriptors];
+}
+
+- (void)registerAuthenticator:(ONGAuthenticator *)authenticator
+{
+    self.authenticationController = [AuthenticationController authenticationControllerWithNavigationController:self.navigationController completion:^{
+        self.authenticationController = nil;
+    }];
+
+    [self.userClient registerAuthenticator:authenticator delegate:self.authenticationController];
+}
+
+- (void)deregisterAuthenticator:(ONGAuthenticator *)authenticator
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [self.userClient deregisterAuthenticator:authenticator completion:^(BOOL deregistered, NSError *error) {
+        [hud hideAnimated:YES];
+
+        [self reloadData];
+
+        if (error != nil) {
+            UIAlertController *controller = [UIAlertController controllerWithTitle:@"Failed to deregistered" message:error.localizedDescription completion:nil];
+            [self presentViewController:controller animated:YES completion:nil];
+        }
+    }];
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.authenticators.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *identifier = NSStringFromClass([AuthenticatorCellTableViewCell class]);
+    AuthenticatorCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    [cell apply:self.authenticators[indexPath.row]];
+
+    __weak typeof(self) weakSelf = self;
+    [cell setDidChangeAuthenticatorSelectionState:^(AuthenticatorCellTableViewCell *sender, BOOL selected) {
+        __strong typeof(self) self = weakSelf;
+        if (!self) {
+            return;
+        }
+
+        ONGAuthenticator *authenticator = self.authenticators[[self.tableView indexPathForCell:sender].row];
+        if (selected && !authenticator.registered) {
+            [self registerAuthenticator:authenticator];
+        } else if (!selected && authenticator.registered) {
+            [self deregisterAuthenticator:authenticator];
+        }
+    }];
+    
+    return cell;
+}
+
+#pragma mark - Actions
+
+- (void)invokeDataReload:(UIRefreshControl *)sender
+{
+    [sender endRefreshing];
+    [self reloadData];
+}
+
+- (IBAction)selectPreferredAuthenticator:(id)sender
+{
+    
+}
 
 @end

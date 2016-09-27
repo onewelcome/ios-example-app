@@ -14,7 +14,6 @@
 		1D6A359A4BBC2A98FE047F04 /* AuthenticatorCellTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A39EABD811550F0DED8A7 /* AuthenticatorCellTableViewCell.h */; };
 		1D6A370A308FE89704C3198C /* UIAlertController+Shortcut.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A3F17A5FD85B52B51CBFB /* UIAlertController+Shortcut.h */; };
 		1D6A3790481B45EC7F9ADAB4 /* ONGResourceResponse+JSONResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A37EEF488F40336008921 /* ONGResourceResponse+JSONResponse.h */; };
-		1D6A3A4B584ECEBA4E476BD7 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D6A3B6BCAE7719B0F6D2850 /* SettingsViewController.xib */; };
 		1D6A3BB7068B5D6A6CF579D7 /* ONGResourceResponse+JSONResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3EC9D950AE2FC0E556EE /* ONGResourceResponse+JSONResponse.m */; };
 		1D6A3C21101996CC9DBA06E7 /* SettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A3AE1650D83B8D6BFDA44 /* SettingsViewController.h */; };
 		1D6A3DC90D7E0D5F2C95C863 /* PinErrorMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A328D53DDF3417A35EF62 /* PinErrorMapper.h */; };
@@ -92,7 +91,6 @@
 		1D6A37EEF488F40336008921 /* ONGResourceResponse+JSONResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ONGResourceResponse+JSONResponse.h"; sourceTree = "<group>"; };
 		1D6A39EABD811550F0DED8A7 /* AuthenticatorCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticatorCellTableViewCell.h; sourceTree = "<group>"; };
 		1D6A3AE1650D83B8D6BFDA44 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		1D6A3B6BCAE7719B0F6D2850 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		1D6A3C9CCA5F6762E3538711 /* PinErrorMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinErrorMapper.m; sourceTree = "<group>"; };
 		1D6A3D3023D96D2645797915 /* UIAlertController+Shortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Shortcut.m"; sourceTree = "<group>"; };
 		1D6A3EC9D950AE2FC0E556EE /* ONGResourceResponse+JSONResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ONGResourceResponse+JSONResponse.m"; sourceTree = "<group>"; };
@@ -206,7 +204,6 @@
 			children = (
 				1D6A3AE1650D83B8D6BFDA44 /* SettingsViewController.h */,
 				1D6A3782F8020A9DBEBEDB7C /* SettingsViewController.m */,
-				1D6A3B6BCAE7719B0F6D2850 /* SettingsViewController.xib */,
 				1D6A39EABD811550F0DED8A7 /* AuthenticatorCellTableViewCell.h */,
 				1D6A3345966787F81FC4101C /* AuthenticatorCellTableViewCell.m */,
 			);
@@ -513,7 +510,6 @@
 				5C8A03BF1CDFB36F007ADA14 /* PinViewController.xib in Resources */,
 				FE4DA5D3D36E8E9BCF56FAFC /* tokenserver-demo-test.onegini.com.cer in Resources */,
 				5C3CA1521D11E2B900F00C05 /* PushConfirmationViewController.xib in Resources */,
-				1D6A3A4B584ECEBA4E476BD7 /* SettingsViewController.xib in Resources */,
 				1D6A31DF745C10BCD7425126 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

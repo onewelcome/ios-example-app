@@ -21,6 +21,7 @@
 #import "AuthenticationController.h"
 #import "AuthenticatorCellTableViewCell.h"
 #import "UIAlertController+Shortcut.h"
+#import "FingerprintController.h"
 
 @interface SettingsViewController ()
 
@@ -28,7 +29,7 @@
 @property (nonatomic) ONGUserProfile *userProfile;
 @property (nonatomic, copy) NSArray<ONGAuthenticator *> *authenticators;
 
-@property (nonatomic) AuthenticationController *authenticationController;
+@property (nonatomic) FingerprintController *authenticationController;
 
 @end
 
@@ -69,20 +70,28 @@
 
 - (void)reloadData
 {
+    NSSet<ONGAuthenticator *> *allAuthenticators = [self.userClient allAuthenticatorsForUser:self.userProfile];
+    self.authenticators = [self sortedAuthentictors:allAuthenticators];
+    [self.tableView reloadData];
+}
+
+- (NSArray<ONGAuthenticator *> *)sortedAuthentictors:(NSSet<ONGAuthenticator *> *)authenticators
+{
     NSArray *sortDescriptors = @[
         [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(type)) ascending:YES],
         [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(name)) ascending:YES]
     ];
-    
-    self.authenticators = [[self.userClient allAuthenticatorsForUser:self.userProfile] sortedArrayUsingDescriptors:sortDescriptors];
+
+    return [authenticators sortedArrayUsingDescriptors:sortDescriptors];
 }
 
 - (void)registerAuthenticator:(ONGAuthenticator *)authenticator
 {
-    self.authenticationController = [AuthenticationController authenticationControllerWithNavigationController:self.navigationController completion:^{
+    self.authenticationController = [FingerprintController fingerprintControllerWithNavigationController:self.navigationController completion:^{
         self.authenticationController = nil;
+        
+        [self reloadData];
     }];
-
     [self.userClient registerAuthenticator:authenticator delegate:self.authenticationController];
 }
 
@@ -133,6 +142,17 @@
     return cell;
 }
 
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ONGAuthenticator *authenticator = self.authenticators[indexPath.row];
+    if (!authenticator.preferred && authenticator.registered) {
+        [self.userClient setPreferredAuthenticator:authenticator];
+        [self reloadData];
+    }
+}
+
 #pragma mark - Actions
 
 - (void)invokeDataReload:(UIRefreshControl *)sender
@@ -143,7 +163,15 @@
 
 - (IBAction)selectPreferredAuthenticator:(id)sender
 {
-    
+    NSArray<ONGAuthenticator *> *authenticators = [self sortedAuthentictors:[self.userClient registeredAuthenticatorsForUser:self.userProfile]];
+    UIAlertController *controller = [UIAlertController authenticatorSelectionController:authenticators completion:^(NSInteger index, BOOL cancelled) {
+        if (!cancelled) {
+            [self.userClient setPreferredAuthenticator:authenticators[index]];
+            [self reloadData];
+        }
+    }];
+
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 @end

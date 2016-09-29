@@ -22,6 +22,7 @@
 
 #import "ONGResourceResponse+JSONResponse.h"
 #import "MBProgressHUD.h"
+#import "UIBarButtonItem+Extension.h"
 
 @interface ProfileViewController ()
 
@@ -41,6 +42,7 @@
 {
     [super viewDidLoad];
 
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
     self.getTokenSpinner.hidden = YES;
 }
 

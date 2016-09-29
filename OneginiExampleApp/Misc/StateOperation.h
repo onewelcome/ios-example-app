@@ -14,5 +14,6 @@
 
 // For simplicity of example app we do not implement other lifecycle events such as cancellation, finishing, etc.
 - (void)executionStarted;
+- (void)executionFinished;
 
 @end

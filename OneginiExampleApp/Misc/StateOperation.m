@@ -39,7 +39,7 @@ BOOL OperationStateTransitionValid(OperationState from, OperationState to)
 @interface StateOperation ()
 
 @property (nonatomic) OperationState state;
-@property (nonatomic) NSLock *stateLock;
+@property (nonatomic) NSRecursiveLock *stateLock;
 
 @end
 
@@ -53,7 +53,7 @@ BOOL OperationStateTransitionValid(OperationState from, OperationState to)
     if (self) {
         _state = OperationStateReady;
 
-        self.stateLock = [NSLock new];
+        self.stateLock = [NSRecursiveLock new];
     }
 
     return self;
@@ -91,7 +91,20 @@ BOOL OperationStateTransitionValid(OperationState from, OperationState to)
 
 - (void)finish
 {
-    self.state = OperationStateFinished;
+    BOOL finished = NO;
+    
+    [self.stateLock lock];
+    
+    if (self.state != OperationStateFinished) {
+        self.state = OperationStateFinished;
+        finished = YES;
+    }
+    
+    [self.stateLock unlock];
+    
+    if (finished) {
+        [self executionFinished];
+    }
 }
 
 #pragma mark - State Handling
@@ -121,6 +134,11 @@ BOOL OperationStateTransitionValid(OperationState from, OperationState to)
 @implementation StateOperation (Subclassing)
 
 - (void)executionStarted
+{
+    // no-op
+}
+
+- (void)executionFinished
 {
     // no-op
 }

@@ -42,12 +42,14 @@
     self.window.backgroundColor = [UIColor lightGrayColor];
 
     UINavigationController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
-    [controller.navigationBar setBackgroundImage:[UIImage imageNamed:@"background"] forBarMetrics:UIBarMetricsDefault];
+
+    UIImage *background = [UIImage imageNamed:@"background"];
+    [controller.navigationBar setBackgroundImage:background forBarMetrics:UIBarMetricsDefault];
     [controller.navigationBar setTintColor:[UIColor whiteColor]];
-    //controller.viewControllers = @[[WelcomeViewController new]];
+    [controller.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    [controller.toolbar setBackgroundImage:background forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+    [controller.toolbar setTintColor:[UIColor whiteColor]];
     
-//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:];
-//    controller.navigationBarHidden = YES;
     self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];
 }

@@ -17,10 +17,15 @@
 #import "PinViewController.h"
 #import "PushConfirmationViewController.h"
 #import "PinErrorMapper.h"
+#import "ZFModalTransitionAnimator.h"
 
 @interface MobileAuthenticationOperation ()
 
 @property (nonatomic) PinViewController *pinViewController;
+@property (nonatomic) UIViewController *preservedViewController;
+
+@property (nonatomic) BOOL preparedForPresentation;
+
 @end
 
 @implementation MobileAuthenticationOperation
@@ -52,6 +57,32 @@
     });
 }
 
+- (void)executionFinished
+{
+    if (self.preservedViewController) {
+        [self.navigationController presentViewController:self.preservedViewController animated:YES completion:nil];
+    }
+}
+
+/// There might be an active alert (or any other controller) presented on the top of the screen. We need to preserve it somehow.
+/// You also might want to add new transparent UIWindow on top and present your confirmation completely independently from the
+/// current UI state.
+- (void)performSafeConfirmationPresentation:(void (^)(void))presentation
+{
+    if (self.preparedForPresentation) {
+        presentation();
+    } else {
+        self.preparedForPresentation = YES;
+
+        if (self.navigationController.presentedViewController) {
+            self.preservedViewController = self.navigationController.presentedViewController;
+            [self.navigationController dismissViewControllerAnimated:YES completion:presentation];
+        } else {
+            presentation();
+        }
+    }
+}
+
 #pragma mark - ONGMobileAuthenticationRequestDelegate
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveConfirmationChallenge:(void (^)(BOOL confirmRequest))confirmation forRequest:(ONGMobileAuthenticationRequest *)request
@@ -64,7 +95,10 @@
         confirmation(confirmed);
     };
 
-    [self.navigationController pushViewController:pushVC animated:YES];
+    [self performSafeConfirmationPresentation:^{
+        [self.navigationController pushViewController:pushVC animated:YES];
+    }];
+
 }
 
 /**
@@ -88,17 +122,19 @@
         [challenge.sender respondWithPin:pin challenge:challenge];
     };
 
-    // It is up to the developer to decide when and how to show PIN entry view controller.
-    // For simplicity of the example app we're checking the top-most view controller.
-    if (![self.navigationController.topViewController isEqual:self.pinViewController]) {
-        [self.navigationController pushViewController:self.pinViewController animated:YES];
-    }
+    [self performSafeConfirmationPresentation:^{
+        // It is up to the developer to decide when and how to show PIN entry view controller.
+        // For simplicity of the example app we're checking the top-most view controller.
+        if (![self.navigationController.topViewController isEqual:self.pinViewController]) {
+            [self.navigationController pushViewController:self.pinViewController animated:YES];
+        }
 
-    if (challenge.error) {
-        // Please read comments for the PinErrorMapper to understand intent of this class and how errors can be handled.
-        NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
-        [self.pinViewController showError:description];
-    }
+        if (challenge.error) {
+            // Please read comments for the PinErrorMapper to understand intent of this class and how errors can be handled.
+            NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
+            [self.pinViewController showError:description];
+        }
+    }];
 }
 
 /**
@@ -112,6 +148,7 @@
     pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint - %@", request.userProfile.profileId];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [self.navigationController popViewControllerAnimated:YES];
+        
         if (confirmed){
             [challenge.sender respondWithDefaultPromptForChallenge:challenge];
         } else {
@@ -119,7 +156,9 @@
         }
     };
 
-    [self.navigationController pushViewController:pushVC animated:YES];
+    [self performSafeConfirmationPresentation:^{
+        [self.navigationController pushViewController:pushVC animated:YES];
+    }];
 }
 
 - (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request

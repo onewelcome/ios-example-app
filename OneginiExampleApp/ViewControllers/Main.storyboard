@@ -79,12 +79,16 @@
         <scene sceneID="qhp-1T-id5">
             <objects>
                 <navigationController id="Ki4-bs-HYN" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FP7-ZL-yw1">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FP7-ZL-yw1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.0" green="0.60784313729999995" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="DAi-uA-UpQ">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qCO-Ge-vtt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

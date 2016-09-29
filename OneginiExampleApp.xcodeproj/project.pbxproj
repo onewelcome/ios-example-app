@@ -11,7 +11,9 @@
 		1D6A3311B607A0A88951B5EC /* AuthenticatorCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3345966787F81FC4101C /* AuthenticatorCellTableViewCell.m */; };
 		1D6A3512499A1433115A382D /* UIAlertController+Shortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3D3023D96D2645797915 /* UIAlertController+Shortcut.m */; };
 		1D6A3562C58CF7B77806C78C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3782F8020A9DBEBEDB7C /* SettingsViewController.m */; };
+		1D6A35682A8137EEEE658FB4 /* UIBarButtonItem+Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A3E861288599BD7CFFD5C /* UIBarButtonItem+Extension.h */; };
 		1D6A359A4BBC2A98FE047F04 /* AuthenticatorCellTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A39EABD811550F0DED8A7 /* AuthenticatorCellTableViewCell.h */; };
+		1D6A36022E8C01D0DFBD8982 /* UIBarButtonItem+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3152B017C5D23CB7F135 /* UIBarButtonItem+Extension.m */; };
 		1D6A370A308FE89704C3198C /* UIAlertController+Shortcut.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A3F17A5FD85B52B51CBFB /* UIAlertController+Shortcut.h */; };
 		1D6A3790481B45EC7F9ADAB4 /* ONGResourceResponse+JSONResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A37EEF488F40336008921 /* ONGResourceResponse+JSONResponse.h */; };
 		1D6A3BB7068B5D6A6CF579D7 /* ONGResourceResponse+JSONResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3EC9D950AE2FC0E556EE /* ONGResourceResponse+JSONResponse.m */; };
@@ -84,6 +86,7 @@
 
 /* Begin PBXFileReference section */
 		0F8C250D7FB81F5D5ACD924D /* libPods-OneginiExampleApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneginiExampleApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6A3152B017C5D23CB7F135 /* UIBarButtonItem+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Extension.m"; sourceTree = "<group>"; };
 		1D6A328D53DDF3417A35EF62 /* PinErrorMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinErrorMapper.h; sourceTree = "<group>"; };
 		1D6A3345966787F81FC4101C /* AuthenticatorCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticatorCellTableViewCell.m; sourceTree = "<group>"; };
 		1D6A360A7B25D794A1103737 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -93,6 +96,7 @@
 		1D6A3AE1650D83B8D6BFDA44 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1D6A3C9CCA5F6762E3538711 /* PinErrorMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinErrorMapper.m; sourceTree = "<group>"; };
 		1D6A3D3023D96D2645797915 /* UIAlertController+Shortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Shortcut.m"; sourceTree = "<group>"; };
+		1D6A3E861288599BD7CFFD5C /* UIBarButtonItem+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Extension.h"; sourceTree = "<group>"; };
 		1D6A3EC9D950AE2FC0E556EE /* ONGResourceResponse+JSONResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ONGResourceResponse+JSONResponse.m"; sourceTree = "<group>"; };
 		1D6A3F17A5FD85B52B51CBFB /* UIAlertController+Shortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Shortcut.h"; sourceTree = "<group>"; };
 		3ACFD9054DC70E31931FBE1A /* Pods-OneginiExampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneginiExampleApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneginiExampleApp/Pods-OneginiExampleApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 				1D6A37EEF488F40336008921 /* ONGResourceResponse+JSONResponse.h */,
 				1D6A3D3023D96D2645797915 /* UIAlertController+Shortcut.m */,
 				1D6A3F17A5FD85B52B51CBFB /* UIAlertController+Shortcut.h */,
+				1D6A3152B017C5D23CB7F135 /* UIBarButtonItem+Extension.m */,
+				1D6A3E861288599BD7CFFD5C /* UIBarButtonItem+Extension.h */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -436,6 +442,7 @@
 				1D6A3DC90D7E0D5F2C95C863 /* PinErrorMapper.h in Headers */,
 				1D6A3C21101996CC9DBA06E7 /* SettingsViewController.h in Headers */,
 				1D6A359A4BBC2A98FE047F04 /* AuthenticatorCellTableViewCell.h in Headers */,
+				1D6A35682A8137EEEE658FB4 /* UIBarButtonItem+Extension.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +482,7 @@
 				TargetAttributes = {
 					C572A2D61CD893C400B137DC = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 47G5S528XM;
 					};
 				};
 			};
@@ -590,6 +598,7 @@
 				1D6A3E32BC3EB7E9A7DAE958 /* PinErrorMapper.m in Sources */,
 				1D6A3562C58CF7B77806C78C /* SettingsViewController.m in Sources */,
 				1D6A3311B607A0A88951B5EC /* AuthenticatorCellTableViewCell.m in Sources */,
+				1D6A36022E8C01D0DFBD8982 /* UIBarButtonItem+Extension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,7 +696,7 @@
 			baseConfigurationReference = 8F110FB687139430D79AEAD0 /* Pods-OneginiExampleApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 47G5S528XM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = OneginiExampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -711,7 +720,7 @@
 			baseConfigurationReference = 3ACFD9054DC70E31931FBE1A /* Pods-OneginiExampleApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 47G5S528XM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = OneginiExampleApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

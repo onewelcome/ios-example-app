@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
 #import "MobileAuthenticationController.h"
+#import "NavigationControllerAppearance.h"
 
 @interface AppDelegate ()
 
@@ -42,14 +43,8 @@
     self.window.backgroundColor = [UIColor lightGrayColor];
 
     UINavigationController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+    [NavigationControllerAppearance apply:controller];
 
-    UIImage *background = [UIImage imageNamed:@"background"];
-    [controller.navigationBar setBackgroundImage:background forBarMetrics:UIBarMetricsDefault];
-    [controller.navigationBar setTintColor:[UIColor whiteColor]];
-    [controller.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-    [controller.toolbar setBackgroundImage:background forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
-    [controller.toolbar setTintColor:[UIColor whiteColor]];
-    
     self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];
 }

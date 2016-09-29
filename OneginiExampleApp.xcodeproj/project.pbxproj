@@ -28,7 +28,6 @@
 		5C3CA1521D11E2B900F00C05 /* PushConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C3CA1511D11E2B900F00C05 /* PushConfirmationViewController.xib */; };
 		5C3CA15C1D13E56100F00C05 /* ChangePinController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3CA15A1D13E56100F00C05 /* ChangePinController.m */; };
 		5C7745211D998285004BBCFE /* ChangePinController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C3CA1591D13E56100F00C05 /* ChangePinController.h */; };
-		5C8A03AD1CDE90AE007ADA14 /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A03AC1CDE90AE007ADA14 /* WelcomeViewController.xib */; };
 		5C8A03B31CDFA7C2007ADA14 /* WebBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A03B11CDFA7C2007ADA14 /* WebBrowserViewController.m */; };
 		5C8A03B41CDFA7C2007ADA14 /* WebBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C8A03B21CDFA7C2007ADA14 /* WebBrowserViewController.xib */; };
 		5C8A03BE1CDFB36F007ADA14 /* PinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8A03BC1CDFB36F007ADA14 /* PinViewController.m */; };
@@ -109,7 +108,6 @@
 		5C3CA1511D11E2B900F00C05 /* PushConfirmationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PushConfirmationViewController.xib; sourceTree = "<group>"; };
 		5C3CA1591D13E56100F00C05 /* ChangePinController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePinController.h; sourceTree = "<group>"; };
 		5C3CA15A1D13E56100F00C05 /* ChangePinController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePinController.m; sourceTree = "<group>"; };
-		5C8A03AC1CDE90AE007ADA14 /* WelcomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeViewController.xib; sourceTree = "<group>"; };
 		5C8A03B01CDFA7C2007ADA14 /* WebBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebBrowserViewController.h; sourceTree = "<group>"; };
 		5C8A03B11CDFA7C2007ADA14 /* WebBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebBrowserViewController.m; sourceTree = "<group>"; };
 		5C8A03B21CDFA7C2007ADA14 /* WebBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebBrowserViewController.xib; sourceTree = "<group>"; };
@@ -295,7 +293,6 @@
 				5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */,
 				C54139891CD9D3010033DBA8 /* WelcomeViewController.h */,
 				C541398A1CD9D3010033DBA8 /* WelcomeViewController.m */,
-				5C8A03AC1CDE90AE007ADA14 /* WelcomeViewController.xib */,
 				5C8A03BB1CDFB36F007ADA14 /* PinViewController.h */,
 				5C8A03BC1CDFB36F007ADA14 /* PinViewController.m */,
 				5C8A03BD1CDFB36F007ADA14 /* PinViewController.xib */,
@@ -513,7 +510,6 @@
 				C572A2E71CD893C400B137DC /* Assets.xcassets in Resources */,
 				C502CAAA1CDB62B600FB18E7 /* ProfileViewController.xib in Resources */,
 				5CAE98B01CE0929C009C1D1A /* LaunchScreen.xib in Resources */,
-				5C8A03AD1CDE90AE007ADA14 /* WelcomeViewController.xib in Resources */,
 				5C8A03B41CDFA7C2007ADA14 /* WebBrowserViewController.xib in Resources */,
 				5C8A03BF1CDFB36F007ADA14 /* PinViewController.xib in Resources */,
 				FE4DA5D3D36E8E9BCF56FAFC /* tokenserver-demo-test.onegini.com.cer in Resources */,

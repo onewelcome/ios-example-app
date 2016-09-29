@@ -41,9 +41,14 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor lightGrayColor];
 
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[WelcomeViewController new]];
-    navigationController.navigationBarHidden = YES;
-    self.window.rootViewController = navigationController;
+    UINavigationController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+    [controller.navigationBar setBackgroundImage:[UIImage imageNamed:@"background"] forBarMetrics:UIBarMetricsDefault];
+    [controller.navigationBar setTintColor:[UIColor whiteColor]];
+    //controller.viewControllers = @[[WelcomeViewController new]];
+    
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:];
+//    controller.navigationBarHidden = YES;
+    self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];
 }
 

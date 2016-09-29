@@ -20,6 +20,7 @@
 #import "UIAlertController+Shortcut.h"
 #import "ONGResourceResponse+JSONResponse.h"
 #import "MBProgressHUD.h"
+#import "UIBarButtonItem+Extension.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -37,20 +38,20 @@
 
 @implementation WelcomeViewController
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
+    self.appInfoLabel.hidden = YES;
+
+    [self authenticateDeviceAndFetchResource];
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
     [self.profilePicker reloadAllComponents];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    self.appInfoLabel.hidden = YES;
-
-    [self authenticateDeviceAndFetchResource];
 }
 
 - (IBAction)registerNewProfile:(id)sender

@@ -16,7 +16,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AuthenticatorCellTableViewCell" rowHeight="70" id="kQq-Mc-djp" customClass="AuthenticatorCellTableViewCell">
-                                <rect key="frame" x="0.0" y="28" width="375" height="70"/>
+                                <rect key="frame" x="0.0" y="92" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kQq-Mc-djp" id="ddq-9j-HSE">
                                     <frame key="frameInset" width="375" height="69"/>
@@ -157,9 +157,9 @@
                             <constraint firstAttribute="trailing" secondItem="Oh7-B9-DMq" secondAttribute="trailing" id="Tbx-C3-8Ho"/>
                             <constraint firstItem="aKe-zq-tGv" firstAttribute="centerX" secondItem="3xO-6u-djg" secondAttribute="centerX" id="gqs-Xy-wZR"/>
                             <constraint firstItem="Bbl-fa-wUn" firstAttribute="centerX" secondItem="3xO-6u-djg" secondAttribute="centerX" id="ozI-Lb-iED"/>
+                            <constraint firstItem="uLH-X9-Itm" firstAttribute="top" secondItem="hmy-ZE-hX5" secondAttribute="bottom" constant="22" id="q8u-sa-gOq"/>
                             <constraint firstItem="aKe-zq-tGv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Oh7-B9-DMq" secondAttribute="bottom" id="uHa-fj-ORy"/>
                             <constraint firstItem="n5c-kq-6CA" firstAttribute="centerX" secondItem="3xO-6u-djg" secondAttribute="centerX" id="wwM-YT-Nmp"/>
-                            <constraint firstItem="uLH-X9-Itm" firstAttribute="top" secondItem="hmy-ZE-hX5" secondAttribute="bottom" constant="22" id="yAD-Rr-0ca"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="CIU-eQ-jwR"/>
@@ -178,7 +178,7 @@
         <scene sceneID="qhp-1T-id5">
             <objects>
                 <navigationController id="Ki4-bs-HYN" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="FP7-ZL-yw1">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="FP7-ZL-yw1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.0" green="0.60784313729999995" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>

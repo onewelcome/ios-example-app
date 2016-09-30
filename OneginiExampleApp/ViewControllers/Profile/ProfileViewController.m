@@ -37,6 +37,17 @@
 
 @implementation ProfileViewController
 
+#pragma mark - Init
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = @"Profile";
+    }
+    return self;
+}
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad

@@ -15,11 +15,12 @@
 
 #import "WelcomeViewController.h"
 
+#import <MBProgressHUD/MBProgressHUD.h>
+
 #import "AuthenticationController.h"
 #import "RegistrationController.h"
 #import "UIAlertController+Shortcut.h"
 #import "ONGResourceResponse+JSONResponse.h"
-#import "MBProgressHUD.h"
 #import "UIBarButtonItem+Extension.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>

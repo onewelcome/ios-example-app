@@ -15,13 +15,14 @@
 
 #import "ProfileViewController.h"
 
+#import <MBProgressHUD/MBProgressHUD.h>
+
 #import "FingerprintController.h"
 #import "ChangePinController.h"
 #import "TextViewController.h"
 #import "SettingsViewController.h"
 
 #import "ONGResourceResponse+JSONResponse.h"
-#import "MBProgressHUD.h"
 #import "UIBarButtonItem+Extension.h"
 
 @interface ProfileViewController ()

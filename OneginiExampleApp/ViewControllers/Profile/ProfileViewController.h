@@ -15,8 +15,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class ProfileViewController;
-
 @interface ProfileViewController : UIViewController
 
 - (void)updateViews;

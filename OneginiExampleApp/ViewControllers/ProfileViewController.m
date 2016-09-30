@@ -149,8 +149,7 @@
 
 - (IBAction)presentSettings:(id)sender
 {
-    NSString *identifier = NSStringFromClass([SettingsViewController class]);
-    SettingsViewController *settings = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:identifier];
+    SettingsViewController *settings = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:settings animated:YES];
 }
 

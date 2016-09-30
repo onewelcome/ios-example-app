@@ -37,16 +37,35 @@
 
 #pragma mark - View Lifecycle
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = @"Settings";
+        
+        UIBarButtonItem *selectItem = [[UIBarButtonItem alloc] initWithTitle:@"Select preferred"
+                                                                       style:UIBarButtonItemStylePlain
+                                                                      target:self
+                                                                      action:@selector(selectPreferredAuthenticator:)];
+        self.toolbarItems = @[selectItem];
+        
+        self.userClient = [ONGUserClient sharedInstance];
+        self.userProfile = [self.userClient authenticatedUserProfile];
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.userClient = [ONGUserClient sharedInstance];
-    self.userProfile = [self.userClient authenticatedUserProfile];
+    NSString *reuseID = NSStringFromClass([AuthenticatorCellTableViewCell class]);
+    [self.tableView registerNib:[UINib nibWithNibName:reuseID bundle:nil] forCellReuseIdentifier:reuseID];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(invokeDataReload:) forControlEvents:UIControlEventValueChanged];
-    
+                           
     [self reloadData];
 }
 

@@ -31,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly) ONGAuthenticatorType type;
 
+@property (nonatomic, readonly, getter=isRegistered) BOOL registered;
+@property (nonatomic, readonly, getter=isPreferred) BOOL preferred;
+
 @end
 
 NS_ASSUME_NONNULL_END

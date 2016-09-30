@@ -15,6 +15,8 @@
 
 #import "UIAlertController+Shortcut.h"
 
+#import "OneginiSDK.h"
+
 @implementation UIAlertController (Shortcut)
 
 + (instancetype)controllerWithTitle:(NSString *)title message:(NSString *)message completion:(void (^)(void))completion
@@ -27,6 +29,29 @@
         }
     }]];
 
+    return controller;
+}
+
++ (instancetype)authenticatorSelectionController:(NSArray<ONGAuthenticator *> *)authenticators completion:(void (^)(NSInteger selectedIndex, BOOL cancelled))completion
+{
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Select Preferred Authenticator"
+                                                                        message:nil
+                                                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    [authenticators enumerateObjectsUsingBlock:^(ONGAuthenticator * _Nonnull object, NSUInteger idx, BOOL * _Nonnull stop) {
+        [controller addAction:[UIAlertAction actionWithTitle:object.name style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (completion != nil) {
+                completion(idx, NO);
+            }
+        }]];
+    }];
+    
+    [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        if (completion != nil) {
+            completion(NSNotFound, YES);
+        }
+    }]];
+    
     return controller;
 }
 

@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
 #import "MobileAuthenticationController.h"
+#import "NavigationControllerAppearance.h"
 
 @interface AppDelegate ()
 
@@ -41,9 +42,11 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor lightGrayColor];
 
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[WelcomeViewController new]];
-    navigationController.navigationBarHidden = YES;
-    self.window.rootViewController = navigationController;
+    WelcomeViewController *root = [[WelcomeViewController alloc] init];
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:root];
+    [NavigationControllerAppearance apply:controller];
+
+    self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];
 }
 

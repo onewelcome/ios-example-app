@@ -14,6 +14,7 @@
 // limitations under the License.
 
 #import "PinViewController.h"
+#import "UIBarButtonItem+Extension.h"
 
 @interface PinViewController ()
 
@@ -44,6 +45,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
+
     self.pinEntry = [NSMutableArray new];
     self.pinEntryToVerify = [NSMutableArray new];
 

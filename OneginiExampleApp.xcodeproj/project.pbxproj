@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D6A31DF745C10BCD7425126 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D6A360A7B25D794A1103737 /* Main.storyboard */; };
 		1D6A31EF60D62E8CA78850EE /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3CB9F77C29BFB4E61EC5 /* ProfileViewController.m */; };
 		1D6A3311B607A0A88951B5EC /* AuthenticatorCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3345966787F81FC4101C /* AuthenticatorCellTableViewCell.m */; };
 		1D6A34A799DB9CCFF7EC4840 /* WebBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D6A3FCE4B8CCB452F56F9D2 /* WebBrowserViewController.xib */; };
@@ -102,7 +101,6 @@
 		1D6A3498F3AF95E38FAADA93 /* WebBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebBrowserViewController.m; sourceTree = "<group>"; };
 		1D6A34DB3A2EDA081D5B85CB /* TextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
 		1D6A3501CE369F617D340DEE /* PinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinViewController.m; sourceTree = "<group>"; };
-		1D6A360A7B25D794A1103737 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1D6A373DE7F6CA5789B8C6DD /* PushConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushConfirmationViewController.h; sourceTree = "<group>"; };
 		1D6A3782F8020A9DBEBEDB7C /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1D6A37EEF488F40336008921 /* ONGResourceResponse+JSONResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ONGResourceResponse+JSONResponse.h"; sourceTree = "<group>"; };
@@ -366,7 +364,6 @@
 			children = (
 				5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */,
 				1D6A35E788A1C69B144DB339 /* Settings */,
-				1D6A360A7B25D794A1103737 /* Main.storyboard */,
 				1D6A3FDCF9B8E3F5E71D2D86 /* Welcome */,
 				1D6A3240BF4EB8CE613FA7A8 /* Pin */,
 				1D6A3C1CA787A35E550E2F99 /* Profile */,
@@ -574,7 +571,6 @@
 				5CAE98B01CE0929C009C1D1A /* LaunchScreen.xib in Resources */,
 				AD2F1FD21D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib in Resources */,
 				FE4DA5D3D36E8E9BCF56FAFC /* tokenserver-demo-test.onegini.com.cer in Resources */,
-				1D6A31DF745C10BCD7425126 /* Main.storyboard in Resources */,
 				AD2F1FD41D9EABA8006A50FF /* WelcomeViewController.xib in Resources */,
 				AD2F1FD01D9EA8DD006A50FF /* SettingsViewController.xib in Resources */,
 				1D6A36C107FC4CC3FDF7ED14 /* PinViewController.xib in Resources */,

@@ -42,7 +42,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor lightGrayColor];
 
-    UINavigationController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+    WelcomeViewController *root = [[WelcomeViewController alloc] init];
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:root];
     [NavigationControllerAppearance apply:controller];
 
     self.window.rootViewController = controller;

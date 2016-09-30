@@ -15,11 +15,12 @@
 
 #import "WelcomeViewController.h"
 
+#import <MBProgressHUD/MBProgressHUD.h>
+
 #import "AuthenticationController.h"
 #import "RegistrationController.h"
 #import "UIAlertController+Shortcut.h"
 #import "ONGResourceResponse+JSONResponse.h"
-#import "MBProgressHUD.h"
 #import "UIBarButtonItem+Extension.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
@@ -37,6 +38,19 @@
 @end
 
 @implementation WelcomeViewController
+
+#pragma mark - Init
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = @"Welcome";
+    }
+    return self;
+}
+
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {

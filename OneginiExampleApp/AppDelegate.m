@@ -43,7 +43,7 @@
     self.window.backgroundColor = [UIColor lightGrayColor];
 
     WelcomeViewController *root = [[WelcomeViewController alloc] init];
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:root]; // [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:root];
     [NavigationControllerAppearance apply:controller];
 
     self.window.rootViewController = controller;

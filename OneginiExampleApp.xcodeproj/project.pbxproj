@@ -363,13 +363,13 @@
 			isa = PBXGroup;
 			children = (
 				5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */,
-				1D6A35E788A1C69B144DB339 /* Settings */,
-				1D6A3FDCF9B8E3F5E71D2D86 /* Welcome */,
 				1D6A3240BF4EB8CE613FA7A8 /* Pin */,
 				1D6A3C1CA787A35E550E2F99 /* Profile */,
 				1D6A33D692351089B88B3F83 /* PushConfirmation */,
+				1D6A35E788A1C69B144DB339 /* Settings */,
 				1D6A37901858FC6395935095 /* Text */,
 				1D6A369DA3EA4675EACBEE0D /* WebBrowser */,
+				1D6A3FDCF9B8E3F5E71D2D86 /* Welcome */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

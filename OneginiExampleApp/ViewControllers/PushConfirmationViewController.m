@@ -14,7 +14,6 @@
 // limitations under the License.
 
 #import "PushConfirmationViewController.h"
-#import "UIBarButtonItem+Extension.h"
 
 @interface PushConfirmationViewController ()
 
@@ -24,13 +23,6 @@
 @end
 
 @implementation PushConfirmationViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
-}
 
 - (IBAction)confirmPush:(id)sender
 {

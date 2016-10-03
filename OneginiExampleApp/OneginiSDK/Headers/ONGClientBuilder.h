@@ -60,13 +60,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  
  *  To reduce frequency of client validation calls, device config stays cached for specified period of time.
- *  Setting cache duration to negative or 0 value will disable caching.
+ *  Setting cache duration to 0 will disable caching.
  *
  *  This method must be called before any service request is made, preferably after initialization.
  *
- *  @param cacheDuration cache duration in seconds. Default value is 300 seconds (5 minutes).
+ *  @param cacheDurationMillis cache duration in milliseconds. Default value is 300000 (5 minutes).
  */
-- (instancetype)setDeviceConfigCacheDuration:(NSTimeInterval)cacheDuration;
+- (instancetype)setDeviceConfigCacheDurationMillis:(NSUInteger)cacheDurationMillis;
 
 /**
  * Set up SDK and return configured instance of `ONGClient` using builder's values.

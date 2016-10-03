@@ -15,12 +15,8 @@
 
 #import <UIKit/UIKit.h>
 
-@class ONGAuthenticator;
-
 @interface UIAlertController (Shortcut)
 
 + (instancetype)controllerWithTitle:(NSString *)title message:(NSString *)message completion:(void (^)(void))completion;
-
-+ (instancetype)authenticatorSelectionController:(NSArray<ONGAuthenticator *> *)authenticators completion:(void (^)(NSInteger index, BOOL cancelled))completion;
 
 @end

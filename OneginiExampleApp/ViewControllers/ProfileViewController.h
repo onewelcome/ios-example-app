@@ -15,6 +15,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsViewController : UITableViewController
+@class ProfileViewController;
+
+@interface ProfileViewController : UIViewController
+
+- (void)updateViews;
 
 @end

@@ -23,10 +23,10 @@
         // because we have no control over it and therefore can not guarantee that every mobile request will be handled.
         _executionQueue = [[NSOperationQueue alloc] init];
         self.executionQueue.name = [NSString stringWithFormat:@"%@.%@.executionQueue", [NSBundle mainBundle].bundleIdentifier, NSStringFromClass([self class])];
-        
+
         // We want to execute our mobile authentication requests as soon as possible
         self.executionQueue.qualityOfService = NSQualityOfServiceUserInteractive;
-        
+
         // There shouldn't be more than one mobile authentication request handled at a time.
         // Otherwise two requests may start modifying UI stack leading to a quite unexpected behaviour for the User.
         self.executionQueue.maxConcurrentOperationCount = 1;

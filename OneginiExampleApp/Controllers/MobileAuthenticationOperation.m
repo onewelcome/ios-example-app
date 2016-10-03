@@ -65,7 +65,7 @@
 }
 
 /// There might be an active alert (or any other controller) presented on the top of the screen. We need to preserve it somehow.
-/// You also might want to add new transparent UIWindow on top and present your confirmation completely independently from the
+/// You also might want to add a new transparent UIWindow on top and present your confirmation completely independently from the
 /// current UI state.
 - (void)performSafeConfirmationPresentation:(void (^)(void))presentation
 {
@@ -98,16 +98,15 @@
     [self performSafeConfirmationPresentation:^{
         [self.navigationController pushViewController:pushVC animated:YES];
     }];
-
 }
 
 /**
- * SDK sends challenge in order to authenticated User. In case User has entered invalid pin or SDK wasn't able to
- * connect to the server this method will be invoked again. Developer may want to inspect `challenge.error` property to understand reason of error.
- * In addition to error property `challenge` also maintains `previousFailureCount`, `maxFailureCount` and `remainingFailureCount` that
- * reflects number of attemps left. User gets deregistered once number of attempts exceeded.
+ * SDK sends a challenge in order to authenticate the user. In case the user has entered an invalid pin or the SDK wasn't able to
+ * connect to the server this method will be invoked again. You may want to inspect the `challenge.error` property to understand the reason of the error.
+ * In addition to the error property the `challenge` also maintains `previousFailureCount`, `maxFailureCount` and `remainingFailureCount` these
+ * reflect the number of PIN attemps left. The user gets deregistered once the number of attempts is exceeded.
  *
- * Note: during errors that are not related to the PIN validation such as network errors attempts counter remains untouched.
+ * Note: during errors that are not related to the PIN validation such as network errors the attempts counter remains untouched.
  */
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge forRequest:(ONGMobileAuthenticationRequest *)request
 {
@@ -130,7 +129,7 @@
         }
 
         if (challenge.error) {
-            // Please read comments for the PinErrorMapper to understand intent of this class and how errors can be handled.
+            // Please read comments for the PinErrorMapper to understand the intent of this class and how errors can be handled.
             NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
             [self.pinViewController showError:description];
         }
@@ -148,8 +147,8 @@
     pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint - %@", request.userProfile.profileId];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [self.navigationController popViewControllerAnimated:YES];
-        
-        if (confirmed){
+
+        if (confirmed) {
             [challenge.sender respondWithDefaultPromptForChallenge:challenge];
         } else {
             [challenge.sender cancelChallenge:challenge];
@@ -163,7 +162,7 @@
 
 - (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request
 {
-    // Once SDK reported that the `request` has been handled we need to finish our operation and free-up queue.
+    // Once the SDK reported that the `request` has been handled we need to finish our operation and free-up the queue.
     [self finish];
 }
 

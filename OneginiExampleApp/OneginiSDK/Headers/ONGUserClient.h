@@ -150,22 +150,22 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param userInfo userInfo of received push notification
  *  @param delegate delegate responsinble for handling push messages
- *  @return true, if the notification is processed by the client
+ *  @return true, if the notification is processed by the Onegini SDK
  */
 - (BOOL)handleMobileAuthenticationRequest:(NSDictionary *)userInfo delegate:(id<ONGMobileAuthenticationRequestDelegate>)delegate;
 
 /**
  *  Ensures that a push notification that is received by the application can be handled by the SDK.
- *  It might be useful to check whether SDK can handle it or not for various use cases.
+ *  It is useful to check whether the SDK can handle it or not for various use reasons.
  *  In contrast to `-handleMobileAuthenticationRequest:delegate:` the `-canHandleMobileAuthenticationRequest:`
  *  does not start any handling of the noticiation (no side-effects).
- *  It might be useful when you're building a queue of mobile authenticaiton request handling to prevent interferences
- *  between simultaiously running requests.
+ *  It might be useful when you're building a queue of mobile authentication request handling to prevent interferences
+ *  between simultaneously received / running requests.
  *
  *  @see UIApplication
  *
- *  @param userInfo userInfo of received push notification
- *  @return true, if the notification can be processed by the client
+ *  @param userInfo the userInfo of the received push notification
+ *  @return true, if the notification can be processed by the Onegini SDK
  */
 - (BOOL)canHandleMobileAuthenticationRequest:(NSDictionary *)userInfo;
 

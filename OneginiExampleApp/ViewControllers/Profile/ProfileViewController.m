@@ -15,12 +15,15 @@
 
 #import "ProfileViewController.h"
 
+#import <MBProgressHUD/MBProgressHUD.h>
+
 #import "FingerprintController.h"
 #import "ChangePinController.h"
 #import "TextViewController.h"
+#import "SettingsViewController.h"
 
 #import "ONGResourceResponse+JSONResponse.h"
-#import "MBProgressHUD.h"
+#import "UIBarButtonItem+Extension.h"
 
 @interface ProfileViewController ()
 
@@ -34,10 +37,24 @@
 
 @implementation ProfileViewController
 
+#pragma mark - Init
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = @"Profile";
+    }
+    return self;
+}
+
+#pragma mark - View Lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
     self.getTokenSpinner.hidden = YES;
 }
 
@@ -56,6 +73,8 @@
         [self.fingerprintButton setTitle:@"Enroll for fingerprint authentication" forState:UIControlStateNormal];
     }
 }
+
+#pragma mark - IBAction
 
 - (IBAction)logout:(id)sender
 {
@@ -139,6 +158,14 @@
     }
     [self updateViews];
 }
+
+- (IBAction)presentSettings:(id)sender
+{
+    SettingsViewController *settings = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:settings animated:YES];
+}
+
+#pragma mark - Logic
 
 - (void)registerFingerprint
 {

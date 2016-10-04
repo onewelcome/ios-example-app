@@ -19,8 +19,15 @@ The iOS Example App is using the Onegini iOS SDK to perform secure authenticatio
 1. Run `pod install` to correctly setup the Cocoapods dependencies
 2. Make sure that you open the project referring to `OneginiExampleApp.xcworkspace` in Xcode or AppCode.
 
-## Providing token server configuration
+## Providing the Token Server configuration
 The example app is already configured with the token server out of the box. 
 
 ### Changing the configuration
 If there is a need to change the token server configuration within the example app it is going to be best to do it using the Onegini SDK Configurator. Follow the steps as described in: `https://github.com/Onegini/sdk-configurator`
+
+### Building and running the application
+You can run the app on both a simulator and real device.
+
+>**Note:** with XCode 8 a few things have changed. Before you can build the app you must select a development team and set a unique app bundle identifier
+
+>**Note 2:** When you want to run the app on an iOS 10 simulator you must enable the keychain sharing capability, or use an older simulator. For more info see: http://stackoverflow.com/questions/38456471/secitemadd-always-returns-error-34018-in-xcode-8-in-ios-10-simulator

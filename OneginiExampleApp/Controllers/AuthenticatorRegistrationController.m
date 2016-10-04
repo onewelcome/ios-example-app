@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "FingerprintController.h"
+#import "AuthenticatorRegistrationController.h"
 
 #import <MBProgressHUD/MBProgressHUD.h>
 
@@ -21,7 +21,7 @@
 #import "PinErrorMapper.h"
 #import "NavigationControllerAppearance.h"
 
-@interface FingerprintController ()
+@interface AuthenticatorRegistrationController ()
 
 @property (nonatomic) UINavigationController *presentingViewController;
 
@@ -32,7 +32,7 @@
 
 @end
 
-@implementation FingerprintController
+@implementation AuthenticatorRegistrationController
 
 #pragma mark - Init
 
@@ -53,31 +53,27 @@
     return self;
 }
 
-+ (instancetype)fingerprintControllerWithNavigationController:(UINavigationController *)navigationController
-                                                   completion:(void (^)())completion
++ (instancetype)controllerWithNavigationController:(UINavigationController *)navigationController
+                                        completion:(void (^)())completion
 {
     return [[self alloc] initWithPresentingViewController:navigationController completion:completion];
 }
 
 #pragma mark - ONGAuthenticationDelegate
 
-- (void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile
+- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator user:(nonnull ONGUserProfile *)userProfile
 {
     [MBProgressHUD hideHUDForView:self.container.view animated:YES];
 
-    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticatorsForUser:userProfile];
-    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
-    [ONGUserClient sharedInstance].preferredAuthenticator = fingerprintAuthenticator;
+    [ONGUserClient sharedInstance].preferredAuthenticator = authenticator;
 
     [self finish:nil deregistered:NO];
 }
 
 /**
- * The error handling described in the FingerprintController differs from what the Example App does during PIN change or PIN Authentication because
- * it is used as a delegate for authenticator registration. Therefore the main difference is in the error handling approach.
  * Possible error domains are ONGAuthenticatorRegistrationErrorDomain and ONGGenericErrorDomain.
  */
-- (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
+- (void)userClient:(ONGUserClient *)userClient didFailToRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator user:(nonnull ONGUserProfile *)userProfile error:(nonnull NSError *)error
 {
     [MBProgressHUD hideHUDForView:self.container.view animated:YES];
 
@@ -120,7 +116,7 @@
 }
 
 /**
-* The SDK sends a challenge in order to authenticate a user. In case the user has entered an invalid pin or the SDK wasn't able to
+ * The SDK sends a challenge in order to authenticate a user. In case the user has entered an invalid pin or the SDK wasn't able to
  * connect to the server this method will be invoked again. Developer may want to inspect the `challenge.error` property to understand reason of the error.
  * In addition to the error property the `challenge` also maintains `previousFailureCount`, `maxFailureCount` and `remainingFailureCount` that
  * reflects number of PIN attemps left. The user gets deregistered once number of attempts exceeds the maximum amount.
@@ -153,16 +149,10 @@
 
 - (void)showError:(NSString *)error
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Fingerprint enrollment error" message:error preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Authenticator registration error" message:error preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okButton];
     [self.presentingViewController presentViewController:alert animated:YES completion:nil];
-}
-
-- (ONGAuthenticator *)fingerprintAuthenticatorFromSet:(NSSet<ONGAuthenticator *> *)authenticators
-{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type == %d", ONGAuthenticatorTouchID];
-    return [authenticators filteredSetUsingPredicate:predicate].anyObject;
 }
 
 - (void)finish:(NSError *)error deregistered:(BOOL)deregistered

@@ -17,7 +17,6 @@
 
 #import <MBProgressHUD/MBProgressHUD.h>
 
-#import "FingerprintController.h"
 #import "ChangePinController.h"
 #import "TextViewController.h"
 #import "SettingsViewController.h"
@@ -28,7 +27,6 @@
 @interface ProfileViewController ()
 
 @property (nonatomic) ChangePinController *changePinController;
-@property (nonatomic) FingerprintController *fingerprintController;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getTokenSpinner;
 @property (weak, nonatomic) IBOutlet UIButton *fingerprintButton;
@@ -56,22 +54,6 @@
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
     self.getTokenSpinner.hidden = YES;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-    [self updateViews];
-}
-
-- (void)updateViews
-{
-    if ([self isFingerprintEnrolled]) {
-        [self.fingerprintButton setTitle:@"Disable fingerprint authentication" forState:UIControlStateNormal];
-    } else {
-        [self.fingerprintButton setTitle:@"Enroll for fingerprint authentication" forState:UIControlStateNormal];
-    }
 }
 
 #pragma mark - IBAction
@@ -149,16 +131,6 @@
     [[ONGUserClient sharedInstance] changePin:self.changePinController];
 }
 
-- (IBAction)enrollForFingerprintAuthentication:(id)sender
-{
-    if ([self isFingerprintEnrolled]) {
-        [self deregisterFingerprint];
-    } else {
-        [self registerFingerprint];
-    }
-    [self updateViews];
-}
-
 - (IBAction)presentSettings:(id)sender
 {
     SettingsViewController *settings = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
@@ -166,46 +138,6 @@
 }
 
 #pragma mark - Logic
-
-- (void)registerFingerprint
-{
-    if (self.fingerprintController)
-        return;
-
-    ONGUserProfile *userProfile = [ONGUserClient sharedInstance].authenticatedUserProfile;
-    NSSet<ONGAuthenticator *> *authenticators = [[ONGUserClient sharedInstance] nonRegisteredAuthenticatorsForUser:userProfile];
-    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:authenticators];
-    self.fingerprintController = [FingerprintController
-        fingerprintControllerWithNavigationController:self.navigationController
-                                           completion:^{
-                                               self.fingerprintController = nil;
-                                           }];
-    if (fingerprintAuthenticator == nil) {
-        // If fingerprint authentication is not possible we will not receive the fingerprint authenticator in the list of not registered authenticators.
-        // There could be a number of reasons why fingerprint authentication is not possible. e.g. due to the fact that it is not enabled in the Token Server
-        // configuration or the device might not be capable of performing TouchID authentication.
-        [self showError:@"Fingerprint authentication is not possible."];
-        return;
-    }
-
-    [[ONGUserClient sharedInstance] registerAuthenticator:fingerprintAuthenticator delegate:self.fingerprintController];
-}
-
-- (void)deregisterFingerprint
-{
-    ONGUserProfile *userProfile = [ONGUserClient sharedInstance].authenticatedUserProfile;
-    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticatorsForUser:userProfile];
-    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
-    [[ONGUserClient sharedInstance] deregisterAuthenticator:fingerprintAuthenticator completion:nil];
-}
-
-- (BOOL)isFingerprintEnrolled
-{
-    ONGUserProfile *userProfile = [ONGUserClient sharedInstance].authenticatedUserProfile;
-    NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticatorsForUser:userProfile];
-    ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
-    return fingerprintAuthenticator != nil;
-}
 
 - (ONGAuthenticator *)fingerprintAuthenticatorFromSet:(NSSet<ONGAuthenticator *> *)authenticators
 {

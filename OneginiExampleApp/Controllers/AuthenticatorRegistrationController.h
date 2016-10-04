@@ -17,9 +17,9 @@
 #import <UIKit/UIKit.h>
 #import "OneginiSDK.h"
 
-@interface FingerprintController : NSObject<ONGAuthenticationDelegate>
+@interface AuthenticatorRegistrationController : NSObject<ONGAuthenticatorRegistrationDelegate>
 
-+ (instancetype)fingerprintControllerWithNavigationController:(UINavigationController *)navigationController
-                                                   completion:(void (^)())completion;
++ (instancetype)controllerWithNavigationController:(UINavigationController *)navigationController
+                                        completion:(void (^)())completion;
 
 @end

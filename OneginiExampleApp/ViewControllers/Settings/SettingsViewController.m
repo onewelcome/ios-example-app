@@ -158,17 +158,6 @@
     return cell;
 }
 
-#pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ONGAuthenticator *authenticator = self.authenticators[indexPath.row];
-    if (!authenticator.preferred && authenticator.registered) {
-        [self.userClient setPreferredAuthenticator:authenticator];
-        [self reloadData];
-    }
-}
-
 #pragma mark - Actions
 
 - (void)invokeDataReload:(UIRefreshControl *)sender

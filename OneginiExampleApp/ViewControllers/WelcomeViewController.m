@@ -15,13 +15,11 @@
 
 #import "WelcomeViewController.h"
 
-#import <MBProgressHUD/MBProgressHUD.h>
-
 #import "AuthenticationController.h"
 #import "RegistrationController.h"
 #import "UIAlertController+Shortcut.h"
 #import "ONGResourceResponse+JSONResponse.h"
-#import "UIBarButtonItem+Extension.h"
+#import "MBProgressHUD.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -39,33 +37,20 @@
 
 @implementation WelcomeViewController
 
-#pragma mark - Init
-
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        self.title = @"Welcome";
-    }
-    return self;
-}
-
-#pragma mark - View Lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
-    self.appInfoLabel.hidden = YES;
-
-    [self authenticateDeviceAndFetchResource];
-}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
     [self.profilePicker reloadAllComponents];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.appInfoLabel.hidden = YES;
+
+    [self authenticateDeviceAndFetchResource];
 }
 
 - (IBAction)registerNewProfile:(id)sender

@@ -43,7 +43,7 @@
     ProfileViewController *viewController = [ProfileViewController new];
     [self.navigationController pushViewController:viewController animated:YES];
     self.completion();
-    
+
     if (self.progressStateDidChange != nil) {
         self.progressStateDidChange(NO);
     }
@@ -68,7 +68,7 @@
     [self showError:error];
 
     self.completion();
-    
+
     if (self.progressStateDidChange != nil) {
         self.progressStateDidChange(NO);
     }
@@ -82,11 +82,15 @@
     self.pinViewController.profile = challenge.userProfile;
 
     __weak typeof(self) weakSelf = self;
-    self.pinViewController.pinEntered = ^(NSString *pin) {
+    self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
         if (self.progressStateDidChange != nil) {
             weakSelf.progressStateDidChange(YES);
         }
-        [challenge.sender respondWithPin:pin challenge:challenge];
+        if (pin) {
+            [challenge.sender respondWithPin:pin challenge:challenge];
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge];
+        }
     };
 
     // It is up to you to decide when and how to show the PIN entry view controller.
@@ -100,7 +104,7 @@
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
         [self.pinViewController showError:description];
     }
-    
+
     if (self.progressStateDidChange != nil) {
         self.progressStateDidChange(NO);
     }

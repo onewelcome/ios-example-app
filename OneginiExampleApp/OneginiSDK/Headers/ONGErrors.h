@@ -14,29 +14,28 @@ ONG_EXTERN NSString *const ONGGenericErrorDomain;
  * Error codes in ONGGenericErrorDomain
  */
 typedef NS_ENUM(ONGErrorCode, ONGGenericError) {
-    /// An unknown error occurred
-    ONGGenericErrorUnknown = 9000,
-    /// Requested action was cancelled.
-    ONGGenericErrorActionCancelled = 9001,
-    /// Requested action already in progress and can not be performed concurrently.
-    ONGGenericErrorActionAlreadyInProgress = 9002,
-
     /// Due to a problem with the device internet connection it was not possible to initiate the requested action.
-    ONGGenericErrorNetworkConnectivityFailure = 9010,
+    ONGGenericErrorNetworkConnectivityFailure = 9000,
     /// Check the Onegini SDK configuration for the correct server URL.
-    ONGGenericErrorServerNotReachable = 9011,
-    /// The Token Server configuration does not allow one of the requested scopes.
-    ONGGenericErrorConfigurationInvalid = 9020,
-    /// The request to the Token Server was invalid. Please verify that the Token Server configuration is correct and that no reverse proxy is interfering with the connection.
-    ONGGenericErrorRequestInvalid = 9021,
-    /// The Token Server denotes that the current app is no longer valid and can no longer be used. The end-user must update the application. Updating the SDK configuration might also solve the problem.
-    ONGGenericErrorOutdatedApplication = 9022,
-    /// The Token Server does not allow this application to run on the current OS version. Instruct the user to update the OS.
-    ONGGenericErrorOutdatedOS = 9023,
+    ONGGenericErrorServerNotReachable = 9001,
     /// The device registration was removed from the Token Server. All locally stored data is removed from the device and the user needs to register again.
-    ONGGenericErrorDeviceDeregistered = 9030,
+    ONGGenericErrorDeviceDeregistered = 9002,
     /// The user account is deregistered from the device. The user supplied the wrong PIN for too many times. All local data associated with the user profile has been removed.
-    ONGGenericErrorUserDeregistered = 9031,
+    ONGGenericErrorUserDeregistered = 9003,
+    /// The Token Server denotes that the current app is no longer valid and can no longer be used. The end-user must update the application. Updating the SDK configuration might also solve the problem.
+    ONGGenericErrorOutdatedApplication = 9004,
+    /// The Token Server does not allow this application to run on the current OS version. Instruct the user to update the OS.
+    ONGGenericErrorOutdatedOS = 9005,
+    /// Requested action was cancelled.
+    ONGGenericErrorActionCancelled = 9006,
+    /// Requested action already in progress and can not be performed concurrently.
+    ONGGenericErrorActionAlreadyInProgress = 9007,
+    /// An unknown error occurred
+    ONGGenericErrorUnknown = 10000,
+    /// The Token Server configuration does not allow one of the requested scopes.
+    ONGGenericErrorConfigurationInvalid = 10001,
+    /// The request to the Token Server was invalid. Please verify that the Token Server configuration is correct and that no reverse proxy is interfering with the connection.
+    ONGGenericErrorRequestInvalid = 10015,
 };
 
 /**
@@ -51,15 +50,15 @@ ONG_EXTERN NSString *const ONGAuthenticatorRegistrationErrorDomain;
  */
 typedef NS_ENUM(ONGErrorCode, ONGAuthenticatorRegistrationError) {
     /// No user is currently authenticated, possibly due to the fact that the access token has expired. A user must be authenticated in order to register an authenticator.
-    ONGAuthenticatorRegistrationErrorUserNotAuthenticated = 9100,
+    ONGAuthenticatorRegistrationErrorUserNotAuthenticated = 9010,
     /// The authenticator that you tried to register is invalid. It may not exist, please verify whether you have supplied the correct authenticator for registration.
-    ONGAuthenticatorRegistrationErrorAuthenticatorInvalid = 9110,
+    ONGAuthenticatorRegistrationErrorAuthenticatorInvalid = 9015,
     /// The given authenticator is already registered and can therefore not be registered again
-    ONGAuthenticatorRegistrationErrorAuthenticatorAlreadyRegistered = 9111,
+    ONGAuthenticatorRegistrationErrorAuthenticatorAlreadyRegistered = 10004,
     /// The Token Server configuration does not allow you to register FIDO authenticators. Enable FIDO authentication for the current application in the Token Server configuration to allow FIDO authenticator registration
-    ONGAuthenticatorRegistrationErrorFidoAuthenticationDisabled = 9112,
+    ONGAuthenticatorRegistrationErrorFidoAuthenticationDisabled = 10005,
     /// The given authenticator is not supported.
-    ONGAuthenticatorRegistrationErrorAuthenticatorNotSupported = 9113,
+    ONGAuthenticatorRegistrationErrorAuthenticatorNotSupported = 10006,
 };
 
 /**
@@ -74,11 +73,13 @@ ONG_EXTERN NSString *const ONGAuthenticatorDeregistrationErrorDomain;
  */
 typedef NS_ENUM(ONGErrorCode, ONGAuthenticatorDeregistrationError) {
     /// No user is currently authenticated, possibly due to the fact that the access token has expired. A user must be authenticated in order to deregister an authenticator.
-    ONGAuthenticatorDeregistrationErrorUserNotAuthenticated = 9200,
+    ONGAuthenticatorDeregistrationErrorUserNotAuthenticated = 9010,
     /// The authenticator that you tried to register is invalid. It may not exist, please verify whether you have supplied the correct authenticator for registration
-    ONGAuthenticatorDeregistrationErrorAuthenticatorInvalid = 9210,
+    ONGAuthenticatorDeregistrationErrorAuthenticatorInvalid = 9015,
     /// The given authenticator is not registered and can therefore not be deregistered
-    ONGAuthenticatorDeregistrationErrorAuthenticatorNotRegistered = 9211,
+    ONGAuthenticatorDeregistrationErrorAuthenticatorNotRegistered = 10007,
+    // PIN auth deregistration not possible
+    ONGAuthenticatorPinDeregistrationNotPossible = 10008
 };
 
 /**
@@ -93,9 +94,9 @@ ONG_EXTERN NSString *const ONGRegistrationErrorDomain;
  */
 typedef NS_ENUM(ONGErrorCode, ONGRegistrationError) {
     /// The device could not be registered with the Token Server, verify that the SDK configuration, Token Server configuration and security features are correctly configured
-    ONGRegistrationErrorDeviceRegistrationFailure = 9300,
+    ONGRegistrationErrorDeviceRegistrationFailure = 9008,
     /// A possible security issue was detected during User Registration.
-    ONGRegistrationErrorInvalidState = 9301
+    ONGRegistrationErrorInvalidState = 10002
 };
 
 /**
@@ -110,7 +111,7 @@ ONG_EXTERN NSString *const ONGDeregistrationErrorDomain;
  */
 typedef NS_ENUM(ONGErrorCode, ONGDeregistrationError) {
     /// The user was only deregistered on the device. The device registration has not been removed on the server-side due to a connection problem. This does not pose a problem but you might want to inform the end-user as he might be able to see that he/she is still registered through a web portal.
-    ONGDeregistrationErrorLocalDeregistration = 9400,
+    ONGDeregistrationErrorLocalDeregistration = 10003,
 };
 
 /**
@@ -125,7 +126,7 @@ ONG_EXTERN NSString *const ONGChangePinErrorDomain;
  */
 typedef NS_ENUM(ONGErrorCode, ONGChangePinError) {
     /// No user is currently authenticated, possibly due to the fact that the access token has expired. A user must be authenticated in order to change PIN.
-    ONGPinChangeErrorUserNotAuthenticated = 9500
+    ONGPinChangeErrorUserNotAuthenticated = 9010
 };
 
 /**
@@ -141,7 +142,7 @@ ONG_EXTERN NSString *const ONGPinAuthenticationErrorDomain;
  */
 typedef NS_ENUM(ONGErrorCode, ONGPinAuthenticationError) {
     /// The provided PIN was invalid
-    ONGPinAuthenticationErrorInvalidPin = 9600
+    ONGPinAuthenticationErrorInvalidPin = 9009
 };
 
 /**
@@ -168,13 +169,13 @@ ONG_EXTERN NSString *const ONGPinValidationErrorRequiredLengthKey;
  */
 typedef NS_ENUM(ONGErrorCode, ONGPinValidationError) {
     /// The provided PIN was marked as blacklisted on the Token Server.
-    ONGPinValidationErrorPinBlackListed = 9700,
+    ONGPinValidationErrorPinBlackListed = 9011,
     /// The provided PIN contains a not allowed sequence
-    ONGPinValidationErrorPinShouldNotBeASequence = 9701,
-    /// The provided PIN length is wrong
-    ONGPinValidationErrorWrongPinLength = 9702,
+    ONGPinValidationErrorPinShouldNotBeASequence = 9012,
     /// The provided PIN contains too many similar digits
-    ONGPinValidationErrorPinShouldNotUseSimilarDigits = 9703
+    ONGPinValidationErrorPinShouldNotUseSimilarDigits = 9013,
+    /// The provided PIN length is wrong
+    ONGPinValidationErrorWrongPinLength = 9014
 };
 
 /**
@@ -189,15 +190,15 @@ ONG_EXTERN NSString *const ONGMobileAuthenticationEnrollmentErrorDomain;
  */
 typedef NS_ENUM(ONGErrorCode, ONGMobileAuthenticationEnrollmentError) {
     /// No user is currently authenticated, possibly due to the fact that the access token has expired. A user must be authenticated in order to enroll for mobile authentication.
-    ONGMobileAuthenticationEnrollmentErrorUserNotAuthenticated = 9800,
+    ONGMobileAuthenticationEnrollmentErrorUserNotAuthenticated = 9010,
     /// The device is already enrolled for mobile authentication. This may happen in case an old push token is still left behind in the Token Server database and is reused by the OS.
-    ONGMobileAuthenticationEnrollmentErrorDeviceAlreadyEnrolled = 9810,
+    ONGMobileAuthenticationEnrollmentErrorDeviceAlreadyEnrolled = 9016,
     /// The Mobile authentication feature is disabled in the Token Server configuration.
-    ONGMobileAuthenticationEnrollmentErrorEnrollmentNotAvailable = 9811,
+    ONGMobileAuthenticationEnrollmentErrorEnrollmentNotAvailable = 9017,
     /// The user is already enrolled for mobile authentication on another device.
-    ONGMobileAuthenticationEnrollmentErrorUserAlreadyEnrolled = 9812,
+    ONGMobileAuthenticationEnrollmentErrorUserAlreadyEnrolled = 9018,
     /// The device Push Token is not set.
-    ONGMobileAuthenticationEnrollmentErrorMissingDevicePushToken = 9820
+    ONGMobileAuthenticationEnrollmentErrorMissingDevicePushToken = 10011
 };
 
 /**
@@ -212,7 +213,7 @@ ONG_EXTERN NSString *const ONGMobileAuthenticationRequestErrorDomain;
  */
 typedef NS_ENUM(ONGErrorCode, ONGMobileAuthenticationRequestError) {
     /// The mobile authentication request was not found. Please make sure that the mobile authentication request is available. This might be an indication that your Token Server setup is not correct. Cache replication might not work properly.
-    ONGMobileAuthenticationRequestErrorNotFound = 9900,
+    ONGMobileAuthenticationRequestErrorNotFound = 10013,
 };
 
 /**
@@ -227,7 +228,7 @@ ONG_EXTERN NSString *const ONGLogoutErrorDomain;
  */
 typedef NS_ENUM(ONGErrorCode, ONGLogoutError) {
     /// The user was only logged out on the device. The access token has not been invalidated on the server-side. This does not pose a problem but you might want to inform the end-user as he might be able to see that he/she is still logged in through a web portal.
-    ONGLogoutErrorLocalLogout = 10000
+    ONGLogoutErrorLocalLogout = 10009
 };
 
 /**
@@ -241,10 +242,10 @@ ONG_EXTERN NSString *const ONGFetchResourceErrorDomain;
  * Error codes in ONGFetchResourceErrorDomain
  */
 typedef NS_ENUM(ONGErrorCode, ONGFetchResourceError) {
-    /// provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
-    ONGFetchResourceErrorInvalidMethod = 10100,
     /// No user is currently authenticated, possibly due to the fact that the access token has expired. A user must be authenticated in order to fetch resources.
-    ONGFetchResourceErrorUserNotAuthenticated = 10101
+    ONGFetchResourceErrorUserNotAuthenticated = 9010,
+    /// provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
+    ONGFetchResourceErrorInvalidMethod = 10010,
 };
 
 /**
@@ -259,9 +260,9 @@ ONG_EXTERN NSString *const ONGFetchAnonymousResourceErrorDomain;
  */
 typedef NS_ENUM(ONGErrorCode, ONGFetchAnonymousResourceError) {
     /// provided request method is not valid, use one of @"GET", @"POST", @"DELETE", @"PUT"
-    ONGFetchAnonymousResourceErrorInvalidMethod = 10200,
+    ONGFetchAnonymousResourceErrorInvalidMethod = 10010,
     /// A device access token could not be retrieved. Check your Application configuration in the Token Server
-    ONGFetchAnonymousResourceErrorDeviceNotAuthenticated = 10201,
+    ONGFetchAnonymousResourceErrorDeviceNotAuthenticated = 10012,
 };
 
 /**
@@ -271,5 +272,5 @@ ONG_EXTERN NSString *const ONGSDKInitializationErrorDomain;
 
 typedef NS_ENUM(ONGErrorCode, ONGSDKInitializationError) {
     /// The device could not be registered with the Token Server, verify that the SDK configuration, Token Server configuration and security features are correctly configured
-    ONGSDKInitialisationErrorDeviceRegistrationFailed = 10300,
+    ONGSDKInitialisationErrorDeviceRegistrationFailed = 9008,
 };

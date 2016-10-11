@@ -1,0 +1,15 @@
+PODS:
+  - MBProgressHUD (1.0.0)
+  - ZFDragableModalTransition (0.6)
+
+DEPENDENCIES:
+  - MBProgressHUD (~> 1.0.0)
+  - ZFDragableModalTransition (~> 0.6)
+
+SPEC CHECKSUMS:
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  ZFDragableModalTransition: 0d294eaaba6edfcb9839595de765f9ca06a4b524
+
+PODFILE CHECKSUM: 152b2d3bc147a1c6d08e25e04be532c58c580ba6
+
+COCOAPODS: 1.0.1

@@ -1,87 +1,55 @@
-//  Copyright © 2016 Onegini. All rights reserved.
+// Copyright (c) 2016 Onegini. All rights reserved.
 
 #import "MobileAuthenticationController.h"
-#import "PinViewController.h"
-#import "PushConfirmationViewController.h"
+#import "ONGUserClient.h"
+#import "MobileAuthenticationOperation.h"
 
 @interface MobileAuthenticationController ()
 
-@property (nonatomic) PinViewController *pinViewController;
-@property (nonatomic) UINavigationController *navigationController;
-@property (nonatomic) void (^completion)();
+@property (nonatomic) NSOperationQueue *executionQueue;
 
 @end
 
-@implementation MobileAuthenticationController
-
-+ (instancetype)mobileAuthentiactionControllerWithNaviationController:(UINavigationController *)navigationController
-                                                           completion:(void (^)())completion
-{
-    MobileAuthenticationController *mobileAuthenticationController = [MobileAuthenticationController new];
-    mobileAuthenticationController.navigationController = navigationController;
-    mobileAuthenticationController.completion = completion;
-    mobileAuthenticationController.pinViewController = [PinViewController new];
-    return mobileAuthenticationController;
+@implementation MobileAuthenticationController {
 }
-
-- (void)userClient:(ONGUserClient *)userClient didReceiveConfirmationChallenge:(void (^)(BOOL confirmRequest))confirmation forRequest:(ONGMobileAuthenticationRequest *)request
+- (instancetype)initWithUserClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController
 {
-    PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
-    pushVC.pushMessage.text = request.title;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push - %@", request.userProfile.profileId];
-    pushVC.pushConfirmed = ^(BOOL confirmed) {
-        [self.navigationController popViewControllerAnimated:YES];
-        confirmation(confirmed);
-    };
-    [self.navigationController pushViewController:pushVC animated:YES];
-}
+    self = [super init];
+    if (self) {
+        _navigationController = navigationController;
+        _userClient = userClient;
 
-- (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge forRequest:(ONGMobileAuthenticationRequest *)request
-{
-    [self.pinViewController reset];
-    self.pinViewController.mode = PINCheckMode;
-    self.pinViewController.pinLength = 5;
-    self.pinViewController.customTitle = [NSString stringWithFormat:@"Push with pin - %@", challenge.userProfile.profileId];
-    __weak MobileAuthenticationController *weakSelf = self;
+        // SDK can not be called from any background queue, however it is generally a bad idea to reuse shared [NSOperationQueue mainQueue]
+        // because we have no control over it and therefore can not guarantee that every mobile request will be handled.
+        _executionQueue = [[NSOperationQueue alloc] init];
+        self.executionQueue.name = [NSString stringWithFormat:@"%@.%@.executionQueue", [NSBundle mainBundle].bundleIdentifier, NSStringFromClass([self class])];
 
-    self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
-        if (pin) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-            [challenge.sender respondWithPin:pin challenge:challenge];
-        } else if (cancelled) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-            [challenge.sender cancelChallenge:challenge];
-        }
-    };
+        // We want to execute our mobile authentication requests as soon as possible
+        self.executionQueue.qualityOfService = NSQualityOfServiceUserInteractive;
 
-    if (challenge.previousFailureCount) {
-        NSString *errorMessage = [NSString stringWithFormat:@"Invalid pin. You have still %@ attempts left.", @(challenge.remainingFailureCount)];
-        [self.pinViewController showError:errorMessage];
-    } else {
-        [self.navigationController pushViewController:self.pinViewController animated:YES];
+        // There shouldn't be more than one mobile authentication request handled at a time.
+        // Otherwise two requests may start modifying UI stack leading to a quite unexpected behaviour for the User.
+        self.executionQueue.maxConcurrentOperationCount = 1;
     }
+
+    return self;
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveFingerprintChallenge:(ONGFingerprintChallenge *)challenge forRequest:(ONGMobileAuthenticationRequest *)request
+- (BOOL)handleMobileAuthenticationRequest:(NSDictionary *)userInfo
 {
-    PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
-    pushVC.pushMessage.text = request.title;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint - %@", request.userProfile.profileId];
-    pushVC.pushConfirmed = ^(BOOL confirmed) {
-        [self.navigationController popViewControllerAnimated:YES];
-        [challenge.sender respondWithDefaultPromptForChallenge:challenge];
-    };
-    [self.navigationController pushViewController:pushVC animated:YES];
-}
+    // It is easier to implement queue of delayed `-[ONGUserClient handleMobileAuthenticationRequest:delegate:]` invocations
+    // rather than handling UI elements queuing. Because of this we're ensuring that the given `userInfo` is a valid Onegini's
+    // mobile authentication request and delaying actual handling by wrapping it into a NSOperation-based class.
+    if (![self.userClient canHandleMobileAuthenticationRequest:userInfo]) {
+        return NO;
+    }
 
-- (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request
-{
-    self.completion();
-}
+    MobileAuthenticationOperation *operation = [[MobileAuthenticationOperation alloc] initWithUserInfo:userInfo
+                                                                                            userClient:self.userClient
+                                                                                  navigationController:self.navigationController];
+    [self.executionQueue addOperation:operation];
 
-- (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request error:(NSError *)error
-{
-    self.completion();
+    return YES;
 }
 
 @end

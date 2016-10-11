@@ -12,9 +12,9 @@
     return @{
         @"ONGAppIdentifier" : @"ExampleApp",
         @"ONGAppPlatform" : @"ios",
-        @"ONGAppVersion" : @"1.0.0",
-        @"ONGAppBaseURL" : @"https://onegini-msp-snapshot.test.onegini.io",
-        @"ONGResourceBaseURL" : @"https://onegini-msp-snapshot.test.onegini.io",
+        @"ONGAppVersion" : @"2.0.0",
+        @"ONGAppBaseURL" : @"https://demo-msp.onegini.com",
+        @"ONGResourceBaseURL" : @"https://demo-msp.onegini.com",
         @"ONGRedirectURL" : @"oneginiexample://loginsuccess",
     };
 }

@@ -81,13 +81,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)changePin:(id<ONGChangePinDelegate>)delegate;
 
 /**
- *  Determines if the user is authorized.
- *
- *  @return true, if a valid access token is available
- */
-- (BOOL)isAuthorized;
-
-/**
  *  Return currently authenticated user.
  *
  *  @return authenticated user
@@ -104,7 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return true if all pin policy constraints are satisfied
  */
 
-- (void)validatePinWithPolicy:(NSString *)pin completion:(void (^)(BOOL valid, NSError * _Nullable error))completion;
+- (void)validatePinWithPolicy:(NSString *)pin completion:(void (^)(BOOL valid, NSError *_Nullable error))completion;
 
 /**
  *  Handles the response of the registration request from the browser redirect.
@@ -125,18 +118,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)logoutUser:(nullable void (^)(ONGUserProfile *userProfile, NSError *_Nullable error))completion;
 
 /**
- *  Clears all tokens and reset the pin attempt count.
- *
- *  @param error not nil when deleting the refresh token from the keychain fails.
- *  @return true, if the token deletion is successful.
- */
-- (BOOL)clearTokens:(NSError **)error;
-
-/**
  *  Stores the device token for the current session.
  *
  *  This should be invoked from the UIApplicationDelegate
- *  - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+ *  - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
  *
  *  @param deviceToken device token to store
  */
@@ -165,9 +150,24 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param userInfo userInfo of received push notification
  *  @param delegate delegate responsinble for handling push messages
- *  @return true, if the notification is processed by the client
+ *  @return true, if the notification is processed by the Onegini SDK
  */
 - (BOOL)handleMobileAuthenticationRequest:(NSDictionary *)userInfo delegate:(id<ONGMobileAuthenticationRequestDelegate>)delegate;
+
+/**
+ *  Ensures that a push notification that is received by the application can be handled by the SDK.
+ *  It is useful to check whether the SDK can handle it or not for various use reasons.
+ *  In contrast to `-handleMobileAuthenticationRequest:delegate:` the `-canHandleMobileAuthenticationRequest:`
+ *  does not start any handling of the noticiation (no side-effects).
+ *  It might be useful when you're building a queue of mobile authentication request handling to prevent interferences
+ *  between simultaneously received / running requests.
+ *
+ *  @see UIApplication
+ *
+ *  @param userInfo the userInfo of the received push notification
+ *  @return true, if the notification can be processed by the Onegini SDK
+ */
+- (BOOL)canHandleMobileAuthenticationRequest:(NSDictionary *)userInfo;
 
 /**
  *  List of enrolled users stored locally
@@ -197,7 +197,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completion block that will be called either upon request completion or immediatelly in case if validation error.
  * @return instance of `ONGNetworkTask` or nil. By utilizing `ONGNetworkTask` developer may observe and control execution of the request.
  */
-- (nullable ONGNetworkTask *)fetchResource:(ONGResourceRequest *)request completion:(nullable void (^)(ONGResourceResponse * _Nullable response, NSError * _Nullable error))completion;
+- (nullable ONGNetworkTask *)fetchResource:(ONGResourceRequest *)request completion:(nullable void (^)(ONGResourceResponse *_Nullable response, NSError *_Nullable error))completion;
 
 /**
  * Returns a access token for the currently authenticated user, or nil if no user is currently
@@ -211,21 +211,31 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) NSString *accessToken;
 
 /**
- * Discovers and returns a set of authenticators which are supported both, client and server side, and are not yet registered.
+ * Returns a set of authenticators which are supported both, client and server side, and are not yet registered.
  *
- * The returned errors will be within the ONGGenericErrorDomain.
- *
- * @param completion block returning non registered authenticators or any encountered error
+ * @param userProfile user profile for which authenticators are fetched
+ * @return set of non registered authenticators
  */
-- (void)fetchNonRegisteredAuthenticators:(void (^)(NSSet<ONGAuthenticator *> * _Nullable authenticators, NSError * _Nullable error))completion;
+- (NSSet<ONGAuthenticator *> *)nonRegisteredAuthenticatorsForUser:(ONGUserProfile *)userProfile;
 
 /**
- * Set of registered authenticators.
+ * Returns a set of registered authenticators.
+ *
+ * @param userProfile user profile for which authenticators are fetched
+ * @return set of registered authenticators
  */
-@property (nonatomic, readonly) NSSet<ONGAuthenticator *> *registeredAuthenticators;
+- (NSSet<ONGAuthenticator *> *)registeredAuthenticatorsForUser:(ONGUserProfile *)userProfile;
 
 /**
- * Registers an authenticator. Use one of the non registeres authenticators returned by `fetchNonRegisteredAuthenticators` method.
+ * Returns a set of both registered and nonregistered authenticators.
+ *
+ * @param userProfile user profile for which authenticators are fetched
+ * @return set of registered authenticators
+ */
+- (NSSet<ONGAuthenticator *> *)allAuthenticatorsForUser:(ONGUserProfile *)userProfile;
+
+/**
+ * Registers an authenticator. Use one of the non registered authenticators returned by `nonRegisteredAuthenticatorsForUser:` method.
  * Registering an authenticator requires user authentication which is handled by the delegate.
  *
  * The returned errors will be within the ONGGenericErrorDomain or ONGAuthenticatorRegistrationErrorDomain.
@@ -236,14 +246,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)registerAuthenticator:(ONGAuthenticator *)authenticator delegate:(id<ONGAuthenticationDelegate>)delegate;
 
 /**
- * Deregisters an authenticator. Use one of the registered authenticators returned by `registeredAuthenticators` method.
+ * Deregisters an authenticator. Use one of the registered authenticators returned by `registeredAuthenticatorsForUser:` method.
  *
  * The returned errors will be within the ONGGenericErrorDomain or ONGAuthenticatorDeregistrationErrorDomain.
  *
  * @param authenticator to be deregistered authenticator
  * @param completion block returning result of deregistration action or any encountered error
  */
-- (void)deregisterAuthenticator:(ONGAuthenticator *)authenticator completion:(nullable void (^)(BOOL deregistered, NSError * _Nullable error))completion;
+- (void)deregisterAuthenticator:(ONGAuthenticator *)authenticator completion:(nullable void (^)(BOOL deregistered, NSError *_Nullable error))completion;
 
 /**
  * Represents preferred authenticator. By default SDK uses PIN as preferred authenticator.

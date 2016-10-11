@@ -14,36 +14,62 @@
 // limitations under the License.
 
 #import "FingerprintController.h"
+
+#import <MBProgressHUD/MBProgressHUD.h>
+
 #import "PinViewController.h"
 #import "PinErrorMapper.h"
+#import "NavigationControllerAppearance.h"
 
 @interface FingerprintController ()
 
-@property (nonatomic) UINavigationController *navigationController;
+@property (nonatomic) UINavigationController *presentingViewController;
+
+@property (nonatomic) UINavigationController *container;
 @property (nonatomic) PinViewController *pinViewController;
+
 @property (nonatomic) void (^completion)();
 
 @end
 
 @implementation FingerprintController
 
+#pragma mark - Init
+
+- (instancetype)initWithPresentingViewController:(UINavigationController *)presentingViewController completion:(void (^)(void))completion
+{
+    self = [super init];
+    if (self) {
+        self.presentingViewController = presentingViewController;
+        self.completion = completion;
+
+        self.pinViewController = [[PinViewController alloc] init];
+        self.pinViewController.pinLength = 5;
+        self.pinViewController.mode = PINCheckMode;
+
+        self.container = [[UINavigationController alloc] initWithRootViewController:self.pinViewController];
+    }
+
+    return self;
+}
+
 + (instancetype)fingerprintControllerWithNavigationController:(UINavigationController *)navigationController
                                                    completion:(void (^)())completion
 {
-    FingerprintController *fingerprintController = [FingerprintController new];
-    fingerprintController.navigationController = navigationController;
-    fingerprintController.completion = completion;
-    return fingerprintController;
+    return [[self alloc] initWithPresentingViewController:navigationController completion:completion];
 }
+
+#pragma mark - ONGAuthenticationDelegate
 
 - (void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile
 {
+    [MBProgressHUD hideHUDForView:self.container.view animated:YES];
+
     NSSet *registeredAuthenticators = [[ONGUserClient sharedInstance] registeredAuthenticatorsForUser:userProfile];
     ONGAuthenticator *fingerprintAuthenticator = [self fingerprintAuthenticatorFromSet:registeredAuthenticators];
     [ONGUserClient sharedInstance].preferredAuthenticator = fingerprintAuthenticator;
-    
-    [self dismissNavigationPresentedViewController:nil];
-    self.completion();
+
+    [self finish:nil deregistered:NO];
 }
 
 /**
@@ -53,6 +79,8 @@
  */
 - (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
+    [MBProgressHUD hideHUDForView:self.container.view animated:YES];
+
     switch (error.code) {
         // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
         // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
@@ -62,8 +90,7 @@
         // the user is starting up the app for the first time.
         case ONGGenericErrorUserDeregistered:
         case ONGGenericErrorDeviceDeregistered:
-            [self unwindNavigationStack];
-            [self showError:error.localizedDescription];
+            [self finish:error deregistered:YES];
             break;
 
         // The user has tried to register an authenticator for the user that is no longer authenticated.
@@ -88,12 +115,8 @@
         case ONGGenericErrorServerNotReachable:
 
         default:
-            [self dismissNavigationPresentedViewController:nil];
-            [self showError:error.localizedDescription];
-            break;
+            [self finish:error deregistered:NO];
     }
-
-    self.completion();
 }
 
 /**
@@ -106,36 +129,38 @@
  */
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
 {
-    if (challenge.error) {
-        [self dismissNavigationPresentedViewController:^{
-            // Please read the comments written in the PinErrorMapper class to understand the intent of this class and how errors can be handled.
-            NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
-            [self.pinViewController showError:description];
+    __weak typeof(self) weakSelf = self;
+    self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
 
-            [self.pinViewController reset];
-            [self.navigationController presentViewController:self.pinViewController animated:YES completion:nil];
-        }];
-    } else {
-        PinViewController *viewController = [PinViewController new];
-        self.pinViewController = viewController;
-        viewController.pinLength = 5;
-        viewController.mode = PINCheckMode;
-        viewController.profile = challenge.userProfile;
-
-        viewController.pinEntered = ^(NSString *pin) {
+        if (pin) {
+            [MBProgressHUD showHUDAddedTo:weakSelf.container.view animated:YES];
             [challenge.sender respondWithPin:pin challenge:challenge];
-        };
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge];
+        }
+    };
 
-        [self.navigationController presentViewController:viewController animated:YES completion:nil];
+    if (challenge.error) {
+        // Pin is already presented on the screen
+        NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
+        [self.pinViewController showError:description];
+        [self.pinViewController reset];
+    } else {
+        // First time we're going to show Pin
+        [NavigationControllerAppearance apply:self.container];
+        self.pinViewController.profile = challenge.userProfile;
+        [self.presentingViewController presentViewController:self.container animated:YES completion:nil];
     }
 }
+
+#pragma mark - Misc
 
 - (void)showError:(NSString *)error
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Fingerprint enrollment error" message:error preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okButton];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
+    [self.presentingViewController presentViewController:alert animated:YES completion:nil];
 }
 
 - (ONGAuthenticator *)fingerprintAuthenticatorFromSet:(NSSet<ONGAuthenticator *> *)authenticators
@@ -144,21 +169,26 @@
     return [authenticators filteredSetUsingPredicate:predicate].anyObject;
 }
 
-- (void)unwindNavigationStack
+- (void)finish:(NSError *)error deregistered:(BOOL)deregistered
 {
-    if (self.navigationController.presentedViewController) {
-        [self.navigationController dismissViewControllerAnimated:YES completion:^{
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }];
-    }
-}
+    void (^dismissalCompletion)(void) = ^{
+        if (deregistered) {
+            [self.presentingViewController popToRootViewControllerAnimated:YES];
+        }
 
-- (void)dismissNavigationPresentedViewController:(void (^)(void))completion
-{
-    if (self.navigationController.presentedViewController) {
-        [self.navigationController dismissViewControllerAnimated:YES completion:completion];
-    } else if (completion != nil) {
-        completion();
+        if (error) {
+            [self showError:error.localizedDescription];
+        }
+
+        if (self.completion) {
+            self.completion();
+        }
+    };
+
+    if (self.container.beingPresented || self.presentingViewController.presentedViewController == self.container) {
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:dismissalCompletion];
+    } else {
+        dismissalCompletion();
     }
 }
 

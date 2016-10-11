@@ -118,8 +118,12 @@
     self.pinViewController.mode = PINRegistrationMode;
     self.pinViewController.profile = challenge.userProfile;
 
-    self.pinViewController.pinEntered = ^(NSString *pin) {
-        [challenge.sender respondWithCreatedPin:pin challenge:challenge];
+    self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
+        if (pin) {
+            [challenge.sender respondWithCreatedPin:pin challenge:challenge];
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge];
+        }
     };
 
     // It is up to the you to decide when and how to show the PIN entry view controller.

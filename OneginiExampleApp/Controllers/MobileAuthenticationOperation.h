@@ -14,13 +14,15 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "OneginiSDK.h"
+#import "StateOperation.h"
 
-@class ONGAuthenticator;
+@interface MobileAuthenticationOperation : StateOperation <ONGMobileAuthenticationRequestDelegate>
 
-@interface UIAlertController (Shortcut)
+@property (nonatomic, readonly) ONGUserClient *userClient;
+@property (nonatomic, readonly) UINavigationController *navigationController;
+@property (nonatomic, readonly) NSDictionary *userInfo;
 
-+ (instancetype)controllerWithTitle:(NSString *)title message:(NSString *)message completion:(void (^)(void))completion;
-
-+ (instancetype)authenticatorSelectionController:(NSArray<ONGAuthenticator *> *)authenticators completion:(void (^)(NSInteger index, BOOL cancelled))completion;
+- (instancetype)initWithUserInfo:(NSDictionary *)userInfo userClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController;
 
 @end

@@ -37,3 +37,4 @@ Carthage/Build
 .idea
 
 OneginiExampleApp/OneginiSDK/*.a
+Dependencies/

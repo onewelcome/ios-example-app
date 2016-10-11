@@ -78,7 +78,7 @@ typedef NS_ENUM(ONGErrorCode, ONGAuthenticatorDeregistrationError) {
     ONGAuthenticatorDeregistrationErrorAuthenticatorInvalid = 9015,
     /// The given authenticator is not registered and can therefore not be deregistered
     ONGAuthenticatorDeregistrationErrorAuthenticatorNotRegistered = 10007,
-    // PIN auth deregistration not possible
+    /// PIN authenticator deregistration not possible
     ONGAuthenticatorPinDeregistrationNotPossible = 10008
 };
 

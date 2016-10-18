@@ -8,8 +8,8 @@ The iOS Example App is using the Onegini iOS SDK to perform secure authenticatio
 1. Go to https://repo.onegini.com
 2. Login using your credentials (provided to you by Onegini support via `support@onegini.com`). If you don't have these, feel free to create an account on `http://support.onegini.com` and request credentials. 
 3. Click the 'Artifacts' tab on the left side 
-4. Navigate to the `onegini-sdk/com/onegini/mobile/sdk/ios/OneginiSDKiOS/` folder. 
-5. download the latest 5.x version of the OneginiSDK, e.g.: `libOneginiSDKiOS-5.00.00.a` + headers file. They should be bundled as well in a zip file. 
+4. Navigate to the `onegini-sdk/com/onegini/mobile/sdk/ios/libOneginiSDKiOS/` folder. 
+5. download the latest 5.x version of the OneginiSDK, e.g.: `libOneginiSDKiOS-5.00.01.a` + headers file. They should be bundled as well in a zip file. 
 
 ### Adding the Onegini iOS SDK to the Example App
 1. Copy libOneginiSDKiOS-5.xx.xx.a binary to the ./OneginiExampleApp/OneginiSDK folder. This path is relative to the project file.

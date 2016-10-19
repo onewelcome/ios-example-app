@@ -17,8 +17,8 @@
 
 @interface PushConfirmationViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *pushTitle;
-@property (weak, nonatomic) IBOutlet UILabel *pushMessage;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *message;
 @property (nonatomic, copy) void (^pushConfirmed)(BOOL confirmed);
 
 @end

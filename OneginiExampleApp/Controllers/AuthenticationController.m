@@ -111,7 +111,7 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"FIDO Authentication"
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:@"Authenticate"
+    UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Authenticate with %@", challenge.authenticator.name]
                                                                  style:UIAlertActionStyleDefault
                                                                handler:^(UIAlertAction * _Nonnull action) {
                                                                    [challenge.sender respondWithFIDOForChallenge:challenge];

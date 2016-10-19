@@ -69,6 +69,7 @@
 		5CAE98C61CE0DEF8009C1D1A /* OneginiConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */; };
 		5CD187431CEDA5B8001FD062 /* MobileAuthenticationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */; };
 		5CD187441CEDA5B8001FD062 /* MobileAuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD187421CEDA5B8001FD062 /* MobileAuthenticationController.m */; };
+		5CF4F3BA1DB6603600A9FE01 /* ONGFIDOChallenge.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CF4F3B91DB6603600A9FE01 /* ONGFIDOChallenge.h */; };
 		AD2F1FD01D9EA8DD006A50FF /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FCF1D9EA8DD006A50FF /* SettingsViewController.xib */; };
 		AD2F1FD21D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FD11D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib */; };
 		AD2F1FD41D9EABA8006A50FF /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FD31D9EABA8006A50FF /* WelcomeViewController.xib */; };
@@ -196,6 +197,8 @@
 		5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneginiConfigModel.m; path = Configuration/OneginiConfigModel.m; sourceTree = "<group>"; };
 		5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileAuthenticationController.h; sourceTree = "<group>"; };
 		5CD187421CEDA5B8001FD062 /* MobileAuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileAuthenticationController.m; sourceTree = "<group>"; };
+		5CF4F3B81DB65D4E00A9FE01 /* OneginiExampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneginiExampleApp.entitlements; sourceTree = "<group>"; };
+		5CF4F3B91DB6603600A9FE01 /* ONGFIDOChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGFIDOChallenge.h; sourceTree = "<group>"; };
 		8F110FB687139430D79AEAD0 /* Pods-OneginiExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneginiExampleApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneginiExampleApp/Pods-OneginiExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		AD2F1FCF1D9EA8DD006A50FF /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		AD2F1FD11D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthenticatorCellTableViewCell.xib; sourceTree = "<group>"; };
@@ -390,6 +393,7 @@
 		5C6B80951D9EA86E00D94D68 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				5CF4F3B91DB6603600A9FE01 /* ONGFIDOChallenge.h */,
 				5C6B810D1DA3902700D94D68 /* ONGAuthenticatorRegistrationDelegate.h */,
 				5C6B80961D9EA86E00D94D68 /* OneginiSDK.h */,
 				5C6B80971D9EA86E00D94D68 /* ONGAuthenticationDelegate.h */,
@@ -483,6 +487,7 @@
 		C572A2D91CD893C400B137DC /* OneginiExampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				5CF4F3B81DB65D4E00A9FE01 /* OneginiExampleApp.entitlements */,
 				C5A29A751CDCE78F00E6B1D4 /* Models */,
 				C5A29A5F1CDCA55900E6B1D4 /* Controllers */,
 				C54139881CD9D3010033DBA8 /* ViewControllers */,
@@ -557,6 +562,7 @@
 				5CD187431CEDA5B8001FD062 /* MobileAuthenticationController.h in Headers */,
 				5C6B80C21D9EA86E00D94D68 /* ONGPinChallenge.h in Headers */,
 				5C6B80C01D9EA86E00D94D68 /* ONGMobileAuthenticationRequestDelegate.h in Headers */,
+				5CF4F3BA1DB6603600A9FE01 /* ONGFIDOChallenge.h in Headers */,
 				B47ADC3E1D644F24006DA9D1 /* SecurityController.h in Headers */,
 				5C7745211D998285004BBCFE /* ChangePinController.h in Headers */,
 				E4459662EEBC767C4F350A5A /* OneginiConfigModel.h in Headers */,
@@ -644,6 +650,11 @@
 					C572A2D61CD893C400B137DC = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = 47G5S528XM;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -859,6 +870,7 @@
 			baseConfigurationReference = 8F110FB687139430D79AEAD0 /* Pods-OneginiExampleApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OneginiExampleApp/OneginiExampleApp.entitlements;
 				DEVELOPMENT_TEAM = 47G5S528XM;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -890,6 +902,7 @@
 			baseConfigurationReference = 3ACFD9054DC70E31931FBE1A /* Pods-OneginiExampleApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OneginiExampleApp/OneginiExampleApp.entitlements;
 				DEVELOPMENT_TEAM = 47G5S528XM;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

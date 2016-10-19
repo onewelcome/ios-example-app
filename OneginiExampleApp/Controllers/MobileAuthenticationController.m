@@ -104,6 +104,22 @@
     [self.navigationController pushViewController:pushVC animated:YES];
 }
 
+-(void)userClient:(ONGUserClient *)userClient didReceiveFIDOChallenge:(ONGFIDOChallenge *)challenge forRequest:(ONGMobileAuthenticationRequest *)request
+{
+    PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
+    pushVC.pushMessage.text = request.message;
+    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint - %@", request.userProfile.profileId];
+    pushVC.pushConfirmed = ^(BOOL confirmed) {
+        [self.navigationController popViewControllerAnimated:YES];
+        if (confirmed){
+            [challenge.sender respondWithFIDOForChallenge:challenge];
+        } else {
+            [challenge.sender cancelChallenge:challenge];
+        }
+    };
+    [self.navigationController pushViewController:pushVC animated:YES];
+}
+
 - (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request
 {
     self.completion();

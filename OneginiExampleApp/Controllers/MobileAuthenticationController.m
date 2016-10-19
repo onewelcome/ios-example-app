@@ -41,8 +41,8 @@
 - (void)userClient:(ONGUserClient *)userClient didReceiveConfirmationChallenge:(void (^)(BOOL confirmRequest))confirmation forRequest:(ONGMobileAuthenticationRequest *)request
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
-    pushVC.pushMessage.text = request.message;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push - %@", request.userProfile.profileId];
+    pushVC.message = request.message;
+    pushVC.title = [NSString stringWithFormat:@"Confirm push - %@", request.userProfile.profileId];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [self.navigationController popViewControllerAnimated:YES];
         confirmation(confirmed);
@@ -91,12 +91,28 @@
 - (void)userClient:(ONGUserClient *)userClient didReceiveFingerprintChallenge:(ONGFingerprintChallenge *)challenge forRequest:(ONGMobileAuthenticationRequest *)request
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
-    pushVC.pushMessage.text = request.message;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint - %@", request.userProfile.profileId];
+    pushVC.message = request.message;
+    pushVC.title = [NSString stringWithFormat:@"Confirm push with fingerprint - %@", request.userProfile.profileId];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [self.navigationController popViewControllerAnimated:YES];
         if (confirmed){
             [challenge.sender respondWithDefaultPromptForChallenge:challenge];
+        } else {
+            [challenge.sender cancelChallenge:challenge];
+        }
+    };
+    [self.navigationController pushViewController:pushVC animated:YES];
+}
+
+-(void)userClient:(ONGUserClient *)userClient didReceiveFIDOChallenge:(ONGFIDOChallenge *)challenge forRequest:(ONGMobileAuthenticationRequest *)request
+{
+    PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
+    pushVC.message = request.message;
+    pushVC.title = [NSString stringWithFormat:@"Confirm push with %@ - %@", challenge.authenticator.name, request.userProfile.profileId];
+    pushVC.pushConfirmed = ^(BOOL confirmed) {
+        [self.navigationController popViewControllerAnimated:YES];
+        if (confirmed){
+            [challenge.sender respondWithFIDOForChallenge:challenge];
         } else {
             [challenge.sender cancelChallenge:challenge];
         }

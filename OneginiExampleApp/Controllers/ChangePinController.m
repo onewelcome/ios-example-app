@@ -51,8 +51,12 @@
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.profile = challenge.userProfile;
     self.pinViewController.pinLength = 5;
-    self.pinViewController.pinEntered = ^(NSString *pin) {
-        [challenge.sender respondWithPin:pin challenge:challenge];
+    self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
+        if (pin) {
+            [challenge.sender respondWithPin:pin challenge:challenge];
+        } else if (cancelled) {
+            
+        }
     };
 
     // It is up to the developer to decide when and how to show PIN entry view controller.
@@ -86,8 +90,12 @@
     [self.pinViewController reset];
 
     self.pinViewController.mode = PINRegistrationMode;
-    self.pinViewController.pinEntered = ^(NSString *pin) {
-        [challenge.sender respondWithCreatedPin:pin challenge:challenge];
+    self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
+        if (pin) {
+            [challenge.sender respondWithCreatedPin:pin challenge:challenge];
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge];
+        }
     };
 
     if (challenge.error) {

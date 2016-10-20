@@ -126,10 +126,14 @@
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
 {
     __weak typeof(self) weakSelf = self;
-    self.pinViewController.pinEntered = ^(NSString *pin) {
-        [MBProgressHUD showHUDAddedTo:weakSelf.container.view animated:YES];
+    self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
 
-        [challenge.sender respondWithPin:pin challenge:challenge];
+        if (pin) {
+            [MBProgressHUD showHUDAddedTo:weakSelf.container.view animated:YES];
+            [challenge.sender respondWithPin:pin challenge:challenge];
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge];
+        }
     };
 
     if (challenge.error) {

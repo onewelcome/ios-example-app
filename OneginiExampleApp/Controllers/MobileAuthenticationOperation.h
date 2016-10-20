@@ -13,25 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "OneginiSDK.h"
+#import "StateOperation.h"
 
-typedef enum : NSUInteger {
-    PINCheckMode,
-    PINRegistrationMode,
-    PINRegistrationVerifyMode,
-} PINEntryMode;
+@interface MobileAuthenticationOperation : StateOperation <ONGMobileAuthenticationRequestDelegate>
 
-@interface PinViewController : UIViewController
+@property (nonatomic, readonly) ONGUserClient *userClient;
+@property (nonatomic, readonly) UINavigationController *navigationController;
+@property (nonatomic, readonly) NSDictionary *userInfo;
 
-@property (nonatomic) NSString *customTitle;
-@property (nonatomic) PINEntryMode mode;
-@property (nonatomic) ONGUserProfile *profile;
-@property (nonatomic, copy) void (^pinEntered)(NSString *pin, BOOL cancelled);
-@property (nonatomic) NSInteger pinLength;
-
-- (void)showError:(NSString *)error;
-- (void)reset;
+- (instancetype)initWithUserInfo:(NSDictionary *)userInfo userClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController;
 
 @end

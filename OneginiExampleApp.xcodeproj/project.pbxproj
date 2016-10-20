@@ -26,7 +26,9 @@
 		1D6A38D6CA4B4E3E8C0F1180 /* TextViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A3BC3E11F6AA6AB8A67F4 /* TextViewController.h */; };
 		1D6A38DE74044D87D80F4DF1 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A30F82FC0C34367E3B439 /* TextViewController.m */; };
 		1D6A398C3421FF22811B1994 /* NavigationControllerAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A33EEAB85952D64A6F6F3 /* NavigationControllerAppearance.m */; };
+		1D6A3A242F9FB92F594D2ABB /* StateOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A325C250ECD6166818ACA /* StateOperation.h */; };
 		1D6A3BB7068B5D6A6CF579D7 /* ONGResourceResponse+JSONResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A3EC9D950AE2FC0E556EE /* ONGResourceResponse+JSONResponse.m */; };
+		1D6A3C1B408210BA5A90DF0B /* StateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D6A390EC2572C6F5C316B72 /* StateOperation.m */; };
 		1D6A3C21101996CC9DBA06E7 /* SettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A3AE1650D83B8D6BFDA44 /* SettingsViewController.h */; };
 		1D6A3C785B2F3FAC1B0B2276 /* PushConfirmationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D6A373DE7F6CA5789B8C6DD /* PushConfirmationViewController.h */; };
 		1D6A3D3D5D76E0EA756DA02F /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D6A3852A60B8D9519FDF224 /* ProfileViewController.xib */; };
@@ -70,6 +72,8 @@
 		5CD187431CEDA5B8001FD062 /* MobileAuthenticationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */; };
 		5CD187441CEDA5B8001FD062 /* MobileAuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD187421CEDA5B8001FD062 /* MobileAuthenticationController.m */; };
 		5CF4F3BA1DB6603600A9FE01 /* ONGFIDOChallenge.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CF4F3B91DB6603600A9FE01 /* ONGFIDOChallenge.h */; };
+		68AD227F29F4DDCC83BC4A47 /* MobileAuthenticationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 68AD27F23CE59643D7C37336 /* MobileAuthenticationOperation.h */; };
+		68AD253F2DBAA70E8B11A8D7 /* MobileAuthenticationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AD26240A0F4ED4AD29ACA3 /* MobileAuthenticationOperation.m */; };
 		AD2F1FD01D9EA8DD006A50FF /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FCF1D9EA8DD006A50FF /* SettingsViewController.xib */; };
 		AD2F1FD21D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FD11D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib */; };
 		AD2F1FD41D9EABA8006A50FF /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FD31D9EABA8006A50FF /* WelcomeViewController.xib */; };
@@ -130,6 +134,7 @@
 		1D6A3152B017C5D23CB7F135 /* UIBarButtonItem+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Extension.m"; sourceTree = "<group>"; };
 		1D6A322ADB02E92F8F9D959A /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		1D6A3231E45B84DAE1BE7D63 /* PushConfirmationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PushConfirmationViewController.xib; sourceTree = "<group>"; };
+		1D6A325C250ECD6166818ACA /* StateOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateOperation.h; sourceTree = "<group>"; };
 		1D6A327187B32EAE41340FD5 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		1D6A328D53DDF3417A35EF62 /* PinErrorMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinErrorMapper.h; sourceTree = "<group>"; };
 		1D6A3345966787F81FC4101C /* AuthenticatorCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticatorCellTableViewCell.m; sourceTree = "<group>"; };
@@ -141,6 +146,7 @@
 		1D6A3782F8020A9DBEBEDB7C /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1D6A37EEF488F40336008921 /* ONGResourceResponse+JSONResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ONGResourceResponse+JSONResponse.h"; sourceTree = "<group>"; };
 		1D6A3852A60B8D9519FDF224 /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		1D6A390EC2572C6F5C316B72 /* StateOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateOperation.m; sourceTree = "<group>"; };
 		1D6A39AB112BA2D3A28165FB /* PushConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushConfirmationViewController.m; sourceTree = "<group>"; };
 		1D6A39EABD811550F0DED8A7 /* AuthenticatorCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticatorCellTableViewCell.h; sourceTree = "<group>"; };
 		1D6A3A4C4A308C210E87CC77 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
@@ -199,6 +205,8 @@
 		5CD187421CEDA5B8001FD062 /* MobileAuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileAuthenticationController.m; sourceTree = "<group>"; };
 		5CF4F3B81DB65D4E00A9FE01 /* OneginiExampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneginiExampleApp.entitlements; sourceTree = "<group>"; };
 		5CF4F3B91DB6603600A9FE01 /* ONGFIDOChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGFIDOChallenge.h; sourceTree = "<group>"; };
+		68AD26240A0F4ED4AD29ACA3 /* MobileAuthenticationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileAuthenticationOperation.m; sourceTree = "<group>"; };
+		68AD27F23CE59643D7C37336 /* MobileAuthenticationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileAuthenticationOperation.h; sourceTree = "<group>"; };
 		8F110FB687139430D79AEAD0 /* Pods-OneginiExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneginiExampleApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneginiExampleApp/Pods-OneginiExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		AD2F1FCF1D9EA8DD006A50FF /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		AD2F1FD11D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthenticatorCellTableViewCell.xib; sourceTree = "<group>"; };
@@ -336,6 +344,8 @@
 				1D6A33CE3DD0EDE4540C5B39 /* Categories */,
 				1D6A328D53DDF3417A35EF62 /* PinErrorMapper.h */,
 				1D6A3C9CCA5F6762E3538711 /* PinErrorMapper.m */,
+				1D6A390EC2572C6F5C316B72 /* StateOperation.m */,
+				1D6A325C250ECD6166818ACA /* StateOperation.h */,
 				1D6A33EEAB85952D64A6F6F3 /* NavigationControllerAppearance.m */,
 				1D6A3F00AB5D62BC7FAE1334 /* NavigationControllerAppearance.h */,
 			);
@@ -522,6 +532,8 @@
 				5C3CA15A1D13E56100F00C05 /* ChangePinController.m */,
 				5C3CA1461D11394000F00C05 /* AuthenticatorRegistrationController.h */,
 				5C3CA1471D11394000F00C05 /* AuthenticatorRegistrationController.m */,
+				68AD26240A0F4ED4AD29ACA3 /* MobileAuthenticationOperation.m */,
+				68AD27F23CE59643D7C37336 /* MobileAuthenticationOperation.h */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -609,6 +621,8 @@
 				1D6A3FE5409C973731021E6C /* NavigationControllerAppearance.h in Headers */,
 				1D6A3C785B2F3FAC1B0B2276 /* PushConfirmationViewController.h in Headers */,
 				1D6A38D6CA4B4E3E8C0F1180 /* TextViewController.h in Headers */,
+				1D6A3A242F9FB92F594D2ABB /* StateOperation.h in Headers */,
+				68AD227F29F4DDCC83BC4A47 /* MobileAuthenticationOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -763,6 +777,8 @@
 				1D6A3BB7068B5D6A6CF579D7 /* ONGResourceResponse+JSONResponse.m in Sources */,
 				1D6A3512499A1433115A382D /* UIAlertController+Shortcut.m in Sources */,
 				1D6A3E32BC3EB7E9A7DAE958 /* PinErrorMapper.m in Sources */,
+				1D6A3C1B408210BA5A90DF0B /* StateOperation.m in Sources */,
+				68AD253F2DBAA70E8B11A8D7 /* MobileAuthenticationOperation.m in Sources */,
 				1D6A3562C58CF7B77806C78C /* SettingsViewController.m in Sources */,
 				1D6A3311B607A0A88951B5EC /* AuthenticatorCellTableViewCell.m in Sources */,
 				1D6A36022E8C01D0DFBD8982 /* UIBarButtonItem+Extension.m in Sources */,

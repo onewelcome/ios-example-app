@@ -15,11 +15,13 @@
 
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
+
 #import "MobileAuthenticationController.h"
 #import "NavigationControllerAppearance.h"
 
 @interface AppDelegate ()
 
+@property (nonatomic) UINavigationController *rootNavigationController;
 @property (nonatomic) MobileAuthenticationController *mobileAuthenticationController;
 
 @end
@@ -81,6 +83,9 @@
             }
         }
     }];
+
+    ONGUserClient *userClient = [ONGUserClient sharedInstance];
+    self.mobileAuthenticationController = [[MobileAuthenticationController alloc] initWithUserClient:userClient navigationController:self.rootNavigationController];
 }
 
 - (void)registerForPushMessages
@@ -114,21 +119,10 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    if (self.mobileAuthenticationController)
-        return;
-
-    self.mobileAuthenticationController = [MobileAuthenticationController
-        mobileAuthentiactionControllerWithNaviationController:(UINavigationController *)self.window.rootViewController
-                                                   completion:^{
-                                                       self.mobileAuthenticationController = nil;
-                                                   }];
-
-    // todo: anyway code above will be rewritten. Do not delete comment below :)
-
-    // Developer needs to be aware that push notifications sometime can be delivered nearly simultaneously.
-    // Therefore it is not recommended to share single delegate for all of the incoming mobile authentication requests,
-    // since previous request may be in the middle of authentication process (i.e. not finished).
-    [[ONGUserClient sharedInstance] handleMobileAuthenticationRequest:userInfo delegate:self.mobileAuthenticationController];
+    BOOL handled = [self.mobileAuthenticationController handleMobileAuthenticationRequest:userInfo];
+    if (!handled) {
+        // pass it to the next service (FireBase, Facebook, etc).
+    }
 }
 
 -(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options

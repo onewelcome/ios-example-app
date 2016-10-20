@@ -1,25 +1,19 @@
-//
 // Copyright (c) 2016 Onegini. All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "OneginiSDK.h"
 
-@interface MobileAuthenticationController : NSObject<ONGMobileAuthenticationRequestDelegate>
+@class ONGUserClient;
 
-+ (instancetype)mobileAuthentiactionControllerWithNaviationController:(UINavigationController *)navigationController
-                                                           completion:(void (^)())completion;
+// Due to nature of mobile request authentication that requires user interaction it appears that more notifications than
+// one notification can be received by the app.
+// In order to prevent overlapping of the Pin UI develop may want to handle mobile auth requests as a queue. 
+@interface MobileAuthenticationController : NSObject
+
+@property (nonatomic, readonly) ONGUserClient *userClient;
+@property (nonatomic, readonly) UINavigationController *navigationController;
+
+- (instancetype)initWithUserClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController;
+
+- (BOOL)handleMobileAuthenticationRequest:(NSDictionary *)userInfo;
 
 @end

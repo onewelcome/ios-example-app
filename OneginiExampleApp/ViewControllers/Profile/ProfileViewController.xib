@@ -101,7 +101,7 @@
                 <constraint firstItem="NEk-d7-u7M" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="ayu-6T-T6G"/>
                 <constraint firstItem="NEk-d7-u7M" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ov7-yB-iac"/>
             </constraints>
-            <point key="canvasLocation" x="-74.5" y="288.5"/>
+            <point key="canvasLocation" x="-71" y="185"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

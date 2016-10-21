@@ -137,6 +137,8 @@
     };
 
     if (challenge.error) {
+        [MBProgressHUD hideHUDForView:self.container.view animated:YES];
+
         // Pin is already presented on the screen
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
         [self.pinViewController showError:description];

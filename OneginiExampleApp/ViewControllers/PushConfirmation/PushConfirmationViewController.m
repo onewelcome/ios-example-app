@@ -18,8 +18,6 @@
 
 @interface PushConfirmationViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *pushTitle;
-@property (weak, nonatomic) IBOutlet UILabel *pushMessage;
 @property (weak, nonatomic) IBOutlet UIButton *pushConfirmButton;
 @property (weak, nonatomic) IBOutlet UIButton *pushDenyButton;
 
@@ -32,8 +30,6 @@
     [super viewDidLoad];
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
-    self.pushTitle.text = self.title;
-    self.pushMessage.text = self.message;
 }
 
 - (IBAction)confirmPush:(id)sender

@@ -21,7 +21,6 @@
 
 @interface AppDelegate ()
 
-@property (nonatomic) UINavigationController *rootNavigationController;
 @property (nonatomic) MobileAuthenticationController *mobileAuthenticationController;
 
 @end
@@ -85,7 +84,7 @@
     }];
 
     ONGUserClient *userClient = [ONGUserClient sharedInstance];
-    self.mobileAuthenticationController = [[MobileAuthenticationController alloc] initWithUserClient:userClient navigationController:self.rootNavigationController];
+    self.mobileAuthenticationController = [[MobileAuthenticationController alloc] initWithUserClient:userClient navigationController:(UINavigationController *)self.window.rootViewController];
 }
 
 - (void)registerForPushMessages

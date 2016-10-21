@@ -63,7 +63,7 @@
 		5C6B80C81D9EA86E00D94D68 /* ONGResourceResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6B80AA1D9EA86E00D94D68 /* ONGResourceResponse.h */; };
 		5C6B80C91D9EA86E00D94D68 /* ONGUserClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6B80AB1D9EA86E00D94D68 /* ONGUserClient.h */; };
 		5C6B80CA1D9EA86E00D94D68 /* ONGUserProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6B80AC1D9EA86E00D94D68 /* ONGUserProfile.h */; };
-		5C6B80CD1D9EA86E00D94D68 /* libOneginiSDKiOS-5.00.00.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6B80AF1D9EA86E00D94D68 /* libOneginiSDKiOS-5.00.00.a */; };
+		5C6B80CD1D9EA86E00D94D68 /* libOneginiSDKiOS-5.00.02-FIDO-BETA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6B80AF1D9EA86E00D94D68 /* libOneginiSDKiOS-5.00.02-FIDO-BETA.a */; };
 		5C6B80CF1D9EABB700D94D68 /* SensoryBiometricsManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6B80921D9EA86E00D94D68 /* SensoryBiometricsManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5C6B810E1DA3902700D94D68 /* ONGAuthenticatorRegistrationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6B810D1DA3902700D94D68 /* ONGAuthenticatorRegistrationDelegate.h */; };
 		5C7745211D998285004BBCFE /* ChangePinController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C3CA1591D13E56100F00C05 /* ChangePinController.h */; };
@@ -197,7 +197,7 @@
 		5C6B80AC1D9EA86E00D94D68 /* ONGUserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGUserProfile.h; sourceTree = "<group>"; };
 		5C6B80AD1D9EA86E00D94D68 /* samsungsds-biomodule-ios-v1.4.0.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "samsungsds-biomodule-ios-v1.4.0.framework"; sourceTree = "<group>"; };
 		5C6B80AE1D9EA86E00D94D68 /* SensoryBiometricsManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SensoryBiometricsManager.framework; sourceTree = "<group>"; };
-		5C6B80AF1D9EA86E00D94D68 /* libOneginiSDKiOS-5.00.00.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libOneginiSDKiOS-5.00.00.a"; sourceTree = "<group>"; };
+		5C6B80AF1D9EA86E00D94D68 /* libOneginiSDKiOS-5.00.02-FIDO-BETA.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libOneginiSDKiOS-5.00.02-FIDO-BETA.a"; sourceTree = "<group>"; };
 		5C6B810D1DA3902700D94D68 /* ONGAuthenticatorRegistrationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGAuthenticatorRegistrationDelegate.h; sourceTree = "<group>"; };
 		5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneginiConfigModel.m; path = Configuration/OneginiConfigModel.m; sourceTree = "<group>"; };
@@ -259,7 +259,7 @@
 				C5FE9E991CD8C10000142A20 /* libc++.tbd in Frameworks */,
 				5C6B80B21D9EA86E00D94D68 /* SensoryBiometricsManager.framework in Frameworks */,
 				5C6B80B11D9EA86E00D94D68 /* samsungsds-bm-ios-v1.4.1.a in Frameworks */,
-				5C6B80CD1D9EA86E00D94D68 /* libOneginiSDKiOS-5.00.00.a in Frameworks */,
+				5C6B80CD1D9EA86E00D94D68 /* libOneginiSDKiOS-5.00.02-FIDO-BETA.a in Frameworks */,
 				C5FE9E971CD8C0F300142A20 /* libiconv.tbd in Frameworks */,
 				C5FE9E951CD8C0DE00142A20 /* MobileCoreServices.framework in Frameworks */,
 				C5FE9E931CD8C0D800142A20 /* SystemConfiguration.framework in Frameworks */,
@@ -395,7 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				5C6B80951D9EA86E00D94D68 /* Headers */,
-				5C6B80AF1D9EA86E00D94D68 /* libOneginiSDKiOS-5.00.00.a */,
+				5C6B80AF1D9EA86E00D94D68 /* libOneginiSDKiOS-5.00.02-FIDO-BETA.a */,
 			);
 			path = OneginiSDK;
 			sourceTree = "<group>";
@@ -906,7 +906,7 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-force_load",
-					"$(SRCROOT)/Dependencies/OneginiSDK/libOneginiSDKiOS-5.00.00.a",
+					"$(SRCROOT)/Dependencies/OneginiSDK/libOneginiSDKiOS-5.00.02-FIDO-BETA.a",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.onegini.ExampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -938,7 +938,7 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-force_load",
-					"$(SRCROOT)/Dependencies/OneginiSDK/libOneginiSDKiOS-5.00.00.a",
+					"$(SRCROOT)/Dependencies/OneginiSDK/libOneginiSDKiOS-5.00.02-FIDO-BETA.a",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.onegini.ExampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

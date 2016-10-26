@@ -59,9 +59,9 @@
     return [[self alloc] initWithPresentingViewController:navigationController completion:completion];
 }
 
-#pragma mark - ONGAuthenticationDelegate
+#pragma mark - ONGAuthenticatorRegistrationDelegate
 
-- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator user:(nonnull ONGUserProfile *)userProfile
+- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile
 {
     [MBProgressHUD hideHUDForView:self.container.view animated:YES];
 
@@ -73,7 +73,7 @@
 /**
  * Possible error domains are ONGAuthenticatorRegistrationErrorDomain and ONGGenericErrorDomain.
  */
-- (void)userClient:(ONGUserClient *)userClient didFailToRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator user:(nonnull ONGUserProfile *)userProfile error:(nonnull NSError *)error
+- (void)userClient:(ONGUserClient *)userClient didFailToRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile error:(nonnull NSError *)error
 {
     [MBProgressHUD hideHUDForView:self.container.view animated:YES];
 

@@ -42,7 +42,7 @@
 		5C3CA15C1D13E56100F00C05 /* ChangePinController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3CA15A1D13E56100F00C05 /* ChangePinController.m */; };
 		5C6B80B11D9EA86E00D94D68 /* samsungsds-bm-ios-v1.4.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6B80911D9EA86E00D94D68 /* samsungsds-bm-ios-v1.4.1.a */; };
 		5C6B80B21D9EA86E00D94D68 /* SensoryBiometricsManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6B80921D9EA86E00D94D68 /* SensoryBiometricsManager.framework */; };
-		5C6B80B31D9EA86E00D94D68 /* uaf-client-ios-v1.4.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6B80931D9EA86E00D94D68 /* uaf-client-ios-v1.4.1.a */; };
+		5C6B80B31D9EA86E00D94D68 /* uaf-client-ios-v.1.4.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6B80931D9EA86E00D94D68 /* uaf-client-ios-v.1.4.1.a */; };
 		5C6B80B41D9EA86E00D94D68 /* OneginiSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6B80961D9EA86E00D94D68 /* OneginiSDK.h */; };
 		5C6B80B51D9EA86E00D94D68 /* ONGAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6B80971D9EA86E00D94D68 /* ONGAuthenticationDelegate.h */; };
 		5C6B80B61D9EA86E00D94D68 /* ONGAuthenticator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6B80981D9EA86E00D94D68 /* ONGAuthenticator.h */; };
@@ -171,7 +171,7 @@
 		5C3CA15A1D13E56100F00C05 /* ChangePinController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePinController.m; sourceTree = "<group>"; };
 		5C6B80911D9EA86E00D94D68 /* samsungsds-bm-ios-v1.4.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "samsungsds-bm-ios-v1.4.1.a"; sourceTree = "<group>"; };
 		5C6B80921D9EA86E00D94D68 /* SensoryBiometricsManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SensoryBiometricsManager.framework; sourceTree = "<group>"; };
-		5C6B80931D9EA86E00D94D68 /* uaf-client-ios-v1.4.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "uaf-client-ios-v1.4.1.a"; sourceTree = "<group>"; };
+		5C6B80931D9EA86E00D94D68 /* uaf-client-ios-v.1.4.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "uaf-client-ios-v.1.4.1.a"; sourceTree = "<group>"; };
 		5C6B80961D9EA86E00D94D68 /* OneginiSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneginiSDK.h; sourceTree = "<group>"; };
 		5C6B80971D9EA86E00D94D68 /* ONGAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGAuthenticationDelegate.h; sourceTree = "<group>"; };
 		5C6B80981D9EA86E00D94D68 /* ONGAuthenticator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGAuthenticator.h; sourceTree = "<group>"; };
@@ -195,8 +195,6 @@
 		5C6B80AA1D9EA86E00D94D68 /* ONGResourceResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGResourceResponse.h; sourceTree = "<group>"; };
 		5C6B80AB1D9EA86E00D94D68 /* ONGUserClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGUserClient.h; sourceTree = "<group>"; };
 		5C6B80AC1D9EA86E00D94D68 /* ONGUserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGUserProfile.h; sourceTree = "<group>"; };
-		5C6B80AD1D9EA86E00D94D68 /* samsungsds-biomodule-ios-v1.4.0.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "samsungsds-biomodule-ios-v1.4.0.framework"; sourceTree = "<group>"; };
-		5C6B80AE1D9EA86E00D94D68 /* SensoryBiometricsManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SensoryBiometricsManager.framework; sourceTree = "<group>"; };
 		5C6B80AF1D9EA86E00D94D68 /* libOneginiSDKiOS-5.00.02-FIDO-BETA.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libOneginiSDKiOS-5.00.02-FIDO-BETA.a"; sourceTree = "<group>"; };
 		5C6B810D1DA3902700D94D68 /* ONGAuthenticatorRegistrationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ONGAuthenticatorRegistrationDelegate.h; sourceTree = "<group>"; };
 		5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -265,7 +263,7 @@
 				C5FE9E931CD8C0D800142A20 /* SystemConfiguration.framework in Frameworks */,
 				C5FE9E911CD8C0D200142A20 /* Security.framework in Frameworks */,
 				CFC7BE61EF0643B492D7E269 /* libPods-OneginiExampleApp.a in Frameworks */,
-				5C6B80B31D9EA86E00D94D68 /* uaf-client-ios-v1.4.1.a in Frameworks */,
+				5C6B80B31D9EA86E00D94D68 /* uaf-client-ios-v.1.4.1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +384,7 @@
 			children = (
 				5C6B80911D9EA86E00D94D68 /* samsungsds-bm-ios-v1.4.1.a */,
 				5C6B80921D9EA86E00D94D68 /* SensoryBiometricsManager.framework */,
-				5C6B80931D9EA86E00D94D68 /* uaf-client-ios-v1.4.1.a */,
+				5C6B80931D9EA86E00D94D68 /* uaf-client-ios-v.1.4.1.a */,
 			);
 			path = FIDO;
 			sourceTree = "<group>";
@@ -428,8 +426,6 @@
 				5C6B80AA1D9EA86E00D94D68 /* ONGResourceResponse.h */,
 				5C6B80AB1D9EA86E00D94D68 /* ONGUserClient.h */,
 				5C6B80AC1D9EA86E00D94D68 /* ONGUserProfile.h */,
-				5C6B80AD1D9EA86E00D94D68 /* samsungsds-biomodule-ios-v1.4.0.framework */,
-				5C6B80AE1D9EA86E00D94D68 /* SensoryBiometricsManager.framework */,
 			);
 			path = Headers;
 			sourceTree = "<group>";

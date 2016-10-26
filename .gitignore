@@ -36,5 +36,4 @@ Carthage/Build
 # AppCode
 .idea
 
-OneginiExampleApp/OneginiSDK/*.a
 Dependencies/

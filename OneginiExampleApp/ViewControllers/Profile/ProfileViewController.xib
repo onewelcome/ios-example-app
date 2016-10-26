@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController">
             <connections>
-                <outlet property="fingerprintButton" destination="LLC-si-NRP" id="v1g-ci-hsM"/>
                 <outlet property="getTokenSpinner" destination="lYF-s1-yVn" id="YfO-lE-fpP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -67,15 +66,6 @@
                                 <action selector="enrollForMobileAuthentication:" destination="-1" eventType="touchUpInside" id="WUj-Vi-Qoq"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLC-si-NRP">
-                            <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <state key="normal" title="Enroll for fingerprint">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="enrollForFingerprintAuthentication:" destination="-1" eventType="touchUpInside" id="g2x-4D-AIT"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2FJ-eX-JDg" userLabel="Change pin Button">
                             <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal" title="Change pin">
@@ -103,7 +93,6 @@
                         <constraint firstItem="8eJ-Cw-DPl" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="nNd-QH-yjC"/>
                         <constraint firstItem="8ui-yk-FRc" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="rOb-wd-uYy"/>
                         <constraint firstItem="2FJ-eX-JDg" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="waP-ZD-xGp"/>
-                        <constraint firstItem="LLC-si-NRP" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="ypq-ol-fiy"/>
                     </constraints>
                 </stackView>
             </subviews>

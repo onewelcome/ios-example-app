@@ -21,15 +21,14 @@
 #import "AuthenticationController.h"
 #import "AuthenticatorCellTableViewCell.h"
 #import "UIAlertController+Shortcut.h"
-#import "FingerprintController.h"
+#import "AuthenticatorRegistrationController.h"
 
 @interface SettingsViewController ()
 
 @property (nonatomic) ONGUserClient *userClient;
 @property (nonatomic) ONGUserProfile *userProfile;
 @property (nonatomic, copy) NSArray<ONGAuthenticator *> *authenticators;
-
-@property (nonatomic) FingerprintController *authenticationController;
+@property (nonatomic) AuthenticatorRegistrationController *authenticatorRegistrationController;
 
 @end
 
@@ -104,12 +103,12 @@
 
 - (void)registerAuthenticator:(ONGAuthenticator *)authenticator
 {
-    self.authenticationController = [FingerprintController fingerprintControllerWithNavigationController:self.navigationController completion:^{
-        self.authenticationController = nil;
+    self.authenticatorRegistrationController = [AuthenticatorRegistrationController controllerWithNavigationController:self.navigationController completion:^{
+        self.authenticatorRegistrationController = nil;
         
         [self reloadData];
     }];
-    [self.userClient registerAuthenticator:authenticator delegate:self.authenticationController];
+    [self.userClient registerAuthenticator:authenticator delegate:self.authenticatorRegistrationController];
 }
 
 - (void)deregisterAuthenticator:(ONGAuthenticator *)authenticator
@@ -157,17 +156,6 @@
     }];
     
     return cell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ONGAuthenticator *authenticator = self.authenticators[indexPath.row];
-    if (!authenticator.preferred && authenticator.registered) {
-        [self.userClient setPreferredAuthenticator:authenticator];
-        [self reloadData];
-    }
 }
 
 #pragma mark - Actions

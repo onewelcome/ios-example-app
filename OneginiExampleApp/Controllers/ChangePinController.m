@@ -55,7 +55,7 @@
         if (pin) {
             [challenge.sender respondWithPin:pin challenge:challenge];
         } else if (cancelled) {
-            
+            [challenge.sender cancelChallenge:challenge];
         }
     };
 

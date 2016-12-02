@@ -92,11 +92,11 @@
         // The user has tried to register an authenticator for the user that is no longer authenticated.
         case ONGAuthenticatorRegistrationErrorUserNotAuthenticated:
         // The provided authenticator is not valid. For example attempt to register Fingerprint authenticator while TouchID is neither available nor configured.
-        case ONGAuthenticatorRegistrationErrorAuthenticatorInvalid:
+        case ONGAuthenticationErrorAuthenticatorInvalid:
         // Attempt to register an already registered authenticator
         case ONGAuthenticatorRegistrationErrorAuthenticatorAlreadyRegistered:
         // Currently not used, you may skip it.
-        case ONGAuthenticatorRegistrationErrorFidoAuthenticationDisabled:
+        case ONGAuthenticationErrorFidoAuthenticationDisabled:
         // The given authenticator is not supported.
         case ONGAuthenticatorRegistrationErrorAuthenticatorNotSupported:
 

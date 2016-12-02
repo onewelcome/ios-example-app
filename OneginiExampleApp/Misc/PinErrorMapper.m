@@ -16,7 +16,7 @@
     NSString *reason = nil;
     switch (error.code) {
         // Typical error for invalid PIN
-        case ONGPinAuthenticationErrorInvalidPin:
+        case ONGAuthenticationErrorInvalidPin:
             reason = @"Invalid pin";
             break;
 

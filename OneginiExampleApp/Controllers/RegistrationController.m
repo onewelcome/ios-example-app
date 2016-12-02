@@ -57,6 +57,7 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToRegisterWithError:(NSError *)error
 {
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     // Errors are going to be within ONGGenericErrorDomain or ONGRegistrationErrorDomain domains.
     switch (error.code) {
         // Both errors from ONGRegistrationErrorDomain mean that registration can not be completed.

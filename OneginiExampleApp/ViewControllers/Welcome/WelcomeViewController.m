@@ -78,6 +78,8 @@
         registrationControllerWithNavigationController:self.navigationController
                                             completion:^{
                                                 self.registrationController = nil;
+                                                self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
+                                                [self.profilePicker reloadAllComponents];
                                             }];
     [[ONGUserClient sharedInstance] registerUser:@[@"read"] delegate:self.registrationController];
 }
@@ -108,6 +110,8 @@
                                               completion:^{
                                                   [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                                   self.authenticationController = nil;
+                                                  self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
+                                                  [self.profilePicker reloadAllComponents];
                                               }];
     __weak typeof(self) weakSelf = self;
     self.authenticationController.progressStateDidChange = ^(BOOL isInProgress) {

@@ -40,9 +40,6 @@
 		5C3CA1481D11394000F00C05 /* AuthenticatorRegistrationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C3CA1461D11394000F00C05 /* AuthenticatorRegistrationController.h */; };
 		5C3CA1491D11394000F00C05 /* AuthenticatorRegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3CA1471D11394000F00C05 /* AuthenticatorRegistrationController.m */; };
 		5C3CA15C1D13E56100F00C05 /* ChangePinController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3CA15A1D13E56100F00C05 /* ChangePinController.m */; };
-		5C6B80B11D9EA86E00D94D68 /* samsungsds-bm-ios-v1.4.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6B80911D9EA86E00D94D68 /* samsungsds-bm-ios-v1.4.1.a */; };
-		5C6B80B21D9EA86E00D94D68 /* SensoryBiometricsManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6B80921D9EA86E00D94D68 /* SensoryBiometricsManager.framework */; };
-		5C6B80B31D9EA86E00D94D68 /* uaf-client-ios-v.1.4.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6B80931D9EA86E00D94D68 /* uaf-client-ios-v.1.4.1.a */; };
 		5C6B80B41D9EA86E00D94D68 /* OneginiSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6B80961D9EA86E00D94D68 /* OneginiSDK.h */; };
 		5C6B80B51D9EA86E00D94D68 /* ONGAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6B80971D9EA86E00D94D68 /* ONGAuthenticationDelegate.h */; };
 		5C6B80B61D9EA86E00D94D68 /* ONGAuthenticator.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C6B80981D9EA86E00D94D68 /* ONGAuthenticator.h */; };

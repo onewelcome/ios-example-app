@@ -12,11 +12,11 @@ example app.
 [App developer quickstart](https://docs.onegini.com/app-developer-quickstart.html#step1) and perform the first step.
 3. Click the 'Artifacts' tab on the left side 
 4. Navigate to the `onegini-sdk/com/onegini/mobile/sdk/ios/libOneginiSDKiOS/` folder. 
-5. download the latest 5.x version of the OneginiSDK, e.g.: `libOneginiSDKiOS-5.00.01.a` + headers file. They should be bundled as well in a zip file. 
+5. Download the latest 5.x version of the OneginiSDK, e.g.: `libOneginiSDKiOS-5.01.00.a` + headers file. They should be bundled as well in a zip file. 
 
 ### Adding the Onegini iOS SDK to the Example App
-1. Copy libOneginiSDKiOS-5.xx.xx.a binary to the ./OneginiExampleApp/OneginiSDK folder. This path is relative to the project file.
-2. In Xcode, make sure the binary is added to the `Framework/OneginiSDK` group. If not, add it.
+1. Copy libOneginiSDKiOS-5.xx.xx.a binary to the ./OneginiExampleApp/Dependencies/OneginiSDK folder. This path is relative to the project file.
+2. In Xcode, make sure the binary is added to the `Dependencies/OneginiSDK` group. If not, add it.
 
 ### Setup the Cocoapods dependencies
 1. Run `pod install` to correctly setup the Cocoapods dependencies

@@ -17,6 +17,4 @@
 
 @interface ProfileViewController : UIViewController
 
-- (void)updateViews;
-
 @end

@@ -1,7 +1,11 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '9.0'
+plugin 'cocoapods-art', :sources => [
+ 'cocoapods-snapshot-local'
+]
+
+use_frameworks!
 
 target 'OneginiExampleApp' do
+  pod 'OneginiSDKiOS', '~> 5.01.01-SNAPSHOT'
   pod 'ZFDragableModalTransition', '~> 0.6'
   pod 'MBProgressHUD', '~> 1.0.0'
 end

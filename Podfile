@@ -1,3 +1,5 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
 plugin 'cocoapods-art', :sources => [
  'cocoapods-snapshot-local'
 ]

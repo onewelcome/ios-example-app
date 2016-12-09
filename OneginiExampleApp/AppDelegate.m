@@ -18,8 +18,9 @@
 
 #import "MobileAuthenticationController.h"
 #import "NavigationControllerAppearance.h"
+#import "TestOptions.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <UINavigationControllerDelegate>
 
 @property (nonatomic) MobileAuthenticationController *mobileAuthenticationController;
 
@@ -46,7 +47,8 @@
     WelcomeViewController *root = [[WelcomeViewController alloc] init];
     UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:root];
     [NavigationControllerAppearance apply:controller];
-
+    controller.delegate = self;
+    
     self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];
 }
@@ -127,6 +129,17 @@
 -(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
     return [[ONGUserClient sharedInstance] handleApplicationURL:url];
+}
+
+- (void)showSecretOptions
+{
+    [TestOptions showSecretOptionsOnViewController:self.window.rootViewController];
+}
+
+-(void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    UIBarButtonItem *testingOptions = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStylePlain target:self action:@selector(showSecretOptions)];
+    viewController.navigationItem.rightBarButtonItem = testingOptions;
 }
 
 @end

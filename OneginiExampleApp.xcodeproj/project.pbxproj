@@ -101,6 +101,7 @@
 		B44AF5C21DBA6A36009F1269 /* tokenserver-demo-test.onegini.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = B44AF5C11DBA6A36009F1269 /* tokenserver-demo-test.onegini.com.cer */; };
 		B47ADC3E1D644F24006DA9D1 /* SecurityController.h in Headers */ = {isa = PBXBuildFile; fileRef = B47ADC3C1D644F24006DA9D1 /* SecurityController.h */; };
 		B47ADC3F1D644F24006DA9D1 /* SecurityController.m in Sources */ = {isa = PBXBuildFile; fileRef = B47ADC3D1D644F24006DA9D1 /* SecurityController.m */; };
+		B49C75F41E002310009FCCA0 /* SensoryBiometricsManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C6B80921D9EA86E00D94D68 /* SensoryBiometricsManager.framework */; };
 		C572A2DC1CD893C400B137DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C572A2DB1CD893C400B137DC /* main.m */; };
 		C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C572A2DE1CD893C400B137DC /* AppDelegate.m */; };
 		C572A2E71CD893C400B137DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E61CD893C400B137DC /* Assets.xcassets */; };
@@ -256,12 +257,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B49C75F41E002310009FCCA0 /* SensoryBiometricsManager.framework in Frameworks */,
 				B41C61261DF55A8700B335C9 /* samsungsds-bm-ios-v1.4.1.a in Frameworks */,
 				B41C61271DF55A8700B335C9 /* uaf-client-ios-v.1.4.1.a in Frameworks */,
 				C5FE9E991CD8C10000142A20 /* libc++.tbd in Frameworks */,
 				5CC2B1D01DF592B3003C60BF /* libOneginiSDKiOSFIDO-5.01.00.a in Frameworks */,
 				C5FE9E971CD8C0F300142A20 /* libiconv.tbd in Frameworks */,
-				5CC2B18D1DF56EAB003C60BF /* libOneginiSDKiOS-5.01.00.a in Frameworks */,
 				C5FE9E951CD8C0DE00142A20 /* MobileCoreServices.framework in Frameworks */,
 				C5FE9E931CD8C0D800142A20 /* SystemConfiguration.framework in Frameworks */,
 				C5FE9E911CD8C0D200142A20 /* Security.framework in Frameworks */,
@@ -591,44 +592,34 @@
 				5CC2B1C31DF592B3003C60BF /* ONGFingerprintChallenge.h in Headers */,
 				5CC2B1B71DF592B3003C60BF /* OneginiSDK.h in Headers */,
 				5C3CA1481D11394000F00C05 /* AuthenticatorRegistrationController.h in Headers */,
-				5CC2B1741DF56EAB003C60BF /* OneginiSDK.h in Headers */,
 				ADEC3AF71D884D7E0009234A /* ONGErrors.h in Headers */,
-				5CC2B1781DF56EAB003C60BF /* ONGChangePinDelegate.h in Headers */,
-				5CC2B18A1DF56EAB003C60BF /* ONGResourceResponse.h in Headers */,
 				ADEC3B021D884D7E0009234A /* ONGResourceResponse.h in Headers */,
 				ADEC3AF21D884D7E0009234A /* ONGClient.h in Headers */,
 				5CC2B1CB1DF592B3003C60BF /* ONGRequestBuilder.h in Headers */,
 				5CC2B1BC1DF592B3003C60BF /* ONGClient.h in Headers */,
 				ADEC3AF01D884D7E0009234A /* ONGAuthenticator.h in Headers */,
 				ADEC3AF81D884D7E0009234A /* ONGFingerprintChallenge.h in Headers */,
-				5CC2B1801DF56EAB003C60BF /* ONGFingerprintChallenge.h in Headers */,
 				ADEC3AF51D884D7E0009234A /* ONGCreatePinChallenge.h in Headers */,
-				5CC2B1791DF56EAB003C60BF /* ONGClient.h in Headers */,
 				ADEC3AFE1D884D7E0009234A /* ONGPublicDefines.h in Headers */,
 				5CC2B1B81DF592B3003C60BF /* ONGAuthenticationDelegate.h in Headers */,
 				ADEC3AEF1D884D7E0009234A /* ONGAuthenticationDelegate.h in Headers */,
-				5CC2B1861DF56EAB003C60BF /* ONGPublicDefines.h in Headers */,
 				ADEC3AF41D884D7E0009234A /* ONGConfigModel.h in Headers */,
 				ADEC3AFC1D884D7E0009234A /* ONGPinChallenge.h in Headers */,
-				5CC2B1771DF56EAB003C60BF /* ONGAuthenticatorRegistrationDelegate.h in Headers */,
 				ADEC3AEE1D884D7E0009234A /* OneginiSDK.h in Headers */,
 				5CC2B1BB1DF592B3003C60BF /* ONGChangePinDelegate.h in Headers */,
 				ADEC3AFB1D884D7E0009234A /* ONGNetworkTask.h in Headers */,
-				5CC2B17A1DF56EAB003C60BF /* ONGClientBuilder.h in Headers */,
 				ADEC3B031D884D7E0009234A /* ONGUserClient.h in Headers */,
 				5CC2B1CC1DF592B3003C60BF /* ONGResourceRequest.h in Headers */,
 				5CC2B1C91DF592B3003C60BF /* ONGPublicDefines.h in Headers */,
 				5CC2B1C41DF592B3003C60BF /* ONGMobileAuthenticationRequest.h in Headers */,
 				ADEC3AFF1D884D7E0009234A /* ONGRegistrationDelegate.h in Headers */,
 				ADEC3AF91D884D7E0009234A /* ONGMobileAuthenticationRequest.h in Headers */,
-				5CC2B17E1DF56EAB003C60BF /* ONGErrors.h in Headers */,
 				ADEC3B001D884D7E0009234A /* ONGRequestBuilder.h in Headers */,
 				5CC2B1C81DF592B3003C60BF /* ONGPublicCommons.h in Headers */,
 				ADEC3AF31D884D7E0009234A /* ONGClientBuilder.h in Headers */,
 				5CC2B1C01DF592B3003C60BF /* ONGDeviceClient.h in Headers */,
 				ADEC3B041D884D7E0009234A /* ONGUserProfile.h in Headers */,
 				ADEC3B011D884D7E0009234A /* ONGResourceRequest.h in Headers */,
-				5CC2B17C1DF56EAB003C60BF /* ONGCreatePinChallenge.h in Headers */,
 				1D6A3790481B45EC7F9ADAB4 /* ONGResourceResponse+JSONResponse.h in Headers */,
 				5CC2B1BE1DF592B3003C60BF /* ONGConfigModel.h in Headers */,
 				1D6A370A308FE89704C3198C /* UIAlertController+Shortcut.h in Headers */,
@@ -638,18 +629,10 @@
 				1D6A359A4BBC2A98FE047F04 /* AuthenticatorCellTableViewCell.h in Headers */,
 				1D6A35682A8137EEEE658FB4 /* UIBarButtonItem+Extension.h in Headers */,
 				1D6A3FE5409C973731021E6C /* NavigationControllerAppearance.h in Headers */,
-				5CC2B17D1DF56EAB003C60BF /* ONGDeviceClient.h in Headers */,
-				5CC2B1831DF56EAB003C60BF /* ONGNetworkTask.h in Headers */,
 				1D6A3C785B2F3FAC1B0B2276 /* PushConfirmationViewController.h in Headers */,
 				1D6A38D6CA4B4E3E8C0F1180 /* TextViewController.h in Headers */,
-				5CC2B18B1DF56EAB003C60BF /* ONGUserClient.h in Headers */,
-				5CC2B1871DF56EAB003C60BF /* ONGRegistrationDelegate.h in Headers */,
-				5CC2B1811DF56EAB003C60BF /* ONGMobileAuthenticationRequest.h in Headers */,
-				5CC2B1881DF56EAB003C60BF /* ONGRequestBuilder.h in Headers */,
 				1D6A3A242F9FB92F594D2ABB /* StateOperation.h in Headers */,
 				68AD227F29F4DDCC83BC4A47 /* MobileAuthenticationOperation.h in Headers */,
-				5CC2B18C1DF56EAB003C60BF /* ONGUserProfile.h in Headers */,
-				5CC2B1891DF56EAB003C60BF /* ONGResourceRequest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

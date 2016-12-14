@@ -97,37 +97,26 @@
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 
     [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError *_Nullable error) {
-        __weak typeof(self) weakSelf = self;
-        [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
-        NSString *alertTitle = nil;
-
+        
+        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+        NSString *alertMessage = nil;
         if (!enrolled) {
             if (error) {
                 switch (error.code) {
                     case ONGGenericErrorUserDeregistered:
                     case ONGGenericErrorDeviceDeregistered:
-                        [self.navigationController popToRootViewControllerAnimated:YES];
-                        [self showError:error.localizedDescription];
-                        break;
                     case ONGMobileAuthenticationEnrollmentErrorUserNotAuthenticated:
                         [self.navigationController popToRootViewControllerAnimated:YES];
                         break;
-                    default:
-                        [self showError:error.localizedDescription];
                 }
-
-                return;
+                alertMessage = error.localizedDescription;
             } else {
-                alertTitle = @"Enrollment failed";
+                alertMessage = @"Enrollment failed";
             }
         } else {
-            alertTitle = @"Enrolled successfully";
+            alertMessage = @"Enrolled successfully";
         }
-
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-        [alert addAction:okButton];
-        [self.navigationController presentViewController:alert animated:YES completion:nil];
+        [self showError:alertMessage];
     }];
 }
 

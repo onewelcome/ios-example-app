@@ -109,6 +109,9 @@
                         [self.navigationController popToRootViewControllerAnimated:YES];
                         [self showError:error.localizedDescription];
                         break;
+                    case ONGMobileAuthenticationEnrollmentErrorUserNotAuthenticated:
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                        break;
                     default:
                         [self showError:error.localizedDescription];
                 }

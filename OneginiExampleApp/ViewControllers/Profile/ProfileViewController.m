@@ -94,6 +94,7 @@
 
 - (IBAction)enrollForMobileAuthentication:(id)sender
 {
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError *_Nullable error) {
         NSString *alertTitle = nil;
         if (enrolled) {
@@ -101,6 +102,9 @@
         } else {
             alertTitle = @"Enrollment failure";
         }
+        __weak typeof(self) weakSelf = self;
+        [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
         [alert addAction:okButton];
@@ -138,12 +142,6 @@
 }
 
 #pragma mark - Logic
-
-- (ONGAuthenticator *)fingerprintAuthenticatorFromSet:(NSSet<ONGAuthenticator *> *)authenticators
-{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type == %d", ONGAuthenticatorTouchID];
-    return [authenticators filteredSetUsingPredicate:predicate].anyObject;
-}
 
 - (void)showError:(NSString *)error
 {

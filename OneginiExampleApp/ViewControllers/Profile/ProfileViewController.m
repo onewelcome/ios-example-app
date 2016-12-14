@@ -81,7 +81,7 @@
     self.getTokenSpinner.hidden = NO;
 
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/devices" method:@"GET"];
-    [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
+    [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         self.getTokenSpinner.hidden = YES;
 
         if (response && response.statusCode < 300) {
@@ -95,15 +95,31 @@
 - (IBAction)enrollForMobileAuthentication:(id)sender
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+
     [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError *_Nullable error) {
-        NSString *alertTitle = nil;
-        if (enrolled) {
-            alertTitle = @"Enrolled successfully";
-        } else {
-            alertTitle = @"Enrollment failure";
-        }
         __weak typeof(self) weakSelf = self;
         [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+        NSString *alertTitle = nil;
+
+        if (!enrolled) {
+            if (error) {
+                switch (error.code) {
+                    case ONGGenericErrorUserDeregistered:
+                    case ONGGenericErrorDeviceDeregistered:
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                        [self showError:error.localizedDescription];
+                        break;
+                    default:
+                        [self showError:error.localizedDescription];
+                }
+
+                return;
+            } else {
+                alertTitle = @"Enrollment failed";
+            }
+        } else {
+            alertTitle = @"Enrolled successfully";
+        }
 
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];

@@ -3,11 +3,11 @@
 @implementation SecurityController
 + (bool)rootDetection
 {
-    return NO;
+    return YES;
 }
 
 + (bool)debugDetection
 {
-    return NO;
+    return YES;
 }
 @end

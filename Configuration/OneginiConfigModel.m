@@ -10,12 +10,12 @@
 + (NSDictionary *)configuration
 {
     return @{
-        @"ONGAppIdentifier" : @"ExampleApp",
+        @"ONGAppIdentifier" : @"PenTest",
         @"ONGAppPlatform" : @"ios",
-        @"ONGAppVersion" : @"2.2.0",
+        @"ONGAppVersion" : @"2.3.0",
         @"ONGAppBaseURL" : @"https://demo-msp.onegini.com",
         @"ONGResourceBaseURL" : @"https://demo-msp.onegini.com",
-        @"ONGRedirectURL" : @"oneginiexample://loginsuccess",
+        @"ONGRedirectURL" : @"pentest://redirect",
     };
 }
 

@@ -1,18 +1,18 @@
 PODS:
   - MBProgressHUD (1.0.0)
-  - OneginiSDKiOS (5.01.01-SNAPSHOT)
+  - OneginiSDKiOS (5.01.01)
   - ZFDragableModalTransition (0.6)
 
 DEPENDENCIES:
   - MBProgressHUD (~> 1.0.0)
-  - OneginiSDKiOS (~> 5.01.01-SNAPSHOT)
+  - OneginiSDKiOS (~> 5.01.01)
   - ZFDragableModalTransition (~> 0.6)
 
 SPEC CHECKSUMS:
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
-  OneginiSDKiOS: f438a1fa37a2d72b76f0e09f535444b9096ecf9c
+  OneginiSDKiOS: 38f69280dff84bc33c573f4636b93cd0a6533d9d
   ZFDragableModalTransition: 0d294eaaba6edfcb9839595de765f9ca06a4b524
 
-PODFILE CHECKSUM: 09560184f2e0e08fea0bb40f63dd19aac9bc3f57
+PODFILE CHECKSUM: 7a504201ac5cc190868d0386bce6c2eb499364d0
 
 COCOAPODS: 1.1.1

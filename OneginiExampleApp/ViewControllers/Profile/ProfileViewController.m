@@ -115,7 +115,10 @@
             }
         } else {
             alertMessage = @"Enrolled successfully";
+            [self showMessage:alertMessage];
+            return;
         }
+
         [self showError:alertMessage];
     }];
 }
@@ -154,6 +157,18 @@
 - (void)showError:(NSString *)error
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:error
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
+                                                 style:UIAlertActionStyleDefault
+                                               handler:nil];
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)showMessage:(NSString *)error
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Success"
                                                                    message:error
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"

@@ -10,7 +10,7 @@ example app.
 The Example app includes the Onegini SDK as a Cocoapod. In order to let Cocoapods download it you need to setup your account details so the SDK can be
 automatically downloaded.
 
-Please see the [Setting up the project guide](https://docs.onegini.com/ios-sdk/topics/setting-up-the-projec.html#cocoapods) in the Onegini SDK documentation for
+Please see the [Setting up the project guide](https://docs.onegini.com/ios-sdk/topics/setting-up-the-project.html#cocoapods) in the Onegini SDK documentation for
 instructions on configuring access to the Onegini Cocoapods repository.
 
 >**Note** Don't forget to update the Onegini Cocoapods repository with the following command: `pod repo-art update onegini`. If you don't update the repo it may

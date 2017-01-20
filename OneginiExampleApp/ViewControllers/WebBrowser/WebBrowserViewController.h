@@ -14,10 +14,11 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
+#import "OneginiSDK.h"
 
 @interface WebBrowserViewController : UIViewController
 
-@property (nonatomic) NSURL *url;
+@property (nonatomic) ONGRegistrationRequestChallenge *registrationRequestChallenge;
 @property (nonatomic) void (^completionBlock)(NSURL *url);
 
 @end

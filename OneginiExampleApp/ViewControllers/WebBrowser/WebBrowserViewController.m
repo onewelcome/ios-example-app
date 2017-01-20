@@ -14,11 +14,12 @@
 // limitations under the License.
 
 #import "WebBrowserViewController.h"
-#import "OneginiSDK.h"
+#import "OneginiConfigModel.h"
 
-@interface WebBrowserViewController ()
+@interface WebBrowserViewController () <UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
 @end
 
@@ -27,15 +28,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeWebBrowser) name:ONGCloseWebViewNotification object:nil];
+    self.webView.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (self.url) {
+    if (self.registrationRequestChallenge.url) {
         [self clearWebViewCache];
-        NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
+        NSURLRequest *request = [NSURLRequest requestWithURL:self.registrationRequestChallenge.url];
         [self.webView loadRequest:request];
     }
 }
@@ -55,9 +56,17 @@
     }
 }
 
-- (void)closeWebBrowser
+-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    self.completionBlock(self.webView.request.URL);
+    if ([request.URL.absoluteString hasPrefix:[OneginiConfigModel configuration][@"ONGRedirectURL"]]) {
+        self.completionBlock(request.URL);
+        return NO;
+    }
+    return YES;
+}
+
+- (IBAction)cancelRegistration:(id)sender {
+    self.completionBlock(nil);
 }
 
 @end

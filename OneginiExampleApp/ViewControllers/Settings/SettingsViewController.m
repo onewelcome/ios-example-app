@@ -29,6 +29,8 @@
 @property (nonatomic) ONGUserProfile *userProfile;
 @property (nonatomic, copy) NSArray<ONGAuthenticator *> *authenticators;
 @property (nonatomic) AuthenticatorRegistrationController *authenticatorRegistrationController;
+@property (nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -64,6 +66,7 @@
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(invokeDataReload:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
                            
     [self reloadData];
 }
@@ -72,14 +75,13 @@
 {
     [super viewWillAppear:animated];
     
-    [self.navigationController setToolbarHidden:NO animated:YES];
+    [self.navigationController setToolbarHidden:NO animated:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    [self.navigationController setToolbarHidden:YES animated:YES];
+    [self.navigationController setToolbarHidden:YES animated:animated];
 }
 
 #pragma mark - Logic
@@ -120,8 +122,12 @@
         [self reloadData];
 
         if (error != nil) {
-            UIAlertController *controller = [UIAlertController controllerWithTitle:@"Failed to deregistered" message:error.localizedDescription completion:nil];
-            [self presentViewController:controller animated:YES completion:nil];
+            if (error.code == ONGGenericErrorDeviceDeregistered || error.code == ONGGenericErrorUserDeregistered) {
+                [self.navigationController setToolbarHidden:YES animated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }
+            UIAlertController *controller = [UIAlertController controllerWithTitle:@"Authenticator deregistered locally" message:error.localizedDescription completion:nil];
+            [self.navigationController presentViewController:controller animated:YES completion:nil];
         }
     }];
 }

@@ -81,7 +81,7 @@
     self.getTokenSpinner.hidden = NO;
 
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/devices" method:@"GET"];
-    [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
+    [[ONGUserClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         self.getTokenSpinner.hidden = YES;
 
         if (response && response.statusCode < 300) {
@@ -94,17 +94,32 @@
 
 - (IBAction)enrollForMobileAuthentication:(id)sender
 {
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+
     [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError *_Nullable error) {
-        NSString *alertTitle = nil;
-        if (enrolled) {
-            alertTitle = @"Enrolled successfully";
+        
+        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+        NSString *alertMessage = nil;
+        if (!enrolled) {
+            if (error) {
+                switch (error.code) {
+                    case ONGGenericErrorUserDeregistered:
+                    case ONGGenericErrorDeviceDeregistered:
+                    case ONGMobileAuthenticationEnrollmentErrorUserNotAuthenticated:
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                        break;
+                }
+                alertMessage = error.localizedDescription;
+            } else {
+                alertMessage = @"Enrollment failed";
+            }
         } else {
-            alertTitle = @"Enrollment failure";
+            alertMessage = @"Enrolled successfully";
+            [self showMessage:alertMessage];
+            return;
         }
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-        [alert addAction:okButton];
-        [self.navigationController presentViewController:alert animated:YES completion:nil];
+
+        [self showError:alertMessage];
     }];
 }
 
@@ -139,15 +154,21 @@
 
 #pragma mark - Logic
 
-- (ONGAuthenticator *)fingerprintAuthenticatorFromSet:(NSSet<ONGAuthenticator *> *)authenticators
-{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type == %d", ONGAuthenticatorTouchID];
-    return [authenticators filteredSetUsingPredicate:predicate].anyObject;
-}
-
 - (void)showError:(NSString *)error
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:error
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
+                                                 style:UIAlertActionStyleDefault
+                                               handler:nil];
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)showMessage:(NSString *)error
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Success"
                                                                    message:error
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"

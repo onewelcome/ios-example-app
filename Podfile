@@ -1,7 +1,13 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '9.0'
+source 'https://github.com/CocoaPods/Specs.git'
+
+plugin 'cocoapods-art', :sources => [
+ 'onegini'
+]
 
 target 'OneginiExampleApp' do
+  pod 'OneginiSDKiOSFIDO', '~> 5.01.02'
   pod 'ZFDragableModalTransition', '~> 0.6'
   pod 'MBProgressHUD', '~> 1.0.0'
 end
+
+# vi:syntax=ruby

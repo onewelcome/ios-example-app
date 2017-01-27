@@ -5,7 +5,7 @@ plugin 'cocoapods-art', :sources => [
 ]
 
 target 'OneginiExampleApp' do
-  pod 'OneginiSDKiOSFIDO', '~> 5.01.02'
+  pod 'OneginiSDKiOSFIDO', '~> 5.02.00'
   pod 'ZFDragableModalTransition', '~> 0.6'
   pod 'MBProgressHUD', '~> 1.0.0'
 end

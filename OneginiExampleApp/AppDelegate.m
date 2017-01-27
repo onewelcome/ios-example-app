@@ -126,11 +126,6 @@
     }
 }
 
--(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
-{
-    return [[ONGUserClient sharedInstance] handleApplicationURL:url];
-}
-
 - (void)showSecretOptions
 {
     [TestOptions showSecretOptionsOnViewController:self.window.rootViewController];

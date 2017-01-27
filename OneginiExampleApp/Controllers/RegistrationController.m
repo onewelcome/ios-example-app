@@ -141,13 +141,18 @@
     }
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveRegistrationRequestWithUrl:(NSURL *)url
+- (void)userClient:(ONGUserClient *)userClient didReceiveRegistrationRequestChallenge:(ONGRegistrationRequestChallenge *)challenge
 {
     WebBrowserViewController *webBrowserViewController = [WebBrowserViewController new];
-    webBrowserViewController.url = url;
+    webBrowserViewController.registrationRequestChallenge = challenge;
     webBrowserViewController.completionBlock = ^(NSURL *completionURL) {
         if ([self.navigationController.presentedViewController isKindOfClass:WebBrowserViewController.class]) {
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        }
+        if (completionURL) {
+            [challenge.sender respondWithURL:completionURL challenge:challenge];
+        } else {
+            [challenge.sender cancelChallenge:challenge];
         }
     };
     [self.navigationController presentViewController:webBrowserViewController animated:YES completion:nil];

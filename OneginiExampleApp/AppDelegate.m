@@ -19,6 +19,7 @@
 #import "MobileAuthenticationController.h"
 #import "NavigationControllerAppearance.h"
 #import "TestOptions.h"
+#import "ProfileModel.h"
 
 @interface AppDelegate () <UINavigationControllerDelegate>
 
@@ -74,6 +75,7 @@
             } else if (error.code == ONGGenericErrorOutdatedOS) {
                 [self showAlertWithTitle:@"OS outdated" message:@"The operating system that you use is no longer valid, please update your OS."];
             } else if (error.code == ONGGenericErrorDeviceDeregistered) {
+                [[ProfileModel new] deleteProfileNames];
                 [self showAlertWithTitle:@"Device deregistered" message:@"Your device has been deregistered on the server side. Please register your account again."];
             } else if (error.code == ONGGenericErrorUserDeregistered) {
                 [self showAlertWithTitle:@"User deregistered" message:@"Your account has been deregistered on the server side. Please register again."];
@@ -134,6 +136,7 @@
 -(void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     UIBarButtonItem *testingOptions = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStylePlain target:self action:@selector(showSecretOptions)];
+    testingOptions.accessibilityIdentifier = @"TestOptionsBarButtonItem";
     viewController.navigationItem.rightBarButtonItem = testingOptions;
 }
 

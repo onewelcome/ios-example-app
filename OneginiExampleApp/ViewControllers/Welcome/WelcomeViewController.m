@@ -22,6 +22,7 @@
 #import "UIAlertController+Shortcut.h"
 #import "ONGResourceResponse+JSONResponse.h"
 #import "UIBarButtonItem+Extension.h"
+#import "ProfileModel.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -184,7 +185,8 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return (self.profiles[(NSUInteger)row]).profileId;
+    NSString *profileName = [[ProfileModel new] profileNameForUserProfile:self.profiles[(NSUInteger)row]];
+    return profileName;
 }
 
 @end

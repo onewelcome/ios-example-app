@@ -16,6 +16,7 @@
 #import "ChangePinController.h"
 #import "PinViewController.h"
 #import "PinErrorMapper.h"
+#import "ProfileModel.h"
 
 @interface ChangePinController ()
 
@@ -122,10 +123,15 @@
     // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
     // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
     // deregistered user.
+    if (error.code == ONGGenericErrorUserDeregistered) {
+        [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
     // In case the entire device registration has been removed from the Token Server the SDK will return the ONGGenericErrorDeviceDeregistered error. In this
     // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
     // the user is starting up the app for the first time.
-    if (error.code == ONGGenericErrorDeviceDeregistered || error.code == ONGGenericErrorUserDeregistered) {
+    else if (error.code == ONGGenericErrorDeviceDeregistered) {
+        [[ProfileModel new] deleteProfileNames];
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else {
         [self.navigationController popViewControllerAnimated:YES];

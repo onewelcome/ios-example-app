@@ -22,6 +22,7 @@
 #import "AuthenticatorCellTableViewCell.h"
 #import "UIAlertController+Shortcut.h"
 #import "AuthenticatorRegistrationController.h"
+#import "ProfileModel.h"
 
 @interface SettingsViewController ()
 
@@ -116,13 +117,19 @@
 - (void)deregisterAuthenticator:(ONGAuthenticator *)authenticator
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    ONGUserProfile *userProfile = [ONGUserClient sharedInstance].authenticatedUserProfile;
     [self.userClient deregisterAuthenticator:authenticator completion:^(BOOL deregistered, NSError *error) {
         [hud hideAnimated:YES];
 
         [self reloadData];
 
         if (error != nil) {
-            if (error.code == ONGGenericErrorDeviceDeregistered || error.code == ONGGenericErrorUserDeregistered) {
+            if (error.code == ONGGenericErrorUserDeregistered) {
+                [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];
+                [self.navigationController setToolbarHidden:YES animated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            } else if (error.code == ONGGenericErrorDeviceDeregistered) {
+                [[ProfileModel new] deleteProfileNames];
                 [self.navigationController setToolbarHidden:YES animated:YES];
                 [self.navigationController popToRootViewControllerAnimated:YES];
             }

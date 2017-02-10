@@ -47,6 +47,11 @@
 		5CAE98C61CE0DEF8009C1D1A /* OneginiConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */; };
 		5CD187431CEDA5B8001FD062 /* MobileAuthenticationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */; };
 		5CD187441CEDA5B8001FD062 /* MobileAuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CD187421CEDA5B8001FD062 /* MobileAuthenticationController.m */; };
+		5CF4078D1E4B2897001C06D6 /* ProfileCreationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CF4078A1E4B2897001C06D6 /* ProfileCreationViewController.h */; };
+		5CF4078E1E4B2897001C06D6 /* ProfileCreationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF4078B1E4B2897001C06D6 /* ProfileCreationViewController.m */; };
+		5CF4078F1E4B2897001C06D6 /* ProfileCreationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CF4078C1E4B2897001C06D6 /* ProfileCreationViewController.xib */; };
+		5CF407921E4B2CAB001C06D6 /* ProfileModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CF407901E4B2CAB001C06D6 /* ProfileModel.h */; };
+		5CF407931E4B2CAB001C06D6 /* ProfileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF407911E4B2CAB001C06D6 /* ProfileModel.m */; };
 		68AD227F29F4DDCC83BC4A47 /* MobileAuthenticationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 68AD27F23CE59643D7C37336 /* MobileAuthenticationOperation.h */; };
 		68AD253F2DBAA70E8B11A8D7 /* MobileAuthenticationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AD26240A0F4ED4AD29ACA3 /* MobileAuthenticationOperation.m */; };
 		AD2F1FD01D9EA8DD006A50FF /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FCF1D9EA8DD006A50FF /* SettingsViewController.xib */; };
@@ -143,6 +148,11 @@
 		5CAE98C51CE0DEF8009C1D1A /* OneginiConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OneginiConfigModel.m; path = Configuration/OneginiConfigModel.m; sourceTree = "<group>"; };
 		5CD187411CEDA5B8001FD062 /* MobileAuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileAuthenticationController.h; sourceTree = "<group>"; };
 		5CD187421CEDA5B8001FD062 /* MobileAuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileAuthenticationController.m; sourceTree = "<group>"; };
+		5CF4078A1E4B2897001C06D6 /* ProfileCreationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCreationViewController.h; sourceTree = "<group>"; };
+		5CF4078B1E4B2897001C06D6 /* ProfileCreationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCreationViewController.m; sourceTree = "<group>"; };
+		5CF4078C1E4B2897001C06D6 /* ProfileCreationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileCreationViewController.xib; sourceTree = "<group>"; };
+		5CF407901E4B2CAB001C06D6 /* ProfileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileModel.h; sourceTree = "<group>"; };
+		5CF407911E4B2CAB001C06D6 /* ProfileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileModel.m; sourceTree = "<group>"; };
 		5CF4F3B81DB65D4E00A9FE01 /* OneginiExampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneginiExampleApp.entitlements; sourceTree = "<group>"; };
 		68AD26240A0F4ED4AD29ACA3 /* MobileAuthenticationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileAuthenticationOperation.m; sourceTree = "<group>"; };
 		68AD27F23CE59643D7C37336 /* MobileAuthenticationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileAuthenticationOperation.h; sourceTree = "<group>"; };
@@ -289,6 +299,9 @@
 				1D6A3A4C4A308C210E87CC77 /* ProfileViewController.h */,
 				1D6A3CB9F77C29BFB4E61EC5 /* ProfileViewController.m */,
 				1D6A3852A60B8D9519FDF224 /* ProfileViewController.xib */,
+				5CF4078A1E4B2897001C06D6 /* ProfileCreationViewController.h */,
+				5CF4078B1E4B2897001C06D6 /* ProfileCreationViewController.m */,
+				5CF4078C1E4B2897001C06D6 /* ProfileCreationViewController.xib */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -422,6 +435,8 @@
 			children = (
 				C5A29A761CDCE78F00E6B1D4 /* Profile.h */,
 				C5A29A771CDCE78F00E6B1D4 /* Profile.m */,
+				5CF407901E4B2CAB001C06D6 /* ProfileModel.h */,
+				5CF407911E4B2CAB001C06D6 /* ProfileModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -448,6 +463,7 @@
 				B47ADC3E1D644F24006DA9D1 /* SecurityController.h in Headers */,
 				5C7745211D998285004BBCFE /* ChangePinController.h in Headers */,
 				E4459662EEBC767C4F350A5A /* OneginiConfigModel.h in Headers */,
+				5CF407921E4B2CAB001C06D6 /* ProfileModel.h in Headers */,
 				5C3CA1481D11394000F00C05 /* AuthenticatorRegistrationController.h in Headers */,
 				ADEC3AF71D884D7E0009234A /* ONGErrors.h in Headers */,
 				ADEC3B021D884D7E0009234A /* ONGResourceResponse.h in Headers */,
@@ -470,6 +486,7 @@
 				ADEC3B041D884D7E0009234A /* ONGUserProfile.h in Headers */,
 				ADEC3B011D884D7E0009234A /* ONGResourceRequest.h in Headers */,
 				1D6A3790481B45EC7F9ADAB4 /* ONGResourceResponse+JSONResponse.h in Headers */,
+				5CF4078D1E4B2897001C06D6 /* ProfileCreationViewController.h in Headers */,
 				1D6A370A308FE89704C3198C /* UIAlertController+Shortcut.h in Headers */,
 				1D6A3DC90D7E0D5F2C95C863 /* PinErrorMapper.h in Headers */,
 				1D6A3C21101996CC9DBA06E7 /* SettingsViewController.h in Headers */,
@@ -557,6 +574,7 @@
 				AD2F1FD21D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib in Resources */,
 				AD2F1FD41D9EABA8006A50FF /* WelcomeViewController.xib in Resources */,
 				AD2F1FD01D9EA8DD006A50FF /* SettingsViewController.xib in Resources */,
+				5CF4078F1E4B2897001C06D6 /* ProfileCreationViewController.xib in Resources */,
 				1D6A36C107FC4CC3FDF7ED14 /* PinViewController.xib in Resources */,
 				1D6A3D3D5D76E0EA756DA02F /* ProfileViewController.xib in Resources */,
 				1D6A368E0AFB5584858C6455 /* PushConfirmationViewController.xib in Resources */,
@@ -628,6 +646,7 @@
 				C5A29A781CDCE78F00E6B1D4 /* Profile.m in Sources */,
 				B47ADC3F1D644F24006DA9D1 /* SecurityController.m in Sources */,
 				C5A29A661CDCA55900E6B1D4 /* AuthenticationController.m in Sources */,
+				5CF407931E4B2CAB001C06D6 /* ProfileModel.m in Sources */,
 				C572A2DC1CD893C400B137DC /* main.m in Sources */,
 				5C1F1CDC1D464DE100D4D5C0 /* RegistrationController.m in Sources */,
 				5CD187441CEDA5B8001FD062 /* MobileAuthenticationController.m in Sources */,
@@ -637,6 +656,7 @@
 				1D6A3C1B408210BA5A90DF0B /* StateOperation.m in Sources */,
 				68AD253F2DBAA70E8B11A8D7 /* MobileAuthenticationOperation.m in Sources */,
 				1D6A3562C58CF7B77806C78C /* SettingsViewController.m in Sources */,
+				5CF4078E1E4B2897001C06D6 /* ProfileCreationViewController.m in Sources */,
 				1D6A3311B607A0A88951B5EC /* AuthenticatorCellTableViewCell.m in Sources */,
 				1D6A36022E8C01D0DFBD8982 /* UIBarButtonItem+Extension.m in Sources */,
 				1D6A398C3421FF22811B1994 /* NavigationControllerAppearance.m in Sources */,

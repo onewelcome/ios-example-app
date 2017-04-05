@@ -23,6 +23,7 @@
 
 #import "ONGResourceResponse+JSONResponse.h"
 #import "UIBarButtonItem+Extension.h"
+#import "ProfileModel.h"
 
 @interface ProfileViewController ()
 
@@ -96,6 +97,7 @@
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 
+    ONGUserProfile *userProfile = [ONGUserClient sharedInstance].authenticatedUserProfile;
     [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError *_Nullable error) {
         
         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
@@ -104,7 +106,13 @@
             if (error) {
                 switch (error.code) {
                     case ONGGenericErrorUserDeregistered:
+                        [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                        break;
                     case ONGGenericErrorDeviceDeregistered:
+                        [[ProfileModel new] deleteProfileNames];
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                        break;
                     case ONGMobileAuthenticationEnrollmentErrorUserNotAuthenticated:
                         [self.navigationController popToRootViewControllerAnimated:YES];
                         break;

@@ -19,6 +19,7 @@
 #import "ProfileViewController.h"
 #import "PinErrorMapper.h"
 #import "MBProgressHUD.h"
+#import "ProfileCreationViewController.h"
 
 @interface RegistrationController ()
 
@@ -50,7 +51,8 @@
 
 - (void)userClient:(ONGUserClient *)userClient didRegisterUser:(ONGUserProfile *)userProfile
 {
-    ProfileViewController *viewController = [ProfileViewController new];
+    ProfileCreationViewController *viewController = [[ProfileCreationViewController alloc] initWithUserProfile:userProfile];
+    
     [self.navigationController pushViewController:viewController animated:YES];
     self.completion();
 }
@@ -127,7 +129,7 @@
         }
     };
 
-    // It is up to the you to decide when and how to show the PIN entry view controller.
+    // It is up to you to decide when and how to show the PIN entry view controller.
     // For simplicity of the example app we're checking the top-most view controller.
     if (![self.navigationController.topViewController isEqual:self.pinViewController]) {
         [self.navigationController pushViewController:self.pinViewController animated:YES];
@@ -141,7 +143,7 @@
     }
 }
 
--(void)userClient:(ONGUserClient *)userClient didReceiveRegistrationRequestChallenge:(ONGRegistrationRequestChallenge *)challenge
+- (void)userClient:(ONGUserClient *)userClient didReceiveRegistrationRequestChallenge:(ONGRegistrationRequestChallenge *)challenge
 {
     WebBrowserViewController *webBrowserViewController = [WebBrowserViewController new];
     webBrowserViewController.registrationRequestChallenge = challenge;

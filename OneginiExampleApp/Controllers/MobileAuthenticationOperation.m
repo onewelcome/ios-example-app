@@ -18,6 +18,7 @@
 #import "PushConfirmationViewController.h"
 #import "PinErrorMapper.h"
 #import "ZFModalTransitionAnimator.h"
+#import "ProfileModel.h"
 
 @interface MobileAuthenticationOperation ()
 
@@ -89,7 +90,7 @@
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = request.message;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push - %@", request.userProfile.profileId];
+    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push for user: %@", [[ProfileModel new] profileNameForUserProfile:request.userProfile]];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [self.navigationController popViewControllerAnimated:YES];
         confirmation(confirmed);
@@ -113,7 +114,7 @@
     [self.pinViewController reset];
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.pinLength = 5;
-    self.pinViewController.customTitle = [NSString stringWithFormat:@"Push with pin - %@", challenge.userProfile.profileId];
+    self.pinViewController.customTitle = [NSString stringWithFormat:@"Push with pin for user: %@", [[ProfileModel new] profileNameForUserProfile:challenge.userProfile]];
     __weak MobileAuthenticationOperation *weakSelf = self;
 
     self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
@@ -148,7 +149,7 @@
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = request.message;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint - %@", request.userProfile.profileId];
+    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint for user: %@", [[ProfileModel new] profileNameForUserProfile:request.userProfile]];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [self.navigationController popViewControllerAnimated:YES];
 
@@ -172,7 +173,7 @@
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = request.message;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with %@ - %@", challenge.authenticator.name, request.userProfile.profileId];
+    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with %@ for %@", challenge.authenticator.name, [[ProfileModel new] profileNameForUserProfile:request.userProfile]];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [self.navigationController popViewControllerAnimated:YES];
         if (confirmed){
@@ -194,13 +195,17 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request error:(NSError *)error
 {
-    if (error.code == ONGGenericErrorUserDeregistered || error.code == ONGGenericErrorDeviceDeregistered) {
+    if (error.code == ONGGenericErrorUserDeregistered) {
         // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
         // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
         // deregistered user.
+        [[ProfileModel new] deleteProfileNameForUserProfile:request.userProfile];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    } else if (error.code == ONGGenericErrorDeviceDeregistered) {
         // In case the entire device registration has been removed from the Token Server the SDK will return the ONGGenericErrorDeviceDeregistered error. In this
         // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
         // the user is starting up the app for the first time.
+        [[ProfileModel new] deleteProfileNames];
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else if (error.code == ONGMobileAuthenticationRequestErrorNotFound) {
         // For some reason the mobile authentication request cannot be found on the Token Server anymore. This can happen if a push notification

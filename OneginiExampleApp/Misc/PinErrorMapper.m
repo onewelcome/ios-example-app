@@ -25,7 +25,7 @@
         case ONGGenericErrorServerNotReachable:
             reason = @"Failed to connect to the server. Please try again";
             break;
-
+            
             // Some undefined error occurred. This not a typical situation but worth to display at least something.
         case ONGGenericErrorUnknown:
         default:

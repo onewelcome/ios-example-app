@@ -40,7 +40,7 @@
     // It is easier to implement queue of delayed `-[ONGUserClient handleMobileAuthenticationRequest:delegate:]` invocations
     // rather than handling UI elements queuing. Because of this we're ensuring that the given `userInfo` is a valid Onegini's
     // mobile authentication request and delaying actual handling by wrapping it into a NSOperation-based class.
-    if (![self.userClient canHandleMobileAuthenticationRequest:userInfo]) {
+    if (![self.userClient canHandleMobileAuthRequest:userInfo]) {
         return NO;
     }
 

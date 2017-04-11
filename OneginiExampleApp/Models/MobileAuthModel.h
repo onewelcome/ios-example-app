@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2016 Onegini. All rights reserved.
+// Copyright (c) 2017 Onegini. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,27 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "Profile.h"
+#import <Foundation/Foundation.h>
 
-@interface Profile ()
+@interface MobileAuthModel : NSObject
 
-@property (nonatomic, strong) NSString *email;
-@property (nonatomic, strong) NSString *firstName;
-@property (nonatomic, strong) NSString *lastName;
++ (instancetype)sharedInstance;
 
-@end
-
-@implementation Profile
-
-+ (instancetype)profileFromJSON:(NSDictionary *)json
-{
-    Profile *profile = [Profile new];
-
-    profile.email = json[@"email"];
-    profile.firstName = json[@"first_name"];
-    profile.lastName = json[@"last_name"];
-
-    return profile;
-}
+@property (nonatomic, copy) NSData *deviceToken;
 
 @end

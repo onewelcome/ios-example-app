@@ -24,8 +24,6 @@
 
 @interface AppDelegate () <UINavigationControllerDelegate>
 
-@property (nonatomic) MobileAuthenticationController *mobileAuthenticationController;
-
 @end
 
 @implementation AppDelegate
@@ -123,7 +121,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    BOOL handled = [self.mobileAuthenticationController handleMobileAuthenticationRequest:userInfo];
+    BOOL handled = [self.mobileAuthenticationController handlePushMobileAuthenticationRequest:userInfo];
     if (!handled) {
         // pass it to the next service (FireBase, Facebook, etc).
     }

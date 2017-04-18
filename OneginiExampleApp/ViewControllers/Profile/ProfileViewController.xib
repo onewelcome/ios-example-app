@@ -11,7 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController">
             <connections>
                 <outlet property="enrollForMobileAuthButton" destination="m10-Cb-mn3" id="iqb-KQ-N1b"/>
-                <outlet property="enrollForPushMobileAuthBotton" destination="dpd-ly-dSH" id="b20-nh-GOf"/>
+                <outlet property="enrollForPushMobileAuthButton" destination="dpd-ly-dSH" id="b20-nh-GOf"/>
                 <outlet property="enrolledForMobileAuthSwitch" destination="8Gm-ge-vvH" id="IQR-mZ-dCw"/>
                 <outlet property="enrolledForPushMobileAuthSwitch" destination="1sm-r4-muJ" id="sCI-Db-J1d"/>
                 <outlet property="getTokenSpinner" destination="lYF-s1-yVn" id="YfO-lE-fpP"/>

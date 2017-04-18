@@ -32,10 +32,9 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *enrollForMobileAuthButton;
 @property (weak, nonatomic) IBOutlet UISwitch *enrolledForMobileAuthSwitch;
-@property (weak, nonatomic) IBOutlet UIButton *enrollForPushMobileAuthBotton;
+@property (weak, nonatomic) IBOutlet UIButton *enrollForPushMobileAuthButton;
 @property (weak, nonatomic) IBOutlet UISwitch *enrolledForPushMobileAuthSwitch;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getTokenSpinner;
-@property (weak, nonatomic) IBOutlet UIButton *fingerprintButton;
 
 @end
 

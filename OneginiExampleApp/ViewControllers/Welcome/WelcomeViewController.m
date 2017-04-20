@@ -22,9 +22,8 @@
 #import "UIAlertController+Shortcut.h"
 #import "ONGResourceResponse+JSONResponse.h"
 #import "UIBarButtonItem+Extension.h"
-#import "ProfileModel.h"
-#import "AppDelegate.h"
 #import "MobileAuthenticationController.h"
+#import "ProfileModel.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -126,28 +125,6 @@
     };
 
     [[ONGUserClient sharedInstance] authenticateUser:selectedUserProfile delegate:self.authenticationController];
-}
-
-- (IBAction)mobileAuthWithOTP:(id)sender
-{
-    NSString *profileName = [[ProfileModel new] profileNameForUserProfile:self.selectedProfile];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Mobile Authentication with OTP"
-                                                                   message:[NSString stringWithFormat:@"Authenticated user: %@",profileName]
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {}];
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Authenticate"
-                                                       style:UIAlertActionStyleDefault
-                                                     handler:^(UIAlertAction *action) {
-                                                         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                                                         NSString *otpRequest = alert.textFields[0].text;
-                                                         [appDelegate.mobileAuthenticationController handleMobileAuthenticationRequest:otpRequest userProfile:self.selectedProfile];
-                                                     }];
-    [alert addAction:okButton];
-    UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction *action){}];
-    [alert addAction:cancelButton];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)authenticateDeviceAndFetchResource

@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="NEk-d7-u7M">
-                    <rect key="frame" x="47.5" y="161.5" width="280" height="344"/>
+                    <rect key="frame" x="47.5" y="131.5" width="280" height="404"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pz4-sP-mfq" userLabel="Logout Button">
                             <rect key="frame" x="0.0" y="0.0" width="280" height="44"/>
@@ -85,6 +85,17 @@
                                 <action selector="presentSettings:" destination="-1" eventType="touchUpInside" id="ma3-of-ykK"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qVd-rq-XhD">
+                            <rect key="frame" x="0.0" y="360" width="280" height="44"/>
+                            <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="contentEdgeInsets" minX="50" minY="10" maxX="50" maxY="10"/>
+                            <state key="normal" title="Mobile Auth with OTP">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="mobileAuthWithOTP:" destination="-1" eventType="touchUpInside" id="aXj-QU-BQZ"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstItem="ce6-QG-ZqY" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="FP8-ot-IP9"/>
@@ -92,6 +103,7 @@
                         <constraint firstAttribute="width" constant="280" id="ZLN-1x-vAo"/>
                         <constraint firstItem="8eJ-Cw-DPl" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="iVl-sM-d12"/>
                         <constraint firstItem="8ui-yk-FRc" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="rOb-wd-uYy"/>
+                        <constraint firstItem="qVd-rq-XhD" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="t4l-WJ-ju6"/>
                         <constraint firstItem="2FJ-eX-JDg" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="waP-ZD-xGp"/>
                     </constraints>
                 </stackView>

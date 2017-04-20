@@ -23,11 +23,9 @@
 @property (nonatomic, readonly) UINavigationController *navigationController;
 @property (nonatomic, readonly) NSDictionary *userInfo;
 @property (nonatomic, readonly) NSString *otpRequest;
-@property (nonatomic, readonly) ONGUserProfile *userProfile;
 
 - (instancetype)initWithUserInfo:(NSDictionary *)userInfo userClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController;
 - (instancetype)initWithOTPRequest:(NSString *)otpRequest
-                       userProfile:(ONGUserProfile *)userProfile
                         userClient:(ONGUserClient *)userClient
               navigationController:(UINavigationController *)navigationController;
 

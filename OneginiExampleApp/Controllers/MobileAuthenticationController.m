@@ -42,7 +42,6 @@
     }
     
     MobileAuthenticationOperation *operation = [[MobileAuthenticationOperation alloc] initWithOTPRequest:request
-                                                                                             userProfile:userProfile
                                                                                               userClient:self.userClient
                                                                                     navigationController:self.navigationController];
     [self.executionQueue addOperation:operation];

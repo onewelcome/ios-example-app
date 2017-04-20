@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController">
             <connections>
-                <outlet property="enrollForMobileAuthButton" destination="m10-Cb-mn3" id="iqb-KQ-N1b"/>
-                <outlet property="enrollForPushMobileAuthButton" destination="dpd-ly-dSH" id="b20-nh-GOf"/>
-                <outlet property="enrolledForMobileAuthSwitch" destination="8Gm-ge-vvH" id="IQR-mZ-dCw"/>
-                <outlet property="enrolledForPushMobileAuthSwitch" destination="1sm-r4-muJ" id="sCI-Db-J1d"/>
                 <outlet property="getTokenSpinner" destination="lYF-s1-yVn" id="YfO-lE-fpP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="NEk-d7-u7M">
-                    <rect key="frame" x="47.5" y="101.5" width="280" height="464"/>
+                    <rect key="frame" x="47.5" y="161.5" width="280" height="344"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pz4-sP-mfq" userLabel="Logout Button">
                             <rect key="frame" x="0.0" y="0.0" width="280" height="44"/>
@@ -69,50 +65,8 @@
                             </subviews>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zxh-YJ-hpX">
-                            <rect key="frame" x="0.0" y="240" width="280" height="44"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m10-Cb-mn3" userLabel="Enroll Button">
-                                    <rect key="frame" x="0.0" y="0.0" width="221" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <state key="normal" title="Enroll for MobileAuth">
-                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="enrollForMobileAuthentication:" destination="-1" eventType="touchUpInside" id="WUj-Vi-Qoq"/>
-                                    </connections>
-                                </button>
-                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Gm-ge-vvH">
-                                    <rect key="frame" x="229" y="6" width="51" height="31"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </switch>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hoj-9o-y7S">
-                            <rect key="frame" x="0.0" y="300" width="280" height="44"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpd-ly-dSH" userLabel="Enroll Button">
-                                    <rect key="frame" x="0.0" y="0.0" width="220" height="39"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <state key="normal" title="Enroll for PushMobileAuth">
-                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="enrollForPushMobileAuthentication:" destination="-1" eventType="touchUpInside" id="Pec-pK-elT"/>
-                                    </connections>
-                                </button>
-                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1sm-r4-muJ">
-                                    <rect key="frame" x="228" y="4" width="51" height="31"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </switch>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2FJ-eX-JDg" userLabel="Change pin Button">
-                            <rect key="frame" x="0.0" y="360" width="280" height="44"/>
+                            <rect key="frame" x="0.0" y="240" width="280" height="44"/>
                             <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal" title="Change pin">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -122,7 +76,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ce6-QG-ZqY" userLabel="Settings Button">
-                            <rect key="frame" x="0.0" y="420" width="280" height="44"/>
+                            <rect key="frame" x="0.0" y="300" width="280" height="44"/>
                             <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal" title="Settings">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -135,8 +89,6 @@
                     <constraints>
                         <constraint firstItem="ce6-QG-ZqY" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="FP8-ot-IP9"/>
                         <constraint firstItem="7XT-BQ-zzU" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="K2j-iI-Dov"/>
-                        <constraint firstItem="Zxh-YJ-hpX" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="PPW-hd-NQF"/>
-                        <constraint firstItem="hoj-9o-y7S" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="VAs-iP-7BP"/>
                         <constraint firstAttribute="width" constant="280" id="ZLN-1x-vAo"/>
                         <constraint firstItem="8eJ-Cw-DPl" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="iVl-sM-d12"/>
                         <constraint firstItem="8ui-yk-FRc" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="rOb-wd-uYy"/>

@@ -30,12 +30,7 @@
 
 @property (nonatomic) ChangePinController *changePinController;
 
-@property (weak, nonatomic) IBOutlet UIButton *enrollForMobileAuthButton;
-@property (weak, nonatomic) IBOutlet UISwitch *enrolledForMobileAuthSwitch;
-@property (weak, nonatomic) IBOutlet UIButton *enrollForPushMobileAuthBotton;
-@property (weak, nonatomic) IBOutlet UISwitch *enrolledForPushMobileAuthSwitch;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getTokenSpinner;
-@property (weak, nonatomic) IBOutlet UIButton *fingerprintButton;
 
 @end
 
@@ -65,8 +60,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.enrolledForMobileAuthSwitch.on = [ONGUserClient sharedInstance].isEnrolledForMobileAuth;
-    self.enrolledForPushMobileAuthSwitch.on = [ONGUserClient sharedInstance].isEnrolledForPushMobileAuth;
 }
 
 #pragma mark - IBAction
@@ -106,61 +99,6 @@
             [self showError:error.localizedDescription];
         }
     }];
-}
-
-- (IBAction)enrollForMobileAuthentication:(id)sender
-{
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-
-    [[ONGUserClient sharedInstance] enrollForMobileAuth:^(BOOL enrolled, NSError * _Nullable error) {
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        self.enrolledForMobileAuthSwitch.on = enrolled;
-        if (enrolled) {
-            [self showMessage:@"Enrolled successfully"];
-        } else {
-            [self handleMobileAuthError:error];
-        }
-    }];
-}
-
-- (IBAction)enrollForPushMobileAuthentication:(id)sender
-{
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    [[ONGUserClient sharedInstance] enrollForPushMobileAuthWithDeviceToken:[MobileAuthModel sharedInstance].deviceToken
-                                                                completion:^(BOOL enrolled, NSError * _Nullable error) {
-                                                                    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-                                                                    self.enrolledForPushMobileAuthSwitch.on = enrolled;
-                                                                    if (enrolled) {
-                                                                        [self showMessage:@"Enrolled successfully"];
-                                                                    } else {
-                                                                        [self handleMobileAuthError:error];
-                                                                    }
-                                                                }];
-}
-
-- (void)handleMobileAuthError:(NSError *)error
-{
-    ONGUserProfile *userProfile = [ONGUserClient sharedInstance].authenticatedUserProfile;
-    NSString *alertMessage = nil;
-    if (error) {
-        switch (error.code) {
-            case ONGGenericErrorUserDeregistered:
-                [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];
-                [self.navigationController popToRootViewControllerAnimated:YES];
-                break;
-            case ONGGenericErrorDeviceDeregistered:
-                [[ProfileModel new] deleteProfileNames];
-                [self.navigationController popToRootViewControllerAnimated:YES];
-                break;
-            case ONGMobileAuthEnrollmentErrorUserNotAuthenticated:
-                [self.navigationController popToRootViewControllerAnimated:YES];
-                break;
-        }
-        alertMessage = error.localizedDescription;
-    } else {
-        alertMessage = @"Enrollment failed";
-    }
-    [self showError:alertMessage];
 }
 
 - (IBAction)changePin:(id)sender

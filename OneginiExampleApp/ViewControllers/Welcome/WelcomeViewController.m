@@ -22,7 +22,6 @@
 #import "UIAlertController+Shortcut.h"
 #import "ONGResourceResponse+JSONResponse.h"
 #import "UIBarButtonItem+Extension.h"
-#import "MobileAuthenticationController.h"
 #import "ProfileModel.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>

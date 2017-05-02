@@ -17,7 +17,7 @@
 #import "OneginiSDK.h"
 #import "StateOperation.h"
 
-@interface MobileAuthenticationOperation : StateOperation <ONGMobileAuthenticationRequestDelegate>
+@interface MobileAuthenticationOperation : StateOperation <ONGMobileAuthRequestDelegate>
 
 @property (nonatomic, readonly) ONGUserClient *userClient;
 @property (nonatomic, readonly) UINavigationController *navigationController;

@@ -20,6 +20,7 @@
 #import "NavigationControllerAppearance.h"
 #import "TestOptions.h"
 #import "ProfileModel.h"
+#import "MobileAuthModel.h"
 
 @interface AppDelegate () <UINavigationControllerDelegate>
 
@@ -112,12 +113,12 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    [[ONGUserClient sharedInstance] storeDevicePushTokenInSession:deviceToken];
+    [MobileAuthModel sharedInstance].deviceToken = deviceToken;
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    [[ONGUserClient sharedInstance] storeDevicePushTokenInSession:nil];
+    [MobileAuthModel sharedInstance].deviceToken = nil;
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo

@@ -5,9 +5,13 @@
 /**
  *  Class responsible for toggling debug/jailbreak detection. This class is read by the Onegini SDK trough reflection.
  */
+
+#ifdef DEBUG
 @interface SecurityController : NSObject
 
-+ (bool)rootDetection;
-+ (bool)debugDetection;
++ (BOOL)rootDetection;
++ (BOOL)debugDetection;
++ (BOOL)debugLogs;
 
 @end
+#endif

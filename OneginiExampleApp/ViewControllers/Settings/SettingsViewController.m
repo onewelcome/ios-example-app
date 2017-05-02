@@ -23,6 +23,7 @@
 #import "UIAlertController+Shortcut.h"
 #import "AuthenticatorRegistrationController.h"
 #import "ProfileModel.h"
+#import "MobileAuthModel.h"
 
 @interface SettingsViewController ()
 
@@ -32,6 +33,11 @@
 @property (nonatomic) AuthenticatorRegistrationController *authenticatorRegistrationController;
 @property (nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic) UIRefreshControl *refreshControl;
+
+@property (weak, nonatomic) IBOutlet UIButton *enrollForMobileAuthButton;
+@property (weak, nonatomic) IBOutlet UISwitch *enrolledForMobileAuthSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *enrollForPushMobileAuthButton;
+@property (weak, nonatomic) IBOutlet UISwitch *enrolledForPushMobileAuthSwitch;
 
 @end
 
@@ -44,17 +50,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = @"Settings";
-        
-        UIBarButtonItem *selectItem = [[UIBarButtonItem alloc] initWithTitle:@"Select preferred"
-                                                                       style:UIBarButtonItemStylePlain
-                                                                      target:self
-                                                                      action:@selector(selectPreferredAuthenticator:)];
-        self.toolbarItems = @[selectItem];
-        
         self.userClient = [ONGUserClient sharedInstance];
         self.userProfile = [self.userClient authenticatedUserProfile];
     }
-    
     return self;
 }
 
@@ -76,16 +74,95 @@
 {
     [super viewWillAppear:animated];
     
-    [self.navigationController setToolbarHidden:NO animated:animated];
+    self.enrolledForMobileAuthSwitch.on = [ONGUserClient sharedInstance].isEnrolledForMobileAuth;
+    self.enrolledForPushMobileAuthSwitch.on = [ONGUserClient sharedInstance].isEnrolledForPushMobileAuth;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController setToolbarHidden:YES animated:animated];
 }
 
 #pragma mark - Logic
+
+- (IBAction)enrollForMobileAuthentication:(id)sender
+{
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    
+    [[ONGUserClient sharedInstance] enrollForMobileAuth:^(BOOL enrolled, NSError * _Nullable error) {
+        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+        self.enrolledForMobileAuthSwitch.on = enrolled;
+        if (enrolled) {
+            [self showMessage:@"Enrolled successfully"];
+        } else {
+            [self handleMobileAuthError:error];
+        }
+    }];
+}
+
+- (IBAction)enrollForPushMobileAuthentication:(id)sender
+{
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [[ONGUserClient sharedInstance] enrollForPushMobileAuthWithDeviceToken:[MobileAuthModel sharedInstance].deviceToken
+                                                                completion:^(BOOL enrolled, NSError * _Nullable error) {
+                                                                    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+                                                                    self.enrolledForPushMobileAuthSwitch.on = enrolled;
+                                                                    if (enrolled) {
+                                                                        [self showMessage:@"Enrolled successfully"];
+                                                                    } else {
+                                                                        [self handleMobileAuthError:error];
+                                                                    }
+                                                                }];
+}
+
+- (void)handleMobileAuthError:(NSError *)error
+{
+    ONGUserProfile *userProfile = [ONGUserClient sharedInstance].authenticatedUserProfile;
+    NSString *alertMessage = nil;
+    if (error) {
+        switch (error.code) {
+            case ONGGenericErrorUserDeregistered:
+                [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+                break;
+            case ONGGenericErrorDeviceDeregistered:
+                [[ProfileModel new] deleteProfileNames];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+                break;
+            case ONGMobileAuthEnrollmentErrorUserNotAuthenticated:
+                [self.navigationController popToRootViewControllerAnimated:YES];
+                break;
+        }
+        alertMessage = error.localizedDescription;
+    } else {
+        alertMessage = @"Enrollment failed";
+    }
+    [self showError:alertMessage];
+}
+
+- (void)showError:(NSString *)error
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:error
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
+                                                 style:UIAlertActionStyleDefault
+                                               handler:nil];
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)showMessage:(NSString *)error
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Success"
+                                                                   message:error
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
+                                                 style:UIAlertActionStyleDefault
+                                               handler:nil];
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 
 - (void)reloadData
 {
@@ -126,11 +203,9 @@
         if (error != nil) {
             if (error.code == ONGGenericErrorUserDeregistered) {
                 [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];
-                [self.navigationController setToolbarHidden:YES animated:YES];
                 [self.navigationController popToRootViewControllerAnimated:YES];
             } else if (error.code == ONGGenericErrorDeviceDeregistered) {
                 [[ProfileModel new] deleteProfileNames];
-                [self.navigationController setToolbarHidden:YES animated:YES];
                 [self.navigationController popToRootViewControllerAnimated:YES];
             }
             UIAlertController *controller = [UIAlertController controllerWithTitle:@"Authenticator deregistered locally" message:error.localizedDescription completion:nil];

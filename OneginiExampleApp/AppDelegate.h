@@ -16,8 +16,11 @@
 #import <UIKit/UIKit.h>
 #import "OneginiSDK.h"
 
+@class MobileAuthenticationController;
+
 @interface AppDelegate : UIResponder<UIApplicationDelegate>
 
 @property (nonatomic) UIWindow *window;
+@property (nonatomic) MobileAuthenticationController *mobileAuthenticationController;
 
 @end

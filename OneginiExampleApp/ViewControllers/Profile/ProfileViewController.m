@@ -25,6 +25,9 @@
 #import "UIBarButtonItem+Extension.h"
 #import "ProfileModel.h"
 #import "MobileAuthModel.h"
+#import "ProfileModel.h"
+#import "AppDelegate.h"
+#import "MobileAuthenticationController.h"
 
 @interface ProfileViewController ()
 
@@ -128,6 +131,28 @@
 {
     SettingsViewController *settings = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:settings animated:YES];
+}
+
+- (IBAction)mobileAuthWithOTP:(id)sender
+{
+    NSString *profileName = [[ProfileModel new] profileNameForUserProfile:[ONGUserClient sharedInstance].authenticatedUserProfile];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Mobile Authentication with OTP"
+                                                                   message:[NSString stringWithFormat:@"Authenticated user: %@",profileName]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {}];
+    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Authenticate"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction *action) {
+                                                         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                                                         NSString *otpRequest = alert.textFields[0].text;
+                                                         [appDelegate.mobileAuthenticationController handleMobileAuthenticationRequest:otpRequest userProfile:[ONGUserClient sharedInstance].authenticatedUserProfile];
+                                                     }];
+    [alert addAction:okButton];
+    UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction *action){}];
+    [alert addAction:cancelButton];
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Logic

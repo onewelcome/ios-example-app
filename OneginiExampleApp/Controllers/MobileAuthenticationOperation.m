@@ -35,14 +35,25 @@
 
 - (instancetype)initWithUserInfo:(NSDictionary *)userInfo userClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController
 {
-
     self = [super init];
     if (self) {
         _userInfo = userInfo;
         _userClient = userClient;
         _navigationController = navigationController;
     }
+    return self;
+}
 
+- (instancetype)initWithOTPRequest:(NSString *)otpRequest
+                        userClient:(ONGUserClient *)userClient
+              navigationController:(UINavigationController *)navigationController
+{
+    self = [super init];
+    if (self) {
+        _otpRequest = otpRequest;
+        _userClient = userClient;
+        _navigationController = navigationController;
+    }
     return self;
 }
 
@@ -54,7 +65,11 @@
     // Result of calling the SDK from the background thread is undefined.
     dispatch_async(dispatch_get_main_queue(), ^{
         self.pinViewController = [[PinViewController alloc] init];
-        [self.userClient handleMobileAuthRequest:self.userInfo delegate:self];
+        if (self.otpRequest) {
+            [self.userClient handleMobileAuthRequest:self.otpRequest delegate:self];
+        } else {
+            [self.userClient handlePushMobileAuthRequest:self.userInfo delegate:self];
+        }
     });
 }
 

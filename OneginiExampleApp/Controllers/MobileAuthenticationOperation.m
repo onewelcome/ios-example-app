@@ -66,7 +66,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         self.pinViewController = [[PinViewController alloc] init];
         if (self.otpRequest) {
-            [self.userClient handleMobileAuthRequest:self.otpRequest delegate:self];
+            [self.userClient handleOTPMobileAuthRequest:self.otpRequest delegate:self];
         } else {
             [self.userClient handlePushMobileAuthRequest:self.userInfo delegate:self];
         }

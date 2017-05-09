@@ -24,13 +24,16 @@
 #import "ONGResourceResponse+JSONResponse.h"
 #import "UIBarButtonItem+Extension.h"
 #import "ProfileModel.h"
+#import "MobileAuthModel.h"
+#import "ProfileModel.h"
+#import "AppDelegate.h"
+#import "MobileAuthenticationController.h"
 
 @interface ProfileViewController ()
 
 @property (nonatomic) ChangePinController *changePinController;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *getTokenSpinner;
-@property (weak, nonatomic) IBOutlet UIButton *fingerprintButton;
 
 @end
 
@@ -57,12 +60,20 @@
     self.getTokenSpinner.hidden = YES;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
 #pragma mark - IBAction
 
 - (IBAction)logout:(id)sender
 {
     [[ONGUserClient sharedInstance] logoutUser:^(ONGUserProfile *_Nonnull userProfile, NSError *_Nullable error) {
         [self.navigationController popToRootViewControllerAnimated:YES];
+        if (error) {
+            [self showError:error.description];
+        }
     }];
 }
 
@@ -93,44 +104,6 @@
     }];
 }
 
-- (IBAction)enrollForMobileAuthentication:(id)sender
-{
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-
-    ONGUserProfile *userProfile = [ONGUserClient sharedInstance].authenticatedUserProfile;
-    [[ONGUserClient sharedInstance] enrollForMobileAuthentication:^(BOOL enrolled, NSError *_Nullable error) {
-        
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        NSString *alertMessage = nil;
-        if (!enrolled) {
-            if (error) {
-                switch (error.code) {
-                    case ONGGenericErrorUserDeregistered:
-                        [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];
-                        [self.navigationController popToRootViewControllerAnimated:YES];
-                        break;
-                    case ONGGenericErrorDeviceDeregistered:
-                        [[ProfileModel new] deleteProfileNames];
-                        [self.navigationController popToRootViewControllerAnimated:YES];
-                        break;
-                    case ONGMobileAuthenticationEnrollmentErrorUserNotAuthenticated:
-                        [self.navigationController popToRootViewControllerAnimated:YES];
-                        break;
-                }
-                alertMessage = error.localizedDescription;
-            } else {
-                alertMessage = @"Enrollment failed";
-            }
-        } else {
-            alertMessage = @"Enrolled successfully";
-            [self showMessage:alertMessage];
-            return;
-        }
-
-        [self showError:alertMessage];
-    }];
-}
-
 - (IBAction)changePin:(id)sender
 {
     if (self.changePinController)
@@ -158,6 +131,28 @@
 {
     SettingsViewController *settings = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:settings animated:YES];
+}
+
+- (IBAction)mobileAuthWithOTP:(id)sender
+{
+    NSString *profileName = [[ProfileModel new] profileNameForUserProfile:[ONGUserClient sharedInstance].authenticatedUserProfile];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Mobile Authentication with OTP"
+                                                                   message:[NSString stringWithFormat:@"Authenticated user: %@",profileName]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {}];
+    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Authenticate"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction *action) {
+                                                         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                                                         NSString *otpRequest = alert.textFields[0].text;
+                                                         [appDelegate.mobileAuthenticationController handleMobileAuthenticationRequest:otpRequest userProfile:[ONGUserClient sharedInstance].authenticatedUserProfile];
+                                                     }];
+    [alert addAction:okButton];
+    UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction *action){}];
+    [alert addAction:cancelButton];
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Logic

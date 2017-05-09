@@ -20,10 +20,9 @@
 #import "NavigationControllerAppearance.h"
 #import "TestOptions.h"
 #import "ProfileModel.h"
+#import "MobileAuthModel.h"
 
 @interface AppDelegate () <UINavigationControllerDelegate>
-
-@property (nonatomic) MobileAuthenticationController *mobileAuthenticationController;
 
 @end
 
@@ -112,17 +111,17 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    [[ONGUserClient sharedInstance] storeDevicePushTokenInSession:deviceToken];
+    [MobileAuthModel sharedInstance].deviceToken = deviceToken;
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    [[ONGUserClient sharedInstance] storeDevicePushTokenInSession:nil];
+    [MobileAuthModel sharedInstance].deviceToken = nil;
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    BOOL handled = [self.mobileAuthenticationController handleMobileAuthenticationRequest:userInfo];
+    BOOL handled = [self.mobileAuthenticationController handlePushMobileAuthenticationRequest:userInfo];
     if (!handled) {
         // pass it to the next service (FireBase, Facebook, etc).
     }

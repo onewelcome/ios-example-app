@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -59,24 +59,14 @@
                             <rect key="frame" x="0.0" y="180" width="280" height="44"/>
                             <subviews>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lYF-s1-yVn" userLabel="Get Token Spinner">
-                                    <rect key="frame" x="130" y="13" width="20" height="20"/>
+                                    <rect key="frame" x="129" y="12" width="20" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
                             </subviews>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m10-Cb-mn3" userLabel="Enroll Button">
-                            <rect key="frame" x="0.0" y="240" width="280" height="44"/>
-                            <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <state key="normal" title="Enroll for mobile authentication">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="enrollForMobileAuthentication:" destination="-1" eventType="touchUpInside" id="WUj-Vi-Qoq"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2FJ-eX-JDg" userLabel="Change pin Button">
-                            <rect key="frame" x="0.0" y="300" width="280" height="44"/>
+                            <rect key="frame" x="0.0" y="240" width="280" height="44"/>
                             <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal" title="Change pin">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -86,7 +76,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ce6-QG-ZqY" userLabel="Settings Button">
-                            <rect key="frame" x="0.0" y="360" width="280" height="44"/>
+                            <rect key="frame" x="0.0" y="300" width="280" height="44"/>
                             <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal" title="Settings">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -95,14 +85,25 @@
                                 <action selector="presentSettings:" destination="-1" eventType="touchUpInside" id="ma3-of-ykK"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qVd-rq-XhD">
+                            <rect key="frame" x="0.0" y="360" width="280" height="44"/>
+                            <color key="backgroundColor" red="0.0" green="0.68235294120000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="contentEdgeInsets" minX="50" minY="10" maxX="50" maxY="10"/>
+                            <state key="normal" title="Mobile Auth with OTP">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="mobileAuthWithOTP:" destination="-1" eventType="touchUpInside" id="aXj-QU-BQZ"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstItem="ce6-QG-ZqY" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="FP8-ot-IP9"/>
                         <constraint firstItem="7XT-BQ-zzU" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="K2j-iI-Dov"/>
-                        <constraint firstItem="m10-Cb-mn3" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="MW5-Qv-GuK"/>
                         <constraint firstAttribute="width" constant="280" id="ZLN-1x-vAo"/>
-                        <constraint firstItem="8eJ-Cw-DPl" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="nNd-QH-yjC"/>
+                        <constraint firstItem="8eJ-Cw-DPl" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="iVl-sM-d12"/>
                         <constraint firstItem="8ui-yk-FRc" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="rOb-wd-uYy"/>
+                        <constraint firstItem="qVd-rq-XhD" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="t4l-WJ-ju6"/>
                         <constraint firstItem="2FJ-eX-JDg" firstAttribute="height" secondItem="pz4-sP-mfq" secondAttribute="height" id="waP-ZD-xGp"/>
                     </constraints>
                 </stackView>
@@ -112,7 +113,7 @@
                 <constraint firstItem="NEk-d7-u7M" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="ayu-6T-T6G"/>
                 <constraint firstItem="NEk-d7-u7M" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ov7-yB-iac"/>
             </constraints>
-            <point key="canvasLocation" x="-38" y="176"/>
+            <point key="canvasLocation" x="-38.5" y="175.5"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

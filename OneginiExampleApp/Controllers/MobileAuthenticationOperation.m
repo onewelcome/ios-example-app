@@ -35,14 +35,25 @@
 
 - (instancetype)initWithUserInfo:(NSDictionary *)userInfo userClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController
 {
-
     self = [super init];
     if (self) {
         _userInfo = userInfo;
         _userClient = userClient;
         _navigationController = navigationController;
     }
+    return self;
+}
 
+- (instancetype)initWithOTPRequest:(NSString *)otpRequest
+                        userClient:(ONGUserClient *)userClient
+              navigationController:(UINavigationController *)navigationController
+{
+    self = [super init];
+    if (self) {
+        _otpRequest = otpRequest;
+        _userClient = userClient;
+        _navigationController = navigationController;
+    }
     return self;
 }
 
@@ -54,7 +65,11 @@
     // Result of calling the SDK from the background thread is undefined.
     dispatch_async(dispatch_get_main_queue(), ^{
         self.pinViewController = [[PinViewController alloc] init];
-        [self.userClient handleMobileAuthenticationRequest:self.userInfo delegate:self];
+        if (self.otpRequest) {
+            [self.userClient handleOTPMobileAuthRequest:self.otpRequest delegate:self];
+        } else {
+            [self.userClient handlePushMobileAuthRequest:self.userInfo delegate:self];
+        }
     });
 }
 
@@ -86,7 +101,7 @@
 
 #pragma mark - ONGMobileAuthenticationRequestDelegate
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveConfirmationChallenge:(void (^)(BOOL confirmRequest))confirmation forRequest:(ONGMobileAuthenticationRequest *)request
+- (void)userClient:(ONGUserClient *)userClient didReceiveConfirmationChallenge:(void (^)(BOOL confirmRequest))confirmation forRequest:(ONGMobileAuthRequest *)request
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = request.message;
@@ -109,7 +124,7 @@
  *
  * Note: during errors that are not related to the PIN validation such as network errors the attempts counter remains untouched.
  */
-- (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge forRequest:(ONGMobileAuthenticationRequest *)request
+- (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
 {
     [self.pinViewController reset];
     self.pinViewController.mode = PINCheckMode;
@@ -145,7 +160,7 @@
  * In contract with -userClient:didReceivePinChallenge:forRequest: is not going to be called again in case or error - SDK fallbacks to the PIN instead.
  * This also doesn't affect on the PIN attempts count. Thats why we can skip any error handling for the fingerpint challenge.
  */
-- (void)userClient:(ONGUserClient *)userClient didReceiveFingerprintChallenge:(ONGFingerprintChallenge *)challenge forRequest:(ONGMobileAuthenticationRequest *)request
+- (void)userClient:(ONGUserClient *)userClient didReceiveFingerprintChallenge:(ONGFingerprintChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = request.message;
@@ -169,7 +184,7 @@
  * In contract with -userClient:didReceivePinChallenge:forRequest: is not going to be called again in case or error - SDK fallbacks to the PIN instead.
  * This also doesn't affect on the PIN attempts count. Thats why we can skip any error handling for the fingerpint challenge.
  */
--(void)userClient:(ONGUserClient *)userClient didReceiveFIDOChallenge:(ONGFIDOChallenge *)challenge forRequest:(ONGMobileAuthenticationRequest *)request
+-(void)userClient:(ONGUserClient *)userClient didReceiveFIDOChallenge:(ONGFIDOChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = request.message;
@@ -187,13 +202,13 @@
     }];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request
+- (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthRequest:(ONGMobileAuthRequest *)request
 {
     // Once the SDK reported that the `request` has been handled we need to finish our operation and free-up the queue.
     [self finish];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthenticationRequest:(ONGMobileAuthenticationRequest *)request error:(NSError *)error
+- (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthRequest:(ONGMobileAuthRequest *)request error:(NSError *)error
 {
     if (error.code == ONGGenericErrorUserDeregistered) {
         // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
@@ -207,7 +222,7 @@
         // the user is starting up the app for the first time.
         [[ProfileModel new] deleteProfileNames];
         [self.navigationController popToRootViewControllerAnimated:YES];
-    } else if (error.code == ONGMobileAuthenticationRequestErrorNotFound) {
+    } else if (error.code == ONGMobileAuthRequestErrorNotFound) {
         // For some reason the mobile authentication request cannot be found on the Token Server anymore. This can happen if a push notification
         // was delivered with a huge delay and a mobile authentication request was already removed from the Token Server because it expired.
     } else if (error.code == ONGGenericErrorActionCancelled) {

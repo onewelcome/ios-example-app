@@ -17,12 +17,16 @@
 #import "OneginiSDK.h"
 #import "StateOperation.h"
 
-@interface MobileAuthenticationOperation : StateOperation <ONGMobileAuthenticationRequestDelegate>
+@interface MobileAuthenticationOperation : StateOperation <ONGMobileAuthRequestDelegate>
 
 @property (nonatomic, readonly) ONGUserClient *userClient;
 @property (nonatomic, readonly) UINavigationController *navigationController;
 @property (nonatomic, readonly) NSDictionary *userInfo;
+@property (nonatomic, readonly) NSString *otpRequest;
 
 - (instancetype)initWithUserInfo:(NSDictionary *)userInfo userClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController;
+- (instancetype)initWithOTPRequest:(NSString *)otpRequest
+                        userClient:(ONGUserClient *)userClient
+              navigationController:(UINavigationController *)navigationController;
 
 @end

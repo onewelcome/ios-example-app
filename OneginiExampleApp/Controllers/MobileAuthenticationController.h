@@ -3,6 +3,7 @@
 #import <UIKit/UIKit.h>
 
 @class ONGUserClient;
+@class ONGUserProfile;
 
 // Due to nature of mobile request authentication that requires user interaction it appears that more notifications than
 // one notification can be received by the app.
@@ -14,6 +15,8 @@
 
 - (instancetype)initWithUserClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController;
 
-- (BOOL)handleMobileAuthenticationRequest:(NSDictionary *)userInfo;
+- (BOOL)handleMobileAuthenticationRequest:(NSString *)request userProfile:(ONGUserProfile *)userProfile;
+
+- (BOOL)handlePushMobileAuthenticationRequest:(NSDictionary *)userInfo;
 
 @end

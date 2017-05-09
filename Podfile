@@ -1,13 +1,12 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 plugin 'cocoapods-art', :sources => [
- 'onegini'
+ 'onegini',
+ 'onegini-snapshot'
 ]
 
 target 'OneginiExampleApp' do
-  pod 'OneginiSDKiOSFIDO', '~> 5.04.00'
+  pod 'OneginiSDKiOSFIDO', '~> 6.0.0-BETA'
   pod 'ZFDragableModalTransition', '~> 0.6'
   pod 'MBProgressHUD', '~> 1.0.0'
 end
-
-# vi:syntax=ruby

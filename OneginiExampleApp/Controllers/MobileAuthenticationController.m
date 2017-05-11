@@ -40,15 +40,14 @@
     if (![self.userClient canHandleOTPMobileAuthRequest:request]) {
         return NO;
     }
-    
+
     MobileAuthenticationOperation *operation = [[MobileAuthenticationOperation alloc] initWithOTPRequest:request
                                                                                               userClient:self.userClient
                                                                                     navigationController:self.navigationController];
     [self.executionQueue addOperation:operation];
-    
+
     return YES;
 }
-
 
 - (BOOL)handlePushMobileAuthenticationRequest:(NSDictionary *)userInfo
 {

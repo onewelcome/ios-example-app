@@ -74,8 +74,8 @@
 {
     [super viewWillAppear:animated];
     
-    self.enrolledForMobileAuthSwitch.on = [ONGUserClient sharedInstance].isEnrolledForMobileAuth;
-    self.enrolledForPushMobileAuthSwitch.on = [ONGUserClient sharedInstance].isEnrolledForPushMobileAuth;
+    self.enrolledForMobileAuthSwitch.on = [[ONGUserClient sharedInstance] isUserEnrolledForMobileAuth:self.userProfile];
+    self.enrolledForPushMobileAuthSwitch.on = [[ONGUserClient sharedInstance] isUserEnrolledForPushMobileAuth:self.userProfile];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

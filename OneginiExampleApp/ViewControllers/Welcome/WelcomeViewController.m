@@ -63,6 +63,7 @@
 
     [self authenticateDeviceAndFetchResource];
 }
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -167,37 +168,37 @@
     }];
 }
 
-- (void) authenticateUserImplicitlyAndFetchResource
+- (void)authenticateUserImplicitlyAndFetchResource
 {
     if (self.profiles.count > 0) {
         self.profileLabel.hidden = NO;
-    [[ONGUserClient sharedInstance] implicitlyAuthenticateUser:[self selectedProfile] scopes:nil completion:^(BOOL success, NSError * _Nonnull error) {
-        if (success) {
-            [self fetchResourcesImplicitly];
-        } else {
-            [self.navigationController popToRootViewControllerAnimated:YES];
+        [[ONGUserClient sharedInstance] implicitlyAuthenticateUser:[self selectedProfile] scopes:nil completion:^(BOOL success, NSError *_Nonnull error) {
+            if (success) {
+                [self fetchResourcesImplicitly];
+            } else {
+                [self.navigationController popToRootViewControllerAnimated:YES];
 
-            NSString *title = @"Implicit authentication failed";
-            UIAlertController *alert = [UIAlertController controllerWithTitle:title message:error.localizedDescription completion:nil];
-            [self.navigationController presentViewController:alert animated:YES completion:nil];
-        }
-    }];
+                NSString *title = @"Implicit authentication failed";
+                UIAlertController *alert = [UIAlertController controllerWithTitle:title message:error.localizedDescription completion:nil];
+                [self.navigationController presentViewController:alert animated:YES completion:nil];
+            }
+        }];
     } else {
         self.profileLabel.hidden = YES;
     }
 }
 
-- (void) fetchResourcesImplicitly
+- (void)fetchResourcesImplicitly
 {
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/user-id-decorated" method:@"GET"];
-    [[ONGUserClient sharedInstance] fetchImplicitResource:request completion:^(ONGResourceResponse * _Nullable response, NSError * _Nullable error) {
+    [[ONGUserClient sharedInstance] fetchImplicitResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         if (error) {
             self.profileLabel.text = @"Implicit resource fetching failed";
         } else {
             id jsonResponse = [response JSONResponse];
             if (jsonResponse != nil) {
                 self.profileLabel.text = [NSString stringWithFormat:@"%@",
-                                          [jsonResponse objectForKey:@"decorated_user_id"]];
+                                                                    [jsonResponse objectForKey:@"decorated_user_id"]];
             }
         }
     }];
@@ -221,7 +222,8 @@
     return 1;
 }
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
     [self authenticateUserImplicitlyAndFetchResource];
 }
 

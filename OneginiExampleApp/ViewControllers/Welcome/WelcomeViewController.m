@@ -28,9 +28,11 @@
 
 @property (nonatomic) NSArray<ONGUserProfile *> *profiles;
 
+@property (nonatomic) ONGAuthenticator *selectedAuthenticator;
 @property (nonatomic) AuthenticationController *authenticationController;
 @property (nonatomic) RegistrationController *registrationController;
 
+@property (weak, nonatomic) IBOutlet UISwitch *preferedAuthentiacorSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIPickerView *profilePicker;
@@ -69,6 +71,7 @@
     [super viewWillAppear:animated];
     self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
     [self.profilePicker reloadAllComponents];
+    self.preferedAuthentiacorSwitch.on = YES;
     [self authenticateUserImplicitlyAndFetchResource];
 }
 
@@ -91,32 +94,31 @@
 - (IBAction)login:(id)sender
 {
     if ([self.profiles count] == 0) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                       message:@"No registered profiles"
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okButton = [UIAlertAction
-            actionWithTitle:@"Ok"
-                      style:UIAlertActionStyleDefault
-                    handler:^(UIAlertAction *action) {
-                    }];
-        [alert addAction:okButton];
-        [self.navigationController presentViewController:alert animated:YES completion:nil];
-
+        [self showError:@"No registered profiles"];
         return;
     }
-    if (self.authenticationController || self.registrationController)
-        return;
 
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     ONGUserProfile *selectedUserProfile = [self selectedProfile];
+    
+    if (self.preferedAuthentiacorSwitch.on) {
+        [self startAuthentication:nil selectedUserProfile:selectedUserProfile];
+    } else {
+        [self showRegisteredAuthenticatorsForUser:selectedUserProfile];
+    }
+
+}
+
+- (void) startAuthentication:(nullable ONGAuthenticator *)authenticator selectedUserProfile:(ONGUserProfile *)selectedUserProfile
+{
     self.authenticationController = [AuthenticationController
-        authenticationControllerWithNavigationController:self.navigationController
-                                              completion:^{
-                                                  [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-                                                  self.authenticationController = nil;
-                                                  self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
-                                                  [self.profilePicker reloadAllComponents];
-                                              }];
+                                     authenticationControllerWithNavigationController:self.navigationController
+                                     completion:^{
+                                         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+                                         self.authenticationController = nil;
+                                         self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
+                                         [self.profilePicker reloadAllComponents];
+                                     }];
+    
     __weak typeof(self) weakSelf = self;
     self.authenticationController.progressStateDidChange = ^(BOOL isInProgress) {
         if (isInProgress) {
@@ -125,8 +127,14 @@
             [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
         }
     };
-
-    [[ONGUserClient sharedInstance] authenticateUser:selectedUserProfile delegate:self.authenticationController];
+    
+    if (authenticator) {
+        [[ONGUserClient sharedInstance] authenticateUserWithAuthenticator:authenticator profile:selectedUserProfile delegate:self.authenticationController];
+    } else {
+        [[ONGUserClient sharedInstance] authenticateUser:selectedUserProfile delegate:self.authenticationController];
+    }
+    
+    
 }
 
 - (void)authenticateDeviceAndFetchResource
@@ -166,6 +174,33 @@
             }
         }
     }];
+}
+
+- (void) showRegisteredAuthenticatorsForUser:(ONGUserProfile *)selectedUserProfile
+{
+    NSSet<ONGAuthenticator *> *registeredAuthenticatorsForUser = [[ONGUserClient sharedInstance] registeredAuthenticatorsForUser:selectedUserProfile];
+    UIAlertController *authenticatorList = [UIAlertController alertControllerWithTitle:@"" message:@"Select authenticator" preferredStyle:UIAlertControllerStyleActionSheet];
+    for (ONGAuthenticator *authenticator in registeredAuthenticatorsForUser) {
+        [authenticatorList addAction:[UIAlertAction actionWithTitle:authenticator.name style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self startAuthentication:authenticator selectedUserProfile:selectedUserProfile];
+        }]];
+    }
+    [authenticatorList addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}]];
+    [self presentViewController:authenticatorList animated:YES completion:^{}];
+}
+
+- (void) showError:(NSString *)message
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okButton = [UIAlertAction
+                               actionWithTitle:@"Ok"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action) {
+                               }];
+    [alert addAction:okButton];
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)authenticateUserImplicitlyAndFetchResource

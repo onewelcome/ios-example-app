@@ -155,4 +155,9 @@
     [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
+-(void) userClient:(ONGUserClient *)userClient didStartAuthenticationForUser:(ONGUserProfile *)userProfile
+{
+    self.progressStateDidChange(YES);
+}
+
 @end

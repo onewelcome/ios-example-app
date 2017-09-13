@@ -150,8 +150,8 @@
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-details" method:@"GET"];
     [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         if (error) {
-            UIAlertController *controller = [UIAlertController controllerWithTitle:@"Error" message:error.localizedDescription completion:nil];
-            [self presentViewController:controller animated:YES completion:nil];
+            self.appInfoLabel.text = @"Fetching anonymous resource failed";
+            self.appInfoLabel.hidden = NO;
         } else {
             id jsonResponse = [response JSONResponse];
             if (jsonResponse != nil) {
@@ -179,11 +179,7 @@
                 if (success) {
                     [self fetchResourceImplicitly];
                 } else {
-                    [self.navigationController popToRootViewControllerAnimated:YES];
-
-                    NSString *title = @"Implicit authentication failed";
-                    UIAlertController *alert = [UIAlertController controllerWithTitle:title message:error.localizedDescription completion:nil];
-                    [self.navigationController presentViewController:alert animated:YES completion:nil];
+                    self.profileLabel.text = @"Implicit authentication failed";
                 }
             }];
         }
@@ -204,7 +200,7 @@
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/user-id-decorated" method:@"GET"];
     [[ONGUserClient sharedInstance] fetchImplicitResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         if (error) {
-            self.profileLabel.text = @"Implicit resource fetching failed";
+            self.profileLabel.text = @"Fetching implicit resource failed";
         } else {
             id jsonResponse = [response JSONResponse];
             if (jsonResponse != nil) {

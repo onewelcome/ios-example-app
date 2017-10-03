@@ -39,7 +39,7 @@
     return authorizationController;
 }
 
-- (void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile
+- (void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile info:(nullable ONGCustomAuthenticatorInfo *)info
 {
     ProfileViewController *viewController = [ProfileViewController new];
     [self.navigationController pushViewController:viewController animated:YES];
@@ -50,7 +50,7 @@
     }
 }
 
-- (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
+- (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error info:(nullable ONGCustomAuthenticatorInfo *)info
 {
     // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
     // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
@@ -141,6 +141,11 @@
     [alert addAction:pinFallbackButton];
     [alert addAction:cancelButton];
     [self.navigationController presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthenticatorAuthenticateFinishChallenge:(nonnull ONGCustomAuthenticatorAuthenticationFinishChallenge *)challenge
+{
+    [challenge.sender respondWithData:@"yourCustomAuthenticatorData" challenge:challenge];
 }
 
 - (void)showError:(NSError *)error

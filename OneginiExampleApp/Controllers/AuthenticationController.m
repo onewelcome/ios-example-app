@@ -143,7 +143,7 @@
     [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthenticatorAuthenticateFinishChallenge:(nonnull ONGCustomAuthenticatorAuthenticationFinishChallenge *)challenge
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthenticatorAuthenticationFinishChallenge:(nonnull ONGCustomAuthenticatorAuthenticationFinishChallenge *)challenge
 {
     [challenge.sender respondWithData:@"yourCustomAuthenticatorData" challenge:challenge];
 }

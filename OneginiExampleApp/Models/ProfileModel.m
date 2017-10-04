@@ -53,7 +53,14 @@
 
 - (NSString *)profileNameForUserProfile:(ONGUserProfile *)userProfile
 {
-    return [[[NSUserDefaults standardUserDefaults] dictionaryForKey:self.profilesKey] objectForKey:userProfile.profileId];
+    if ([userProfile.profileId isEqualToString:@"static"]) {
+        [self registerProfileName:@"static" forUserProfile:userProfile];
+    }
+    NSString *storedName = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:self.profilesKey] objectForKey:userProfile.profileId];
+    if (!storedName)
+        storedName = @"ExampleName";
+    return storedName;
+
 }
 
 - (void)deleteProfileNameForUserProfile:(ONGUserProfile *)userProfile

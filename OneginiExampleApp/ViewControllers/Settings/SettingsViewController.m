@@ -22,6 +22,7 @@
 #import "AuthenticatorCellTableViewCell.h"
 #import "UIAlertController+Shortcut.h"
 #import "AuthenticatorRegistrationController.h"
+#import "AuthenticatorDeregistrationController.h"
 #import "ProfileModel.h"
 #import "MobileAuthModel.h"
 
@@ -31,6 +32,7 @@
 @property (nonatomic) ONGUserProfile *userProfile;
 @property (nonatomic, copy) NSArray<ONGAuthenticator *> *authenticators;
 @property (nonatomic) AuthenticatorRegistrationController *authenticatorRegistrationController;
+@property (nonatomic) AuthenticatorDeregistrationController *authenticatorDeregistrationController;
 @property (nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic) UIRefreshControl *refreshControl;
 
@@ -194,24 +196,11 @@
 - (void)deregisterAuthenticator:(ONGAuthenticator *)authenticator
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    ONGUserProfile *userProfile = [ONGUserClient sharedInstance].authenticatedUserProfile;
-    [self.userClient deregisterAuthenticator:authenticator completion:^(BOOL deregistered, NSError *error) {
-        [hud hideAnimated:YES];
-
+    self.authenticatorDeregistrationController = [AuthenticatorDeregistrationController controllerWithNavigationController:self.navigationController completion:^{
+        self.authenticatorDeregistrationController = nil;
         [self reloadData];
-
-        if (error != nil) {
-            if (error.code == ONGGenericErrorUserDeregistered) {
-                [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];
-                [self.navigationController popToRootViewControllerAnimated:YES];
-            } else if (error.code == ONGGenericErrorDeviceDeregistered) {
-                [[ProfileModel new] deleteProfileNames];
-                [self.navigationController popToRootViewControllerAnimated:YES];
-            }
-            UIAlertController *controller = [UIAlertController controllerWithTitle:@"Authenticator deregistered locally" message:error.localizedDescription completion:nil];
-            [self.navigationController presentViewController:controller animated:YES completion:nil];
-        }
     }];
+    [self.userClient deregisterAuthenticator:authenticator delegate:self.authenticatorDeregistrationController];
 }
 
 #pragma mark - UITableViewDataSource

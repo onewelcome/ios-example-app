@@ -62,7 +62,7 @@
 
 #pragma mark - ONGAuthenticatorRegistrationDelegate
 
-- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile
+- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile withInfo:(ONGCustomAuthenticatorInfo * _Nullable)customAuthenticatorInfo
 {
     [MBProgressHUD hideHUDForView:self.container.view animated:YES];
 
@@ -74,7 +74,7 @@
 /**
  * Possible error domains are ONGAuthenticatorRegistrationErrorDomain and ONGGenericErrorDomain.
  */
-- (void)userClient:(ONGUserClient *)userClient didFailToRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile error:(nonnull NSError *)error
+- (void)userClient:(ONGUserClient *)userClient didFailToRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile error:(nonnull NSError *)error info:(ONGCustomAuthenticatorInfo * _Nullable)customAuthenticatorInfo
 {
     [MBProgressHUD hideHUDForView:self.container.view animated:YES];
 
@@ -154,6 +154,12 @@
         self.pinViewController.profile = challenge.userProfile;
         [self.presentingViewController presentViewController:self.container animated:YES completion:nil];
     }
+}
+
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthenticatorRegistrationFinishChallenge:(nonnull ONGCustomAuthenticatorRegistrationFinishChallenge *)challenge
+{
+    NSString *data = @"yourCustomAuthenticatorData";
+    [challenge.sender respondWithData:data challenge:challenge];
 }
 
 #pragma mark - Misc

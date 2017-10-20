@@ -145,7 +145,27 @@
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthenticatorAuthenticationFinishChallenge:(nonnull ONGCustomAuthenticatorAuthenticationFinishChallenge *)challenge
 {
-    [challenge.sender respondWithData:@"yourCustomAuthenticatorData" challenge:challenge];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Custom Authenticator"
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    __block UITextField *alertTextField;
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        alertTextField = textField;
+    }];
+    UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:@"Authenticate"
+                                                                 style:UIAlertActionStyleDefault
+                                                               handler:^(UIAlertAction * _Nonnull action) {
+                                                                   [challenge.sender respondWithData:alertTextField.text challenge:challenge];
+                                                               }];
+    UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [challenge.sender cancelChallenge:challenge underlyingError:nil];
+                                                         }];
+    
+    [alert addAction:authenticateButton];
+    [alert addAction:cancelButton];
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)showError:(NSError *)error

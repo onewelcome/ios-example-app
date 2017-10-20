@@ -202,13 +202,38 @@
     }];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthRequest:(ONGMobileAuthRequest *)request
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthenticatorFinishChallenge:(ONGCustomAuthenticatorAuthenticationFinishChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Custom Authenticator"
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    __block UITextField *alertTextField;
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        alertTextField = textField;
+    }];
+    UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:@"Authenticate"
+                                                                 style:UIAlertActionStyleDefault
+                                                               handler:^(UIAlertAction * _Nonnull action) {
+                                                                   [challenge.sender respondWithData:alertTextField.text challenge:challenge];
+                                                               }];
+    UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [challenge.sender cancelChallenge:challenge underlyingError:nil];
+                                                         }];
+    
+    [alert addAction:authenticateButton];
+    [alert addAction:cancelButton];
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthRequest:(ONGMobileAuthRequest *)request info:(ONGCustomAuthenticatorInfo * _Nullable)customAuthenticatorInfo
 {
     // Once the SDK reported that the `request` has been handled we need to finish our operation and free-up the queue.
     [self finish];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthRequest:(ONGMobileAuthRequest *)request error:(NSError *)error
+- (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthRequest:(ONGMobileAuthRequest *)request error:(NSError *)error info:(ONGCustomAuthenticatorInfo * _Nullable)customAuthenticatorInfo
 {
     if (error.code == ONGGenericErrorUserDeregistered) {
         // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can

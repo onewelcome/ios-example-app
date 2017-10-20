@@ -167,7 +167,6 @@
     pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint for user: %@", [[ProfileModel new] profileNameForUserProfile:request.userProfile]];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [self.navigationController popViewControllerAnimated:YES];
-
         if (confirmed) {
             [challenge.sender respondWithDefaultPromptForChallenge:challenge];
         } else {
@@ -204,8 +203,8 @@
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthenticatorFinishChallenge:(ONGCustomAuthenticatorAuthenticationFinishChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Custom Authenticator"
-                                                                   message:nil
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Mobile Auth"
+                                                                   message:[NSString stringWithFormat:@"Confirm push with %@ for %@", challenge.authenticator.name, [[ProfileModel new] profileNameForUserProfile:request.userProfile]]
                                                             preferredStyle:UIAlertControllerStyleAlert];
     __block UITextField *alertTextField;
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {

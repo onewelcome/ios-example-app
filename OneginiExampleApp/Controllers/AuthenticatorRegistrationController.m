@@ -62,7 +62,7 @@
 
 #pragma mark - ONGAuthenticatorRegistrationDelegate
 
-- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile withInfo:(ONGCustomAuthenticatorInfo * _Nullable)customAuthenticatorInfo
+- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile info:(ONGCustomAuthenticatorInfo * _Nullable)customAuthenticatorInfo
 {
     [MBProgressHUD hideHUDForView:self.container.view animated:YES];
 

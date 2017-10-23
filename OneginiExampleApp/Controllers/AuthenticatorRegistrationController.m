@@ -62,7 +62,7 @@
 
 #pragma mark - ONGAuthenticatorRegistrationDelegate
 
-- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile withInfo:(ONGCustomAuthenticatorInfo * _Nullable)customAuthenticatorInfo
+- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile info:(ONGCustomAuthenticatorInfo * _Nullable)customAuthenticatorInfo
 {
     [MBProgressHUD hideHUDForView:self.container.view animated:YES];
 
@@ -158,8 +158,27 @@
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthenticatorRegistrationFinishChallenge:(nonnull ONGCustomAuthenticatorRegistrationFinishChallenge *)challenge
 {
-    NSString *data = @"yourCustomAuthenticatorData";
-    [challenge.sender respondWithData:data challenge:challenge];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Custom Authenticator"
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    __block UITextField *alertTextField;
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        alertTextField = textField;
+    }];
+    UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:@"Register"
+                                                                 style:UIAlertActionStyleDefault
+                                                               handler:^(UIAlertAction * _Nonnull action) {
+                                                                   [challenge.sender respondWithData:alertTextField.text challenge:challenge];
+                                                               }];
+    UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [challenge.sender cancelChallenge:challenge underlyingError:nil];
+                                                         }];
+    
+    [alert addAction:authenticateButton];
+    [alert addAction:cancelButton];
+    [self.presentingViewController presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Misc

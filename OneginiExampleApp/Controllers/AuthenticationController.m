@@ -116,6 +116,12 @@
     }
 }
 
+-(void)userClient:(ONGUserClient *)userClient didReceiveFingerprintChallenge:(ONGFingerprintChallenge *)challenge
+{
+    self.progressStateDidChange(YES);
+    [challenge.sender respondWithPrompt:@"Please provide your fingerprint." challenge:challenge];
+}
+
 - (void)userClient:(ONGUserClient *)userClient didReceiveFIDOChallenge:(nonnull ONGFIDOChallenge *)challenge
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"FIDO Authentication"
@@ -124,6 +130,7 @@
     UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Authenticate with %@", challenge.authenticator.name]
                                                                  style:UIAlertActionStyleDefault
                                                                handler:^(UIAlertAction * _Nonnull action) {
+                                                                   self.progressStateDidChange(YES);
                                                                    [challenge.sender respondWithFIDOForChallenge:challenge];
                                                                }];
     UIAlertAction *pinFallbackButton = [UIAlertAction actionWithTitle:@"Fallback to PIN"
@@ -155,6 +162,7 @@
     UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:@"Authenticate"
                                                                  style:UIAlertActionStyleDefault
                                                                handler:^(UIAlertAction * _Nonnull action) {
+                                                                   self.progressStateDidChange(YES);
                                                                    [challenge.sender respondWithData:alertTextField.text challenge:challenge];
                                                                }];
     UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
@@ -178,11 +186,6 @@
                                                      handler:nil];
     [alert addAction:okButton];
     [self.navigationController presentViewController:alert animated:YES completion:nil];
-}
-
--(void) userClient:(ONGUserClient *)userClient didStartAuthenticationForUser:(ONGUserProfile *)userProfile
-{
-    self.progressStateDidChange(YES);
 }
 
 @end

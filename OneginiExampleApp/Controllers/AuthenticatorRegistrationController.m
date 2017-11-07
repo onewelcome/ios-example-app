@@ -62,7 +62,7 @@
 
 #pragma mark - ONGAuthenticatorRegistrationDelegate
 
-- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile info:(ONGCustomAuthenticatorInfo * _Nullable)customAuthenticatorInfo
+- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile info:(ONGCustomAuthInfo * _Nullable)customAuthInfo
 {
     [MBProgressHUD hideHUDForView:self.container.view animated:YES];
 
@@ -74,7 +74,7 @@
 /**
  * Possible error domains are ONGAuthenticatorRegistrationErrorDomain and ONGGenericErrorDomain.
  */
-- (void)userClient:(ONGUserClient *)userClient didFailToRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile error:(nonnull NSError *)error info:(ONGCustomAuthenticatorInfo * _Nullable)customAuthenticatorInfo
+- (void)userClient:(ONGUserClient *)userClient didFailToRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile error:(nonnull NSError *)error
 {
     [MBProgressHUD hideHUDForView:self.container.view animated:YES];
 
@@ -155,8 +155,7 @@
         [self.presentingViewController presentViewController:self.container animated:YES completion:nil];
     }
 }
-
-- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthenticatorRegistrationFinishChallenge:(nonnull ONGCustomAuthenticatorRegistrationFinishChallenge *)challenge
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthFinishRegistrationChallenge:(ONGCustomAuthFinishRegistrationChallenge *)challenge
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Custom Authenticator"
                                                                    message:nil

@@ -39,7 +39,7 @@
     return authorizationController;
 }
 
-- (void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile info:(nullable ONGCustomAuthenticatorInfo *)info
+- (void)userClient:(ONGUserClient *)userClient didAuthenticateUser:(ONGUserProfile *)userProfile info:(nullable ONGCustomAuthInfo *)info
 {
     ProfileViewController *viewController = [ProfileViewController new];
     [self.navigationController pushViewController:viewController animated:YES];
@@ -50,7 +50,7 @@
     }
 }
 
-- (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error info:(nullable ONGCustomAuthenticatorInfo *)info
+- (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
     // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
     // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
@@ -116,7 +116,7 @@
     }
 }
 
--(void)userClient:(ONGUserClient *)userClient didReceiveFingerprintChallenge:(ONGFingerprintChallenge *)challenge
+- (void)userClient:(ONGUserClient *)userClient didReceiveFingerprintChallenge:(ONGFingerprintChallenge *)challenge
 {
     self.progressStateDidChange(YES);
     [challenge.sender respondWithPrompt:@"Please provide your fingerprint." challenge:challenge];
@@ -150,7 +150,7 @@
     [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthenticatorAuthenticationFinishChallenge:(nonnull ONGCustomAuthenticatorAuthenticationFinishChallenge *)challenge
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthFinishAuthenticationChallenge:(ONGCustomAuthFinishAuthenticationChallenge *)challenge
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Custom Authenticator"
                                                                    message:nil

@@ -64,7 +64,7 @@
     [self finish:error];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthenticatorDeregistrationChallenge:(ONGCustomAuthenticatorDeregistrationChallenge *)challenge
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthDeregistrationChallenge:(ONGCustomAuthDeregistrationChallenge *)challenge
 {
     [challenge.sender continueWithChallenge:challenge];
 }

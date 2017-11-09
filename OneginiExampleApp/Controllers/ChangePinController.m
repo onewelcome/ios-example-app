@@ -22,14 +22,14 @@
 
 @property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic) UINavigationController *navigationController;
-@property (nonatomic) void (^completion)();
+@property (nonatomic) void (^completion)(void);
 
 @end
 
 @implementation ChangePinController
 
 + (instancetype)changePinControllerWithNavigationController:(UINavigationController *)navigationController
-                                                 completion:(void (^)())completion
+                                                 completion:(void (^)(void))completion
 {
     ChangePinController *changePinController = [ChangePinController new];
     changePinController.navigationController = navigationController;

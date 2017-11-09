@@ -22,6 +22,6 @@
 @property (nonatomic, copy) void (^progressStateDidChange)(BOOL);
 
 + (instancetype)changePinControllerWithNavigationController:(UINavigationController *)navigationController
-                                                 completion:(void (^)())completion;
+                                                 completion:(void (^)(void))completion;
 
 @end

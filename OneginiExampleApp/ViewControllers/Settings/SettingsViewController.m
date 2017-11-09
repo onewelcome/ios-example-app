@@ -195,7 +195,7 @@
 
 - (void)deregisterAuthenticator:(ONGAuthenticator *)authenticator
 {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.authenticatorDeregistrationController = [AuthenticatorDeregistrationController controllerWithNavigationController:self.navigationController completion:^{
         self.authenticatorDeregistrationController = nil;
         [self reloadData];

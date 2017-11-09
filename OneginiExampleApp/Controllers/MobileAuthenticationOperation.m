@@ -183,7 +183,7 @@
  * In contract with -userClient:didReceivePinChallenge:forRequest: is not going to be called again in case or error - SDK fallbacks to the PIN instead.
  * This also doesn't affect on the PIN attempts count. Thats why we can skip any error handling for the fingerpint challenge.
  */
--(void)userClient:(ONGUserClient *)userClient didReceiveFIDOChallenge:(ONGFIDOChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
+- (void)userClient:(ONGUserClient *)userClient didReceiveFIDOChallenge:(ONGFIDOChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = request.message;
@@ -201,7 +201,7 @@
     }];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthenticatorFinishChallenge:(ONGCustomAuthenticatorAuthenticationFinishChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthFinishAuthenticationChallenge:(ONGCustomAuthFinishAuthenticationChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Mobile Auth"
                                                                    message:[NSString stringWithFormat:@"Confirm push with %@ for %@", challenge.authenticator.name, [[ProfileModel new] profileNameForUserProfile:request.userProfile]]
@@ -226,13 +226,13 @@
     [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthRequest:(ONGMobileAuthRequest *)request info:(ONGCustomAuthenticatorInfo * _Nullable)customAuthenticatorInfo
+- (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthRequest:(ONGMobileAuthRequest *)request info:(ONGCustomAuthInfo * _Nullable)customAuthInfo
 {
     // Once the SDK reported that the `request` has been handled we need to finish our operation and free-up the queue.
     [self finish];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthRequest:(ONGMobileAuthRequest *)request error:(NSError *)error info:(ONGCustomAuthenticatorInfo * _Nullable)customAuthenticatorInfo
+- (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthRequest:(ONGMobileAuthRequest *)request error:(NSError *)error
 {
     if (error.code == ONGGenericErrorUserDeregistered) {
         // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can

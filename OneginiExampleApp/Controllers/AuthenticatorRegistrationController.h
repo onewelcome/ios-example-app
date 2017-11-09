@@ -20,6 +20,6 @@
 @interface AuthenticatorRegistrationController : NSObject<ONGAuthenticatorRegistrationDelegate>
 
 + (instancetype)controllerWithNavigationController:(UINavigationController *)navigationController
-                                        completion:(void (^)())completion;
+                                        completion:(void (^)(void))completion;
 
 @end

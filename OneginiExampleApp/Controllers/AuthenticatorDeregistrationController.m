@@ -21,7 +21,7 @@
 
 @property (nonatomic) UINavigationController *presentingViewController;
 
-@property (nonatomic) void (^completion)();
+@property (nonatomic) void (^completion)(void);
 
 @end
 
@@ -38,7 +38,7 @@
 }
 
 + (instancetype)controllerWithNavigationController:(UINavigationController *)navigationController
-                                        completion:(void (^)())completion
+                                        completion:(void (^)(void))completion
 {
     return [[self alloc] initWithPresentingViewController:navigationController completion:completion];
 }

@@ -23,14 +23,14 @@
 
 @property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic) UINavigationController *navigationController;
-@property (nonatomic) void (^completion)();
+@property (nonatomic) void (^completion)(void);
 
 @end
 
 @implementation AuthenticationController
 
 + (instancetype)authenticationControllerWithNavigationController:(UINavigationController *)navigationController
-                                                      completion:(void (^)())completion
+                                                      completion:(void (^)(void))completion
 {
     AuthenticationController *authorizationController = [AuthenticationController new];
     authorizationController.navigationController = navigationController;

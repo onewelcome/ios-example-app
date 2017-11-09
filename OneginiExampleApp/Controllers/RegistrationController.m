@@ -25,7 +25,7 @@
 
 @property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic) UINavigationController *navigationController;
-@property (nonatomic) void (^completion)();
+@property (nonatomic) void (^completion)(void);
 
 @end
 
@@ -41,7 +41,7 @@
 }
 
 + (instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController
-                                                    completion:(void (^)())completion
+                                                    completion:(void (^)(void))completion
 {
     RegistrationController *registrationController = [RegistrationController new];
     registrationController.navigationController = navigationController;

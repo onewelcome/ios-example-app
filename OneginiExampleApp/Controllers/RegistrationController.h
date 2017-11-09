@@ -20,6 +20,6 @@
 @interface RegistrationController : NSObject<ONGRegistrationDelegate>
 
 + (instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController
-                                                    completion:(void (^)())completion;
+                                                    completion:(void (^)(void))completion;
 
 @end

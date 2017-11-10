@@ -60,18 +60,18 @@
         [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-        // In case the entire device registration has been removed from the Token Server the SDK will return the ONGGenericErrorDeviceDeregistered error. In this
-        // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
-        // the user is starting up the app for the first time.
+    // In case the entire device registration has been removed from the Token Server the SDK will return the ONGGenericErrorDeviceDeregistered error. In this
+    // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
+    // the user is starting up the app for the first time.
     else if (error.code == ONGGenericErrorDeviceDeregistered) {
         [[ProfileModel new] deleteProfileNames];
         [self.navigationController popToRootViewControllerAnimated:YES];
-    } else if (error.code == ONGGenericErrorActionCancelled) {
-        // If the challenge has been cancelled than the ONGGenericErrorActionCancelled error is returned.
+    }
+    // If the challenge has been cancelled than the ONGGenericErrorActionCancelled error is returned.
+    else if (error.code == ONGGenericErrorActionCancelled) {
         // In the example app login is done in the root of the application navigation stack, that's why we're simply popping the pin view controller
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-
     [self showError:error];
 
     self.completion();

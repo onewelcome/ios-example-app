@@ -235,7 +235,7 @@
     ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/user-id-decorated" method:@"GET"];
     [[ONGUserClient sharedInstance] fetchImplicitResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         if (error) {
-            self.profileLabel.text = [NSString stringWithFormat:@"Fetching implicit resource failed \r %ld", error.code];
+            self.profileLabel.text = [NSString stringWithFormat:@"Fetching implicit resource failed %ld", error.code];
         } else {
             id jsonResponse = [response JSONResponse];
             if (jsonResponse != nil) {

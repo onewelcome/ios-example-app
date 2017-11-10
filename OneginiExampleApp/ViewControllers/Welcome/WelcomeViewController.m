@@ -156,7 +156,7 @@
 
 - (void)fetchApplicationDetails
 {
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-detais" method:@"GET"];
+    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-details" method:@"GET"];
     [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         if (error) {
             self.appInfoLabel.text = [NSString stringWithFormat: @"%ld\nFetching anonymous resource failed", error.code];

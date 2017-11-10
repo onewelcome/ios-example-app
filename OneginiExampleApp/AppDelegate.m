@@ -18,9 +18,10 @@
 
 #import "MobileAuthenticationController.h"
 #import "NavigationControllerAppearance.h"
-#import "TestOptions.h"
+#import "TestOptionsPresenter.h"
 #import "ProfileModel.h"
 #import "MobileAuthModel.h"
+#import "AlertPresenter.h"
 
 @interface AppDelegate () <UINavigationControllerDelegate>
 
@@ -64,7 +65,6 @@
     // In case of such errors the user can not use the app anymore and has to update the app / OS.
     // The SDK in turn won't be able to provide any functionality to prevent user's data leakage / corruption.
     [[ONGClient sharedInstance] start:^(BOOL result, NSError *error) {
-
         if (error != nil) {
             // Catching two important errors that might happen during SDK initialization.
             // The user can not use this version of the App / OS anymore and has to update it.
@@ -101,12 +101,8 @@
 
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-                                                                   message:message
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:okButton];
-    [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
+    AlertPresenter *alertPresenter = [AlertPresenter createAlertPresenterWithNavigationController:(UINavigationController *)self.window.rootViewController];
+    [alertPresenter showErrorAlertWithMessage:message title:title];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -129,7 +125,7 @@
 
 - (void)showSecretOptions
 {
-    [TestOptions showSecretOptionsOnViewController:self.window.rootViewController];
+    [TestOptionsPresenter showSecretOptionsOnViewController:self.window.rootViewController];
 }
 
 -(void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated

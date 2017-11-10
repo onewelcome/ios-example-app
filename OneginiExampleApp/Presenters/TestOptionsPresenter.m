@@ -1,8 +1,8 @@
 //  Copyright © 2016 Onegini. All rights reserved.
 
-#import "TestOptions.h"
+#import "TestOptionsPresenter.h"
 
-@implementation TestOptions
+@implementation TestOptionsPresenter
 
 + (void)showSecretOptionsOnViewController:(UIViewController *)viewController
 {

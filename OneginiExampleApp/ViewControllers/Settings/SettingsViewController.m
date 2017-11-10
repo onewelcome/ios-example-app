@@ -25,6 +25,7 @@
 #import "AuthenticatorDeregistrationController.h"
 #import "ProfileModel.h"
 #import "MobileAuthModel.h"
+#import "AlertPresenter.h"
 
 @interface SettingsViewController ()
 
@@ -120,7 +121,6 @@
 - (void)handleMobileAuthError:(NSError *)error
 {
     ONGUserProfile *userProfile = [ONGUserClient sharedInstance].authenticatedUserProfile;
-    NSString *alertMessage = nil;
     if (error) {
         switch (error.code) {
             case ONGGenericErrorUserDeregistered:
@@ -135,29 +135,20 @@
                 [self.navigationController popToRootViewControllerAnimated:YES];
                 break;
         }
-        alertMessage = error.localizedDescription;
-    } else {
-        alertMessage = @"Enrollment failed";
+        [self showError:error];
     }
-    [self showError:alertMessage];
 }
 
-- (void)showError:(NSString *)error
+- (void)showError:(NSError *)error
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                   message:error
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
-                                                 style:UIAlertActionStyleDefault
-                                               handler:nil];
-    [alert addAction:ok];
-    [self presentViewController:alert animated:YES completion:nil];
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    [errorPresenter showErrorAlert:error title:@"Enrollment failed"];
 }
 
-- (void)showMessage:(NSString *)error
+- (void)showMessage:(NSString *)message
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Success"
-                                                                   message:error
+                                                                   message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
                                                  style:UIAlertActionStyleDefault

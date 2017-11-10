@@ -20,6 +20,7 @@
 #import "PinErrorMapper.h"
 #import "MBProgressHUD.h"
 #import "ProfileCreationViewController.h"
+#import "AlertPresenter.h"
 
 @interface RegistrationController ()
 
@@ -100,7 +101,7 @@
             // display error.
             break;
     }
-
+    [self.navigationController popToRootViewControllerAnimated:YES];
     [self showError:error];
 
     self.completion();
@@ -162,15 +163,8 @@
 
 - (void)showError:(NSError *)error
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Registration Error"
-                                                                   message:error.localizedDescription
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok"
-                                                       style:UIAlertActionStyleDefault
-                                                     handler:nil];
-    [alert addAction:okButton];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    [errorPresenter showErrorAlert:error title:@"Registration Error"];
 }
 
 @end

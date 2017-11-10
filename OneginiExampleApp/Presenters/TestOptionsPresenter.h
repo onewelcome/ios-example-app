@@ -6,7 +6,7 @@
 /**
  * These class is responsible for providing options used for testing purposes only.
  */
-@interface TestOptions : NSObject
+@interface TestOptionsPresenter : NSObject
 
 + (void)showSecretOptionsOnViewController:(UIViewController *)viewController;
 

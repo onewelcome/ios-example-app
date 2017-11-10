@@ -18,6 +18,7 @@
 #import "ProfileViewController.h"
 #import "PinErrorMapper.h"
 #import "ProfileModel.h"
+#import "AlertPresenter.h"
 
 @interface AuthenticationController ()
 
@@ -59,9 +60,9 @@
         [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-    // In case the entire device registration has been removed from the Token Server the SDK will return the ONGGenericErrorDeviceDeregistered error. In this
-    // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
-    // the user is starting up the app for the first time.
+        // In case the entire device registration has been removed from the Token Server the SDK will return the ONGGenericErrorDeviceDeregistered error. In this
+        // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
+        // the user is starting up the app for the first time.
     else if (error.code == ONGGenericErrorDeviceDeregistered) {
         [[ProfileModel new] deleteProfileNames];
         [self.navigationController popToRootViewControllerAnimated:YES];
@@ -129,21 +130,21 @@
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Authenticate with %@", challenge.authenticator.name]
                                                                  style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction * _Nonnull action) {
+                                                               handler:^(UIAlertAction *_Nonnull action) {
                                                                    self.progressStateDidChange(YES);
                                                                    [challenge.sender respondWithFIDOForChallenge:challenge];
                                                                }];
     UIAlertAction *pinFallbackButton = [UIAlertAction actionWithTitle:@"Fallback to PIN"
                                                                 style:UIAlertActionStyleDefault
-                                                              handler:^(UIAlertAction * _Nonnull action) {
+                                                              handler:^(UIAlertAction *_Nonnull action) {
                                                                   [challenge.sender respondWithPinFallbackForChallenge:challenge];
                                                               }];
     UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                         handler:^(UIAlertAction *_Nonnull action) {
                                                              [challenge.sender cancelChallenge:challenge];
                                                          }];
-    
+
     [alert addAction:authenticateButton];
     [alert addAction:pinFallbackButton];
     [alert addAction:cancelButton];
@@ -156,21 +157,21 @@
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleAlert];
     __block UITextField *alertTextField;
-    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *_Nonnull textField) {
         alertTextField = textField;
     }];
     UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:@"Authenticate"
                                                                  style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction * _Nonnull action) {
+                                                               handler:^(UIAlertAction *_Nonnull action) {
                                                                    self.progressStateDidChange(YES);
                                                                    [challenge.sender respondWithData:alertTextField.text challenge:challenge];
                                                                }];
     UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                         handler:^(UIAlertAction *_Nonnull action) {
                                                              [challenge.sender cancelChallenge:challenge underlyingError:nil];
                                                          }];
-    
+
     [alert addAction:authenticateButton];
     [alert addAction:cancelButton];
     [self.navigationController presentViewController:alert animated:YES completion:nil];
@@ -178,14 +179,8 @@
 
 - (void)showError:(NSError *)error
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Authentication Error"
-                                                                   message:error.localizedDescription
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok"
-                                                       style:UIAlertActionStyleDefault
-                                                     handler:nil];
-    [alert addAction:okButton];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    [errorPresenter showErrorAlert:error title:@"Authentication Error"];
 }
 
 @end

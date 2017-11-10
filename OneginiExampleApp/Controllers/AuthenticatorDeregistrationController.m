@@ -16,6 +16,7 @@
 #import "AuthenticatorDeregistrationController.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "ProfileModel.h"
+#import "AlertPresenter.h"
 
 @interface AuthenticatorDeregistrationController ()
 
@@ -69,18 +70,16 @@
     [challenge.sender continueWithChallenge:challenge];
 }
 
-- (void)showError:(NSString *)error
+- (void)showError:(NSError *)error
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Authenticator deregistration error" message:error preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:okButton];
-    [self.presentingViewController presentViewController:alert animated:YES completion:nil];
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.presentingViewController];
+    [errorPresenter showErrorAlert:error title:@"Authenticator deregistration error"];
 }
 
 - (void)finish:(NSError *)error
 {
     if (error) {
-        [self showError:error.localizedDescription];
+        [self showError:error];
     }
     if (self.completion) {
         self.completion();

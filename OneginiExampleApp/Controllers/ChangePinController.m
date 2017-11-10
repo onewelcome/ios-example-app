@@ -17,6 +17,7 @@
 #import "PinViewController.h"
 #import "PinErrorMapper.h"
 #import "ProfileModel.h"
+#import "AlertPresenter.h"
 
 @interface ChangePinController ()
 
@@ -148,12 +149,8 @@
 
 - (void)showError:(NSError *)error
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change pin error"
-                                                                   message:error.localizedDescription
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:okButton];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    [errorPresenter showErrorAlert:error title:@"Change pin error"];
 }
 
 @end

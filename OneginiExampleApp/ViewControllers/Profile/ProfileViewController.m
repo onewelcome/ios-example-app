@@ -28,6 +28,7 @@
 #import "ProfileModel.h"
 #import "AppDelegate.h"
 #import "MobileAuthenticationController.h"
+#import "AlertPresenter.h"
 
 @interface ProfileViewController ()
 
@@ -72,7 +73,7 @@
     [[ONGUserClient sharedInstance] logoutUser:^(ONGUserProfile *_Nonnull userProfile, NSError *_Nullable error) {
         [self.navigationController popToRootViewControllerAnimated:YES];
         if (error) {
-            [self showError:error.description];
+            [self showError:error];
         }
     }];
 }
@@ -99,7 +100,7 @@
         if (response && response.statusCode < 300) {
             [self displayJSONResponse:[response JSONResponse]];
         } else {
-            [self showError:error.localizedDescription];
+            [self showError:error];
         }
     }];
 }
@@ -157,28 +158,10 @@
 
 #pragma mark - Logic
 
-- (void)showError:(NSString *)error
+- (void)showError:(NSError *)error
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                   message:error
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
-                                                 style:UIAlertActionStyleDefault
-                                               handler:nil];
-    [alert addAction:ok];
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)showMessage:(NSString *)error
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Success"
-                                                                   message:error
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
-                                                 style:UIAlertActionStyleDefault
-                                               handler:nil];
-    [alert addAction:ok];
-    [self presentViewController:alert animated:YES completion:nil];
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    [errorPresenter showErrorAlert:error title:@"Error"];
 }
 
 #pragma mark - Misc

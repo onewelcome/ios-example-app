@@ -23,6 +23,7 @@
 #import "ONGResourceResponse+JSONResponse.h"
 #import "UIBarButtonItem+Extension.h"
 #import "ProfileModel.h"
+#import "AlertPresenter.h"
 
 @interface WelcomeViewController ()<UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -31,6 +32,7 @@
 @property (nonatomic) ONGAuthenticator *selectedAuthenticator;
 @property (nonatomic) AuthenticationController *authenticationController;
 @property (nonatomic) RegistrationController *registrationController;
+@property (nonatomic) AlertPresenter *alertPresenter;
 
 @property (weak, nonatomic) IBOutlet UISwitch *preferedAuthentiacorSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
@@ -62,7 +64,8 @@
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
     self.appInfoLabel.hidden = YES;
-
+    self.alertPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    
     [self authenticateDeviceAndFetchResource];
 }
 
@@ -94,7 +97,7 @@
 - (IBAction)login:(id)sender
 {
     if ([self.profiles count] == 0) {
-        [self showError:@"No registered profiles"];
+        [self.alertPresenter showErrorAlertWithMessage:@"No registered profiles" title:@"Error"];
         return;
     }
 
@@ -145,20 +148,18 @@
         } else {
             // unwind stack in case we've opened registration
             [self.navigationController popToRootViewControllerAnimated:YES];
-
-            NSString *title = @"Device authentication failed";
-            UIAlertController *alert = [UIAlertController controllerWithTitle:title message:error.localizedDescription completion:nil];
-            [self.navigationController presentViewController:alert animated:YES completion:nil];
+            
+            [self.alertPresenter showErrorAlert:error title:@"Device authentication failed"];
         }
     }];
 }
 
 - (void)fetchApplicationDetails
 {
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-details" method:@"GET"];
+    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-detais" method:@"GET"];
     [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         if (error) {
-            self.appInfoLabel.text = @"Fetching anonymous resource failed";
+            self.appInfoLabel.text = [NSString stringWithFormat: @"%ld\nFetching anonymous resource failed", error.code];
             self.appInfoLabel.hidden = NO;
         } else {
             id jsonResponse = [response JSONResponse];
@@ -189,20 +190,6 @@
     [self presentViewController:authenticatorList animated:YES completion:^{}];
 }
 
-- (void) showError:(NSString *)message
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                   message:message
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction
-                               actionWithTitle:@"Ok"
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction *action) {
-                               }];
-    [alert addAction:okButton];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
-}
-
 - (void)authenticateUserImplicitlyAndFetchResource
 {
     if (self.profiles.count > 0) {
@@ -214,7 +201,7 @@
                 if (success) {
                     [self fetchResourceImplicitly];
                 } else {
-                    self.profileLabel.text = @"Implicit authentication failed";
+                    self.profileLabel.text = [NSString stringWithFormat:@"Implicit authentication failed %ld", error.code];
                 }
             }];
         }

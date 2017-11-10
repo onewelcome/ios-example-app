@@ -21,6 +21,7 @@
 #import "PinErrorMapper.h"
 #import "NavigationControllerAppearance.h"
 #import "ProfileModel.h"
+#import "AlertPresenter.h"
 
 @interface AuthenticatorRegistrationController ()
 
@@ -182,12 +183,10 @@
 
 #pragma mark - Misc
 
-- (void)showError:(NSString *)error
+- (void)showError:(NSError *)error
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Authenticator registration error" message:error preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:okButton];
-    [self.presentingViewController presentViewController:alert animated:YES completion:nil];
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.presentingViewController];
+    [errorPresenter showErrorAlert:error title:@"Authenticator registration error"];
 }
 
 - (void)finish:(NSError *)error deregistered:(BOOL)deregistered
@@ -198,7 +197,7 @@
         }
 
         if (error) {
-            [self showError:error.localizedDescription];
+            [self showError:error];
         }
 
         if (self.completion) {

@@ -39,8 +39,6 @@
 		5C1276841F84FAB60098072A /* AuthenticatorDeregistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1276821F84FAB60098072A /* AuthenticatorDeregistrationController.m */; };
 		5C1276851F84FAB60098072A /* AuthenticatorDeregistrationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C1276831F84FAB60098072A /* AuthenticatorDeregistrationController.h */; };
 		5C1F1CDC1D464DE100D4D5C0 /* RegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C1F1CDA1D464DE100D4D5C0 /* RegistrationController.m */; };
-		5C2083991DFAE2E800A99825 /* TestOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C2083971DFAE2E800A99825 /* TestOptions.h */; };
-		5C20839A1DFAE2E800A99825 /* TestOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2083981DFAE2E800A99825 /* TestOptions.m */; };
 		5C3CA1481D11394000F00C05 /* AuthenticatorRegistrationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C3CA1461D11394000F00C05 /* AuthenticatorRegistrationController.h */; };
 		5C3CA1491D11394000F00C05 /* AuthenticatorRegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3CA1471D11394000F00C05 /* AuthenticatorRegistrationController.m */; };
 		5C3CA15C1D13E56100F00C05 /* ChangePinController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3CA15A1D13E56100F00C05 /* ChangePinController.m */; };
@@ -88,6 +86,10 @@
 		C572A2DF1CD893C400B137DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C572A2DE1CD893C400B137DC /* AppDelegate.m */; };
 		C572A2E71CD893C400B137DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C572A2E61CD893C400B137DC /* Assets.xcassets */; };
 		C5A29A661CDCA55900E6B1D4 /* AuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A29A611CDCA55900E6B1D4 /* AuthenticationController.m */; };
+		DF1061DA296F131289437FFA /* TestOptionsPresenter.h in Headers */ = {isa = PBXBuildFile; fileRef = DF106BE43F65A7045A6BED82 /* TestOptionsPresenter.h */; };
+		DF1065C9A591C849213CAF52 /* TestOptionsPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1065FB54EBBF8B3574741B /* TestOptionsPresenter.m */; };
+		DF1066ABB7524B10C30D0ED8 /* AlertPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = DF106C5B7628765AE230B74B /* AlertPresenter.m */; };
+		DF10694224B12C99B03F52D5 /* AlertPresenter.h in Headers */ = {isa = PBXBuildFile; fileRef = DF10699171607D39594CC450 /* AlertPresenter.h */; };
 		E4459662EEBC767C4F350A5A /* OneginiConfigModel.h in Headers */ = {isa = PBXBuildFile; fileRef = AF975CF4D99994DAF5BD2E6B /* OneginiConfigModel.h */; };
 /* End PBXBuildFile section */
 
@@ -143,8 +145,6 @@
 		5C1276831F84FAB60098072A /* AuthenticatorDeregistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticatorDeregistrationController.h; sourceTree = "<group>"; };
 		5C1F1CD91D464DE100D4D5C0 /* RegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationController.h; sourceTree = "<group>"; };
 		5C1F1CDA1D464DE100D4D5C0 /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
-		5C2083971DFAE2E800A99825 /* TestOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOptions.h; sourceTree = "<group>"; };
-		5C2083981DFAE2E800A99825 /* TestOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOptions.m; sourceTree = "<group>"; };
 		5C3CA1461D11394000F00C05 /* AuthenticatorRegistrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticatorRegistrationController.h; sourceTree = "<group>"; };
 		5C3CA1471D11394000F00C05 /* AuthenticatorRegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticatorRegistrationController.m; sourceTree = "<group>"; };
 		5C3CA1591D13E56100F00C05 /* ChangePinController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePinController.h; sourceTree = "<group>"; };
@@ -204,6 +204,10 @@
 		C5FE9E941CD8C0DE00142A20 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		C5FE9E961CD8C0F300142A20 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		C5FE9E981CD8C10000142A20 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		DF1065FB54EBBF8B3574741B /* TestOptionsPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOptionsPresenter.m; sourceTree = "<group>"; };
+		DF10699171607D39594CC450 /* AlertPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertPresenter.h; sourceTree = "<group>"; };
+		DF106BE43F65A7045A6BED82 /* TestOptionsPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOptionsPresenter.h; sourceTree = "<group>"; };
+		DF106C5B7628765AE230B74B /* AlertPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertPresenter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -427,6 +431,7 @@
 				C572A2DE1CD893C400B137DC /* AppDelegate.m */,
 				C572A2E61CD893C400B137DC /* Assets.xcassets */,
 				1D6A3BE3B71FAF525D60E60A /* Misc */,
+				DF106405301EC136432B78DE /* Presenters */,
 			);
 			path = OneginiExampleApp;
 			sourceTree = "<group>";
@@ -458,8 +463,6 @@
 				5C1276821F84FAB60098072A /* AuthenticatorDeregistrationController.m */,
 				68AD26240A0F4ED4AD29ACA3 /* MobileAuthenticationOperation.m */,
 				68AD27F23CE59643D7C37336 /* MobileAuthenticationOperation.h */,
-				5C2083971DFAE2E800A99825 /* TestOptions.h */,
-				5C2083981DFAE2E800A99825 /* TestOptions.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -473,6 +476,17 @@
 				5CEB19611E9D14D4004DDCCC /* MobileAuthModel.m */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		DF106405301EC136432B78DE /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				DF106C5B7628765AE230B74B /* AlertPresenter.m */,
+				DF10699171607D39594CC450 /* AlertPresenter.h */,
+				DF106BE43F65A7045A6BED82 /* TestOptionsPresenter.h */,
+				DF1065FB54EBBF8B3574741B /* TestOptionsPresenter.m */,
+			);
+			path = Presenters;
 			sourceTree = "<group>";
 		};
 		EB67C9E0317DB4510001471A /* Configuration */ = {
@@ -512,7 +526,6 @@
 				ADEC3AF41D884D7E0009234A /* ONGConfigModel.h in Headers */,
 				ADEC3AFC1D884D7E0009234A /* ONGPinChallenge.h in Headers */,
 				ADEC3AEE1D884D7E0009234A /* OneginiSDK.h in Headers */,
-				5C2083991DFAE2E800A99825 /* TestOptions.h in Headers */,
 				ADEC3AFB1D884D7E0009234A /* ONGNetworkTask.h in Headers */,
 				ADEC3B031D884D7E0009234A /* ONGUserClient.h in Headers */,
 				ADEC3AFF1D884D7E0009234A /* ONGRegistrationDelegate.h in Headers */,
@@ -533,6 +546,8 @@
 				1D6A38D6CA4B4E3E8C0F1180 /* TextViewController.h in Headers */,
 				1D6A3A242F9FB92F594D2ABB /* StateOperation.h in Headers */,
 				68AD227F29F4DDCC83BC4A47 /* MobileAuthenticationOperation.h in Headers */,
+				DF10694224B12C99B03F52D5 /* AlertPresenter.h in Headers */,
+				DF1061DA296F131289437FFA /* TestOptionsPresenter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -703,8 +718,9 @@
 				1D6A31EF60D62E8CA78850EE /* ProfileViewController.m in Sources */,
 				1D6A3D5139768E447367C746 /* PushConfirmationViewController.m in Sources */,
 				1D6A38DE74044D87D80F4DF1 /* TextViewController.m in Sources */,
-				5C20839A1DFAE2E800A99825 /* TestOptions.m in Sources */,
 				1D6A37F9394FC621A669717F /* WebBrowserViewController.m in Sources */,
+				DF1066ABB7524B10C30D0ED8 /* AlertPresenter.m in Sources */,
+				DF1065C9A591C849213CAF52 /* TestOptionsPresenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

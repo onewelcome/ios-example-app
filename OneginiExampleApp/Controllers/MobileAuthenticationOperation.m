@@ -208,6 +208,7 @@
                                                             preferredStyle:UIAlertControllerStyleAlert];
     __block UITextField *alertTextField;
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.accessibilityIdentifier = @"CustomAuthenticatorAlertTextField";
         alertTextField = textField;
     }];
     UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:@"Authenticate"

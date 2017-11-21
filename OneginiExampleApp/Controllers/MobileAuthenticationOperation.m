@@ -19,6 +19,7 @@
 #import "PinErrorMapper.h"
 #import "ZFModalTransitionAnimator.h"
 #import "ProfileModel.h"
+#import "AlertPresenter.h"
 
 @interface MobileAuthenticationOperation ()
 
@@ -216,6 +217,13 @@
                                                                handler:^(UIAlertAction * _Nonnull action) {
                                                                    [challenge.sender respondWithData:alertTextField.text challenge:challenge];
                                                                }];
+    
+    UIAlertAction *pinFallbackButton = [UIAlertAction actionWithTitle:@"Fallback to PIN"
+                                                                 style:UIAlertActionStyleDefault
+                                                               handler:^(UIAlertAction * _Nonnull action) {
+                                                                   [challenge.sender respondWithPinFallbackForChallenge:challenge];
+                                                               }];
+    
     UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * _Nonnull action) {
@@ -223,6 +231,7 @@
                                                          }];
     
     [alert addAction:authenticateButton];
+    [alert addAction:pinFallbackButton];
     [alert addAction:cancelButton];
     [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
@@ -254,9 +263,16 @@
         // If a challenge has been cancelled then the ONGGenericErrorActionCancelled error is returned. You can use this error to determine whether a mobile
         // authentication request was cancelled. You can also ignore it if you are not interested in this.
     }
-
+    
+    [self showError:error];
     // Once SDK reported that the `request` has been handled we need to finish our operation and free-up queue.
     [self finish];
+}
+
+- (void)showError:(NSError *)error
+{
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    [errorPresenter showErrorAlert:error title:@"Mobile Auth Error"];
 }
 
 @end

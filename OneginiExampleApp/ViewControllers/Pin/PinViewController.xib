@@ -218,7 +218,7 @@
                             </subviews>
                             <color key="backgroundColor" red="0.0" green="0.61960784313725492" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <accessibility key="accessibilityConfiguration" identifier="CustomKeyboard">
-                                <bool key="isElement" value="YES"/>
+                                <bool key="isElement" value="NO"/>
                             </accessibility>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6Gg-Ql-gCE">

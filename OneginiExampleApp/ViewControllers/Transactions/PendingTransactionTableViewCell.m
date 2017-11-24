@@ -4,6 +4,7 @@
 #import "PendingTransactionTableViewCell.h"
 #import "ONGPendingMobileAuthRequest.h"
 #import "ONGUserProfile.h"
+#import "ProfileModel.h"
 
 @interface PendingTransactionTableViewCell()
 
@@ -17,7 +18,7 @@
 
 - (void)setupCell:(ONGPendingMobileAuthRequest *)pendingTransaction
 {
-    self.profileNameLabel.text = pendingTransaction.userProfile.profileId;
+    self.profileNameLabel.text = [[ProfileModel new] profileNameForUserProfile:pendingTransaction.userProfile];
     self.timeLabel.text = [self convertDateToString:pendingTransaction.date];
     self.messageLabel.text = pendingTransaction.message;
 }

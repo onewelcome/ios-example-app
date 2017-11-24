@@ -20,6 +20,7 @@
 @interface RegistrationController : NSObject<ONGRegistrationDelegate>
 
 + (instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController
+                                              tabBarController:(UITabBarController *)tabBarController
                                                     completion:(void (^)(void))completion;
 
 @end

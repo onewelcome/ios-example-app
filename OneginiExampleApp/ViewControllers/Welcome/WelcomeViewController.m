@@ -51,7 +51,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = @"Welcome";
+        self.title = @"Onegini Example App";
     }
     return self;
 }
@@ -86,6 +86,7 @@
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.registrationController = [RegistrationController
         registrationControllerWithNavigationController:self.navigationController
+                                    tabBarController:self.tabBarController
                                             completion:^{
                                                 self.registrationController = nil;
                                                 self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
@@ -115,6 +116,7 @@
 {
     self.authenticationController = [AuthenticationController
                                      authenticationControllerWithNavigationController:self.navigationController
+                                     tapBarController:self.tabBarController
                                      completion:^{
                                          [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                          self.authenticationController = nil;
@@ -125,9 +127,13 @@
     __weak typeof(self) weakSelf = self;
     self.authenticationController.progressStateDidChange = ^(BOOL isInProgress) {
         if (isInProgress) {
-            [MBProgressHUD showHUDAddedTo:weakSelf.navigationController.view animated:YES];
+            if ([weakSelf.tabBarController.presentedViewController isEqual:weakSelf.authenticationController.pinViewController]) {
+                [MBProgressHUD showHUDAddedTo:weakSelf.authenticationController.pinViewController.view animated:YES];
+            } else {
+                [MBProgressHUD showHUDAddedTo:weakSelf.navigationController.view animated:YES];
+            }
         } else {
-            [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+            [MBProgressHUD hideHUDForView:weakSelf.authenticationController.pinViewController.view animated:YES];
         }
     };
     

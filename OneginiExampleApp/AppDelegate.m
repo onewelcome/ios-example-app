@@ -22,8 +22,9 @@
 #import "ProfileModel.h"
 #import "MobileAuthModel.h"
 #import "AlertPresenter.h"
+#import "PendingTransactionsViewController.h"
 
-@interface AppDelegate () <UINavigationControllerDelegate>
+@interface AppDelegate () <UINavigationControllerDelegate, UITabBarControllerDelegate>
 
 @end
 
@@ -36,6 +37,8 @@
     [self startOneginiClient];
 
     [self registerForPushMessages];
+    
+    [self setBadgeOnPendingTransactionIcon:(UITabBarController *)self.window.rootViewController];
 
     return YES;
 }
@@ -50,7 +53,16 @@
     [NavigationControllerAppearance apply:controller];
     controller.delegate = self;
     
-    self.window.rootViewController = controller;
+    PendingTransactionsViewController *pendingTransactionsVC = [[PendingTransactionsViewController alloc] init];
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.delegate = self;
+    NSArray *controllers = [NSArray arrayWithObjects: controller, pendingTransactionsVC, nil];
+    tabBarController.viewControllers = controllers;
+    
+    [self tabBarStylization:tabBarController];
+
+    self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
 }
 
@@ -128,11 +140,35 @@
     [TestOptionsPresenter showSecretOptionsOnViewController:self.window.rootViewController];
 }
 
--(void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     UIBarButtonItem *testingOptions = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStylePlain target:self action:@selector(showSecretOptions)];
     testingOptions.accessibilityIdentifier = @"TestOptionsBarButtonItem";
     viewController.navigationItem.rightBarButtonItem = testingOptions;
+}
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
+{
+    return viewController != tabBarController.selectedViewController;
+}
+
+- (void)tabBarStylization:(UITabBarController *)tabBarController
+{
+    UITabBarItem *tabBarHome = [tabBarController.tabBar.items objectAtIndex:0];
+    UITabBarItem *tabBarPendingTransactions = [tabBarController.tabBar.items objectAtIndex:1];
+    
+    [tabBarHome setImage:[UIImage imageNamed:@"key"]];
+    [tabBarHome setTitle:@"Home"];
+    
+    [tabBarPendingTransactions setImage:[UIImage imageNamed:@"notifications-bell-button"]];
+}
+
+- (void)setBadgeOnPendingTransactionIcon:(UITabBarController *)tabBarController
+{
+    [[ONGUserClient sharedInstance] pendingPushMobileAuthRequests:^(NSArray<ONGPendingMobileAuthRequest *> * _Nullable pendingTransactions, NSError * _Nullable error) {
+        NSInteger pendingTransactionsCount = [pendingTransactions count];
+        [[tabBarController.tabBar.items objectAtIndex:1] setBadgeValue:[NSString stringWithFormat:@"%ld", (long)pendingTransactionsCount]];
+    }];
 }
 
 @end

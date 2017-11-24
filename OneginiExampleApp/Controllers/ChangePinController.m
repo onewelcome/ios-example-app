@@ -21,8 +21,8 @@
 
 @interface ChangePinController ()
 
-@property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic) UINavigationController *navigationController;
+@property (nonatomic) UITabBarController *tabBarController;
 @property (nonatomic) void (^completion)(void);
 
 @end
@@ -30,10 +30,12 @@
 @implementation ChangePinController
 
 + (instancetype)changePinControllerWithNavigationController:(UINavigationController *)navigationController
+                                           tabBarController:(UITabBarController *)tabBarController
                                                  completion:(void (^)(void))completion
 {
     ChangePinController *changePinController = [ChangePinController new];
     changePinController.navigationController = navigationController;
+    changePinController.tabBarController = tabBarController;
     changePinController.pinViewController = [PinViewController new];
     changePinController.completion = completion;
     return changePinController;
@@ -53,7 +55,11 @@
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.profile = challenge.userProfile;
     self.pinViewController.pinLength = 5;
+    __weak typeof(self) weakSelf = self;
     self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
+        if (self.progressStateDidChange != nil) {
+            weakSelf.progressStateDidChange(YES);
+        }
         if (pin) {
             [challenge.sender respondWithPin:pin challenge:challenge];
         } else if (cancelled) {
@@ -65,8 +71,8 @@
     // For simplicity of the example app we're checking the top-most view controller.
     // Also good place to do this is the -userClient:didStartPinChangeForUser: but you need to be aware that there is a
     // delay between pin change start and receiving of the pin challenge.
-    if (![self.navigationController.topViewController isEqual:self.pinViewController]) {
-        [self.navigationController pushViewController:self.pinViewController animated:YES];
+    if (![self.tabBarController.presentedViewController isEqual:self.pinViewController]) {
+        [self.tabBarController presentViewController:self.pinViewController animated:YES completion:nil];
     }
 
     if (challenge.error) {
@@ -112,7 +118,7 @@
 
 - (void)userClient:(ONGUserClient *)userClient didChangePinForUser:(ONGUserProfile *)userProfile
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
     self.completion();
     if (self.progressStateDidChange != nil) {
         self.progressStateDidChange(NO);
@@ -121,6 +127,8 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToChangePinForUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
+    [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
+    
     // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
     // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
     // deregistered user.
@@ -134,8 +142,6 @@
     else if (error.code == ONGGenericErrorDeviceDeregistered) {
         [[ProfileModel new] deleteProfileNames];
         [self.navigationController popToRootViewControllerAnimated:YES];
-    } else {
-        [self.navigationController popViewControllerAnimated:YES];
     }
 
     [self showError:error];

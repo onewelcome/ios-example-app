@@ -26,6 +26,8 @@
 
 @interface AppDelegate () <UINavigationControllerDelegate, UITabBarControllerDelegate>
 
+@property (nonatomic) UINavigationController *navigationController;
+
 @end
 
 @implementation AppDelegate
@@ -49,15 +51,15 @@
     self.window.backgroundColor = [UIColor lightGrayColor];
 
     WelcomeViewController *root = [[WelcomeViewController alloc] init];
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:root];
-    [NavigationControllerAppearance apply:controller];
-    controller.delegate = self;
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:root];
+    [NavigationControllerAppearance apply:self.navigationController];
+    self.navigationController.delegate = self;
     
     PendingTransactionsViewController *pendingTransactionsVC = [[PendingTransactionsViewController alloc] init];
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.delegate = self;
-    NSArray *controllers = [NSArray arrayWithObjects: controller, pendingTransactionsVC, nil];
+    NSArray *controllers = [NSArray arrayWithObjects: self.navigationController, pendingTransactionsVC, nil];
     tabBarController.viewControllers = controllers;
     
     [self tabBarStylization:tabBarController];
@@ -99,7 +101,8 @@
     }];
 
     ONGUserClient *userClient = [ONGUserClient sharedInstance];
-    self.mobileAuthenticationController = [[MobileAuthenticationController alloc] initWithUserClient:userClient navigationController:(UINavigationController *)self.window.rootViewController];
+    
+    self.mobileAuthenticationController = [[MobileAuthenticationController alloc] initWithUserClient:userClient navigationController:self.navigationController tabBarController:(UITabBarController *)self.window.rootViewController];
 }
 
 - (void)registerForPushMessages

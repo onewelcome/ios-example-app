@@ -12,8 +12,9 @@
 
 @property (nonatomic, readonly) ONGUserClient *userClient;
 @property (nonatomic, readonly) UINavigationController *navigationController;
+@property (nonatomic, readonly) UITabBarController *tabBarController;
 
-- (instancetype)initWithUserClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController;
+- (instancetype)initWithUserClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController tabBarController:(UITabBarController *)tabBarController;
 
 - (BOOL)handleMobileAuthenticationRequest:(NSString *)request userProfile:(ONGUserProfile *)userProfile;
 

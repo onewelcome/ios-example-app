@@ -25,6 +25,7 @@
 
 @property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic) UIViewController *preservedViewController;
+@property (nonatomic) UITabBarController *tabBarController;
 
 @property (nonatomic) BOOL preparedForPresentation;
 
@@ -34,19 +35,21 @@
 
 #pragma mark - Init
 
-- (instancetype)initWithUserInfo:(NSDictionary *)userInfo userClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController
+- (instancetype)initWithUserInfo:(NSDictionary *)userInfo userClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController tabBarController:(UITabBarController *)tabBarController
 {
     self = [super init];
     if (self) {
         _userInfo = userInfo;
         _userClient = userClient;
         _navigationController = navigationController;
+        _tabBarController = tabBarController;
     }
     return self;
 }
 
 - (instancetype)initWithOTPRequest:(NSString *)otpRequest
                         userClient:(ONGUserClient *)userClient
+                  tabBarController:(UITabBarController *)tabBarController
               navigationController:(UINavigationController *)navigationController
 {
     self = [super init];
@@ -54,6 +57,7 @@
         _otpRequest = otpRequest;
         _userClient = userClient;
         _navigationController = navigationController;
+        _tabBarController = tabBarController;
     }
     return self;
 }
@@ -77,7 +81,7 @@
 - (void)executionFinished
 {
     if (self.preservedViewController) {
-        [self.navigationController presentViewController:self.preservedViewController animated:YES completion:nil];
+        [self.tabBarController presentViewController:self.preservedViewController animated:YES completion:nil];
     }
 }
 
@@ -91,9 +95,9 @@
     } else {
         self.preparedForPresentation = YES;
 
-        if (self.navigationController.presentedViewController) {
-            self.preservedViewController = self.navigationController.presentedViewController;
-            [self.navigationController dismissViewControllerAnimated:YES completion:presentation];
+        if (self.tabBarController.presentedViewController) {
+            self.preservedViewController = self.tabBarController.presentedViewController;
+            [self.tabBarController dismissViewControllerAnimated:YES completion:presentation];
         } else {
             presentation();
         }
@@ -108,12 +112,12 @@
     pushVC.pushMessage.text = request.message;
     pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push for user: %@", [[ProfileModel new] profileNameForUserProfile:request.userProfile]];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
         confirmation(confirmed);
     };
 
     [self performSafeConfirmationPresentation:^{
-        [self.navigationController pushViewController:pushVC animated:YES];
+        [self.tabBarController presentViewController:pushVC animated:YES completion:nil];
     }];
 }
 
@@ -134,7 +138,7 @@
     __weak MobileAuthenticationOperation *weakSelf = self;
 
     self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
-        [weakSelf.navigationController popViewControllerAnimated:YES];
+        [weakSelf.tabBarController dismissViewControllerAnimated:YES completion:nil];
         if (pin) {
             [challenge.sender respondWithPin:pin challenge:challenge];
         } else if (cancelled) {
@@ -145,8 +149,8 @@
     [self performSafeConfirmationPresentation:^{
         // It is up to the developer to decide when and how to show PIN entry view controller.
         // For simplicity of the example app we're checking the top-most view controller.
-        if (![self.navigationController.topViewController isEqual:self.pinViewController]) {
-            [self.navigationController pushViewController:self.pinViewController animated:YES];
+        if (![self.tabBarController.presentedViewController isEqual:self.pinViewController]) {
+            [self.tabBarController presentViewController:self.pinViewController animated:YES completion:nil];
         }
 
         if (challenge.error) {
@@ -167,7 +171,7 @@
     pushVC.pushMessage.text = request.message;
     pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint for user: %@", [[ProfileModel new] profileNameForUserProfile:request.userProfile]];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
         if (confirmed) {
             [challenge.sender respondWithDefaultPromptForChallenge:challenge];
         } else {
@@ -176,7 +180,7 @@
     };
 
     [self performSafeConfirmationPresentation:^{
-        [self.navigationController pushViewController:pushVC animated:YES];
+        [self.tabBarController presentViewController:pushVC animated:YES completion:nil];
     }];
 }
 
@@ -190,7 +194,7 @@
     pushVC.pushMessage.text = request.message;
     pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with %@ for %@", challenge.authenticator.name, [[ProfileModel new] profileNameForUserProfile:request.userProfile]];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
         if (confirmed){
             [challenge.sender respondWithFIDOForChallenge:challenge];
         } else {
@@ -198,7 +202,7 @@
         }
     };
     [self performSafeConfirmationPresentation:^{
-        [self.navigationController pushViewController:pushVC animated:YES];
+        [self.tabBarController presentViewController:pushVC animated:YES completion:nil];
     }];
 }
 
@@ -233,7 +237,7 @@
     [alert addAction:authenticateButton];
     [alert addAction:pinFallbackButton];
     [alert addAction:cancelButton];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
+    [self.tabBarController presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthRequest:(ONGMobileAuthRequest *)request info:(ONGCustomAuthInfo * _Nullable)customAuthInfo
@@ -244,6 +248,8 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToHandleMobileAuthRequest:(ONGMobileAuthRequest *)request error:(NSError *)error
 {
+    [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
+    
     if (error.code == ONGGenericErrorUserDeregistered) {
         // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
         // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the

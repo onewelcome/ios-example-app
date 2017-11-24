@@ -15,6 +15,7 @@
 
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
+#import <UserNotifications/UserNotifications.h>
 
 #import "MobileAuthenticationController.h"
 #import "NavigationControllerAppearance.h"
@@ -40,8 +41,7 @@
 
     [self registerForPushMessages];
     
-    [self setBadgeOnPendingTransactionIcon:(UITabBarController *)self.window.rootViewController];
-
+    
     return YES;
 }
 
@@ -132,10 +132,16 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    BOOL handled = [self.mobileAuthenticationController handlePushMobileAuthenticationRequest:userInfo];
-    if (!handled) {
+        BOOL handled = [self.mobileAuthenticationController handlePushMobileAuthenticationRequest:userInfo];
+        if (!handled) {
         // pass it to the next service (FireBase, Facebook, etc).
-    }
+        }
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [self setBadgeOnPendingTransactionIcon:(UITabBarController *)self.window.rootViewController];
+    [[UNUserNotificationCenter currentNotificationCenter] removeAllDeliveredNotifications];
 }
 
 - (void)showSecretOptions

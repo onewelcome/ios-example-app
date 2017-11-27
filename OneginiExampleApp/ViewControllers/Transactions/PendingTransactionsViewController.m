@@ -3,6 +3,7 @@
 #import "PendingTransactionsViewController.h"
 #import "PendingTransactionTableViewCell.h"
 #import "ONGUserClient.h"
+#import "AlertPresenter.h"
 
 @interface PendingTransactionsViewController ()
 
@@ -44,10 +45,15 @@
 - (void)reloadData
 {
     [[ONGUserClient sharedInstance] pendingPushMobileAuthRequests:^(NSArray<ONGPendingMobileAuthRequest *> * _Nullable pendingTransactions, NSError * _Nullable error) {
-        self.pendingTransactions = [self sortPendingTransactionsByTime:pendingTransactions];
-        NSInteger pendingTransactionsCount = [pendingTransactions count];
-        [[self.tabBarController.tabBar.items objectAtIndex:1] setBadgeValue:[NSString stringWithFormat:@"%ld", (long)pendingTransactionsCount]];
-        [self.tableView reloadData];
+        if (!error){
+            self.pendingTransactions = [self sortPendingTransactionsByTime:pendingTransactions];
+            NSInteger pendingTransactionsCount = [pendingTransactions count];
+            [[self.tabBarController.tabBar.items objectAtIndex:1] setBadgeValue:[NSString stringWithFormat:@"%ld", (long)pendingTransactionsCount]];
+            [self.tableView reloadData];
+        }
+        else {
+            [self showError:error];
+        }
     }];
 }
 
@@ -82,6 +88,12 @@
                                  [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(date)) ascending:NO]
                                  ];
     return [pendingTransactions sortedArrayUsingDescriptors:sortDescriptors];
+}
+
+- (void)showError:(NSError *)error
+{
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    [errorPresenter showErrorAlert:error title:@"Pending transactions error"];
 }
 
 @end

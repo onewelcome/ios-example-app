@@ -175,8 +175,10 @@
 - (void)setBadgeOnPendingTransactionIcon:(UITabBarController *)tabBarController
 {
     [[ONGUserClient sharedInstance] pendingPushMobileAuthRequests:^(NSArray<ONGPendingMobileAuthRequest *> * _Nullable pendingTransactions, NSError * _Nullable error) {
-        NSInteger pendingTransactionsCount = [pendingTransactions count];
-        [[tabBarController.tabBar.items objectAtIndex:1] setBadgeValue:[NSString stringWithFormat:@"%ld", (long)pendingTransactionsCount]];
+        if (!error) {
+            NSInteger pendingTransactionsCount = [pendingTransactions count];
+            [[tabBarController.tabBar.items objectAtIndex:1] setBadgeValue:[NSString stringWithFormat:@"%ld", (long)pendingTransactionsCount]];
+        }
     }];
 }
 

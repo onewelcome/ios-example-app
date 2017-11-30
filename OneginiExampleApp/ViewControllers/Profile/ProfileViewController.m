@@ -112,7 +112,8 @@
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.changePinController = [ChangePinController
         changePinControllerWithNavigationController:self.navigationController
-                                         completion:^{
+                                tabBarController:self.tabBarController
+                                    completion:^{
                                              [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                              self.changePinController = nil;
                                          }];
@@ -120,9 +121,9 @@
     __weak typeof(self) weakSelf = self;
     self.changePinController.progressStateDidChange = ^(BOOL isInProgress) {
         if (isInProgress) {
-            [MBProgressHUD showHUDAddedTo:weakSelf.navigationController.view animated:YES];
+            [MBProgressHUD showHUDAddedTo:weakSelf.changePinController.pinViewController.view animated:YES];
         } else {
-            [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+            [MBProgressHUD hideHUDForView:weakSelf.changePinController.pinViewController.view animated:YES];
         }
     };
     [[ONGUserClient sharedInstance] changePin:self.changePinController];

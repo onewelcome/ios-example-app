@@ -16,10 +16,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "OneginiSDK.h"
+#import "PinViewController.h"
 
 @interface AuthenticatorRegistrationController : NSObject<ONGAuthenticatorRegistrationDelegate>
 
+@property (nonatomic) PinViewController *pinViewController;
+@property (nonatomic, copy) void (^progressStateDidChange)(BOOL);
+
 + (instancetype)controllerWithNavigationController:(UINavigationController *)navigationController
+                                  tabBarController:(UITabBarController *)tabBarController
                                         completion:(void (^)(void))completion;
 
 @end

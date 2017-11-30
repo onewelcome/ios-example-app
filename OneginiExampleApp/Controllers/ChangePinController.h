@@ -16,12 +16,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "OneginiSDK.h"
+#import "PinViewController.h"
 
 @interface ChangePinController : NSObject<ONGChangePinDelegate>
 
+@property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic, copy) void (^progressStateDidChange)(BOOL);
 
 + (instancetype)changePinControllerWithNavigationController:(UINavigationController *)navigationController
+                                           tabBarController:(UITabBarController *)tabBarController
                                                  completion:(void (^)(void))completion;
 
 @end

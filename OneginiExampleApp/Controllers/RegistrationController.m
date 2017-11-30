@@ -26,6 +26,7 @@
 
 @property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic) UINavigationController *navigationController;
+@property (nonatomic) UITabBarController *tabBarController;
 @property (nonatomic) void (^completion)(void);
 
 @end
@@ -42,10 +43,12 @@
 }
 
 + (instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController
+                                              tabBarController:(UITabBarController *)tabBarController
                                                     completion:(void (^)(void))completion
 {
     RegistrationController *registrationController = [RegistrationController new];
     registrationController.navigationController = navigationController;
+    registrationController.tabBarController = tabBarController;
     registrationController.completion = completion;
     return registrationController;
 }
@@ -53,8 +56,8 @@
 - (void)userClient:(ONGUserClient *)userClient didRegisterUser:(ONGUserProfile *)userProfile
 {
     ProfileCreationViewController *viewController = [[ProfileCreationViewController alloc] initWithUserProfile:userProfile];
-    
     [self.navigationController pushViewController:viewController animated:YES];
+    [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
     self.completion();
 }
 
@@ -101,6 +104,7 @@
             // display error.
             break;
     }
+    [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popToRootViewControllerAnimated:YES];
     [self showError:error];
 
@@ -132,8 +136,8 @@
 
     // It is up to you to decide when and how to show the PIN entry view controller.
     // For simplicity of the example app we're checking the top-most view controller.
-    if (![self.navigationController.topViewController isEqual:self.pinViewController]) {
-        [self.navigationController pushViewController:self.pinViewController animated:YES];
+    if (![self.tabBarController.presentedViewController isEqual:self.pinViewController]) {
+        [self.tabBarController presentViewController:self.pinViewController animated:YES completion:nil];
     }
 
     if (challenge.error) {

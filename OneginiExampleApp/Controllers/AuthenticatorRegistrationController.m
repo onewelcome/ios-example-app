@@ -26,9 +26,9 @@
 @interface AuthenticatorRegistrationController ()
 
 @property (nonatomic) UINavigationController *presentingViewController;
+@property (nonatomic) UITabBarController *tabBarController;
 
 @property (nonatomic) UINavigationController *container;
-@property (nonatomic) PinViewController *pinViewController;
 
 @property (nonatomic) void (^completion)(void);
 
@@ -38,38 +38,30 @@
 
 #pragma mark - Init
 
-- (instancetype)initWithPresentingViewController:(UINavigationController *)presentingViewController completion:(void (^)(void))completion
-{
-    self = [super init];
-    if (self) {
-        self.presentingViewController = presentingViewController;
-        self.completion = completion;
-
-        self.pinViewController = [[PinViewController alloc] init];
-        self.pinViewController.pinLength = 5;
-        self.pinViewController.mode = PINCheckMode;
-
-        self.container = [[UINavigationController alloc] initWithRootViewController:self.pinViewController];
-    }
-
-    return self;
-}
-
 + (instancetype)controllerWithNavigationController:(UINavigationController *)navigationController
+                                  tabBarController:(UITabBarController *)tabBarController
                                         completion:(void (^)(void))completion
 {
-    return [[self alloc] initWithPresentingViewController:navigationController completion:completion];
+    AuthenticatorRegistrationController *authenticatorRegistrationController = [AuthenticatorRegistrationController new];
+    authenticatorRegistrationController.presentingViewController = navigationController;
+    authenticatorRegistrationController.completion = completion;
+    authenticatorRegistrationController.pinViewController = [PinViewController new];
+    authenticatorRegistrationController.tabBarController = tabBarController;
+    return authenticatorRegistrationController;
 }
 
 #pragma mark - ONGAuthenticatorRegistrationDelegate
 
 - (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile info:(ONGCustomAuthInfo * _Nullable)customAuthInfo
 {
-    [MBProgressHUD hideHUDForView:self.container.view animated:YES];
 
     [ONGUserClient sharedInstance].preferredAuthenticator = authenticator;
 
-    [self finish:nil deregistered:NO];
+    [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
+    self.completion();
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 /**
@@ -77,7 +69,7 @@
  */
 - (void)userClient:(ONGUserClient *)userClient didFailToRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile error:(nonnull NSError *)error
 {
-    [MBProgressHUD hideHUDForView:self.container.view animated:YES];
+    [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
 
     switch (error.code) {
         // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
@@ -85,14 +77,14 @@
         // deregistered user.
         case ONGGenericErrorUserDeregistered:
             [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];;
-            [self finish:error deregistered:YES];
+            [self.presentingViewController popToRootViewControllerAnimated:YES];
             break;
         // In case the entire device registration has been removed from the Token Server the SDK will return the ONGGenericErrorDeviceDeregistered error. In this
         // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
         // the user is starting up the app for the first time.
         case ONGGenericErrorDeviceDeregistered:
             [[ProfileModel new] deleteProfileNames];
-            [self finish:error deregistered:YES];
+            [self.presentingViewController popToRootViewControllerAnimated:YES];
             break;
 
         // The user has tried to register an authenticator for the user that is no longer authenticated.
@@ -115,9 +107,15 @@
         // Typical network connectivity failure errors
         case ONGGenericErrorNetworkConnectivityFailure:
         case ONGGenericErrorServerNotReachable:
-
-        default:
-            [self finish:error deregistered:NO];
+            break;
+    }
+    
+    [self showError:error];
+    
+    self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
     }
 }
 
@@ -131,31 +129,38 @@
  */
 - (void)userClient:(ONGUserClient *)userClient didReceivePinChallenge:(ONGPinChallenge *)challenge
 {
+    [self.pinViewController reset];
+    self.pinViewController.pinLength = 5;
+    self.pinViewController.mode = PINCheckMode;
+    self.pinViewController.profile = challenge.userProfile;
+    
     __weak typeof(self) weakSelf = self;
     self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
-
+        if (self.progressStateDidChange != nil) {
+            weakSelf.progressStateDidChange(YES);
+        }
         if (pin) {
-            [MBProgressHUD showHUDAddedTo:weakSelf.container.view animated:YES];
             [challenge.sender respondWithPin:pin challenge:challenge];
         } else if (cancelled) {
             [challenge.sender cancelChallenge:challenge];
         }
     };
+    
+    if (![self.tabBarController.presentedViewController isEqual:self.pinViewController]) {
+        [self.tabBarController presentViewController:self.pinViewController animated:YES completion:nil];
+    }
 
     if (challenge.error) {
-        [MBProgressHUD hideHUDForView:self.container.view animated:YES];
-
         // Pin is already presented on the screen
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofPinChallenge:challenge];
         [self.pinViewController showError:description];
-        [self.pinViewController reset];
-    } else {
-        // First time we're going to show Pin
-        [NavigationControllerAppearance apply:self.container];
-        self.pinViewController.profile = challenge.userProfile;
-        [self.presentingViewController presentViewController:self.container animated:YES completion:nil];
+    }
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
     }
 }
+
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthFinishRegistrationChallenge:(ONGCustomAuthFinishRegistrationChallenge *)challenge
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Custom Authenticator"
@@ -188,29 +193,6 @@
 {
     AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.presentingViewController];
     [errorPresenter showErrorAlert:error title:@"Authenticator registration error"];
-}
-
-- (void)finish:(NSError *)error deregistered:(BOOL)deregistered
-{
-    void (^dismissalCompletion)(void) = ^{
-        if (deregistered) {
-            [self.presentingViewController popToRootViewControllerAnimated:YES];
-        }
-
-        if (error) {
-            [self showError:error];
-        }
-
-        if (self.completion) {
-            self.completion();
-        }
-    };
-
-    if (self.container.beingPresented || self.presentingViewController.presentedViewController == self.container) {
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:dismissalCompletion];
-    } else {
-        dismissalCompletion();
-    }
 }
 
 @end

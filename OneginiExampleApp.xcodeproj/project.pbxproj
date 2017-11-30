@@ -56,6 +56,12 @@
 		5CF407931E4B2CAB001C06D6 /* ProfileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF407911E4B2CAB001C06D6 /* ProfileModel.m */; };
 		68AD227F29F4DDCC83BC4A47 /* MobileAuthenticationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 68AD27F23CE59643D7C37336 /* MobileAuthenticationOperation.h */; };
 		68AD253F2DBAA70E8B11A8D7 /* MobileAuthenticationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AD26240A0F4ED4AD29ACA3 /* MobileAuthenticationOperation.m */; };
+		7E224C381FC6D11600CAD88E /* PendingTransactionTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E224C351FC6D11600CAD88E /* PendingTransactionTableViewCell.h */; };
+		7E224C391FC6D11600CAD88E /* PendingTransactionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E224C361FC6D11600CAD88E /* PendingTransactionTableViewCell.m */; };
+		7E224C3A1FC6D11600CAD88E /* PendingTransactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E224C371FC6D11600CAD88E /* PendingTransactionTableViewCell.xib */; };
+		7EA5B6E31FC577B8008DDA0E /* PendingTransactionsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7EA5B6E01FC577B8008DDA0E /* PendingTransactionsViewController.h */; };
+		7EA5B6E41FC577B8008DDA0E /* PendingTransactionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5B6E11FC577B8008DDA0E /* PendingTransactionsViewController.m */; };
+		7EA5B6E51FC577B8008DDA0E /* PendingTransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EA5B6E21FC577B8008DDA0E /* PendingTransactionsViewController.xib */; };
 		AD2F1FD01D9EA8DD006A50FF /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FCF1D9EA8DD006A50FF /* SettingsViewController.xib */; };
 		AD2F1FD21D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FD11D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib */; };
 		AD2F1FD41D9EABA8006A50FF /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FD31D9EABA8006A50FF /* WelcomeViewController.xib */; };
@@ -163,6 +169,12 @@
 		5CF4F3B81DB65D4E00A9FE01 /* OneginiExampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneginiExampleApp.entitlements; sourceTree = "<group>"; };
 		68AD26240A0F4ED4AD29ACA3 /* MobileAuthenticationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileAuthenticationOperation.m; sourceTree = "<group>"; };
 		68AD27F23CE59643D7C37336 /* MobileAuthenticationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileAuthenticationOperation.h; sourceTree = "<group>"; };
+		7E224C351FC6D11600CAD88E /* PendingTransactionTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PendingTransactionTableViewCell.h; sourceTree = "<group>"; };
+		7E224C361FC6D11600CAD88E /* PendingTransactionTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PendingTransactionTableViewCell.m; sourceTree = "<group>"; };
+		7E224C371FC6D11600CAD88E /* PendingTransactionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingTransactionTableViewCell.xib; sourceTree = "<group>"; };
+		7EA5B6E01FC577B8008DDA0E /* PendingTransactionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PendingTransactionsViewController.h; sourceTree = "<group>"; };
+		7EA5B6E11FC577B8008DDA0E /* PendingTransactionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PendingTransactionsViewController.m; sourceTree = "<group>"; };
+		7EA5B6E21FC577B8008DDA0E /* PendingTransactionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingTransactionsViewController.xib; sourceTree = "<group>"; };
 		8F110FB687139430D79AEAD0 /* Pods-OneginiExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneginiExampleApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneginiExampleApp/Pods-OneginiExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		AD2F1FCF1D9EA8DD006A50FF /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		AD2F1FD11D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthenticatorCellTableViewCell.xib; sourceTree = "<group>"; };
@@ -351,6 +363,19 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		7EA5B6DF1FC57790008DDA0E /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				7EA5B6E01FC577B8008DDA0E /* PendingTransactionsViewController.h */,
+				7EA5B6E11FC577B8008DDA0E /* PendingTransactionsViewController.m */,
+				7EA5B6E21FC577B8008DDA0E /* PendingTransactionsViewController.xib */,
+				7E224C351FC6D11600CAD88E /* PendingTransactionTableViewCell.h */,
+				7E224C361FC6D11600CAD88E /* PendingTransactionTableViewCell.m */,
+				7E224C371FC6D11600CAD88E /* PendingTransactionTableViewCell.xib */,
+			);
+			path = Transactions;
+			sourceTree = "<group>";
+		};
 		85C98E12477B3DE5E53674FE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -385,6 +410,7 @@
 		C54139881CD9D3010033DBA8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7EA5B6DF1FC57790008DDA0E /* Transactions */,
 				5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */,
 				1D6A3240BF4EB8CE613FA7A8 /* Pin */,
 				1D6A3C1CA787A35E550E2F99 /* Profile */,
@@ -507,8 +533,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E224C381FC6D11600CAD88E /* PendingTransactionTableViewCell.h in Headers */,
 				5CD187431CEDA5B8001FD062 /* MobileAuthenticationController.h in Headers */,
 				B47ADC3E1D644F24006DA9D1 /* SecurityController.h in Headers */,
+				7EA5B6E31FC577B8008DDA0E /* PendingTransactionsViewController.h in Headers */,
 				5C7745211D998285004BBCFE /* ChangePinController.h in Headers */,
 				E4459662EEBC767C4F350A5A /* OneginiConfigModel.h in Headers */,
 				5CF407921E4B2CAB001C06D6 /* ProfileModel.h in Headers */,
@@ -622,8 +650,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C572A2E71CD893C400B137DC /* Assets.xcassets in Resources */,
+				7EA5B6E51FC577B8008DDA0E /* PendingTransactionsViewController.xib in Resources */,
 				5CAE98B01CE0929C009C1D1A /* LaunchScreen.xib in Resources */,
 				AD2F1FD21D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib in Resources */,
+				7E224C3A1FC6D11600CAD88E /* PendingTransactionTableViewCell.xib in Resources */,
 				AD2F1FD41D9EABA8006A50FF /* WelcomeViewController.xib in Resources */,
 				AD2F1FD01D9EA8DD006A50FF /* SettingsViewController.xib in Resources */,
 				5CF4078F1E4B2897001C06D6 /* ProfileCreationViewController.xib in Resources */,
@@ -706,6 +736,7 @@
 				1D6A3512499A1433115A382D /* UIAlertController+Shortcut.m in Sources */,
 				1D6A3E32BC3EB7E9A7DAE958 /* PinErrorMapper.m in Sources */,
 				1D6A3C1B408210BA5A90DF0B /* StateOperation.m in Sources */,
+				7EA5B6E41FC577B8008DDA0E /* PendingTransactionsViewController.m in Sources */,
 				68AD253F2DBAA70E8B11A8D7 /* MobileAuthenticationOperation.m in Sources */,
 				1D6A3562C58CF7B77806C78C /* SettingsViewController.m in Sources */,
 				5C1276841F84FAB60098072A /* AuthenticatorDeregistrationController.m in Sources */,
@@ -720,6 +751,7 @@
 				1D6A38DE74044D87D80F4DF1 /* TextViewController.m in Sources */,
 				1D6A37F9394FC621A669717F /* WebBrowserViewController.m in Sources */,
 				DF1066ABB7524B10C30D0ED8 /* AlertPresenter.m in Sources */,
+				7E224C391FC6D11600CAD88E /* PendingTransactionTableViewCell.m in Sources */,
 				DF1065C9A591C849213CAF52 /* TestOptionsPresenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

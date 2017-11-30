@@ -12,12 +12,13 @@
 
 @implementation MobileAuthenticationController
 
-- (instancetype)initWithUserClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController
+- (instancetype)initWithUserClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController tabBarController:(UITabBarController *)tabBarController
 {
     self = [super init];
     if (self) {
         _navigationController = navigationController;
         _userClient = userClient;
+        _tabBarController = tabBarController;
 
         // SDK can not be called from any background queue, however it is generally a bad idea to reuse shared [NSOperationQueue mainQueue]
         // because we have no control over it and therefore can not guarantee that every mobile request will be handled.
@@ -43,6 +44,7 @@
 
     MobileAuthenticationOperation *operation = [[MobileAuthenticationOperation alloc] initWithOTPRequest:request
                                                                                               userClient:self.userClient
+                                                                                        tabBarController:self.tabBarController
                                                                                     navigationController:self.navigationController];
     [self.executionQueue addOperation:operation];
 
@@ -60,7 +62,8 @@
 
     MobileAuthenticationOperation *operation = [[MobileAuthenticationOperation alloc] initWithUserInfo:userInfo
                                                                                             userClient:self.userClient
-                                                                                  navigationController:self.navigationController];
+                                                                                  navigationController:self.navigationController
+                                                                                      tabBarController:self.tabBarController];
     [self.executionQueue addOperation:operation];
 
     return YES;

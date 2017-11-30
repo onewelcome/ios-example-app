@@ -24,9 +24,10 @@
 @property (nonatomic, readonly) NSDictionary *userInfo;
 @property (nonatomic, readonly) NSString *otpRequest;
 
-- (instancetype)initWithUserInfo:(NSDictionary *)userInfo userClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController;
+- (instancetype)initWithUserInfo:(NSDictionary *)userInfo userClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController tabBarController:(UITabBarController *)tabBarController;
 - (instancetype)initWithOTPRequest:(NSString *)otpRequest
                         userClient:(ONGUserClient *)userClient
+                  tabBarController:(UITabBarController *)tabBarController
               navigationController:(UINavigationController *)navigationController;
 
 @end

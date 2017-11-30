@@ -22,8 +22,8 @@
 
 @interface AuthenticationController ()
 
-@property (nonatomic) PinViewController *pinViewController;
 @property (nonatomic) UINavigationController *navigationController;
+@property (nonatomic) UITabBarController *tapBarController;
 @property (nonatomic) void (^completion)(void);
 
 @end
@@ -31,10 +31,12 @@
 @implementation AuthenticationController
 
 + (instancetype)authenticationControllerWithNavigationController:(UINavigationController *)navigationController
+                                                tapBarController:(UITabBarController *)tapBarController
                                                       completion:(void (^)(void))completion
 {
     AuthenticationController *authorizationController = [AuthenticationController new];
     authorizationController.navigationController = navigationController;
+    authorizationController.tapBarController = tapBarController;
     authorizationController.completion = completion;
     authorizationController.pinViewController = [PinViewController new];
     return authorizationController;
@@ -44,6 +46,7 @@
 {
     ProfileViewController *viewController = [ProfileViewController new];
     [self.navigationController pushViewController:viewController animated:YES];
+    [self.tapBarController dismissViewControllerAnimated:YES completion:nil];
     self.completion();
 
     if (self.progressStateDidChange != nil) {
@@ -53,6 +56,8 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
+    [self.tapBarController dismissViewControllerAnimated:YES completion:nil];
+    
     // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
     // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
     // deregistered user.
@@ -102,8 +107,8 @@
 
     // It is up to you to decide when and how to show the PIN entry view controller.
     // For simplicity of the example app we're checking the top-most view controller.
-    if (![self.navigationController.topViewController isEqual:self.pinViewController]) {
-        [self.navigationController pushViewController:self.pinViewController animated:YES];
+    if (![self.tapBarController.presentedViewController isEqual:self.pinViewController]) {
+        [self.tapBarController presentViewController:self.pinViewController animated:YES completion:nil];
     }
 
     if (challenge.error) {

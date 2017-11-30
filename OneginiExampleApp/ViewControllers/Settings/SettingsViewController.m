@@ -176,11 +176,24 @@
 
 - (void)registerAuthenticator:(ONGAuthenticator *)authenticator
 {
-    self.authenticatorRegistrationController = [AuthenticatorRegistrationController controllerWithNavigationController:self.navigationController completion:^{
-        self.authenticatorRegistrationController = nil;
+    self.authenticatorRegistrationController = [AuthenticatorRegistrationController controllerWithNavigationController:self.navigationController
+                                                                                                      tabBarController:self.tabBarController                                                                                                            completion:^{
+                                                                                                          [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+                                                                                                          
+                                                                                                          self.authenticatorRegistrationController = nil;
         
-        [self reloadData];
+                                                                                                          [self reloadData];
     }];
+    
+    __weak typeof(self) weakSelf = self;
+    self.authenticatorRegistrationController.progressStateDidChange = ^(BOOL isInProgress) {
+        if (isInProgress) {
+            [MBProgressHUD showHUDAddedTo:weakSelf.authenticatorRegistrationController.pinViewController.view animated:YES];
+        } else {
+            [MBProgressHUD hideHUDForView:weakSelf.authenticatorRegistrationController.pinViewController.view animated:YES];
+        }
+    };
+    
     [self.userClient registerAuthenticator:authenticator delegate:self.authenticatorRegistrationController];
 }
 

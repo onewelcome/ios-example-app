@@ -15,6 +15,7 @@
 
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
+#import <UserNotifications/UserNotifications.h>
 
 #import "MobileAuthenticationController.h"
 #import "NavigationControllerAppearance.h"
@@ -22,8 +23,11 @@
 #import "ProfileModel.h"
 #import "MobileAuthModel.h"
 #import "AlertPresenter.h"
+#import "PendingTransactionsViewController.h"
 
-@interface AppDelegate () <UINavigationControllerDelegate>
+@interface AppDelegate () <UINavigationControllerDelegate, UITabBarControllerDelegate>
+
+@property (nonatomic) UINavigationController *navigationController;
 
 @end
 
@@ -36,7 +40,7 @@
     [self startOneginiClient];
 
     [self registerForPushMessages];
-
+    
     return YES;
 }
 
@@ -46,11 +50,20 @@
     self.window.backgroundColor = [UIColor lightGrayColor];
 
     WelcomeViewController *root = [[WelcomeViewController alloc] init];
-    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:root];
-    [NavigationControllerAppearance apply:controller];
-    controller.delegate = self;
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:root];
+    [NavigationControllerAppearance apply:self.navigationController];
+    self.navigationController.delegate = self;
     
-    self.window.rootViewController = controller;
+    PendingTransactionsViewController *pendingTransactionsVC = [[PendingTransactionsViewController alloc] init];
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.delegate = self;
+    NSArray *controllers = [NSArray arrayWithObjects: self.navigationController, pendingTransactionsVC, nil];
+    tabBarController.viewControllers = controllers;
+    
+    [self tabBarStylization:tabBarController];
+
+    self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
 }
 
@@ -87,7 +100,8 @@
     }];
 
     ONGUserClient *userClient = [ONGUserClient sharedInstance];
-    self.mobileAuthenticationController = [[MobileAuthenticationController alloc] initWithUserClient:userClient navigationController:(UINavigationController *)self.window.rootViewController];
+    
+    self.mobileAuthenticationController = [[MobileAuthenticationController alloc] initWithUserClient:userClient navigationController:self.navigationController tabBarController:(UITabBarController *)self.window.rootViewController];
 }
 
 - (void)registerForPushMessages
@@ -119,8 +133,14 @@
 {
     BOOL handled = [self.mobileAuthenticationController handlePushMobileAuthenticationRequest:userInfo];
     if (!handled) {
-        // pass it to the next service (FireBase, Facebook, etc).
+    // pass it to the next service (FireBase, Facebook, etc).
     }
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [self setBadgeOnPendingTransactionIcon:(UITabBarController *)self.window.rootViewController];
+    [[UNUserNotificationCenter currentNotificationCenter] removeAllDeliveredNotifications];
 }
 
 - (void)showSecretOptions
@@ -128,11 +148,37 @@
     [TestOptionsPresenter showSecretOptionsOnViewController:self.window.rootViewController];
 }
 
--(void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     UIBarButtonItem *testingOptions = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStylePlain target:self action:@selector(showSecretOptions)];
     testingOptions.accessibilityIdentifier = @"TestOptionsBarButtonItem";
     viewController.navigationItem.rightBarButtonItem = testingOptions;
+}
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
+{
+    return viewController != tabBarController.selectedViewController;
+}
+
+- (void)tabBarStylization:(UITabBarController *)tabBarController
+{
+    UITabBarItem *tabBarHome = [tabBarController.tabBar.items objectAtIndex:0];
+    UITabBarItem *tabBarPendingTransactions = [tabBarController.tabBar.items objectAtIndex:1];
+    
+    [tabBarHome setImage:[UIImage imageNamed:@"key"]];
+    [tabBarHome setTitle:@"Home"];
+    
+    [tabBarPendingTransactions setImage:[UIImage imageNamed:@"notifications-bell-button"]];
+}
+
+- (void)setBadgeOnPendingTransactionIcon:(UITabBarController *)tabBarController
+{
+    [[ONGUserClient sharedInstance] pendingPushMobileAuthRequests:^(NSArray<ONGPendingMobileAuthRequest *> * _Nullable pendingTransactions, NSError * _Nullable error) {
+        if (!error) {
+            NSInteger pendingTransactionsCount = [pendingTransactions count];
+            [[tabBarController.tabBar.items objectAtIndex:1] setBadgeValue:[NSString stringWithFormat:@"%ld", (long)pendingTransactionsCount]];
+        }
+    }];
 }
 
 @end

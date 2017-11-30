@@ -4,6 +4,7 @@
 #import "PendingTransactionTableViewCell.h"
 #import "ONGUserClient.h"
 #import "AlertPresenter.h"
+#import "MobileAuthenticationOperation.h"
 
 @interface PendingTransactionsViewController ()
 
@@ -72,6 +73,18 @@
     [cell setupCell:self.pendingTransactions[indexPath.row]];
     
     return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MobileAuthenticationOperation *operation = [[MobileAuthenticationOperation alloc] initWithPendingMobileAuthRequest:self.pendingTransactions[indexPath.row]
+                                                                                                            userClient:[ONGUserClient sharedInstance]
+                                                                                                  navigationController:self.navigationController
+                                                                                                      tabBarController:self.tabBarController];
+    
+    [[ONGUserClient sharedInstance] handlePendingPushMobileAuthRequest:self.pendingTransactions[indexPath.row] delegate:operation];
 }
 
 #pragma mark - Actions

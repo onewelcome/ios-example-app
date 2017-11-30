@@ -53,17 +53,18 @@
 
 - (BOOL)handlePushMobileAuthenticationRequest:(NSDictionary *)userInfo
 {
+    ONGPendingMobileAuthRequest *pendingMobileAuthRequest = [self.userClient pendingMobileAuthRequestFromUserInfo:userInfo];
     // It is easier to implement queue of delayed `-[ONGUserClient handlePushMobileAuthenticationRequest:delegate:]` invocations
     // rather than handling UI elements queuing. Because of this we're ensuring that the given `userInfo` is a valid Onegini's
     // mobile authentication request and delaying actual handling by wrapping it into a NSOperation-based class.
-    if (![self.userClient canHandlePushMobileAuthRequest:userInfo]) {
+    if (!pendingMobileAuthRequest) {
         return NO;
     }
 
-    MobileAuthenticationOperation *operation = [[MobileAuthenticationOperation alloc] initWithUserInfo:userInfo
-                                                                                            userClient:self.userClient
-                                                                                  navigationController:self.navigationController
-                                                                                      tabBarController:self.tabBarController];
+    MobileAuthenticationOperation *operation = [[MobileAuthenticationOperation alloc] initWithPendingMobileAuthRequest:pendingMobileAuthRequest
+                                                                                                            userClient:self.userClient
+                                                                                                  navigationController:self.navigationController
+                                                                                                      tabBarController:self.tabBarController];
     [self.executionQueue addOperation:operation];
 
     return YES;

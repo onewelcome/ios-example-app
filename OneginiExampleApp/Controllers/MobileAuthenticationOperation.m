@@ -35,11 +35,14 @@
 
 #pragma mark - Init
 
-- (instancetype)initWithUserInfo:(NSDictionary *)userInfo userClient:(ONGUserClient *)userClient navigationController:(UINavigationController *)navigationController tabBarController:(UITabBarController *)tabBarController
+- (instancetype)initWithPendingMobileAuthRequest:(ONGPendingMobileAuthRequest *)pendingMobileAuthRequest
+                                      userClient:(ONGUserClient *)userClient
+                            navigationController:(UINavigationController *)navigationController
+                                tabBarController:(UITabBarController *)tabBarController
 {
     self = [super init];
     if (self) {
-        _userInfo = userInfo;
+        _pendingMobileAuthRequest = pendingMobileAuthRequest;
         _userClient = userClient;
         _navigationController = navigationController;
         _tabBarController = tabBarController;
@@ -73,7 +76,7 @@
         if (self.otpRequest) {
             [self.userClient handleOTPMobileAuthRequest:self.otpRequest delegate:self];
         } else {
-            [self.userClient handlePushMobileAuthRequest:self.userInfo delegate:self];
+            [self.userClient handlePendingPushMobileAuthRequest:self.pendingMobileAuthRequest delegate:self];
         }
     });
 }

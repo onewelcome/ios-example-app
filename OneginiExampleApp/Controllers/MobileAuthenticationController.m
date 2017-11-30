@@ -37,7 +37,6 @@
 }
 
 - (BOOL)handleMobileAuthenticationRequest:(NSString *)request userProfile:(ONGUserProfile *)userProfile
-
 {
     if (![self.userClient canHandleOTPMobileAuthRequest:request]) {
         return NO;

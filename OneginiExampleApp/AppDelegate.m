@@ -41,7 +41,6 @@
 
     [self registerForPushMessages];
     
-    
     return YES;
 }
 
@@ -132,10 +131,10 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-        BOOL handled = [self.mobileAuthenticationController handlePushMobileAuthenticationRequest:userInfo];
-        if (!handled) {
-        // pass it to the next service (FireBase, Facebook, etc).
-        }
+    BOOL handled = [self.mobileAuthenticationController handlePushMobileAuthenticationRequest:userInfo];
+    if (!handled) {
+    // pass it to the next service (FireBase, Facebook, etc).
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

@@ -20,21 +20,13 @@
 - (void)setupCell:(ONGPendingMobileAuthRequest *)pendingTransaction
 {
     self.profileNameLabel.text = [[ProfileModel new] profileNameForUserProfile:pendingTransaction.userProfile];
-    self.timeLabel.text = [self convertDateToString:pendingTransaction.date];
-    self.expireTime.text = [NSString stringWithFormat:@"Will expire at: %@", [self convertDateToString:[self addingTimeInterval:pendingTransaction.timeToLive date:pendingTransaction.date]]];
+    self.timeLabel.text = [NSDateFormatter localizedStringFromDate:pendingTransaction.date
+                                                         dateStyle:NSDateFormatterNoStyle
+                                                         timeStyle:NSDateFormatterMediumStyle];
+    self.expireTime.text = [NSString stringWithFormat:@"Will expire at: %@", [NSDateFormatter localizedStringFromDate:[pendingTransaction.date dateByAddingTimeInterval:([pendingTransaction.timeToLive doubleValue])]
+                                                                                                            dateStyle:NSDateFormatterNoStyle
+                                                                                                            timeStyle:NSDateFormatterMediumStyle]];
     self.messageLabel.text = pendingTransaction.message;
-}
-
-- (NSString *)convertDateToString:(NSDate *)date
-{
-    return [NSDateFormatter localizedStringFromDate:date
-                                        dateStyle:NSDateFormatterNoStyle
-                                        timeStyle:NSDateFormatterMediumStyle];
-}
-
-- (NSDate *)addingTimeInterval:(NSNumber *)timeInterval date:(NSDate *)date
-{
-    return [date dateByAddingTimeInterval:([timeInterval doubleValue])];
 }
 
 @end

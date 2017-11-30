@@ -141,7 +141,7 @@
 
 - (void)showError:(NSError *)error
 {
-    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
     [errorPresenter showErrorAlert:error title:@"Enrollment failed"];
 }
 
@@ -200,7 +200,7 @@
 - (void)deregisterAuthenticator:(ONGAuthenticator *)authenticator
 {
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    self.authenticatorDeregistrationController = [AuthenticatorDeregistrationController controllerWithNavigationController:self.navigationController completion:^{
+    self.authenticatorDeregistrationController = [AuthenticatorDeregistrationController controllerWithNavigationController:self.navigationController                            tabBarController:self.tabBarController completion:^{
         self.authenticatorDeregistrationController = nil;
         [self reloadData];
     }];

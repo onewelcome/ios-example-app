@@ -5,16 +5,16 @@
 
 @interface AlertPresenter ()
 
-@property (nonatomic) UINavigationController *navigationController;
+@property (nonatomic) UITabBarController *tabBarController;
 
 @end
 
 @implementation AlertPresenter
 
-+ (instancetype)createAlertPresenterWithNavigationController:(UINavigationController *)navigationController
++ (instancetype)createAlertPresenterWithTabBarController:(UITabBarController *)tabBarController
 {
     AlertPresenter *alertPresenter = [AlertPresenter new];
-    alertPresenter.navigationController = navigationController;
+    alertPresenter.tabBarController = tabBarController;
     return alertPresenter;
 }
 
@@ -30,7 +30,7 @@
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okButton];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
+    [self.tabBarController presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)showErrorAlertWithMessage:(NSString *)message title:(NSString *)title 
@@ -40,7 +40,7 @@
                                                             preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction:okButton];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
+    [self.tabBarController presentViewController:alert animated:YES completion:nil];
 }
 
 @end

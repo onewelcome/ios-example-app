@@ -20,6 +20,7 @@
 @interface AuthenticatorDeregistrationController : NSObject<ONGAuthenticatorDeregistrationDelegate>
 
 + (instancetype)controllerWithNavigationController:(UINavigationController *)navigationController
+                                  tabBarController:(UITabBarController *)tabBarController
                                         completion:(void (^)(void))completion;
 
 @end

@@ -115,7 +115,7 @@
 
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
 {
-    AlertPresenter *alertPresenter = [AlertPresenter createAlertPresenterWithNavigationController:(UINavigationController *)self.window.rootViewController];
+    AlertPresenter *alertPresenter = [AlertPresenter createAlertPresenterWithTabBarController:(UITabBarController *)self.window.rootViewController];
     [alertPresenter showErrorAlertWithMessage:message title:title];
 }
 

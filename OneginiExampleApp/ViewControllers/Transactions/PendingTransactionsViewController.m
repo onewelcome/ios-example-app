@@ -84,7 +84,7 @@
                                                                                                   navigationController:self.navigationController
                                                                                                       tabBarController:self.tabBarController];
     
-    [[ONGUserClient sharedInstance] handlePendingPushMobileAuthRequest:self.pendingTransactions[indexPath.row] delegate:operation];
+    [operation executionStarted];
 }
 
 #pragma mark - Actions

@@ -109,11 +109,7 @@
     UNUserNotificationCenter.currentNotificationCenter.delegate = self;
     
     UNAuthorizationOptions supportedTypes = UNAuthorizationOptionSound | UNAuthorizationOptionBadge | UNAuthorizationOptionAlert;
-    [UNUserNotificationCenter.currentNotificationCenter requestAuthorizationWithOptions:supportedTypes completionHandler:^(BOOL granted, NSError * _Nullable error) {
-        if (!error) {
-            [[UIApplication sharedApplication] registerForRemoteNotifications];
-        }
-    }];
+    [UNUserNotificationCenter.currentNotificationCenter requestAuthorizationWithOptions:supportedTypes completionHandler:^(BOOL granted, NSError * _Nullable error) {}];
 }
 
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message

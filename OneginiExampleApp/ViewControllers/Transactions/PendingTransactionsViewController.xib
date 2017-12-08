@@ -28,6 +28,7 @@
                     <color key="sectionIndexBackgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="tBq-kw-y41"/>
+                        <outlet property="delegate" destination="-1" id="Nlw-By-Zio"/>
                     </connections>
                 </tableView>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZFn-zg-Di0">

@@ -4,6 +4,7 @@
 #import "PendingTransactionTableViewCell.h"
 #import "ONGUserClient.h"
 #import "AlertPresenter.h"
+#import "MobileAuthenticationOperation.h"
 
 @interface PendingTransactionsViewController ()
 
@@ -74,6 +75,18 @@
     return cell;
 }
 
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MobileAuthenticationOperation *operation = [[MobileAuthenticationOperation alloc] initWithPendingMobileAuthRequest:self.pendingTransactions[indexPath.row]
+                                                                                                            userClient:[ONGUserClient sharedInstance]
+                                                                                                  navigationController:self.navigationController
+                                                                                                      tabBarController:self.tabBarController];
+    
+    [operation executionStarted];
+}
+
 #pragma mark - Actions
 
 - (void)invokeDataReload:(UIRefreshControl *)sender
@@ -92,7 +105,7 @@
 
 - (void)showError:(NSError *)error
 {
-    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
     [errorPresenter showErrorAlert:error title:@"Pending transactions error"];
 }
 

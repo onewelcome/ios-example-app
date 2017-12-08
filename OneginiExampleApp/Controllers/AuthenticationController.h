@@ -24,7 +24,7 @@
 @property (nonatomic) PinViewController *pinViewController;
 
 + (instancetype)authenticationControllerWithNavigationController:(UINavigationController *)navigationController
-                                                tapBarController:(UITabBarController *)tapBarController
+                                                tabBarController:(UITabBarController *)tabBarController
                                                       completion:(void (^)(void))completion;
 
 @end

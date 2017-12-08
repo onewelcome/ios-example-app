@@ -25,7 +25,7 @@
 #import "AlertPresenter.h"
 #import "PendingTransactionsViewController.h"
 
-@interface AppDelegate () <UINavigationControllerDelegate, UITabBarControllerDelegate>
+@interface AppDelegate () <UINavigationControllerDelegate, UITabBarControllerDelegate, UNUserNotificationCenterDelegate>
 
 @property (nonatomic) UINavigationController *navigationController;
 
@@ -106,16 +106,21 @@
 
 - (void)registerForPushMessages
 {
-    UIUserNotificationType supportedTypes = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:supportedTypes categories:nil];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    UNUserNotificationCenter.currentNotificationCenter.delegate = self;
+    
+    UNAuthorizationOptions supportedTypes = UNAuthorizationOptionSound | UNAuthorizationOptionBadge | UNAuthorizationOptionAlert;
+    [UNUserNotificationCenter.currentNotificationCenter requestAuthorizationWithOptions:supportedTypes completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        if (!error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[UIApplication sharedApplication] registerForRemoteNotifications];
+            });
+        }
+    }];
 }
 
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message
 {
-    AlertPresenter *alertPresenter = [AlertPresenter createAlertPresenterWithNavigationController:(UINavigationController *)self.window.rootViewController];
+    AlertPresenter *alertPresenter = [AlertPresenter createAlertPresenterWithTabBarController:(UITabBarController *)self.window.rootViewController];
     [alertPresenter showErrorAlertWithMessage:message title:title];
 }
 
@@ -129,12 +134,17 @@
     [MobileAuthModel sharedInstance].deviceToken = nil;
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler
 {
-    BOOL handled = [self.mobileAuthenticationController handlePushMobileAuthenticationRequest:userInfo];
-    if (!handled) {
-    // pass it to the next service (FireBase, Facebook, etc).
-    }
+    [self handleNotification:response.notification.request.content.userInfo];
+    completionHandler();
+}
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+{
+    [self handleNotification:notification.request.content.userInfo];
+    completionHandler(UNNotificationPresentationOptionNone);
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -179,6 +189,14 @@
             [[tabBarController.tabBar.items objectAtIndex:1] setBadgeValue:[NSString stringWithFormat:@"%ld", (long)pendingTransactionsCount]];
         }
     }];
+}
+
+- (void)handleNotification:(NSDictionary *)userInfo
+{
+    BOOL handled = [self.mobileAuthenticationController handlePushMobileAuthenticationRequest:userInfo];
+    if (!handled) {
+        // pass it to the next service (FireBase, Facebook, etc).
+    }
 }
 
 @end

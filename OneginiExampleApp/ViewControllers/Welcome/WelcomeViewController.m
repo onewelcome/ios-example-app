@@ -64,7 +64,7 @@
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
     self.appInfoLabel.hidden = YES;
-    self.alertPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    self.alertPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
     
     [self authenticateDeviceAndFetchResource];
 }
@@ -116,7 +116,7 @@
 {
     self.authenticationController = [AuthenticationController
                                      authenticationControllerWithNavigationController:self.navigationController
-                                     tapBarController:self.tabBarController
+                                     tabBarController:self.tabBarController
                                      completion:^{
                                          [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                          self.authenticationController = nil;

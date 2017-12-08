@@ -5,7 +5,7 @@
 
 @interface AlertPresenter : NSObject
 
-+ (instancetype)createAlertPresenterWithNavigationController:(UINavigationController *)navigationController;
++ (instancetype)createAlertPresenterWithTabBarController:(UITabBarController *)tabBarController;
 
 - (void)showErrorAlert:(NSError *)error title:(NSString *)title;
 - (void)showErrorAlertWithMessage:(NSString *)message title:(NSString *)title;

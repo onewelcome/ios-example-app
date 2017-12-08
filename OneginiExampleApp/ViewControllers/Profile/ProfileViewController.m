@@ -161,7 +161,7 @@
 
 - (void)showError:(NSError *)error
 {
-    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
     [errorPresenter showErrorAlert:error title:@"Error"];
 }
 

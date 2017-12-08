@@ -23,7 +23,7 @@
 @interface AuthenticationController ()
 
 @property (nonatomic) UINavigationController *navigationController;
-@property (nonatomic) UITabBarController *tapBarController;
+@property (nonatomic) UITabBarController *tabBarController;
 @property (nonatomic) void (^completion)(void);
 
 @end
@@ -31,12 +31,13 @@
 @implementation AuthenticationController
 
 + (instancetype)authenticationControllerWithNavigationController:(UINavigationController *)navigationController
-                                                tapBarController:(UITabBarController *)tapBarController
+                                                tabBarController:(UITabBarController *)tabBarController
                                                       completion:(void (^)(void))completion
 {
     AuthenticationController *authorizationController = [AuthenticationController new];
     authorizationController.navigationController = navigationController;
-    authorizationController.tapBarController = tapBarController;
+    authorizationController.tabBarController = tabBarController
+    ;
     authorizationController.completion = completion;
     authorizationController.pinViewController = [PinViewController new];
     return authorizationController;
@@ -46,7 +47,7 @@
 {
     ProfileViewController *viewController = [ProfileViewController new];
     [self.navigationController pushViewController:viewController animated:YES];
-    [self.tapBarController dismissViewControllerAnimated:YES completion:nil];
+    [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
     self.completion();
 
     if (self.progressStateDidChange != nil) {
@@ -56,7 +57,7 @@
 
 - (void)userClient:(ONGUserClient *)userClient didFailToAuthenticateUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
-    [self.tapBarController dismissViewControllerAnimated:YES completion:nil];
+    [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
     
     // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
     // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
@@ -107,8 +108,8 @@
 
     // It is up to you to decide when and how to show the PIN entry view controller.
     // For simplicity of the example app we're checking the top-most view controller.
-    if (![self.tapBarController.presentedViewController isEqual:self.pinViewController]) {
-        [self.tapBarController presentViewController:self.pinViewController animated:YES completion:nil];
+    if (![self.tabBarController.presentedViewController isEqual:self.pinViewController]) {
+        [self.tabBarController presentViewController:self.pinViewController animated:YES completion:nil];
     }
 
     if (challenge.error) {
@@ -185,7 +186,7 @@
 
 - (void)showError:(NSError *)error
 {
-    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.navigationController];
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
     [errorPresenter showErrorAlert:error title:@"Authentication Error"];
 }
 

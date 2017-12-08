@@ -21,6 +21,7 @@
 @interface AuthenticatorDeregistrationController ()
 
 @property (nonatomic) UINavigationController *presentingViewController;
+@property (nonatomic) UITabBarController *tabBarController;
 
 @property (nonatomic) void (^completion)(void);
 
@@ -28,10 +29,13 @@
 
 @implementation AuthenticatorDeregistrationController
 
-- (instancetype)initWithPresentingViewController:(UINavigationController *)presentingViewController completion:(void (^)(void))completion
+- (instancetype)initWithPresentingViewController:(UINavigationController *)presentingViewController
+                                tabBarController:(UITabBarController *)tabBarController
+                                      completion:(void (^)(void))completion
 {
     self = [super init];
     if (self) {
+        self.tabBarController = tabBarController;
         self.presentingViewController = presentingViewController;
         self.completion = completion;
     }
@@ -39,9 +43,10 @@
 }
 
 + (instancetype)controllerWithNavigationController:(UINavigationController *)navigationController
+                                  tabBarController:(UITabBarController *)tabBarController
                                         completion:(void (^)(void))completion
 {
-    return [[self alloc] initWithPresentingViewController:navigationController completion:completion];
+    return [[self alloc] initWithPresentingViewController:navigationController tabBarController:tabBarController completion:completion];
 }
 
 #pragma mark - ONGAuthenticatorDeregistrationDelegate
@@ -72,7 +77,7 @@
 
 - (void)showError:(NSError *)error
 {
-    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithNavigationController:self.presentingViewController];
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
     [errorPresenter showErrorAlert:error title:@"Authenticator deregistration error"];
 }
 

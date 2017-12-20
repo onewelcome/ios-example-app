@@ -35,10 +35,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self setupWindow];
-
     [self startOneginiClient];
-
+    
     [self registerForPushMessages];
     
     return YES;
@@ -48,7 +46,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor lightGrayColor];
-
+    
     WelcomeViewController *root = [[WelcomeViewController alloc] init];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:root];
     [NavigationControllerAppearance apply:self.navigationController];
@@ -77,8 +75,11 @@
     // This step is crucial since it may report critical errors such as: Application is outdated, OS is outdated.
     // In case of such errors the user can not use the app anymore and has to update the app / OS.
     // The SDK in turn won't be able to provide any functionality to prevent user's data leakage / corruption.
+    // Before initializing any views we want ot make sure start method has already completed
+    
     dispatch_semaphore_t sem = dispatch_semaphore_create(0);
     [[ONGClient sharedInstance] start:^(BOOL result, NSError *error) {
+        [self setupWindow];
         if (error != nil) {
             // Catching two important errors that might happen during SDK initialization.
             // The user can not use this version of the App / OS anymore and has to update it.

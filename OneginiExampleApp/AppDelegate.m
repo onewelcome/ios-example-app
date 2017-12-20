@@ -77,6 +77,7 @@
     // This step is crucial since it may report critical errors such as: Application is outdated, OS is outdated.
     // In case of such errors the user can not use the app anymore and has to update the app / OS.
     // The SDK in turn won't be able to provide any functionality to prevent user's data leakage / corruption.
+    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
     [[ONGClient sharedInstance] start:^(BOOL result, NSError *error) {
         if (error != nil) {
             // Catching two important errors that might happen during SDK initialization.
@@ -97,8 +98,13 @@
                 // later on connect to the internet when the user wants to login or register for example.
             }
         }
+        dispatch_semaphore_signal(sem);
     }];
 
+    while (dispatch_semaphore_wait(sem, DISPATCH_TIME_NOW)) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0]];
+    };
+    
     ONGUserClient *userClient = [ONGUserClient sharedInstance];
     
     self.mobileAuthenticationController = [[MobileAuthenticationController alloc] initWithUserClient:userClient navigationController:self.navigationController tabBarController:(UITabBarController *)self.window.rootViewController];

@@ -8,7 +8,7 @@ plugin 'cocoapods-art', :sources => [
 ]
 
 target 'OneginiExampleApp' do
-  pod 'OneginiSDKiOS', '7.0.1-SNAPSHOT'
+  pod 'OneginiSDKiOS', '7.1.0'
   pod 'ZFDragableModalTransition', '~> 0.6'
   pod 'MBProgressHUD', '~> 1.0.0'
 end

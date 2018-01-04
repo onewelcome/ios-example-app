@@ -22,6 +22,7 @@
 #import "NavigationControllerAppearance.h"
 #import "ProfileModel.h"
 #import "AlertPresenter.h"
+#import "ExperimentalCustomAuthenticatiorViewController.h"
 
 @interface AuthenticatorRegistrationController ()
 
@@ -163,7 +164,26 @@
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthFinishRegistrationChallenge:(ONGCustomAuthFinishRegistrationChallenge *)challenge
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Custom Authenticator"
+    if ([challenge.authenticator.identifier isEqualToString:@"PASSWORD_CA_ID"]) {
+        [self showPasswordCA:challenge];
+    } else if ([challenge.authenticator.identifier isEqualToString:@"EXPERIMENTAL_CA_ID"]) {
+        ExperimentalCustomAuthenticatiorViewController *experimentalCustomAuthenticatiorViewController = [[ExperimentalCustomAuthenticatiorViewController alloc] init];
+        experimentalCustomAuthenticatiorViewController.customAuthFinishRegistrationChallenge = challenge;
+        [self.tabBarController presentViewController:experimentalCustomAuthenticatiorViewController animated:YES completion:nil];
+    }
+}
+
+#pragma mark - Misc
+
+- (void)showError:(NSError *)error
+{
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
+    [errorPresenter showErrorAlert:error title:@"Authenticator registration error"];
+}
+
+- (void)showPasswordCA:(ONGCustomAuthFinishRegistrationChallenge *)challenge
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Password Custom Authenticator"
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleAlert];
     __block UITextField *alertTextField;
@@ -185,14 +205,6 @@
     [alert addAction:authenticateButton];
     [alert addAction:cancelButton];
     [self.presentingViewController presentViewController:alert animated:YES completion:nil];
-}
-
-#pragma mark - Misc
-
-- (void)showError:(NSError *)error
-{
-    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
-    [errorPresenter showErrorAlert:error title:@"Authenticator registration error"];
 }
 
 @end

@@ -19,6 +19,7 @@
 #import "PinErrorMapper.h"
 #import "ProfileModel.h"
 #import "AlertPresenter.h"
+#import "ExperimentalCustomAuthenticatiorViewController.h"
 
 @interface AuthenticationController ()
 
@@ -159,35 +160,45 @@
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthFinishAuthenticationChallenge:(ONGCustomAuthFinishAuthenticationChallenge *)challenge
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Custom Authenticator"
-                                                                   message:nil
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    __block UITextField *alertTextField;
-    [alert addTextFieldWithConfigurationHandler:^(UITextField *_Nonnull textField) {
-        textField.accessibilityIdentifier = @"CustomAuthenticatorAlertTextField";
-        alertTextField = textField;
-    }];
-    UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:@"Authenticate"
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction *_Nonnull action) {
-                                                                   self.progressStateDidChange(YES);
-                                                                   [challenge.sender respondWithData:alertTextField.text challenge:challenge];
-                                                               }];
-    UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction *_Nonnull action) {
-                                                             [challenge.sender cancelChallenge:challenge underlyingError:nil];
-                                                         }];
-
-    [alert addAction:authenticateButton];
-    [alert addAction:cancelButton];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
+    if ([challenge.authenticator.identifier isEqualToString:@"PASSWORD_CA_ID"]) {
+        [self showPasswordCA:challenge];
+    } else if ([challenge.authenticator.identifier isEqualToString:@"EXPERIMENTAL_CA_ID"]) {
+        ExperimentalCustomAuthenticatiorViewController *experimentalCustomAuthenticatiorViewController = [[ExperimentalCustomAuthenticatiorViewController alloc] init];
+        experimentalCustomAuthenticatiorViewController.customAuthFinishAuthenticationChallenge = challenge;
+        [self.tabBarController presentViewController:experimentalCustomAuthenticatiorViewController animated:YES completion:nil];
+    }
 }
 
 - (void)showError:(NSError *)error
 {
     AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
     [errorPresenter showErrorAlert:error title:@"Authentication Error"];
+}
+
+- (void)showPasswordCA:(ONGCustomAuthFinishAuthenticationChallenge *)challenge
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Password Custom Authenticator"
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    __block UITextField *alertTextField;
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.accessibilityIdentifier = @"CustomAuthenticatorAlertTextField";
+        alertTextField = textField;
+    }];
+    UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:@"Register"
+                                                                 style:UIAlertActionStyleDefault
+                                                               handler:^(UIAlertAction * _Nonnull action) {
+                                                                   [challenge.sender respondWithData:alertTextField.text challenge:challenge];
+                                                               }];
+    UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [challenge.sender cancelChallenge:challenge underlyingError:nil];
+                                                         }];
+    
+    [alert addAction:authenticateButton];
+    [alert addAction:cancelButton];
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
 @end

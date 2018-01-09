@@ -42,7 +42,7 @@
     self.titleLabel.text = @"Authentication";
 }
 
-- (IBAction)success:(id)sender
+- (IBAction)confirm:(id)sender
 {
     if (self.customAuthFinishAuthenticationChallenge) {
         [self.customAuthFinishAuthenticationChallenge.sender respondWithData:@"data" challenge:self.customAuthFinishAuthenticationChallenge];
@@ -51,23 +51,12 @@
     }
 }
 
-- (IBAction)failure:(id)sender
+- (IBAction)cancel:(id)sender
 {
     if (self.customAuthFinishAuthenticationChallenge) {
         [self.customAuthFinishAuthenticationChallenge.sender cancelChallenge:self.customAuthFinishAuthenticationChallenge underlyingError:nil];
     } else if (self.customAuthFinishRegistrationChallenge) {
         [self.customAuthFinishRegistrationChallenge.sender cancelChallenge:self.customAuthFinishRegistrationChallenge underlyingError:nil];
-    }
-}
-
-
-- (IBAction)error:(id)sender
-{
-    NSError *error = [NSError new];
-    if (self.customAuthFinishAuthenticationChallenge) {
-        [self.customAuthFinishAuthenticationChallenge.sender cancelChallenge:self.customAuthFinishAuthenticationChallenge underlyingError:error];
-    } else if (self.customAuthFinishRegistrationChallenge) {
-        [self.customAuthFinishRegistrationChallenge.sender cancelChallenge:self.customAuthFinishRegistrationChallenge underlyingError:error];
     }
 }
 

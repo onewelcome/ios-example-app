@@ -29,8 +29,7 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <connections>
-                        <action selector="confirm:" destination="-1" eventType="touchUpInside" id="Umn-kc-F5o"/>
-                        <action selector="success:" destination="-1" eventType="touchUpInside" id="8P1-bj-ng6"/>
+                        <action selector="confirm:" destination="-1" eventType="touchUpInside" id="HFb-UC-nEg"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pTF-SQ-5kO">
@@ -41,8 +40,7 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <connections>
-                        <action selector="cancel:" destination="-1" eventType="touchUpInside" id="Xib-2L-06R"/>
-                        <action selector="failure:" destination="-1" eventType="touchUpInside" id="4c6-Gj-zu6"/>
+                        <action selector="cancel:" destination="-1" eventType="touchUpInside" id="4lA-qd-Xsa"/>
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xNU-Ol-mkX">

@@ -17,7 +17,7 @@
 
 @interface ExperimentalCustomAuthenticatiorViewController : UIViewController
 
-@property (nonatomic) ONGCustomAuthFinishRegistrationChallenge *customAuthFinishRegistrationChallenge;
-@property (nonatomic) ONGCustomAuthFinishAuthenticationChallenge *customAuthFinishAuthenticationChallenge;
+@property (nonatomic, copy) void (^customAuthAction)(NSString *data, BOOL cancelled);
+@property (nonatomic) NSString *viewTitle;
 
 @end

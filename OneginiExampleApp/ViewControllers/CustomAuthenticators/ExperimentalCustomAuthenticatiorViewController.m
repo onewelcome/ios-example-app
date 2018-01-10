@@ -23,41 +23,20 @@
 
 @implementation ExperimentalCustomAuthenticatiorViewController
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
-    [super viewWillAppear:animated];
-    self.customAuthFinishRegistrationChallenge = self.customAuthFinishRegistrationChallenge;
-    self.customAuthFinishAuthenticationChallenge = self.customAuthFinishAuthenticationChallenge;
-}
-
-- (void)setCustomAuthFinishRegistrationChallenge:(ONGCustomAuthFinishRegistrationChallenge *)customAuthFinishRegistrationChallenge
-{
-    _customAuthFinishRegistrationChallenge = customAuthFinishRegistrationChallenge;
-    self.titleLabel.text = @"Registration";
-}
-
-- (void)setCustomAuthFinishAuthenticationChallenge:(ONGCustomAuthFinishAuthenticationChallenge *)customAuthFinishAuthenticationChallenge
-{
-    _customAuthFinishAuthenticationChallenge = customAuthFinishAuthenticationChallenge;
-    self.titleLabel.text = @"Authentication";
+    [super viewDidLoad];
+    self.titleLabel.text = self.viewTitle;
 }
 
 - (IBAction)confirm:(id)sender
 {
-    if (self.customAuthFinishAuthenticationChallenge) {
-        [self.customAuthFinishAuthenticationChallenge.sender respondWithData:@"data" challenge:self.customAuthFinishAuthenticationChallenge];
-    } else if (self.customAuthFinishRegistrationChallenge) {
-        [self.customAuthFinishRegistrationChallenge.sender respondWithData:@"data" challenge:self.customAuthFinishRegistrationChallenge];
-    }
+    self.customAuthAction(@"data", NO);
 }
 
 - (IBAction)cancel:(id)sender
 {
-    if (self.customAuthFinishAuthenticationChallenge) {
-        [self.customAuthFinishAuthenticationChallenge.sender cancelChallenge:self.customAuthFinishAuthenticationChallenge underlyingError:nil];
-    } else if (self.customAuthFinishRegistrationChallenge) {
-        [self.customAuthFinishRegistrationChallenge.sender cancelChallenge:self.customAuthFinishRegistrationChallenge underlyingError:nil];
-    }
+    self.customAuthAction(nil, YES);
 }
 
 @end

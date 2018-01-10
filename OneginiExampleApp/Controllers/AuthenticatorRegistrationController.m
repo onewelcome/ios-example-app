@@ -167,9 +167,7 @@
     if ([challenge.authenticator.identifier isEqualToString:@"PASSWORD_CA_ID"]) {
         [self showPasswordCA:challenge];
     } else if ([challenge.authenticator.identifier isEqualToString:@"EXPERIMENTAL_CA_ID"]) {
-        ExperimentalCustomAuthenticatiorViewController *experimentalCustomAuthenticatiorViewController = [[ExperimentalCustomAuthenticatiorViewController alloc] init];
-        experimentalCustomAuthenticatiorViewController.customAuthFinishRegistrationChallenge = challenge;
-        [self.tabBarController presentViewController:experimentalCustomAuthenticatiorViewController animated:YES completion:nil];
+        [self showExperimentalCA:challenge];
     }
 }
 
@@ -205,6 +203,23 @@
     [alert addAction:authenticateButton];
     [alert addAction:cancelButton];
     [self.presentingViewController presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)showExperimentalCA:(ONGCustomAuthFinishRegistrationChallenge *)challenge
+{
+    ExperimentalCustomAuthenticatiorViewController *experimentalCustomAuthenticatiorViewController = [[ExperimentalCustomAuthenticatiorViewController alloc] init];
+    experimentalCustomAuthenticatiorViewController.viewTitle = @"Registration";
+    __weak typeof(self) weakSelf = self;
+    experimentalCustomAuthenticatiorViewController.customAuthAction = ^(NSString *data, BOOL cancelled) {
+        [weakSelf.tabBarController dismissViewControllerAnimated:YES completion:nil];
+        if (data) {
+            [challenge.sender respondWithData:data challenge:challenge];
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge underlyingError:nil];
+        }
+    };
+    
+    [self.tabBarController presentViewController:experimentalCustomAuthenticatiorViewController animated:YES completion:nil];
 }
 
 @end

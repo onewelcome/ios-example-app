@@ -178,7 +178,16 @@
                                                                        [challenge.sender respondWithData:alertTextField.text challenge:challenge];
                                                                    } else if ([challenge.authenticator.identifier isEqualToString:@"EXPERIMENTAL_CA_ID"]) {
                                                                        ExperimentalCustomAuthenticatiorViewController *experimentalCustomAuthenticatiorViewController = [[ExperimentalCustomAuthenticatiorViewController alloc] init];
-                                                                       experimentalCustomAuthenticatiorViewController.customAuthFinishAuthenticationChallenge = challenge;
+                                                                       experimentalCustomAuthenticatiorViewController.viewTitle = @"Authentication";
+                                                                       __weak typeof(self) weakSelf = self;
+                                                                       experimentalCustomAuthenticatiorViewController.customAuthAction = ^(NSString *data, BOOL cancelled) {
+                                                                           [weakSelf.tabBarController dismissViewControllerAnimated:YES completion:nil];
+                                                                           if (data) {
+                                                                               [challenge.sender respondWithData:data challenge:challenge];
+                                                                           } else if (cancelled) {
+                                                                               [challenge.sender cancelChallenge:challenge underlyingError:nil];
+                                                                           }
+                                                                       };
                                                                        [self.tabBarController presentViewController:experimentalCustomAuthenticatiorViewController animated:YES completion:nil];
                                                                    }
                                                                }];

@@ -229,9 +229,7 @@
                                                                    if ([challenge.authenticator.identifier isEqualToString:@"PASSWORD_CA_ID"]) {
                                                                        [challenge.sender respondWithData:alertTextField.text challenge:challenge];
                                                                    } else if ([challenge.authenticator.identifier isEqualToString:@"EXPERIMENTAL_CA_ID"]) {
-                                                                       ExperimentalCustomAuthenticatiorViewController *experimentalCustomAuthenticatiorViewController = [[ExperimentalCustomAuthenticatiorViewController alloc] init];
-                                                                       experimentalCustomAuthenticatiorViewController.customAuthFinishAuthenticationChallenge = challenge;
-                                                                       [self.tabBarController presentViewController:experimentalCustomAuthenticatiorViewController animated:YES completion:nil];
+                                                                       [self showExperimentalCA:challenge];
                                                                    }
                                                                }];
     
@@ -292,6 +290,25 @@
 {
     AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
     [errorPresenter showErrorAlert:error title:@"Mobile Auth Error"];
+}
+
+- (void)showExperimentalCA:(ONGCustomAuthFinishAuthenticationChallenge *)challenge
+{
+        ExperimentalCustomAuthenticatiorViewController *experimentalCustomAuthenticatiorViewController = [[ExperimentalCustomAuthenticatiorViewController alloc] init];
+        experimentalCustomAuthenticatiorViewController.viewTitle = @"Authentication";
+        __weak MobileAuthenticationOperation *weakSelf = self;
+        experimentalCustomAuthenticatiorViewController.customAuthAction = ^(NSString *data, BOOL cancelled) {
+            [weakSelf.tabBarController dismissViewControllerAnimated:YES completion:nil];
+            if (data) {
+                [challenge.sender respondWithData:data challenge:challenge];
+            } else if (cancelled) {
+                [challenge.sender cancelChallenge:challenge underlyingError:nil];
+            }
+        };
+        
+        [self performSafeConfirmationPresentation:^{
+            [self.tabBarController presentViewController:experimentalCustomAuthenticatiorViewController animated:YES completion:nil];
+        }];
 }
 
 @end

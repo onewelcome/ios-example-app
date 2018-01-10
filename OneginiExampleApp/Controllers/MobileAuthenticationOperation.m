@@ -188,28 +188,6 @@
     }];
 }
 
-/**
- * In contract with -userClient:didReceivePinChallenge:forRequest: is not going to be called again in case or error - SDK fallbacks to the PIN instead.
- * This also doesn't affect on the PIN attempts count. Thats why we can skip any error handling for the fingerpint challenge.
- */
-- (void)userClient:(ONGUserClient *)userClient didReceiveFIDOChallenge:(ONGFIDOChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
-{
-    PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
-    pushVC.pushMessage.text = request.message;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with %@ for %@", challenge.authenticator.name, [[ProfileModel new] profileNameForUserProfile:request.userProfile]];
-    pushVC.pushConfirmed = ^(BOOL confirmed) {
-        [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
-        if (confirmed){
-            [challenge.sender respondWithFIDOForChallenge:challenge];
-        } else {
-            [challenge.sender cancelChallenge:challenge];
-        }
-    };
-    [self performSafeConfirmationPresentation:^{
-        [self.tabBarController presentViewController:pushVC animated:YES completion:nil];
-    }];
-}
-
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthFinishAuthenticationChallenge:(ONGCustomAuthFinishAuthenticationChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Mobile Auth"

@@ -130,34 +130,6 @@
     [challenge.sender respondWithPrompt:@"Please provide your fingerprint." challenge:challenge];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveFIDOChallenge:(nonnull ONGFIDOChallenge *)challenge
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"FIDO Authentication"
-                                                                   message:nil
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Authenticate with %@", challenge.authenticator.name]
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction *_Nonnull action) {
-                                                                   self.progressStateDidChange(YES);
-                                                                   [challenge.sender respondWithFIDOForChallenge:challenge];
-                                                               }];
-    UIAlertAction *pinFallbackButton = [UIAlertAction actionWithTitle:@"Fallback to PIN"
-                                                                style:UIAlertActionStyleDefault
-                                                              handler:^(UIAlertAction *_Nonnull action) {
-                                                                  [challenge.sender respondWithPinFallbackForChallenge:challenge];
-                                                              }];
-    UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction *_Nonnull action) {
-                                                             [challenge.sender cancelChallenge:challenge];
-                                                         }];
-
-    [alert addAction:authenticateButton];
-    [alert addAction:pinFallbackButton];
-    [alert addAction:cancelButton];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
-}
-
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthFinishAuthenticationChallenge:(ONGCustomAuthFinishAuthenticationChallenge *)challenge
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Custom Authenticator"

@@ -94,8 +94,6 @@
         case ONGAuthenticationErrorAuthenticatorInvalid:
         // Attempt to register an already registered authenticator
         case ONGAuthenticatorRegistrationErrorAuthenticatorAlreadyRegistered:
-        // Currently not used, you may skip it.
-        case ONGAuthenticationErrorFidoAuthenticationDisabled:
         // The given authenticator is not supported.
         case ONGAuthenticatorRegistrationErrorAuthenticatorNotSupported:
 

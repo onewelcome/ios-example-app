@@ -19,6 +19,7 @@
 #import "PinErrorMapper.h"
 #import "ProfileModel.h"
 #import "AlertPresenter.h"
+#import "ExperimentalCustomAuthenticatiorViewController.h"
 
 @interface AuthenticationController ()
 
@@ -129,57 +130,54 @@
     [challenge.sender respondWithPrompt:@"Please provide your fingerprint." challenge:challenge];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveFIDOChallenge:(nonnull ONGFIDOChallenge *)challenge
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"FIDO Authentication"
-                                                                   message:nil
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"Authenticate with %@", challenge.authenticator.name]
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction *_Nonnull action) {
-                                                                   self.progressStateDidChange(YES);
-                                                                   [challenge.sender respondWithFIDOForChallenge:challenge];
-                                                               }];
-    UIAlertAction *pinFallbackButton = [UIAlertAction actionWithTitle:@"Fallback to PIN"
-                                                                style:UIAlertActionStyleDefault
-                                                              handler:^(UIAlertAction *_Nonnull action) {
-                                                                  [challenge.sender respondWithPinFallbackForChallenge:challenge];
-                                                              }];
-    UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction *_Nonnull action) {
-                                                             [challenge.sender cancelChallenge:challenge];
-                                                         }];
-
-    [alert addAction:authenticateButton];
-    [alert addAction:pinFallbackButton];
-    [alert addAction:cancelButton];
-    [self.navigationController presentViewController:alert animated:YES completion:nil];
-}
-
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthFinishAuthenticationChallenge:(ONGCustomAuthFinishAuthenticationChallenge *)challenge
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Custom Authenticator"
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleAlert];
     __block UITextField *alertTextField;
-    [alert addTextFieldWithConfigurationHandler:^(UITextField *_Nonnull textField) {
-        textField.accessibilityIdentifier = @"CustomAuthenticatorAlertTextField";
-        alertTextField = textField;
-    }];
+    if ([challenge.authenticator.identifier isEqualToString:@"PASSWORD_CA_ID"]) {
+        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.accessibilityIdentifier = @"CustomAuthenticatorAlertTextField";
+            alertTextField = textField;
+        }];
+    }
+    
     UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:@"Authenticate"
                                                                  style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction *_Nonnull action) {
-                                                                   self.progressStateDidChange(YES);
-                                                                   [challenge.sender respondWithData:alertTextField.text challenge:challenge];
+                                                               handler:^(UIAlertAction * _Nonnull action) {
+                                                                   if ([challenge.authenticator.identifier isEqualToString:@"PASSWORD_CA_ID"]) {
+                                                                       [challenge.sender respondWithData:alertTextField.text challenge:challenge];
+                                                                   } else if ([challenge.authenticator.identifier isEqualToString:@"EXPERIMENTAL_CA_ID"]) {
+                                                                       ExperimentalCustomAuthenticatiorViewController *experimentalCustomAuthenticatiorViewController = [[ExperimentalCustomAuthenticatiorViewController alloc] init];
+                                                                       experimentalCustomAuthenticatiorViewController.viewTitle = @"Authentication";
+                                                                       __weak typeof(self) weakSelf = self;
+                                                                       experimentalCustomAuthenticatiorViewController.customAuthAction = ^(NSString *data, BOOL cancelled) {
+                                                                           [weakSelf.tabBarController dismissViewControllerAnimated:YES completion:nil];
+                                                                           if (data) {
+                                                                               [challenge.sender respondWithData:data challenge:challenge];
+                                                                           } else if (cancelled) {
+                                                                               [challenge.sender cancelChallenge:challenge underlyingError:nil];
+                                                                           }
+                                                                       };
+                                                                       [self.tabBarController presentViewController:experimentalCustomAuthenticatiorViewController animated:YES completion:nil];
+                                                                   }
                                                                }];
+    
+    UIAlertAction *fallbackToPinButton = [UIAlertAction actionWithTitle:@"Fallback to PIN"
+                                                                  style:UIAlertActionStyleDefault
+                                                                handler:^(UIAlertAction * _Nonnull action) {
+                                                                    [challenge.sender respondWithPinFallbackForChallenge:challenge];
+                                                                }];
+    
     UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction *_Nonnull action) {
+                                                         handler:^(UIAlertAction * _Nonnull action) {
                                                              [challenge.sender cancelChallenge:challenge underlyingError:nil];
                                                          }];
-
+    
     [alert addAction:authenticateButton];
+    [alert addAction:fallbackToPinButton];
     [alert addAction:cancelButton];
     [self.navigationController presentViewController:alert animated:YES completion:nil];
 }

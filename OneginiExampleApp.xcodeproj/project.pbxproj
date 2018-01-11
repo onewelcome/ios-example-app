@@ -59,6 +59,9 @@
 		7E224C381FC6D11600CAD88E /* PendingTransactionTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E224C351FC6D11600CAD88E /* PendingTransactionTableViewCell.h */; };
 		7E224C391FC6D11600CAD88E /* PendingTransactionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E224C361FC6D11600CAD88E /* PendingTransactionTableViewCell.m */; };
 		7E224C3A1FC6D11600CAD88E /* PendingTransactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E224C371FC6D11600CAD88E /* PendingTransactionTableViewCell.xib */; };
+		7E3286511FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E32864E1FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.h */; };
+		7E3286521FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E32864F1FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.m */; };
+		7E3286531FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E3286501FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.xib */; };
 		7EA5B6E31FC577B8008DDA0E /* PendingTransactionsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7EA5B6E01FC577B8008DDA0E /* PendingTransactionsViewController.h */; };
 		7EA5B6E41FC577B8008DDA0E /* PendingTransactionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5B6E11FC577B8008DDA0E /* PendingTransactionsViewController.m */; };
 		7EA5B6E51FC577B8008DDA0E /* PendingTransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EA5B6E21FC577B8008DDA0E /* PendingTransactionsViewController.xib */; };
@@ -172,6 +175,9 @@
 		7E224C351FC6D11600CAD88E /* PendingTransactionTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PendingTransactionTableViewCell.h; sourceTree = "<group>"; };
 		7E224C361FC6D11600CAD88E /* PendingTransactionTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PendingTransactionTableViewCell.m; sourceTree = "<group>"; };
 		7E224C371FC6D11600CAD88E /* PendingTransactionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingTransactionTableViewCell.xib; sourceTree = "<group>"; };
+		7E32864E1FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExperimentalCustomAuthenticatiorViewController.h; sourceTree = "<group>"; };
+		7E32864F1FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExperimentalCustomAuthenticatiorViewController.m; sourceTree = "<group>"; };
+		7E3286501FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExperimentalCustomAuthenticatiorViewController.xib; sourceTree = "<group>"; };
 		7EA5B6E01FC577B8008DDA0E /* PendingTransactionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PendingTransactionsViewController.h; sourceTree = "<group>"; };
 		7EA5B6E11FC577B8008DDA0E /* PendingTransactionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PendingTransactionsViewController.m; sourceTree = "<group>"; };
 		7EA5B6E21FC577B8008DDA0E /* PendingTransactionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingTransactionsViewController.xib; sourceTree = "<group>"; };
@@ -363,6 +369,16 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		7E32864D1FFE2E0C009E0DA7 /* CustomAuthenticators */ = {
+			isa = PBXGroup;
+			children = (
+				7E32864E1FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.h */,
+				7E32864F1FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.m */,
+				7E3286501FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.xib */,
+			);
+			path = CustomAuthenticators;
+			sourceTree = "<group>";
+		};
 		7EA5B6DF1FC57790008DDA0E /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
@@ -410,6 +426,7 @@
 		C54139881CD9D3010033DBA8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7E32864D1FFE2E0C009E0DA7 /* CustomAuthenticators */,
 				7EA5B6DF1FC57790008DDA0E /* Transactions */,
 				5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */,
 				1D6A3240BF4EB8CE613FA7A8 /* Pin */,
@@ -559,6 +576,7 @@
 				ADEC3AFF1D884D7E0009234A /* ONGRegistrationDelegate.h in Headers */,
 				ADEC3AF91D884D7E0009234A /* ONGMobileAuthenticationRequest.h in Headers */,
 				ADEC3B001D884D7E0009234A /* ONGRequestBuilder.h in Headers */,
+				7E3286511FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.h in Headers */,
 				ADEC3AF31D884D7E0009234A /* ONGClientBuilder.h in Headers */,
 				ADEC3B041D884D7E0009234A /* ONGUserProfile.h in Headers */,
 				ADEC3B011D884D7E0009234A /* ONGResourceRequest.h in Headers */,
@@ -657,6 +675,7 @@
 				AD2F1FD41D9EABA8006A50FF /* WelcomeViewController.xib in Resources */,
 				AD2F1FD01D9EA8DD006A50FF /* SettingsViewController.xib in Resources */,
 				5CF4078F1E4B2897001C06D6 /* ProfileCreationViewController.xib in Resources */,
+				7E3286531FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.xib in Resources */,
 				1D6A36C107FC4CC3FDF7ED14 /* PinViewController.xib in Resources */,
 				1D6A3D3D5D76E0EA756DA02F /* ProfileViewController.xib in Resources */,
 				1D6A368E0AFB5584858C6455 /* PushConfirmationViewController.xib in Resources */,
@@ -753,6 +772,7 @@
 				DF1066ABB7524B10C30D0ED8 /* AlertPresenter.m in Sources */,
 				7E224C391FC6D11600CAD88E /* PendingTransactionTableViewCell.m in Sources */,
 				DF1065C9A591C849213CAF52 /* TestOptionsPresenter.m in Sources */,
+				7E3286521FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

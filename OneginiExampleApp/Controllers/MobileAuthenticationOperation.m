@@ -20,6 +20,7 @@
 #import "ZFModalTransitionAnimator.h"
 #import "ProfileModel.h"
 #import "AlertPresenter.h"
+#import "ExperimentalCustomAuthenticatiorViewController.h"
 
 @interface MobileAuthenticationOperation ()
 
@@ -187,49 +188,34 @@
     }];
 }
 
-/**
- * In contract with -userClient:didReceivePinChallenge:forRequest: is not going to be called again in case or error - SDK fallbacks to the PIN instead.
- * This also doesn't affect on the PIN attempts count. Thats why we can skip any error handling for the fingerpint challenge.
- */
-- (void)userClient:(ONGUserClient *)userClient didReceiveFIDOChallenge:(ONGFIDOChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
-{
-    PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
-    pushVC.pushMessage.text = request.message;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with %@ for %@", challenge.authenticator.name, [[ProfileModel new] profileNameForUserProfile:request.userProfile]];
-    pushVC.pushConfirmed = ^(BOOL confirmed) {
-        [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
-        if (confirmed){
-            [challenge.sender respondWithFIDOForChallenge:challenge];
-        } else {
-            [challenge.sender cancelChallenge:challenge];
-        }
-    };
-    [self performSafeConfirmationPresentation:^{
-        [self.tabBarController presentViewController:pushVC animated:YES completion:nil];
-    }];
-}
-
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthFinishAuthenticationChallenge:(ONGCustomAuthFinishAuthenticationChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Mobile Auth"
                                                                    message:[NSString stringWithFormat:@"Confirm push with %@ for %@", challenge.authenticator.name, [[ProfileModel new] profileNameForUserProfile:request.userProfile]]
                                                             preferredStyle:UIAlertControllerStyleAlert];
     __block UITextField *alertTextField;
-    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.accessibilityIdentifier = @"CustomAuthenticatorAlertTextField";
-        alertTextField = textField;
-    }];
+    if ([challenge.authenticator.identifier isEqualToString:@"PASSWORD_CA_ID"]) {
+        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.accessibilityIdentifier = @"CustomAuthenticatorAlertTextField";
+            alertTextField = textField;
+        }];
+    }
+    
     UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:@"Authenticate"
                                                                  style:UIAlertActionStyleDefault
                                                                handler:^(UIAlertAction * _Nonnull action) {
-                                                                   [challenge.sender respondWithData:alertTextField.text challenge:challenge];
+                                                                   if ([challenge.authenticator.identifier isEqualToString:@"PASSWORD_CA_ID"]) {
+                                                                       [challenge.sender respondWithData:alertTextField.text challenge:challenge];
+                                                                   } else if ([challenge.authenticator.identifier isEqualToString:@"EXPERIMENTAL_CA_ID"]) {
+                                                                       [self showExperimentalCA:challenge];
+                                                                   }
                                                                }];
     
     UIAlertAction *pinFallbackButton = [UIAlertAction actionWithTitle:@"Fallback to PIN"
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction * _Nonnull action) {
-                                                                   [challenge.sender respondWithPinFallbackForChallenge:challenge];
-                                                               }];
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * _Nonnull action) {
+                                                                  [challenge.sender respondWithPinFallbackForChallenge:challenge];
+                                                              }];
     
     UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
@@ -282,6 +268,25 @@
 {
     AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
     [errorPresenter showErrorAlert:error title:@"Mobile Auth Error"];
+}
+
+- (void)showExperimentalCA:(ONGCustomAuthFinishAuthenticationChallenge *)challenge
+{
+    ExperimentalCustomAuthenticatiorViewController *experimentalCustomAuthenticatiorViewController = [[ExperimentalCustomAuthenticatiorViewController alloc] init];
+    experimentalCustomAuthenticatiorViewController.viewTitle = @"Authentication";
+    __weak MobileAuthenticationOperation *weakSelf = self;
+    experimentalCustomAuthenticatiorViewController.customAuthAction = ^(NSString *data, BOOL cancelled) {
+        [weakSelf.tabBarController dismissViewControllerAnimated:YES completion:nil];
+        if (data) {
+            [challenge.sender respondWithData:data challenge:challenge];
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge underlyingError:nil];
+        }
+    };
+    
+    [self performSafeConfirmationPresentation:^{
+        [self.tabBarController presentViewController:experimentalCustomAuthenticatiorViewController animated:YES completion:nil];
+    }];
 }
 
 @end

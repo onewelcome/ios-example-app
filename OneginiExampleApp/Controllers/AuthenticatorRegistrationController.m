@@ -22,6 +22,7 @@
 #import "NavigationControllerAppearance.h"
 #import "ProfileModel.h"
 #import "AlertPresenter.h"
+#import "ExperimentalCustomAuthenticatiorViewController.h"
 
 @interface AuthenticatorRegistrationController ()
 
@@ -93,8 +94,6 @@
         case ONGAuthenticationErrorAuthenticatorInvalid:
         // Attempt to register an already registered authenticator
         case ONGAuthenticatorRegistrationErrorAuthenticatorAlreadyRegistered:
-        // Currently not used, you may skip it.
-        case ONGAuthenticationErrorFidoAuthenticationDisabled:
         // The given authenticator is not supported.
         case ONGAuthenticatorRegistrationErrorAuthenticatorNotSupported:
 
@@ -163,7 +162,24 @@
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthFinishRegistrationChallenge:(ONGCustomAuthFinishRegistrationChallenge *)challenge
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Custom Authenticator"
+    if ([challenge.authenticator.identifier isEqualToString:@"PASSWORD_CA_ID"]) {
+        [self showPasswordCA:challenge];
+    } else if ([challenge.authenticator.identifier isEqualToString:@"EXPERIMENTAL_CA_ID"]) {
+        [self showExperimentalCA:challenge];
+    }
+}
+
+#pragma mark - Misc
+
+- (void)showError:(NSError *)error
+{
+    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
+    [errorPresenter showErrorAlert:error title:@"Authenticator registration error"];
+}
+
+- (void)showPasswordCA:(ONGCustomAuthFinishRegistrationChallenge *)challenge
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Password Custom Authenticator"
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleAlert];
     __block UITextField *alertTextField;
@@ -187,12 +203,21 @@
     [self.presentingViewController presentViewController:alert animated:YES completion:nil];
 }
 
-#pragma mark - Misc
-
-- (void)showError:(NSError *)error
+- (void)showExperimentalCA:(ONGCustomAuthFinishRegistrationChallenge *)challenge
 {
-    AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
-    [errorPresenter showErrorAlert:error title:@"Authenticator registration error"];
+    ExperimentalCustomAuthenticatiorViewController *experimentalCustomAuthenticatiorViewController = [[ExperimentalCustomAuthenticatiorViewController alloc] init];
+    experimentalCustomAuthenticatiorViewController.viewTitle = @"Registration";
+    __weak typeof(self) weakSelf = self;
+    experimentalCustomAuthenticatiorViewController.customAuthAction = ^(NSString *data, BOOL cancelled) {
+        [weakSelf.tabBarController dismissViewControllerAnimated:YES completion:nil];
+        if (data) {
+            [challenge.sender respondWithData:data challenge:challenge];
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge underlyingError:nil];
+        }
+    };
+    
+    [self.tabBarController presentViewController:experimentalCustomAuthenticatiorViewController animated:YES completion:nil];
 }
 
 @end

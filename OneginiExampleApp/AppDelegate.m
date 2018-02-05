@@ -158,6 +158,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    [application setApplicationIconBadgeNumber:0];
     [self setBadgeOnPendingTransactionIcon:(UITabBarController *)self.window.rootViewController];
     [[UNUserNotificationCenter currentNotificationCenter] removeAllDeliveredNotifications];
 }

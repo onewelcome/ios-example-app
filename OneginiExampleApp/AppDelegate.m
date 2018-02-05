@@ -24,6 +24,7 @@
 #import "MobileAuthModel.h"
 #import "AlertPresenter.h"
 #import "PendingTransactionsViewController.h"
+#import "InfoViewController.h"
 
 @interface AppDelegate () <UINavigationControllerDelegate, UITabBarControllerDelegate, UNUserNotificationCenterDelegate>
 
@@ -53,10 +54,11 @@
     self.navigationController.delegate = self;
     
     PendingTransactionsViewController *pendingTransactionsVC = [[PendingTransactionsViewController alloc] init];
+    InfoViewController *infoVC = [[InfoViewController alloc] init];
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.delegate = self;
-    NSArray *controllers = [NSArray arrayWithObjects: self.navigationController, pendingTransactionsVC, nil];
+    NSArray *controllers = [NSArray arrayWithObjects: self.navigationController, pendingTransactionsVC, infoVC, nil];
     tabBarController.viewControllers = controllers;
     
     [self tabBarStylization:tabBarController];
@@ -89,7 +91,7 @@
             } else if (error.code == ONGGenericErrorOutdatedOS) {
                 [self showAlertWithTitle:@"OS outdated" message:@"The operating system that you use is no longer valid, please update your OS."];
             } else if (error.code == ONGGenericErrorDeviceDeregistered) {
-                [[ProfileModel new] deleteProfileNames];
+                [[ProfileModel sharedInstance] deleteProfileNames];
                 [self showAlertWithTitle:@"Device deregistered" message:@"Your device has been deregistered on the server side. Please register your account again."];
             } else if (error.code == ONGGenericErrorUserDeregistered) {
                 [self showAlertWithTitle:@"User deregistered" message:@"Your account has been deregistered on the server side. Please register again."];
@@ -181,11 +183,15 @@
 {
     UITabBarItem *tabBarHome = [tabBarController.tabBar.items objectAtIndex:0];
     UITabBarItem *tabBarPendingTransactions = [tabBarController.tabBar.items objectAtIndex:1];
+    UITabBarItem *tabBarInfo = [tabBarController.tabBar.items objectAtIndex:2];
     
     [tabBarHome setImage:[UIImage imageNamed:@"key"]];
     [tabBarHome setTitle:@"Home"];
     
     [tabBarPendingTransactions setImage:[UIImage imageNamed:@"notifications-bell-button"]];
+    
+    [tabBarInfo setTitle:@"Info"];
+    [tabBarInfo setImage:[UIImage imageNamed:@"info"]];
 }
 
 - (void)setBadgeOnPendingTransactionIcon:(UITabBarController *)tabBarController

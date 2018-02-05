@@ -38,8 +38,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIPickerView *profilePicker;
-@property (weak, nonatomic) IBOutlet UILabel *appInfoLabel;
-@property (weak, nonatomic) IBOutlet UILabel *profileLabel;
 
 @end
 
@@ -63,10 +61,7 @@
     [super viewDidLoad];
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
-    self.appInfoLabel.hidden = YES;
     self.alertPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
-    
-    [self authenticateDeviceAndFetchResource];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -75,7 +70,9 @@
     self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
     [self.profilePicker reloadAllComponents];
     self.preferedAuthentiacorSwitch.on = YES;
-    [self authenticateUserImplicitlyAndFetchResource];
+    if (self.profiles.count > 0) {
+        [ProfileModel sharedInstance].selectedUserProfile = self.selectedProfile;
+    }
 }
 
 - (IBAction)registerNewProfile:(id)sender
@@ -146,43 +143,6 @@
     
 }
 
-- (void)authenticateDeviceAndFetchResource
-{
-    [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"application-details"] completion:^(BOOL success, NSError *_Nullable error) {
-        if (success) {
-            [self fetchApplicationDetails];
-        } else {
-            // unwind stack in case we've opened registration
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            
-            [self.alertPresenter showErrorAlert:error title:@"Device authentication failed"];
-        }
-    }];
-}
-
-- (void)fetchApplicationDetails
-{
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-details" method:@"GET"];
-    [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
-        if (error) {
-            self.appInfoLabel.text = [NSString stringWithFormat: @"%ld\nFetching anonymous resource failed", error.code];
-            self.appInfoLabel.hidden = NO;
-        } else {
-            id jsonResponse = [response JSONResponse];
-            if (jsonResponse != nil) {
-                self.appInfoLabel.text = [NSString stringWithFormat:
-                    @"%@\n%@\n%@",
-                    [jsonResponse objectForKey:@"application_identifier"],
-                    [jsonResponse objectForKey:@"application_platform"],
-                    [jsonResponse objectForKey:@"application_version"]
-                ];
-
-                self.appInfoLabel.hidden = NO;
-            }
-        }
-    }];
-}
-
 - (void) showRegisteredAuthenticatorsForUser:(ONGUserProfile *)selectedUserProfile
 {
     NSSet<ONGAuthenticator *> *registeredAuthenticatorsForUser = [[ONGUserClient sharedInstance] registeredAuthenticatorsForUser:selectedUserProfile];
@@ -194,49 +154,6 @@
     }
     [authenticatorList addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}]];
     [self presentViewController:authenticatorList animated:YES completion:^{}];
-}
-
-- (void)authenticateUserImplicitlyAndFetchResource
-{
-    if (self.profiles.count > 0) {
-        self.profileLabel.hidden = NO;
-        if ([self selectedProfileIsImplicitlyAuthenticated]) {
-            [self fetchResourceImplicitly];
-        } else {
-            [[ONGUserClient sharedInstance] implicitlyAuthenticateUser:[self selectedProfile] scopes:nil completion:^(BOOL success, NSError *_Nonnull error) {
-                if (success) {
-                    [self fetchResourceImplicitly];
-                } else {
-                    self.profileLabel.text = [NSString stringWithFormat:@"Implicit authentication failed %ld", error.code];
-                }
-            }];
-        }
-    } else {
-        self.profileLabel.hidden = YES;
-    }
-}
-
-- (BOOL)selectedProfileIsImplicitlyAuthenticated
-{
-    ONGUserProfile *authenticatedUserProfile = [[ONGUserClient sharedInstance] implicitlyAuthenticatedUserProfile];
-
-    return authenticatedUserProfile && [authenticatedUserProfile isEqual:self.selectedProfile];
-}
-
-- (void)fetchResourceImplicitly
-{
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/user-id-decorated" method:@"GET"];
-    [[ONGUserClient sharedInstance] fetchImplicitResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
-        if (error) {
-            self.profileLabel.text = [NSString stringWithFormat:@"Fetching implicit resource failed %ld", error.code];
-        } else {
-            id jsonResponse = [response JSONResponse];
-            if (jsonResponse != nil) {
-                self.profileLabel.text = [NSString stringWithFormat:@"%@",
-                                                                    [jsonResponse objectForKey:@"decorated_user_id"]];
-            }
-        }
-    }];
 }
 
 - (ONGUserProfile *)selectedProfile
@@ -259,13 +176,13 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [self authenticateUserImplicitlyAndFetchResource];
+    [ProfileModel sharedInstance].selectedUserProfile = [self selectedProfile];
 }
 
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSString *profileName = [[ProfileModel new] profileNameForUserProfile:self.profiles[(NSUInteger)row]];
+    NSString *profileName = [[ProfileModel sharedInstance] profileNameForUserProfile:self.profiles[(NSUInteger)row]];
     return profileName;
 }
 

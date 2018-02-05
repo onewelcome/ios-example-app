@@ -60,10 +60,10 @@
 -(void)userClient:(ONGUserClient *)userClient didFailToDeregisterAuthenticator:(ONGAuthenticator *)authenticator forUser:(ONGUserProfile *)userProfile error:(NSError *)error
 {
     if (error.code == ONGGenericErrorUserDeregistered) {
-        [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];
+        [[ProfileModel sharedInstance] deleteProfileNameForUserProfile:userProfile];
         [self.presentingViewController popToRootViewControllerAnimated:YES];
     } else if (error.code == ONGGenericErrorDeviceDeregistered) {
-        [[ProfileModel new] deleteProfileNames];
+        [[ProfileModel sharedInstance] deleteProfileNames];
         [self.presentingViewController popToRootViewControllerAnimated:YES];
     }
     [MBProgressHUD hideHUDForView:self.presentingViewController.view animated:YES];

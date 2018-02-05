@@ -137,7 +137,7 @@
 
 - (IBAction)mobileAuthWithOTP:(id)sender
 {
-    NSString *profileName = [[ProfileModel new] profileNameForUserProfile:[ONGUserClient sharedInstance].authenticatedUserProfile];
+    NSString *profileName = [[ProfileModel sharedInstance] profileNameForUserProfile:[ONGUserClient sharedInstance].authenticatedUserProfile];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Mobile Authentication with OTP"
                                                                    message:[NSString stringWithFormat:@"Authenticated user: %@",profileName]
                                                             preferredStyle:UIAlertControllerStyleAlert];

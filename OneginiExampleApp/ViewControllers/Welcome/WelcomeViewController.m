@@ -176,7 +176,7 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [ProfileModel sharedInstance].selectedUserProfile = [self selectedProfile];
+    [ProfileModel sharedInstance].selectedUserProfile = self.profiles[row];
 }
 
 

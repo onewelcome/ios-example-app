@@ -36,6 +36,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.selectedUserProfile = [ProfileModel sharedInstance].selectedUserProfile;
+    if (self.selectedUserProfile) {
+        self.profileId.text = self.selectedUserProfile.profileId;
+        self.profileName.text = [[ProfileModel sharedInstance] profileNameForUserProfile:self.selectedUserProfile];
+    }
     [self authenticateUserImplicitlyAndFetchResource];
 }
 
@@ -43,12 +48,6 @@
 {
     [super viewDidLoad];
     self.alertPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
-    self.selectedUserProfile = [ProfileModel sharedInstance].selectedUserProfile;
-    if (self.selectedUserProfile) {
-        self.profileId.text = self.selectedUserProfile.profileId;
-        self.profileName.text = [[ProfileModel sharedInstance] profileNameForUserProfile:self.selectedUserProfile];
-    }
-    
     [self authenticateDeviceAndFetchResource];
 }
 

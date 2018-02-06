@@ -19,7 +19,7 @@
 
 - (void)setupCell:(ONGPendingMobileAuthRequest *)pendingTransaction
 {
-    self.profileNameLabel.text = [[ProfileModel new] profileNameForUserProfile:pendingTransaction.userProfile];
+    self.profileNameLabel.text = [[ProfileModel sharedInstance] profileNameForUserProfile:pendingTransaction.userProfile];
     self.timeLabel.text = [NSDateFormatter localizedStringFromDate:pendingTransaction.date
                                                          dateStyle:NSDateFormatterNoStyle
                                                          timeStyle:NSDateFormatterMediumStyle];

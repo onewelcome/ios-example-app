@@ -77,14 +77,14 @@
         // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
         // deregistered user.
         case ONGGenericErrorUserDeregistered:
-            [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];;
+            [[ProfileModel sharedInstance] deleteProfileNameForUserProfile:userProfile];;
             [self.presentingViewController popToRootViewControllerAnimated:YES];
             break;
         // In case the entire device registration has been removed from the Token Server the SDK will return the ONGGenericErrorDeviceDeregistered error. In this
         // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
         // the user is starting up the app for the first time.
         case ONGGenericErrorDeviceDeregistered:
-            [[ProfileModel new] deleteProfileNames];
+            [[ProfileModel sharedInstance] deleteProfileNames];
             [self.presentingViewController popToRootViewControllerAnimated:YES];
             break;
 

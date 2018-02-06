@@ -19,6 +19,9 @@
 
 @interface ProfileModel : NSObject
 
+@property (nonatomic) ONGUserProfile *selectedUserProfile;
+
++ (instancetype)sharedInstance;
 - (NSArray *)profileNames;
 - (void)registerProfileName:(NSString *)profileName forUserProfile:(ONGUserProfile *)userProfile;
 - (NSString *)profileNameForUserProfile:(ONGUserProfile *)userProfile;

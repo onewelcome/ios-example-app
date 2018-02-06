@@ -65,6 +65,9 @@
 		7EA5B6E31FC577B8008DDA0E /* PendingTransactionsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7EA5B6E01FC577B8008DDA0E /* PendingTransactionsViewController.h */; };
 		7EA5B6E41FC577B8008DDA0E /* PendingTransactionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5B6E11FC577B8008DDA0E /* PendingTransactionsViewController.m */; };
 		7EA5B6E51FC577B8008DDA0E /* PendingTransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EA5B6E21FC577B8008DDA0E /* PendingTransactionsViewController.xib */; };
+		7ED6E4BC2024B68700BA6E54 /* InfoViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ED6E4B92024B68700BA6E54 /* InfoViewController.h */; };
+		7ED6E4BD2024B68700BA6E54 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ED6E4BA2024B68700BA6E54 /* InfoViewController.m */; };
+		7ED6E4BE2024B68700BA6E54 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ED6E4BB2024B68700BA6E54 /* InfoViewController.xib */; };
 		AD2F1FD01D9EA8DD006A50FF /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FCF1D9EA8DD006A50FF /* SettingsViewController.xib */; };
 		AD2F1FD21D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FD11D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib */; };
 		AD2F1FD41D9EABA8006A50FF /* WelcomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD2F1FD31D9EABA8006A50FF /* WelcomeViewController.xib */; };
@@ -181,6 +184,9 @@
 		7EA5B6E01FC577B8008DDA0E /* PendingTransactionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PendingTransactionsViewController.h; sourceTree = "<group>"; };
 		7EA5B6E11FC577B8008DDA0E /* PendingTransactionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PendingTransactionsViewController.m; sourceTree = "<group>"; };
 		7EA5B6E21FC577B8008DDA0E /* PendingTransactionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingTransactionsViewController.xib; sourceTree = "<group>"; };
+		7ED6E4B92024B68700BA6E54 /* InfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
+		7ED6E4BA2024B68700BA6E54 /* InfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
+		7ED6E4BB2024B68700BA6E54 /* InfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
 		8F110FB687139430D79AEAD0 /* Pods-OneginiExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneginiExampleApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneginiExampleApp/Pods-OneginiExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		AD2F1FCF1D9EA8DD006A50FF /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		AD2F1FD11D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthenticatorCellTableViewCell.xib; sourceTree = "<group>"; };
@@ -392,6 +398,16 @@
 			path = Transactions;
 			sourceTree = "<group>";
 		};
+		7ED6E4B82024B65500BA6E54 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				7ED6E4B92024B68700BA6E54 /* InfoViewController.h */,
+				7ED6E4BA2024B68700BA6E54 /* InfoViewController.m */,
+				7ED6E4BB2024B68700BA6E54 /* InfoViewController.xib */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
 		85C98E12477B3DE5E53674FE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -426,6 +442,7 @@
 		C54139881CD9D3010033DBA8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7ED6E4B82024B65500BA6E54 /* Info */,
 				7E32864D1FFE2E0C009E0DA7 /* CustomAuthenticators */,
 				7EA5B6DF1FC57790008DDA0E /* Transactions */,
 				5CAE98AF1CE0929C009C1D1A /* LaunchScreen.xib */,
@@ -563,6 +580,7 @@
 				5C1276851F84FAB60098072A /* AuthenticatorDeregistrationController.h in Headers */,
 				ADEC3B021D884D7E0009234A /* ONGResourceResponse.h in Headers */,
 				ADEC3AF21D884D7E0009234A /* ONGClient.h in Headers */,
+				7ED6E4BC2024B68700BA6E54 /* InfoViewController.h in Headers */,
 				ADEC3AF01D884D7E0009234A /* ONGAuthenticator.h in Headers */,
 				ADEC3AF81D884D7E0009234A /* ONGFingerprintChallenge.h in Headers */,
 				ADEC3AF51D884D7E0009234A /* ONGCreatePinChallenge.h in Headers */,
@@ -669,6 +687,7 @@
 			files = (
 				C572A2E71CD893C400B137DC /* Assets.xcassets in Resources */,
 				7EA5B6E51FC577B8008DDA0E /* PendingTransactionsViewController.xib in Resources */,
+				7ED6E4BE2024B68700BA6E54 /* InfoViewController.xib in Resources */,
 				5CAE98B01CE0929C009C1D1A /* LaunchScreen.xib in Resources */,
 				AD2F1FD21D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib in Resources */,
 				7E224C3A1FC6D11600CAD88E /* PendingTransactionTableViewCell.xib in Resources */,
@@ -760,6 +779,7 @@
 				1D6A3562C58CF7B77806C78C /* SettingsViewController.m in Sources */,
 				5C1276841F84FAB60098072A /* AuthenticatorDeregistrationController.m in Sources */,
 				5CF4078E1E4B2897001C06D6 /* ProfileCreationViewController.m in Sources */,
+				7ED6E4BD2024B68700BA6E54 /* InfoViewController.m in Sources */,
 				1D6A3311B607A0A88951B5EC /* AuthenticatorCellTableViewCell.m in Sources */,
 				1D6A36022E8C01D0DFBD8982 /* UIBarButtonItem+Extension.m in Sources */,
 				1D6A398C3421FF22811B1994 /* NavigationControllerAppearance.m in Sources */,

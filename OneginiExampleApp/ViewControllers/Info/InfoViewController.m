@@ -69,7 +69,7 @@
 
 - (void)fetchApplicationDetails
 {
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-detail" method:@"GET"];
+    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-details" method:@"GET"];
     [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         if (error) {
             self.appId.text = [NSString stringWithFormat:@"Anonymous resource failed %ld", error.code];
@@ -113,7 +113,7 @@
 
 - (void)fetchResourceImplicitly
 {
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/user-id-decorate" method:@"GET"];
+    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/user-id-decorated" method:@"GET"];
     [[ONGUserClient sharedInstance] fetchImplicitResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         if (error) {
             self.implicit.text = [NSString stringWithFormat:@"Implicit resource failed %ld", error.code];

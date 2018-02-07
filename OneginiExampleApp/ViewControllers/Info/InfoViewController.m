@@ -69,10 +69,10 @@
 
 - (void)fetchApplicationDetails
 {
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-details" method:@"GET"];
+    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-detail" method:@"GET"];
     [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         if (error) {
-            self.appId.text = [NSString stringWithFormat: @"%ld\nFetching anonymous resource failed", error.code];
+            self.appId.text = [NSString stringWithFormat:@"Anonymous resource failed %ld", error.code];
             self.appId.hidden = NO;
         } else {
             id jsonResponse = [response JSONResponse];
@@ -113,10 +113,10 @@
 
 - (void)fetchResourceImplicitly
 {
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/user-id-decorated" method:@"GET"];
+    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/user-id-decorate" method:@"GET"];
     [[ONGUserClient sharedInstance] fetchImplicitResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         if (error) {
-            self.implicit.text = [NSString stringWithFormat:@"Fetching implicit resource failed %ld", error.code];
+            self.implicit.text = [NSString stringWithFormat:@"Implicit resource failed %ld", error.code];
         } else {
             id jsonResponse = [response JSONResponse];
             if (jsonResponse != nil) {

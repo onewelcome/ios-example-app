@@ -35,6 +35,7 @@
 @property (nonatomic) AlertPresenter *alertPresenter;
 
 @property (weak, nonatomic) IBOutlet UISwitch *preferedAuthentiacorSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *defaultIdentityProviderSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIPickerView *profilePicker;
@@ -62,6 +63,7 @@
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
     self.alertPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
+    [[ONGUserClient sharedInstance] identityProviders];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,6 +72,7 @@
     self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
     [self.profilePicker reloadAllComponents];
     self.preferedAuthentiacorSwitch.on = YES;
+    self.defaultIdentityProviderSwitch.on = YES;
     if (self.profiles.count > 0) {
         [ProfileModel sharedInstance].selectedUserProfile = self.selectedProfile;
     }
@@ -79,17 +82,12 @@
 {
     if (self.authenticationController || self.registrationController)
         return;
-
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    self.registrationController = [RegistrationController
-        registrationControllerWithNavigationController:self.navigationController
-                                    tabBarController:self.tabBarController
-                                            completion:^{
-                                                self.registrationController = nil;
-                                                self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
-                                                [self.profilePicker reloadAllComponents];
-                                            }];
-    [[ONGUserClient sharedInstance] registerUser:@[@"read"] delegate:self.registrationController];
+    
+    if (self.defaultIdentityProviderSwitch.on) {
+        [self registerUserWithIdentityProvider:nil];
+    } else {
+        [self showAvailableIdentityProviders];
+    }
 }
 
 - (IBAction)login:(id)sender
@@ -143,6 +141,24 @@
     
 }
 
+- (void)registerUserWithIdentityProvider:(ONGIdentityProvider *)identityProvider
+{
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+
+    self.registrationController = [RegistrationController
+                                   registrationControllerWithNavigationController:self.navigationController
+                                   tabBarController:self.tabBarController
+                                   completion:^{
+                                       self.registrationController = nil;
+                                       self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
+                                       [self.profilePicker reloadAllComponents];
+                                   }];
+    [[ONGUserClient sharedInstance] registerUserWithIdentityProvider:identityProvider
+                                                              scopes:@[@"read"]
+                                                            delegate:self.registrationController];
+
+}
+
 - (void) showRegisteredAuthenticatorsForUser:(ONGUserProfile *)selectedUserProfile
 {
     NSSet<ONGAuthenticator *> *registeredAuthenticatorsForUser = [[ONGUserClient sharedInstance] registeredAuthenticatorsForUser:selectedUserProfile];
@@ -154,6 +170,19 @@
     }
     [authenticatorList addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}]];
     [self presentViewController:authenticatorList animated:YES completion:^{}];
+}
+
+-(void)showAvailableIdentityProviders
+{
+    NSArray<ONGIdentityProvider *> *identityProviders = [[ONGUserClient sharedInstance] identityProviders];
+    UIAlertController *identityProviderList = [UIAlertController alertControllerWithTitle:@"" message:@"Select identity provider" preferredStyle:UIAlertControllerStyleActionSheet];
+    for (ONGIdentityProvider *identityProvider in identityProviders) {
+        [identityProviderList addAction:[UIAlertAction actionWithTitle:identityProvider.name style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self registerUserWithIdentityProvider:identityProvider];
+        }]];
+    }
+    [identityProviderList addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}]];
+    [self presentViewController:identityProviderList animated:YES completion:^{}];
 }
 
 - (ONGUserProfile *)selectedProfile

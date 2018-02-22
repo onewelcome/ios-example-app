@@ -63,7 +63,6 @@
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
     self.alertPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
-    [[ONGUserClient sharedInstance] identityProviders];
 }
 
 - (void)viewWillAppear:(BOOL)animated

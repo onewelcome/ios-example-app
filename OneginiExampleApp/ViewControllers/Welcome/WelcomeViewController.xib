@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WelcomeViewController">
             <connections>
+                <outlet property="defaultIdentityProviderSwitch" destination="W2z-wb-SeW" id="Rjy-Bz-ASv"/>
                 <outlet property="loginButton" destination="0OE-uC-YRg" id="Dup-S5-N65"/>
                 <outlet property="preferedAuthentiacorSwitch" destination="h9u-0b-Hol" id="Kih-Vt-rLx"/>
                 <outlet property="profilePicker" destination="NH9-jj-EWq" id="zGD-td-oUX"/>
@@ -36,8 +37,8 @@
                         <outlet property="delegate" destination="-1" id="SBO-a3-fhW"/>
                     </connections>
                 </pickerView>
-                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="751" verticalCompressionResistancePriority="751" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="osV-YB-o54">
-                    <rect key="frame" x="16" y="262" width="288" height="123"/>
+                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="751" verticalCompressionResistancePriority="751" misplaced="YES" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="osV-YB-o54">
+                    <rect key="frame" x="16" y="239" width="288" height="162"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0OE-uC-YRg">
                             <rect key="frame" x="0.0" y="0.0" width="288" height="38"/>
@@ -76,6 +77,21 @@
                                 <action selector="registerNewProfile:" destination="-1" eventType="touchUpInside" id="0vD-df-oL3"/>
                             </connections>
                         </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ic2-Gc-z3R">
+                            <rect key="frame" x="0.0" y="131" width="288" height="31"/>
+                            <subviews>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="right" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W2z-wb-SeW">
+                                    <rect key="frame" x="0.0" y="0.0" width="60" height="31"/>
+                                    <color key="onTintColor" red="0.0" green="0.48224725190000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </switch>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use default identity provider" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I34-6t-eqc">
+                                    <rect key="frame" x="68" y="7" width="220" height="17"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                     </subviews>
                     <constraints>
                         <constraint firstItem="mQm-p7-UrQ" firstAttribute="top" secondItem="0OE-uC-YRg" secondAttribute="bottom" constant="8" id="7wd-I1-yHn"/>

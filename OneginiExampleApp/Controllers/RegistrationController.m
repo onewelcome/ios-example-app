@@ -148,7 +148,7 @@
     }
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveRegistrationRequestChallenge:(ONGRegistrationRequestChallenge *)challenge
+- (void)userClient:(ONGUserClient *)userClient didReceiveBrowserRegistrationChallenge:(ONGBrowserRegistrationChallenge *)challenge
 {
     WebBrowserViewController *webBrowserViewController = [WebBrowserViewController new];
     webBrowserViewController.registrationRequestChallenge = challenge;

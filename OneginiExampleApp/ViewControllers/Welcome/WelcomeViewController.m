@@ -174,7 +174,7 @@
 
 -(void)showAvailableIdentityProviders
 {
-    NSArray<ONGIdentityProvider *> *identityProviders = [[ONGUserClient sharedInstance] identityProviders];
+    NSSet<ONGIdentityProvider *> *identityProviders = [[ONGUserClient sharedInstance] identityProviders];
     UIAlertController *identityProviderList = [UIAlertController alertControllerWithTitle:@"" message:@"Select identity provider" preferredStyle:UIAlertControllerStyleActionSheet];
     for (ONGIdentityProvider *identityProvider in identityProviders) {
         [identityProviderList addAction:[UIAlertAction actionWithTitle:identityProvider.name style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

@@ -18,7 +18,7 @@
 
 @interface WebBrowserViewController : UIViewController
 
-@property (nonatomic) ONGBrowserRegistrationChallenge *registrationRequestChallenge;
+@property (nonatomic) ONGBrowserRegistrationChallenge *browserRegistrationChallenge;
 @property (nonatomic) void (^completionBlock)(NSURL *url);
 
 @end

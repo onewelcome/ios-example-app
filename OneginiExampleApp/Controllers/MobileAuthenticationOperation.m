@@ -229,7 +229,7 @@
     [self.tabBarController presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthRequest:(ONGMobileAuthRequest *)request info:(ONGCustomAuthInfo * _Nullable)customAuthInfo
+- (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthRequest:(ONGMobileAuthRequest *)request info:(ONGCustomInfo * _Nullable)customAuthInfo
 {
     // Once the SDK reported that the `request` has been handled we need to finish our operation and free-up the queue.
     [self finish];

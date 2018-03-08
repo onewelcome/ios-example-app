@@ -21,6 +21,7 @@
 #import "MBProgressHUD.h"
 #import "ProfileCreationViewController.h"
 #import "AlertPresenter.h"
+#import "TwoWayOTPViewController.h"
 
 @interface RegistrationController ()
 
@@ -53,8 +54,10 @@
     return registrationController;
 }
 
-- (void)userClient:(ONGUserClient *)userClient didRegisterUser:(ONGUserProfile *)userProfile
+- (void)userClient:(ONGUserClient *)userClient didRegisterUser:(ONGUserProfile *)userProfile info:(ONGCustomInfo * _Nullable)info
 {
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+
     ProfileCreationViewController *viewController = [[ProfileCreationViewController alloc] initWithUserProfile:userProfile];
     [self.navigationController pushViewController:viewController animated:YES];
     [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
@@ -121,6 +124,7 @@
 - (void)userClient:(ONGUserClient *)userClient didReceivePinRegistrationChallenge:(ONGCreatePinChallenge *)challenge
 {
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+    [self.tabBarController dismissViewControllerAnimated:false completion:nil];
 
     self.pinViewController.pinLength = challenge.pinLength;
     self.pinViewController.mode = PINRegistrationMode;
@@ -151,7 +155,7 @@
 - (void)userClient:(ONGUserClient *)userClient didReceiveBrowserRegistrationChallenge:(ONGBrowserRegistrationChallenge *)challenge
 {
     WebBrowserViewController *webBrowserViewController = [WebBrowserViewController new];
-    webBrowserViewController.registrationRequestChallenge = challenge;
+    webBrowserViewController.browserRegistrationChallenge = challenge;
     webBrowserViewController.completionBlock = ^(NSURL *completionURL) {
         if ([self.navigationController.presentedViewController isKindOfClass:WebBrowserViewController.class]) {
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -163,6 +167,40 @@
         }
     };
     [self.navigationController presentViewController:webBrowserViewController animated:YES completion:nil];
+}
+
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomRegistrationInitChallenge:(ONGCustomRegistrationChallenge *)challenge
+{
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [challenge.sender respondWithData:@"" challenge:challenge];
+}
+
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomRegistrationFinishChallenge:(ONGCustomRegistrationChallenge *)challenge
+{
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+    TwoWayOTPViewController *twoWayOTPViewController = [TwoWayOTPViewController new];
+    twoWayOTPViewController.challenge = challenge;
+    twoWayOTPViewController.completionBlock = ^(NSString *code, BOOL cancelled) {
+        if (code) {
+            NSString *data =  [NSString stringWithFormat:@"{\"challenge_response\":\"%@\",\"csrf_token\":\"%@\"}", code, [self getTokenFromJSONString:challenge.data]];
+            [challenge.sender respondWithData:data challenge:challenge];
+            [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge];
+        }
+    };
+    
+    [self.navigationController presentViewController:twoWayOTPViewController animated:YES completion:nil];
+}
+
+- (NSString *)getTokenFromJSONString:(NSString *)data
+{
+    NSError *jsonError;
+    NSData *objectData = [data dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData
+                                                         options:NSJSONReadingMutableContainers
+                                                           error:&jsonError];
+    return json[@"csrf_token"];
 }
 
 - (void)showError:(NSError *)error

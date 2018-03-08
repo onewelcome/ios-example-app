@@ -12,7 +12,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.challengeCode.text = [self getCodeFromJSONString:self.challenge.data];
+    self.challengeCode.text = self.challenge.data;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -39,16 +39,6 @@
 
 - (IBAction)cancel:(id)sender {
     self.completionBlock(nil, YES);
-}
-
-- (NSString *)getCodeFromJSONString:(NSString *)data
-{
-    NSError *jsonError;
-    NSData *objectData = [data dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData
-                                                         options:NSJSONReadingMutableContainers
-                                                           error:&jsonError];
-    return json[@"client_code"];
 }
 
 @end

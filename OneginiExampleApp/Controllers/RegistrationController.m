@@ -123,8 +123,8 @@
  */
 - (void)userClient:(ONGUserClient *)userClient didReceivePinRegistrationChallenge:(ONGCreatePinChallenge *)challenge
 {
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     [self.tabBarController dismissViewControllerAnimated:false completion:nil];
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
 
     self.pinViewController.pinLength = challenge.pinLength;
     self.pinViewController.mode = PINRegistrationMode;
@@ -182,8 +182,7 @@
     twoWayOTPViewController.challenge = challenge;
     twoWayOTPViewController.completionBlock = ^(NSString *code, BOOL cancelled) {
         if (code) {
-            NSString *data =  [NSString stringWithFormat:@"{\"challenge_response\":\"%@\",\"csrf_token\":\"%@\"}", code, [self getTokenFromJSONString:challenge.data]];
-            [challenge.sender respondWithData:data challenge:challenge];
+            [challenge.sender respondWithData:code challenge:challenge];
             [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         } else if (cancelled) {
             [challenge.sender cancelChallenge:challenge];
@@ -191,16 +190,6 @@
     };
     
     [self.navigationController presentViewController:twoWayOTPViewController animated:YES completion:nil];
-}
-
-- (NSString *)getTokenFromJSONString:(NSString *)data
-{
-    NSError *jsonError;
-    NSData *objectData = [data dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData
-                                                         options:NSJSONReadingMutableContainers
-                                                           error:&jsonError];
-    return json[@"csrf_token"];
 }
 
 - (void)showError:(NSError *)error

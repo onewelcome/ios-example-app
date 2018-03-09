@@ -10,9 +10,9 @@
 
 @implementation TwoWayOTPViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    self.challengeCode.text = self.challenge.data;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -23,7 +23,8 @@
     }
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
     if(range.length + range.location > textField.text.length)
     {
         return NO;
@@ -33,11 +34,18 @@
     return newLength <= 6;
 }
 
-- (IBAction)ok:(id)sender {
+- (void)setChallenge:(ONGCustomRegistrationChallenge *)challenge
+{
+    self.challengeCode.text = challenge.data;
+}
+
+- (IBAction)ok:(id)sender
+{
     self.completionBlock(self.responseCode.text, NO);
 }
 
-- (IBAction)cancel:(id)sender {
+- (IBAction)cancel:(id)sender
+{
     self.completionBlock(nil, YES);
 }
 

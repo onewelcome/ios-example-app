@@ -85,12 +85,26 @@
         registrationControllerWithNavigationController:self.navigationController
                                     tabBarController:self.tabBarController
                                             completion:^{
+                                                [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                                 self.registrationController = nil;
                                                 self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
                                                 [self.profilePicker reloadAllComponents];
                                             }];
+    
+    __weak typeof(self) weakSelf = self;
+    self.registrationController.progressStateDidChange = ^(BOOL isInProgress) {
+        if (isInProgress) {
+            if ([weakSelf.tabBarController.presentedViewController isEqual:weakSelf.registrationController.twoWayOTPViewController]) {
+                [MBProgressHUD showHUDAddedTo:weakSelf.registrationController.twoWayOTPViewController.view animated:YES];
+            } else {
+                [MBProgressHUD showHUDAddedTo:weakSelf.navigationController.view animated:YES];
+            }
+        } else {
+            [MBProgressHUD hideHUDForView:weakSelf.registrationController.twoWayOTPViewController.view animated:YES];
+        }
+    };
+    
     if (self.defaultIdentityProvider.on) {
-        [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         [[ONGUserClient sharedInstance] registerUserWithIdentityProvider:nil scopes:@[@"read"] delegate:self.registrationController];
     } else {
         [self showAvailableIdentityProviders];

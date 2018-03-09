@@ -51,17 +51,20 @@
     registrationController.navigationController = navigationController;
     registrationController.tabBarController = tabBarController;
     registrationController.completion = completion;
+    registrationController.twoWayOTPViewController = [TwoWayOTPViewController new];
     return registrationController;
 }
 
 - (void)userClient:(ONGUserClient *)userClient didRegisterUser:(ONGUserProfile *)userProfile info:(ONGCustomInfo * _Nullable)info
 {
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-
     ProfileCreationViewController *viewController = [[ProfileCreationViewController alloc] initWithUserProfile:userProfile];
     [self.navigationController pushViewController:viewController animated:YES];
     [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToRegisterWithError:(NSError *)error
@@ -112,6 +115,10 @@
     [self showError:error];
 
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 /**
@@ -124,8 +131,6 @@
 - (void)userClient:(ONGUserClient *)userClient didReceivePinRegistrationChallenge:(ONGCreatePinChallenge *)challenge
 {
     [self.tabBarController dismissViewControllerAnimated:false completion:nil];
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-
     self.pinViewController.pinLength = challenge.pinLength;
     self.pinViewController.mode = PINRegistrationMode;
     self.pinViewController.profile = challenge.userProfile;
@@ -150,6 +155,11 @@
         [self.pinViewController showError:description];
         [self.pinViewController reset];
     }
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
+
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveBrowserRegistrationChallenge:(ONGBrowserRegistrationChallenge *)challenge
@@ -171,25 +181,32 @@
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomRegistrationInitChallenge:(ONGCustomRegistrationChallenge *)challenge
 {
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     [challenge.sender respondWithData:@"" challenge:challenge];
+    self.progressStateDidChange(YES);
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomRegistrationFinishChallenge:(ONGCustomRegistrationChallenge *)challenge
 {
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    TwoWayOTPViewController *twoWayOTPViewController = [TwoWayOTPViewController new];
-    twoWayOTPViewController.challenge = challenge;
-    twoWayOTPViewController.completionBlock = ^(NSString *code, BOOL cancelled) {
+    self.progressStateDidChange(NO);
+    self.twoWayOTPViewController.challenge = challenge;
+    
+    __weak typeof(self) weakSelf = self;
+    self.twoWayOTPViewController.completionBlock = ^(NSString *code, BOOL cancelled) {
+        if (self.progressStateDidChange != nil) {
+            weakSelf.progressStateDidChange(YES);
+        }
         if (code) {
             [challenge.sender respondWithData:code challenge:challenge];
-            [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         } else if (cancelled) {
             [challenge.sender cancelChallenge:challenge];
         }
     };
     
-    [self.navigationController presentViewController:twoWayOTPViewController animated:YES completion:nil];
+    [self.navigationController presentViewController:self.twoWayOTPViewController animated:YES completion:nil];
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)showError:(NSError *)error

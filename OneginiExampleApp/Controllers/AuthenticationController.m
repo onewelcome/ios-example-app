@@ -37,8 +37,7 @@
 {
     AuthenticationController *authorizationController = [AuthenticationController new];
     authorizationController.navigationController = navigationController;
-    authorizationController.tabBarController = tabBarController
-    ;
+    authorizationController.tabBarController = tabBarController;
     authorizationController.completion = completion;
     authorizationController.pinViewController = [PinViewController new];
     return authorizationController;

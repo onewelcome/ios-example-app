@@ -62,7 +62,6 @@
 		7E3286511FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E32864E1FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.h */; };
 		7E3286521FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E32864F1FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.m */; };
 		7E3286531FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E3286501FFE2F00009E0DA7 /* ExperimentalCustomAuthenticatiorViewController.xib */; };
-		7E40A3E9204D51820046D0AE /* charles-proxy-ssl-proxying-certificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 7E9E75CF204991DD0053115B /* charles-proxy-ssl-proxying-certificate.cer */; };
 		7E40A3F4204EA3570046D0AE /* TwoWayOTPViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E40A3F1204EA3570046D0AE /* TwoWayOTPViewController.h */; };
 		7E40A3F5204EA3570046D0AE /* TwoWayOTPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E40A3F2204EA3570046D0AE /* TwoWayOTPViewController.m */; };
 		7E40A3F6204EA3570046D0AE /* TwoWayOTPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E40A3F3204EA3570046D0AE /* TwoWayOTPViewController.xib */; };
@@ -188,7 +187,6 @@
 		7E40A3F1204EA3570046D0AE /* TwoWayOTPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwoWayOTPViewController.h; sourceTree = "<group>"; };
 		7E40A3F2204EA3570046D0AE /* TwoWayOTPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwoWayOTPViewController.m; sourceTree = "<group>"; };
 		7E40A3F3204EA3570046D0AE /* TwoWayOTPViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TwoWayOTPViewController.xib; sourceTree = "<group>"; };
-		7E9E75CF204991DD0053115B /* charles-proxy-ssl-proxying-certificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "charles-proxy-ssl-proxying-certificate.cer"; sourceTree = "<group>"; };
 		7EA5B6E01FC577B8008DDA0E /* PendingTransactionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PendingTransactionsViewController.h; sourceTree = "<group>"; };
 		7EA5B6E11FC577B8008DDA0E /* PendingTransactionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PendingTransactionsViewController.m; sourceTree = "<group>"; };
 		7EA5B6E21FC577B8008DDA0E /* PendingTransactionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingTransactionsViewController.xib; sourceTree = "<group>"; };
@@ -438,7 +436,6 @@
 		B44AF5C01DBA699F009F1269 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7E9E75CF204991DD0053115B /* charles-proxy-ssl-proxying-certificate.cer */,
 				B44AF5C11DBA6A36009F1269 /* tokenserver-demo-test.onegini.com.cer */,
 			);
 			name = Resources;
@@ -710,7 +707,6 @@
 				7EA5B6E51FC577B8008DDA0E /* PendingTransactionsViewController.xib in Resources */,
 				7ED6E4BE2024B68700BA6E54 /* InfoViewController.xib in Resources */,
 				5CAE98B01CE0929C009C1D1A /* LaunchScreen.xib in Resources */,
-				7E40A3E9204D51820046D0AE /* charles-proxy-ssl-proxying-certificate.cer in Resources */,
 				AD2F1FD21D9EA8EE006A50FF /* AuthenticatorCellTableViewCell.xib in Resources */,
 				7E224C3A1FC6D11600CAD88E /* PendingTransactionTableViewCell.xib in Resources */,
 				AD2F1FD41D9EABA8006A50FF /* WelcomeViewController.xib in Resources */,

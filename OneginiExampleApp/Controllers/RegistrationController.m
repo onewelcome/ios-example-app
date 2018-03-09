@@ -181,7 +181,7 @@
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomRegistrationInitChallenge:(ONGCustomRegistrationChallenge *)challenge
 {
-    [challenge.sender respondWithData:@"" challenge:challenge];
+    [challenge.sender respondWithData:nil challenge:challenge];
     self.progressStateDidChange(YES);
 }
 

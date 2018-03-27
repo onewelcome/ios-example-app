@@ -8,4 +8,6 @@
 @property (nonatomic) ONGCustomRegistrationChallenge *challenge;
 @property (nonatomic) void (^completionBlock)(NSString *code, BOOL cancelled);
 
+- (void)reset;
+
 @end

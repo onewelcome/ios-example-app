@@ -197,6 +197,8 @@
         }
         if (code) {
             [challenge.sender respondWithData:code challenge:challenge];
+            [weakSelf.twoWayOTPViewController dismissViewControllerAnimated:YES completion:nil];
+            [weakSelf.twoWayOTPViewController reset];
         } else if (cancelled) {
             [challenge.sender cancelChallenge:challenge];
         }

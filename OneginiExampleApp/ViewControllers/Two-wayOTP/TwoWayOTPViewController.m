@@ -15,6 +15,11 @@
     [super viewDidLoad];
 }
 
+- (void)reset
+{
+    self.responseCode.text = nil;
+}
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     UITouch * touch = [touches anyObject];
@@ -36,7 +41,7 @@
 
 - (void)setChallenge:(ONGCustomRegistrationChallenge *)challenge
 {
-    self.challengeCode.text = challenge.data;
+    self.challengeCode.text = challenge.info.data;
 }
 
 - (IBAction)ok:(id)sender

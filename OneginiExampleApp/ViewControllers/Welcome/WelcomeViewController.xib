@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WelcomeViewController">
             <connections>
-                <outlet property="defaultIdentityProviderSwitch" destination="W2z-wb-SeW" id="Rjy-Bz-ASv"/>
+                <outlet property="defaultIdentityProvider" destination="t7g-4s-Qg1" id="BRe-M1-h8W"/>
                 <outlet property="loginButton" destination="0OE-uC-YRg" id="Dup-S5-N65"/>
                 <outlet property="preferedAuthentiacorSwitch" destination="h9u-0b-Hol" id="Kih-Vt-rLx"/>
                 <outlet property="profilePicker" destination="NH9-jj-EWq" id="zGD-td-oUX"/>
@@ -24,21 +24,21 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Profiles:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pvx-Do-gOg">
-                    <rect key="frame" x="129" y="48" width="62" height="20.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profiles:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pvx-Do-gOg">
+                    <rect key="frame" x="129" y="4" width="62" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <pickerView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NH9-jj-EWq">
-                    <rect key="frame" x="0.0" y="43.5" width="320" height="216"/>
+                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NH9-jj-EWq">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Ta6-e1-XBX"/>
                         <outlet property="delegate" destination="-1" id="SBO-a3-fhW"/>
                     </connections>
                 </pickerView>
-                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="751" verticalCompressionResistancePriority="751" misplaced="YES" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="osV-YB-o54">
-                    <rect key="frame" x="16" y="239" width="288" height="162"/>
+                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="751" verticalCompressionResistancePriority="751" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="osV-YB-o54">
+                    <rect key="frame" x="16" y="236" width="288" height="162"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0OE-uC-YRg">
                             <rect key="frame" x="0.0" y="0.0" width="288" height="38"/>
@@ -55,11 +55,14 @@
                             <rect key="frame" x="0.0" y="46" width="288" height="31"/>
                             <subviews>
                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="right" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h9u-0b-Hol">
-                                    <rect key="frame" x="0.0" y="0.0" width="61" height="31"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="49" id="heP-CB-rXY"/>
+                                    </constraints>
                                     <color key="onTintColor" red="0.0" green="0.4822472519083556" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </switch>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use preferred authenticator" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pae-9h-hG3">
-                                    <rect key="frame" x="69" y="7" width="219" height="17"/>
+                                    <rect key="frame" x="59" y="7" width="229" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -77,15 +80,18 @@
                                 <action selector="registerNewProfile:" destination="-1" eventType="touchUpInside" id="0vD-df-oL3"/>
                             </connections>
                         </button>
-                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ic2-Gc-z3R">
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Goq-9T-hTT">
                             <rect key="frame" x="0.0" y="131" width="288" height="31"/>
                             <subviews>
-                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="right" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W2z-wb-SeW">
-                                    <rect key="frame" x="0.0" y="0.0" width="60" height="31"/>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="right" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t7g-4s-Qg1">
+                                    <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="49" id="alU-0f-Irc"/>
+                                    </constraints>
                                     <color key="onTintColor" red="0.0" green="0.48224725190000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </switch>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use default identity provider" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I34-6t-eqc">
-                                    <rect key="frame" x="68" y="7" width="220" height="17"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use default identity provider" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACp-C1-kKW">
+                                    <rect key="frame" x="59" y="7" width="229" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -110,11 +116,12 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="osV-YB-o54" firstAttribute="top" relation="greaterThanOrEqual" secondItem="NH9-jj-EWq" secondAttribute="bottom" id="3IH-2K-syF"/>
+                <constraint firstItem="osV-YB-o54" firstAttribute="top" relation="greaterThanOrEqual" secondItem="NH9-jj-EWq" secondAttribute="bottom" constant="-13" id="3IH-2K-syF"/>
                 <constraint firstAttribute="trailing" secondItem="NH9-jj-EWq" secondAttribute="trailing" id="AUL-L0-r9p"/>
                 <constraint firstItem="NH9-jj-EWq" firstAttribute="leading" secondItem="4cf-MP-Aby" secondAttribute="leading" id="Syq-yg-CJg"/>
+                <constraint firstItem="osV-YB-o54" firstAttribute="top" secondItem="NH9-jj-EWq" secondAttribute="bottom" constant="20" id="Uf4-Pe-7Mq"/>
                 <constraint firstItem="pvx-Do-gOg" firstAttribute="centerX" secondItem="4cf-MP-Aby" secondAttribute="centerX" id="Ydg-Ca-lWb"/>
-                <constraint firstAttribute="bottom" secondItem="osV-YB-o54" secondAttribute="bottom" constant="70" id="k64-dS-oNo"/>
+                <constraint firstAttribute="bottom" secondItem="osV-YB-o54" secondAttribute="bottom" constant="57" id="k64-dS-oNo"/>
                 <constraint firstItem="osV-YB-o54" firstAttribute="centerX" secondItem="4cf-MP-Aby" secondAttribute="centerX" id="skl-y9-0vj"/>
                 <constraint firstItem="NH9-jj-EWq" firstAttribute="top" secondItem="pvx-Do-gOg" secondAttribute="bottom" constant="-25" id="w3F-l3-h7P"/>
             </constraints>

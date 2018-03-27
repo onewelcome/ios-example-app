@@ -15,9 +15,14 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "TwoWayOTPViewController.h"
 #import "OneginiSDK.h"
 
 @interface RegistrationController : NSObject<ONGRegistrationDelegate>
+
+@property (nonatomic, copy) void (^progressStateDidChange)(BOOL);
+@property (nonatomic) TwoWayOTPViewController *twoWayOTPViewController;
+
 
 + (instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController
                                               tabBarController:(UITabBarController *)tabBarController

@@ -34,9 +34,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (self.registrationRequestChallenge.url) {
+    if (self.browserRegistrationChallenge.url) {
         [self clearWebViewCache];
-        NSURLRequest *request = [NSURLRequest requestWithURL:self.registrationRequestChallenge.url];
+        NSURLRequest *request = [NSURLRequest requestWithURL:self.browserRegistrationChallenge.url];
         [self.webView loadRequest:request];
     }
 }

@@ -53,7 +53,7 @@
 
 #pragma mark - ONGAuthenticatorRegistrationDelegate
 
-- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile info:(ONGCustomAuthInfo * _Nullable)customAuthInfo
+- (void)userClient:(ONGUserClient *)userClient didRegisterAuthenticator:(nonnull ONGAuthenticator *)authenticator forUser:(nonnull ONGUserProfile *)userProfile info:(ONGCustomInfo * _Nullable)customAuthInfo
 {
 
     [ONGUserClient sharedInstance].preferredAuthenticator = authenticator;

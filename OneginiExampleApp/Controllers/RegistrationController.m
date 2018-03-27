@@ -21,6 +21,7 @@
 #import "MBProgressHUD.h"
 #import "ProfileCreationViewController.h"
 #import "AlertPresenter.h"
+#import "TwoWayOTPViewController.h"
 
 @interface RegistrationController ()
 
@@ -50,15 +51,20 @@
     registrationController.navigationController = navigationController;
     registrationController.tabBarController = tabBarController;
     registrationController.completion = completion;
+    registrationController.twoWayOTPViewController = [TwoWayOTPViewController new];
     return registrationController;
 }
 
-- (void)userClient:(ONGUserClient *)userClient didRegisterUser:(ONGUserProfile *)userProfile
+- (void)userClient:(ONGUserClient *)userClient didRegisterUser:(ONGUserProfile *)userProfile info:(ONGCustomInfo * _Nullable)info
 {
     ProfileCreationViewController *viewController = [[ProfileCreationViewController alloc] initWithUserProfile:userProfile];
     [self.navigationController pushViewController:viewController animated:YES];
     [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToRegisterWithError:(NSError *)error
@@ -109,6 +115,10 @@
     [self showError:error];
 
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 /**
@@ -120,8 +130,7 @@
  */
 - (void)userClient:(ONGUserClient *)userClient didReceivePinRegistrationChallenge:(ONGCreatePinChallenge *)challenge
 {
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-
+    [self.tabBarController dismissViewControllerAnimated:false completion:nil];
     self.pinViewController.pinLength = challenge.pinLength;
     self.pinViewController.mode = PINRegistrationMode;
     self.pinViewController.profile = challenge.userProfile;
@@ -146,12 +155,17 @@
         [self.pinViewController showError:description];
         [self.pinViewController reset];
     }
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
+
 }
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveBrowserRegistrationChallenge:(ONGBrowserRegistrationChallenge *)challenge
 {
     WebBrowserViewController *webBrowserViewController = [WebBrowserViewController new];
-    webBrowserViewController.registrationRequestChallenge = challenge;
+    webBrowserViewController.browserRegistrationChallenge = challenge;
     webBrowserViewController.completionBlock = ^(NSURL *completionURL) {
         if ([self.navigationController.presentedViewController isKindOfClass:WebBrowserViewController.class]) {
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -163,6 +177,38 @@
         }
     };
     [self.navigationController presentViewController:webBrowserViewController animated:YES completion:nil];
+}
+
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomRegistrationInitChallenge:(ONGCustomRegistrationChallenge *)challenge
+{
+    [challenge.sender respondWithData:nil challenge:challenge];
+    self.progressStateDidChange(YES);
+}
+
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomRegistrationFinishChallenge:(ONGCustomRegistrationChallenge *)challenge
+{
+    self.progressStateDidChange(NO);
+    self.twoWayOTPViewController.challenge = challenge;
+    
+    __weak typeof(self) weakSelf = self;
+    self.twoWayOTPViewController.completionBlock = ^(NSString *code, BOOL cancelled) {
+        if (self.progressStateDidChange != nil) {
+            weakSelf.progressStateDidChange(YES);
+        }
+        if (code) {
+            [challenge.sender respondWithData:code challenge:challenge];
+            [weakSelf.twoWayOTPViewController dismissViewControllerAnimated:YES completion:nil];
+            [weakSelf.twoWayOTPViewController reset];
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge];
+        }
+    };
+    
+    [self.navigationController presentViewController:self.twoWayOTPViewController animated:YES completion:nil];
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)showError:(NSError *)error

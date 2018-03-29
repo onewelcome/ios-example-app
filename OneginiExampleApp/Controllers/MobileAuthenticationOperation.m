@@ -139,10 +139,8 @@
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.pinLength = 5;
     self.pinViewController.customTitle = [NSString stringWithFormat:@"Push with pin for user: %@", [[ProfileModel sharedInstance] profileNameForUserProfile:challenge.userProfile]];
-    __weak MobileAuthenticationOperation *weakSelf = self;
 
     self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
-        [weakSelf.tabBarController dismissViewControllerAnimated:YES completion:nil];
         if (pin) {
             [challenge.sender respondWithPin:pin challenge:challenge];
         } else if (cancelled) {
@@ -231,6 +229,8 @@
 
 - (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthRequest:(ONGMobileAuthRequest *)request info:(ONGCustomInfo * _Nullable)customAuthInfo
 {
+    [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
+
     // Once the SDK reported that the `request` has been handled we need to finish our operation and free-up the queue.
     [self finish];
 }

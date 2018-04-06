@@ -56,6 +56,9 @@
 		5CF407931E4B2CAB001C06D6 /* ProfileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF407911E4B2CAB001C06D6 /* ProfileModel.m */; };
 		68AD227F29F4DDCC83BC4A47 /* MobileAuthenticationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 68AD27F23CE59643D7C37336 /* MobileAuthenticationOperation.h */; };
 		68AD253F2DBAA70E8B11A8D7 /* MobileAuthenticationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AD26240A0F4ED4AD29ACA3 /* MobileAuthenticationOperation.m */; };
+		7E0C00332076662000FD6F09 /* QRCodeViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E0C00302076662000FD6F09 /* QRCodeViewController.h */; };
+		7E0C00342076662000FD6F09 /* QRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E0C00312076662000FD6F09 /* QRCodeViewController.m */; };
+		7E0C00352076662000FD6F09 /* QRCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E0C00322076662000FD6F09 /* QRCodeViewController.xib */; };
 		7E224C381FC6D11600CAD88E /* PendingTransactionTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E224C351FC6D11600CAD88E /* PendingTransactionTableViewCell.h */; };
 		7E224C391FC6D11600CAD88E /* PendingTransactionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E224C361FC6D11600CAD88E /* PendingTransactionTableViewCell.m */; };
 		7E224C3A1FC6D11600CAD88E /* PendingTransactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E224C371FC6D11600CAD88E /* PendingTransactionTableViewCell.xib */; };
@@ -178,6 +181,9 @@
 		5CF4F3B81DB65D4E00A9FE01 /* OneginiExampleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneginiExampleApp.entitlements; sourceTree = "<group>"; };
 		68AD26240A0F4ED4AD29ACA3 /* MobileAuthenticationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileAuthenticationOperation.m; sourceTree = "<group>"; };
 		68AD27F23CE59643D7C37336 /* MobileAuthenticationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileAuthenticationOperation.h; sourceTree = "<group>"; };
+		7E0C00302076662000FD6F09 /* QRCodeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRCodeViewController.h; sourceTree = "<group>"; };
+		7E0C00312076662000FD6F09 /* QRCodeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRCodeViewController.m; sourceTree = "<group>"; };
+		7E0C00322076662000FD6F09 /* QRCodeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRCodeViewController.xib; sourceTree = "<group>"; };
 		7E224C351FC6D11600CAD88E /* PendingTransactionTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PendingTransactionTableViewCell.h; sourceTree = "<group>"; };
 		7E224C361FC6D11600CAD88E /* PendingTransactionTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PendingTransactionTableViewCell.m; sourceTree = "<group>"; };
 		7E224C371FC6D11600CAD88E /* PendingTransactionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingTransactionTableViewCell.xib; sourceTree = "<group>"; };
@@ -381,6 +387,16 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		7E0C00292076653100FD6F09 /* QR-code */ = {
+			isa = PBXGroup;
+			children = (
+				7E0C00302076662000FD6F09 /* QRCodeViewController.h */,
+				7E0C00312076662000FD6F09 /* QRCodeViewController.m */,
+				7E0C00322076662000FD6F09 /* QRCodeViewController.xib */,
+			);
+			path = "QR-code";
+			sourceTree = "<group>";
+		};
 		7E32864D1FFE2E0C009E0DA7 /* CustomAuthenticators */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,6 +474,7 @@
 		C54139881CD9D3010033DBA8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7E0C00292076653100FD6F09 /* QR-code */,
 				7E40A3F0204EA3000046D0AE /* Two-wayOTP */,
 				7ED6E4B82024B65500BA6E54 /* Info */,
 				7E32864D1FFE2E0C009E0DA7 /* CustomAuthenticators */,
@@ -504,11 +521,11 @@
 				C5A29A751CDCE78F00E6B1D4 /* Models */,
 				C5A29A5F1CDCA55900E6B1D4 /* Controllers */,
 				C54139881CD9D3010033DBA8 /* ViewControllers */,
+				DF106405301EC136432B78DE /* Presenters */,
 				C572A2DD1CD893C400B137DC /* AppDelegate.h */,
 				C572A2DE1CD893C400B137DC /* AppDelegate.m */,
 				C572A2E61CD893C400B137DC /* Assets.xcassets */,
 				1D6A3BE3B71FAF525D60E60A /* Misc */,
-				DF106405301EC136432B78DE /* Presenters */,
 			);
 			path = OneginiExampleApp;
 			sourceTree = "<group>";
@@ -587,6 +604,7 @@
 				7E224C381FC6D11600CAD88E /* PendingTransactionTableViewCell.h in Headers */,
 				5CD187431CEDA5B8001FD062 /* MobileAuthenticationController.h in Headers */,
 				B47ADC3E1D644F24006DA9D1 /* SecurityController.h in Headers */,
+				7E0C00332076662000FD6F09 /* QRCodeViewController.h in Headers */,
 				7EA5B6E31FC577B8008DDA0E /* PendingTransactionsViewController.h in Headers */,
 				5C7745211D998285004BBCFE /* ChangePinController.h in Headers */,
 				E4459662EEBC767C4F350A5A /* OneginiConfigModel.h in Headers */,
@@ -703,6 +721,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E0C00352076662000FD6F09 /* QRCodeViewController.xib in Resources */,
 				C572A2E71CD893C400B137DC /* Assets.xcassets in Resources */,
 				7EA5B6E51FC577B8008DDA0E /* PendingTransactionsViewController.xib in Resources */,
 				7ED6E4BE2024B68700BA6E54 /* InfoViewController.xib in Resources */,
@@ -792,6 +811,7 @@
 				1D6A3BB7068B5D6A6CF579D7 /* ONGResourceResponse+JSONResponse.m in Sources */,
 				1D6A3512499A1433115A382D /* UIAlertController+Shortcut.m in Sources */,
 				1D6A3E32BC3EB7E9A7DAE958 /* PinErrorMapper.m in Sources */,
+				7E0C00342076662000FD6F09 /* QRCodeViewController.m in Sources */,
 				1D6A3C1B408210BA5A90DF0B /* StateOperation.m in Sources */,
 				7EA5B6E41FC577B8008DDA0E /* PendingTransactionsViewController.m in Sources */,
 				68AD253F2DBAA70E8B11A8D7 /* MobileAuthenticationOperation.m in Sources */,

@@ -96,11 +96,14 @@
         if (isInProgress) {
             if ([weakSelf.tabBarController.presentedViewController isEqual:weakSelf.registrationController.twoWayOTPViewController]) {
                 [MBProgressHUD showHUDAddedTo:weakSelf.registrationController.twoWayOTPViewController.view animated:YES];
+            } else if ([weakSelf.tabBarController.presentedViewController isEqual:weakSelf.registrationController.qrCodeViewController]){
+                [MBProgressHUD showHUDAddedTo:weakSelf.registrationController.qrCodeViewController.view animated:YES];
             } else {
                 [MBProgressHUD showHUDAddedTo:weakSelf.navigationController.view animated:YES];
             }
         } else {
             [MBProgressHUD hideHUDForView:weakSelf.registrationController.twoWayOTPViewController.view animated:YES];
+            [MBProgressHUD hideHUDForView:weakSelf.registrationController.qrCodeViewController.view animated:YES];
         }
     };
     

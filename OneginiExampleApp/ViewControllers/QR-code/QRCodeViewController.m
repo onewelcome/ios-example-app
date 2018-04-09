@@ -27,7 +27,6 @@
 {
     [super viewWillDisappear:animated];
     [self.session stopRunning];
-//    [self.previewLayer removeFromSuperlayer];
 }
 
 - (void)setupQRCodeScanner

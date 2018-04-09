@@ -40,6 +40,8 @@
     
     [self registerForPushMessages];
     
+    [self statusBarStylization:application];
+    
     return YES;
 }
 
@@ -203,6 +205,13 @@
             [[tabBarController.tabBar.items objectAtIndex:1] setBadgeValue:[NSString stringWithFormat:@"%ld", (long)pendingTransactionsCount]];
         }
     }];
+}
+
+- (void)statusBarStylization:(UIApplication *)application
+{
+    UIColor *blueColor = [UIColor colorWithRed:0.0f/255.0f green:174.0f/255.0f blue:239.0f/255.0f alpha:1.0f];
+    UIView *statusBar = ((UIView *)[application valueForKey:@"statusBar"]);
+    statusBar.backgroundColor = blueColor;
 }
 
 - (void)handleNotification:(NSDictionary *)userInfo

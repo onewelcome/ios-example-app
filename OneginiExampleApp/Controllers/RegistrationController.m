@@ -52,6 +52,7 @@
     registrationController.tabBarController = tabBarController;
     registrationController.completion = completion;
     registrationController.twoWayOTPViewController = [TwoWayOTPViewController new];
+    registrationController.qrCodeViewController = [QRCodeViewController new];
     return registrationController;
 }
 
@@ -187,24 +188,41 @@
 
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomRegistrationFinishChallenge:(ONGCustomRegistrationChallenge *)challenge
 {
-    self.progressStateDidChange(NO);
-    self.twoWayOTPViewController.challenge = challenge;
+    if ([challenge.identityProvider.identifier isEqualToString:@"2-way-otp-api"]) {
+        self.progressStateDidChange(NO);
+        self.twoWayOTPViewController.challenge = challenge;
     
-    __weak typeof(self) weakSelf = self;
-    self.twoWayOTPViewController.completionBlock = ^(NSString *code, BOOL cancelled) {
-        if (self.progressStateDidChange != nil) {
-            weakSelf.progressStateDidChange(YES);
-        }
-        if (code) {
-            [challenge.sender respondWithData:code challenge:challenge];
-            [weakSelf.twoWayOTPViewController dismissViewControllerAnimated:YES completion:nil];
-            [weakSelf.twoWayOTPViewController reset];
-        } else if (cancelled) {
-            [challenge.sender cancelChallenge:challenge];
-        }
-    };
+        __weak typeof(self) weakSelf = self;
+        self.twoWayOTPViewController.completionBlock = ^(NSString *code, BOOL cancelled) {
+            if (self.progressStateDidChange != nil) {
+                weakSelf.progressStateDidChange(YES);
+            }
+            if (code) {
+                [challenge.sender respondWithData:code challenge:challenge];
+                [weakSelf.twoWayOTPViewController dismissViewControllerAnimated:YES completion:nil];
+                [weakSelf.twoWayOTPViewController reset];
+            } else if (cancelled) {
+                [challenge.sender cancelChallenge:challenge];
+            }
+        };
     
-    [self.navigationController presentViewController:self.twoWayOTPViewController animated:YES completion:nil];
+        [self.navigationController presentViewController:self.twoWayOTPViewController animated:YES completion:nil];
+        
+    } else if ([challenge.identityProvider.identifier isEqualToString:@"qr-code-api"]) {
+        self.progressStateDidChange(YES);
+        self.qrCodeViewController.challenge = challenge;
+        __weak typeof(self) weakSelf = self;
+        self.qrCodeViewController.completionBlock = ^(NSString *code, BOOL cancelled) {
+            if (code) {
+                [challenge.sender respondWithData:code challenge:challenge];
+                [weakSelf.qrCodeViewController dismissViewControllerAnimated:YES completion:nil];
+            } else if (cancelled) {
+                [challenge.sender cancelChallenge:challenge];
+            }
+        };
+        
+        [self.navigationController presentViewController:self.qrCodeViewController animated:YES completion:nil];
+    }
     
     if (self.progressStateDidChange != nil) {
         self.progressStateDidChange(NO);

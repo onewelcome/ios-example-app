@@ -16,12 +16,14 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "TwoWayOTPViewController.h"
+#import "QRCodeViewController.h"
 #import "OneginiSDK.h"
 
 @interface RegistrationController : NSObject<ONGRegistrationDelegate>
 
 @property (nonatomic, copy) void (^progressStateDidChange)(BOOL);
 @property (nonatomic) TwoWayOTPViewController *twoWayOTPViewController;
+@property (nonatomic) QRCodeViewController *qrCodeViewController;
 
 
 + (instancetype)registrationControllerWithNavigationController:(UINavigationController *)navigationController

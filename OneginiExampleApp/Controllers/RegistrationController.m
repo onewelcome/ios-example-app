@@ -131,7 +131,6 @@
  */
 - (void)userClient:(ONGUserClient *)userClient didReceivePinRegistrationChallenge:(ONGCreatePinChallenge *)challenge
 {
-    [self.tabBarController dismissViewControllerAnimated:false completion:nil];
     self.pinViewController.pinLength = challenge.pinLength;
     self.pinViewController.mode = PINRegistrationMode;
     self.pinViewController.profile = challenge.userProfile;
@@ -144,17 +143,19 @@
         }
     };
 
-    // It is up to you to decide when and how to show the PIN entry view controller.
-    // For simplicity of the example app we're checking the top-most view controller.
-    if (![self.tabBarController.presentedViewController isEqual:self.pinViewController]) {
-        [self.tabBarController presentViewController:self.pinViewController animated:YES completion:nil];
-    }
-
     if (challenge.error) {
         // Please read comments for the PinErrorMapper to understand intent of this class and how errors can be handled.
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofCreatePinChallenge:challenge];
         [self.pinViewController showError:description];
         [self.pinViewController reset];
+    } else {
+        [self.tabBarController dismissViewControllerAnimated:false completion:nil];
+    }
+    
+    // It is up to you to decide when and how to show the PIN entry view controller.
+    // For simplicity of the example app we're checking the top-most view controller.
+    if (![self.tabBarController.presentedViewController isEqual:self.pinViewController]) {
+        [self.tabBarController presentViewController:self.pinViewController animated:YES completion:nil];
     }
     
     if (self.progressStateDidChange != nil) {

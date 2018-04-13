@@ -192,7 +192,11 @@
 - (ONGUserProfile *)selectedProfile
 {
     NSUInteger profileIndex = (NSUInteger)[self.profilePicker selectedRowInComponent:0];
-    return self.profiles[profileIndex];
+    if (self.profiles.count) {
+        return self.profiles[profileIndex];
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark - UIPickerView
@@ -209,13 +213,17 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [ProfileModel sharedInstance].selectedUserProfile = self.profiles[row];
+    if (self.profiles.count) {
+        [ProfileModel sharedInstance].selectedUserProfile = self.profiles[row];
+    }
 }
-
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSString *profileName = [[ProfileModel sharedInstance] profileNameForUserProfile:self.profiles[(NSUInteger)row]];
+    NSString *profileName = @"";
+    if (self.profiles.count) {
+        profileName = [[ProfileModel sharedInstance] profileNameForUserProfile:self.profiles[(NSUInteger)row]];
+    }
     return profileName;
 }
 

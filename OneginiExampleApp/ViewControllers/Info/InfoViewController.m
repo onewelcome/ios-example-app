@@ -69,7 +69,7 @@
 
 - (void)fetchApplicationDetails
 {
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"https://onegini-msp-snapshot.test.onegini.io/resources/application-details" method:@"GET"];
+    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-details" method:@"GET"];
     [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
         if (error) {
             self.appId.text = [NSString stringWithFormat:@"Anonymous resource failed %ld", error.code];

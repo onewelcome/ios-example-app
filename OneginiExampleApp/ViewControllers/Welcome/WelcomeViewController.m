@@ -85,10 +85,10 @@
         registrationControllerWithNavigationController:self.navigationController
                                     tabBarController:self.tabBarController
                                             completion:^{
-                                                [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                                 self.registrationController = nil;
                                                 self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
                                                 [self.profilePicker reloadAllComponents];
+                                                [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                             }];
     
     __weak typeof(self) weakSelf = self;

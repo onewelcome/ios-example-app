@@ -35,11 +35,10 @@
 @property (nonatomic) AlertPresenter *alertPresenter;
 
 @property (weak, nonatomic) IBOutlet UISwitch *preferedAuthentiacorSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *defaultIdentityProvider;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIPickerView *profilePicker;
-@property (weak, nonatomic) IBOutlet UILabel *appInfoLabel;
-@property (weak, nonatomic) IBOutlet UILabel *profileLabel;
 
 @end
 
@@ -63,10 +62,7 @@
     [super viewDidLoad];
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem keyImageBarButtonItem];
-    self.appInfoLabel.hidden = YES;
     self.alertPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
-    
-    [self authenticateDeviceAndFetchResource];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -75,15 +71,16 @@
     self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
     [self.profilePicker reloadAllComponents];
     self.preferedAuthentiacorSwitch.on = YES;
-    [self authenticateUserImplicitlyAndFetchResource];
+    if (self.profiles.count > 0) {
+        [ProfileModel sharedInstance].selectedUserProfile = self.selectedProfile;
+    }
 }
 
 - (IBAction)registerNewProfile:(id)sender
 {
-    if (self.authenticationController || self.registrationController)
-        return;
+//    if (self.authenticationController || self.registrationController)
+//        return;
 
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.registrationController = [RegistrationController
         registrationControllerWithNavigationController:self.navigationController
                                     tabBarController:self.tabBarController
@@ -91,8 +88,44 @@
                                                 self.registrationController = nil;
                                                 self.profiles = [[ONGUserClient sharedInstance] userProfiles].allObjects;
                                                 [self.profilePicker reloadAllComponents];
+                                                [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
                                             }];
-    [[ONGUserClient sharedInstance] registerUser:@[@"read"] delegate:self.registrationController];
+    
+    __weak typeof(self) weakSelf = self;
+    self.registrationController.progressStateDidChange = ^(BOOL isInProgress) {
+        if (isInProgress) {
+            if ([weakSelf.tabBarController.presentedViewController isEqual:weakSelf.registrationController.twoWayOTPViewController]) {
+                [MBProgressHUD showHUDAddedTo:weakSelf.registrationController.twoWayOTPViewController.view animated:YES];
+            } else if ([weakSelf.tabBarController.presentedViewController isEqual:weakSelf.registrationController.qrCodeViewController]){
+                [MBProgressHUD showHUDAddedTo:weakSelf.registrationController.qrCodeViewController.view animated:YES];
+            } else {
+                [MBProgressHUD showHUDAddedTo:weakSelf.navigationController.view animated:YES];
+            }
+        } else {
+            [MBProgressHUD hideHUDForView:weakSelf.registrationController.twoWayOTPViewController.view animated:YES];
+            [MBProgressHUD hideHUDForView:weakSelf.registrationController.qrCodeViewController.view animated:YES];
+        }
+    };
+    
+    if (self.defaultIdentityProvider.on) {
+        [[ONGUserClient sharedInstance] registerUserWithIdentityProvider:nil scopes:@[@"read"] delegate:self.registrationController];
+    } else {
+        [self showAvailableIdentityProviders];
+    }
+    
+}
+
+- (void)showAvailableIdentityProviders
+{
+    NSSet<ONGIdentityProvider *> *identityProviders = [[ONGUserClient sharedInstance] identityProviders];
+    UIAlertController *identityProviderList = [UIAlertController alertControllerWithTitle:@"" message:@"Select identity provider" preferredStyle:UIAlertControllerStyleActionSheet];
+    for (ONGIdentityProvider *identityProvider in identityProviders) {
+        [identityProviderList addAction:[UIAlertAction actionWithTitle:identityProvider.name style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[ONGUserClient sharedInstance] registerUserWithIdentityProvider:identityProvider scopes:@[@"read"] delegate:self.registrationController];
+        }]];
+    }
+    [identityProviderList addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}]];
+    [self presentViewController:identityProviderList animated:YES completion:^{}];
 }
 
 - (IBAction)login:(id)sender
@@ -146,43 +179,6 @@
     
 }
 
-- (void)authenticateDeviceAndFetchResource
-{
-    [[ONGDeviceClient sharedInstance] authenticateDevice:@[@"application-details"] completion:^(BOOL success, NSError *_Nullable error) {
-        if (success) {
-            [self fetchApplicationDetails];
-        } else {
-            // unwind stack in case we've opened registration
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            
-            [self.alertPresenter showErrorAlert:error title:@"Device authentication failed"];
-        }
-    }];
-}
-
-- (void)fetchApplicationDetails
-{
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/application-details" method:@"GET"];
-    [[ONGDeviceClient sharedInstance] fetchResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
-        if (error) {
-            self.appInfoLabel.text = [NSString stringWithFormat: @"%ld\nFetching anonymous resource failed", error.code];
-            self.appInfoLabel.hidden = NO;
-        } else {
-            id jsonResponse = [response JSONResponse];
-            if (jsonResponse != nil) {
-                self.appInfoLabel.text = [NSString stringWithFormat:
-                    @"%@\n%@\n%@",
-                    [jsonResponse objectForKey:@"application_identifier"],
-                    [jsonResponse objectForKey:@"application_platform"],
-                    [jsonResponse objectForKey:@"application_version"]
-                ];
-
-                self.appInfoLabel.hidden = NO;
-            }
-        }
-    }];
-}
-
 - (void) showRegisteredAuthenticatorsForUser:(ONGUserProfile *)selectedUserProfile
 {
     NSSet<ONGAuthenticator *> *registeredAuthenticatorsForUser = [[ONGUserClient sharedInstance] registeredAuthenticatorsForUser:selectedUserProfile];
@@ -196,53 +192,14 @@
     [self presentViewController:authenticatorList animated:YES completion:^{}];
 }
 
-- (void)authenticateUserImplicitlyAndFetchResource
-{
-    if (self.profiles.count > 0) {
-        self.profileLabel.hidden = NO;
-        if ([self selectedProfileIsImplicitlyAuthenticated]) {
-            [self fetchResourceImplicitly];
-        } else {
-            [[ONGUserClient sharedInstance] implicitlyAuthenticateUser:[self selectedProfile] scopes:nil completion:^(BOOL success, NSError *_Nonnull error) {
-                if (success) {
-                    [self fetchResourceImplicitly];
-                } else {
-                    self.profileLabel.text = [NSString stringWithFormat:@"Implicit authentication failed %ld", error.code];
-                }
-            }];
-        }
-    } else {
-        self.profileLabel.hidden = YES;
-    }
-}
-
-- (BOOL)selectedProfileIsImplicitlyAuthenticated
-{
-    ONGUserProfile *authenticatedUserProfile = [[ONGUserClient sharedInstance] implicitlyAuthenticatedUserProfile];
-
-    return authenticatedUserProfile && [authenticatedUserProfile isEqual:self.selectedProfile];
-}
-
-- (void)fetchResourceImplicitly
-{
-    ONGResourceRequest *request = [[ONGResourceRequest alloc] initWithPath:@"resources/user-id-decorated" method:@"GET"];
-    [[ONGUserClient sharedInstance] fetchImplicitResource:request completion:^(ONGResourceResponse *_Nullable response, NSError *_Nullable error) {
-        if (error) {
-            self.profileLabel.text = [NSString stringWithFormat:@"Fetching implicit resource failed %ld", error.code];
-        } else {
-            id jsonResponse = [response JSONResponse];
-            if (jsonResponse != nil) {
-                self.profileLabel.text = [NSString stringWithFormat:@"%@",
-                                                                    [jsonResponse objectForKey:@"decorated_user_id"]];
-            }
-        }
-    }];
-}
-
 - (ONGUserProfile *)selectedProfile
 {
     NSUInteger profileIndex = (NSUInteger)[self.profilePicker selectedRowInComponent:0];
-    return self.profiles[profileIndex];
+    if (self.profiles.count) {
+        return self.profiles[profileIndex];
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark - UIPickerView
@@ -259,13 +216,17 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [self authenticateUserImplicitlyAndFetchResource];
+    if (self.profiles.count) {
+        [ProfileModel sharedInstance].selectedUserProfile = self.profiles[row];
+    }
 }
-
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSString *profileName = [[ProfileModel new] profileNameForUserProfile:self.profiles[(NSUInteger)row]];
+    NSString *profileName = @"";
+    if (self.profiles.count) {
+        profileName = [[ProfileModel sharedInstance] profileNameForUserProfile:self.profiles[(NSUInteger)row]];
+    }
     return profileName;
 }
 

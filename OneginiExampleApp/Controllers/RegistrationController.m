@@ -21,6 +21,7 @@
 #import "MBProgressHUD.h"
 #import "ProfileCreationViewController.h"
 #import "AlertPresenter.h"
+#import "TwoWayOTPViewController.h"
 
 @interface RegistrationController ()
 
@@ -50,15 +51,21 @@
     registrationController.navigationController = navigationController;
     registrationController.tabBarController = tabBarController;
     registrationController.completion = completion;
+    registrationController.twoWayOTPViewController = [TwoWayOTPViewController new];
+    registrationController.qrCodeViewController = [QRCodeViewController new];
     return registrationController;
 }
 
-- (void)userClient:(ONGUserClient *)userClient didRegisterUser:(ONGUserProfile *)userProfile
+- (void)userClient:(ONGUserClient *)userClient didRegisterUser:(ONGUserProfile *)userProfile info:(ONGCustomInfo * _Nullable)info
 {
     ProfileCreationViewController *viewController = [[ProfileCreationViewController alloc] initWithUserProfile:userProfile];
     [self.navigationController pushViewController:viewController animated:YES];
     [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)userClient:(ONGUserClient *)userClient didFailToRegisterWithError:(NSError *)error
@@ -109,6 +116,10 @@
     [self showError:error];
 
     self.completion();
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 /**
@@ -120,8 +131,6 @@
  */
 - (void)userClient:(ONGUserClient *)userClient didReceivePinRegistrationChallenge:(ONGCreatePinChallenge *)challenge
 {
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-
     self.pinViewController.pinLength = challenge.pinLength;
     self.pinViewController.mode = PINRegistrationMode;
     self.pinViewController.profile = challenge.userProfile;
@@ -134,24 +143,31 @@
         }
     };
 
-    // It is up to you to decide when and how to show the PIN entry view controller.
-    // For simplicity of the example app we're checking the top-most view controller.
-    if (![self.tabBarController.presentedViewController isEqual:self.pinViewController]) {
-        [self.tabBarController presentViewController:self.pinViewController animated:YES completion:nil];
-    }
-
     if (challenge.error) {
         // Please read comments for the PinErrorMapper to understand intent of this class and how errors can be handled.
         NSString *description = [PinErrorMapper descriptionForError:challenge.error ofCreatePinChallenge:challenge];
         [self.pinViewController showError:description];
         [self.pinViewController reset];
+    } else {
+        [self.tabBarController dismissViewControllerAnimated:false completion:nil];
     }
+    
+    // It is up to you to decide when and how to show the PIN entry view controller.
+    // For simplicity of the example app we're checking the top-most view controller.
+    if (![self.tabBarController.presentedViewController isEqual:self.pinViewController]) {
+        [self.tabBarController presentViewController:self.pinViewController animated:YES completion:nil];
+    }
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
+
 }
 
-- (void)userClient:(ONGUserClient *)userClient didReceiveRegistrationRequestChallenge:(ONGRegistrationRequestChallenge *)challenge
+- (void)userClient:(ONGUserClient *)userClient didReceiveBrowserRegistrationChallenge:(ONGBrowserRegistrationChallenge *)challenge
 {
     WebBrowserViewController *webBrowserViewController = [WebBrowserViewController new];
-    webBrowserViewController.registrationRequestChallenge = challenge;
+    webBrowserViewController.browserRegistrationChallenge = challenge;
     webBrowserViewController.completionBlock = ^(NSURL *completionURL) {
         if ([self.navigationController.presentedViewController isKindOfClass:WebBrowserViewController.class]) {
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -163,6 +179,55 @@
         }
     };
     [self.navigationController presentViewController:webBrowserViewController animated:YES completion:nil];
+}
+
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomRegistrationInitChallenge:(ONGCustomRegistrationChallenge *)challenge
+{
+    [challenge.sender respondWithData:nil challenge:challenge];
+    self.progressStateDidChange(YES);
+}
+
+- (void)userClient:(ONGUserClient *)userClient didReceiveCustomRegistrationFinishChallenge:(ONGCustomRegistrationChallenge *)challenge
+{
+    if ([challenge.identityProvider.identifier isEqualToString:@"2-way-otp-api"]) {
+        self.progressStateDidChange(NO);
+        self.twoWayOTPViewController.challenge = challenge;
+    
+        __weak typeof(self) weakSelf = self;
+        self.twoWayOTPViewController.completionBlock = ^(NSString *code, BOOL cancelled) {
+            if (self.progressStateDidChange != nil) {
+                weakSelf.progressStateDidChange(YES);
+            }
+            if (code) {
+                [challenge.sender respondWithData:code challenge:challenge];
+                [weakSelf.twoWayOTPViewController dismissViewControllerAnimated:YES completion:nil];
+                [weakSelf.twoWayOTPViewController reset];
+            } else if (cancelled) {
+                [challenge.sender cancelChallenge:challenge];
+            }
+        };
+    
+        [self.navigationController presentViewController:self.twoWayOTPViewController animated:YES completion:nil];
+        
+    } else if ([challenge.identityProvider.identifier isEqualToString:@"qr-code-api"]) {
+        self.progressStateDidChange(YES);
+        self.qrCodeViewController.challenge = challenge;
+        __weak typeof(self) weakSelf = self;
+        self.qrCodeViewController.completionBlock = ^(NSString *code, BOOL cancelled) {
+            if (code) {
+                [challenge.sender respondWithData:code challenge:challenge];
+                [weakSelf.qrCodeViewController dismissViewControllerAnimated:YES completion:nil];
+            } else if (cancelled) {
+                [challenge.sender cancelChallenge:challenge];
+            }
+        };
+        
+        [self.navigationController presentViewController:self.qrCodeViewController animated:YES completion:nil];
+    }
+    
+    if (self.progressStateDidChange != nil) {
+        self.progressStateDidChange(NO);
+    }
 }
 
 - (void)showError:(NSError *)error

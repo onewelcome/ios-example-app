@@ -28,7 +28,7 @@
     if (!self.profileName.text) {
         self.profileName.text = self.userProfile.profileId;
     }
-    [[ProfileModel new] registerProfileName:self.profileName.text forUserProfile:self.userProfile];
+    [[ProfileModel sharedInstance] registerProfileName:self.profileName.text forUserProfile:self.userProfile];
     
     ProfileViewController *viewController = [ProfileViewController new];
     [self.navigationController pushViewController:viewController animated:YES];

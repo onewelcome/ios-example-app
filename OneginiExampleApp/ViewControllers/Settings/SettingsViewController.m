@@ -124,11 +124,11 @@
     if (error) {
         switch (error.code) {
             case ONGGenericErrorUserDeregistered:
-                [[ProfileModel new] deleteProfileNameForUserProfile:userProfile];
+                [[ProfileModel sharedInstance] deleteProfileNameForUserProfile:userProfile];
                 [self.navigationController popToRootViewControllerAnimated:YES];
                 break;
             case ONGGenericErrorDeviceDeregistered:
-                [[ProfileModel new] deleteProfileNames];
+                [[ProfileModel sharedInstance] deleteProfileNames];
                 [self.navigationController popToRootViewControllerAnimated:YES];
                 break;
             case ONGMobileAuthEnrollmentErrorUserNotAuthenticated:

@@ -16,38 +16,38 @@
 #import "ProfileModel.h"
 #import "OneginiSDK.h"
 
-@interface ProfileModel ()
+NSString *const profilesKey = @"profiles";
 
-@property (nonatomic) NSString *profilesKey;
+@interface ProfileModel ()
 
 @end
 
 @implementation ProfileModel
 
-- (instancetype)init
++ (instancetype)sharedInstance
 {
-    self = [super init];
-    if (self) {
-        self.profilesKey = @"profiles";
+    static ProfileModel *sharedInstance;
+    if (!sharedInstance) {
+        sharedInstance = [ProfileModel new];
     }
-    return self;
+    return sharedInstance;
 }
 
 - (NSArray *)profileNames
 {
-    return [[[NSUserDefaults standardUserDefaults] dictionaryForKey:self.profilesKey] allValues];
+    return [[[NSUserDefaults standardUserDefaults] dictionaryForKey:profilesKey] allValues];
 }
 
 - (void)registerProfileName:(NSString *)profileName forUserProfile:(ONGUserProfile *)userProfile
 {
-    NSDictionary *profiles = [[NSUserDefaults standardUserDefaults] dictionaryForKey:self.profilesKey];
+    NSDictionary *profiles = [[NSUserDefaults standardUserDefaults] dictionaryForKey:profilesKey];
     if (profiles == nil) {
         profiles = @{};
     }
     NSMutableDictionary *mutableProfiles = profiles.mutableCopy;
     [mutableProfiles setValue:profileName forKey:userProfile.profileId];
     NSDictionary *updatedProfiles = mutableProfiles.copy;
-    [[NSUserDefaults standardUserDefaults] setObject:updatedProfiles forKey:self.profilesKey];
+    [[NSUserDefaults standardUserDefaults] setObject:updatedProfiles forKey:profilesKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -56,7 +56,7 @@
     if ([userProfile.profileId isEqualToString:@"static"]) {
         [self registerProfileName:@"static" forUserProfile:userProfile];
     }
-    NSString *storedName = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:self.profilesKey] objectForKey:userProfile.profileId];
+    NSString *storedName = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:profilesKey] objectForKey:userProfile.profileId];
     if (!storedName)
         storedName = @"ExampleName";
     return storedName;
@@ -65,20 +65,20 @@
 
 - (void)deleteProfileNameForUserProfile:(ONGUserProfile *)userProfile
 {
-    NSDictionary *profiles = [[NSUserDefaults standardUserDefaults] dictionaryForKey:self.profilesKey];
+    NSDictionary *profiles = [[NSUserDefaults standardUserDefaults] dictionaryForKey:profilesKey];
     if (profiles == nil) {
         profiles = @{};
     }
     NSMutableDictionary *mutableProfiles = profiles.mutableCopy;
     [mutableProfiles removeObjectForKey:userProfile.profileId];
     NSDictionary *updatedProfiles = mutableProfiles.copy;
-    [[NSUserDefaults standardUserDefaults] setObject:updatedProfiles forKey:self.profilesKey];
+    [[NSUserDefaults standardUserDefaults] setObject:updatedProfiles forKey:profilesKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)deleteProfileNames
 {
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:self.profilesKey];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:profilesKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

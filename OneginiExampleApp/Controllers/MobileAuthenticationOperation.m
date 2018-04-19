@@ -20,6 +20,7 @@
 #import "ZFModalTransitionAnimator.h"
 #import "ProfileModel.h"
 #import "AlertPresenter.h"
+#import "ExperimentalCustomAuthenticatiorViewController.h"
 
 @interface MobileAuthenticationOperation ()
 
@@ -113,7 +114,7 @@
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = request.message;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push for user: %@", [[ProfileModel new] profileNameForUserProfile:request.userProfile]];
+    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push for user: %@", [[ProfileModel sharedInstance] profileNameForUserProfile:request.userProfile]];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
         confirmation(confirmed);
@@ -137,11 +138,9 @@
     [self.pinViewController reset];
     self.pinViewController.mode = PINCheckMode;
     self.pinViewController.pinLength = 5;
-    self.pinViewController.customTitle = [NSString stringWithFormat:@"Push with pin for user: %@", [[ProfileModel new] profileNameForUserProfile:challenge.userProfile]];
-    __weak MobileAuthenticationOperation *weakSelf = self;
+    self.pinViewController.customTitle = [NSString stringWithFormat:@"Push with pin for user: %@", [[ProfileModel sharedInstance] profileNameForUserProfile:challenge.userProfile]];
 
     self.pinViewController.pinEntered = ^(NSString *pin, BOOL cancelled) {
-        [weakSelf.tabBarController dismissViewControllerAnimated:YES completion:nil];
         if (pin) {
             [challenge.sender respondWithPin:pin challenge:challenge];
         } else if (cancelled) {
@@ -172,7 +171,7 @@
 {
     PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
     pushVC.pushMessage.text = request.message;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint for user: %@", [[ProfileModel new] profileNameForUserProfile:request.userProfile]];
+    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with fingerprint for user: %@", [[ProfileModel sharedInstance] profileNameForUserProfile:request.userProfile]];
     pushVC.pushConfirmed = ^(BOOL confirmed) {
         [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
         if (confirmed) {
@@ -187,49 +186,34 @@
     }];
 }
 
-/**
- * In contract with -userClient:didReceivePinChallenge:forRequest: is not going to be called again in case or error - SDK fallbacks to the PIN instead.
- * This also doesn't affect on the PIN attempts count. Thats why we can skip any error handling for the fingerpint challenge.
- */
-- (void)userClient:(ONGUserClient *)userClient didReceiveFIDOChallenge:(ONGFIDOChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
-{
-    PushConfirmationViewController *pushVC = [PushConfirmationViewController new];
-    pushVC.pushMessage.text = request.message;
-    pushVC.pushTitle.text = [NSString stringWithFormat:@"Confirm push with %@ for %@", challenge.authenticator.name, [[ProfileModel new] profileNameForUserProfile:request.userProfile]];
-    pushVC.pushConfirmed = ^(BOOL confirmed) {
-        [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
-        if (confirmed){
-            [challenge.sender respondWithFIDOForChallenge:challenge];
-        } else {
-            [challenge.sender cancelChallenge:challenge];
-        }
-    };
-    [self performSafeConfirmationPresentation:^{
-        [self.tabBarController presentViewController:pushVC animated:YES completion:nil];
-    }];
-}
-
 - (void)userClient:(ONGUserClient *)userClient didReceiveCustomAuthFinishAuthenticationChallenge:(ONGCustomAuthFinishAuthenticationChallenge *)challenge forRequest:(ONGMobileAuthRequest *)request
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Mobile Auth"
-                                                                   message:[NSString stringWithFormat:@"Confirm push with %@ for %@", challenge.authenticator.name, [[ProfileModel new] profileNameForUserProfile:request.userProfile]]
+                                                                   message:[NSString stringWithFormat:@"Confirm push with %@ for %@", challenge.authenticator.name, [[ProfileModel sharedInstance] profileNameForUserProfile:request.userProfile]]
                                                             preferredStyle:UIAlertControllerStyleAlert];
     __block UITextField *alertTextField;
-    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.accessibilityIdentifier = @"CustomAuthenticatorAlertTextField";
-        alertTextField = textField;
-    }];
+    if ([challenge.authenticator.identifier isEqualToString:@"PASSWORD_CA_ID"]) {
+        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.accessibilityIdentifier = @"CustomAuthenticatorAlertTextField";
+            alertTextField = textField;
+        }];
+    }
+    
     UIAlertAction *authenticateButton = [UIAlertAction actionWithTitle:@"Authenticate"
                                                                  style:UIAlertActionStyleDefault
                                                                handler:^(UIAlertAction * _Nonnull action) {
-                                                                   [challenge.sender respondWithData:alertTextField.text challenge:challenge];
+                                                                   if ([challenge.authenticator.identifier isEqualToString:@"PASSWORD_CA_ID"]) {
+                                                                       [challenge.sender respondWithData:alertTextField.text challenge:challenge];
+                                                                   } else if ([challenge.authenticator.identifier isEqualToString:@"EXPERIMENTAL_CA_ID"]) {
+                                                                       [self showExperimentalCA:challenge];
+                                                                   }
                                                                }];
     
     UIAlertAction *pinFallbackButton = [UIAlertAction actionWithTitle:@"Fallback to PIN"
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction * _Nonnull action) {
-                                                                   [challenge.sender respondWithPinFallbackForChallenge:challenge];
-                                                               }];
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * _Nonnull action) {
+                                                                  [challenge.sender respondWithPinFallbackForChallenge:challenge];
+                                                              }];
     
     UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
@@ -243,8 +227,10 @@
     [self.tabBarController presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthRequest:(ONGMobileAuthRequest *)request info:(ONGCustomAuthInfo * _Nullable)customAuthInfo
+- (void)userClient:(ONGUserClient *)userClient didHandleMobileAuthRequest:(ONGMobileAuthRequest *)request info:(ONGCustomInfo * _Nullable)customAuthInfo
 {
+    [self.tabBarController dismissViewControllerAnimated:YES completion:nil];
+
     // Once the SDK reported that the `request` has been handled we need to finish our operation and free-up the queue.
     [self finish];
 }
@@ -257,13 +243,13 @@
         // In case the user is deregistered on the server side the SDK will return the ONGGenericErrorUserDeregistered error. There are a few reasons why this can
         // happen (e.g. the user has entered too many failed PIN attempts). The app needs to handle this situation by deleting any locally stored data for the
         // deregistered user.
-        [[ProfileModel new] deleteProfileNameForUserProfile:request.userProfile];
+        [[ProfileModel sharedInstance] deleteProfileNameForUserProfile:request.userProfile];
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else if (error.code == ONGGenericErrorDeviceDeregistered) {
         // In case the entire device registration has been removed from the Token Server the SDK will return the ONGGenericErrorDeviceDeregistered error. In this
         // case the application needs to remove any locally stored data that is associated with any user. It is probably best to reset the app in the state as if
         // the user is starting up the app for the first time.
-        [[ProfileModel new] deleteProfileNames];
+        [[ProfileModel sharedInstance] deleteProfileNames];
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else if (error.code == ONGMobileAuthRequestErrorNotFound) {
         // For some reason the mobile authentication request cannot be found on the Token Server anymore. This can happen if a push notification
@@ -282,6 +268,25 @@
 {
     AlertPresenter *errorPresenter = [AlertPresenter createAlertPresenterWithTabBarController:self.tabBarController];
     [errorPresenter showErrorAlert:error title:@"Mobile Auth Error"];
+}
+
+- (void)showExperimentalCA:(ONGCustomAuthFinishAuthenticationChallenge *)challenge
+{
+    ExperimentalCustomAuthenticatiorViewController *experimentalCustomAuthenticatiorViewController = [[ExperimentalCustomAuthenticatiorViewController alloc] init];
+    experimentalCustomAuthenticatiorViewController.viewTitle = @"Authentication";
+    __weak MobileAuthenticationOperation *weakSelf = self;
+    experimentalCustomAuthenticatiorViewController.customAuthAction = ^(NSString *data, BOOL cancelled) {
+        [weakSelf.tabBarController dismissViewControllerAnimated:YES completion:nil];
+        if (data) {
+            [challenge.sender respondWithData:data challenge:challenge];
+        } else if (cancelled) {
+            [challenge.sender cancelChallenge:challenge underlyingError:nil];
+        }
+    };
+    
+    [self performSafeConfirmationPresentation:^{
+        [self.tabBarController presentViewController:experimentalCustomAuthenticatiorViewController animated:YES completion:nil];
+    }];
 }
 
 @end

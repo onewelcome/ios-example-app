@@ -1,5 +1,7 @@
 # iOS Example App
 
+**This is an old and deprecated version of iOS Example App. Please refer to the following version https://github.com/Onegini/ios-example-app-swift**
+
 The iOS Example App is using the Onegini iOS SDK to perform secure authentication and resource calls. Please have a look at the
 [App developer quickstart](https://docs.onegini.com/app-developer-quickstart.html) if you want more information about how to get setup with this
 example app.
